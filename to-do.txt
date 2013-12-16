@@ -1,0 +1,112 @@
+BoQ Upload
+- test number of columns
+- delete file after processing
+- only get the first two rows for the verify step
+
+Cost Upload
+- as above
+BoQ item delete
+ - return to project or package depending on start point.
+
+Emails
+email notification 
+
+ - on new documents - checkbox on upload.  button to send notifications.
+
+Add preference settings from users so they get no notifications, immediate or daily/weekly transcript.
+
+ADDRESS TYPES
+Make address types a select box e.g. Home, Postal, Deliveries, Office, Site
+
+
+INBOUND EMAIL
+send to an email address like project@builder.naild.com.au may have to be project.builder@in.naild.com.au
+
+project email address added to project
+company email alias added to project
+
+Put all the emails in a timeline for the project company, kind of facebook like.
+
+Put attachments in uploads.
+
+inbox items can then be linked to: site diary, variations, 
+if they are to a consultant, and cc'd to naild then they can be linked to the contact.
+
+
+BUGS #############
+
+ID's when connecting a company to a contact doesn't work...
+check the create routine in company controller.
+
+############# Missing link in subcontractor was c.user_id -> user.id link was missing so 
+the company relationship was picking up c.company_id rather than u.company_id
+
+
+The contact gets connected to other instances of that company which then breaks the rights to 
+view stuff.
+
+
+Need to send a link to un-subscribe.
+
+BIDDERS:
+BUG:  Bidders appear twice in the Subcontractors tab for a package until they've accepted.
+Features: INVITING TENDERERS/BIDDERS
+        Search based on trade.
+        checkbox to select multiple invitees.
+        Get to customise the invitation email.
+        Response deadline.
+
+NO BID MANAGEMENT INTERFACES !!! - submitted a bid for Station St 600 but can't see it.
+
+
+SUBCONTRACT ITEM handling is rough  - types, multiple lines don't transfer to 
+the subcontract details correctly, form doesn't hide/change with different types.
+
+
+SUBCONTRACTS:
+only one active subcontract per package - enforce it with model.
+
+During manual create process, check if selected company has any contacts, 
+get user to select an existing contact or create a new one.
+
+Poke the selected/created contact into the followers for this package.
+
+
+Do we need to manage variations to subcontracts ?  WHat processes are around this?
+
+Changed type on Subcontract Item but change not reflected on form.
+
+
+
+TENDER REQUIREMENTS
+Need to add a rate type tender rqs
+Added `unit` field to tenderqs but not reflected in code.
+
+I have screwed up the types on Tender Qs and Subcontract Items - will need to fix forms and display.
+
+
+CREATE COMPANY FORM
+Company type needs to be more custom depending on the situation.
+
+TRADES
+Each company needs its own customisable trades list that's prepopulated with the standard ones.
+
+CONTRACT
+Maybe each contractitem has many packages rather than just one.
+
+EXTENSION OF TIME
+ - LD's
+ - Contract start and end dates.
+ - Rain days etc.
+
+
+CAPTURE ARCHITECTS INSTRUCTIONS
+
+Ai input architects instructions.
+
+VARIATIONS
+Variations create in system
+Break up and requote subcontract
+
+EXCLUSIONS
+Button to spring a new package for exclusion. Exclusions during need to past on to head contract.

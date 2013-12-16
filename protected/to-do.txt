@@ -1,0 +1,28 @@
+follower/addfollower/
+needs to be customised depending on the type of project.
+options in dropdowns don't make sense in terms of tendering 
+
+Create a project button on home page still shows if there are tenders and follows
+Button only meant to show if they have no projects of any kind.
+
+project/view/tab/tenderers as owner of tender
+should be able to complete tender on behalf of tenderer - in case they submit hardcopy.
+
+Tendering Process:
+
+Time Limit for submission.
+Reminders to tenderers
+Overall Tender Status
+
+Tenderer submits all questions, and then additional question is created
+ - notify tenderer of additional requirement.
+
+
+Project Details:
+Address
+Project Manager
+Contact Details
+
+
+
+

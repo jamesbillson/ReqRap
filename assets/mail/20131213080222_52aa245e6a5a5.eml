@@ -1,0 +1,65 @@
+Date: Fri, 13 Dec 2013 08:02:22 +1100
+Return-Path: info@billson.com
+From: info@billson.com
+Reply-To: info@billson.com
+Message-ID: <c678b8d3bfd64d8543d860a482da356c@reqer>
+X-Priority: 3
+X-Mailer: PHPMailer 5.2.2 (http://code.google.com/a/apache-extras.org/p/phpmailer/)
+MIME-Version: 1.0
+Content-Type: multipart/alternative;
+	boundary="b1_c678b8d3bfd64d8543d860a482da356c"
+To: twit@test.com
+Subject: You have registered an account on Naild
+
+--b1_c678b8d3bfd64d8543d860a482da356c
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+You need an HTML capable viewer to read this message.
+
+
+--b1_c678b8d3bfd64d8543d860a482da356c
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+<html>
+<head>
+	<meta content="text/html; charset=UTF-8" http-equiv="content-type">
+</head>
+<table cellspacing="0" cellpadding="10" style="color:#575756;font:13px Arial;line-height:1.4em;width:100%;">
+	<tbody>
+
+		<tr>
+            <td style="color:#000000;font-size:16px;padding-top:5px;">
+            	            </td>
+		</tr>
+		<tr>
+            <td>
+				Dear twit,
+                    <br />
+                    Hi, it looks like you've created an account on Naild, the 
+                    online construction management system.<br />
+                    To confirm your email address and activate your account follow the link below and complete the join form.
+                    <br />
+                    Click here to accept <a href="http://naild/user/active/verifycode/52aa245e381000.34176327">naild/user/active/verifycode/52aa245e381000.34176327</a>                   
+                    <br />   <br />.
+                    Thanks, 
+                    from the Naild Team.
+                                </td>
+		</tr>
+		<tr>
+            <td style="padding:15px 20px;padding-top:5px;">
+                Naild<br />
+                T. <br />
+                 <br /> 
+                <a href="http://www.naild.com.au/">www.naild.com.au</a><br /> 
+              	</td>
+		</tr>
+	</tbody>
+</table>
+</body>
+</html>
+
+
+
+--b1_c678b8d3bfd64d8543d860a482da356c--
