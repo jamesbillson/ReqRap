@@ -25,3 +25,10 @@ either log, or make multiple copies.
 
 
 
+### TEST RUNS
+create the first test run when the project gets switched to testing.
+
+### NON FUNCTIONAL REQ's.
+
+free form.
+

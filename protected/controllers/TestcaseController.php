@@ -58,7 +58,14 @@ class TestcaseController extends Controller
 
         public function actionRun($id)
 	{
-		$this->render('run',array(
+	// GET THE CURRENT TEST RUN.
+        $testrun=Testrun::model()->findAll('number project_id=')
+        // LOAD the form with a new Testresult model.
+         
+            
+            
+            
+            $this->render('run',array(
 			'model'=>$this->loadModel($id),
 		));
 	}

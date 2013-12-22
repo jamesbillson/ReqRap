@@ -13,6 +13,9 @@
  */
 class Testresult extends CActiveRecord
 {
+    
+    	public static $testresult = array(1=>'Fail', 2=>'Pass',3=>'Block', 4=>'Not Tested');	
+ 
 	/**
 	 * @return string the associated database table name
 	 */
@@ -55,7 +58,8 @@ class Testresult extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'teststep_id' => 'Teststep',
+		'testrun_id' => 'Test Run',	
+                    'teststep_id' => 'Teststep',
 			'user_id' => 'User',
 			'date' => 'Date',
 			'result' => 'Result',

@@ -65,11 +65,22 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                                  <td>   
                         <?php echo $item['result'];?>
                     </td>  
-
+                  
                   
                     <td>
-                        <a href="/teststep/update/id/<?php echo $item['id'];?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
-                        <a href="/teststep/delete?id=<?php echo $item['id'];?>"><i class="icon-remove-sign" rel="tooltip" title="Delete"></i></a> 
+                     
+                      <form action="/testresult/createinline/" method="POST">
+                        <input type="hidden" name="step_id" value="<?php echo $item['id'];?>">
+                        <select name="rule">
+                            <?php foreach(Testresult::$testresult as $key=>$value){?>
+                            <option value="<?php echo $key;?>"><?php echo $value;?></option>
+                            <?php } ?>
+                        </select>
+                        <br />Notes
+                        <input type="text" name="new_rule">
+                        <input type="submit" value="add" class="btn primary">
+                        </form>
+                    
                     </td>
                 </tr>
             <?php endforeach ?>
