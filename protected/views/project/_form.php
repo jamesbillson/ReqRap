@@ -25,7 +25,7 @@ If (User::model()->myCompanyType()==1){
 ?>
          <div class="row">
 		What type of project is this?<br />
-		<?php echo $form->dropdownlist($model,'stage',Project::$buildstagecreatebuilder); ?>
+		<?php echo $form->dropdownlist($model,'stage',Project::$projectstage); ?>
 		<?php echo $form->error($model,'stage'); ?>
 	</div>	
 <?php

@@ -1,8 +1,5 @@
 
-Follower invite to set the type as an invite to bid, or an invite to follow.<br />
-Bidders will need a new column in follower to set their type. <br />
-Only bidders will see the Tender Requirements.<br />
-(/project/_viewFollower)
+
 <?php 
 $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
     'title' => 'Followers',
@@ -61,7 +58,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                         <?php echo $item['email'];?>
                     </td>
                     <td>   
-                        <?php echo $status[$item['confirmed']];?>
+                        <?php echo $item['confirmed'];?>
                     </td>
                     <td>
                         <a href="/contact/view/id/<?php echo $item['id'];?>"><i class="icon-eye-open" rel="tooltip" title="View"></i></a> 

@@ -15,7 +15,7 @@ class UsecaseController extends Controller
 	{
 		return array(
 			'accessControl', // perform access control for CRUD operations
-			'postOnly + delete', // we only allow deletion via POST request
+			//'postOnly + delete', // we only allow deletion via POST request
 		);
 	}
 
@@ -32,11 +32,11 @@ class UsecaseController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update'),
+				'actions'=>array('create','update','delete'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete'),
+				'actions'=>array('admin'),
 				'users'=>array('admin'),
 			),
 			array('deny',  // deny all users
@@ -66,24 +66,32 @@ class UsecaseController extends Controller
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
-
+                $number=Usecase::model()->getNextNumber($id);
+                $package=Package::model()->findbyPK($id);
+                $packnum=$package->sequence;
 		if(isset($_POST['Usecase']))
 		{
-			$model->attributes=$_POST['Usecase'];
-			if($model->save())
+			
+                    $model->attributes=$_POST['Usecase'];
+			if($model->save()){
                         $flow=new Flow;
                         $flow->name='Main';
                         $flow->main=1;
                         $flow->startstep_id=0;
                         $flow->rejoinstep_id=0;
                         $flow->usecase_id=$model->getPrimaryKey();
-                        $flow->save();
-                            
+                        $flow->save(false);
+                        $step=new Step;
+                          $step->flow_id=$flow->getPrimaryKey();
+                          $step->number=  Step::model()->getNextNumber($id);
+                          $step->text='Actor action.';
+                          $step->result='System result.';
+                          $step->save(false);
 				$this->redirect(array('/package/view/tab/usecases/','id'=>$model->package->id));
-		}
+                }}
 
 		$this->render('create',array(
-			'model'=>$model,'id'=>$id,
+			'model'=>$model,'package_id'=>$id,'number'=>$number,'packnum'=>$packnum
 		));
 	}
 
@@ -95,7 +103,9 @@ class UsecaseController extends Controller
 	public function actionUpdate($id)
 	{
 		$model=$this->loadModel($id);
-
+                $package_id=$model->package->id;
+                $number=$model->number;
+                $packnum=$model->package->sequence;
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
@@ -107,7 +117,8 @@ class UsecaseController extends Controller
 		}
 
 		$this->render('update',array(
-			'model'=>$model,'id'=>$id,
+			'model'=>$model,'id'=>$id,'package_id'=>$package_id,'number'=>$number,
+                            'packnum'=>$packnum
 		));
 	}
 
@@ -118,11 +129,12 @@ class UsecaseController extends Controller
 	 */
 	public function actionDelete($id)
 	{
-		$this->loadModel($id)->delete();
+		$model = $this->loadModel($id);
+        $id=$model->package->id;
+        $model->delete();
 
-		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
-		if(!isset($_GET['ajax']))
-			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
+	
+			$this->redirect(array('/package/view/tab/usecases/id/'.$id));
 	}
 
 	/**

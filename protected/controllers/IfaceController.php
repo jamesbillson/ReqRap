@@ -15,7 +15,7 @@ class IfaceController extends Controller
 	{
 		return array(
 			'accessControl', // perform access control for CRUD operations
-			'postOnly + delete', // we only allow deletion via POST request
+			//'postOnly + delete', // we only allow deletion via POST request
 		);
 	}
 
@@ -32,11 +32,11 @@ class IfaceController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update'),
+				'actions'=>array('create','update','delete'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete'),
+				'actions'=>array('admin'),
 				'users'=>array('admin'),
 			),
 			array('deny',  // deny all users
@@ -104,22 +104,22 @@ class IfaceController extends Controller
 	 * If update is successful, the browser will be redirected to the 'view' page.
 	 * @param integer $id the ID of the model to be updated
 	 */
-	public function actionUpdate($id)
+	public function actionUpdate($id,$ucid)
 	{
 		$model=$this->loadModel($id);
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
-
+                $id=$model->project_id;
 		if(isset($_POST['Iface']))
 		{
 			$model->attributes=$_POST['Iface'];
 			if($model->save())
-				$this->redirect(array('view','id'=>$model->id));
+				$this->redirect(array('/usecase/view/id/'.$ucid));
 		}
 
 		$this->render('update',array(
-			'model'=>$model,
+			'model'=>$model,'id'=>$id
 		));
 	}
 
@@ -128,15 +128,15 @@ class IfaceController extends Controller
 	 * If deletion is successful, the browser will be redirected to the 'admin' page.
 	 * @param integer $id the ID of the model to be deleted
 	 */
-	public function actionDelete($id)
+	public function actionDelete($id,$ucid,$type)
 	{
 		$this->loadModel($id)->delete();
-
-		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
-		if(!isset($_GET['ajax']))
-			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
+               if($type==1) $this->redirect(array('/usecase/view/id/'.$ucid));
+               if($type==2) $this->redirect(array('/project/view/tab/interfaces/id/'.$ucid));
 	}
 
+
+        
 	/**
 	 * Lists all models.
 	 */

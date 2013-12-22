@@ -33,7 +33,7 @@ class Actorusecase extends CActiveRecord
 			array('actor_id, usecase_id', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('actor_id, usecase_id', 'safe', 'on'=>'search'),
+			array('id, actor_id, usecase_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -56,8 +56,9 @@ class Actorusecase extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'actor_id' => 'Actor',
-			'usecase_id' => 'Usecase',
+                    'id' => 'ID',	
+                    'actor_id' => 'Actor',
+                    'usecase_id' => 'Usecase',
 		);
 	}
 
@@ -78,7 +79,7 @@ class Actorusecase extends CActiveRecord
 		// @todo Please modify the following code to remove attributes that should not be searched.
 
 		$criteria=new CDbCriteria;
-
+                $criteria->compare('id',$this->actor_id);
 		$criteria->compare('actor_id',$this->actor_id);
 		$criteria->compare('usecase_id',$this->usecase_id);
 

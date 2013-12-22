@@ -121,6 +121,7 @@ class ProjectController extends Controller
             $model->company_id = User::model()->myCompany();
             $model->extlink = md5(uniqid(rand(), true));
             if($model->save())
+                Iface::model ()->createTypes($model->getPrimaryKey());
            
             $this->redirect(array('view','id'=>$model->id,'tab'=>'documents'));
         }

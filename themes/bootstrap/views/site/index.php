@@ -214,7 +214,7 @@ if(!empty($bids)) {
      $this->widget('bootstrap.widgets.TbMenu', array(
     'type'=>'list',
     'items'=>array(
-        array('label'=>'Bids', 'icon'=>'star-empty', 'url'=>array('project/mybids')),
+        array('label'=>'Requirements', 'icon'=>'star-empty', 'url'=>array('project/mybids')),
       
        ),
     
@@ -227,7 +227,7 @@ if(!empty($construction))  {
      $this->widget('bootstrap.widgets.TbMenu', array(
     'type'=>'list',
     'items'=>array(
-         array('label'=>'Projects', 'icon'=>'star-empty', 'url'=>array('project/myprojects')),
+         array('label'=>'Testing', 'icon'=>'star-empty', 'url'=>array('project/myprojects')),
      
        ),
 ));  

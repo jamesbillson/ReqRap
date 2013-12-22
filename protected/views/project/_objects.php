@@ -13,7 +13,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
         'class' => 'bootstrap.widgets.TbButton',
         'type' => 'primary', // '', 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
         'label'=> 'Add Object',
-        'url'=>'/object/create?id='.$model->id,
+        'url'=>'/object/create/id/'.$model->id,
     ),
     
 ))); 
@@ -22,7 +22,9 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
         <table class="table">
             <thead>
                 <tr>
+                    <th>Number</th>
                     <th>Name</th>
+                     <th>Description</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -31,10 +33,15 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
             <?php foreach($data as $item):?>
                 <tr class="odd">  
                    
-                                        <td>   
+                    <td>
+                    OB-<?php echo str_pad($item['number'], 3, "0", STR_PAD_LEFT); ?>
+                    </td>
+                    <td>
                         <?php echo $item['name'];?>
                     </td>
-                    
+                    <td>
+                        <?php echo $item['description'];?>
+                    </td>            
                     <td>
                         <a href="/object/view/id/<?php echo $item['id'];?>"><i class="icon-eye-open" rel="tooltip" title="View"></i></a> 
                         <a href="/object/update/id/<?php echo $item['id'];?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 

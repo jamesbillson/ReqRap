@@ -35,6 +35,7 @@ return array(
                 'application.extensions.iwi.*',
                 'application.widgets.bootstrap.*',
                 'application.modules.auth.components.*',
+				'application.controllers.*',
                 'ext.YiiMailer.YiiMailer',
 				'editable.*',
     ),

@@ -4,10 +4,7 @@
 
 <?php echo $form->dropDownListRow($model,'organisationtype',
                 CHtml::listData(Organisationtype::model()->findAll(),'id','name'),array('class'=>'span3'));  ?>
-<div class="selectThis">
-    <?php echo $form->dropDownListRow($model,'trade_id',
-                CHtml::listData(Trade::model()->findAll('companyowner_id='.User::model()->myCompany()),'id','name'),array('class'=>'span3'));  ?>
-</div>
+
 
 <script type="text/javascript">
     $(document).ready(function(){

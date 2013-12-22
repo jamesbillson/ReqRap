@@ -114,17 +114,37 @@ class Usecase extends CActiveRecord
 		$projects = $command->queryAll();
 		return $projects;
     }
+    
+      public function getNextNumber($id)
+    {
+       
+              
+            $sql="SELECT max(`r`.`number`)as number
+                    From `usecase` `r`
+                    WHERE `r`.`package_id`=".$id;
+		$connection=Yii::app()->db;
+		$command = $connection->createCommand($sql);
+		$projects = $command->queryAll();
+		   if (!isset($projects[0]['number'])) {
+                    $projects[0]['number']='1';
+                } ELSE {
+                    $projects[0]['number']=$projects[0]['number']+1;
+                }
+		return $projects[0]['number'];
+    }  
+    
+    
                public function getProjectUCs($id)
     {
         $user= Yii::app()->user->id;   
               
-        $sql="SELECT `u`.`name`, `u`.`id`, `u`.`description`,
-            `p`.`name` as packname,`p`.`id` as packid,
+        $sql="SELECT `u`.`name`, `u`.`number`,`u`.`id`, `u`.`description`,
+            `p`.`name` as packname,`p`.`id` as packid,`p`.`sequence`,
             `s`.`id` as steps
             FROM `package` `p`
-            LEFT Join  `usecase` `u`
+            LEFT JOIN  `usecase` `u`
             on `p`.`id`=`u`.`package_id`
-            LEFT Join `project` `r`
+            Join `project` `r`
             ON `r`.`id` =`p`.`project_id`
             LEFT Join `flow` `f`
             ON `u`.`id`=`f`.`usecase_id`

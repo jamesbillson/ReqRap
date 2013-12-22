@@ -25,11 +25,11 @@ class Stepiface extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('step_id, iface_id', 'required'),
-			array('step_id, iface_id', 'numerical', 'integerOnly'=>true),
+			array('id, step_id, iface_id', 'required'),
+			array('id, step_id, iface_id', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('step_id, iface_id', 'safe', 'on'=>'search'),
+			array('id, step_id, iface_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -54,7 +54,8 @@ class Stepiface extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'step_id' => 'Step',
+			'id' => 'ID',
+                    'step_id' => 'Step',
 			'iface_id' => 'Iface',
 		);
 	}

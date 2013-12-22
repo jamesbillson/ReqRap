@@ -29,6 +29,8 @@ $active['followers']=FALSE;
 $active['rules']=FALSE;
 $active['interfaces']=FALSE; 
 $active['usecases']=FALSE;
+$active['forms']=FALSE;
+$active['followers']=FALSE;
 
  $active[$tab]=TRUE;
 
@@ -42,7 +44,12 @@ $active['usecases']=FALSE;
         'label' => 'Documents', 
         'content' => $this->renderPartial('_documents',
                 compact('model'),true,true),'active'=>$active['documents']);
-
+ 
+    $tabs[] = array('id' => 'followers', 
+        'label' => 'Followers', 
+        'content' => $this->renderPartial('_followers',
+                compact('model'),true,true),'active'=>$active['followers']);
+    
     $tabs[] = array('id' => 'objects', 
         'label' => 'Objects', 
         'content' => $this->renderPartial('_objects',
@@ -67,6 +74,11 @@ $active['usecases']=FALSE;
             'label' => 'Rules',
             'content' => $this->renderPartial('_rules',
                     compact('model','status'),true,true),'active'=>$active['rules']);
+
+    $tabs[] = array('id' => 'forms',
+            'label' => 'Forms',
+            'content' => $this->renderPartial('_forms',
+                    compact('model','status'),true,true),'active'=>$active['forms']);
     
     $tabs[] = array('id' => 'interfaces',
             'label' => 'Interfaces',

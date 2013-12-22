@@ -29,11 +29,11 @@ class Rule extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('number, text, project_id', 'required'),
+			array('number, title,text, project_id', 'required'),
 			array('number', 'length', 'max'=>4),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, number, text', 'safe', 'on'=>'search'),
+			array('id, number, title, text', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -46,6 +46,7 @@ class Rule extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'ruleusecase' => array(self::HAS_ONE, 'Ruleusecase', 'rule_id'),
+                    'project' => array(self::BELONGS_TO, 'Project', 'project_id'),
 		);
 	}
 
@@ -57,6 +58,7 @@ class Rule extends CActiveRecord
 		return array(
 			'id' => 'ID',
 			'number' => 'Number',
+                    'title' => 'Title',
 			'text' => 'Text',
                     'project_id'=>'Project',
 		);
@@ -94,13 +96,18 @@ class Rule extends CActiveRecord
     {
         $user= Yii::app()->user->id;   
               
-        $sql="SELECT `r`.`text`,`r`.`number`, `r`.`id`
+        $sql="SELECT `r`.`text`,`r`.`number`, `r`.`id`,`r`.`title`
            From `rule` `r`
-       Join `ruleusecase` `j` 
-            on `j`.`rule_id`=`r`.`id`
-            Join `usecase` `u` 
-            on `j`.`usecase_id`=`u`.`id`
-           WHERE `u`.`id`=".$id;
+            Join `steprule` `x` 
+            on `x`.`rule_id`=`r`.`id`
+            Join `step` `s` 
+            on `x`.`step_id`=`s`.`id`
+            Join `flow` `f`
+            ON `f`.`id`=`s`.`flow_id`
+          
+           WHERE `f`.`usecase_id`=".$id."
+               GROUP BY `r`.`id`
+               ORDER BY `r`.`number`";
 		$connection=Yii::app()->db;
 		$command = $connection->createCommand($sql);
 		$projects = $command->queryAll();
@@ -111,7 +118,7 @@ class Rule extends CActiveRecord
     {
        
               
-        $sql="SELECT `r`.`text`,`r`.`number`, `r`.`id`
+        $sql="SELECT `r`.`text`,`r`.`number`, `r`.`id`,`r`.`title`,`x`.`id` as xid
            From `rule` `r`
             Join `steprule` `x` 
             on `x`.`rule_id`=`r`.`id`
@@ -123,7 +130,23 @@ class Rule extends CActiveRecord
 		$projects = $command->queryAll();
 		return $projects;
     }  
-    
+        public function getNextNumber($id)
+    {
+       
+              
+        $sql="SELECT max(`r`.`number`)as number
+           From `rule` `r`
+            WHERE `r`.`project_id`=".$id;
+		$connection=Yii::app()->db;
+		$command = $connection->createCommand($sql);
+		$projects = $command->queryAll();
+		   if (!isset($projects[0]['number'])) {
+                    $projects[0]['number']='1';
+                } ELSE {
+                    $projects[0]['number']=$projects[0]['number']+1;
+                }
+		return $projects[0]['number'];
+    }  
 	/**
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!

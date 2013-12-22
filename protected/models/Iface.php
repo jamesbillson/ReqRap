@@ -100,13 +100,20 @@ class Iface extends CActiveRecord
     {
         $user= Yii::app()->user->id;   
               
-        $sql="SELECT `i`.`number`,`i`.`name`, `i`.`type_id`,`i`.`id`
+        $sql="SELECT `i`.`number`,`i`.`name`, 
+            `i`.`type_id`,`i`.`id`,`t`.`name` as type, `t`.`number` as typenum
             FROM `iface` `i`
-            Join `interfaceusecase` `j` 
-            on `j`.`interface_id`=`i`.`id`
-            Join `usecase` `u` 
-            on `j`.`usecase_id`=`u`.`id`
-           WHERE `u`.`id`=".$id;
+            Join `interfacetype` `t` 
+            on `i`.`type_id`=`t`.`id`
+            Join `stepiface` `x` 
+            on `x`.`iface_id`=`i`.`id`
+            Join `step` `s` 
+            on `x`.`step_id`=`s`.`id`
+            Join `flow` `f` 
+            on `f`.`id`=`s`.`flow_id`
+           WHERE `f`.`usecase_id`=".$id."
+               GROUP BY `i`.`id`
+               ORDER BY `t`.`number` ASC, `i`.`number` ASC";
 		$connection=Yii::app()->db;
 		$command = $connection->createCommand($sql);
 		$projects = $command->queryAll();
@@ -117,13 +124,43 @@ class Iface extends CActiveRecord
     {
        
               
-        $sql="SELECT `i`.`number`,`i`.`name`, `i`.`type_id`,`i`.`id`
+        $sql="SELECT `i`.`number`,`i`.`name`, `i`.`type_id`,`i`.`id`,`x`.`id` as xid
             FROM `iface` `i`
             Join `stepiface` `x` 
             on `x`.`iface_id`=`i`.`id`
             Join `step` `s` 
             on `x`.`step_id`=`s`.`id`
            WHERE `s`.`id`=".$id;
+		$connection=Yii::app()->db;
+		$command = $connection->createCommand($sql);
+		$projects = $command->queryAll();
+		return $projects;
+    }   
+  
+      
+      public function getNextIfaceNumber($id)
+    {
+                   
+        $sql="SELECT max(`r`.`number`)as number
+           From `iface` `r`
+            WHERE `r`.`project_id`=".$id;
+		$connection=Yii::app()->db;
+		$command = $connection->createCommand($sql);
+		$projects = $command->queryAll();
+		   if (!isset($projects[0]['number'])) {
+                    $projects[0]['number']='1';
+                } ELSE {
+                    $projects[0]['number']=$projects[0]['number']+1;
+                }
+		return $projects[0]['number'];
+      
+    
+    }   
+    
+          public function createTypes($id)
+    {
+       $sql="INSERT INTO `interfacetype`(`number`, `name`, `project_id`) VALUES 
+           (0,'Not Classified', ".$id."),(1,'Web Interface', ".$id."),(2,'Email', ".$id.")";
 		$connection=Yii::app()->db;
 		$command = $connection->createCommand($sql);
 		$projects = $command->queryAll();

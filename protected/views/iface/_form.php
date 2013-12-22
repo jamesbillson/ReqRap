@@ -40,9 +40,10 @@
 	</div>
 
 
-
+            
         
         <div class="row">
+
         <?php  if (!empty($interfacetypes)){
                 echo $form->labelEx($model,'type_id'); ?>
         <?php   echo $form->dropDownList($model, 'type_id',

@@ -15,7 +15,7 @@ class ActorusecaseController extends Controller
 	{
 		return array(
 			'accessControl', // perform access control for CRUD operations
-			'postOnly + delete', // we only allow deletion via POST request
+			//'postOnly + delete', // we only allow deletion via POST request
 		);
 	}
 
@@ -32,11 +32,11 @@ class ActorusecaseController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update'),
+				'actions'=>array('create','update','delete'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete'),
+				'actions'=>array('admin'),
 				'users'=>array('admin'),
 			),
 			array('deny',  // deny all users
@@ -71,7 +71,7 @@ class ActorusecaseController extends Controller
 		{
 			$model->attributes=$_POST['Actorusecase'];
 			if($model->save())
-				$this->redirect(array('/usecase/view/id/'.$model->$usecase_id));
+				$this->redirect(array('/usecase/view/id/'.$model->usecase_id));
 		}
 
 		$this->render('create',array(
@@ -108,13 +108,11 @@ class ActorusecaseController extends Controller
 	 * If deletion is successful, the browser will be redirected to the 'admin' page.
 	 * @param integer $id the ID of the model to be deleted
 	 */
-	public function actionDelete($id)
+	public function actionDelete($actor_id,$usecase_id)
 	{
-		$this->loadModel($id)->delete();
-
-		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
-		if(!isset($_GET['ajax']))
-			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
+		$model=Actorusecase::model()->find('actor_id='.$actor_id.' and usecase_id='.$usecase_id);
+                $model->delete();
+                $this->redirect(array('/usecase/view/id/'.$usecase_id));
 	}
 
 	/**

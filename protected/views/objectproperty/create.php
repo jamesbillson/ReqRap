@@ -1,18 +1,3 @@
-<?php
-/* @var $this ObjectpropertyController */
-/* @var $model Objectproperty */
+<h1>Create A Property for an Object</h1>
 
-$this->breadcrumbs=array(
-	'Objectproperties'=>array('index'),
-	'Create',
-);
-
-$this->menu=array(
-	array('label'=>'List Objectproperty', 'url'=>array('index')),
-	array('label'=>'Manage Objectproperty', 'url'=>array('admin')),
-);
-?>
-
-<h1>Create Objectproperty</h1>
-
-<?php $this->renderPartial('_form', array('model'=>$model,'id'=>$id)); ?>
+<?php $this->renderPartial('_form', array('model'=>$model,'object_id'=>$id)); ?>

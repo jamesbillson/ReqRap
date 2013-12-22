@@ -120,6 +120,23 @@ class Flow extends CActiveRecord
                 }
 		return $projects[0]['name'];
     }    
+    
+              public function checkSteps($id)
+    {
+       
+              
+        $sql="SELECT `f`.`id`,count(`s`.`id`) as steps
+              FROM `flow` `f`
+              JOIN `step` `s` 
+              ON `s`.`flow_id`=`f`.`id`
+              WHERE `f`.`id`=".$id."
+              ";
+		$connection=Yii::app()->db;
+		$command = $connection->createCommand($sql);
+		$projects = $command->queryAll();
+                
+		return $projects[0]['steps'];
+    }    
 
 	/**
 	 * Returns the static model of the specified AR class.

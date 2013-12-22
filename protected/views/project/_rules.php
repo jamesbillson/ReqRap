@@ -1,5 +1,5 @@
 <?php 
-$data = Rule::model()->findAll(array('order'=>'number', 'condition'=>'project_id=:x', 'params'=>array(':x'=>$model->id)));
+$data = Rule::model()->findAll(array('order'=>'number ASC', 'condition'=>'project_id=:x', 'params'=>array(':x'=>$model->id)));
 
 
 $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
@@ -25,8 +25,8 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
 	<thead>
 	<tr>
 		<th>Number</th>
-		<th>Detail</th>
-
+		<th>Title</th>
+<th>Text</th>
                 <th>Actions</th>
 
 	</tr>
@@ -36,10 +36,12 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
         <?php foreach($data as $item) {?>
         <tr class="odd">  
         <td>   
-        <?php echo $item['number'];?>
+        BR-<?php echo str_pad($item['number'], 3, "0", STR_PAD_LEFT); ?> 
         </td>
    
-
+<td>   
+       <a href="/rule/view/id/<?php echo $item['id'];?>"><?php echo $item['title'];?></a>
+        </td>
     
     <td>   
         <?php echo $item['text'];?>
@@ -48,9 +50,8 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
 
 
       <td>
-        <a href="/claimstage/view/id/<?php echo $item['id'];?>"><i class="icon-eye-open" rel="tooltip" title="View"></i></a> 
-        <a href="/claimstage/update/id/<?php echo $item['id'];?>"><i class="icon-edit" rel="tooltip" title="Edit Details"></i></a> 
-        <a href="/claimstage/remove?id=<?php echo $item['id'];?>"><i class="icon-remove-sign" rel="tooltip" title="Remove/Uninvite"></i></a> 
+        <a href="/rule/update/id/<?php echo $item['id'];?>"><i class="icon-edit" rel="tooltip" title="Edit Details"></i></a> 
+        <a href="/rule/delete/id/<?php echo $item['id'];?>"><i class="icon-remove-sign text-error" rel="tooltip" title="Remove/Uninvite"></i></a> 
     
               
         </td>

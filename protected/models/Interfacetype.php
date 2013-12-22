@@ -88,6 +88,25 @@ class Interfacetype extends CActiveRecord
 		));
 	}
 
+        
+                   public function getUnclassified($id)
+    {
+       
+              
+        $sql="SELECT `i`.`id`
+            FROM `interfacetype` `i`
+            WHERE `i`.`project_id`=".$id."
+            AND 
+            `i`.`number`=0
+            LIMIT 1
+            ";
+		$connection=Yii::app()->db;
+		$command = $connection->createCommand($sql);
+		$projects = $command->queryAll();
+               
+		return $projects[0]['id'];
+    }
+        
 	/**
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!

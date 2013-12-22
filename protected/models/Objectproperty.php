@@ -30,12 +30,13 @@ class Objectproperty extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('object_id, name, description', 'required'),
+			array('object_id, number, name, description', 'required'),
 			array('object_id', 'numerical', 'integerOnly'=>true),
 			array('name', 'length', 'max'=>255),
+                    array('number', 'length', 'max'=>30),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, object_id, name, description', 'safe', 'on'=>'search'),
+			array('id, object_id, number, name, description', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -60,6 +61,7 @@ class Objectproperty extends CActiveRecord
 			'id' => 'ID',
 			'object_id' => 'Object',
 			'name' => 'Name',
+                    'number'=>'Number',
 			'description' => 'Description',
 		);
 	}
@@ -92,6 +94,26 @@ class Objectproperty extends CActiveRecord
 		));
 	}
 
+        
+                     public function getNextNumber($id)
+    {
+                   
+        $sql="SELECT max(`r`.`number`)as number
+           From `objectproperty` `r`
+            WHERE `r`.`object_id`=".$id;
+		$connection=Yii::app()->db;
+		$command = $connection->createCommand($sql);
+		$projects = $command->queryAll();
+		   if (!isset($projects[0]['number'])) {
+                    $projects[0]['number']='1';
+                } ELSE {
+                    $projects[0]['number']=$projects[0]['number']+1;
+                }
+		return $projects[0]['number'];
+      
+    
+    }   
+        
 	/**
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!

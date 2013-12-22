@@ -169,7 +169,7 @@ class PackageController extends Controller
 		{
 			$model->attributes=$_POST['Package'];
 			if($model->save())
-				$this->redirect(array('/project/view','id'=>$model->project->id,'tab'=>'package'));
+				$this->redirect(array('/project/view','id'=>$model->project->id,'tab'=>'packages'));
 		}
 
 		$this->render('update',array(

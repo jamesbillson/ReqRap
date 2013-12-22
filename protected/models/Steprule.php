@@ -25,11 +25,11 @@ class Steprule extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('step_id, rule_id', 'required'),
-			array('step_id, rule_id', 'numerical', 'integerOnly'=>true),
+			array('id,step_id, rule_id', 'required'),
+			array('id,step_id, rule_id', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('step_id, rule_id', 'safe', 'on'=>'search'),
+			array('id,step_id, rule_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -41,6 +41,8 @@ class Steprule extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+                    'step' => array(self::BELONGS_TO, 'Step', 'step_id'),
+                    'rule' => array(self::BELONGS_TO, 'Rule', 'rule_id'),
 		);
 	}
 
@@ -50,7 +52,8 @@ class Steprule extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'step_id' => 'Step',
+		'id' => 'ID',	
+                    'step_id' => 'Step',
 			'rule_id' => 'Rule',
 		);
 	}

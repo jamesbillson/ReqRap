@@ -1,15 +1,69 @@
 
 <div class="row">
-    <h3> <a href="/project/view/tab/details/id/<?php echo $model->package->project->id; ?>"><?php echo $model->package->project->name; ?></a></h3>
+    <h3> <a href="/project/view/tab/usecases/id/<?php echo $model->package->project->id; ?>"><?php echo $model->package->project->name; ?></a></h3>
 </div>
 
+<div class="row"> 
+    <?php 
+$testcases = Testcase::model()->findAll('usecase_id='.$model->id); // get the requirements with answers
+
+
+
+$box = $this->beginWidget('bootstrap.widgets.TbBox', array(
+	'title' => 'Test Cases',
+	'headerIcon' => 'icon-user',
+	'htmlOptions' => array('class'=>'bootstrap-widget-table'),
+           'headerButtons' => array(
+                array(
+                    'class' => 'bootstrap.widgets.TbButton',
+                    'type' => 'primary', // '', 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
+                    'label'=> 'Auto Add Test Cases',
+                    'url'=>'/testcase/make/id/'.$model->id,
+                    
+                      ),
+     
+)));  
+  if (count($testcases)):?>
+
+  <table class="table">
+  	<thead>
+    	<tr>
+          <th>Name</th>
+
+          <th>Actions</th>
+    	</tr>
+  	</thead>
+      <tbody>
+  
+        <?php foreach($testcases as $item) : // Go through each un answered question??>
+
+          <tr class="odd">
+
+              <td>   
+                  <b><a href="/testcase/view/id/<?php echo $item['id'];?>"><?php echo $item['name'];?></a></b>
+                
+              </td> 
+                <td>
+                  <a href="/testcase/delete/ucid/<?php echo $model->id;?>/id/<?php echo $item['id'];?>"><i class="icon-remove-sign text-error" rel="tooltip" title="Delete"></i></a> 
+                  <a href="/testcase/update/id/<?php echo $item['id'];?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
+              </td>
+         
+        <?php endforeach ?>       
+    </tbody>
+  </table>
+
+  <?php endif; // end count of results
+  
+  $this->endWidget();
+  ?>
+      </div>
 
 
  <div class="row"> 
     <?php
 
 $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
-        'title' => 'Use Case : '.$model->number.''.$model->name,
+        'title' => 'Use Case : UC-'.str_pad($model->package->sequence, 2, "0", STR_PAD_LEFT).str_pad($model->number, 3, "0", STR_PAD_LEFT).'-'.$model->name,
         'htmlOptions' => array('class'=>'bootstrap-widget-table'),
           ));  
 ?>
@@ -22,7 +76,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
 
               <td>  <b>Package</b> 
               </td>
-              <td>   <a href="/package/view/tab/details/id/<?php echo $model->package->id; ?>"><?php echo $model->package->name ; ?></a>
+              <td>   <a href="/package/view/tab/usecases/id/<?php echo $model->package->id; ?>"><?php echo $model->package->name ; ?></a>
               </td>
                   
           </tr>
@@ -93,8 +147,8 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                 
               </td> 
               <td>
-                  <a href="/actor/update/id/<?php echo $item['id'];?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
-                    <a href="/actor/remove/id/<?php echo $item['id'];?>"><i class="icon-remove-sign" rel="tooltip" title="Remove Actor"></i></a> 
+                  <a href="/actor/update/id/"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
+                    <a href="/actorusecase/delete/usecase_id/<?php echo $model->id;?>/actor_id/<?php echo $item['id'];?>"><i class="icon-remove-sign" rel="tooltip" title="Remove Actor"></i></a> 
                          
               </td>
          
@@ -108,61 +162,9 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
   ?>
       </div>
 
+
       
-      <div class="row"> 
-      
-          <?php 
-$uses = Uses::model()->getUses($model->id); // get the requirements with answers
-
-
-
-$box = $this->beginWidget('bootstrap.widgets.TbBox', array(
-	'title' => 'Uses',
-	'headerIcon' => 'icon-user',
-	'htmlOptions' => array('class'=>'bootstrap-widget-table'),
-           'headerButtons' => array(
-                array(
-                    'class' => 'bootstrap.widgets.TbButton',
-                    'type' => 'primary', // '', 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
-                    'label'=> 'Add +',
-                    'url'=>'/actor/create/id/'.$model->id,
-                    
-                      ),
-     
-)));  
-  if (count($uses)):?>
-
-  <table class="table">
-  	<thead>
-    	<tr>
-          <th>Name</th>
-
-          <th>Actions</th>
-    	</tr>
-  	</thead>
-      <tbody>
-  
-        <?php foreach($uses as $item) : // Go through each un answered question??>
-
-          <tr class="odd">
-
-              <td>   
-                  <b><?php echo $item['name'];?></b>
-                
-              </td> 
-              <td>
-                  <a href="/usecase/update/id/<?php echo $item['id'];?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
-              </td>
-         
-        <?php endforeach ?>       
-    </tbody>
-  </table>
-
-  <?php endif; // end count of results
-  
-  $this->endWidget();
-  ?>
-      </div>
+    
       
       <div class="row"> 
   
@@ -197,6 +199,7 @@ if($last_flow != $line['flow']) {
                 $uc[$flow][$step]['step'] = $line['number'];
                 $uc[$flow][$step]['position'] = $line['number']+$line['start'];
                 $uc[$flow][$step]['text']= $line['text'];
+                $uc[$flow][$step]['result']= $line['result'];
                 $uc[$flow][$step]['id']= $line['id'];
                  $steps_total=$steps_total+1;
                 $uc[$flow]['total']=$uc[$flow]['total']+1;
@@ -211,7 +214,7 @@ if($last_flow != $line['flow']) {
 
  $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
 	'title' => 'Steps',
-	'headerIcon' => 'icon-user',
+	'headerIcon' => 'icon-list-ol',
 	'htmlOptions' => array('class'=>'bootstrap-widget-table'),
           ));  
  ?>
@@ -230,32 +233,35 @@ if($last_flow != $line['flow']) {
      
         <?php if($uc[$w]['main']==0) { ?>
         
-        <td> <b>Alternate Flow <?php echo $uc[$w]['flow'];?></b> </td>
+        <td> <b>Alternate Flow <?php echo $uc[$w]['flow'];?></b> 
+        <a href="/step/update/id/-1/flow/<?php echo $uc[$w]['id'];?>"><i class="icon-edit" rel="tooltip" title="Edit Flow Steps"></i></a>
+        </td>
        <td colspan="3"> Start at Main Flow step <?php echo $uc[$w]['start'] ;?> and finish at step <?php echo $uc[$w]['rejoin'] ;?></td>
 
  <?php } ELSE {?>
-       <td> <b>Main Flow</b> </td>
+       <td colspan="3"> 
+           <b>Main Flow</b> 
+            <a href="/step/update/id/-1/flow/<?php echo $uc[$w]['id'];?>"><i class="icon-edit" rel="tooltip" title="Edit Flow Steps"></i></a>
+       
+       </td>
        
         <?php } ?>
           </tr>
-    <?php
-       $x=1; 
-        $number_ucs=count($uc[$w])-6;
-       
-        while($x <= $number_ucs)
-          {
-    ?>
+            <?php $x=1; 
+            $number_ucs=count($uc[$w])-6;
+            while($x <= $number_ucs) { ?>
         <tr>
             <td></td>
-            <td> <b>step <?php echo $uc[$w][$x]['step'];?></b> </td>
-        <td>    <?php  echo $uc[$w][$x]['text'];?>
-        </td> 
-        <td>
+            <td> <b>step&nbsp;<?php echo $uc[$w][$x]['step'];?></b> </td>
+          
+            <td>    <?php  echo $uc[$w][$x]['text'];?> </td> 
+            <td>    <?php  echo $uc[$w][$x]['result'];?> </td> 
+        <td>  
              <?php if($uc[$w]['main']==1) { ?>
-              <a href="/step/update/id/<?php echo $uc[$w][$x]['id'];?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
+             
               <a href="/flow/create/start/<?php echo $uc[$w][$x]['id'];?>/id/<?php echo $model->id;?>"><i class="icon-random" rel="tooltip" title="Start Alternate Flow Here"></i></a> 
               <?php } ELSE {?>
-             <a href="/step/update/id/<?php echo $uc[$w][$x]['id'];?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
+             
               
                <?php } ?>
         </td>
@@ -263,7 +269,7 @@ if($last_flow != $line['flow']) {
            <?php           
           $x++;
           } ?>
-         <tr><td colspan="4">   <a href="/step/create/id/<?php echo $uc[$w]['id'];?>"><i class="icon-plus-sign-alt" rel="tooltip" title="Add another step"></i></a> 
+         <tr><td colspan="5">   <a href="/step/create/id/<?php echo $uc[$w]['id'];?>"><i class="icon-plus-sign-alt" rel="tooltip" title="Add another step"></i></a> 
            </td></tr>
     <?php           
     $w++;
@@ -284,18 +290,10 @@ $rules = Rule::model()->getRules($model->id); // get the requirements with answe
 
 $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
 	'title' => 'Business Rules',
-	'headerIcon' => 'icon-user',
+	'headerIcon' => 'icon-cogs',
 	'htmlOptions' => array('class'=>'bootstrap-widget-table'),
-           'headerButtons' => array(
-                array(
-                    'class' => 'bootstrap.widgets.TbButton',
-                    'type' => 'primary', // '', 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
-                    'label'=> 'Add +',
-                    'url'=>'/rule/create/id/'.$model->id,
-                    
-                      ),
-     
-)));  
+       
+               ));  
   if (count($rules)):?>
 
   <table class="table">
@@ -312,12 +310,13 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
 
           <tr class="odd">
 
-              <td>   <?php echo $item['number'];?> 
-                  <b><?php echo $item['text'];?></b>
-                
-              </td> 
+              <td>   BR-<?php echo str_pad($item['number'], 4, "0", STR_PAD_LEFT); ?> 
+                  <b><?php echo $item['title'];?></b>
+                <?php if ($item['text']=='stub')echo '<i class="icon-exclamation-sign text-warning" rel="tooltip" title="Incomplete Rule"></i>';?>
+              </td>
               <td>
-                  <a href="/usecase/update/id/<?php echo $item['id'];?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
+                  <a href="/rule/delete/id/<?php echo $item['id'];?>"><i class="icon-remove-sign text-error" rel="tooltip" title="Delete"></i></a> 
+                  <a href="/rule/update/id/<?php echo $item['id'];?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
               </td>
          
         <?php endforeach ?>       
@@ -339,16 +338,10 @@ $interfaces = Iface::model()->getIfaces($model->id); // get the requirements wit
 
 $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
 	'title' => 'Interfaces',
-	'headerIcon' => 'icon-user',
+	'headerIcon' => 'icon-picture',
 	'htmlOptions' => array('class'=>'bootstrap-widget-table'),
            'headerButtons' => array(
-                array(
-                    'class' => 'bootstrap.widgets.TbButton',
-                    'type' => 'primary', // '', 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
-                    'label'=> 'Add +',
-                    'url'=>'/iface/create/uc/'.$model->id.'/id/'.$model->package->project->id,
-                    
-                      ),
+              
      
 )));  
   if (count($interfaces)):?>
@@ -368,11 +361,12 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
           <tr class="odd">
 
               <td>   
-                  <b><a href="/iface/view/id/<?php echo $item['id'];?>"><?php echo $item['name'];?></a></b>
+                  <?php echo $item['type'].' UI-'.str_pad($item['typenum'], 2, "0", STR_PAD_LEFT).'-'.str_pad($item['number'], 3, "0", STR_PAD_LEFT);?> <b><a href="/iface/view/id/<?php echo $item['id'];?>"><?php echo $item['name'];?></a></b>
                 
               </td> 
               <td>
-                  <a href="/usecase/update/id/<?php echo $item['id'];?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
+                  <a href="/iface/delete/id/<?php echo $item['id'];?>/ucid/<?php echo $model->id;?>"><i class="icon-remove-sign text-error" rel="tooltip" title="Delete"></i></a> 
+                  <a href="/iface/update/id/<?php echo $item['id'];?>/ucid/<?php echo $model->id;?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
               </td>
          
         <?php endforeach ?>       
@@ -383,13 +377,55 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
   
   $this->endWidget();
   ?>
-        
-           </div>
-        
-	<div class="row buttons">
-		<?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>
-	</div>
+     
+       <?php 
+$forms = Form::model()->getForms($model->id); // get the requirements with answers
 
+
+
+$box = $this->beginWidget('bootstrap.widgets.TbBox', array(
+	'title' => 'Forms',
+	'headerIcon' => 'icon-list-alt',
+	'htmlOptions' => array('class'=>'bootstrap-widget-table'),
+           'headerButtons' => array(
+              
+     
+)));  
+  if (count($interfaces)):?>
+
+  <table class="table">
+  	<thead>
+    	<tr>
+          <th>Name</th>
+
+          <th>Actions</th>
+    	</tr>
+  	</thead>
+      <tbody>
+  
+        <?php foreach($forms as $item) : // Go through each un answered question??>
+
+          <tr class="odd">
+
+              <td>   
+                  <?php echo 'UF-'.str_pad($item['number'], 3, "0", STR_PAD_LEFT);?> <b><a href="/form/view/id/<?php echo $item['id'];?>"><?php echo $item['name'];?></a></b>
+                
+              </td> 
+              <td>
+                  <a href="/form/delete/id/<?php echo $item['id'];?>/ucid/<?php echo $model->id;?>"><i class="icon-remove-sign text-error" rel="tooltip" title="Delete"></i></a> 
+                  <a href="/form/update/id/<?php echo $item['id'];?>/ucid/<?php echo $model->id;?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
+              </td>
+         
+        <?php endforeach ?>       
+    </tbody>
+  </table>
+
+  <?php endif; // end count of results
+  
+  $this->endWidget();
+  ?>    
+           </div>
+      
 
 
 </div><!-- form -->

@@ -134,59 +134,8 @@ else:
 echo 'No bids';
 endif;
 
-?>
 
 
-<h3>Costs</h3>
-<?php 
 
-$data = Cost::model()->findAll('supplier_id='.$model->id.' and company_id='.$model->companyowner_id);
-if (count($data)):
 
-    $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
-        'title' => 'Employees',
-        'headerIcon' => 'icon-briefcase',
-        // when displaying a table, if we include bootstra-widget-table class
-        // the table will be 0-padding to the box
-        'htmlOptions' => array('class'=>'bootstrap-widget-table')
-    ));
-
-?>
-
-<table class="table">
-    <thead>
-        <tr>
-            <th>ID</th>   
-            <th>Description</th>
-            <th>Amount</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    
-    <tbody>
-
-        <?php foreach($data as $item):?>
-        <tr class="odd"> 
-            <td>
-                <?php echo $item['identifier'];?>
-            </td>    
-            <td>   
-                <?php echo $item['description'];?>
-            </td>
-            <td>   
-               <?php echo $item['amount'];?>
-            </td>          
-            <td>
-                <a href="/document/delete?id=<?php echo $item['id'];?>"><i class="icon-remove-sign" rel="tooltip" title="Delete"></i></a> 
-            </td>
-        </tr>
-       <?php endforeach; ?>
-    </tbody>
-</table>
-
-<?php
-$this->endWidget();
-else:
-echo 'No costs';
-endif;
 ?>

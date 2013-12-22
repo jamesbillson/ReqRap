@@ -16,7 +16,7 @@
 )); ?>
 
 	<p class="note">Fields with <span class="required">*</span> are required.</p>
-        <?php echo $form->hiddenField($model,'package_id',array('value'=>$id)); ?>
+        <?php echo $form->hiddenField($model,'package_id',array('value'=>$package_id)); ?>
 	<?php echo $form->errorSummary($model); ?>
 
 	<div class="row">
@@ -25,9 +25,9 @@
 		<?php echo $form->error($model,'name'); ?>
         </div>
 	<div class="row">
-		UC-package.No-
-		<?php echo $form->textField($model,'number',array('size'=>60,'maxlength'=>255)); ?>
-		<?php echo $form->error($model,'number'); ?>
+		UC-<?php echo $packnum; ?>-<?php echo $number; ?>
+		<?php echo $form->hiddenField($model,'number',array('value'=>$number)); ?>
+		
         </div>
         <div class="row">  
           <?php echo $form->labelEx($model,'description'); ?>

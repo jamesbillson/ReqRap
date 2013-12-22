@@ -139,7 +139,7 @@ if (!empty(Yii::app()->user->id) || !empty(Yii::app()->user->company_id)){
             
             <br />
             
-		Copyright &copy; <?php echo date('Y'); ?> by Naild Construction Systems.<br/>
+		Copyright &copy; <?php echo date('Y'); ?> by Billson Fisher Consulting P/L.<br/>
 		All Rights Reserved.<br/>
             </font>
 	</div><!-- footer -->

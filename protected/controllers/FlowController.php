@@ -32,7 +32,7 @@ class FlowController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update'),
+				'actions'=>array('create','update','updateendpoints'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -76,14 +76,40 @@ class FlowController extends Controller
                         $step->flow_id=$flow->getPrimaryKey();
                         $step->number=1;
                         $step->text='New step.';
+                         $step->result='Result';
                         $step->save();
                         $id=$step->getPrimaryKey();
-              $this->redirect(array('/step/update/id/'.$id));
+              $this->redirect(array('/step/update/flow/'.$step->flow_id.'/id/'.$id));
 		
 
-		
 	}
 
+        	public function renumberFlows($id)
+       {
+               
+               $data = Flow::model()->findAll(array('order'=>'id ASC', 'condition'=>'usecase_id=:x and main=0', 'params'=>array(':x'=>$id)));
+               $label=chr(ord('A')-1);
+                       //
+               foreach($data as $line) {
+                   $label= chr(ord($label)+1);
+                   $line->name = $label;
+                   $line->save(false);
+               }
+	}
+        
+          public function actionUpdateEndpoints($flow,$id,$end)
+	{
+		$model=$this->loadModel($flow);
+               if($end==1)
+                $model->startstep_id=$id;
+               if($end==2)
+               $model->rejoinstep_id= $id;
+                 $model->save();
+                
+		
+		$this->redirect(array('/step/update/flow/'.$model->id.'/id/-1'));
+		
+	}
 	/**
 	 * Updates a particular model.
 	 * If update is successful, the browser will be redirected to the 'view' page.

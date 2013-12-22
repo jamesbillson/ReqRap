@@ -15,7 +15,7 @@ class RuleController extends Controller
 	{
 		return array(
 			'accessControl', // perform access control for CRUD operations
-			'postOnly + delete', // we only allow deletion via POST request
+			//'postOnly + delete', // we only allow deletion via POST request
 		);
 	}
 
@@ -32,11 +32,11 @@ class RuleController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update'),
+				'actions'=>array('create','update','delete'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete'),
+				'actions'=>array('admin'),
 				'users'=>array('admin'),
 			),
 			array('deny',  // deny all users
@@ -65,7 +65,7 @@ class RuleController extends Controller
 		$usecase=Usecase::model()->find('id='.$id);
                 $project=$usecase->package->project->id;
                 $model=new Rule;
-                $ruleusecase = new Ruleusecase;
+                
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
@@ -73,19 +73,9 @@ class RuleController extends Controller
 		if(isset($_POST['Rule']))
 		{
 			$model->attributes=$_POST['Rule'];
-			if($model->save())
-                            
-                         
-                  if(isset($_POST['Usecase_id']))
-		{
-			$ruleusecase->rule_id=$model->primaryKey;
-                        $ruleusecase->usecase_id=$_POST['Usecase_id'];
-			if($ruleusecase->save());
-				$this->redirect(array('/usecase/view/id/'.$ruleusecase->usecase_id));
-		}            
-                            
-                            
-		}
+			$model->save();
+                          
+                }
                 
               
 
@@ -105,16 +95,17 @@ class RuleController extends Controller
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
-
+                $project=$model->project_id;
+            
 		if(isset($_POST['Rule']))
 		{
 			$model->attributes=$_POST['Rule'];
 			if($model->save())
-				$this->redirect(array('view','id'=>$model->id));
+				$this->redirect(array('/project/view/tab/rules/id/'.$project));
 		}
 
 		$this->render('update',array(
-			'model'=>$model,
+			'model'=>$model,'project'=>$project
 		));
 	}
 
@@ -125,11 +116,12 @@ class RuleController extends Controller
 	 */
 	public function actionDelete($id)
 	{
-		$this->loadModel($id)->delete();
+		$model=$this->loadModel($id);
+                $id=$model->project->id;
+                $model->delete();
 
-		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
-		if(!isset($_GET['ajax']))
-			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
+		
+			$this->redirect(array('/project/view/tab/rules/id/'.$id));
 	}
 
 	/**

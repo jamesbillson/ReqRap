@@ -15,7 +15,7 @@ class StepController extends Controller
 	{
 		return array(
 			'accessControl', // perform access control for CRUD operations
-			'postOnly + delete', // we only allow deletion via POST request
+			//'postOnly + delete', // we only allow deletion via POST request
 		);
 	}
 
@@ -32,7 +32,7 @@ class StepController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update'),
+				'actions'=>array('create','update','delete','insert'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -70,34 +70,65 @@ class StepController extends Controller
                 $model->number=$number;
                 $model->flow_id= $id;
                 $model->text = 'New step';
+                $model->result = 'Result';
                 $model->save();
                 
 		
-		$this->redirect(array('/step/update/id/'.$model->id));
+		$this->redirect(array('/step/update/flow/'.$model->flow_id.'/id/'.$model->id));
 		
 	}
 
+      	public function actionInsert($id)
+	{
+            $step=$this->loadModel($id);
+            $number=$step->number;
+            $flow=$step->flow_id;
+            // need to add 1 to all the later steps.
+            //UPDATE step SET number = number+1 where number>$Number
+            Step::model()->insertNumber($number,$flow);
+            
+            $model=new Step;
+               
+                $model->number=$number;
+                $model->flow_id= $flow;
+                $model->text = 'New step';
+                $model->result = 'Result';
+                $model->save();
+                
+		Step::model()->reNumber($flow);
+		$this->redirect(array('/step/update/flow/'.$model->flow_id.'/id/-1'));
+		
+	}
+        
+        
 	/**
 	 * Updates a particular model.
 	 * If update is successful, the browser will be redirected to the 'view' page.
 	 * @param integer $id the ID of the model to be updated
 	 */
-	public function actionUpdate($id)
+	public function actionUpdate($flow,$id)
 	{
-		$model=$this->loadModel($id);
+	if($id!=-1){
+            $step=$this->loadModel($id);
+            $model=Flow::model()->findbyPK($step->flow->id);
+        }
+        if($id==-1){
+              $model=Flow::model()->findbyPK($flow);
+              $step=array();
+              }
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
                
 		if(isset($_POST['Step']))
 		{
-			$model->attributes=$_POST['Step'];
-			if($model->save())
-				$this->redirect(array('/usecase/view/id/'.$model->flow->usecase->id));
+			$step->attributes=$_POST['Step'];
+			if($step->save())
+				$this->redirect(array('/step/update/flow/'.$model->id.'/id/-1'));
 		}
 
 		$this->render('update',array(
-			'model'=>$model,'id'=>$id
+			'model'=>$model,'step'=>$step,'id'=>$id
 		));
 	}
 
@@ -108,11 +139,22 @@ class StepController extends Controller
 	 */
 	public function actionDelete($id)
 	{
-		$this->loadModel($id)->delete();
+		
+            $model=$this->loadModel($id);
+                $id=$model->flow->usecase_id;
+                $flow=$model->flow->id;
+                $flowmodel=Flow::model()->findbyPK($flow);
+                $model->delete();
 
-		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
-		if(!isset($_GET['ajax']))
-			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
+                //IF THIS IS THE LAST STEP, THEN DELETE THE FLOW, AND RENUMBER
+             $steps= Flow::model()->checkSteps($flow);
+             if ($steps==0){
+                 $flowmodel->delete();
+                 FlowController::renumberFlows($id);
+             }
+                  Step::model()->reNumber($flow);
+		$this->redirect(array('/step/update/flow/'.$flow.'/id/-1'));
+		
 	}
 
 	/**

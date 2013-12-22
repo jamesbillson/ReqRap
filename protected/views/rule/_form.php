@@ -15,16 +15,20 @@
 )); ?>
 
 	<p class="note">Fields with <span class="required">*</span> are required.</p>
-<?php echo $form->hiddenField($model,'project_id',array('value'=>$project)); ?>
+        <?php echo $form->hiddenField($model,'project_id',array('value'=>$project)); ?>
 	<?php echo $form->errorSummary($model); ?>
 
-        <input type="hidden" name="Usecase_id" value="<?php echo $id; ?>">
+
 	<div class="row">
 		<?php echo $form->labelEx($model,'number'); ?>
 		<?php echo $form->textField($model,'number',array('size'=>4,'maxlength'=>4)); ?>
 		<?php echo $form->error($model,'number'); ?>
 	</div>
-
+	<div class="row">
+		<?php echo $form->labelEx($model,'title'); ?>
+		<?php echo $form->textField($model,'title',array('size'=>60, 'maxlength'=>255)); ?>
+		<?php echo $form->error($model,'title'); ?>
+	</div>
 	<div class="row">
 		<?php echo $form->labelEx($model,'text'); ?>
 		<?php echo $form->textArea($model,'text',array('rows'=>6, 'cols'=>50)); ?>

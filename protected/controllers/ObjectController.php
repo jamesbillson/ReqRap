@@ -15,7 +15,7 @@ class ObjectController extends Controller
 	{
 		return array(
 			'accessControl', // perform access control for CRUD operations
-			'postOnly + delete', // we only allow deletion via POST request
+			//'postOnly + delete', // we only allow deletion via POST request
 		);
 	}
 
@@ -32,7 +32,7 @@ class ObjectController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update'),
+				'actions'=>array('create','update','delete'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -87,6 +87,7 @@ class ObjectController extends Controller
 	public function actionUpdate($id)
 	{
 		$model=$this->loadModel($id);
+                $id=$model->project->id;
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
@@ -99,7 +100,7 @@ class ObjectController extends Controller
 		}
 
 		$this->render('update',array(
-			'model'=>$model,
+			'model'=>$model,'id'=>$id
 		));
 	}
 
@@ -110,11 +111,11 @@ class ObjectController extends Controller
 	 */
 	public function actionDelete($id)
 	{
-		$this->loadModel($id)->delete();
+		$model=$this->loadModel($id);
+                $id=$model->project->id;
+                $model->delete();
 
-		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
-		if(!isset($_GET['ajax']))
-			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
+		$this->redirect(array('/project/view/tab/objects/id/'.$id));
 	}
 
 	/**

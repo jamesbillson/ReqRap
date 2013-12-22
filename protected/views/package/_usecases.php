@@ -36,10 +36,12 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
           <tr class="odd">
 
               <td>   
-                  <b><?php echo $item['name'];?></b>
+                  <b><a href="/usecase/view/id/<?php echo $item['id'];?>"><?php echo $item['name'];?></a></b>
                 
               </td> 
               <td>
+               <a href="/usecase/delete/id/<?php echo $item['id'];?>"><i class="icon-remove-sign text-error" rel="tooltip" title="Edit"></i></a> 
+              
                   <a href="/usecase/update/id/<?php echo $item['id'];?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
               </td>
          

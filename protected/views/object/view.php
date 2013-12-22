@@ -1,5 +1,5 @@
 
-<h1>Project: <?php echo $model->project->name; ?></h1>
+<h3>Project: <a href="/project/view/tab/objects/id/<?php echo $model->project->id; ?>"><?php echo $model->project->name; ?></a></h3>
 
 
  
@@ -41,6 +41,9 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
             <tbody>
             <?php foreach($data as $item):?>
                 <tr class="odd">  
+                    <td>   
+                        <?php echo $item['number'];?>
+                    </td>
                     <td>   
                         <?php echo $item['name'];?>
                     </td>

@@ -41,7 +41,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                 
                 <tr class="odd">  
                     <td>   
-                        <?php echo $item['sequence'];?>
+                        PA-<?php echo $item['sequence'];?>
                     </td>
  <td>   
                         <?php echo $item['name'];?>

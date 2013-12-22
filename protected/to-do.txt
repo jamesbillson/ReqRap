@@ -1,28 +1,27 @@
-follower/addfollower/
-needs to be customised depending on the type of project.
-options in dropdowns don't make sense in terms of tendering 
+### ACTOR
+Actor should have a 'Test Case' pre-conditions (e.g. log in as user)
 
-Create a project button on home page still shows if there are tenders and follows
-Button only meant to show if they have no projects of any kind.
+### USECASE
+Put 'This use case describes the process of:' in the system, 
+then we can take the same thing and say 'this test case verifies the process of:'
 
-project/view/tab/tenderers as owner of tender
-should be able to complete tender on behalf of tenderer - in case they submit hardcopy.
+## Status
+## COMMENTS / TO DO's.
 
-Tendering Process:
+### Copy: 
+UC's
+Objects
+Forms
 
-Time Limit for submission.
-Reminders to tenderers
-Overall Tender Status
+from one job to the next.
 
-Tenderer submits all questions, and then additional question is created
- - notify tenderer of additional requirement.
+### Library items.
 
 
-Project Details:
-Address
-Project Manager
-Contact Details
+### Versions
 
+relationships are tricky.
+either log, or make multiple copies.
 
 
 

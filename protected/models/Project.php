@@ -11,8 +11,8 @@
 class Project extends CActiveRecord
 {
 	public static $buildstage = array(1=>'bidding', 4=>'tendering', 2=>'construction', 3=>'finished');	
-        public static $buildstagecreatebuilder = array(1=>'I am bidding to win this project',
-                                                2=>'I am constructing this project');
+        public static $projectstage = array(1=>'Analysis',
+                                                2=>'Testing');
  public static $buildstagecreatepm = array(4=>'This is a project I am tendering',
                                                 2=>'This is a project I am managing');
         

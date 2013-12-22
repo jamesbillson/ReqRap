@@ -20,8 +20,14 @@
 	<?php echo $form->errorSummary($model); ?>
 
 
-		<?php echo $form->hiddenField($model,'object_id',array('value'=>$id)); ?>
+	<?php echo $form->hiddenField($model,'object_id',array('value'=>$object_id)); ?>
+		<div class="row">
+		<?php
+                $number=  Objectproperty::model()->getNextNumber($object_id);
+		 echo $form->hiddenField($model,'number',array('value'=>$number)); ?>
+           Number: <?php echo $number; ?>. 
 		
+	</div>
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'name'); ?>
