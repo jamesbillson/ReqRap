@@ -58,19 +58,75 @@ class TestcaseController extends Controller
 
         public function actionRun($id)
 	{
+              $newresult=new Testresult;
+            if(isset($_POST['Testresult']))
+		{
+			$newresult->attributes=$_POST['Testresult'];
+                        $newresult->user_id = Yii::app()->user->id;
+                       
+                        
+			$newresult->save();
+                        
+		}
+            
 	// GET THE CURRENT TEST RUN.
-        $testrun=Testrun::model()->findAll('number project_id=')
+        $testcase=$this->loadModel($id);
+        $project_id=$testcase->project_id;
+        $teststeps=  Teststep::model()->findAll('testcase_id='.$id);
+        
+        $testrun=Testrun::model()->find(array('order'=>'number DESC', 'limit'=>1,
+            'condition'=>'project_id=:x', 'params'=>array(':x'=>$project_id)));
+   
+        $rendered=0; // flag for which step is to have a form
+        $complete=0; // flag to say the test case is finished.
+        $pass=0; // flag to say the test case is PASSing
+        $block=0; // flag to say the test case is BLOCKED.
+
+        // go through the test steps and see which have answers from the current test run.
+        foreach ($teststeps as $teststep) {
+            $testresult=  Testresult::model()->find(array('order'=>'date ASC',
+                                        'condition'=>'testrun_id=:x AND teststep_id=:y',
+                                        'params'=>array(':x'=>$testrun->id,':y'=>$teststep->id)));
+           
+            if ($testresult['result']==3) {
+                $complete=1;// THe test case is BLOCKED
+            $block=1;
+                
+            }
+             if ($testresult['result']!=1) {
+                // THe test step is FAILED
+                $pass=0;
+            } ELSE {
+                $pass=1;
+            }
+             if (!empty($testresult['id']) ){
+            $laststep=$teststep->id;
+                       
+            
+	     } 
+            if (empty($testresult['id']) && $rendered==0){
+            $rendered=$teststep->id;
+                       
+            
+	     } } 
+
+// IF WE get to the end, and they are all filled out, then the test case is done
+                if($teststep->id == $rendered) $complete=1;
+                //IF WE get a BLOCK then the test case is done.
+                
+                
         // LOAD the form with a new Testresult model.
-         
-            
-            
-            
-            $this->render('run',array(
-			'model'=>$this->loadModel($id),
+         $this->render('run',array(
+			'model'=>$testcase,
+                        'teststep_id'=>$rendered,
+                        'laststep'=>$laststep,
+                        'newresult'=>$newresult,
+                        'complete'=>$complete,
+                        'block'=>$block,
+                        'pass'=>$pass,
+                        'testrun'=>$testrun->id
 		));
-	}
-        
-        
+        } 
         
 	/**
 	 * Creates a new model.

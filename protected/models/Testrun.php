@@ -26,7 +26,7 @@ class Testrun extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('teststep_id, status', 'required'),
+			array('teststep_id, number, status', 'required'),
 			array('teststep_id, status', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
@@ -54,6 +54,7 @@ class Testrun extends CActiveRecord
 			'id' => 'ID',
 			'teststep_id' => 'Teststep',
 			'status' => 'Status',
+                    'number'=>'Number'
 		);
 	}
 

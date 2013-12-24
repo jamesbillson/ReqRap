@@ -1,27 +1,24 @@
 <?php
 
 /**
- * This is the model class for table "testresult".
+ * This is the model class for table "testcaseresult".
  *
- * The followings are the available columns in table 'testresult':
+ * The followings are the available columns in table 'testcaseresult':
  * @property integer $id
- * @property integer $teststep_id
+ * @property integer $testcase_id
+ * @property integer $testrun_id
+ * @property integer $status
+ * @property string $modified_date
  * @property integer $user_id
- * @property string $date
- * @property integer $result
- * @property string $comments
  */
-class Testresult extends CActiveRecord
+class Testcaseresult extends CActiveRecord
 {
-    
-    	public static $testresult = array(1=>'Fail', 2=>'Pass',3=>'Block', 4=>'Not Tested');	
- 
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'testresult';
+		return 'testcaseresult';
 	}
 
 	/**
@@ -32,11 +29,11 @@ class Testresult extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('teststep_id, testrun_id,comments, result', 'required'),
-			array('teststep_id, user_id, result', 'numerical', 'integerOnly'=>true),
+			array('testcase_id, testrun_id, status, modified_date, user_id', 'required'),
+			array('testcase_id, testrun_id, status, user_id', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, teststep_id, user_id, date, result, comments', 'safe', 'on'=>'search'),
+			array('id, testcase_id, testrun_id, status, modified_date, user_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -48,7 +45,6 @@ class Testresult extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-                  'testrun' => array(self::BELONGS_TO, 'Testrun', 'testrun_id'),
 		);
 	}
 
@@ -59,12 +55,11 @@ class Testresult extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-		'testrun_id' => 'Test Run',	
-                    'teststep_id' => 'Teststep',
+			'testcase_id' => 'Testcase',
+			'testrun_id' => 'Testrun',
+			'status' => 'Status',
+			'modified_date' => 'Modified Date',
 			'user_id' => 'User',
-			'date' => 'Date',
-			'result' => 'Result',
-			'comments' => 'Comments',
 		);
 	}
 
@@ -87,11 +82,11 @@ class Testresult extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id);
-		$criteria->compare('teststep_id',$this->teststep_id);
+		$criteria->compare('testcase_id',$this->testcase_id);
+		$criteria->compare('testrun_id',$this->testrun_id);
+		$criteria->compare('status',$this->status);
+		$criteria->compare('modified_date',$this->modified_date,true);
 		$criteria->compare('user_id',$this->user_id);
-		$criteria->compare('date',$this->date,true);
-		$criteria->compare('result',$this->result);
-		$criteria->compare('comments',$this->comments,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -102,7 +97,7 @@ class Testresult extends CActiveRecord
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return Testresult the static model class
+	 * @return Testcaseresult the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{
