@@ -6,7 +6,7 @@
 <div class="row"> 
     <?php 
 $testcases = Testcase::model()->findAll('usecase_id='.$model->id); // get the requirements with answers
-
+$run=Testrun::model()->getCurrentRun($model->package->project->id);
 
 
 $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
@@ -36,11 +36,19 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
       <tbody>
   
         <?php foreach($testcases as $item) : // Go through each un answered question??>
+<?php   
 
+$result=Testcaseresult::model()->find('testrun_id='.$run.' AND testcase_id='.$item['id']);
+
+?>
           <tr class="odd">
 
               <td>   
                   <b><a href="/testcase/view/id/<?php echo $item['id'];?>"><?php echo $item['name'];?></a></b>
+                
+              </td> 
+               <td>   
+                 <?php echo Testcaseresult::$status[$result->status];?>
                 
               </td> 
                 <td>

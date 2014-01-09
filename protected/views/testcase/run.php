@@ -42,7 +42,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
         <?php if ($pass==1) echo 'PASS'; ELSE echo 'FAIL';?>
    <?php if ($block==1) echo ' - Test Case is BLOCKED';?>
         <?php   } ?> 
-    <?php if(!empty($teststep_id)){
+    <?php if(!empty($teststep_id)&& $laststep >0){
         $lasttest=  Testresult::model()->find('teststep_id='.$laststep) ;
      ?>
         <br /><?php echo 'Latest Test Run: '.$lasttest->testrun->number;?> <br />

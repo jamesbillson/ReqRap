@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Dec 22, 2013 at 07:18 PM
+-- Generation Time: Jan 09, 2014 at 05:24 PM
 -- Server version: 5.5.19
 -- PHP Version: 5.3.8
 
@@ -32,6 +32,7 @@ CREATE TABLE IF NOT EXISTS `actor` (
   `name` varchar(255) NOT NULL,
   `description` text NOT NULL,
   `alias` text NOT NULL,
+  `inherits` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `project_id` (`project_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
@@ -40,11 +41,11 @@ CREATE TABLE IF NOT EXISTS `actor` (
 -- Dumping data for table `actor`
 --
 
-INSERT INTO `actor` (`id`, `project_id`, `name`, `description`, `alias`) VALUES
-(1, 47, 'User', 'A public user of the website.', ''),
-(2, 47, 'Member', 'A user who has signed up to the website and has credentials.', ''),
-(3, 47, 'Administrator', '', ''),
-(4, 47, 'PayPal', '', '');
+INSERT INTO `actor` (`id`, `project_id`, `name`, `description`, `alias`, `inherits`) VALUES
+(1, 47, 'User', 'A public user of the website.', '', 0),
+(2, 47, 'Member', 'A user who has signed up to the website and has credentials.', '', 0),
+(3, 47, 'Administrator', '', '', 0),
+(4, 47, 'PayPal', '', '', 0);
 
 -- --------------------------------------------------------
 
@@ -446,7 +447,7 @@ CREATE TABLE IF NOT EXISTS `iface` (
   PRIMARY KEY (`id`),
   KEY `type_id` (`type_id`),
   KEY `project_id` (`project_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=21 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=22 ;
 
 --
 -- Dumping data for table `iface`
@@ -463,7 +464,8 @@ INSERT INTO `iface` (`id`, `number`, `name`, `type_id`, `project_id`) VALUES
 (16, 9, 'Wine Search Result Accordian', 2, 47),
 (18, 0, 'Welcome Page', 1, 47),
 (19, 1, 'Validation Email', 3, 47),
-(20, 10, 'System Admin New Member Notification Email', 3, 47);
+(20, 10, 'System Admin New Member Notification Email', 3, 47),
+(21, 11, 'Form error highlight style', 2, 47);
 
 -- --------------------------------------------------------
 
@@ -535,7 +537,7 @@ CREATE TABLE IF NOT EXISTS `object` (
   `project_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `project_id` (`project_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
 
 --
 -- Dumping data for table `object`
@@ -760,7 +762,7 @@ CREATE TABLE IF NOT EXISTS `step` (
   `result` text NOT NULL,
   PRIMARY KEY (`id`),
   KEY `flow_id` (`flow_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=80 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=71 ;
 
 --
 -- Dumping data for table `step`
@@ -819,7 +821,7 @@ CREATE TABLE IF NOT EXISTS `stepiface` (
   PRIMARY KEY (`id`),
   KEY `iface_id` (`iface_id`),
   KEY `step_id` (`step_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=26 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=27 ;
 
 --
 -- Dumping data for table `stepiface`
@@ -833,7 +835,8 @@ INSERT INTO `stepiface` (`id`, `step_id`, `iface_id`) VALUES
 (19, 63, 13),
 (20, 64, 5),
 (22, 70, 19),
-(25, 56, 12);
+(25, 56, 12),
+(26, 61, 21);
 
 -- --------------------------------------------------------
 
@@ -874,15 +877,42 @@ CREATE TABLE IF NOT EXISTS `testcase` (
   `preparation` text NOT NULL,
   `active` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=59 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=66 ;
 
 --
 -- Dumping data for table `testcase`
 --
 
 INSERT INTO `testcase` (`id`, `usecase_id`, `project_id`, `number`, `name`, `preparation`, `active`) VALUES
-(57, 8, 47, 1, 'Create Membership(main)', 'None', 1),
-(58, 8, 47, 2, 'Create Membership(A)', 'None', 1);
+(64, 8, 47, 1, 'Create Membership(main)', 'None', 1),
+(65, 8, 47, 2, 'Create Membership(A)', 'None', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `testcaseresult`
+--
+
+CREATE TABLE IF NOT EXISTS `testcaseresult` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `testcase_id` int(11) NOT NULL,
+  `testrun_id` int(11) NOT NULL,
+  `status` tinyint(1) NOT NULL,
+  `modified_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `user_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `testcase_id` (`testcase_id`),
+  KEY `testrun_id` (`testrun_id`),
+  KEY `user_id` (`user_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
+
+--
+-- Dumping data for table `testcaseresult`
+--
+
+INSERT INTO `testcaseresult` (`id`, `testcase_id`, `testrun_id`, `status`, `modified_date`, `user_id`) VALUES
+(3, 64, 1, 1, '2013-12-24 05:20:53', 113),
+(4, 65, 1, 1, '2013-12-24 05:20:53', 113);
 
 -- --------------------------------------------------------
 
@@ -898,8 +928,20 @@ CREATE TABLE IF NOT EXISTS `testresult` (
   `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `result` tinyint(1) NOT NULL,
   `comments` text NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+  PRIMARY KEY (`id`),
+  KEY `teststep_id` (`teststep_id`),
+  KEY `testrun_id` (`testrun_id`),
+  KEY `date` (`date`),
+  KEY `user_id` (`user_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=14 ;
+
+--
+-- Dumping data for table `testresult`
+--
+
+INSERT INTO `testresult` (`id`, `testrun_id`, `teststep_id`, `user_id`, `date`, `result`, `comments`) VALUES
+(12, 1, 417, 113, '2013-12-24 05:24:50', 2, 'none'),
+(13, 1, 418, 113, '2013-12-24 05:31:39', 2, 'none');
 
 -- --------------------------------------------------------
 
@@ -909,10 +951,18 @@ CREATE TABLE IF NOT EXISTS `testresult` (
 
 CREATE TABLE IF NOT EXISTS `testrun` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `project_id` int(11) NOT NULL,
   `number` smallint(4) NOT NULL,
   `status` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `testrun`
+--
+
+INSERT INTO `testrun` (`id`, `project_id`, `number`, `status`) VALUES
+(1, 47, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -928,31 +978,31 @@ CREATE TABLE IF NOT EXISTS `teststep` (
   `result` text NOT NULL,
   PRIMARY KEY (`id`),
   KEY `testcase_id` (`testcase_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=369 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=435 ;
 
 --
 -- Dumping data for table `teststep`
 --
 
 INSERT INTO `teststep` (`id`, `testcase_id`, `number`, `action`, `result`) VALUES
-(351, 57, '1', 'Actor selects ''Register'' link.', 'System displays the Register Page.'),
-(352, 57, '2', 'Verify interface', 'UI-0005 Register Page'),
-(353, 57, '3', 'Actor completes Register form and submits.', 'System validates inputs.'),
-(354, 57, '4', 'Test Validation Rules', 'UF-0001 Registration Form - field: First Name'),
-(355, 57, '5', 'Test Validation Rules', 'UF-0001 Registration Form - field: Last Name'),
-(356, 57, '6', 'Test Validation Rules', 'UF-0001 Registration Form - field: Username'),
-(357, 57, '7', 'Test Validation Rules', 'UF-0001 Registration Form - field: email address'),
-(358, 57, '8', 'Verify rule', 'BR-0008 Password Complexity'),
-(359, 57, '9', 'Form is valid', 'System creates membership and displays the Please Validate page.'),
-(360, 57, '10', 'Verify interface', 'UI-0006 Please Validate'),
-(361, 57, '11', 'No action', 'System sends Validation email.'),
-(362, 57, '12', 'Verify interface', 'UI-0001 Validation Email'),
-(363, 58, '1', 'Actor selects ''Register'' link.', 'System displays the Register Page.'),
-(364, 58, '2', 'Actor completes Register form and submits.', 'System validates inputs.'),
-(365, 58, '3', 'Form fails validation', 'Form redisplays with errors highlighted.'),
-(366, 58, '4', 'Actor completes Register form and submits.', 'System validates inputs.'),
-(367, 58, '5', 'Form is valid', 'System creates membership and displays the Please Validate page.'),
-(368, 58, '6', 'No action', 'System sends Validation email.');
+(417, 64, '1', 'Actor selects ''Register'' link.', 'System displays the Register Page.'),
+(418, 64, '2', 'Verify interface', 'UI-0005 Register Page'),
+(419, 64, '3', 'Actor completes Register form and submits.', 'System validates inputs.'),
+(420, 64, '4', 'Test Validation Rules', 'UF-0001 Registration Form - field: First Name'),
+(421, 64, '5', 'Test Validation Rules', 'UF-0001 Registration Form - field: Last Name'),
+(422, 64, '6', 'Test Validation Rules', 'UF-0001 Registration Form - field: Username'),
+(423, 64, '7', 'Test Validation Rules', 'UF-0001 Registration Form - field: email address'),
+(424, 64, '8', 'Verify rule', 'BR-0008 Password Complexity'),
+(425, 64, '9', 'Form is valid', 'System creates membership and displays the Please Validate page.'),
+(426, 64, '10', 'Verify interface', 'UI-0006 Please Validate'),
+(427, 64, '11', 'No action', 'System sends Validation email.'),
+(428, 64, '12', 'Verify interface', 'UI-0001 Validation Email'),
+(429, 65, '1', 'Actor selects ''Register'' link.', 'System displays the Register Page.'),
+(430, 65, '2', 'Actor completes Register form and submits.', 'System validates inputs.'),
+(431, 65, '3', 'Form fails validation', 'Form redisplays with errors highlighted.'),
+(432, 65, '4', 'Actor completes Register form and submits.', 'System validates inputs.'),
+(433, 65, '5', 'Form is valid', 'System creates membership and displays the Please Validate page.'),
+(434, 65, '6', 'No action', 'System sends Validation email.');
 
 -- --------------------------------------------------------
 
@@ -1059,8 +1109,8 @@ ALTER TABLE `actor`
 -- Constraints for table `actorusecase`
 --
 ALTER TABLE `actorusecase`
-  ADD CONSTRAINT `actorusecase_ibfk_3` FOREIGN KEY (`actor_id`) REFERENCES `actor` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `actorusecase_ibfk_2` FOREIGN KEY (`usecase_id`) REFERENCES `usecase` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `actorusecase_ibfk_2` FOREIGN KEY (`usecase_id`) REFERENCES `usecase` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `actorusecase_ibfk_3` FOREIGN KEY (`actor_id`) REFERENCES `actor` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `flow`
@@ -1078,8 +1128,8 @@ ALTER TABLE `formproperty`
 -- Constraints for table `iface`
 --
 ALTER TABLE `iface`
-  ADD CONSTRAINT `iface_ibfk_4` FOREIGN KEY (`type_id`) REFERENCES `interfacetype` (`id`),
-  ADD CONSTRAINT `iface_ibfk_3` FOREIGN KEY (`project_id`) REFERENCES `project` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `iface_ibfk_3` FOREIGN KEY (`project_id`) REFERENCES `project` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `iface_ibfk_4` FOREIGN KEY (`type_id`) REFERENCES `interfacetype` (`id`);
 
 --
 -- Constraints for table `interfacetype`
@@ -1115,8 +1165,8 @@ ALTER TABLE `step`
 -- Constraints for table `stepform`
 --
 ALTER TABLE `stepform`
-  ADD CONSTRAINT `stepform_ibfk_2` FOREIGN KEY (`form_id`) REFERENCES `form` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `stepform_ibfk_1` FOREIGN KEY (`step_id`) REFERENCES `step` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `stepform_ibfk_1` FOREIGN KEY (`step_id`) REFERENCES `step` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `stepform_ibfk_2` FOREIGN KEY (`form_id`) REFERENCES `form` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `stepiface`
@@ -1131,6 +1181,22 @@ ALTER TABLE `stepiface`
 ALTER TABLE `steprule`
   ADD CONSTRAINT `steprule_ibfk_2` FOREIGN KEY (`rule_id`) REFERENCES `rule` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `steprule_ibfk_3` FOREIGN KEY (`step_id`) REFERENCES `step` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `testcaseresult`
+--
+ALTER TABLE `testcaseresult`
+  ADD CONSTRAINT `testcaseresult_ibfk_1` FOREIGN KEY (`testcase_id`) REFERENCES `testcase` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `testcaseresult_ibfk_2` FOREIGN KEY (`testrun_id`) REFERENCES `testrun` (`id`),
+  ADD CONSTRAINT `testcaseresult_ibfk_3` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
+
+--
+-- Constraints for table `testresult`
+--
+ALTER TABLE `testresult`
+  ADD CONSTRAINT `testresult_ibfk_1` FOREIGN KEY (`testrun_id`) REFERENCES `testrun` (`id`),
+  ADD CONSTRAINT `testresult_ibfk_2` FOREIGN KEY (`teststep_id`) REFERENCES `teststep` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `testresult_ibfk_3` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
 
 --
 -- Constraints for table `teststep`

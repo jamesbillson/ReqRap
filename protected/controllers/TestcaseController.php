@@ -58,14 +58,34 @@ class TestcaseController extends Controller
 
         public function actionRun($id)
 	{
-              $newresult=new Testresult;
+            $testcase=$this->loadModel($id);
+            $project_id=$testcase->project_id;
+            $teststeps=  Teststep::model()->findAll('testcase_id='.$id);
+            $laststep= Teststep::model()->getLastStep($id);
+            $testrun=Testrun::model()->getCurrentRun($project_id); 
+            $testcaseresult=Testcaseresult::model()->find('testrun_id='.$testrun.' AND testcase_id='.$id);
+            
+            
+            $newresult=new Testresult;
             if(isset($_POST['Testresult']))
 		{
 			$newresult->attributes=$_POST['Testresult'];
                         $newresult->user_id = Yii::app()->user->id;
                        
-                        
-			$newresult->save();
+                        //TEST RESULT 1=>'Fail', 2=>'Pass',3=>'Block', 4=>'Not Tested'
+                        // TEST CASE RESULT 1=>'new', 2=>'running', 3=>'blocked', 4=>'fail',5=>'pass'
+                        if($newresult->save()){
+                           // if the testcase result is 'new' set it to 'running'
+                            if($testcaseresult->status == 1)$testcaseresult->status =2;
+                                                      
+                            //if its a fail, fail the testcaseresult
+                            if($newresult->result==1)$testcaseresult->status =4;
+                            
+                            //if its a block, block the test case result
+                            if($newresult->result==3)$testcaseresult->status =3;
+                            
+                            $testcaseresult->save();
+                        }
                         
 		}
             
@@ -73,16 +93,16 @@ class TestcaseController extends Controller
         $testcase=$this->loadModel($id);
         $project_id=$testcase->project_id;
         $teststeps=  Teststep::model()->findAll('testcase_id='.$id);
-        
-        $testrun=Testrun::model()->find(array('order'=>'number DESC', 'limit'=>1,
-            'condition'=>'project_id=:x', 'params'=>array(':x'=>$project_id)));
-   
+        $testrun=Testrun::model()->getCurrentRun($project_id);
+       
         $rendered=0; // flag for which step is to have a form
         $complete=0; // flag to say the test case is finished.
         $pass=0; // flag to say the test case is PASSing
         $block=0; // flag to say the test case is BLOCKED.
+        $laststep=0;
 
         // go through the test steps and see which have answers from the current test run.
+        /*
         foreach ($teststeps as $teststep) {
             $testresult=  Testresult::model()->find(array('order'=>'date ASC',
                                         'condition'=>'testrun_id=:x AND teststep_id=:y',
@@ -113,7 +133,7 @@ class TestcaseController extends Controller
 // IF WE get to the end, and they are all filled out, then the test case is done
                 if($teststep->id == $rendered) $complete=1;
                 //IF WE get a BLOCK then the test case is done.
-                
+             */   
                 
         // LOAD the form with a new Testresult model.
          $this->render('run',array(
@@ -247,6 +267,15 @@ if (count($mainflow)){
                     
                     
                 }  
+                
+                $result=new Testcaseresult;
+                $result->testcase_id=$testcase_id;
+                $result->status=1;
+                $result->testrun_id=  Testrun::model()->getCurrentRun($testcase->project_id);
+                $result->modified_date=date('Y-m-d H:i:s');
+                $result->user_id=Yii::app()->user->id;   
+                      $result->save();  
+                        
                 
               } ELSE {
                         // The case hasn't saved 
@@ -388,7 +417,19 @@ foreach($flows as $flow){
                   $teststep->action=$mainflowstep['text'];
                   $teststep->result=$mainflowstep['result'];
                   $teststep->save();
-                         }    
+                         }   
+                         // MAKE THE TEST RESULT ENTRY
+                            $result=new Testcaseresult;
+                $result->testcase_id=$testcase_id;
+                $result->status=1;
+                $result->testrun_id=  Testrun::model()->getCurrentRun($testcase->project_id);
+                $result->modified_date=date('Y-m-d H:i:s');
+                $result->user_id=Yii::app()->user->id;   
+                      $result->save();  
+                        
+                         
+                         
+                         
                     } ELSE {
                 // The case hasn't saved  
                    $this->redirect(array('/site/fail'));

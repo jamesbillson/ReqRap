@@ -44,6 +44,7 @@ class Testcase extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
                'project' => array(self::BELONGS_TO, 'Project', 'project_id'),
+                'testcaseresult'    =>array(self::HAS_ONE, 'Testcaseresult', 'testcase_id'),
 		);
 	}
 

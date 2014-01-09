@@ -84,7 +84,20 @@ class Teststep extends CActiveRecord
 			'criteria'=>$criteria,
 		));
 	}
-
+  public function getLastStep($id)
+    {
+       
+              
+            $sql="SELECT t.id, t.number
+                    From `teststep` `t`
+                    WHERE `t`.`testcase_id`=".$id."
+                ORDER BY number DESC Limit 1        
+                ";
+		$connection=Yii::app()->db;
+		$command = $connection->createCommand($sql);
+		$projects = $command->queryAll();
+		return $projects[0]['number'];
+    }  
 	/**
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!

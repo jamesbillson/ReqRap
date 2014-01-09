@@ -1,21 +1,15 @@
 <?php
 
-/**
- * This is the model class for table "testcaseresult".
- *
- * The followings are the available columns in table 'testcaseresult':
- * @property integer $id
- * @property integer $testcase_id
- * @property integer $testrun_id
- * @property integer $status
- * @property string $modified_date
- * @property integer $user_id
- */
+
 class Testcaseresult extends CActiveRecord
 {
-	/**
-	 * @return string the associated database table name
-	 */
+
+    
+    public static $status = array(1=>'new', 2=>'running', 3=>'blocked', 4=>'fail',5=>'pass');	
+      
+    
+    
+    
 	public function tableName()
 	{
 		return 'testcaseresult';
@@ -45,6 +39,8 @@ class Testcaseresult extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+                    'testcase'=>array(self::BELONGS_TO, 'Testcase', 'testcase_id'),
+                    
 		);
 	}
 

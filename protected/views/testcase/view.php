@@ -16,7 +16,15 @@ if(!empty($model->usecase_id))
 <br>
 <?php 
 $data=  Teststep::model()->findAll('testcase_id='.$model->id);
+$result=Testcaseresult::model()->findbyPK($model->testcaseresult->id);
+$new=false;
+$running=false;
+if($result->status == 1)$new=true;
+if($result->status == 2) $running=true;
+?>
 
+Test Status: <?php echo Testcaseresult::$status[$result->status]; ?>
+<?php
 
 $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
     'title' => 'Test Case: '.$model->name,
@@ -28,11 +36,18 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                 array(
                     'class' => 'bootstrap.widgets.TbButton',
                     'type' => 'primary', // '', 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
-                    'label'=> 'Run this Test Case',
+                    'label'=> 'Start Test Run',
                     'url'=>'/testcase/run/id/'.$model->id,
+                    'visible'=>$new,
                     
                       ),
-     
+ array(
+                    'class' => 'bootstrap.widgets.TbButton',
+                    'type' => 'primary', // '', 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
+                    'label'=> 'Continue Run',
+                    'url'=>'/testcase/run/id/'.$model->id,
+                    'visible'=>$running,
+                      ),     
 )
 ));?>
 <table><tr><td>Test Preparation: <?php echo $model->preparation;?></td></tr></table>

@@ -85,6 +85,24 @@ class Testrun extends CActiveRecord
 		));
 	}
 
+        	public function getCurrentRun($id)
+	{
+		
+		   $sql="SELECT `r`.`number`
+                    From `testrun` `r`
+                    WHERE `r`.`status`=1
+                    AND project_id=".$id;
+		$connection=Yii::app()->db;
+		$command = $connection->createCommand($sql);
+		$projects = $command->queryAll();
+
+		return $projects[0]['number'];
+	}
+
+        
+        
+        
+        
 	/**
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
