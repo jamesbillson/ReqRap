@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Jan 09, 2014 at 05:24 PM
+-- Generation Time: Jan 15, 2014 at 01:14 PM
 -- Server version: 5.5.19
 -- PHP Version: 5.3.8
 
@@ -710,28 +710,31 @@ CREATE TABLE IF NOT EXISTS `projectstatustype` (
 
 CREATE TABLE IF NOT EXISTS `rule` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `rule_id` int(11) NOT NULL,
   `number` smallint(4) NOT NULL,
   `title` varchar(255) NOT NULL,
   `text` text NOT NULL,
   `project_id` int(11) NOT NULL,
+  `version_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `project_id` (`project_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=25 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=26 ;
 
 --
 -- Dumping data for table `rule`
 --
 
-INSERT INTO `rule` (`id`, `number`, `title`, `text`, `project_id`) VALUES
-(10, 2, 'Username ', 'Username is a string of alpha-numeric characters, it is unique to each user.', 47),
-(14, 3, 'Header displays username', 'The page header shows the logged in user name, or if no user is logged in, a ''login'' link.', 47),
-(15, 4, 'email address', 'email address must be a valid email address.', 47),
-(16, 5, 'error highlights on forms', 'Errors are highlighted on the form if it redisplays failing validation.  HIghlight style is defined in design.', 47),
-(17, 6, 'Ajax Search on Typing', 'After typing two characters an Ajax search is made.', 47),
-(18, 7, 'Ajax Site Search Matching', 'Ajax Site Search matches winery and label names and article content with a partial AND match. Matching wines are displayed followed by articles ordered by relevance.', 47),
-(22, 8, 'Password Complexity', 'Password must contain a capital letter, a lower case letter and a number.  Must be 6 characters or more.', 47),
-(23, 9, 'System Admin email address', 'System Admin email address is set as an option in the database and is editable through the admin system.', 47),
-(24, 10, 'User account validation link', 'User account validation link uses a long, unique, non sequential  alpha-numeric string to prevent guessing of link URLs.', 47);
+INSERT INTO `rule` (`id`, `rule_id`, `number`, `title`, `text`, `project_id`, `version_id`) VALUES
+(10, 2, 2, 'Username ', 'Username is a string of alpha-numeric characters, it is unique to each user.', 47, 1),
+(14, 3, 3, 'Header displays username', 'The page header shows the logged in user name, or if no user is logged in, a ''login'' link.', 47, 2),
+(15, 4, 4, 'email address', 'email address must be a valid email address.', 47, 3),
+(16, 5, 5, 'error highlights on forms', 'Errors are highlighted on the form if it redisplays failing validation.  HIghlight style is defined in design.', 47, 4),
+(17, 6, 6, 'Ajax Search on Typing', 'After typing two characters an Ajax search is made.', 47, 5),
+(18, 7, 7, 'Ajax Site Search Matching', 'Ajax Site Search matches winery and label names and article content with a partial AND match. Matching wines are displayed followed by articles ordered by relevance.', 47, 6),
+(22, 8, 8, 'Password Complexity', 'Password must contain a capital letter, a lower case letter and a number.  Must be 6 characters or more.', 47, 7),
+(23, 9, 9, 'System Admin email address', 'System Admin email address is set as an option in the database and is editable through the admin system.', 47, 8),
+(24, 10, 10, 'User account validation link', 'User account validation link uses a long, unique, non sequential  alpha-numeric string to prevent guessing of link URLs.', 47, 9),
+(25, 10, 10, 'Test new version', 'Test new version', 47, 10);
 
 -- --------------------------------------------------------
 
@@ -1090,6 +1093,7 @@ CREATE TABLE IF NOT EXISTS `uses` (
 CREATE TABLE IF NOT EXISTS `version` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `number` decimal(6,3) NOT NULL,
+  `release` varchar(6) NOT NULL,
   `project_id` int(11) NOT NULL,
   `status` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`)
