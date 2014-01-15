@@ -21,9 +21,11 @@
 <?php
 $cname='';
 if (!empty(Yii::app()->user->id) || !empty(Yii::app()->user->company_id)){
-   
-    $cname=Company::model()->findbypk(User::model()->myCompany(Yii::app()->user->id))->name;
-    $img='<img src="/images/furniture/logo.png">';
+   $company=User::model()->myCompany(Yii::app()->user->id);
+   if($company>0){
+    $cname=Company::model()->findbypk($company)->name;
+   }
+   $img='<img src="/images/furniture/logo.png">';
 }ELSE{
     $img='';
 }
