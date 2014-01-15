@@ -29,7 +29,7 @@ class Rule extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('number, title,text, project_id', 'required'),
+			array('rule_id, number, title,text, project_id, version_id', 'required'),
 			array('number', 'length', 'max'=>4),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
@@ -57,10 +57,12 @@ class Rule extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
+                    'rule_id'=>'Rule ID',
 			'number' => 'Number',
                     'title' => 'Title',
 			'text' => 'Text',
                     'project_id'=>'Project',
+                    'version_id'=>'Version',
 		);
 	}
 
@@ -146,6 +148,25 @@ class Rule extends CActiveRecord
                     $projects[0]['number']=$projects[0]['number']+1;
                 }
 		return $projects[0]['number'];
+    }  
+    
+      public function getProjectRules($id)
+    {
+        $sql="
+select *
+from rule r
+inner join(
+    select number, max(id) rev
+    from rule
+    group by number
+)ver on r.number = ver.number and r.id = ver.rev            
+
+            WHERE `r`.`project_id`=".$id;
+		$connection=Yii::app()->db;
+		$command = $connection->createCommand($sql);
+		$projects = $command->queryAll();
+		
+		return $projects;
     }  
 	/**
 	 * Returns the static model of the specified AR class.

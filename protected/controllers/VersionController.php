@@ -1,6 +1,6 @@
 <?php
 
-class RuleController extends Controller
+class VersionController extends Controller
 {
 	/**
 	 * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
@@ -15,7 +15,7 @@ class RuleController extends Controller
 	{
 		return array(
 			'accessControl', // perform access control for CRUD operations
-			//'postOnly + delete', // we only allow deletion via POST request
+			'postOnly + delete', // we only allow deletion via POST request
 		);
 	}
 
@@ -32,11 +32,11 @@ class RuleController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update','delete'),
+				'actions'=>array('create','update'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin'),
+				'actions'=>array('admin','delete'),
 				'users'=>array('admin'),
 			),
 			array('deny',  // deny all users
@@ -60,36 +60,22 @@ class RuleController extends Controller
 	 * Creates a new model.
 	 * If creation is successful, the browser will be redirected to the 'view' page.
 	 */
-	public function actionCreate($type, $id)
+	public function actionCreate()
 	{
-		if ($type==1) {
-                    $usecase=Usecase::model()->find('id='.$id);
-                    $project=$usecase->package->project->id;
-                            } ELSE {
-                    if ($type==0) $project=$id;            
-                            }
-          
-                $model=new Rule;
-                
+		$model=new Version;
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
-		if(isset($_POST['Rule']))
+		if(isset($_POST['Version']))
 		{
-		// get the highest rule_id and increment one.
-                    $version=Version::model()->getNextNumber($project);   
-                    $model->attributes=$_POST['Rule'];
-                    $model->version=$version;
-                    $model->save(); 
-                 
-                        
-                }
-                
-              
+			$model->attributes=$_POST['Version'];
+			if($model->save())
+				$this->redirect(array('view','id'=>$model->id));
+		}
 
 		$this->render('create',array(
-			'model'=>$model,'id'=>$id,'project'=>$project,
+			'model'=>$model,
 		));
 	}
 
@@ -104,17 +90,16 @@ class RuleController extends Controller
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
-                $project=$model->project_id;
-            
-		if(isset($_POST['Rule']))
+
+		if(isset($_POST['Version']))
 		{
-			$model->attributes=$_POST['Rule'];
+			$model->attributes=$_POST['Version'];
 			if($model->save())
-				$this->redirect(array('/project/view/tab/rules/id/'.$project));
+				$this->redirect(array('view','id'=>$model->id));
 		}
 
 		$this->render('update',array(
-			'model'=>$model,'project'=>$project
+			'model'=>$model,
 		));
 	}
 
@@ -125,12 +110,11 @@ class RuleController extends Controller
 	 */
 	public function actionDelete($id)
 	{
-		$model=$this->loadModel($id);
-                $id=$model->project->id;
-                $model->delete();
+		$this->loadModel($id)->delete();
 
-		
-			$this->redirect(array('/project/view/tab/rules/id/'.$id));
+		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
+		if(!isset($_GET['ajax']))
+			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
 	}
 
 	/**
@@ -138,7 +122,7 @@ class RuleController extends Controller
 	 */
 	public function actionIndex()
 	{
-		$dataProvider=new CActiveDataProvider('Rule');
+		$dataProvider=new CActiveDataProvider('Version');
 		$this->render('index',array(
 			'dataProvider'=>$dataProvider,
 		));
@@ -149,10 +133,10 @@ class RuleController extends Controller
 	 */
 	public function actionAdmin()
 	{
-		$model=new Rule('search');
+		$model=new Version('search');
 		$model->unsetAttributes();  // clear any default values
-		if(isset($_GET['Rule']))
-			$model->attributes=$_GET['Rule'];
+		if(isset($_GET['Version']))
+			$model->attributes=$_GET['Version'];
 
 		$this->render('admin',array(
 			'model'=>$model,
@@ -163,12 +147,12 @@ class RuleController extends Controller
 	 * Returns the data model based on the primary key given in the GET variable.
 	 * If the data model is not found, an HTTP exception will be raised.
 	 * @param integer $id the ID of the model to be loaded
-	 * @return Rule the loaded model
+	 * @return Version the loaded model
 	 * @throws CHttpException
 	 */
 	public function loadModel($id)
 	{
-		$model=Rule::model()->findByPk($id);
+		$model=Version::model()->findByPk($id);
 		if($model===null)
 			throw new CHttpException(404,'The requested page does not exist.');
 		return $model;
@@ -176,11 +160,11 @@ class RuleController extends Controller
 
 	/**
 	 * Performs the AJAX validation.
-	 * @param Rule $model the model to be validated
+	 * @param Version $model the model to be validated
 	 */
 	protected function performAjaxValidation($model)
 	{
-		if(isset($_POST['ajax']) && $_POST['ajax']==='rule-form')
+		if(isset($_POST['ajax']) && $_POST['ajax']==='version-form')
 		{
 			echo CActiveForm::validate($model);
 			Yii::app()->end();

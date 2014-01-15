@@ -1,5 +1,10 @@
 <?php 
-$data = Rule::model()->findAll(array('order'=>'number ASC', 'condition'=>'project_id=:x', 'params'=>array(':x'=>$model->id)));
+$data = Rule::model()->getProjectRules($model->id);
+        
+        /*Rule::model()->findAll(array('order'=>'number ASC',
+    'condition'=>'project_id=:x',
+    'params'=>array(':x'=>$model->id)));
+*/
 
 
 $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
