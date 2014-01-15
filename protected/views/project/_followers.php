@@ -15,8 +15,12 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
         'url'=>array('follower/addFollower', 'id'=>$model->id, 'type'=>1)
     )),
 ));
-    $data = Follower::model()->getFollowers($model->id, 1); ?>
+    $data = Follower::model()->getFollowers($model->id, 1); 
+	$status=array('pending','confirmed');
+	
+	?>
     <table class="table">
+	
         <thead>
         <tr>
             <th>Name</th>
