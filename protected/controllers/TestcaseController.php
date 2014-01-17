@@ -144,7 +144,7 @@ class TestcaseController extends Controller
                         'complete'=>$complete,
                         'block'=>$block,
                         'pass'=>$pass,
-                        'testrun'=>$testrun->id
+                        'testrun'=>$testrun
 		));
         } 
         

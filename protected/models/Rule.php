@@ -29,11 +29,11 @@ class Rule extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('rule_id, number, title,text, project_id, version_id', 'required'),
+			array('rule_id, active, number, title,text, project_id, version_id', 'required'),
 			array('number', 'length', 'max'=>4),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, number, title, text', 'safe', 'on'=>'search'),
+			array('id, active, number, title, text', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -60,9 +60,10 @@ class Rule extends CActiveRecord
                     'rule_id'=>'Rule ID',
 			'number' => 'Number',
                     'title' => 'Title',
-			'text' => 'Text',
+			'text' => 'Rule Text',
                     'project_id'=>'Project',
                     'version_id'=>'Version',
+                    'active'=>'Active',
 		);
 	}
 
@@ -150,9 +151,35 @@ class Rule extends CActiveRecord
 		return $projects[0]['number'];
     }  
     
+     public function getNextID($id)
+    {
+       
+              
+        $sql="SELECT max(`r`.`rule_id`)as number
+           From `rule` `r`
+            WHERE `r`.`project_id`=".$id;
+		$connection=Yii::app()->db;
+		$command = $connection->createCommand($sql);
+		$projects = $command->queryAll();
+		   if (!isset($projects[0]['number'])) {
+                    $projects[0]['number']='1';
+                } ELSE {
+                    $projects[0]['number']=$projects[0]['number']+1;
+                }
+		return $projects[0]['number'];
+    }  
+    
       public function getProjectRules($id)
     {
         $sql="
+select *
+from rule r
+WHERE 
+`r`.`active`=1 and            
+`r`.`project_id`=".$id;
+
+        /*
+                 $sql="
 select *
 from rule r
 inner join(
@@ -161,7 +188,67 @@ inner join(
     group by number
 )ver on r.number = ver.number and r.id = ver.rev            
 
-            WHERE `r`.`project_id`=".$id;
+            WHERE 
+`r`.`active`=1 and            
+`r`.`project_id`=".$id;
+         */
+        
+        $connection=Yii::app()->db;
+		$command = $connection->createCommand($sql);
+		$projects = $command->queryAll();
+		
+		return $projects;
+    }  
+    
+    
+             public function rollback($number,$id)
+            {
+    
+              $sql="UPDATE Rule
+                  Set active=0
+                  WHERE
+                  number=".$number;
+                 $connection=Yii::app()->db;
+        $command = $connection->createCommand($sql);
+        $command->execute();
+        
+              $sql="UPDATE Rule
+                  Set active=1
+                  WHERE
+                  id=".$id;
+                 $connection=Yii::app()->db;
+        $command = $connection->createCommand($sql);
+        $command->execute();        
+        
+        
+                 }  
+
+    
+    
+         public function getVersions($id)
+    {
+        $sql="select `r`.`rule_id`,
+                `r`.`id`,
+                `r`.`number`,
+                `r`.`title`,
+                `r`.`text`,
+                `r`.`active`,
+                `v`.`number` as ver_numb,
+                `v`.`release`,
+                `v`.`action`,
+                `v`.`create_date`,
+                `v`.`create_user`,
+                `u`.`firstname`,
+                `u`.`lastname`
+                from `rule` `r`
+                join `version` `v`
+                ON
+                `r`.`version_id`=`v`.`id`
+                join `user` `u`
+                ON
+                `u`.`id`=`v`.`create_user`
+                WHERE 
+                `r`.`rule_id`=".$id;
 		$connection=Yii::app()->db;
 		$command = $connection->createCommand($sql);
 		$projects = $command->queryAll();

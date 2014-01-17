@@ -88,7 +88,7 @@ class Testrun extends CActiveRecord
         	public function getCurrentRun($id)
 	{
 		
-		   $sql="SELECT `r`.`number`
+		   $sql="SELECT `r`.`number`,`r`.`id`
                     From `testrun` `r`
                     WHERE `r`.`status`=1
                     AND project_id=".$id;
@@ -96,7 +96,7 @@ class Testrun extends CActiveRecord
 		$command = $connection->createCommand($sql);
 		$projects = $command->queryAll();
 
-		return $projects[0]['number'];
+		return $projects[0]['id'];
 	}
 
         

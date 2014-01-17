@@ -41,11 +41,18 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
             <?php foreach($data as $item):?>
                 <tr class="odd">  
                     <td>   
+                       
+                        
+                     <a href="/iface/view/id/<?php echo $item['id'];?>">
+                          
                         UI-<?php echo str_pad($item['number'], 3, "0", STR_PAD_LEFT); ?>
+                   </a>
                     </td>
                     <td>   
+                          <?php if(empty($item['file'])){ ?>
                          <i class="icon-picture text-warning" rel="tooltip" title="Incomplete Images"></i>
                         <?php
+                          }
                          if(!count(Stepiface::model()->findAll('iface_id='.$item['id']))){
                         ?>
                         <i class="icon-exclamation-sign text-warning" rel="tooltip" title="Orphan - this Interface is not used."></i>
@@ -57,7 +64,6 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
 
                   
                     <td>
-                        <a href="/iface/view/id/<?php echo $item['id'];?>"><i class="icon-eye-open" rel="tooltip" title="View"></i></a> 
                         <a href="/iface/update/id/<?php echo $item['id'];?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
                         <a href="/iface/delete/ucid/<?php echo $model->id;?>/type/2/id/<?php echo $item['id'];?>"><i class="icon-remove-sign" rel="tooltip" title="Delete"></i></a> 
                     </td>

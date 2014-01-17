@@ -18,7 +18,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
 		'class' => 'bootstrap.widgets.TbButton',
 		'type' => 'primary', // '', 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
 		'label'=> 'Add Rule',
-            'url'=>'/rule/create?id='.$model->id,
+            'url'=>'/rule/create/type/0/id/'.$model->id,
 	),
 	
            
@@ -40,13 +40,15 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
 <?php if (count($data)):?>
         <?php foreach($data as $item) {?>
         <tr class="odd">  
-        <td>   
+    <td> <a href="/rule/view/id/<?php echo $item['id'];?>"> 
         BR-<?php echo str_pad($item['number'], 3, "0", STR_PAD_LEFT); ?> 
-        </td>
+        </a> 
+    </td>
    
-<td>   
-       <a href="/rule/view/id/<?php echo $item['id'];?>"><?php echo $item['title'];?></a>
-        </td>
+    <td>   
+        <?php if ($item['text']=='stub')echo '<i class="icon-exclamation-sign text-warning" rel="tooltip" title="Incomplete Rule"></i>'.$item['title'];?>
+
+    </td>
     
     <td>   
         <?php echo $item['text'];?>

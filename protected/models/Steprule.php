@@ -53,8 +53,8 @@ class Steprule extends CActiveRecord
 	{
 		return array(
 		'id' => 'ID',	
-                    'step_id' => 'Step',
-			'rule_id' => 'Rule',
+                'step_id' => 'Step',
+		'rule_id' => 'Rule',
 		);
 	}
 

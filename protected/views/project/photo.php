@@ -1,5 +1,5 @@
 <?php if(isset($model->id)): ?>
-    <p><strong>More Photos:</strong></p>
+    <p><strong>More Interfaces:</strong></p>
 
     <div class="row-fluid">
         <div class="well span12">
@@ -18,7 +18,7 @@
         </div>
     </div>
     <div class="row-fluid">
-        <label><strong>Upload More Photos:</strong></label>
+        <label><strong>Upload More Interfaces:</strong></label>
         <div class="span11">
             <?php $photo = new Photo;
 

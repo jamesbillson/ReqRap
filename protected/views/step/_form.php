@@ -32,8 +32,7 @@ if (count($steps)):
 		 <?php echo $form->error($step,'text'); ?>
 		 
       
-                 </td>
-                 <td>
+                <br />
                      <b>Result</b>
 		 <?php echo $form->textArea($step,'result',array('rows'=>3, 'cols'=>80)); ?>
 		 <?php echo $form->error($step,'result'); ?>
@@ -123,8 +122,7 @@ if (count($steps)):
           <tr>
               <td> <b>Action:</b><br />
                             <?php echo $item['text'];?>
-                  </td>      
-                    <td>
+                  <br />
                         <b>Result:</b><br /><?php echo $item['result'];?>
                     </td>
                     <td>
@@ -136,7 +134,7 @@ if (count($steps)):
                     <br />
                         <?php
                         foreach($links as $link){?>
-                        UI-<?php echo str_pad($link['number'], 4, "0",STR_PAD_LEFT);?>  <?php echo $link['name'];?> 
+                    <a href="/iface/view/id/<?php echo $link['id'];?>">UI-<?php echo str_pad($link['number'], 4, "0",STR_PAD_LEFT);?></a>  <?php echo $link['name'];?> 
                          <a href="/stepiface/delete/id/<?php echo $link['xid'];?>"><i class="icon-remove-sign"></i></a><br/>
                         <?php }   ?>
                          <br />
@@ -151,7 +149,7 @@ if (count($steps)):
                        <br />
                             <?php
                         foreach($links as $link){?>
-                        BR-<?php echo str_pad($link['number'], 4, "0",STR_PAD_LEFT);?>  <?php echo $link['title'];?> 
+                       <a href="/rule/view/id/<?php echo $link['id'];?>">BR-<?php echo str_pad($link['number'], 4, "0",STR_PAD_LEFT);?></a>  <?php echo $link['title'];?> 
                         <a href="/steprule/delete/id/<?php echo $link['xid'];?>"><i class="icon-remove-sign"></i></a>
                         <br />
                         <?php } ?>
@@ -167,7 +165,7 @@ if (count($steps)):
                         <strong>Forms</strong>
                         <br />
                        <?php  foreach($links as $link){?>
-                        UF-<?php echo str_pad($link['number'], 4, "0",STR_PAD_LEFT);?>  <?php echo $link['name'];?> 
+                        <a href="/form/view/id/<?php echo $link['id'];?>">UF-<?php echo str_pad($link['number'], 4, "0",STR_PAD_LEFT);?> </a> <?php echo $link['name'];?> 
                         <a href="/stepform/delete/id/<?php echo $link['xid'];?>"><i class="icon-remove-sign"></i></a>
                         <br />
                         <?php }?>

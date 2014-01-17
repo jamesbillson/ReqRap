@@ -48,7 +48,7 @@ $result=Testcaseresult::model()->find('testrun_id='.$run.' AND testcase_id='.$it
                 
               </td> 
                <td>   
-                 <?php echo Testcaseresult::$status[$result->status];?>
+                 <?php // echo Testcaseresult::$status[$result->status];?>
                 
               </td> 
                 <td>
@@ -262,8 +262,8 @@ if($last_flow != $line['flow']) {
             <td></td>
             <td> <b>step&nbsp;<?php echo $uc[$w][$x]['step'];?></b> </td>
           
-            <td>    <?php  echo $uc[$w][$x]['text'];?> </td> 
-            <td>    <?php  echo $uc[$w][$x]['result'];?> </td> 
+            <td>    <?php  echo $uc[$w][$x]['text'];?> <br /> 
+               <?php  echo $uc[$w][$x]['result'];?> </td> 
         <td>  
              <?php if($uc[$w]['main']==1) { ?>
              
@@ -305,23 +305,17 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
   if (count($rules)):?>
 
   <table class="table">
-  	<thead>
-    	<tr>
-          <th>Name</th>
 
-          <th>Actions</th>
-    	</tr>
-  	</thead>
       <tbody>
   
         <?php foreach($rules as $item) : // Go through each un answered question??>
 
           <tr class="odd">
 
-              <td>   BR-<?php echo str_pad($item['number'], 4, "0", STR_PAD_LEFT); ?> 
-                  <b><?php echo $item['title'];?></b>
-                <?php if ($item['text']=='stub')echo '<i class="icon-exclamation-sign text-warning" rel="tooltip" title="Incomplete Rule"></i>';?>
-              </td>
+              <td>  <a href="/rule/view/id/<?php echo $item['id'];?>"> BR-<?php echo str_pad($item['number'], 4, "0", STR_PAD_LEFT); ?> </a>
+                 <?php if ($item['text']=='stub')echo '<i class="icon-exclamation-sign text-warning" rel="tooltip" title="Incomplete Rule"></i>';?>
+             <b><?php echo $item['title'];?></b>
+                  </td>
               <td>
                   <a href="/rule/delete/id/<?php echo $item['id'];?>"><i class="icon-remove-sign text-error" rel="tooltip" title="Delete"></i></a> 
                   <a href="/rule/update/id/<?php echo $item['id'];?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
@@ -352,24 +346,32 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
               
      
 )));  
-  if (count($interfaces)):?>
+  if (count($interfaces)):
+      $lastcat='';
+      ?>
 
   <table class="table">
-  	<thead>
-    	<tr>
-          <th>Name</th>
 
-          <th>Actions</th>
-    	</tr>
-  	</thead>
       <tbody>
   
         <?php foreach($interfaces as $item) : // Go through each un answered question??>
-
+             <?php 
+              if($lastcat!=$item['type']){ ?>
+          
           <tr class="odd">
-
+              <td colspan="2">
+            <?php  echo $item['type']; ?>
+              </td>
+          </tr>
+          
+              <?php }
+          $lastcat=$item['type'];
+          ?>
+          
+          <tr>
               <td>   
-                  <?php echo $item['type'].' UI-'.str_pad($item['typenum'], 2, "0", STR_PAD_LEFT).'-'.str_pad($item['number'], 3, "0", STR_PAD_LEFT);?> <b><a href="/iface/view/id/<?php echo $item['id'];?>"><?php echo $item['name'];?></a></b>
+                  <a href="/iface/view/id/<?php echo $item['id'];?>"><?php echo 'UI-'.str_pad($item['typenum'], 2, "0", STR_PAD_LEFT).'-'.str_pad($item['number'], 3, "0", STR_PAD_LEFT);?> </a>
+                  <b><?php echo $item['name'];?></a>
                 
               </td> 
               <td>
@@ -402,13 +404,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
   if (count($interfaces)):?>
 
   <table class="table">
-  	<thead>
-    	<tr>
-          <th>Name</th>
-
-          <th>Actions</th>
-    	</tr>
-  	</thead>
+  
       <tbody>
   
         <?php foreach($forms as $item) : // Go through each un answered question??>
@@ -416,7 +412,8 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
           <tr class="odd">
 
               <td>   
-                  <?php echo 'UF-'.str_pad($item['number'], 3, "0", STR_PAD_LEFT);?> <b><a href="/form/view/id/<?php echo $item['id'];?>"><?php echo $item['name'];?></a></b>
+                  <a href="/form/view/id/<?php echo $item['id'];?>"><?php echo 'UF-'.str_pad($item['number'], 3, "0", STR_PAD_LEFT);?> </a>
+                  <b><?php echo $item['name'];?></b>
                 
               </td> 
               <td>

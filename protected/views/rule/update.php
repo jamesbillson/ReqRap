@@ -16,6 +16,6 @@ $this->menu=array(
 );
 ?>
 
-<h1>Update Rule <?php echo $model->id; ?></h1>
+<h1>Update Rule BR-<?php echo str_pad($model->number, 3, "0", STR_PAD_LEFT); ?></h1>
 
 <?php $this->renderPartial('_form', array('model'=>$model,'project'=>$project)); ?>

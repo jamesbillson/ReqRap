@@ -176,7 +176,7 @@ return array(
     'params'=>array(
         // this is used in contact page
         'adminEmail'=>'info@billson.com',
-        'photo_folder'=>'/uploads/images/diary/',
+        'photo_folder'=>'/uploads/images/',
     ),
     
 );

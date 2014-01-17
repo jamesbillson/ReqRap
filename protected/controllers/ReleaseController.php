@@ -1,6 +1,6 @@
 <?php
 
-class StepruleController extends Controller
+class ReleaseController extends Controller
 {
 	/**
 	 * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
@@ -14,8 +14,8 @@ class StepruleController extends Controller
 	public function filters()
 	{
 		return array(
-		'accessControl', // perform access control for CRUD operations
-			//'postOnly + delete', // we only allow deletion via POST request
+			'accessControl', // perform access control for CRUD operations
+			'postOnly + delete', // we only allow deletion via POST request
 		);
 	}
 
@@ -32,11 +32,11 @@ class StepruleController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update','createinline','delete'),
+				'actions'=>array('create','update'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin'),
+				'actions'=>array('admin','delete'),
 				'users'=>array('admin'),
 			),
 			array('deny',  // deny all users
@@ -56,55 +56,22 @@ class StepruleController extends Controller
 		));
 	}
 
-        public function actionCreateInline()
-	{
-		
-                $model=new Steprule;
-
-		if(isset($_POST['step_id']))
-		{
-                    $model->step_id=$_POST['step_id'];
-                 $step=Step::model()->findbyPK($model->step_id);
-                    
-		 if(!empty($_POST['new_rule'])){
-                     $rule=new Rule;
-                     $version=Version::model()->getNextNumber($step->flow->usecase->package->project->id,1,1);
-                     $rule->version_id=$version;
-                     $rule->number=Rule::model()->getNextNumber($step->flow->usecase->package->project->id);
-                     $rule->rule_id=Rule::model()->getNextID($step->flow->usecase->package->project->id);
-                     $rule->text='stub';
-                     $rule->title=$_POST['new_rule'];
-                     $rule->project_id=$step->flow->usecase->package->project->id;
-                     $rule->active=1;
-                     $rule->save(false);
-                     $model->rule_id=$rule->getprimaryKey();
-                 }	
-             else {
-                     $model->rule_id=$_POST['rule'];
-                 }
-                        
-                        $model->save(false);
-                }
-                        $this->redirect(array('/step/update/id/-1/flow/'.$model->step->flow->id));
-		
-	}
-        
 	/**
 	 * Creates a new model.
 	 * If creation is successful, the browser will be redirected to the 'view' page.
 	 */
 	public function actionCreate()
 	{
-		$model=new Steprule;
+		$model=new Release;
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
-		if(isset($_POST['Steprule']))
+		if(isset($_POST['Release']))
 		{
-			$model->attributes=$_POST['Steprule'];
+			$model->attributes=$_POST['Release'];
 			if($model->save())
-				$this->redirect(array('view','id'=>$model->step_id));
+				$this->redirect(array('view','id'=>$model->id));
 		}
 
 		$this->render('create',array(
@@ -124,11 +91,11 @@ class StepruleController extends Controller
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
-		if(isset($_POST['Steprule']))
+		if(isset($_POST['Release']))
 		{
-			$model->attributes=$_POST['Steprule'];
+			$model->attributes=$_POST['Release'];
 			if($model->save())
-				$this->redirect(array('view','id'=>$model->step_id));
+				$this->redirect(array('view','id'=>$model->id));
 		}
 
 		$this->render('update',array(
@@ -143,12 +110,11 @@ class StepruleController extends Controller
 	 */
 	public function actionDelete($id)
 	{
-		$model=Steprule::model()->findbyPK($id);
-                $step_id=$model->step_id;
-                $flow=$model->step->flow_id;
-                $model->delete();
+		$this->loadModel($id)->delete();
 
-		$this->redirect(array('/step/update/flow/'.$flow.'/id/'.$step_id));
+		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
+		if(!isset($_GET['ajax']))
+			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
 	}
 
 	/**
@@ -156,7 +122,7 @@ class StepruleController extends Controller
 	 */
 	public function actionIndex()
 	{
-		$dataProvider=new CActiveDataProvider('Steprule');
+		$dataProvider=new CActiveDataProvider('Release');
 		$this->render('index',array(
 			'dataProvider'=>$dataProvider,
 		));
@@ -167,10 +133,10 @@ class StepruleController extends Controller
 	 */
 	public function actionAdmin()
 	{
-		$model=new Steprule('search');
+		$model=new Release('search');
 		$model->unsetAttributes();  // clear any default values
-		if(isset($_GET['Steprule']))
-			$model->attributes=$_GET['Steprule'];
+		if(isset($_GET['Release']))
+			$model->attributes=$_GET['Release'];
 
 		$this->render('admin',array(
 			'model'=>$model,
@@ -181,12 +147,12 @@ class StepruleController extends Controller
 	 * Returns the data model based on the primary key given in the GET variable.
 	 * If the data model is not found, an HTTP exception will be raised.
 	 * @param integer $id the ID of the model to be loaded
-	 * @return Steprule the loaded model
+	 * @return Release the loaded model
 	 * @throws CHttpException
 	 */
 	public function loadModel($id)
 	{
-		$model=Steprule::model()->findByPk($id);
+		$model=Release::model()->findByPk($id);
 		if($model===null)
 			throw new CHttpException(404,'The requested page does not exist.');
 		return $model;
@@ -194,11 +160,11 @@ class StepruleController extends Controller
 
 	/**
 	 * Performs the AJAX validation.
-	 * @param Steprule $model the model to be validated
+	 * @param Release $model the model to be validated
 	 */
 	protected function performAjaxValidation($model)
 	{
-		if(isset($_POST['ajax']) && $_POST['ajax']==='steprule-form')
+		if(isset($_POST['ajax']) && $_POST['ajax']==='version-form')
 		{
 			echo CActiveForm::validate($model);
 			Yii::app()->end();

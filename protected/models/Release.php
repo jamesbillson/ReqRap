@@ -1,25 +1,25 @@
 <?php
 
 /**
- * This is the model class for table "version".
+ * This is the model class for table "release".
  *
- * The followings are the available columns in table 'version':
+ * The followings are the available columns in table 'release':
  * @property integer $id
  * @property string $number
  * @property string $release
  * @property integer $project_id
  * @property integer $status
  */
-class Version extends CActiveRecord
+class Release extends CActiveRecord
 {
- public static $objects= array(1=>'rule'); 
- public static $actions= array(1=>'create',2=>'update',3=>'delete'); 
+    public static $status= array(1=>'draft',2=>'release');
+    
    	
   
  
 	public function tableName()
 	{
-		return 'version';
+		return 'release';
 	}
 
 	/**
@@ -30,9 +30,9 @@ class Version extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('number, release, project_id, status,object, action,create_date, create_user', 'required'),
+			array('number, project_id, status, create_date, create_user', 'required'),
 			array('project_id, status', 'numerical', 'integerOnly'=>true),
-			array('number, release', 'length', 'max'=>6),
+			array('number', 'length', 'max'=>20),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('id, number, release, project_id, status', 'safe', 'on'=>'search'),
@@ -56,13 +56,10 @@ class Version extends CActiveRecord
 		return array(
 			'id' => 'ID',
 			'number' => 'Number',
-			'release' => 'Release',
 			'project_id' => 'Project',
 			'status' => 'Status',
-                    'object'=>'Object',
-                    'action'=>'Action',
-                    'create_date'=>'create date',
-                    'create_user'=>'create user',
+                        'create_date'=>'create date',
+                        'create_user'=>'create user',
 		);
 	}
 
@@ -100,17 +97,17 @@ class Version extends CActiveRecord
        
               
         $sql="select *
-            from version v
+            from release v
             inner join(
             select project_id, max(number) vers
-            from version
+            from release
              )ver on v.project_id = ver.project_id and v.number = ver.vers  
             WHERE `v`.`project_id`=".$id;
 
 
 /*
 SELECT max(`v`.`number`)as number
-           From `version` `v`
+           From `release` `v`
             WHERE `v`.`project_id`=".$id;
  * */
  
@@ -123,7 +120,7 @@ SELECT max(`v`.`number`)as number
                     $number=$projects[0]['number']+1;
                 }
                 
-          $sql="INSERT INTO `version`(`number`,
+          $sql="INSERT INTO `release`(`number`,
               `release`, 
               `project_id`,
               `status`,

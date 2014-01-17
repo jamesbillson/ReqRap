@@ -64,7 +64,8 @@ class Iface extends CActiveRecord
 			'number' => 'Number',
 			'name' => 'Name',
 			'type_id' => 'Type',
-                    'project_id' => 'Project'
+                    'project_id' => 'Project',
+                    'file'=>'Image File'
 		);
 	}
 
