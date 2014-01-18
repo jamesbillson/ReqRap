@@ -3,9 +3,9 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Jan 15, 2014 at 01:14 PM
--- Server version: 5.5.19
--- PHP Version: 5.3.8
+-- Generation Time: Jan 18, 2014 at 12:21 PM
+-- Server version: 5.6.12
+-- PHP Version: 5.4.16
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -43,8 +43,8 @@ CREATE TABLE IF NOT EXISTS `actor` (
 
 INSERT INTO `actor` (`id`, `project_id`, `name`, `description`, `alias`, `inherits`) VALUES
 (1, 47, 'User', 'A public user of the website.', '', 0),
-(2, 47, 'Member', 'A user who has signed up to the website and has credentials.', '', 0),
-(3, 47, 'Administrator', '', '', 0),
+(2, 47, 'Member', 'A user who has signed up to the website and has credentials.', '', 1),
+(3, 47, 'Administrator', '', '', 2),
 (4, 47, 'PayPal', '', '', 0);
 
 -- --------------------------------------------------------
@@ -442,6 +442,7 @@ CREATE TABLE IF NOT EXISTS `iface` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `number` int(4) NOT NULL,
   `name` varchar(255) NOT NULL,
+  `file` varchar(60) NOT NULL,
   `type_id` int(11) NOT NULL,
   `project_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
@@ -453,19 +454,19 @@ CREATE TABLE IF NOT EXISTS `iface` (
 -- Dumping data for table `iface`
 --
 
-INSERT INTO `iface` (`id`, `number`, `name`, `type_id`, `project_id`) VALUES
-(3, 3, 'Login Page', 1, 47),
-(5, 4, 'Sorry Screen', 1, 47),
-(8, 1, 'Success Screen', 1, 47),
-(11, 5, 'Register Page', 1, 47),
-(12, 6, 'Please Validate', 1, 47),
-(13, 7, 'Welcome Email', 3, 47),
-(14, 8, 'Ajax Site Search', 2, 47),
-(16, 9, 'Wine Search Result Accordian', 2, 47),
-(18, 0, 'Welcome Page', 1, 47),
-(19, 1, 'Validation Email', 3, 47),
-(20, 10, 'System Admin New Member Notification Email', 3, 47),
-(21, 11, 'Form error highlight style', 2, 47);
+INSERT INTO `iface` (`id`, `number`, `name`, `file`, `type_id`, `project_id`) VALUES
+(3, 3, 'Login Page', '52d74dda8a85e.png', 1, 47),
+(5, 4, 'Sorry Screen', '', 1, 47),
+(8, 1, 'Success Screen', '', 1, 47),
+(11, 5, 'Register Page', '', 1, 47),
+(12, 6, 'Please Validate', '', 1, 47),
+(13, 7, 'Welcome Email', '', 3, 47),
+(14, 8, 'Ajax Site Search', '', 2, 47),
+(16, 9, 'Wine Search Result Accordian', '', 2, 47),
+(18, 0, 'Welcome Page', '', 1, 47),
+(19, 1, 'Validation Email', '', 3, 47),
+(20, 10, 'System Admin New Member Notification Email', '', 3, 47),
+(21, 11, 'Form error highlight style', '', 1, 47);
 
 -- --------------------------------------------------------
 
@@ -637,15 +638,14 @@ CREATE TABLE IF NOT EXISTS `photo` (
   PRIMARY KEY (`id`),
   KEY `project_id` (`project_id`),
   KEY `user_id` (`user_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
 
 --
 -- Dumping data for table `photo`
 --
 
 INSERT INTO `photo` (`id`, `file`, `project_id`, `user_id`, `create_date`) VALUES
-(1, '52b2e7f6d7241.png', 47, 113, '2013-12-19 12:35:04'),
-(2, '52b2e89acac41.png', 47, 113, '2013-12-19 12:37:46');
+(3, '52d74dda8a85e.png', 47, 113, '2014-01-16 03:11:23');
 
 -- --------------------------------------------------------
 
@@ -705,6 +705,31 @@ CREATE TABLE IF NOT EXISTS `projectstatustype` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `release`
+--
+
+CREATE TABLE IF NOT EXISTS `release` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `number` varchar(20) NOT NULL,
+  `status` tinyint(1) NOT NULL,
+  `project_id` int(11) NOT NULL,
+  `create_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `create_user` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `create_user` (`create_user`),
+  KEY `project_id` (`project_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `release`
+--
+
+INSERT INTO `release` (`id`, `number`, `status`, `project_id`, `create_date`, `create_user`) VALUES
+(1, '0.1', 1, 47, '2014-01-16 03:46:15', 113);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `rule`
 --
 
@@ -716,25 +741,72 @@ CREATE TABLE IF NOT EXISTS `rule` (
   `text` text NOT NULL,
   `project_id` int(11) NOT NULL,
   `version_id` int(11) NOT NULL,
+  `active` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `project_id` (`project_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=26 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=74 ;
 
 --
 -- Dumping data for table `rule`
 --
 
-INSERT INTO `rule` (`id`, `rule_id`, `number`, `title`, `text`, `project_id`, `version_id`) VALUES
-(10, 2, 2, 'Username ', 'Username is a string of alpha-numeric characters, it is unique to each user.', 47, 1),
-(14, 3, 3, 'Header displays username', 'The page header shows the logged in user name, or if no user is logged in, a ''login'' link.', 47, 2),
-(15, 4, 4, 'email address', 'email address must be a valid email address.', 47, 3),
-(16, 5, 5, 'error highlights on forms', 'Errors are highlighted on the form if it redisplays failing validation.  HIghlight style is defined in design.', 47, 4),
-(17, 6, 6, 'Ajax Search on Typing', 'After typing two characters an Ajax search is made.', 47, 5),
-(18, 7, 7, 'Ajax Site Search Matching', 'Ajax Site Search matches winery and label names and article content with a partial AND match. Matching wines are displayed followed by articles ordered by relevance.', 47, 6),
-(22, 8, 8, 'Password Complexity', 'Password must contain a capital letter, a lower case letter and a number.  Must be 6 characters or more.', 47, 7),
-(23, 9, 9, 'System Admin email address', 'System Admin email address is set as an option in the database and is editable through the admin system.', 47, 8),
-(24, 10, 10, 'User account validation link', 'User account validation link uses a long, unique, non sequential  alpha-numeric string to prevent guessing of link URLs.', 47, 9),
-(25, 10, 10, 'Test new version', 'Test new version', 47, 10);
+INSERT INTO `rule` (`id`, `rule_id`, `number`, `title`, `text`, `project_id`, `version_id`, `active`) VALUES
+(10, 2, 2, 'Username ', 'Username is a string of alpha-numeric characters, it is unique to each user.', 47, 1, 1),
+(14, 3, 3, 'Header displays username', 'The page header shows the logged in user name, or if no user is logged in, a ''login'' link.', 47, 2, 1),
+(15, 4, 4, 'email address', 'email address must be a valid email address.', 47, 3, 1),
+(16, 5, 5, 'error highlights on forms', 'Errors are highlighted on the form if it redisplays failing validation.  HIghlight style is defined in design.', 47, 4, 1),
+(17, 6, 6, 'Ajax Search on Typing', 'After typing two characters an Ajax search is made.', 47, 5, 1),
+(18, 7, 7, 'Ajax Site Search Matching', 'Ajax Site Search matches winery and label names and article content with a partial AND match. Matching wines are displayed followed by articles ordered by relevance.', 47, 6, 1),
+(22, 8, 8, 'Password Complexity', 'Password must contain a capital letter, a lower case letter and a number.  Must be 6 characters or more.', 47, 7, 1),
+(23, 9, 9, 'System Admin email address', 'System Admin email address is set as an option in the database and is editable through the admin system.', 47, 8, 1),
+(24, 10, 10, 'User account validation link', 'User account validation link uses a long, unique, non sequential  alpha-numeric string to prevent guessing of link URLs.', 47, 9, 1),
+(25, 10, 10, 'Test new version', 'Test new version', 47, 10, 0),
+(26, 11, 11, 'Test', 'test version 2', 47, 8, 0),
+(27, 11, 11, 'Test', 'test version 3', 47, 9, 0),
+(28, 11, 11, 'deleted', 'deleted', 47, 10, 0),
+(29, 12, 12, 'Versions', 'Must be version controlled', 47, 11, 0),
+(30, 12, 12, 'Versions', 'Must be version controlled in all casese 2', 47, 12, 0),
+(31, 12, 12, 'Versions', 'Must be version controlled in all cases 2. Even minor edits.', 47, 13, 0),
+(32, 12, 12, 'Versions', 'Must be version controlled in all cases 2. Even minor edits. check this puppy out.', 47, 14, 0),
+(35, 13, 13, 'Test display', 'this tests the display of versions', 47, 17, 0),
+(36, 13, 13, 'Test display', 'this tests the display of versions. Another version - perhaps a review screen would be better.', 47, 18, 0),
+(37, 13, 13, 'Test display', 'this tests the display of versions, this should make version 3 and set it active.', 47, 19, 0),
+(38, 13, 13, 'deleted', 'deleted', 47, 20, 0),
+(39, 13, 13, 'deleted', 'deleted', 47, 21, 0),
+(40, 10, 10, 'deleted', 'deleted', 47, 22, 0),
+(41, 12, 12, 'deleted', 'deleted', 47, 23, 0),
+(42, 14, 14, 'Published Content', 'Only content that has a published status shows on the website', 47, 24, 1),
+(43, 15, 15, 'Wineries page visibility', 'If the win_visible flag is set to ‘0’ for a specific winery,  the winery page  does not display for that winery.', 47, 25, 1),
+(44, 16, 16, 'One published logo for winery', 'Only one logo image related to a winery can have a published status at the same time', 47, 26, 1),
+(45, 17, 17, 'Winery default logo', 'Where the winery logo is displayed, if no published logo exists, a default logo displays instead.', 47, 27, 1),
+(46, 18, 18, 'Shared Content', 'Tasting note uses the Winery, Label, Vintage as the Title and the url is to the Tasting Note Detail page using a hashed link that is bypasses the requirement for member login. E.g. www.winegenius.com/AX87JT6784.  This prevents users guessing URL’s to wine notes, and allows the shared content to be viewed by non-members.', 47, 28, 1),
+(47, 19, 19, 'Remember Me', 'If a user selects ‘Remember Me’ on log in, their login will be stored locally for a maximum of 2 weeks.', 47, 29, 1),
+(48, 20, 20, 'Login referrer URL', 'A user is returned to the page where they clicked the link to login after a successful login.', 47, 30, 1),
+(49, 21, 21, 'My Account Link', 'When a member is logged in the Log In button on the header changes to become My Account.', 47, 31, 1),
+(50, 22, 22, 'Login Credentials', 'User logs in with email and password.', 47, 32, 1),
+(51, 23, 23, 'Ajax Search on typing', 'Ajax Site Search is made after each character is entered once there is more than one character entered.', 47, 33, 1),
+(52, 24, 24, 'Ajax Site Search matching', 'Ajax Site Search matches against labels, wineries and wordpress content using a partial match on the entire string. Wines, wineries and content are displayed in Ajax Site Search Pane.', 47, 34, 1),
+(53, 25, 25, 'Submit Site Search', 'Site search uses a partial AND match on the search string separated on spaces.', 47, 35, 1),
+(54, 26, 26, 'Editable user content', 'User submitted content of types ‘note’, ‘points’, ‘drinking range’ and ‘images’', 47, 36, 1),
+(55, 27, 27, 'Ajax Wine Search matching', 'Ajax Site Search matches against wineries, labels and vintages using a partial match on the entire string.  Up to 10 matching wines are displayed. Any filters selected on the wine page are applied to the Ajax search.', 47, 37, 1),
+(56, 28, 28, 'Cursor to focus on search text field on page load.', 'On loading the Wine Search page focus is set to the search text entry field.', 47, 38, 1),
+(57, 29, 29, 'Wine Search Results to display on same page ', 'Wine Search Results to display on same page in an Ajax loaded results pane.', 47, 39, 1),
+(58, 30, 30, 'Logged in user display', 'When a user is logged in the log in link shows the username and a dropdown menu of user options.', 47, 40, 1),
+(59, 31, 31, 'Member Only Content', 'Only logged in members can view wine notes unless the note is accessed via a content share .', 47, 41, 1),
+(60, 32, 32, 'Order of Ajax Search Result display ', 'When displaying Ajax search dropdown results. Wine results will be listed first, wineries next and article results last. ', 47, 42, 1),
+(61, 33, 33, 'Number of Ajax Search Results', 'When displaying Ajax search dropdown results. Up to six wines will be shown, up to three wineries will be shown and up to three articles will be shown.', 47, 43, 1),
+(62, 34, 34, 'No Search Results', 'Should no results be returned from a search, ‘No Results Pop Up’ will appear.', 47, 44, 1),
+(63, 35, 35, 'Ajax link targets', 'All ajax search results are clickable, when clicked:\r\n- Wine results take the user to the specific tasting note of that wine\r\n- Winery results take the user to the specific winery\r\n- Article results take the user to the specific article\r\n', 47, 45, 1),
+(64, 36, 36, 'Password and Confirm must match', 'The password and confirm values entered must match', 47, 46, 1),
+(65, 37, 37, 'No errors shown for incorrect username', 'If no matching account/email is found no error messages are displayed on the Lost Password Form.', 47, 47, 1),
+(66, 38, 38, 'Banned words check', 'New posts will be checked automatically against a banned word list, posts including banned words will fail validation', 47, 48, 1),
+(67, 39, 39, 'Sanitise user inputs', 'User inputs are sanitised to remove injection attacks or embedded scripts.', 47, 49, 1),
+(68, 40, 40, 'Status is review', 'On creation user reviews are given a status of ‘Review’.', 47, 50, 1),
+(69, 41, 41, 'Account Age Calculation', 'The age of the account is calculated as the number of days elapsed since the Account ‘Valid From’ value', 47, 51, 1),
+(70, 42, 42, 'Member review image upload', 'Image upload allows a maximum size of 4mb to be uploaded.\r\nOnly png or jpg file types are allowed.\r\nImage will be automatically resized to a max width of 800 px on upload\r\n', 47, 52, 1),
+(71, 43, 43, 'Order of Article search results', 'Article search results are show ordered by relevance.', 47, 53, 1),
+(72, 44, 44, 'Display of Botrytis and Sparkling Wines', 'Wines in some retail categories show a suffix when their full Winery-Label-Vintage is displayed.  Eg.\r\nWinery-Label-(Suffix)-Vintage\r\nDessert Wine – suffix is ‘Botrytis’\r\nRose – suffix is ‘Rose’\r\nSweet Reds – suffix is ‘Dessert Red’\r\nSparkling White – suffix is ‘Sparkling’\r\nSparkling Rose – suffix is ‘Sparkling’\r\nSparkling Red – suffix is ‘Sparkling’\r\n', 47, 54, 1),
+(73, 45, 45, 'Validation time frame', 'stub', 47, 56, 1);
 
 -- --------------------------------------------------------
 
@@ -765,15 +837,15 @@ CREATE TABLE IF NOT EXISTS `step` (
   `result` text NOT NULL,
   PRIMARY KEY (`id`),
   KEY `flow_id` (`flow_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=71 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=73 ;
 
 --
 -- Dumping data for table `step`
 --
 
 INSERT INTO `step` (`id`, `flow_id`, `number`, `text`, `result`) VALUES
-(54, 41, 3, 'Actor selects ''Register'' link.', 'System displays the Register Page.'),
-(55, 41, 3, 'Actor completes Register form and submits.', 'System validates inputs.'),
+(54, 41, 1, 'Actor selects ''Register'' link.', 'System displays the Register Page.'),
+(55, 41, 2, 'Actor completes Register form and submits.', 'System validates inputs.'),
 (56, 41, 3, 'Form is valid', 'System creates membership and displays the Please Validate page.'),
 (58, 42, 1, 'Actor clicks the verify link in the Validation Email.', 'System matches the the requested URL to membership account and displays welcome page.'),
 (59, 43, 3, 'Actor action.', 'System result.'),
@@ -786,8 +858,8 @@ INSERT INTO `step` (`id`, `flow_id`, `number`, `text`, `result`) VALUES
 (66, 48, 3, 'Actor action.', 'System result.'),
 (67, 49, 3, 'Actor action.', 'System result.'),
 (68, 50, 3, 'Actor action.', 'System result.'),
-(69, 51, 3, 'Actor action.', 'System result.'),
-(70, 41, 3, 'No action', 'System sends Validation email.');
+(69, 51, 1, 'Actor action.', 'System result.'),
+(70, 41, 4, 'No action', 'System sends Validation email.');
 
 -- --------------------------------------------------------
 
@@ -854,7 +926,7 @@ CREATE TABLE IF NOT EXISTS `steprule` (
   PRIMARY KEY (`id`),
   KEY `rule_id` (`rule_id`),
   KEY `step_id` (`step_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=22 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=23 ;
 
 --
 -- Dumping data for table `steprule`
@@ -863,7 +935,8 @@ CREATE TABLE IF NOT EXISTS `steprule` (
 INSERT INTO `steprule` (`id`, `step_id`, `rule_id`) VALUES
 (19, 55, 22),
 (20, 62, 23),
-(21, 58, 24);
+(21, 58, 24),
+(22, 56, 73);
 
 -- --------------------------------------------------------
 
@@ -958,14 +1031,15 @@ CREATE TABLE IF NOT EXISTS `testrun` (
   `number` smallint(4) NOT NULL,
   `status` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 
 --
 -- Dumping data for table `testrun`
 --
 
 INSERT INTO `testrun` (`id`, `project_id`, `number`, `status`) VALUES
-(1, 47, 1, 1);
+(1, 47, 1, 2),
+(2, 47, 2, 1);
 
 -- --------------------------------------------------------
 
@@ -1092,12 +1166,78 @@ CREATE TABLE IF NOT EXISTS `uses` (
 
 CREATE TABLE IF NOT EXISTS `version` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `number` decimal(6,3) NOT NULL,
+  `number` int(11) NOT NULL,
   `release` varchar(6) NOT NULL,
   `project_id` int(11) NOT NULL,
   `status` tinyint(1) NOT NULL,
+  `object` int(2) NOT NULL,
+  `action` tinyint(1) NOT NULL,
+  `create_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `create_user` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=57 ;
+
+--
+-- Dumping data for table `version`
+--
+
+INSERT INTO `version` (`id`, `number`, `release`, `project_id`, `status`, `object`, `action`, `create_date`, `create_user`) VALUES
+(1, 1, '1', 47, 1, 1, 2, '2014-01-16 01:44:48', 113),
+(2, 2, '1', 47, 1, 1, 2, '2014-01-16 01:44:48', 113),
+(3, 3, '1', 47, 1, 1, 2, '2014-01-16 01:44:48', 113),
+(4, 4, '1', 47, 1, 1, 2, '2014-01-16 01:44:48', 113),
+(5, 5, '1', 47, 1, 1, 2, '2014-01-16 01:44:48', 113),
+(6, 6, '1', 47, 1, 1, 2, '2014-01-16 01:44:48', 113),
+(7, 7, '1', 47, 1, 1, 2, '2014-01-16 01:44:48', 113),
+(8, 8, '1', 47, 1, 1, 2, '2014-01-16 01:44:48', 113),
+(9, 9, '1', 47, 1, 1, 2, '2014-01-16 01:44:48', 113),
+(10, 10, '1', 47, 1, 1, 2, '2014-01-16 01:44:48', 113),
+(11, 11, '1', 47, 1, 1, 2, '2014-01-16 01:44:48', 113),
+(12, 12, '1', 47, 1, 1, 2, '2014-01-16 01:44:48', 113),
+(13, 13, '1', 47, 1, 1, 2, '2014-01-16 01:44:48', 113),
+(14, 14, '1', 47, 1, 1, 2, '2014-01-16 01:44:09', 113),
+(15, 15, '1', 47, 1, 1, 2, '2014-01-16 01:44:09', 113),
+(16, 16, '1', 47, 1, 1, 2, '2014-01-16 01:41:52', 113),
+(17, 17, '1', 47, 1, 1, 1, '2014-01-16 01:54:10', 113),
+(18, 18, '1', 47, 1, 1, 2, '2014-01-16 01:49:20', 113),
+(19, 19, '1', 47, 1, 1, 2, '2014-01-16 02:38:41', 113),
+(20, 20, '1', 47, 1, 1, 3, '2014-01-16 04:32:51', 113),
+(21, 21, '1', 47, 1, 1, 3, '2014-01-16 04:34:04', 113),
+(22, 22, '1', 47, 1, 1, 3, '2014-01-16 04:34:11', 113),
+(23, 23, '1', 47, 1, 1, 3, '2014-01-16 04:34:20', 113),
+(24, 24, '1', 47, 1, 1, 1, '2014-01-16 04:38:04', 113),
+(25, 25, '1', 47, 1, 1, 1, '2014-01-16 04:38:35', 113),
+(26, 26, '1', 47, 1, 1, 1, '2014-01-16 04:38:58', 113),
+(27, 27, '1', 47, 1, 1, 1, '2014-01-16 04:39:17', 113),
+(28, 28, '1', 47, 1, 1, 1, '2014-01-16 04:39:40', 113),
+(29, 29, '1', 47, 1, 1, 1, '2014-01-16 04:40:07', 113),
+(30, 30, '1', 47, 1, 1, 1, '2014-01-16 04:40:30', 113),
+(31, 31, '1', 47, 1, 1, 1, '2014-01-16 04:41:02', 113),
+(32, 32, '1', 47, 1, 1, 1, '2014-01-16 04:41:25', 113),
+(33, 33, '1', 47, 1, 1, 1, '2014-01-16 04:41:47', 113),
+(34, 34, '1', 47, 1, 1, 1, '2014-01-16 04:42:07', 113),
+(35, 35, '1', 47, 1, 1, 1, '2014-01-16 04:42:26', 113),
+(36, 36, '1', 47, 1, 1, 1, '2014-01-16 04:42:44', 113),
+(37, 37, '1', 47, 1, 1, 1, '2014-01-16 04:43:07', 113),
+(38, 38, '1', 47, 1, 1, 1, '2014-01-16 04:43:36', 113),
+(39, 39, '1', 47, 1, 1, 1, '2014-01-16 04:44:00', 113),
+(40, 40, '1', 47, 1, 1, 1, '2014-01-16 04:44:20', 113),
+(41, 41, '1', 47, 1, 1, 1, '2014-01-16 04:44:53', 113),
+(42, 42, '1', 47, 1, 1, 1, '2014-01-16 04:45:20', 113),
+(43, 43, '1', 47, 1, 1, 1, '2014-01-16 04:45:45', 113),
+(44, 44, '1', 47, 1, 1, 1, '2014-01-16 04:46:05', 113),
+(45, 45, '1', 47, 1, 1, 1, '2014-01-16 04:46:44', 113),
+(46, 46, '1', 47, 1, 1, 1, '2014-01-16 04:47:22', 113),
+(47, 47, '1', 47, 1, 1, 1, '2014-01-16 04:47:44', 113),
+(48, 48, '1', 47, 1, 1, 1, '2014-01-16 04:49:13', 113),
+(49, 49, '1', 47, 1, 1, 1, '2014-01-16 04:49:31', 113),
+(50, 50, '1', 47, 1, 1, 1, '2014-01-16 04:49:47', 113),
+(51, 51, '1', 47, 1, 1, 1, '2014-01-16 04:50:10', 113),
+(52, 52, '1', 47, 1, 1, 1, '2014-01-16 04:50:59', 113),
+(53, 53, '1', 47, 1, 1, 1, '2014-01-16 04:51:23', 113),
+(54, 54, '1', 47, 1, 1, 1, '2014-01-16 04:51:51', 113),
+(55, 55, '1', 47, 1, 1, 1, '2014-01-17 02:20:49', 113),
+(56, 56, '1', 47, 1, 1, 1, '2014-01-17 02:21:19', 113);
 
 --
 -- Constraints for dumped tables
@@ -1152,6 +1292,13 @@ ALTER TABLE `object`
 --
 ALTER TABLE `objectproperty`
   ADD CONSTRAINT `objectproperty_ibfk_1` FOREIGN KEY (`object_id`) REFERENCES `object` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `release`
+--
+ALTER TABLE `release`
+  ADD CONSTRAINT `release_ibfk_1` FOREIGN KEY (`project_id`) REFERENCES `project` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `release_ibfk_2` FOREIGN KEY (`create_user`) REFERENCES `user` (`id`);
 
 --
 -- Constraints for table `rule`
