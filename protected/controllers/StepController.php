@@ -81,6 +81,7 @@ class StepController extends Controller
       	public function actionInsert($id)
 	{
             $step=$this->loadModel($id);
+            
             $number=$step->number;
             $flow=$step->flow_id;
             // need to add 1 to all the later steps.
@@ -93,10 +94,16 @@ class StepController extends Controller
                 $model->flow_id= $flow;
                 $model->text = 'New step';
                 $model->result = 'Result';
+                $model->actor_id = $step->flow->usecase->actor_id;
+                
                 $model->save();
                 
 		Step::model()->reNumber($flow);
-		$this->redirect(array('/step/update/flow/'.$model->flow_id.'/id/-1'));
+		
+                //add the actor
+                
+                
+                $this->redirect(array('/step/update/flow/'.$flow.'/id/-1'));
 		
 	}
         

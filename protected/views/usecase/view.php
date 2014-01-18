@@ -73,6 +73,16 @@ $result=Testcaseresult::model()->find('testrun_id='.$run.' AND testcase_id='.$it
 $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
         'title' => 'Use Case : UC-'.str_pad($model->package->sequence, 2, "0", STR_PAD_LEFT).str_pad($model->number, 3, "0", STR_PAD_LEFT).'-'.$model->name,
         'htmlOptions' => array('class'=>'bootstrap-widget-table'),
+               'headerButtons' => array(
+                array(
+                    'class' => 'bootstrap.widgets.TbButton',
+                    'type' => 'link', // '', 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
+                    'icon'=> 'edit',
+                    'url'=>'/usecase/update/id/'.$model->id,
+                    
+                      ),
+     
+)
           ));  
 ?>
 
@@ -124,26 +134,11 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
 	'title' => 'Actors',
 	'headerIcon' => 'icon-user',
 	'htmlOptions' => array('class'=>'bootstrap-widget-table'),
-           'headerButtons' => array(
-                array(
-                    'class' => 'bootstrap.widgets.TbButton',
-                    'type' => 'primary', // '', 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
-                    'label'=> 'Add +',
-                    'url'=>'/actorusecase/create/id/'.$model->id,
-                    
-                      ),
-     
-)));  
+));  
   if (count($actors)):?>
 
   <table class="table">
-  	<thead>
-    	<tr>
-          <th>Name</th>
-
-          <th>Actions</th>
-    	</tr>
-  	</thead>
+  	
       <tbody>
   
         <?php foreach($actors as $item) : // Go through each un answered question??>
@@ -155,9 +150,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                 
               </td> 
               <td>
-                  <a href="/actor/update/id/"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
-                    <a href="/actorusecase/delete/usecase_id/<?php echo $model->id;?>/actor_id/<?php echo $item['id'];?>"><i class="icon-remove-sign" rel="tooltip" title="Remove Actor"></i></a> 
-                         
+                          
               </td>
          
         <?php endforeach ?>       
@@ -206,6 +199,7 @@ if($last_flow != $line['flow']) {
   
                 $uc[$flow][$step]['step'] = $line['number'];
                 $uc[$flow][$step]['position'] = $line['number']+$line['start'];
+                $uc[$flow][$step]['actor']=$line['actor'];
                 $uc[$flow][$step]['text']= $line['text'];
                 $uc[$flow][$step]['result']= $line['result'];
                 $uc[$flow][$step]['id']= $line['id'];
@@ -241,13 +235,13 @@ if($last_flow != $line['flow']) {
      
         <?php if($uc[$w]['main']==0) { ?>
         
-        <td> <b>Alternate Flow <?php echo $uc[$w]['flow'];?></b> 
+        <td colspan="2"> <b>Alternate Flow <?php echo $uc[$w]['flow'];?></b> 
         <a href="/step/update/id/-1/flow/<?php echo $uc[$w]['id'];?>"><i class="icon-edit" rel="tooltip" title="Edit Flow Steps"></i></a>
         </td>
        <td colspan="3"> Start at Main Flow step <?php echo $uc[$w]['start'] ;?> and finish at step <?php echo $uc[$w]['rejoin'] ;?></td>
 
  <?php } ELSE {?>
-       <td colspan="3"> 
+       <td colspan="2"> 
            <b>Main Flow</b> 
             <a href="/step/update/id/-1/flow/<?php echo $uc[$w]['id'];?>"><i class="icon-edit" rel="tooltip" title="Edit Flow Steps"></i></a>
        
@@ -262,7 +256,7 @@ if($last_flow != $line['flow']) {
             <td></td>
             <td> <b>step&nbsp;<?php echo $uc[$w][$x]['step'];?></b> </td>
           
-            <td>    <?php  echo $uc[$w][$x]['text'];?> <br /> 
+            <td>  <?php  echo $uc[$w][$x]['actor'];?>  <?php  echo $uc[$w][$x]['text'];?> <br /> 
                <?php  echo $uc[$w][$x]['result'];?> </td> 
         <td>  
              <?php if($uc[$w]['main']==1) { ?>

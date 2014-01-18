@@ -65,9 +65,10 @@ class Usecase extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'id' => 'ID',
-			'name' => 'Name',
+                    'id' => 'ID',
+                    'name' => 'Name',
                     'number' => 'Number',
+                    'actor_id'=>'Default Actor',
                     'package_id' => 'Package',
                     'description' => 'Description',
                     'preconditions' => 'Pre Conditions'
@@ -104,7 +105,7 @@ class Usecase extends CActiveRecord
     {
         $user= Yii::app()->user->id;   
               
-        $sql="SELECT `u`.`name`, `u`.`id`
+        $sql="SELECT `u`.`name`, `u`.`id`, `u`.`number`
             FROM `usecase` `u`
             Join `package` `p` 
             on `p`.`id`=`u`.`package_id`

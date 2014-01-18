@@ -1,10 +1,11 @@
                 
                         
-                        <?php
-$steps = Step::model()->getFlowSteps($model->id);
-if (count($steps)):
-
- ?>  
+    <?php
+    
+    $steps = Step::model()->getFlowSteps($model->id);
+    if (count($steps)):
+        
+     ?>  
 
   <table class="table"><tbody>
   
@@ -36,8 +37,29 @@ if (count($steps)):
                      <b>Result</b>
 		 <?php echo $form->textArea($step,'result',array('rows'=>3, 'cols'=>80)); ?>
 		 <?php echo $form->error($step,'result'); ?>
+                     
+                     
+                     
+ <?php     
+           $actors = Actor::model()->findAll('project_id='.$model->usecase->package->project->id); ?>
+                     <select name="Step[actor_id]">
+  <?php     foreach($actors as $actor){
+           echo '<option value="'.$actor['id'].'"';
+       if($actor['id']==$model->usecase->actor_id)  echo 'selected'; 
+       echo'>'.$actor['name'].'</option>';
+  }
+           ?> 
+               </select>
+                     
+                     
 		 <?php echo CHtml::submitButton($step->isNewRecord ? 'Create' : 'Save'); 
                    $this->endWidget();    ?>
+                     
+                     
+                     
+                     
+                     
+                     
                  </td>
                    <td>
                        <strong>Interfaces</strong><br />

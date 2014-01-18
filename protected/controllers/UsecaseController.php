@@ -68,7 +68,7 @@ class UsecaseController extends Controller
 		// $this->performAjaxValidation($model);
                 $number=Usecase::model()->getNextNumber($id);
                 $package=Package::model()->findbyPK($id);
-                $packnum=$package->sequence;
+               // $packnum=$package->sequence;
 		if(isset($_POST['Usecase']))
 		{
 			
@@ -91,7 +91,7 @@ class UsecaseController extends Controller
                 }}
 
 		$this->render('create',array(
-			'model'=>$model,'package_id'=>$id,'number'=>$number,'packnum'=>$packnum
+			'model'=>$model,'package'=>$package,'number'=>$number
 		));
 	}
 
@@ -103,9 +103,9 @@ class UsecaseController extends Controller
 	public function actionUpdate($id)
 	{
 		$model=$this->loadModel($id);
-                $package_id=$model->package->id;
+                $package=Package::model()->findbyPK($model->package->id);
                 $number=$model->number;
-                $packnum=$model->package->sequence;
+                
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
@@ -117,8 +117,8 @@ class UsecaseController extends Controller
 		}
 
 		$this->render('update',array(
-			'model'=>$model,'id'=>$id,'package_id'=>$package_id,'number'=>$number,
-                            'packnum'=>$packnum
+			'model'=>$model,'id'=>$id,'package'=>$package,'number'=>$number,
+                            
 		));
 	}
 

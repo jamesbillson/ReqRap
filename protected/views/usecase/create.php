@@ -1,6 +1,6 @@
-<h3>Create Usecase</h3>
+<h3>Create Usecase UC-<?php echo $package->sequence; ?>-<?php echo $number; ?></h3>
 
 <?php $this->renderPartial('_form', array('model'=>$model,  
-                            'package_id'=>$package_id,
+                            'package'=>$package,
                             'number'=>$number,
-                            'packnum'=>$packnum)); ?>
+                            )); ?>

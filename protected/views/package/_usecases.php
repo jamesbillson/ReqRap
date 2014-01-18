@@ -19,33 +19,45 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                       ),
      
 )));  
-  if (count($usecases)):?>
+  if (count($usecases)):
+      
+      echo count($usecases);
+  ?>
 
   <table class="table">
-  	<thead>
-    	<tr>
-          <th>Name</th>
 
-          <th>Actions</th>
-    	</tr>
-  	</thead>
       <tbody>
   
-        <?php foreach($usecases as $item) : // Go through each un answered question??>
+        <?php 
+        $counter=0;
+        foreach($usecases as $item) : // Go through each un answered question??>
 
           <tr class="odd">
 
-              <td>   
-                  <b><a href="/usecase/view/id/<?php echo $item['id'];?>"><?php echo $item['name'];?></a></b>
+              <td>
+                  <?php if($counter!=0) { ?>
+                           <a href="/usecase/move/dir/1/id/<?php echo $item['id'];?>"><i class="icon-arrow-up" rel="tooltip" title="Edit"></i></a> 
+                  <?php } ?>       
+                   <?php if($counter!=count($usecases)+1) { ?>        
+                           <a href="/usecase/move/dir/2/id/<?php echo $item['id'];?>"><i class="icon-arrow-down" rel="tooltip" title="Edit"></i></a> 
+         <?php } ?> 
+              </td>
+              <td> 
+                   <a href="/usecase/view/id/<?php echo $item['id'];?>"> UC-<?php echo str_pad($model->sequence, 2, "0", STR_PAD_LEFT).''.str_pad($item['number'], 3, "0", STR_PAD_LEFT); ?></a>
+               </td> 
+              <td>
+                   <b><?php echo $item['name'];?></a></b>
                 
               </td> 
               <td>
-               <a href="/usecase/delete/id/<?php echo $item['id'];?>"><i class="icon-remove-sign text-error" rel="tooltip" title="Edit"></i></a> 
+               <a href="/usecase/delete/id/<?php echo $item['id'];?>"><i class="icon-remove-sign text-error" rel="tooltip" title="Edit"></i> 
               
                   <a href="/usecase/update/id/<?php echo $item['id'];?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
               </td>
          
-        <?php endforeach ?>       
+        <?php 
+        $counter++;
+        endforeach ?>       
     </tbody>
   </table>
 

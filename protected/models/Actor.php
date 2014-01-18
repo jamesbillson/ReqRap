@@ -60,7 +60,7 @@ class Actor extends CActiveRecord
 		return array(
 			'id' => 'ID',
 			'project_id' => 'Project',
-			'name' => 'Name',
+  			'name' => 'Name',
                     'descripion'=>'Description',
                     'alias'=>'Aliases'
 		);
@@ -100,9 +100,15 @@ class Actor extends CActiveRecord
               
         $sql="SELECT `a`.`name`,`a`.`id`,`a`.`alias`, `a`.`description`
             FROM `actor` `a`
-            Join `actorusecase` `u` 
-            on `u`.`actor_id`=`a`.`id`
-           WHERE `u`.`usecase_id`=".$id;
+          
+            Join `step` `s` 
+            on `s`.`actor_id`=`a`.`id`
+            join `flow` `f`
+            ON `f`.`id`=`s`.`flow_id`
+            join `usecase` `u` 
+            ON `u`.`id`=`f`.`usecase_id`
+           WHERE `u`.`id`=".$id."
+               GROUP BY `a`.`id`";
 		$connection=Yii::app()->db;
 		$command = $connection->createCommand($sql);
 		$projects = $command->queryAll();

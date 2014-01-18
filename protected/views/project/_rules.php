@@ -9,7 +9,7 @@ $data = Rule::model()->getProjectRules($model->id);
 
 $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
 	'title' => 'Business Rules',
-	'headerIcon' => 'icon-signal',
+	'headerIcon' => 'icon-cogs',
 	// when displaying a table, if we include bootstra-widget-table class
 	// the table will be 0-padding to the box
 	'htmlOptions' => array('class'=>'bootstrap-widget-table'),
@@ -46,8 +46,16 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
     </td>
    
     <td>   
-        <?php if ($item['text']=='stub')echo '<i class="icon-exclamation-sign text-warning" rel="tooltip" title="Incomplete Rule"></i>'.$item['title'];?>
+        <?php if ($item['text']=='stub')echo '<i class="icon-cogs text-warning" rel="tooltip" title="Incomplete Rule"></i>';?>
 
+               <?php
+                         if(!count(Steprule::model()->findAll('rule_id='.$item['id']))){
+                        ?>
+                        <i class="icon-exclamation-sign text-warning" rel="tooltip" title="Orphan - this Rule is not used."></i>
+                         <?php } ?>
+            
+            
+            <?php echo $item['title']; ?>
     </td>
     
     <td>   

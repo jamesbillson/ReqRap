@@ -31,7 +31,7 @@ class Step extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('flow_id, number, text,result', 'required'),
+			array('flow_id, number, text,result, actor_id', 'required'),
 			array('flow_id, number', 'numerical', 'integerOnly'=>true),
 			
 			// The following rule is used by search().
@@ -63,6 +63,7 @@ class Step extends CActiveRecord
 			'flow_id' => 'Flow',
 			'number' => 'Number',
 			'text' => 'Text',
+                    'actor_id'=>'Actor'
 		);
 	}
 
@@ -98,11 +99,20 @@ class Step extends CActiveRecord
     {
         $user= Yii::app()->user->id;   
               
-        $sql="SELECT `s`.`text`,`s`.`result`,`f`.`main`,`f`.`name` as flow,`f`.`id` as flowid,
+        $sql="SELECT 
+            `s`.`text`,
+            `s`.`result`,
+            `a`.`name` as actor,
+            `f`.`main`,
+            `f`.`name` as flow,
+            `f`.`id` as flowid,
             (SELECT `number` from step p where f.startstep_id=p.id) as start, 
-            (SELECT `number` from step q where f.rejoinstep_id=q.id) as rejoin, `s`.`id`,`s`.`number`
+            (SELECT `number` from step q where f.rejoinstep_id=q.id) as rejoin,
+            `s`.`id`,
+            `s`.`number`
             FROM `step` `s`
-        
+            Join `actor` `a` 
+            on `a`.`id`=`s`.`actor_id`
             Join `flow` `f` 
             on `f`.`id`=`s`.`flow_id`
             Join `usecase` `u` 
@@ -119,7 +129,7 @@ class Step extends CActiveRecord
     {
         $user= Yii::app()->user->id;   
               
-        $sql="SELECT `s`.`text`,`s`.`result`,`f`.`name` as flow, `s`.`id`,`s`.`number`
+        $sql="SELECT `s`.`text`,`s`.`actor_id`,`s`.`result`,`f`.`name` as flow, `s`.`id`,`s`.`number`
             FROM `step` `s`
             Join `flow` `f` 
             on `f`.`id`=`s`.`flow_id`
@@ -137,7 +147,7 @@ class Step extends CActiveRecord
     {
         $user= Yii::app()->user->id;   
               
-        $sql="SELECT `s`.`text`,`f`.`name` as flow, `s`.`id`,`s`.`number`
+        $sql="SELECT `s`.`text`,`s`.`actor_id`,`f`.`name` as flow, `s`.`id`,`s`.`number`
             FROM `step` `s`
             Join `flow` `f` 
             on `f`.`id`=`s`.`flow_id`
