@@ -3,9 +3,9 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Jan 18, 2014 at 12:21 PM
--- Server version: 5.6.12
--- PHP Version: 5.4.16
+-- Generation Time: Jan 18, 2014 at 10:49 PM
+-- Server version: 5.5.19
+-- PHP Version: 5.3.8
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -46,28 +46,6 @@ INSERT INTO `actor` (`id`, `project_id`, `name`, `description`, `alias`, `inheri
 (2, 47, 'Member', 'A user who has signed up to the website and has credentials.', '', 1),
 (3, 47, 'Administrator', '', '', 2),
 (4, 47, 'PayPal', '', '', 0);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `actorusecase`
---
-
-CREATE TABLE IF NOT EXISTS `actorusecase` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `actor_id` int(11) NOT NULL,
-  `usecase_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `usecase_id` (`usecase_id`),
-  KEY `actor_id` (`actor_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
-
---
--- Dumping data for table `actorusecase`
---
-
-INSERT INTO `actorusecase` (`id`, `actor_id`, `usecase_id`) VALUES
-(6, 1, 8);
 
 -- --------------------------------------------------------
 
@@ -833,33 +811,34 @@ CREATE TABLE IF NOT EXISTS `step` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `flow_id` int(11) NOT NULL,
   `number` int(4) NOT NULL,
+  `actor_id` int(11) NOT NULL,
   `text` text NOT NULL,
   `result` text NOT NULL,
   PRIMARY KEY (`id`),
   KEY `flow_id` (`flow_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=73 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=74 ;
 
 --
 -- Dumping data for table `step`
 --
 
-INSERT INTO `step` (`id`, `flow_id`, `number`, `text`, `result`) VALUES
-(54, 41, 1, 'Actor selects ''Register'' link.', 'System displays the Register Page.'),
-(55, 41, 2, 'Actor completes Register form and submits.', 'System validates inputs.'),
-(56, 41, 3, 'Form is valid', 'System creates membership and displays the Please Validate page.'),
-(58, 42, 1, 'Actor clicks the verify link in the Validation Email.', 'System matches the the requested URL to membership account and displays welcome page.'),
-(59, 43, 3, 'Actor action.', 'System result.'),
-(60, 44, 3, 'Actor action.', 'System result.'),
-(61, 45, 3, 'Form fails validation', 'Form redisplays with errors highlighted.'),
-(62, 42, 2, 'System sends notification to System administrator account.', 'Email sent.'),
-(63, 42, 3, 'System sends Welcome Email to new member.', 'Email sent.'),
-(64, 46, 3, 'Validation link is not valid.', 'Sorry page displayed.'),
-(65, 47, 3, 'Actor action.', 'System result.'),
-(66, 48, 3, 'Actor action.', 'System result.'),
-(67, 49, 3, 'Actor action.', 'System result.'),
-(68, 50, 3, 'Actor action.', 'System result.'),
-(69, 51, 1, 'Actor action.', 'System result.'),
-(70, 41, 4, 'No action', 'System sends Validation email.');
+INSERT INTO `step` (`id`, `flow_id`, `number`, `actor_id`, `text`, `result`) VALUES
+(54, 41, 1, 1, 'Actor selects ''Register'' link.', 'System displays the Register Page.'),
+(55, 41, 2, 1, 'Actor completes Register form and submits.', 'System validates inputs.'),
+(56, 41, 3, 1, 'No Action - form is valid', 'System creates membership and displays the Please Validate page.'),
+(58, 42, 1, 1, 'Actor clicks the verify link in the Validation Email.', 'System matches the the requested URL to membership account and displays welcome page.'),
+(59, 43, 3, 1, 'Actor action.', 'System result.'),
+(60, 44, 3, 1, 'Actor action.', 'System result.'),
+(61, 45, 3, 1, 'No action - Form fails validation', 'Form redisplays with errors highlighted.'),
+(62, 42, 2, 1, 'System sends notification to System administrator account.', 'Email sent.'),
+(63, 42, 3, 1, 'System sends Welcome Email to new member.', 'Email sent.'),
+(64, 46, 3, 1, 'Validation link is not valid.', 'Sorry page displayed.'),
+(65, 47, 3, 1, 'Actor action.', 'System result.'),
+(66, 48, 3, 1, 'Actor action.', 'System result.'),
+(67, 49, 3, 1, 'Actor action.', 'System result.'),
+(68, 50, 1, 1, 'Actor action.', 'System result.'),
+(69, 51, 1, 1, 'Actor action.', 'System result.'),
+(70, 41, 4, 1, 'No action', 'System sends Validation email.');
 
 -- --------------------------------------------------------
 
@@ -1091,6 +1070,7 @@ CREATE TABLE IF NOT EXISTS `usecase` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `package_id` int(11) NOT NULL,
   `number` varchar(30) NOT NULL,
+  `actor_id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
   `description` text NOT NULL,
   `preconditions` text NOT NULL,
@@ -1102,16 +1082,16 @@ CREATE TABLE IF NOT EXISTS `usecase` (
 -- Dumping data for table `usecase`
 --
 
-INSERT INTO `usecase` (`id`, `package_id`, `number`, `name`, `description`, `preconditions`) VALUES
-(8, 693, '1', 'Create Membership', 'This use case describes the process of a user registering to become a member.', 'None'),
-(9, 693, '2', 'Sign up with Facebook', 'Process of a user signing up with facebook.', 'None'),
-(10, 693, '3', 'Verify Membership', 'Process of a user verifying their email address as part of the sign up process', 'None'),
-(11, 693, '4', 'Browse Map', 'This use case describes a user browsing the winery map.', 'None'),
-(12, 693, '5', 'Search Wines', 'This use case describes how a User searches for a wine.', 'None'),
-(13, 693, '6', 'Search Content', 'This use case describes how a User searches the site content.', 'None'),
-(14, 693, '7', 'Request Member Only Content', 'This use case describes the process of a user trying to view member only content.', 'None'),
-(15, 693, '8', 'Log In', 'This use case describes the process of how a member logs in', 'None'),
-(16, 693, '9', 'Retrieve Password', 'This use case describes how a member retrieves their username and / or password from within the system.', 'None');
+INSERT INTO `usecase` (`id`, `package_id`, `number`, `actor_id`, `name`, `description`, `preconditions`) VALUES
+(8, 693, '1', 1, 'Create Membership', 'This use case describes the process of a user registering to become a member.', 'None that I know of'),
+(9, 693, '2', 1, 'Sign up with Facebook', 'Process of a user signing up with facebook.', 'None'),
+(10, 693, '3', 1, 'Verify Membership', 'Process of a user verifying their email address as part of the sign up process', 'None'),
+(11, 693, '4', 1, 'Browse Map', 'This use case describes a user browsing the winery map.', 'None'),
+(12, 693, '5', 1, 'Search Wines', 'This use case describes how a User searches for a wine.', 'None'),
+(13, 693, '6', 1, 'Search Content', 'This use case describes how a User searches the site content.', 'None'),
+(14, 693, '7', 1, 'Request Member Only Content', 'This use case describes the process of a user trying to view member only content.', 'None'),
+(15, 693, '8', 1, 'Log In', 'This use case describes the process of how a member logs in', 'None'),
+(16, 693, '9', 1, 'Retrieve Password', 'This use case describes how a member retrieves their username and / or password from within the system.', 'None');
 
 -- --------------------------------------------------------
 
@@ -1182,7 +1162,7 @@ CREATE TABLE IF NOT EXISTS `version` (
 --
 
 INSERT INTO `version` (`id`, `number`, `release`, `project_id`, `status`, `object`, `action`, `create_date`, `create_user`) VALUES
-(1, 1, '1', 47, 1, 1, 2, '2014-01-16 01:44:48', 113),
+(1, 1, '1', 47, 1, 1, 1, '2014-01-18 04:00:35', 113),
 (2, 2, '1', 47, 1, 1, 2, '2014-01-16 01:44:48', 113),
 (3, 3, '1', 47, 1, 1, 2, '2014-01-16 01:44:48', 113),
 (4, 4, '1', 47, 1, 1, 2, '2014-01-16 01:44:48', 113),
@@ -1248,13 +1228,6 @@ INSERT INTO `version` (`id`, `number`, `release`, `project_id`, `status`, `objec
 --
 ALTER TABLE `actor`
   ADD CONSTRAINT `actor_ibfk_1` FOREIGN KEY (`project_id`) REFERENCES `project` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Constraints for table `actorusecase`
---
-ALTER TABLE `actorusecase`
-  ADD CONSTRAINT `actorusecase_ibfk_2` FOREIGN KEY (`usecase_id`) REFERENCES `usecase` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `actorusecase_ibfk_3` FOREIGN KEY (`actor_id`) REFERENCES `actor` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `flow`
