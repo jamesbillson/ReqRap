@@ -1,6 +1,6 @@
 
 <a href="/project/view/id/<?php echo $model->project->id; ?>/tab/documents"><h2><?php echo $model->project->name; ?></h2></a>
-<h3><?php echo $model->sequence; ?> <?php echo $model->name; ?></h3>
+<h3>PA-<?php echo $model->sequence; ?> <?php echo $model->name; ?></h3>
 
 <br />
 

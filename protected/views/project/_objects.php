@@ -34,18 +34,18 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                 <tr class="odd">  
                    
                     <td>
-                    OB-<?php echo str_pad($item['number'], 3, "0", STR_PAD_LEFT); ?>
+                        <a href="/object/view/id/<?php echo $item['id'];?>">OB-<?php echo str_pad($item['number'], 3, "0", STR_PAD_LEFT); ?></a>
                     </td>
                     <td>
-                        <?php echo $item['name'];?>
+                        <b><?php echo $item['name'];?></b>
                     </td>
                     <td>
                         <?php echo $item['description'];?>
                     </td>            
                     <td>
-                        <a href="/object/view/id/<?php echo $item['id'];?>"><i class="icon-eye-open" rel="tooltip" title="View"></i></a> 
+                        
                         <a href="/object/update/id/<?php echo $item['id'];?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
-                        <a href="/object/delete?id=<?php echo $item['id'];?>"><i class="icon-remove-sign" rel="tooltip" title="Delete"></i></a> 
+                        <a href="/object/delete?id=<?php echo $item['id'];?>"><i class="icon-remove-sign text-error" rel="tooltip" title="Delete"></i></a> 
                     </td>
                 </tr>
             <?php endforeach ?>

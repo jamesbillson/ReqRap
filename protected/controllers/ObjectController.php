@@ -70,6 +70,7 @@ class ObjectController extends Controller
 		if(isset($_POST['Object']))
 		{
 			$model->attributes=$_POST['Object'];
+                        $model->number=Object::model()->getNextNumber($model->project_id);
 			if($model->save())
 				$this->redirect(array('/project/view/tab/objects/id/'.$model->project_id));
 		}

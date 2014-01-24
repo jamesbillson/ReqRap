@@ -41,7 +41,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                 
                 <tr class="odd">  
                     <td>   
-                        PA-<?php echo $item['sequence'];?>
+                        <a href="/package/view/id/<?php echo $item['id'];?>/tab/details"> PA-<?php echo $item['sequence'];?></a>
                     </td>
  <td>   
                         <?php echo $item['name'];?>
@@ -49,7 +49,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                 
                    
                     <td>
-                        <a href="/package/view/id/<?php echo $item['id'];?>/tab/details"><i class="icon-eye-open" rel="tooltip" title="View"></i></a> 
+                  
                         <a href="/package/update/id/<?php echo $item['id'];?>"><i class="icon-pencil" rel="tooltip" title="Edit Details"></i></a> 
 
                        

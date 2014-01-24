@@ -1,7 +1,9 @@
 <h1><a href="/project/view/tab/rules/id/<?php echo $model->project->id;?>"><?php echo $model->project->name;?></a></h1>
 
 
-<h2>View Rule BR-<?php echo str_pad($model->number, 3, "0", STR_PAD_LEFT); ?></h2>
+<h2>View Rule BR-<?php echo str_pad($model->number, 3, "0", STR_PAD_LEFT); ?>     
+    <a href="/rule/update/id/<?php echo $model->id;?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
+           </h2>
 
 
 	<b><?php echo CHtml::encode($model->getAttributeLabel('title')); ?>:</b>
@@ -17,9 +19,34 @@
         <?php 
  $steprule=(Steprule::model()->findAll('rule_id='.$model->id));
  if(!count($steprule)){
+     $usecases= Usecase::model()->getProjectUCs($model->project->id);
  ?>
  This Rule is not used.<br />
  Associate with Use Case
+ 
+      <form action="/rule/createinline/" method="POST">
+                    
+                    <input type="hidden" name="rule_id" value="<?php echo $model->id;?>">
+                 <select name="usecase">
+                 <?php foreach($usecases as $uc){?>
+                     <option value="<?php echo $uc['id'];?>"><?php echo $uc['name'];?></option>
+                 <?php } ?>
+                     
+               
+                 </select>
+                    
+                    Dynamically load all the steps here so you can choose the step and associate the Rule.
+                 <select name="step">
+                 <?php foreach($usecases as $uc){?>
+                   <option value="<?php echo $uc['id'];?>"><?php echo $uc['name'];?></option>
+                 <?php } ?>
+                     
+               
+                 </select>
+                     <input type="submit" value="add" class="btn primary">
+               </form>
+ 
+ 
  <?php } ELSE { ?>
  Interface is used in the following UC's:<br />
    <?php foreach($steprule as $item){?>

@@ -30,7 +30,7 @@ class Actor extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('project_id, name, description', 'required'),
+			array('project_id, name, description, alias, inherits', 'required'),
 			array('project_id', 'numerical', 'integerOnly'=>true),
 			array('name', 'length', 'max'=>255),
 			// The following rule is used by search().
@@ -62,8 +62,9 @@ class Actor extends CActiveRecord
 			'project_id' => 'Project',
   			'name' => 'Name',
                     'descripion'=>'Description',
-                    'alias'=>'Aliases'
-		);
+                    'alias'=>'Aliases',
+                    'inherits'=>'Inherits',
+                    );
 	}
 
 	/**

@@ -19,10 +19,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                       ),
      
 )));  
-  if (count($usecases)):
-      
-      echo count($usecases);
-  ?>
+  if (count($usecases)): ?>
 
   <table class="table">
 
@@ -35,11 +32,15 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
           <tr class="odd">
 
               <td>
+                  
                   <?php if($counter!=0) { ?>
-                           <a href="/usecase/move/dir/1/id/<?php echo $item['id'];?>"><i class="icon-arrow-up" rel="tooltip" title="Edit"></i></a> 
-                  <?php } ?>       
-                   <?php if($counter!=count($usecases)+1) { ?>        
-                           <a href="/usecase/move/dir/2/id/<?php echo $item['id'];?>"><i class="icon-arrow-down" rel="tooltip" title="Edit"></i></a> 
+                           <a href="/usecase/move/dir/2/id/<?php echo $item['id'];?>"><i class="icon-arrow-up" rel="tooltip" title="Move Up"></i></a> 
+                  <?php } ELSE {?>   
+                           
+                           <i class="icon-flag" rel="tooltip" title="Start"></i>
+                     <?php } ?>          
+                   <?php if($counter!=count($usecases)-1) { ?>        
+                           <a href="/usecase/move/dir/1/id/<?php echo $item['id'];?>"><i class="icon-arrow-down" rel="tooltip" title="Move Down"></i></a> 
          <?php } ?> 
               </td>
               <td> 

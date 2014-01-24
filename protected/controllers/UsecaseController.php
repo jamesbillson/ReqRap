@@ -32,7 +32,7 @@ class UsecaseController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update','delete'),
+				'actions'=>array('create','update','delete','move'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -85,6 +85,7 @@ class UsecaseController extends Controller
                           $step->flow_id=$flow->getPrimaryKey();
                           $step->number=  Step::model()->getNextNumber($id);
                           $step->text='Actor action.';
+                          $step->actor_id=$model->actor_id;
                           $step->result='System result.';
                           $step->save(false);
 				$this->redirect(array('/package/view/tab/usecases/','id'=>$model->package->id));
@@ -122,6 +123,34 @@ class UsecaseController extends Controller
 		));
 	}
 
+        public function actionMove($dir, $id)
+	{
+		
+            // UP
+            // load this one, and the next one.
+            // 
+            $model=$this->loadModel($id);
+            $oldnum=$model->number;
+            $nextid=Usecase::model()->getNextUC($dir,$model->number);
+            $model2=$this->loadModel($nextid);
+            $newnum=$model2->number;
+            $model->number = $newnum;
+            $model2->number=$oldnum;
+            $model->save(false);
+            $model2->save(false);
+            
+            
+            
+            // 
+            // get the next one, and make it have this one's number
+            // get this one and make it have the old number.
+            // save them both
+            
+          
+		$this->redirect(array('/package/view/tab/usecases/id/'.$model->package->id));
+	
+	}
+        
 	/**
 	 * Deletes a particular model.
 	 * If deletion is successful, the browser will be redirected to the 'admin' page.

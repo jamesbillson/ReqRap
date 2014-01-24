@@ -70,6 +70,7 @@ class ActorController extends Controller
 		if(isset($_POST['Actor']))
 		{
 			$model->attributes=$_POST['Actor'];
+                        $model->inherits=-1;
 			if($model->save())
 				$this->redirect(array('/project/view/tab/actors/id/'.$model->project->id));
 		}

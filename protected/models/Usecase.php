@@ -33,7 +33,7 @@ class Usecase extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('name, package_id, number,description,preconditions', 'required'),
+			array('name, package_id, actor_id, number,description,preconditions', 'required'),
 			array('name', 'length', 'max'=>255),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
@@ -109,7 +109,8 @@ class Usecase extends CActiveRecord
             FROM `usecase` `u`
             Join `package` `p` 
             on `p`.`id`=`u`.`package_id`
-           WHERE `p`.`id`=".$id;
+           WHERE `p`.`id`=".$id." 
+            ORDER BY number ASC";
 		$connection=Yii::app()->db;
 		$command = $connection->createCommand($sql);
 		$projects = $command->queryAll();
@@ -134,6 +135,30 @@ class Usecase extends CActiveRecord
 		return $projects[0]['number'];
     }  
     
+         public function getNextUC($dir,$id)
+    {
+       if ($dir==1) {
+           $order='ASC';
+           $compare='>';
+       }
+       if ($dir==2) {
+           $order='DESC';
+           $compare='<';
+       }
+              
+            $sql="SELECT `r`.`number`,`r`.`id`
+                    From `usecase` `r`
+                    WHERE `r`.`number`".$compare.$id."
+                    ORDER BY `r`.`number` ".$order."
+                    LIMIT 0,1"
+                    ;
+		$connection=Yii::app()->db;
+		$command = $connection->createCommand($sql);
+		$projects = $command->queryAll();
+	
+		return $projects[0]['id'];
+    }  
+    
     
                public function getProjectUCs($id)
     {
@@ -151,7 +176,11 @@ class Usecase extends CActiveRecord
             ON `u`.`id`=`f`.`usecase_id`
             LEFT Join `step` `s`
             ON `f`.`id`=`s`.`flow_id`
-            WHERE `r`.`id`=".$id;
+            WHERE `r`.`id`=".$id." 
+                GROUP BY `u`.`id`
+                ORDER BY 
+             `p`.`sequence` ASC,              
+             `u`.`number` ASC";
 		$connection=Yii::app()->db;
 		$command = $connection->createCommand($sql);
 		$projects = $command->queryAll();
