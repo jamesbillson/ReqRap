@@ -3,9 +3,9 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Jan 18, 2014 at 10:49 PM
--- Server version: 5.5.19
--- PHP Version: 5.3.8
+-- Generation Time: Jan 24, 2014 at 07:14 PM
+-- Server version: 5.6.12
+-- PHP Version: 5.4.16
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS `actor` (
   `inherits` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `project_id` (`project_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=6 ;
 
 --
 -- Dumping data for table `actor`
@@ -45,7 +45,8 @@ INSERT INTO `actor` (`id`, `project_id`, `name`, `description`, `alias`, `inheri
 (1, 47, 'User', 'A public user of the website.', '', 0),
 (2, 47, 'Member', 'A user who has signed up to the website and has credentials.', '', 1),
 (3, 47, 'Administrator', '', '', 2),
-(4, 47, 'PayPal', '', '', 0);
+(4, 47, 'PayPal', '', '', 0),
+(5, 48, 'Member', 'User of the system who has an account.', 'none', -1);
 
 -- --------------------------------------------------------
 
@@ -316,7 +317,7 @@ CREATE TABLE IF NOT EXISTS `flow` (
   KEY `usecase_id` (`usecase_id`),
   KEY `startstep_id` (`startstep_id`),
   KEY `rejoinstep_id` (`rejoinstep_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=52 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=54 ;
 
 --
 -- Dumping data for table `flow`
@@ -333,7 +334,8 @@ INSERT INTO `flow` (`id`, `name`, `usecase_id`, `main`, `startstep_id`, `rejoins
 (48, 'Main', 13, 1, 0, 0),
 (49, 'Main', 14, 1, 0, 0),
 (50, 'Main', 15, 1, 0, 0),
-(51, 'Main', 16, 1, 0, 0);
+(51, 'Main', 16, 1, 0, 0),
+(53, 'Main', 18, 1, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -459,7 +461,7 @@ CREATE TABLE IF NOT EXISTS `interfacetype` (
   `project_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `project_id` (`project_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
 
 --
 -- Dumping data for table `interfacetype`
@@ -468,7 +470,10 @@ CREATE TABLE IF NOT EXISTS `interfacetype` (
 INSERT INTO `interfacetype` (`id`, `number`, `name`, `project_id`) VALUES
 (1, '1', 'Web Interfaces', 47),
 (2, '0', 'Not Classified', 47),
-(3, '2', 'Email', 47);
+(3, '2', 'Email', 47),
+(4, '0', 'Not Classified', 48),
+(5, '1', 'Web Interface', 48),
+(6, '2', 'Email', 48);
 
 -- --------------------------------------------------------
 
@@ -516,7 +521,7 @@ CREATE TABLE IF NOT EXISTS `object` (
   `project_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `project_id` (`project_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
 
 --
 -- Dumping data for table `object`
@@ -524,7 +529,8 @@ CREATE TABLE IF NOT EXISTS `object` (
 
 INSERT INTO `object` (`id`, `number`, `name`, `description`, `project_id`) VALUES
 (2, '1', 'Winery', 'A producer of wines.', 47),
-(3, '2', 'Label', 'A wine product that is produced over one or more years, resulting in a number of vintages of that label.', 47);
+(3, '2', 'Label', 'A wine product that is produced over one or more years, resulting in a number of vintages of that label.', 47),
+(4, '3', 'Option', 'A  business rule parameter stored for to allow updating from time to time', 47);
 
 -- --------------------------------------------------------
 
@@ -540,7 +546,7 @@ CREATE TABLE IF NOT EXISTS `objectproperty` (
   `description` text NOT NULL,
   PRIMARY KEY (`id`),
   KEY `object_id` (`object_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=13 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=16 ;
 
 --
 -- Dumping data for table `objectproperty`
@@ -554,7 +560,10 @@ INSERT INTO `objectproperty` (`id`, `number`, `object_id`, `name`, `description`
 (9, '5', 2, 'Address', 'Address of winery'),
 (10, '6', 2, 'Phone Number', 'Contact land line phone number'),
 (11, '1', 3, 'Name', 'The name on the label.'),
-(12, '2', 3, 'Rating', 'The score out of 5 given to that label by Wine Genius');
+(12, '2', 3, 'Rating', 'The score out of 5 given to that label by Wine Genius'),
+(13, '1', 4, 'Option', 'name of option'),
+(14, '2', 4, 'Description', 'Description of option'),
+(15, '3', 4, 'Value', 'Value of option');
 
 -- --------------------------------------------------------
 
@@ -591,7 +600,7 @@ CREATE TABLE IF NOT EXISTS `package` (
   `contract_amount` decimal(10,2) NOT NULL DEFAULT '0.00',
   `extlink` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=695 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=696 ;
 
 --
 -- Dumping data for table `package`
@@ -599,7 +608,8 @@ CREATE TABLE IF NOT EXISTS `package` (
 
 INSERT INTO `package` (`id`, `name`, `stage`, `sequence`, `project_id`, `budget`, `contract_amount`, `extlink`) VALUES
 (693, 'Public Website', 1, 1, 47, '0.00', '0.00', NULL),
-(694, 'Membership', 1, 2, 47, '0.00', '0.00', NULL);
+(694, 'Membership', 1, 2, 47, '0.00', '0.00', NULL),
+(695, 'Versioning', 1, 1, 48, '0.00', '0.00', NULL);
 
 -- --------------------------------------------------------
 
@@ -644,14 +654,15 @@ CREATE TABLE IF NOT EXISTS `project` (
   `subcontractretention` text NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `extlink` (`extlink`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=48 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=49 ;
 
 --
 -- Dumping data for table `project`
 --
 
 INSERT INTO `project` (`id`, `name`, `description`, `company_id`, `budget`, `claimtype`, `stage`, `extlink`, `subcontractterms`, `subcontractretention`) VALUES
-(47, 'Wine Genius', 'test', 505, '0.00', 1, 1, 'c660a35542e52763d18098132a4815f5', '30 Days after end of month of invoice', '5% held for 45 days');
+(47, 'Wine Genius', 'test', 505, '0.00', 1, 1, 'c660a35542e52763d18098132a4815f5', '30 Days after end of month of invoice', '5% held for 45 days'),
+(48, 'Reqrap', 'Rapid requirements development system.', 505, '0.00', 1, 1, '9e400e1040cd520987bd3858e825061b', '30 Days after end of month of invoice', '5% held for 45 days');
 
 -- --------------------------------------------------------
 
@@ -722,7 +733,7 @@ CREATE TABLE IF NOT EXISTS `rule` (
   `active` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `project_id` (`project_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=74 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=75 ;
 
 --
 -- Dumping data for table `rule`
@@ -784,7 +795,8 @@ INSERT INTO `rule` (`id`, `rule_id`, `number`, `title`, `text`, `project_id`, `v
 (70, 42, 42, 'Member review image upload', 'Image upload allows a maximum size of 4mb to be uploaded.\r\nOnly png or jpg file types are allowed.\r\nImage will be automatically resized to a max width of 800 px on upload\r\n', 47, 52, 1),
 (71, 43, 43, 'Order of Article search results', 'Article search results are show ordered by relevance.', 47, 53, 1),
 (72, 44, 44, 'Display of Botrytis and Sparkling Wines', 'Wines in some retail categories show a suffix when their full Winery-Label-Vintage is displayed.  Eg.\r\nWinery-Label-(Suffix)-Vintage\r\nDessert Wine – suffix is ‘Botrytis’\r\nRose – suffix is ‘Rose’\r\nSweet Reds – suffix is ‘Dessert Red’\r\nSparkling White – suffix is ‘Sparkling’\r\nSparkling Rose – suffix is ‘Sparkling’\r\nSparkling Red – suffix is ‘Sparkling’\r\n', 47, 54, 1),
-(73, 45, 45, 'Validation time frame', 'stub', 47, 56, 1);
+(73, 45, 45, 'Validation time frame', 'stub', 47, 56, 0),
+(74, 45, 45, 'Validation time frame', 'The time limit in days for validation is stored as an ''option'' in the database.', 47, 57, 1);
 
 -- --------------------------------------------------------
 
@@ -816,7 +828,7 @@ CREATE TABLE IF NOT EXISTS `step` (
   `result` text NOT NULL,
   PRIMARY KEY (`id`),
   KEY `flow_id` (`flow_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=74 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=75 ;
 
 --
 -- Dumping data for table `step`
@@ -838,7 +850,8 @@ INSERT INTO `step` (`id`, `flow_id`, `number`, `actor_id`, `text`, `result`) VAL
 (67, 49, 3, 1, 'Actor action.', 'System result.'),
 (68, 50, 1, 1, 'Actor action.', 'System result.'),
 (69, 51, 1, 1, 'Actor action.', 'System result.'),
-(70, 41, 4, 1, 'No action', 'System sends Validation email.');
+(70, 41, 4, 1, 'No action', 'System sends Validation email.'),
+(74, 53, 1, 2, 'Actor action.', 'System result.');
 
 -- --------------------------------------------------------
 
@@ -1076,7 +1089,7 @@ CREATE TABLE IF NOT EXISTS `usecase` (
   `preconditions` text NOT NULL,
   PRIMARY KEY (`id`),
   KEY `package_id` (`package_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=17 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=19 ;
 
 --
 -- Dumping data for table `usecase`
@@ -1084,14 +1097,15 @@ CREATE TABLE IF NOT EXISTS `usecase` (
 
 INSERT INTO `usecase` (`id`, `package_id`, `number`, `actor_id`, `name`, `description`, `preconditions`) VALUES
 (8, 693, '1', 1, 'Create Membership', 'This use case describes the process of a user registering to become a member.', 'None that I know of'),
-(9, 693, '2', 1, 'Sign up with Facebook', 'Process of a user signing up with facebook.', 'None'),
-(10, 693, '3', 1, 'Verify Membership', 'Process of a user verifying their email address as part of the sign up process', 'None'),
-(11, 693, '4', 1, 'Browse Map', 'This use case describes a user browsing the winery map.', 'None'),
-(12, 693, '5', 1, 'Search Wines', 'This use case describes how a User searches for a wine.', 'None'),
-(13, 693, '6', 1, 'Search Content', 'This use case describes how a User searches the site content.', 'None'),
+(9, 693, '3', 1, 'Sign up with Facebook', 'Process of a user signing up with facebook.', 'None'),
+(10, 693, '2', 1, 'Verify Membership', 'Process of a user verifying their email address as part of the sign up process', 'None'),
+(11, 693, '6', 1, 'Browse Map', 'This use case describes a user browsing the winery map.', 'None'),
+(12, 693, '4', 1, 'Search Wines', 'This use case describes how a User searches for a wine.', 'None'),
+(13, 693, '5', 1, 'Search Content', 'This use case describes how a User searches the site content.', 'None'),
 (14, 693, '7', 1, 'Request Member Only Content', 'This use case describes the process of a user trying to view member only content.', 'None'),
 (15, 693, '8', 1, 'Log In', 'This use case describes the process of how a member logs in', 'None'),
-(16, 693, '9', 1, 'Retrieve Password', 'This use case describes how a member retrieves their username and / or password from within the system.', 'None');
+(16, 693, '9', 1, 'Retrieve Password', 'This use case describes how a member retrieves their username and / or password from within the system.', 'None'),
+(18, 694, '1', 2, 'Update profile', 'This use case describes the process of a Member updating their membership profile.', 'None');
 
 -- --------------------------------------------------------
 
@@ -1155,7 +1169,7 @@ CREATE TABLE IF NOT EXISTS `version` (
   `create_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `create_user` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=57 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=58 ;
 
 --
 -- Dumping data for table `version`
@@ -1217,7 +1231,8 @@ INSERT INTO `version` (`id`, `number`, `release`, `project_id`, `status`, `objec
 (53, 53, '1', 47, 1, 1, 1, '2014-01-16 04:51:23', 113),
 (54, 54, '1', 47, 1, 1, 1, '2014-01-16 04:51:51', 113),
 (55, 55, '1', 47, 1, 1, 1, '2014-01-17 02:20:49', 113),
-(56, 56, '1', 47, 1, 1, 1, '2014-01-17 02:21:19', 113);
+(56, 56, '1', 47, 1, 1, 1, '2014-01-17 02:21:19', 113),
+(57, 57, '1', 47, 1, 1, 2, '2014-01-23 04:49:39', 113);
 
 --
 -- Constraints for dumped tables
