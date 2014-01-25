@@ -49,7 +49,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
         <?php if ($item['text']=='stub')echo '<i class="icon-cogs text-warning" rel="tooltip" title="Incomplete Rule"></i>';?>
 
                <?php
-                         if(!count(Steprule::model()->findAll('rule_id='.$item['id']))){
+                         if(!count(Steprule::model()->findAll('rule_id='.$item['rule_id']))){
                         ?>
                         <i class="icon-exclamation-sign text-warning" rel="tooltip" title="Orphan - this Rule is not used."></i>
                          <?php } ?>
@@ -72,10 +72,11 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
         </td>
         </tr>
 <?php
-        } ?>
+        }
+        endif; ?>
         
    	</tbody>
 </table>
 
-<?php endif;
+<?php 
 $this->endWidget(); ?>

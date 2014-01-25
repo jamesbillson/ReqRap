@@ -90,7 +90,6 @@ public function actionCreateInline()
                      $form=new Form;
                      $form->number=Form::model()->getNextNumber($step->flow->usecase->package->project->id);;
                      $form->name=$_POST['new_form'];
-                     $form->type_id=Interfacetype::model()->getUnclassified($step->flow->usecase->package->project->id);
                      $form->project_id=$step->flow->usecase->package->project->id;
                      $form->save(false);
                      $model->form_id=$form->getprimaryKey();

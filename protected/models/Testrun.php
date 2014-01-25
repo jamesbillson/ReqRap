@@ -100,7 +100,14 @@ class Testrun extends CActiveRecord
 	}
 
         
-        
+          public function createInitial($id)
+    {
+       $sql="INSERT INTO `testrun`(`number`, `status`, `project_id`) VALUES 
+           (1,1, ".$id.")";
+                 $connection=Yii::app()->db;
+        $command = $connection->createCommand($sql);
+        $command->execute();
+    }   
         
         
 	/**

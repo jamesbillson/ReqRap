@@ -31,6 +31,7 @@ $active['interfaces']=FALSE;
 $active['usecases']=FALSE;
 $active['forms']=FALSE;
 $active['followers']=FALSE;
+$active['testcases']=FALSE;
 
  $active[$tab]=TRUE;
 
@@ -86,7 +87,10 @@ $active['followers']=FALSE;
                     compact('model','status'),true,true),'active'=>$active['interfaces']);
 
  
-    
+       $tabs[] = array('id' => 'testcases',
+            'label' => 'Test Cases',
+            'content' => $this->renderPartial('_testcases',
+                    compact('model','status'),true,true),'active'=>$active['testcases']); 
 
     
 ?>

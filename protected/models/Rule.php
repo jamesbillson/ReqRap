@@ -102,13 +102,15 @@ class Rule extends CActiveRecord
         $sql="SELECT `r`.`text`,`r`.`number`, `r`.`id`,`r`.`title`
            From `rule` `r`
             Join `steprule` `x` 
-            on `x`.`rule_id`=`r`.`id`
+            on `x`.`rule_id`=`r`.`rule_id`
             Join `step` `s` 
             on `x`.`step_id`=`s`.`id`
             Join `flow` `f`
             ON `f`.`id`=`s`.`flow_id`
           
            WHERE `f`.`usecase_id`=".$id."
+               AND
+               `r`.`active`=1
                GROUP BY `r`.`id`
                ORDER BY `r`.`number`";
 		$connection=Yii::app()->db;
@@ -124,10 +126,13 @@ class Rule extends CActiveRecord
         $sql="SELECT `r`.`text`,`r`.`number`, `r`.`id`,`r`.`title`,`x`.`id` as xid
            From `rule` `r`
             Join `steprule` `x` 
-            on `x`.`rule_id`=`r`.`id`
+            on `x`.`rule_id`=`r`.`rule_id`
             Join `step` `s` 
             on `x`.`step_id`=`s`.`id`
-           WHERE `s`.`id`=".$id;
+           WHERE 
+           `r`.`active`=1
+            AND
+            `s`.`id`=".$id;
 		$connection=Yii::app()->db;
 		$command = $connection->createCommand($sql);
 		$projects = $command->queryAll();
@@ -155,9 +160,11 @@ class Rule extends CActiveRecord
     {
        
               
-        $sql="SELECT max(`r`.`rule_id`)as number
+        $sql="SELECT `r`.`rule_id` as `number`
            From `rule` `r`
-            WHERE `r`.`project_id`=".$id;
+          
+           ORDER BY `number` DESC
+           LIMIT 0,1";
 		$connection=Yii::app()->db;
 		$command = $connection->createCommand($sql);
 		$projects = $command->queryAll();

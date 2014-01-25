@@ -17,9 +17,9 @@
         <h3>Uses</h3>
         
         <?php 
- $steprule=(Steprule::model()->findAll('rule_id='.$model->id));
+ $steprule=(Steprule::model()->findAll('rule_id='.$model->rule_id));
  if(!count($steprule)){
-     $usecases= Usecase::model()->getProjectUCs($model->project->id);
+ $usecases= Usecase::model()->getProjectUCs($model->project->id);
  ?>
  This Rule is not used.<br />
  Associate with Use Case

@@ -162,10 +162,9 @@ class Iface extends CActiveRecord
     {
        $sql="INSERT INTO `interfacetype`(`number`, `name`, `project_id`) VALUES 
            (0,'Not Classified', ".$id."),(1,'Web Interface', ".$id."),(2,'Email', ".$id.")";
-		$connection=Yii::app()->db;
-		$command = $connection->createCommand($sql);
-		$projects = $command->queryAll();
-		return $projects;
+                 $connection=Yii::app()->db;
+        $command = $connection->createCommand($sql);
+        $command->execute();
     }   
 	/**
 	 * Returns the static model of the specified AR class.

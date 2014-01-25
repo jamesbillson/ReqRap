@@ -16,8 +16,9 @@ $data = Release::model()->findAll('project_id='.$model->id);
 
 	</tr>
 	</thead>
+            <?php if (count($data)):?>
         <tbody>
-<?php if (count($data)):?>
+
         <?php foreach($data as $item) {?>
         <tr class="odd">  
         <td>   
@@ -41,15 +42,16 @@ $data = Release::model()->findAll('project_id='.$model->id);
               
         </td>
         </tr>
+          	</tbody>
 <?php
         } ?>
-        
-   	</tbody>
+<?php endif; ?>        
+ 
 </table>
 
 
 
-<?php endif; ?>
+
 
 Finalise this release -<br />
 Change the release number on all the active objects.<br />

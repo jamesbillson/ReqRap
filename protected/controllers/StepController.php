@@ -64,6 +64,7 @@ class StepController extends Controller
 	{
 		$model=new Step;
                 
+                
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
                 $number= 1+ Step::model()->getNextNumber($id);
@@ -71,6 +72,8 @@ class StepController extends Controller
                 $model->flow_id= $id;
                 $model->text = 'New step';
                 $model->result = 'Result';
+                $model->actor_id=$model->flow->usecase->actor_id;
+                
                 $model->save();
                 
 		

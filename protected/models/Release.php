@@ -91,7 +91,7 @@ class Release extends CActiveRecord
 			'criteria'=>$criteria,
 		));
 	}
-
+/*
              public function getNextNumber($id,$object, $action)
     {
        
@@ -105,11 +105,11 @@ class Release extends CActiveRecord
             WHERE `v`.`project_id`=".$id;
 
 
-/*
+
 SELECT max(`v`.`number`)as number
            From `release` `v`
             WHERE `v`.`project_id`=".$id;
- * */
+ * 
  
 		$connection=Yii::app()->db;
 		$command = $connection->createCommand($sql);
@@ -138,7 +138,34 @@ SELECT max(`v`.`number`)as number
         
 		return $number;
     }  
-        
+ */      
+    public function currentRelease($id)
+    {
+               $sql="SELECT `r`.`id`
+            FROM `release` `r`
+            WHERE 
+            `r`.`project_id`=".$id."
+            ORDER BY
+            `r`.`id` DESC
+            Limit 0,1";
+                $connection=Yii::app()->db;
+		$command = $connection->createCommand($sql);
+		$releases = $command->queryAll();
+		$release=$releases[0]['id'];
+        return $release;
+    }
+    
+    
+    
+         public function createInitial($id)
+    {
+       $sql="INSERT INTO `release`(`number`, `status`, `project_id`,`create_user`) VALUES 
+           (0.1,1, ".$id.",".Yii::app()->user->id.")";
+                 $connection=Yii::app()->db;
+        $command = $connection->createCommand($sql);
+        $command->execute();
+    }   
+    
 	/**
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!

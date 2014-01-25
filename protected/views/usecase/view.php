@@ -3,68 +3,6 @@
     <h3> <a href="/project/view/tab/usecases/id/<?php echo $model->package->project->id; ?>"><?php echo $model->package->project->name; ?></a></h3>
 </div>
 
-<div class="row"> 
-    <?php 
-$testcases = Testcase::model()->findAll('usecase_id='.$model->id); // get the requirements with answers
-$run=Testrun::model()->getCurrentRun($model->package->project->id);
-
-
-$box = $this->beginWidget('bootstrap.widgets.TbBox', array(
-	'title' => 'Test Cases',
-	'headerIcon' => 'icon-user',
-	'htmlOptions' => array('class'=>'bootstrap-widget-table'),
-           'headerButtons' => array(
-                array(
-                    'class' => 'bootstrap.widgets.TbButton',
-                    'type' => 'primary', // '', 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
-                    'label'=> 'Auto Add Test Cases',
-                    'url'=>'/testcase/make/id/'.$model->id,
-                    
-                      ),
-     
-)));  
-  if (count($testcases)):?>
-
-  <table class="table">
-  	<thead>
-    	<tr>
-          <th>Name</th>
-
-          <th>Actions</th>
-    	</tr>
-  	</thead>
-      <tbody>
-  
-        <?php foreach($testcases as $item) : // Go through each un answered question??>
-<?php   
-
-$result=Testcaseresult::model()->find('testrun_id='.$run.' AND testcase_id='.$item['id']);
-
-?>
-          <tr class="odd">
-
-              <td>   
-                  <b><a href="/testcase/view/id/<?php echo $item['id'];?>"><?php echo $item['name'];?></a></b>
-                
-              </td> 
-               <td>   
-                 <?php // echo Testcaseresult::$status[$result->status];?>
-                
-              </td> 
-                <td>
-                  <a href="/testcase/delete/ucid/<?php echo $model->id;?>/id/<?php echo $item['id'];?>"><i class="icon-remove-sign text-error" rel="tooltip" title="Delete"></i></a> 
-                  <a href="/testcase/update/id/<?php echo $item['id'];?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
-              </td>
-         
-        <?php endforeach ?>       
-    </tbody>
-  </table>
-
-  <?php endif; // end count of results
-  
-  $this->endWidget();
-  ?>
-      </div>
 
 
  <div class="row"> 
@@ -426,5 +364,67 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
            </div>
       
 
+<div class="row"> 
+    <?php 
+$testcases = Testcase::model()->findAll('usecase_id='.$model->id); // get the requirements with answers
+$run=Testrun::model()->getCurrentRun($model->package->project->id);
+
+
+$box = $this->beginWidget('bootstrap.widgets.TbBox', array(
+	'title' => 'Test Cases',
+	'headerIcon' => 'icon-user',
+	'htmlOptions' => array('class'=>'bootstrap-widget-table'),
+           'headerButtons' => array(
+                array(
+                    'class' => 'bootstrap.widgets.TbButton',
+                    'type' => 'primary', // '', 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
+                    'label'=> 'Auto Add Test Cases',
+                    'url'=>'/testcase/make/id/'.$model->id,
+                    
+                      ),
+     
+)));  
+  if (count($testcases)):?>
+
+  <table class="table">
+  	<thead>
+    	<tr>
+          <th>Name</th>
+
+          <th>Actions</th>
+    	</tr>
+  	</thead>
+      <tbody>
+  
+        <?php foreach($testcases as $item) : // Go through each un answered question??>
+<?php   
+
+$result=Testcaseresult::model()->find('testrun_id='.$run.' AND testcase_id='.$item['id']);
+
+?>
+          <tr class="odd">
+
+              <td>   
+                  <b><a href="/testcase/view/id/<?php echo $item['id'];?>"><?php echo $item['name'];?></a></b>
+                
+              </td> 
+               <td>   
+                 <?php // echo Testcaseresult::$status[$result->status];?>
+                
+              </td> 
+                <td>
+                  <a href="/testcase/delete/ucid/<?php echo $model->id;?>/id/<?php echo $item['id'];?>"><i class="icon-remove-sign text-error" rel="tooltip" title="Delete"></i></a> 
+                  <a href="/testcase/update/id/<?php echo $item['id'];?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
+              </td>
+         
+        <?php endforeach ?>       
+    </tbody>
+  </table>
+
+  <?php endif; // end count of results
+  
+  $this->endWidget();
+  ?>
+      </div>
 
 </div><!-- form -->

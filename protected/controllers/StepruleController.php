@@ -77,7 +77,7 @@ class StepruleController extends Controller
                      $rule->project_id=$step->flow->usecase->package->project->id;
                      $rule->active=1;
                      $rule->save(false);
-                     $model->rule_id=$rule->getprimaryKey();
+                     $model->rule_id=$rule->rule_id;
                  }	
              else {
                      $model->rule_id=$_POST['rule'];

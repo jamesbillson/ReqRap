@@ -110,6 +110,24 @@ class Testcase extends CActiveRecord
 		return $projects[0]['number'];
     }  
         
+    
+        public function getProjectTC($id)
+    {
+        $sql="
+        SELECT t.id, t.number, t.name, u.number as ucnumber 
+        from testcase t
+        JOIN usecase u
+        ON t.usecase_id=u.id
+        WHERE 
+        `t`.`project_id`=".$id;
+
+        $connection=Yii::app()->db;
+		$command = $connection->createCommand($sql);
+		$projects = $command->queryAll();
+		
+		return $projects;
+    }  
+    
 	/**
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!

@@ -3,9 +3,9 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Jan 24, 2014 at 07:14 PM
--- Server version: 5.6.12
--- PHP Version: 5.4.16
+-- Generation Time: Jan 25, 2014 at 03:11 PM
+-- Server version: 5.5.19
+-- PHP Version: 5.3.8
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -317,7 +317,7 @@ CREATE TABLE IF NOT EXISTS `flow` (
   KEY `usecase_id` (`usecase_id`),
   KEY `startstep_id` (`startstep_id`),
   KEY `rejoinstep_id` (`rejoinstep_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=54 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=62 ;
 
 --
 -- Dumping data for table `flow`
@@ -335,7 +335,14 @@ INSERT INTO `flow` (`id`, `name`, `usecase_id`, `main`, `startstep_id`, `rejoins
 (49, 'Main', 14, 1, 0, 0),
 (50, 'Main', 15, 1, 0, 0),
 (51, 'Main', 16, 1, 0, 0),
-(53, 'Main', 18, 1, 0, 0);
+(53, 'Main', 18, 1, 0, 0),
+(54, 'Main', 19, 1, 0, 0),
+(55, 'Main', 20, 1, 0, 0),
+(56, 'Main', 21, 1, 0, 0),
+(58, 'Main', 23, 1, 0, 0),
+(59, 'Main', 24, 1, 0, 0),
+(60, 'Main', 25, 1, 0, 0),
+(61, 'Main', 26, 1, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -377,7 +384,7 @@ CREATE TABLE IF NOT EXISTS `form` (
   `project_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `project_id` (`project_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=8 ;
 
 --
 -- Dumping data for table `form`
@@ -385,7 +392,8 @@ CREATE TABLE IF NOT EXISTS `form` (
 
 INSERT INTO `form` (`id`, `number`, `name`, `project_id`) VALUES
 (5, '1', 'Registration Form', 47),
-(6, '2', 'Lost Password Form', 47);
+(6, '2', 'Lost Password Form', 47),
+(7, '1', 'Choose a version form', 48);
 
 -- --------------------------------------------------------
 
@@ -461,7 +469,7 @@ CREATE TABLE IF NOT EXISTS `interfacetype` (
   `project_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `project_id` (`project_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=34 ;
 
 --
 -- Dumping data for table `interfacetype`
@@ -521,7 +529,7 @@ CREATE TABLE IF NOT EXISTS `object` (
   `project_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `project_id` (`project_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=11 ;
 
 --
 -- Dumping data for table `object`
@@ -530,7 +538,13 @@ CREATE TABLE IF NOT EXISTS `object` (
 INSERT INTO `object` (`id`, `number`, `name`, `description`, `project_id`) VALUES
 (2, '1', 'Winery', 'A producer of wines.', 47),
 (3, '2', 'Label', 'A wine product that is produced over one or more years, resulting in a number of vintages of that label.', 47),
-(4, '3', 'Option', 'A  business rule parameter stored for to allow updating from time to time', 47);
+(4, '3', 'Option', 'A  business rule parameter stored for to allow updating from time to time', 47),
+(5, '1', 'Objects', 'Business objects', 48),
+(6, '2', 'Actors', 'Actors', 48),
+(7, '3', 'Use Cases', 'A list of steps defining interactions between an Actor and a system, to achieve a goal.', 48),
+(8, '4', 'Flow', 'A grouping of steps within a Use Case which allows for alternate paths to reach the goal.', 48),
+(9, '5', 'Step', 'A description of an Actors action and the resulting system response.', 48),
+(10, '6', 'Interface', 'An interface used by an Actor as the interaction medium in a Use Case.', 48);
 
 -- --------------------------------------------------------
 
@@ -599,8 +613,9 @@ CREATE TABLE IF NOT EXISTS `package` (
   `budget` decimal(10,2) NOT NULL DEFAULT '0.00',
   `contract_amount` decimal(10,2) NOT NULL DEFAULT '0.00',
   `extlink` varchar(50) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=696 ;
+  PRIMARY KEY (`id`),
+  KEY `project_id` (`project_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=697 ;
 
 --
 -- Dumping data for table `package`
@@ -609,7 +624,8 @@ CREATE TABLE IF NOT EXISTS `package` (
 INSERT INTO `package` (`id`, `name`, `stage`, `sequence`, `project_id`, `budget`, `contract_amount`, `extlink`) VALUES
 (693, 'Public Website', 1, 1, 47, '0.00', '0.00', NULL),
 (694, 'Membership', 1, 2, 47, '0.00', '0.00', NULL),
-(695, 'Versioning', 1, 1, 48, '0.00', '0.00', NULL);
+(695, 'Versioning', 1, 1, 48, '0.00', '0.00', NULL),
+(696, 'Analysis', 1, 2, 48, '0.00', '0.00', NULL);
 
 -- --------------------------------------------------------
 
@@ -654,7 +670,7 @@ CREATE TABLE IF NOT EXISTS `project` (
   `subcontractretention` text NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `extlink` (`extlink`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=49 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=58 ;
 
 --
 -- Dumping data for table `project`
@@ -707,14 +723,15 @@ CREATE TABLE IF NOT EXISTS `release` (
   PRIMARY KEY (`id`),
   KEY `create_user` (`create_user`),
   KEY `project_id` (`project_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=11 ;
 
 --
 -- Dumping data for table `release`
 --
 
 INSERT INTO `release` (`id`, `number`, `status`, `project_id`, `create_date`, `create_user`) VALUES
-(1, '0.1', 1, 47, '2014-01-16 03:46:15', 113);
+(1, '0.1', 1, 47, '2014-01-16 03:46:15', 113),
+(2, '0.1', 1, 48, '2014-01-25 02:02:38', 113);
 
 -- --------------------------------------------------------
 
@@ -732,8 +749,9 @@ CREATE TABLE IF NOT EXISTS `rule` (
   `version_id` int(11) NOT NULL,
   `active` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `project_id` (`project_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=75 ;
+  KEY `project_id` (`project_id`),
+  KEY `rule_id` (`rule_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=95 ;
 
 --
 -- Dumping data for table `rule`
@@ -774,7 +792,7 @@ INSERT INTO `rule` (`id`, `rule_id`, `number`, `title`, `text`, `project_id`, `v
 (49, 21, 21, 'My Account Link', 'When a member is logged in the Log In button on the header changes to become My Account.', 47, 31, 1),
 (50, 22, 22, 'Login Credentials', 'User logs in with email and password.', 47, 32, 1),
 (51, 23, 23, 'Ajax Search on typing', 'Ajax Site Search is made after each character is entered once there is more than one character entered.', 47, 33, 1),
-(52, 24, 24, 'Ajax Site Search matching', 'Ajax Site Search matches against labels, wineries and wordpress content using a partial match on the entire string. Wines, wineries and content are displayed in Ajax Site Search Pane.', 47, 34, 1),
+(52, 24, 24, 'Ajax Site Search matching', 'Ajax Site Search matches against labels, wineries and wordpress content using a partial match on the entire string. Wines, wineries and content are displayed in Ajax Site Search Pane.', 47, 34, 0),
 (53, 25, 25, 'Submit Site Search', 'Site search uses a partial AND match on the search string separated on spaces.', 47, 35, 1),
 (54, 26, 26, 'Editable user content', 'User submitted content of types ‘note’, ‘points’, ‘drinking range’ and ‘images’', 47, 36, 1),
 (55, 27, 27, 'Ajax Wine Search matching', 'Ajax Site Search matches against wineries, labels and vintages using a partial match on the entire string.  Up to 10 matching wines are displayed. Any filters selected on the wine page are applied to the Ajax search.', 47, 37, 1),
@@ -796,7 +814,12 @@ INSERT INTO `rule` (`id`, `rule_id`, `number`, `title`, `text`, `project_id`, `v
 (71, 43, 43, 'Order of Article search results', 'Article search results are show ordered by relevance.', 47, 53, 1),
 (72, 44, 44, 'Display of Botrytis and Sparkling Wines', 'Wines in some retail categories show a suffix when their full Winery-Label-Vintage is displayed.  Eg.\r\nWinery-Label-(Suffix)-Vintage\r\nDessert Wine – suffix is ‘Botrytis’\r\nRose – suffix is ‘Rose’\r\nSweet Reds – suffix is ‘Dessert Red’\r\nSparkling White – suffix is ‘Sparkling’\r\nSparkling Rose – suffix is ‘Sparkling’\r\nSparkling Red – suffix is ‘Sparkling’\r\n', 47, 54, 1),
 (73, 45, 45, 'Validation time frame', 'stub', 47, 56, 0),
-(74, 45, 45, 'Validation time frame', 'The time limit in days for validation is stored as an ''option'' in the database.', 47, 57, 1);
+(74, 45, 45, 'Validation time frame', 'The time limit in days for validation is stored as an ''option'' in the database.', 47, 57, 1),
+(90, 46, 1, 'Relationships not changed by object version.', 'stub', 48, 79, 0),
+(91, 46, 1, 'Relationships not changed by object version.', 'Relationships not changed by object version.', 48, 80, 1),
+(92, 47, 2, 'Versions displayed in choose a version form', 'stub', 48, 81, 0),
+(93, 47, 2, 'deleted', 'deleted', 48, 82, 0),
+(94, 48, 3, 'Test Rule', 'stub', 48, 83, 1);
 
 -- --------------------------------------------------------
 
@@ -828,7 +851,7 @@ CREATE TABLE IF NOT EXISTS `step` (
   `result` text NOT NULL,
   PRIMARY KEY (`id`),
   KEY `flow_id` (`flow_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=75 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=84 ;
 
 --
 -- Dumping data for table `step`
@@ -851,7 +874,15 @@ INSERT INTO `step` (`id`, `flow_id`, `number`, `actor_id`, `text`, `result`) VAL
 (68, 50, 1, 1, 'Actor action.', 'System result.'),
 (69, 51, 1, 1, 'Actor action.', 'System result.'),
 (70, 41, 4, 1, 'No action', 'System sends Validation email.'),
-(74, 53, 1, 2, 'Actor action.', 'System result.');
+(74, 53, 1, 2, 'Actor action.', 'System result.'),
+(75, 54, 1, 5, 'Actor action.', 'System result.'),
+(76, 55, 1, 5, 'Actor action.', 'System result.'),
+(77, 56, 1, 5, 'Actor action.', 'System result.'),
+(79, 58, 1, 5, 'Actor action.', 'System result.'),
+(80, 59, 1, 5, 'Actor action.', 'System result.'),
+(81, 60, 1, 5, 'Actor selects to view a history of an object from the object view screen.', 'System displays the choose a version form.'),
+(82, 61, 1, 5, 'Actor action.', 'System result.'),
+(83, 60, 2, 5, 'Actor selects a previous version from the list of versions.', 'System redisplays object view with selected version as current version');
 
 -- --------------------------------------------------------
 
@@ -866,14 +897,15 @@ CREATE TABLE IF NOT EXISTS `stepform` (
   PRIMARY KEY (`id`),
   KEY `form_id` (`form_id`),
   KEY `step_id` (`step_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=26 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=27 ;
 
 --
 -- Dumping data for table `stepform`
 --
 
 INSERT INTO `stepform` (`id`, `step_id`, `form_id`) VALUES
-(25, 55, 5);
+(25, 55, 5),
+(26, 81, 7);
 
 -- --------------------------------------------------------
 
@@ -918,7 +950,7 @@ CREATE TABLE IF NOT EXISTS `steprule` (
   PRIMARY KEY (`id`),
   KEY `rule_id` (`rule_id`),
   KEY `step_id` (`step_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=23 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=33 ;
 
 --
 -- Dumping data for table `steprule`
@@ -928,7 +960,8 @@ INSERT INTO `steprule` (`id`, `step_id`, `rule_id`) VALUES
 (19, 55, 22),
 (20, 62, 23),
 (21, 58, 24),
-(22, 56, 73);
+(30, 81, 46),
+(32, 83, 48);
 
 -- --------------------------------------------------------
 
@@ -1022,8 +1055,9 @@ CREATE TABLE IF NOT EXISTS `testrun` (
   `project_id` int(11) NOT NULL,
   `number` smallint(4) NOT NULL,
   `status` tinyint(1) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+  PRIMARY KEY (`id`),
+  KEY `project_id` (`project_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=14 ;
 
 --
 -- Dumping data for table `testrun`
@@ -1031,7 +1065,8 @@ CREATE TABLE IF NOT EXISTS `testrun` (
 
 INSERT INTO `testrun` (`id`, `project_id`, `number`, `status`) VALUES
 (1, 47, 1, 2),
-(2, 47, 2, 1);
+(2, 47, 2, 1),
+(4, 48, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -1089,7 +1124,7 @@ CREATE TABLE IF NOT EXISTS `usecase` (
   `preconditions` text NOT NULL,
   PRIMARY KEY (`id`),
   KEY `package_id` (`package_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=19 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=27 ;
 
 --
 -- Dumping data for table `usecase`
@@ -1097,15 +1132,22 @@ CREATE TABLE IF NOT EXISTS `usecase` (
 
 INSERT INTO `usecase` (`id`, `package_id`, `number`, `actor_id`, `name`, `description`, `preconditions`) VALUES
 (8, 693, '1', 1, 'Create Membership', 'This use case describes the process of a user registering to become a member.', 'None that I know of'),
-(9, 693, '3', 1, 'Sign up with Facebook', 'Process of a user signing up with facebook.', 'None'),
+(9, 693, '2', 1, 'Sign up with Facebook', 'Process of a user signing up with facebook.', 'None'),
 (10, 693, '2', 1, 'Verify Membership', 'Process of a user verifying their email address as part of the sign up process', 'None'),
 (11, 693, '6', 1, 'Browse Map', 'This use case describes a user browsing the winery map.', 'None'),
-(12, 693, '4', 1, 'Search Wines', 'This use case describes how a User searches for a wine.', 'None'),
+(12, 693, '3', 1, 'Search Wines', 'This use case describes how a User searches for a wine.', 'None'),
 (13, 693, '5', 1, 'Search Content', 'This use case describes how a User searches the site content.', 'None'),
 (14, 693, '7', 1, 'Request Member Only Content', 'This use case describes the process of a user trying to view member only content.', 'None'),
 (15, 693, '8', 1, 'Log In', 'This use case describes the process of how a member logs in', 'None'),
 (16, 693, '9', 1, 'Retrieve Password', 'This use case describes how a member retrieves their username and / or password from within the system.', 'None'),
-(18, 694, '1', 2, 'Update profile', 'This use case describes the process of a Member updating their membership profile.', 'None');
+(18, 694, '1', 2, 'Update profile', 'This use case describes the process of a Member updating their membership profile.', 'None'),
+(19, 696, '1', 5, 'Create Objects', 'Define objects used by the system.', 'None'),
+(20, 696, '2', 5, 'Define Actors', 'Create actors', 'None'),
+(21, 696, '3', 5, 'Create Use Cases', 'Define the use cases', 'None'),
+(23, 695, '3', 5, 'Roll back entire project', 'Roll back all the requirements to match a previous state.', 'None'),
+(24, 695, '4', 5, 'Create a new release', 'Complete a release and upgrade the working release number.', 'None'),
+(25, 695, '1', 5, 'Roll back individual object', 'Roll back a single object to a previous version.', 'None'),
+(26, 695, '4', 5, 'View change log', 'See a log of all changes', 'None');
 
 -- --------------------------------------------------------
 
@@ -1168,8 +1210,10 @@ CREATE TABLE IF NOT EXISTS `version` (
   `action` tinyint(1) NOT NULL,
   `create_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `create_user` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=58 ;
+  PRIMARY KEY (`id`),
+  KEY `project_id` (`project_id`),
+  KEY `create_user` (`create_user`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=84 ;
 
 --
 -- Dumping data for table `version`
@@ -1232,7 +1276,12 @@ INSERT INTO `version` (`id`, `number`, `release`, `project_id`, `status`, `objec
 (54, 54, '1', 47, 1, 1, 1, '2014-01-16 04:51:51', 113),
 (55, 55, '1', 47, 1, 1, 1, '2014-01-17 02:20:49', 113),
 (56, 56, '1', 47, 1, 1, 1, '2014-01-17 02:21:19', 113),
-(57, 57, '1', 47, 1, 1, 2, '2014-01-23 04:49:39', 113);
+(57, 57, '1', 47, 1, 1, 2, '2014-01-23 04:49:39', 113),
+(79, 0, '2', 48, 1, 1, 1, '2014-01-25 03:52:22', 113),
+(80, 1, '2', 48, 1, 1, 2, '2014-01-25 03:52:52', 113),
+(81, 2, '2', 48, 1, 1, 1, '2014-01-25 03:58:32', 113),
+(82, 3, '2', 48, 1, 1, 3, '2014-01-25 04:03:41', 113),
+(83, 4, '2', 48, 1, 1, 1, '2014-01-25 04:04:01', 113);
 
 --
 -- Constraints for dumped tables
@@ -1282,6 +1331,12 @@ ALTER TABLE `objectproperty`
   ADD CONSTRAINT `objectproperty_ibfk_1` FOREIGN KEY (`object_id`) REFERENCES `object` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
+-- Constraints for table `package`
+--
+ALTER TABLE `package`
+  ADD CONSTRAINT `package_ibfk_1` FOREIGN KEY (`project_id`) REFERENCES `project` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
 -- Constraints for table `release`
 --
 ALTER TABLE `release`
@@ -1318,7 +1373,7 @@ ALTER TABLE `stepiface`
 -- Constraints for table `steprule`
 --
 ALTER TABLE `steprule`
-  ADD CONSTRAINT `steprule_ibfk_2` FOREIGN KEY (`rule_id`) REFERENCES `rule` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `steprule_ibfk_4` FOREIGN KEY (`rule_id`) REFERENCES `rule` (`rule_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `steprule_ibfk_3` FOREIGN KEY (`step_id`) REFERENCES `step` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
@@ -1338,6 +1393,12 @@ ALTER TABLE `testresult`
   ADD CONSTRAINT `testresult_ibfk_3` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
 
 --
+-- Constraints for table `testrun`
+--
+ALTER TABLE `testrun`
+  ADD CONSTRAINT `testrun_ibfk_1` FOREIGN KEY (`project_id`) REFERENCES `project` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
 -- Constraints for table `teststep`
 --
 ALTER TABLE `teststep`
@@ -1355,6 +1416,13 @@ ALTER TABLE `usecase`
 ALTER TABLE `uses`
   ADD CONSTRAINT `uses_ibfk_2` FOREIGN KEY (`usedby`) REFERENCES `usecase` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `uses_ibfk_3` FOREIGN KEY (`uses`) REFERENCES `usecase` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `version`
+--
+ALTER TABLE `version`
+  ADD CONSTRAINT `version_ibfk_2` FOREIGN KEY (`create_user`) REFERENCES `user` (`id`),
+  ADD CONSTRAINT `version_ibfk_1` FOREIGN KEY (`project_id`) REFERENCES `project` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

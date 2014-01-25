@@ -95,24 +95,70 @@ class Version extends CActiveRecord
 		));
 	}
 
+                 public function createInitial($id)
+    {
+      
+                     
+                          $sql="SELECT `r`.`id`
+            FROM `release` `r`
+            WHERE 
+            `r`.`project_id`=".$id."
+            ORDER BY
+            `r`.`id` DESC
+            Limit 0,1";
+                $connection=Yii::app()->db;
+		$command = $connection->createCommand($sql);
+		$releases = $command->queryAll();
+		$release=$releases[0]['id'];
+                          
+                     
+           $sql="INSERT INTO `version`(
+           `number`, 
+           `release`, 
+           `project_id`,
+           `status`,
+           `object`,
+           `action`,
+           `create_user`
+           ) VALUES (
+           1,
+           ".$release.",
+           ".$id.",
+           1,
+           0,
+           0,
+           ".Yii::app()->user->id.")";
+        $connection=Yii::app()->db;
+        $command = $connection->createCommand($sql);
+        $command->execute();
+    }   
+        
+        
+        
              public function getNextNumber($id,$object, $action)
     {
        
-              
-        $sql="select *
-            from version v
+           /*   
+        $sql="
+           SELECT `v`.`number`
+            FROM `version` `v`
             inner join(
-            select project_id, max(number) vers
-            from version
-             )ver on v.project_id = ver.project_id and v.number = ver.vers  
+            select `project_id`, max(`number`) `vers`
+            from `version`
+             )`ver`
+            on `v`.`project_id` = `ver`.`project_id` and `v`.`number` = `ver`.`vers` 
             WHERE `v`.`project_id`=".$id;
+*/
+                 
+                 $sql=" SELECT `v`.`number`
+                        FROM `version` `v`
+                        WHERE 
+                        `v`.`project_id`=".$id."
+                        ORDER BY
+                        `v`.`number` DESC
+                        Limit 0,1";
 
 
-/*
-SELECT max(`v`.`number`)as number
-           From `version` `v`
-            WHERE `v`.`project_id`=".$id;
- * */
  
 		$connection=Yii::app()->db;
 		$command = $connection->createCommand($sql);
@@ -122,8 +168,11 @@ SELECT max(`v`.`number`)as number
                 } ELSE {
                     $number=$projects[0]['number']+1;
                 }
+          
                 
-          $sql="INSERT INTO `version`(`number`,
+                
+          $sql="INSERT INTO `version`(
+              `number`,
               `release`, 
               `project_id`,
               `status`,
@@ -132,14 +181,21 @@ SELECT max(`v`.`number`)as number
               `create_date`,
               `create_user`) 
               VALUES
-              ('".$number."',"
-                  . " '".$projects[0]['release']."',".$id.",1,".$object.",".$action.",now(),".Yii::app()->user->id.")";
+              ('".$number."',
+                '".Release::model()->currentRelease($id)."'
+                ,".$id.",
+                1,
+                ".$object.",
+                ".$action.",
+                now(),
+                ".Yii::app()->user->id."
+                )";
           
                  $connection=Yii::app()->db;
         $command = $connection->createCommand($sql);
         $command->execute();
-        
-		return $number;
+       return Yii::app()->db->getLastInsertID();
+		
     }  
         
 	/**
