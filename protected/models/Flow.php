@@ -29,12 +29,12 @@ class Flow extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('name, usecase_id, main, startstep_id, rejoinstep_id', 'required'),
-			array('usecase_id, main, startstep_id, rejoinstep_id', 'numerical', 'integerOnly'=>true),
+			array('name, flow_id, usecase_id, main, startstep_id, rejoinstep_id', 'required'),
+			array('usecase_id,  flow_id, main, startstep_id, rejoinstep_id', 'numerical', 'integerOnly'=>true),
 			array('name', 'length', 'max'=>30),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, name, usecase_id, main, startstep_id, rejoinstep_id', 'safe', 'on'=>'search'),
+			array('id, name,  flow_id, usecase_id, main, startstep_id, rejoinstep_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -59,6 +59,7 @@ class Flow extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
+                        'flow_id' => 'Flow_ID',
 			'name' => 'Name',
 			'usecase_id' => 'Usecase',
 			'main' => 'Main',

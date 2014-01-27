@@ -30,13 +30,13 @@ class Objectproperty extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('object_id, number, name, description', 'required'),
-			array('object_id', 'numerical', 'integerOnly'=>true),
+			array('objectproperty_id, object_id, number, name, description', 'required'),
+			array('objectproperty_id, object_id', 'numerical', 'integerOnly'=>true),
 			array('name', 'length', 'max'=>255),
                     array('number', 'length', 'max'=>30),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, object_id, number, name, description', 'safe', 'on'=>'search'),
+			array('id, objectproperty_id, object_id, number, name, description', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -59,7 +59,8 @@ class Objectproperty extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'object_id' => 'Object',
+			'objectproperty_id' => 'Objectprop_id',
+                    'object_id' => 'Object',
 			'name' => 'Name',
                     'number'=>'Number',
 			'description' => 'Description',

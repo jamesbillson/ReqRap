@@ -68,15 +68,16 @@ class StepruleController extends Controller
                     
 		 if(!empty($_POST['new_rule'])){
                      $rule=new Rule;
-                     $version=Version::model()->getNextNumber($step->flow->usecase->package->project->id,1,1);
-                     $rule->version_id=$version;
+                     
                      $rule->number=Rule::model()->getNextNumber($step->flow->usecase->package->project->id);
                      $rule->rule_id=Rule::model()->getNextID($step->flow->usecase->package->project->id);
                      $rule->text='stub';
                      $rule->title=$_POST['new_rule'];
                      $rule->project_id=$step->flow->usecase->package->project->id;
-                     $rule->active=1;
+                     
                      $rule->save(false);
+                     $version=Version::model()->getNextNumber($step->flow->usecase->package->project->id,1,1,$rule->primaryKey,$rule->rule_id);
+                   
                      $model->rule_id=$rule->rule_id;
                  }	
              else {
@@ -85,7 +86,7 @@ class StepruleController extends Controller
                         
                         $model->save(false);
                 }
-                        $this->redirect(array('/step/update/id/-1/flow/'.$model->step->flow->id));
+                        $this->redirect(array('/step/update/id/'.$model->step->id.'/flow/'.$model->step->flow->id));
 		
 	}
         

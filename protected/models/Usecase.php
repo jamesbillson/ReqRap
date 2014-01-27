@@ -33,11 +33,11 @@ class Usecase extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('name, package_id, actor_id, number,description,preconditions', 'required'),
+			array('name, usecase_id, package_id, actor_id, number,description,preconditions', 'required'),
 			array('name', 'length', 'max'=>255),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, name', 'safe', 'on'=>'search'),
+			array('id, usecase_id,  name', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -66,6 +66,7 @@ class Usecase extends CActiveRecord
 	{
 		return array(
                     'id' => 'ID',
+                    'usecase_id' => 'usecase id',
                     'name' => 'Name',
                     'number' => 'Number',
                     'actor_id'=>'Default Actor',

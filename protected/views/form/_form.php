@@ -20,13 +20,7 @@
 	<?php echo $form->errorSummary($model); ?>
 
 	
-	<div class="row">
-		<?php
-                $number=Form::model()->getNextNumber($id);
-		 echo $form->hiddenField($model,'number',array('value'=>$number)); ?>
-           Number: UF-<?php echo str_pad($number, 3, "0", STR_PAD_LEFT); ?> 
-		
-	</div>
+	
 		<?php echo $form->hiddenField($model,'project_id',array('value'=>$id)); ?>
 	<div class="row">
 		<?php echo $form->labelEx($model,'name'); ?>

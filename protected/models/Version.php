@@ -12,7 +12,7 @@
  */
 class Version extends CActiveRecord
 {
- public static $objects= array(1=>'rule'); 
+ public static $objects= array(1=>'rule',2=>'form',3=>'formproperty',4=>'actor'); 
  public static $actions= array(1=>'create',2=>'update',3=>'delete'); 
    	
   
@@ -30,8 +30,8 @@ class Version extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('number, release, project_id, status,object, action,create_date, create_user', 'required'),
-			array('project_id, status', 'numerical', 'integerOnly'=>true),
+			array('number, foreign_id, foreign_key ,release, project_id, status,object, action,create_date, create_user', 'required'),
+			array('project_id, foreign_id, foreign_key ,status', 'numerical', 'integerOnly'=>true),
 			array('number, release', 'length', 'max'=>6),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
@@ -46,6 +46,8 @@ class Version extends CActiveRecord
 	{
 		
             return array(
+                'rule' => array(self::BELONGS_TO, 'Rule', 'foreign_key'),
+                
 		);
 	}
 
@@ -61,6 +63,9 @@ class Version extends CActiveRecord
 			'status' => 'Status',
                     'object'=>'Object',
                     'action'=>'Action',
+                    'foreign_key'=>'dbase key of instance',
+                    'foreign_id'=>'ID of object',
+                    'active'=>'Active',
                     'create_date'=>'create date',
                     'create_user'=>'create user',
 		);
@@ -135,22 +140,9 @@ class Version extends CActiveRecord
         
         
         
-             public function getNextNumber($id,$object, $action)
+             public function getNextNumber($id,$object, $action, $fk,$fid)
     {
-       
-           /*   
-        $sql="
-           SELECT `v`.`number`
-            FROM `version` `v`
-            inner join(
-            select `project_id`, max(`number`) `vers`
-            from `version`
-             )`ver`
-            on `v`.`project_id` = `ver`.`project_id` and `v`.`number` = `ver`.`vers` 
-            WHERE `v`.`project_id`=".$id;
-*/
-                 
-                 $sql=" SELECT `v`.`number`
+          $sql=" SELECT `v`.`number`
                         FROM `version` `v`
                         WHERE 
                         `v`.`project_id`=".$id."
@@ -169,7 +161,19 @@ class Version extends CActiveRecord
                     $number=$projects[0]['number']+1;
                 }
           
-                
+           $sql="UPDATE `version` 
+                SET 
+              `active`=0
+              WHERE
+              `project_id`=".$id."
+              AND
+              `object`=".$object."
+               AND
+               `foreign_id`=".$fid;
+          
+                 $connection=Yii::app()->db;
+        $command = $connection->createCommand($sql);
+        $command->execute();      
                 
           $sql="INSERT INTO `version`(
               `number`,
@@ -178,6 +182,9 @@ class Version extends CActiveRecord
               `status`,
               `object`,
               `action`,
+              `foreign_key`,
+              `foreign_id`,
+              `active`,
               `create_date`,
               `create_user`) 
               VALUES
@@ -187,6 +194,9 @@ class Version extends CActiveRecord
                 1,
                 ".$object.",
                 ".$action.",
+                ".$fk.",
+                ".$fid.",
+                1,
                 now(),
                 ".Yii::app()->user->id."
                 )";
@@ -194,8 +204,11 @@ class Version extends CActiveRecord
                  $connection=Yii::app()->db;
         $command = $connection->createCommand($sql);
         $command->execute();
-       return Yii::app()->db->getLastInsertID();
+       $newversion = Yii::app()->db->getLastInsertID();
 		
+       
+       return $newversion;
+       
     }  
         
 	/**

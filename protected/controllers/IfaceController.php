@@ -83,12 +83,18 @@ class IfaceController extends Controller
                 
                     }
 			$model->attributes=$_POST['Iface'];
+                     $model->number=Iface::model()->getNextIfaceNumber($model->project->id);
+                     $model->file='default.png';
 			if($model->save()){
                             
                   if($uc != -1){
                    $ifuc= new Interfaceusecase;  
                     $ifuc->usecase_id=$uc;
                     $ifuc->interface_id=$model->primarykey;
+                    
+
+                    
+                    
                     $ifuc->save();
                   }
                     	$this->redirect(array('/project/view/id/'.$model->project->id.'/tab/interfaces'));

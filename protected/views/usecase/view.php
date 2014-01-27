@@ -192,9 +192,13 @@ if($last_flow != $line['flow']) {
             while($x <= $number_ucs) { ?>
         <tr>
             <td></td>
-            <td> <b>step&nbsp;<?php echo $uc[$w][$x]['step'];?></b> </td>
+            <td> <b>step&nbsp;<?php echo $uc[$w][$x]['step'];?></b>
+                <a href="/step/update/id/<?php echo $uc[$w][$x]['id'];?>/flow/<?php echo $uc[$w]['id'];?>"><i class="icon-edit" rel="tooltip" title="Edit This Step"></i></a>
+       
+                <br />
+            <?php  echo $uc[$w][$x]['actor'];?></td>
           
-            <td>  <?php  echo $uc[$w][$x]['actor'];?>  <?php  echo $uc[$w][$x]['text'];?> <br /> 
+            <td>   <?php  echo $uc[$w][$x]['text'];?> <br /> 
                <?php  echo $uc[$w][$x]['result'];?> </td> 
         <td>  
              <?php if($uc[$w]['main']==1) { ?>
@@ -244,12 +248,11 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
 
           <tr class="odd">
 
-              <td>  <a href="/rule/view/id/<?php echo $item['id'];?>"> BR-<?php echo str_pad($item['number'], 4, "0", STR_PAD_LEFT); ?> </a>
+              <td>  <a href="/rule/view/id/<?php echo $item['rule_id'];?>"> BR-<?php echo str_pad($item['number'], 4, "0", STR_PAD_LEFT); ?> </a>
                  <?php if ($item['text']=='stub')echo '<i class="icon-exclamation-sign text-warning" rel="tooltip" title="Incomplete Rule"></i>';?>
              <b><?php echo $item['title'];?></b>
                   </td>
               <td>
-                  <a href="/rule/delete/id/<?php echo $item['id'];?>"><i class="icon-remove-sign text-error" rel="tooltip" title="Delete"></i></a> 
                   <a href="/rule/update/id/<?php echo $item['id'];?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
               </td>
          

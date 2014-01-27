@@ -5,7 +5,7 @@ $data = Release::model()->findAll('project_id='.$model->id);
 
 
 ?>
-
+<a href="/version/index/id/<?php echo $model->id; ?> ">View Changelog</a>
 <table class="table">
 	<thead>
 	<tr>

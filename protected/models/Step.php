@@ -31,12 +31,12 @@ class Step extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('flow_id, number, text,result, actor_id', 'required'),
-			array('flow_id, number', 'numerical', 'integerOnly'=>true),
+			array('flow_id, step_id, number, text,result, actor_id', 'required'),
+			array('flow_id, step_id, number', 'numerical', 'integerOnly'=>true),
 			
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, usecase_id, flow, number, text', 'safe', 'on'=>'search'),
+			array('id, step_id, usecase_id, flow, number, text', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -59,6 +59,7 @@ class Step extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
+                    'step_id'=>'step_id',
 			'result'=>'Result',
 			'flow_id' => 'Flow',
 			'number' => 'Number',

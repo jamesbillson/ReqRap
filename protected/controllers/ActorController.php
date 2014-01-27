@@ -32,7 +32,7 @@ class ActorController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update','delete'),
+				'actions'=>array('create','update','delete','rollback'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -49,77 +49,84 @@ class ActorController extends Controller
 	 * Displays a particular model.
 	 * @param integer $id the ID of the model to be displayed
 	 */
-	public function actionView($id)
-	{
-		$this->render('view',array(
-			'model'=>$this->loadModel($id),
-		));
-	}
-
-	/**
-	 * Creates a new model.
-	 * If creation is successful, the browser will be redirected to the 'view' page.
-	 */
-	public function actionCreate($id)
-	{
-		$model=new Actor;
-
-		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
-
-		if(isset($_POST['Actor']))
-		{
-			$model->attributes=$_POST['Actor'];
-                        $model->inherits=-1;
-			if($model->save())
-				$this->redirect(array('/project/view/tab/actors/id/'.$model->project->id));
-		}
-
-		$this->render('create',array(
-			'model'=>$model,'id'=>$id
-		));
-	}
-
-	/**
-	 * Updates a particular model.
-	 * If update is successful, the browser will be redirected to the 'view' page.
-	 * @param integer $id the ID of the model to be updated
-	 */
-	public function actionUpdate($id)
-	{
-		$model=$this->loadModel($id);
-
-		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
-
-		if(isset($_POST['Actor']))
-		{
-			$model->attributes=$_POST['Actor'];
-			if($model->save())
-			$this->redirect(array('/project/view/tab/actors/id/'.$model->project->id));
 	
-                            
+	
+        public function actionView($id) // Note that this is actor_id not id
+	{
+             	$versions=Actor::model()->getVersions($id);
+                $model=$this->loadModel($versions[0]['id']);
+                $this->render('view',array('model'=>$model,
+			'versions'=>$versions
+        	));
+	}
+        
+        
+        
+	  public function actionCreate($id)
+	{
+	
+                $model=new Actor;
+
+		if(isset($_POST['Actor']))
+		{
+                   $model->attributes=$_POST['Actor'];
+                   $model->actor_id=Actor::model()->getNextID($id);
+                   $model->inherits=-1;
+                    
+                    if($model->save())
+                    {
+                     $version=Version::model()->getNextNumber($id,4,1,$model->primaryKey,$model->actor_id);   
+                     $this->redirect(array('/project/view/tab/actors/id/'.$id));
+		    }
+                        
+                }
+               
+                $this->render('create',array(
+			'model'=>$model,'id'=>$id,
+		));
+	}
+
+
+        
+        
+        	public function actionUpdate($id)
+	{
+                $model=$this->loadModel($id);
+                $new= new Actor;
+
+            
+		if(isset($_POST['Actor']))
+		{
+                        
+			 $new->attributes=$_POST['Actor'];
+                         $new->project_id=$model->project_id;
+                         $new->actor_id=$model->actor_id;
+                         $new->inherits=$model->inherits;
+			if($new->save())
+                        {
+			$version=Version::model()->getNextNumber($model->project_id, 4, 2,$new->primaryKey,$model->actor_id);
+                        $this->redirect(array('/project/view/tab/actors/id/'.$model->project_id));
+                        }        
 		}
 
 		$this->render('update',array(
-			'model'=>$model,'id'=>$model->project->id
+			'model'=>$model,'id'=>$model->project_id
 		));
 	}
+        
+        
+	
 
-           
-	/**
-	 * Deletes a particular model.
-	 * If deletion is successful, the browser will be redirected to the 'admin' page.
-	 * @param integer $id the ID of the model to be deleted
-	 */
-	public function actionDelete($id)
+      
+public function actionDelete($id)
 	{
-		$this->loadModel($id)->delete();
-
-		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
-		if(!isset($_GET['ajax']))
-			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
-	}
+		
+            $model=$this->loadModel($id);
+            $version=Version::model()->getNextNumber($model->project_id,4,3,$id,$model->actor_id);  
+            $model->save();
+            $this->redirect(array('/project/view/tab/actors/id/'.$project));
+            
+            }
 
 	/**
 	 * Lists all models.

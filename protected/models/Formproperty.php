@@ -30,12 +30,12 @@ class Formproperty extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('form_id, name, description', 'required'),
-			array('form_id', 'numerical', 'integerOnly'=>true),
+			array('form_id, number, formproperty_id, name, description', 'required'),
+			array('formproperty_id,number, form_id', 'numerical', 'integerOnly'=>true),
 			array('name', 'length', 'max'=>255),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, form_id, name, description', 'safe', 'on'=>'search'),
+			array('id, number, formproperty_id, form_id, name, description', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -47,8 +47,13 @@ class Formproperty extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'form' => array(self::BELONGS_TO, 'Form', 'form_id'),
-		);
+			//'form' => array(self::BELONGS_TO, 'Form', '','on'=>$model->form_id.'=form.form_id'),
+		              
+                            'form'=>array(self::BELONGS_TO,
+                                    'form','form_id',
+                                    'joinType'=>'JOIN',
+                                    'foreignKey'=>'form_id')
+                    );
 	}
 
 	/**
@@ -58,7 +63,9 @@ class Formproperty extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
+                    'formproperty_id' => 'Formpropertyid',
 			'form_id' => 'Form',
+                    'number' => 'Number',
 			'name' => 'Name',
 			'description' => 'Description',
 		);
@@ -102,4 +109,134 @@ class Formproperty extends CActiveRecord
 	{
 		return parent::model($className);
 	}
+        
+        
+           public function getNextNumber($id)
+    {
+                   
+        $sql="SELECT max(`r`.`number`)as number
+           From `formproperty` `r`
+            WHERE `r`.`form_id`=".$id;
+		$connection=Yii::app()->db;
+		$command = $connection->createCommand($sql);
+		$projects = $command->queryAll();
+		   if (!isset($projects[0]['number'])) {
+                    $projects[0]['number']='1';
+                } ELSE {
+                    $projects[0]['number']=$projects[0]['number']+1;
+                }
+		return $projects[0]['number'];
+      
+    
+    }   
+    
+    
+      public function getNextID($id)
+    {
+       
+              
+        $sql="SELECT `r`.`formproperty_id` as `number`
+           From `formproperty` `r`
+           ORDER BY `number` DESC
+           LIMIT 0,1";
+		$connection=Yii::app()->db;
+		$command = $connection->createCommand($sql);
+		$projects = $command->queryAll();
+		   if (!isset($projects[0]['number'])) {
+                    $projects[0]['number']='1';
+                } ELSE {
+                    $projects[0]['number']=$projects[0]['number']+1;
+                }
+		return $projects[0]['number'];
+    }  
+    
+        public function getVersions($id)
+    {
+        $sql="SELECT 
+                `f`.`id`,
+                `f`.`formproperty_id`,
+                `f`.`number`,
+                `f`.`name`,
+                `f`.`description`,
+                `v`.`active`,
+                `v`.`number` as ver_numb,
+                `v`.`release`,
+                `v`.`action`,
+                `v`.`create_date`,
+                `v`.`create_user`,
+                `u`.`firstname`,
+                `u`.`lastname`
+                FROM `formproperty` `f`
+                JOIN `version` `v`
+                ON
+                `f`.`id`=`v`.`foreign_key`
+                JOIN `user` `u`
+                ON
+                `u`.`id`=`v`.`create_user`
+                WHERE 
+                `v`.`object`=3
+                AND
+                `f`.`formproperty_id`=".$id." 
+                ORDER BY `v`.`active` DESC,
+                ver_numb DESC";
+		$connection=Yii::app()->db;
+		$command = $connection->createCommand($sql);
+		$projects = $command->queryAll();
+		
+		return $projects;
+    }  
+    
+      public function getFormProperty($id)
+    {
+        $sql="
+            SELECT 
+            `r`.`id`,
+            `r`.`formproperty_id`,
+            `r`.`number`,
+            `r`.`description`,
+            `r`.`name`,
+            `v`.`active`
+            FROM `formproperty` `r`
+            JOIN `version` `v`
+            ON `v`.`foreign_key`=`r`.`id`
+            WHERE 
+            `v`.`active`=1 and            
+            `r`.`form_id`=".$id." order by `r`.`number`";
+
+     
+        
+        $connection=Yii::app()->db;
+		$command = $connection->createCommand($sql);
+		$projects = $command->queryAll();
+		
+		return $projects;
+    }  
+    
+         public function rollback($number,$id)
+            {
+    
+              $sql="UPDATE `version`
+                  Set `active`=0
+                  WHERE
+                  `object`=3
+                  AND
+                  `foreign_id`=".$number;
+                $connection=Yii::app()->db;
+                $command = $connection->createCommand($sql);
+                $command->execute();
+        
+              $sql="UPDATE `version`
+                  Set active=1
+                  WHERE
+                   `object`=3
+                  AND
+                  `foreign_key`=".$id;
+                 $connection=Yii::app()->db;
+        $command = $connection->createCommand($sql);
+        $command->execute();        
+        
+        
+                 }  
+    
+        
 }

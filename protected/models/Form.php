@@ -30,12 +30,12 @@ class Form extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('name, number, project_id', 'required'),
-			array('project_id', 'numerical', 'integerOnly'=>true),
+			array('name, form_id, number, project_id', 'required'),
+			array('form_id, project_id', 'numerical', 'integerOnly'=>true),
 			array('name', 'length', 'max'=>255),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, name, project_id', 'safe', 'on'=>'search'),
+			array('id, name, form_id, project_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -59,7 +59,8 @@ class Form extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'name' => 'Form Name',
+			'form_id' => 'FormID',
+                    'name' => 'Form Name',
 			'project_id' => 'Project',
                     'number'=>'Number',
 		);
@@ -92,7 +93,9 @@ class Form extends CActiveRecord
 			'criteria'=>$criteria,
 		));
 	}
-              public function getNextNumber($id)
+        
+        
+        public function getNextNumber($id)
     {
                    
         $sql="SELECT max(`r`.`number`)as number
@@ -110,11 +113,33 @@ class Form extends CActiveRecord
       
     
     }   
+    
+    
+      public function getNextID($id)
+    {
+       
+              
+        $sql="SELECT `r`.`form_id` as `number`
+           From `form` `r`
+           ORDER BY `number` DESC
+           LIMIT 0,1";
+		$connection=Yii::app()->db;
+		$command = $connection->createCommand($sql);
+		$projects = $command->queryAll();
+		   if (!isset($projects[0]['number'])) {
+                    $projects[0]['number']='1';
+                } ELSE {
+                    $projects[0]['number']=$projects[0]['number']+1;
+                }
+		return $projects[0]['number'];
+    }  
+    
+    
         public function getStepForms($id)
     {
        
               
-        $sql="SELECT `r`.`name`,`r`.`number`, `r`.`id`,`x`.`id` as xid
+        $sql="SELECT `r`.`name`,`r`.`form_id`,`r`.`number`, `r`.`id`,`x`.`id` as xid
            From `form` `r`
             Join `stepform` `x` 
             on `x`.`form_id`=`r`.`id`
@@ -148,6 +173,59 @@ class Form extends CActiveRecord
 		$projects = $command->queryAll();
 		return $projects;
     }
+    
+      public function getProjectForms($id)
+    {
+        $sql="
+            SELECT `r`.`id`,`r`.`form_id`,`r`.`number`,`r`.`name`,`v`.`active`
+            FROM `form` `r`
+            JOIN `version` `v`
+            ON `v`.`foreign_key`=`r`.`id`
+            WHERE 
+            `v`.`active`=1 and            
+            `r`.`project_id`=".$id;
+
+     
+        
+        $connection=Yii::app()->db;
+		$command = $connection->createCommand($sql);
+		$projects = $command->queryAll();
+		
+		return $projects;
+    }  
+    
+          public function getVersions($id)
+    {
+        $sql="SELECT 
+                `f`.`id`,
+                `f`.`form_id`,
+                `f`.`number`,
+                `f`.`name`,
+                `v`.`active`,
+                `v`.`number` as ver_numb,
+                `v`.`release`,
+                `v`.`action`,
+                `v`.`create_date`,
+                `v`.`create_user`,
+                `u`.`firstname`,
+                `u`.`lastname`
+                from `form` `f`
+                join `version` `v`
+                ON
+                `f`.`id`=`v`.`foreign_key`
+                join `user` `u`
+                ON
+                `u`.`id`=`v`.`create_user`
+                WHERE 
+                `v`.`object`=2
+                AND
+                `f`.`form_id`=".$id;
+		$connection=Yii::app()->db;
+		$command = $connection->createCommand($sql);
+		$projects = $command->queryAll();
+		
+		return $projects;
+    }  
     
     /**
 	 * Returns the static model of the specified AR class.

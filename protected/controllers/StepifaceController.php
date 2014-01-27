@@ -93,6 +93,7 @@ public function actionCreateInline()
                      $iface->name=$_POST['new_interface'];
                      $iface->type_id=Interfacetype::model()->getUnclassified($step->flow->usecase->package->project->id);
                      $iface->project_id=$step->flow->usecase->package->project->id;
+                     $iface->file='default.png';
                      $iface->save(false);
                      $model->iface_id=$iface->getprimaryKey();
                      
@@ -105,7 +106,7 @@ public function actionCreateInline()
                 }
                         $model->save(false);
                 }
-                        $this->redirect(array('/step/update/id/-1/flow/'.$model->step->flow->id));
+                        $this->redirect(array('/step/update/id/'.$model->step->id.'/flow/'.$model->step->flow->id));
 		
 	}
 	/**

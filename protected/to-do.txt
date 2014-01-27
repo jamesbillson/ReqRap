@@ -64,3 +64,38 @@ Maybe like rules you actually add them via steps,
 so that rather than add them first, 
 you add as you go, 
 then you can rationalise later.
+
+############@@@@@@@@@@@@@@@#################
+VERSION CONTROL
+OBJECTS
+--------------
+1.Actor - M - 
+2.Flow - M -
+3.Form - M - C - V
+4.Formproperty - M - C - V
+5.Iface - M - 
+6.ifacetype - M - 
+7.object - M - 
+8.objectproperty - M - 
+9.package - M - 
+10.photo - M -
+11.rule - M - C - V
+12.step - M - 
+13.usecase - M -
+
+RELATIONSHIPS
+----------------
+StepRule
+StepIface
+StepForm
+
+Roll Back to a specific point.
+
+Objects created after the roll back point (RBP) to be deleted.
+Objects active version to be the version prior to the RBP.
+
+Go through each object type by number.
+Go through each Object.Number by version, DESC.
+Prior to RBP delete any objects that are created.
+From the RBP back, set the active version to the first version encountered.
+

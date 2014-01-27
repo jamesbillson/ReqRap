@@ -127,7 +127,7 @@ class PackageController extends Controller
 		));
 	}
         
-        	public function actionAddPackage($id)
+        public function actionAddPackage($id)
 	{
 		$model=new Package;
 
@@ -137,8 +137,9 @@ class PackageController extends Controller
 		if(isset($_POST['Package']))
 		{
 			$model->attributes=$_POST['Package'];
+                        $model->sequence=Package::model()->getNextNumber($model->project->id);
 			if($model->save())
-				$this->redirect(array('/project/view','id'=>$model->project->id,'tab'=>'package'));
+				$this->redirect(array('/project/view','id'=>$model->project->id,'tab'=>'packages'));
 		}
 
 		$this->render('addpackage',array(

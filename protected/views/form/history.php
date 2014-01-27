@@ -1,33 +1,15 @@
-<h1><a href="/project/view/tab/rules/id/<?php echo $model->project->id;?>"><?php echo $model->project->name;?></a></h1>
-<h2>Actor <?php echo $model->name; ?>     
-
-    <a href="/actor/update/id/<?php echo $model->id;?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
-           </h2>
-
-
-	<b><?php echo CHtml::encode($model->getAttributeLabel('name')); ?>:</b>
-        <br />
-	<?php echo CHtml::encode($model->name); ?>
-	<br />
-
-	<b><?php echo CHtml::encode($model->getAttributeLabel('description')); ?>:</b>
-	<br />
-            <?php echo CHtml::encode($model->description); ?>
-
-    
-<h3>Version History</h3>    
-        
    
-        <?php $collapse = $this->beginWidget('bootstrap.widgets.TbCollapse'); ?>
+<h3>Version History</h3>    
+   <?php $collapse = $this->beginWidget('bootstrap.widgets.TbCollapse'); ?>
    <?php if (count($versions)){?>
-        <?php foreach($versions as $item) {?>   
+   <?php foreach($versions as $item) {?>   
 <div class="accordion-group">
         <div class="accordion-heading">
             <table>
                 <tr>
                     <td>
                 <?php if ($item['active'] != 1 && $item['action']!=3){    ?> 
-                <a href="/formproperty/rollback/id/<?php echo $item['id'];?>"><i class="icon-repeat" rel="tooltip" data-placement="right" title="Roll Back to this Version"></i></a> 
+                <a href="/form/rollback/id/<?php echo $item['id'];?>"><i class="icon-repeat" rel="tooltip" data-placement="right" title="Roll Back to this Version"></i></a> 
                 <?php  } ELSE { ?> 
                 <i class="icon-circle-arrow-right" rel="tooltip" data-placement="right" title="Current Version"></i> 
                 <?php   } ?>  
@@ -51,10 +33,9 @@
         <div id="collapse<?php echo $item['ver_numb']; ?>" class="accordion-body collapse">
             <div class="accordion-inner">
                 <strong><?php echo $item['name']; ?></strong><br />
-                   <?php echo $item['description']; ?>
+                   
             </div>
         </div>
     </div>
   <?php } } ?>
 <?php $this->endWidget(); ?>
-

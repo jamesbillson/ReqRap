@@ -120,11 +120,15 @@ class VersionController extends Controller
 	/**
 	 * Lists all models.
 	 */
-	public function actionIndex()
+	public function actionIndex($id)
 	{
-		$dataProvider=new CActiveDataProvider('Version');
-		$this->render('index',array(
-			'dataProvider'=>$dataProvider,
+            $model=Project::model()->findbyPK($id);
+            $dataProvider=new CActiveDataProvider('Version' ,
+                        array('criteria'=>array(
+                        'condition'=>'project_id='.$id, 'order'=>'number DESC')));
+                
+		$this->render('changelog',array(
+			'dataProvider'=>$dataProvider,'model'=>$model,
 		));
 	}
 

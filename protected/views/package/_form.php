@@ -15,11 +15,6 @@
 
 	<?php echo $form->errorSummary($model); ?>
 
-        	<div class="row">
-		<?php echo $form->labelEx($model,'sequence'); ?>
-		<?php echo $form->textField($model,'sequence',array('size'=>6,'maxlength'=>6)); ?>
-		<?php echo $form->error($model,'sequence'); ?>
-	</div>
         
 	<div class="row">
 		<?php echo $form->labelEx($model,'name'); ?>
@@ -27,11 +22,7 @@
 		<?php echo $form->error($model,'name'); ?>
 	</div>
 
-        	<div class="row">
-		<?php echo $form->labelEx($model,'budget'); ?>
-		<?php echo $form->textField($model,'budget',array('size'=>10,'maxlength'=>12)); ?>
-		<?php echo $form->error($model,'budget'); ?>
-	</div>
+        
         
 	<div class="row buttons">
 		<?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>

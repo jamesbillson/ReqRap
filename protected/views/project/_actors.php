@@ -25,6 +25,8 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                     
                     <th>Name</th>
                     <th>Description</th>
+                    <th>Alias</th>
+                    <th>Inherits</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -33,18 +35,27 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
             <?php foreach($data as $item):?>
                 <tr class="odd">  
                     <td>   
-                        <?php echo $item['name'];?>
+                        <a href="/actor/view/id/<?php echo $item['id'];?>">
+                            <?php echo $item['name'];?>
+                        </a>
                     </td>
                     <td>   
                         <?php echo $item['description'];?>
+                    </td>   
+                       <td>   
+                        <?php echo $item['alias'];?>
                     </td>                  
-                   
+                    <td>   
+                        <?php echo $item['inherits'];?>
+                    </td>   
+  
 
                   
                     <td>
-                        <a href="/actor/view/id/<?php echo $item['id'];?>"><i class="icon-eye-open" rel="tooltip" title="View"></i></a> 
                         <a href="/actor/update/id/<?php echo $item['id'];?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
-                        <a href="/actor/delete?id=<?php echo $item['id'];?>"><i class="icon-remove-sign" rel="tooltip" title="Delete"></i></a> 
+                        <a href="/actor/delete/id/<?php echo $item['id'];?>"><i class="icon-remove-sign" rel="tooltip" title="Delete"></i></a> 
+                     <a href="/actor/history/id/<?php echo $item['id'];?>"><i class="icon-calendar" rel="tooltip" title="Version History"></i></a> 
+                    
                     </td>
                 </tr>
             <?php endforeach ?>

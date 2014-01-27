@@ -45,24 +45,19 @@ class RuleController extends Controller
 		);
 	}
 
-	/**
-	 * Displays a particular model.
-	 * @param integer $id the ID of the model to be displayed
-	 */
-	public function actionView($id)
+	
+        
+	public function actionView($id) // Note that this is rule_id
 	{
-		$model=$this->loadModel($id);
-                $versions=Rule::model()->getVersions($model->rule_id);
-            $this->render('view',array(
-			'model'=>$model,'versions'=>$versions
-                
-		));
+             	$versions=Rule::model()->getVersions($id);
+                $model=$this->loadModel($versions[0]['id']);
+                $this->render('view',array('model'=>$model,
+			'versions'=>$versions
+        	));
 	}
 
-	/**
-	 * Creates a new model.
-	 * If creation is successful, the browser will be redirected to the 'view' page.
-	 */
+	
+        
 	public function actionCreate($type, $id)
 	{
 		if ($type==1) {
@@ -82,33 +77,27 @@ class RuleController extends Controller
 		{
                     
 		// get the highest rule_id and increment one.
-                    $version=Version::model()->getNextNumber($project,1,1);   
+                       
                     $model->attributes=$_POST['Rule'];
-                    $model->version_id=$version;
                     $model->number=Rule::model()->getNextNumber($project);
                     $model->rule_id=Rule::model()->getNextID($project);
-                    $model->active=1;
+                   
                     if($model->save())
                     {
-                       $this->redirect(array('/project/view/tab/rules/id/'.$project));
-		 
-                    }
-                 
+                      
+                     $version=Version::model()->getNextNumber($project,1,1,$model->primaryKey,$model->rule_id);   
+                     $this->redirect(array('/project/view/tab/rules/id/'.$project));
+		    }
                         
                 }
-                
-              
-
-		$this->render('create',array(
+               
+                $this->render('create',array(
 			'model'=>$model,'id'=>$id,'project'=>$project,
 		));
 	}
 
-	/**
-	 * Updates a particular model.
-	 * If update is successful, the browser will be redirected to the 'view' page.
-	 * @param integer $id the ID of the model to be updated
-	 */
+
+        
 	public function actionUpdate($id)
 	{
 		$model=$this->loadModel($id);
@@ -117,18 +106,17 @@ class RuleController extends Controller
             
 		if(isset($_POST['Rule']))
 		{
-                      $version=Version::model()->getNextNumber($model->project_id, 1, 2);  
+                        
 			$new->attributes=$_POST['Rule'];
-                         $new->version_id=$version;
+                         
                          $new->number=$model->number;
                          $new->project_id=$model->project_id;
                          $new->rule_id=$model->rule_id;
-                         $new->active=1;
+                         
 			if($new->save())
                         {
-			$model->active=0;
-                        $model->save();
-                            $this->redirect(array('/project/view/tab/rules/id/'.$model->project_id));
+			$version=Version::model()->getNextNumber($model->project_id, 1, 2,$new->primaryKey,$model->rule_id);
+                        $this->redirect(array('/project/view/tab/rules/id/'.$model->project_id));
                         }        
 		}
 
@@ -141,7 +129,7 @@ class RuleController extends Controller
 	{
 	 $model=$this->loadModel($id);
          $project=$model->project_id;
-         Rule::model()->rollback($model->number, $id);
+         Rule::model()->rollback($model->rule_id, $id);
          $this->redirect(array('/project/view/tab/rules/id/'.$project));
         }
         
@@ -155,23 +143,11 @@ class RuleController extends Controller
 	{
 		
             $model=$this->loadModel($id);
-            $project=$model->project_id;
-            $new= new Rule;
-	    
-            
-                      $version=Version::model()->getNextNumber($model->project_id,1,3);  
-			$new->title='deleted';
-                        $new->text='deleted';
-                         $new->version_id=$version;
-                         $new->number=$model->number;
-                         $new->project_id=$model->project_id;
-                         $new->rule_id=$model->rule_id;
-                         $new->active=0;
-			if($new->save()){
-                            $model->active=0;
-                        $model->save();
+            $version=Version::model()->getNextNumber($model->project_id,1,3,$id,$model->rule_id);  
+	    //$model->active=0;
+            $model->save();
 	$this->redirect(array('/project/view/tab/rules/id/'.$project));
-                        }
+                        
             
             }
 

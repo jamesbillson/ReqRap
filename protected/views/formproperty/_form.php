@@ -20,7 +20,7 @@
 	<?php echo $form->errorSummary($model); ?>
 
 
-	<?php echo $form->hiddenField($model,'form_id',array('value'=>$object_id)); ?>
+	<?php echo $form->hiddenField($model,'form_id',array('value'=>$form_id)); ?>
 		
 
 	<div class="row">

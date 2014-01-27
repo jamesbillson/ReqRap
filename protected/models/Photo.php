@@ -20,12 +20,13 @@ class Photo extends CActiveRecord
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('project_id, user_id', 'numerical', 'integerOnly'=>true),
+            array('photo_id, project_id, user_id', 'numerical', 'integerOnly'=>true),
             array('file', 'length', 'max'=>255),
             array('file', 'file', 'types'=>'jpg,jpeg,gif,icon,png','maxSize'=>10*1024*1024,'allowEmpty'=>true),
-            // The following rule is used by search().
+            array('photo_id', 'numerical', 'integerOnly'=>true),
+// The following rule is used by search().
             // Please remove those attributes that should not be searched.
-            array('id, project_id, file, user_id, create_date', 'safe', 'on'=>'search'),
+            array('id, photo_id, project_id, file, user_id, create_date', 'safe', 'on'=>'search'),
         );
     }
 
@@ -48,6 +49,7 @@ class Photo extends CActiveRecord
     {
         return array(
             'id' => 'ID',
+            'photo_id'=>'Photo ID',
             'project_id' => 'Project',
             'file' => 'File',
             'user_id' => 'User',

@@ -65,7 +65,7 @@
                        <strong>Interfaces</strong><br />
                    <?php $links = Iface::model()->getStepIfaces($item['id']);
                   foreach($links as $link){?>
-                  <?php echo $link['number'];?>  <?php echo $link['name'];?> <a href="/stepiface/delete/id/<?php echo $link['xid'];?>"><i class="icon-remove-sign"></i></a><br />
+                  UI-<?php echo str_pad($link['number'], 3, "0", STR_PAD_LEFT); ?>  <?php echo $link['name'];?> <a href="/stepiface/delete/id/<?php echo $link['xid'];?>"><i class="icon-remove-sign"></i></a><br />
                   <?php }  ?>
                 <br />
                  
@@ -90,7 +90,7 @@
                   <?php
                   $links = Rule::model()->getStepRules($item['id']);
                 foreach($links as $link){?>
-                 <?php echo $link['number'];?>  <?php echo $link['title'];?> <a href="/steprule/delete/id/<?php echo $link['xid'];?>"><i class="icon-remove-sign"></i></a><br/>
+                 BR-<?php echo str_pad($link['number'], 3, "0", STR_PAD_LEFT); ?>  <?php echo $link['title'];?> <a href="/steprule/delete/id/<?php echo $link['xid'];?>"><i class="icon-remove-sign"></i></a><br/>
                  <?php } ?>
                 <br />
                  
@@ -114,7 +114,7 @@
                   <?php
                   $links = Form::model()->getStepForms($item['id']);
                 foreach($links as $link){?>
-                 <?php echo $link['number'];?>  <?php echo $link['name'];?> <a href="/stepform/delete/id/<?php echo $link['xid'];?>"><i class="icon-remove-sign"></i></a><br/>
+                 UF-<?php echo str_pad($link['number'], 3, "0", STR_PAD_LEFT); ?>  <?php echo $link['name'];?> <a href="/stepform/delete/id/<?php echo $link['xid'];?>"><i class="icon-remove-sign"></i></a><br/>
                  <?php } ?>
                 <br />
                  
@@ -171,7 +171,7 @@
                        <br />
                             <?php
                         foreach($links as $link){?>
-                       <a href="/rule/view/id/<?php echo $link['id'];?>">BR-<?php echo str_pad($link['number'], 4, "0",STR_PAD_LEFT);?></a>  <?php echo $link['title'];?> 
+                       <a href="/rule/view/id/<?php echo $link['rule_id'];?>">BR-<?php echo str_pad($link['number'], 4, "0",STR_PAD_LEFT);?></a>  <?php echo $link['title'];?> 
                         <a href="/steprule/delete/id/<?php echo $link['xid'];?>"><i class="icon-remove-sign"></i></a>
                         <br />
                         <?php } ?>
@@ -187,7 +187,7 @@
                         <strong>Forms</strong>
                         <br />
                        <?php  foreach($links as $link){?>
-                        <a href="/form/view/id/<?php echo $link['id'];?>">UF-<?php echo str_pad($link['number'], 4, "0",STR_PAD_LEFT);?> </a> <?php echo $link['name'];?> 
+                        <a href="/form/view/id/<?php echo $link['form_id'];?>">UF-<?php echo str_pad($link['number'], 4, "0",STR_PAD_LEFT);?> </a> <?php echo $link['name'];?> 
                         <a href="/stepform/delete/id/<?php echo $link['xid'];?>"><i class="icon-remove-sign"></i></a>
                         <br />
                         <?php }?>
@@ -201,9 +201,10 @@
       
     </tbody>
   </table>
+ <a href="/step/create/id/<?php echo $model->id;?>"><i class="icon-plus-sign-alt" rel="tooltip" title="Add another step"></i> Add Step</a> 
+         
 
   <?php endif; // end count of results ?>
-  
   
 
     
@@ -247,9 +248,9 @@ $steps = Step::model()->getMainSteps($model->usecase->id); // get the requiremen
     </tbody>
   </table>
 
-  <?php endif; // end count of results
-
-  ?>
+  <?php endif; // end count of results  ?>
+    
+ <a href="/step/create/id/<?php echo $model->id;?>"><i class="icon-plus-sign-alt" rel="tooltip" title="Add another step"></i> Add Step</a> 
     
 
 

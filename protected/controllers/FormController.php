@@ -32,7 +32,7 @@ class FormController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update','delete'),
+				'actions'=>array('create','update','delete','history','rollback'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -49,64 +49,83 @@ class FormController extends Controller
 	 * Displays a particular model.
 	 * @param integer $id the ID of the model to be displayed
 	 */
-	public function actionView($id)
+	public function actionView($id) // Note that this is form_id
 	{
-		$this->render('view',array(
-			'model'=>$this->loadModel($id),
-		));
+             	$versions=Form::model()->getVersions($id);
+                $model=$this->loadModel($versions[0]['id']);
+                $this->render('view',array('model'=>$model,
+			'versions'=>$versions
+        	));
 	}
-
-	/**
-	 * Creates a new model.
-	 * If creation is successful, the browser will be redirected to the 'view' page.
-	 */
-	public function actionCreate($id)
+	
+        public function actionHistory($id) // Note that this is form_id
 	{
-              
-            
-                $model= new Form;
-		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
+             	$versions=Form::model()->getVersions($id);
+                $model=$this->loadModel($versions[0]['id']);
+                $this->render('history',array('model'=>$model,
+			'versions'=>$versions
+        	));
+	}
+        
+        
+        public function actionCreate($id)
+	{
+	
+                $model=new Form;
 
 		if(isset($_POST['Form']))
 		{
                     
-               
-                   
-			$model->attributes=$_POST['Form'];
-			if($model->save()){
-                            
-              
-                    	$this->redirect(array('/project/view/id/'.$model->project->id.'/tab/forms'));
-		   } 
+		        
+                    $model->attributes=$_POST['Form'];
+                    $model->number=Form::model()->getNextNumber($id);
+                    $model->form_id=Form::model()->getNextID($id);
+                    
+                    if($model->save())
+                    {
+                      
+                     $version=Version::model()->getNextNumber($id,2,1,$model->primaryKey,$model->form_id);   
+                     $this->redirect(array('/project/view/tab/forms/id/'.$id));
+		    }
+                        
                 }
-		$this->render('create',array(
+               
+                $this->render('create',array(
 			'model'=>$model,'id'=>$id,
 		));
-               
 	}
 
+        
+        
+        
 	/**
 	 * Updates a particular model.
 	 * If update is successful, the browser will be redirected to the 'view' page.
 	 * @param integer $id the ID of the model to be updated
 	 */
-	public function actionUpdate($id,$ucid)
+	public function actionUpdate($id)
 	{
-		$model=$this->loadModel($id);
+	$model=$this->loadModel($id);
+                $new= new Form;
 
-		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
-                $id=$model->project_id;
+            
 		if(isset($_POST['Form']))
 		{
-			$model->attributes=$_POST['Form'];
-			if($model->save())
-				$this->redirect(array('/usecase/view/id/'.$ucid));
+                        
+			 $new->attributes=$_POST['Form'];
+                         $new->number=$model->number;
+                         $new->project_id=$model->project_id;
+                         $new->form_id=$model->form_id;
+                         
+			if($new->save())
+                        {
+			$version=Version::model()->getNextNumber($model->project_id, 2, 2,$new->primaryKey,$model->form_id);
+                        $this->redirect(array('/project/view/tab/forms/id/'.$model->project_id));
+                        }        
 		}
 
 		$this->render('update',array(
-			'model'=>$model,'id'=>$id
+			'model'=>$model,'id'=>$model->project_id
 		));
 	}
 
@@ -115,18 +134,19 @@ class FormController extends Controller
 	 * If deletion is successful, the browser will be redirected to the 'admin' page.
 	 * @param integer $id the ID of the model to be deleted
 	 */
-	public function actionDelete($id,$ucid,$type)
+public function actionDelete($id)
 	{
-		$this->loadModel($id)->delete();
-               if($type==1) $this->redirect(array('/usecase/view/id/'.$ucid));
-               if($type==2) $this->redirect(array('/project/view/tab/interfaces/id/'.$ucid));
-	}
+		
+            $model=$this->loadModel($id);
+            $version=Version::model()->getNextNumber($model->project_id,2,3,$id,$model->form_id);  
+	    //$model->active=0;
+            $model->save();
+            $this->redirect(array('/project/view/tab/forms/id/'.$project));
+            
+            }
 
 
-        
-	/**
-	 * Lists all models.
-	 */
+            
 	public function actionIndex()
 	{
 		$dataProvider=new CActiveDataProvider('Form');

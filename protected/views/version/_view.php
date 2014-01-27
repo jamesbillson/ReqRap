@@ -1,29 +1,23 @@
-<?php
-/* @var $this VersionController */
-/* @var $data Version */
-?>
-
-<div class="view">
-
-	<b><?php echo CHtml::encode($data->getAttributeLabel('id')); ?>:</b>
-	<?php echo CHtml::link(CHtml::encode($data->id), array('view', 'id'=>$data->id)); ?>
-	<br />
-
-	<b><?php echo CHtml::encode($data->getAttributeLabel('number')); ?>:</b>
-	<?php echo CHtml::encode($data->number); ?>
-	<br />
-
-	<b><?php echo CHtml::encode($data->getAttributeLabel('release')); ?>:</b>
-	<?php echo CHtml::encode($data->release); ?>
-	<br />
-
-	<b><?php echo CHtml::encode($data->getAttributeLabel('project_id')); ?>:</b>
-	<?php echo CHtml::encode($data->project_id); ?>
-	<br />
-
-	<b><?php echo CHtml::encode($data->getAttributeLabel('status')); ?>:</b>
-	<?php echo CHtml::encode($data->status); ?>
-	<br />
+<tr>
+<td>
+    <?php echo CHtml::link(CHtml::encode('Change #'.$data->number), array('view', 'id'=>$data->id)); ?>
+</td>
+<td>
+    <?php echo CHtml::encode($data->release); ?>
+</td>   
+<td>
+   <?php echo CHtml::encode(Version::$objects[$data->object]); ?> 
+</td>
+<td>
+   <?php echo CHtml::encode(Version::$actions[$data->action]); ?> 
+</td>
+<td>
+   <?php 
+   if ($data->object == 1) {
+       echo CHtml::encode($data->rule->title) ;
+   }
+   ?> 
+</td>
 
 
-</div>
+</tr>

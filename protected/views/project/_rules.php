@@ -1,5 +1,6 @@
 <?php 
 $data = Rule::model()->getProjectRules($model->id);
+$deleted = Rule::model()->getProjectDeletedRules($model->id);
         
         /*Rule::model()->findAll(array('order'=>'number ASC',
     'condition'=>'project_id=:x',
@@ -40,7 +41,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
 <?php if (count($data)):?>
         <?php foreach($data as $item) {?>
         <tr class="odd">  
-    <td> <a href="/rule/view/id/<?php echo $item['id'];?>"> 
+    <td> <a href="/rule/view/id/<?php echo $item['rule_id'];?>"> 
         BR-<?php echo str_pad($item['number'], 3, "0", STR_PAD_LEFT); ?> 
         </a> 
     </td>
@@ -80,3 +81,40 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
 
 <?php 
 $this->endWidget(); ?>
+
+
+<?php if (count($deleted)):?>
+    
+
+        
+<div class="accordion-group">
+        <div class="accordion-heading">
+
+         <a class="accordion-toggle" data-toggle="collapse"
+          data-parent="#accordionD" href="#collapseD">
+          Show Deleted Versions</a>
+           
+     </div>
+    
+     <div id="collapseD" class="accordion-body collapse">
+        <div class="accordion-inner">
+        <table class="table">
+        <tbody>
+        <?php foreach($deleted as $item) {?>
+           <tr class="odd">  
+                <td> <a href="/rule/view/id/<?php echo $item['rule_id'];?>"> 
+                BR-<?php echo str_pad($item['number'], 3, "0", STR_PAD_LEFT); ?></a> 
+                </td>
+   
+                <td> 
+                <?php echo $item['title']; ?>
+                </td>
+    
+           </tr>
+        <?php }?>
+    	</tbody>
+        </table>   
+            </div>
+        </div>
+    </div>
+<?php  endif; ?>

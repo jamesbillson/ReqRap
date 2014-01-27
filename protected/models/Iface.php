@@ -31,12 +31,12 @@ class Iface extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('number, name, type_id, project_id', 'required'),
-			array('number, type_id, project_id', 'numerical', 'integerOnly'=>true),
+			array('number, iface_id, name, type_id, project_id', 'required'),
+			array('iface_id, number, type_id, project_id', 'numerical', 'integerOnly'=>true),
 			array('name', 'length', 'max'=>255),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, number, name, type_id', 'safe', 'on'=>'search'),
+			array('id, iface_id, number, name, type_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -61,7 +61,8 @@ class Iface extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'number' => 'Number',
+			'iface_id' => 'ifaceID',
+                        'number' => 'Number',
 			'name' => 'Name',
 			'type_id' => 'Type',
                     'project_id' => 'Project',

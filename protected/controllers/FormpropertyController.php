@@ -32,7 +32,7 @@ class FormpropertyController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update','delete'),
+				'actions'=>array('create','update','delete','rollback'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -45,81 +45,92 @@ class FormpropertyController extends Controller
 		);
 	}
 
-	/**
-	 * Displays a particular model.
-	 * @param integer $id the ID of the model to be displayed
-	 */
-	public function actionView($id)
+	
+
+	
+        public function actionView($id) // Note that this is formproperty_id
 	{
-		$this->render('view',array(
-			'model'=>$this->loadModel($id),
-		));
+             	$versions = Formproperty::model()->getVersions($id);
+                $model=$this->loadModel($versions[0]['id']);
+                $this->render('view',array('model'=>$model,
+			'versions'=>$versions
+        	));
 	}
-
-	/**
-	 * Creates a new model.
-	 * If creation is successful, the browser will be redirected to the 'view' page.
-	 */
-	public function actionCreate($id)
+        
+          public function actionCreate($id)
 	{
-		$model=new Formproperty;
-
-		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
+	
+                $model=new Formproperty;
 
 		if(isset($_POST['Formproperty']))
 		{
-			$model->attributes=$_POST['Formproperty'];
-			if($model->save())
-				$this->redirect(array('/form/view','id'=>$model->form->id));
-		}
-
-		$this->render('create',array(
-			'model'=>$model,'id'=>$id
+                    
+		        
+                    $model->attributes=$_POST['Formproperty'];
+                    $model->number=Formproperty::model()->getNextNumber($id);
+                    $model->formproperty_id=Formproperty::model()->getNextID($model->form->project->id);
+                    
+                    if($model->save())
+                    {
+                   
+                     $version=Version::model()->getNextNumber($model->form->project->id,3,1,$model->primaryKey,$model->formproperty_id);   
+                     $this->redirect(array('/form/view/id/'.$model->form_id));
+		    }
+                        
+                }
+               
+                $this->render('create',array(
+			'model'=>$model,'form_id'=>$id,
 		));
 	}
-
-	/**
-	 * Updates a particular model.
-	 * If update is successful, the browser will be redirected to the 'view' page.
-	 * @param integer $id the ID of the model to be updated
-	 */
-	public function actionUpdate($id)
+        
+        public function actionUpdate($id)
 	{
-		$model=$this->loadModel($id);
-
-		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
+            //  The id should be the formproperty_id rather than the id? 
+            
+            $model=$this->loadModel($id);
+                $new= new Formproperty;
 
 		if(isset($_POST['Formproperty']))
 		{
-			$model->attributes=$_POST['Formproperty'];
-			if($model->save())
-				$this->redirect(array('/form/view/','id'=>$model->form->id));
+                  	 $new->attributes=$_POST['Formproperty'];
+                         $new->number=$model->number;
+                         $new->form_id=$model->form_id;
+                         $new->formproperty_id=$model->formproperty_id;
+                         
+			if($new->save())
+                        {
+			$version=Version::model()->getNextNumber($model->form->project_id, 3, 2,$new->primaryKey,$model->formproperty_id);
+                        $this->redirect(array('/form/view/id/'.$model->form_id));
+                        }        
 		}
 
 		$this->render('update',array(
-			'model'=>$model,'id'=>$id,'form_id'=>$model->form->id
+			'model'=>$model,'form_id'=>$model->form_id
 		));
 	}
 
-	/**
-	 * Deletes a particular model.
-	 * If deletion is successful, the browser will be redirected to the 'admin' page.
-	 * @param integer $id the ID of the model to be deleted
-	 */
-	public function actionDelete($id)
+
+        
+        public function actionDelete($id)
 	{
-		$model=$this->loadModel($id);
-                $id=$model->form->id;
-                $model->delete();
+		
+            $model=$this->loadModel($id);
+            $version=Version::model()->getNextNumber($model->project_id,3,3,$id,$model->formproperty_id);  
+	    //$model->active=0;
+            $model->save();
+            $this->redirect(array('/form/view/id/'.$model->form_id));
+            
+            }
 
-		$this->redirect(array('/form/view/id/'.$id));
-	}
-
-	/**
-	 * Lists all models.
-	 */
+        public function actionRollBack($id)
+	{
+	 $model=$this->loadModel($id);
+         $formproperty=$model->formproperty_id;
+         Formproperty::model()->rollback($model->formproperty_id, $id);
+         $this->redirect(array('/formproperty/view/id/'.$formproperty));
+        }
+        
 	public function actionIndex()
 	{
 		$dataProvider=new CActiveDataProvider('Formproperty');

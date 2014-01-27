@@ -27,11 +27,8 @@
 
    		<?php echo $form->hiddenField($model,'project_id',array('value'=>$id)); ?>     
         
-	<div class="row">
-		<?php echo $form->labelEx($model,'number'); ?>
-		<?php echo $form->textField($model,'number'); ?>
-		<?php echo $form->error($model,'number'); ?>
-	</div>
+
+	
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'name'); ?>

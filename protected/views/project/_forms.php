@@ -1,7 +1,7 @@
  
 <?php 
 
-$data = Form::model()->findAll(array('order'=>'id ASC', 'condition'=>'project_id=:x', 'params'=>array(':x'=>$model->id)));
+$data = Form::model()->getProjectForms($model->id);
 
 $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
     'title' => 'Forms',
@@ -18,7 +18,11 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
     ),
     
 ))); 
-    if (count($data)):?>
+   
+
+
+
+if (count($data)):?>
 
 
 
@@ -39,7 +43,9 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                 
                 <tr class="odd">  
                     <td>   
-                        UF-<?php echo str_pad($item['number'], 3, "0", STR_PAD_LEFT); ?> 
+                         <a href="/form/view/id/<?php echo $item['form_id'];?>">
+                         UF-<?php echo str_pad($item['number'], 3, "0", STR_PAD_LEFT); ?> 
+                    </a> 
                     </td>
                     <td>   
                         <?php echo $item['name'];
@@ -58,7 +64,6 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
 
                   
                     <td>
-                        <a href="/form/view/id/<?php echo $item['id'];?>"><i class="icon-eye-open" rel="tooltip" title="View"></i></a> 
                         <a href="/form/update/id/<?php echo $item['id'];?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
                         <a href="/form/delete/ucid/<?php echo $model->id;?>/type/2/id/<?php echo $item['id'];?>"><i class="icon-remove-sign" rel="tooltip" title="Delete"></i></a> 
                     </td>

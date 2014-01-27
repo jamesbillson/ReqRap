@@ -29,11 +29,11 @@ class Rule extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('rule_id, active, number, title,text, project_id, version_id', 'required'),
+			array('rule_id,  number, title,text, project_id ', 'required'),
 			array('number', 'length', 'max'=>4),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, active, number, title, text', 'safe', 'on'=>'search'),
+			array('id, number, title, text', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -62,8 +62,8 @@ class Rule extends CActiveRecord
                     'title' => 'Title',
 			'text' => 'Rule Text',
                     'project_id'=>'Project',
-                    'version_id'=>'Version',
-                    'active'=>'Active',
+                  
+                    
 		);
 	}
 
@@ -95,22 +95,29 @@ class Rule extends CActiveRecord
 	}
 
         
-         public function getRules($id)
+         public function getRules($id) // Get rules for a use case
     {
         $user= Yii::app()->user->id;   
               
-        $sql="SELECT `r`.`text`,`r`.`number`, `r`.`id`,`r`.`title`
-           From `rule` `r`
-            Join `steprule` `x` 
-            on `x`.`rule_id`=`r`.`rule_id`
-            Join `step` `s` 
-            on `x`.`step_id`=`s`.`id`
-            Join `flow` `f`
-            ON `f`.`id`=`s`.`flow_id`
-          
+        $sql="SELECT `r`.`text`,
+            `r`.`number`, 
+            `r`.`id`,
+            `r`.`title`,
+            `r`.`rule_id`
+           FROM `rule` `r`
+           JOIN `steprule` `x` 
+           ON `x`.`rule_id`=`r`.`rule_id`
+           JOIN `step` `s` 
+           ON `x`.`step_id`=`s`.`id`
+           JOIN `flow` `f`
+           ON `f`.`id`=`s`.`flow_id`
+           JOIN `version` `v` 
+           ON `v`.`foreign_key`=`r`.`id`
            WHERE `f`.`usecase_id`=".$id."
-               AND
-               `r`.`active`=1
+            AND
+            `v`.`active`=1
+            AND
+            `v`.`object`=1
                GROUP BY `r`.`id`
                ORDER BY `r`.`number`";
 		$connection=Yii::app()->db;
@@ -123,14 +130,23 @@ class Rule extends CActiveRecord
     {
        
               
-        $sql="SELECT `r`.`text`,`r`.`number`, `r`.`id`,`r`.`title`,`x`.`id` as xid
+        $sql="SELECT `r`.`text`,
+            `r`.`number`,
+            `r`.`rule_id`,
+            `r`.`id`,
+            `r`.`title`,
+            `x`.`id` as xid
            From `rule` `r`
             Join `steprule` `x` 
             on `x`.`rule_id`=`r`.`rule_id`
             Join `step` `s` 
             on `x`.`step_id`=`s`.`id`
+             JOIN `version` `v` 
+           ON `v`.`foreign_key`=`r`.`id`
            WHERE 
-           `r`.`active`=1
+            `v`.`active`=1
+            AND
+            `v`.`object`=1
             AND
             `s`.`id`=".$id;
 		$connection=Yii::app()->db;
@@ -179,26 +195,43 @@ class Rule extends CActiveRecord
       public function getProjectRules($id)
     {
         $sql="
-select *
-from rule r
-WHERE 
-`r`.`active`=1 and            
-`r`.`project_id`=".$id;
-
-        /*
-                 $sql="
-select *
-from rule r
-inner join(
-    select number, max(id) rev
-    from rule
-    group by number
-)ver on r.number = ver.number and r.id = ver.rev            
-
+            SELECT `r`.`id`,`r`.`rule_id`,`r`.`number`,`r`.`title`,`r`.`text`,`v`.`active`
+            FROM `rule` `r`
+            JOIN `version` `v`
+            ON `v`.`foreign_key`=`r`.`id`
             WHERE 
-`r`.`active`=1 and            
-`r`.`project_id`=".$id;
-         */
+            `v`.`active`=1 and            
+            `r`.`project_id`=".$id;
+
+     
+        
+        $connection=Yii::app()->db;
+		$command = $connection->createCommand($sql);
+		$projects = $command->queryAll();
+		
+		return $projects;
+    }  
+       public function getProjectDeletedRules($id)
+    {
+        $sql="
+        SELECT *
+        from `rule` `r`
+        WHERE 
+        `r`.`project_id`=".$id."  
+        AND `r`.`rule_id` NOT IN (
+        SELECT `x`.`id`
+        FROM `rule` `x`
+        JOIN `version` `v`
+        ON `v`.`foreign_key`=`x`.`id`
+        WHERE 
+        `v`.`active`=1 and            
+        `x`.`project_id`=".$id." 
+        )
+                
+        GROUP BY `r`.`number`
+        ORDER BY `r`.`id` DESC";
+
+     
         
         $connection=Yii::app()->db;
 		$command = $connection->createCommand($sql);
@@ -207,22 +240,25 @@ inner join(
 		return $projects;
     }  
     
-    
              public function rollback($number,$id)
             {
     
-              $sql="UPDATE Rule
-                  Set active=0
+              $sql="UPDATE `version`
+                  Set `active`=0
                   WHERE
-                  number=".$number;
-                 $connection=Yii::app()->db;
-        $command = $connection->createCommand($sql);
-        $command->execute();
+                  `object`=1
+                  AND
+                  `foreign_id`=".$number;
+                $connection=Yii::app()->db;
+                $command = $connection->createCommand($sql);
+                $command->execute();
         
-              $sql="UPDATE Rule
+              $sql="UPDATE `version`
                   Set active=1
                   WHERE
-                  id=".$id;
+                   `object`=1
+                  AND
+                  `foreign_key`=".$id;
                  $connection=Yii::app()->db;
         $command = $connection->createCommand($sql);
         $command->execute();        
@@ -239,7 +275,7 @@ inner join(
                 `r`.`number`,
                 `r`.`title`,
                 `r`.`text`,
-                `r`.`active`,
+                `v`.`active`,
                 `v`.`number` as ver_numb,
                 `v`.`release`,
                 `v`.`action`,
@@ -250,12 +286,16 @@ inner join(
                 from `rule` `r`
                 join `version` `v`
                 ON
-                `r`.`version_id`=`v`.`id`
+                `r`.`id`=`v`.`foreign_key`
                 join `user` `u`
                 ON
                 `u`.`id`=`v`.`create_user`
                 WHERE 
-                `r`.`rule_id`=".$id;
+                `v`.`object`=1
+                AND
+                `r`.`rule_id`=".$id." 
+                ORDER BY `v`.`active` DESC,
+                ver_numb DESC";
 		$connection=Yii::app()->db;
 		$command = $connection->createCommand($sql);
 		$projects = $command->queryAll();

@@ -91,9 +91,11 @@ public function actionCreateInline()
                      $form->number=Form::model()->getNextNumber($step->flow->usecase->package->project->id);;
                      $form->name=$_POST['new_form'];
                      $form->project_id=$step->flow->usecase->package->project->id;
+                     $form->form_id=Form::model()->getNextID($form->project_id);
                      $form->save(false);
                      $model->form_id=$form->getprimaryKey();
-                     
+                     $version=Version::model()->getNextNumber($form->project_id,2,1,$form->getprimaryKey(),$form->form_id);
+                   
                    //  make a new interface record
                     // get the new PK() 
                  }	
@@ -103,7 +105,7 @@ public function actionCreateInline()
                 }
                         $model->save(false);
                 }
-                        $this->redirect(array('/step/update/id/-1/flow/'.$model->step->flow->id));
+                        $this->redirect(array('/step/update/id/'.$model->step->id.'/flow/'.$model->step->flow->id));
 		
 	}
 	/**
