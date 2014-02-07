@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Feb 01, 2014 at 11:37 AM
+-- Generation Time: Feb 07, 2014 at 06:19 PM
 -- Server version: 5.5.19
 -- PHP Version: 5.3.8
 
@@ -30,26 +30,30 @@ CREATE TABLE IF NOT EXISTS `actor` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `actor_id` int(11) NOT NULL,
   `project_id` int(11) NOT NULL,
+  `number` varchar(30) NOT NULL,
   `name` varchar(255) NOT NULL,
   `description` text NOT NULL,
   `alias` text NOT NULL,
   `inherits` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `project_id` (`project_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=8 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=12 ;
 
 --
 -- Dumping data for table `actor`
 --
 
-INSERT INTO `actor` (`id`, `actor_id`, `project_id`, `name`, `description`, `alias`, `inherits`) VALUES
-(1, 1, 47, 'User', 'A public user of the website.', '', 0),
-(2, 2, 47, 'Member', 'A user who has signed up to the website and has credentials.', '', 1),
-(3, 3, 47, 'Administrator', '', '', 2),
-(4, 4, 47, 'PayPal', '', '', 0),
-(5, 5, 48, 'Member', 'User of the system who has an account.', 'none', -1),
-(6, 6, 48, 'aoeu', 'aoeu', 'aoeu', -1),
-(7, 5, 48, 'Member', 'User of the system who has an account.', 'none eouoe uo', -1);
+INSERT INTO `actor` (`id`, `actor_id`, `project_id`, `number`, `name`, `description`, `alias`, `inherits`) VALUES
+(1, 1, 47, '', 'User', 'A public user of the website.', '', 0),
+(2, 2, 47, '', 'Member', 'A user who has signed up to the website and has credentials.', '', 1),
+(3, 3, 47, '', 'Administrator', '', '', 2),
+(4, 4, 47, '', 'PayPal', '', '', 0),
+(5, 5, 48, '', 'Member', 'User of the system who has an account.', 'none', -1),
+(6, 6, 48, '', 'aoeu', 'aoeu', 'aoeu', -1),
+(7, 5, 48, '', 'Member', 'User of the system who has an account.', 'none eouoe uo', -1),
+(9, 7, 55, '', 'oaea', 'eaoeaoe', 'aoeaoe', -1),
+(10, 7, 55, '', 'oaea', 'eaoeaoe oeu aeou eoa ', 'aoeaoe', -1),
+(11, 8, 55, '', 'delete me as I''m no good', 'oeau', 'eou', -1);
 
 -- --------------------------------------------------------
 
@@ -393,7 +397,7 @@ CREATE TABLE IF NOT EXISTS `form` (
   PRIMARY KEY (`id`),
   KEY `project_id` (`project_id`),
   KEY `form_id` (`form_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=13 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=19 ;
 
 --
 -- Dumping data for table `form`
@@ -421,7 +425,7 @@ CREATE TABLE IF NOT EXISTS `formproperty` (
   `description` text NOT NULL,
   PRIMARY KEY (`id`),
   KEY `form_id` (`form_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=41 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=50 ;
 
 --
 -- Dumping data for table `formproperty`
@@ -502,7 +506,7 @@ CREATE TABLE IF NOT EXISTS `interfacetype` (
   `project_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `project_id` (`project_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=34 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=22 ;
 
 --
 -- Dumping data for table `interfacetype`
@@ -514,7 +518,10 @@ INSERT INTO `interfacetype` (`id`, `interfacetype_id`, `number`, `name`, `projec
 (3, 3, '2', 'Email', 47),
 (4, 4, '0', 'Not Classified', 48),
 (5, 5, '1', 'Web Interface', 48),
-(6, 6, '2', 'Email', 48);
+(6, 6, '2', 'Email', 48),
+(19, 1, '0', 'Not Classified', 55),
+(20, 2, '1', 'Web Interface', 55),
+(21, 3, '2', 'Email', 55);
 
 -- --------------------------------------------------------
 
@@ -562,8 +569,9 @@ CREATE TABLE IF NOT EXISTS `object` (
   `description` text NOT NULL,
   `project_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `project_id` (`project_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=16 ;
+  KEY `project_id` (`project_id`),
+  KEY `object_id` (`object_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=29 ;
 
 --
 -- Dumping data for table `object`
@@ -583,7 +591,13 @@ INSERT INTO `object` (`id`, `object_id`, `number`, `name`, `description`, `proje
 (12, 12, '8', 'eui', 'euieui', 48),
 (13, 13, '9', 'aoeu', 'aoeuaoeu', 48),
 (14, 13, '9', 'aoeu', 'aoeuaoeu', 48),
-(15, 13, '9', 'aoeu', 'aoeuaoeu', 48);
+(15, 13, '9', 'aoeu', 'aoeuaoeu', 48),
+(23, 14, '1', 'One', ' this is one', 55),
+(24, 15, '2', 'Two this is two', 'oeu', 55),
+(25, 16, '3', 'Two this is two', 'oeu', 55),
+(26, 17, '4', 'double click', 'aoeu', 55),
+(27, 18, '5', 'double click', 'aoeu', 55),
+(28, 19, '6', 'ou', 'eu', 55);
 
 -- --------------------------------------------------------
 
@@ -600,7 +614,7 @@ CREATE TABLE IF NOT EXISTS `objectproperty` (
   `description` text NOT NULL,
   PRIMARY KEY (`id`),
   KEY `object_id` (`object_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=16 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=41 ;
 
 --
 -- Dumping data for table `objectproperty`
@@ -617,7 +631,10 @@ INSERT INTO `objectproperty` (`id`, `objectproperty_id`, `number`, `object_id`, 
 (12, 12, '2', 3, 'Rating', 'The score out of 5 given to that label by Wine Genius'),
 (13, 13, '1', 4, 'Option', 'name of option'),
 (14, 14, '2', 4, 'Description', 'Description of option'),
-(15, 15, '3', 4, 'Value', 'Value of option');
+(15, 15, '3', 4, 'Value', 'Value of option'),
+(38, 16, '1', 14, 'qjkx', 'xk'),
+(39, 17, '2', 14, 'Is this one better', ';qjkqjk'),
+(40, 16, '1', 14, 'qjkx', 'xk eo uoaeu eoau');
 
 -- --------------------------------------------------------
 
@@ -656,7 +673,7 @@ CREATE TABLE IF NOT EXISTS `package` (
   `extlink` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `project_id` (`project_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=700 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=697 ;
 
 --
 -- Dumping data for table `package`
@@ -712,7 +729,7 @@ CREATE TABLE IF NOT EXISTS `project` (
   `subcontractretention` text NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `extlink` (`extlink`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=58 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=56 ;
 
 --
 -- Dumping data for table `project`
@@ -720,7 +737,8 @@ CREATE TABLE IF NOT EXISTS `project` (
 
 INSERT INTO `project` (`id`, `name`, `description`, `company_id`, `budget`, `claimtype`, `stage`, `extlink`, `subcontractterms`, `subcontractretention`) VALUES
 (47, 'Wine Genius', 'test', 505, '0.00', 1, 1, 'c660a35542e52763d18098132a4815f5', '30 Days after end of month of invoice', '5% held for 45 days'),
-(48, 'Reqrap', 'Rapid requirements development system.', 505, '0.00', 1, 1, '9e400e1040cd520987bd3858e825061b', '30 Days after end of month of invoice', '5% held for 45 days');
+(48, 'Reqrap', 'Rapid requirements development system.', 505, '0.00', 1, 1, '9e400e1040cd520987bd3858e825061b', '30 Days after end of month of invoice', '5% held for 45 days'),
+(55, 'A new project', 'tsaohue', 505, '0.00', 1, 1, 'b61a616533effcc297f6198079b8007f', '30 Days after end of month of invoice', '5% held for 45 days');
 
 -- --------------------------------------------------------
 
@@ -765,7 +783,7 @@ CREATE TABLE IF NOT EXISTS `release` (
   PRIMARY KEY (`id`),
   KEY `create_user` (`create_user`),
   KEY `project_id` (`project_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=11 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=8 ;
 
 --
 -- Dumping data for table `release`
@@ -773,7 +791,8 @@ CREATE TABLE IF NOT EXISTS `release` (
 
 INSERT INTO `release` (`id`, `number`, `status`, `project_id`, `create_date`, `create_user`) VALUES
 (1, '0.1', 1, 47, '2014-01-16 03:46:15', 113),
-(2, '0.1', 1, 48, '2014-01-25 02:02:38', 113);
+(2, '0.1', 1, 48, '2014-01-25 02:02:38', 113),
+(7, '0.1', 1, 55, '2014-02-04 10:54:22', 113);
 
 -- --------------------------------------------------------
 
@@ -791,7 +810,7 @@ CREATE TABLE IF NOT EXISTS `rule` (
   PRIMARY KEY (`id`),
   KEY `project_id` (`project_id`),
   KEY `rule_id` (`rule_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=104 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=109 ;
 
 --
 -- Dumping data for table `rule`
@@ -896,7 +915,7 @@ CREATE TABLE IF NOT EXISTS `step` (
   `result` text NOT NULL,
   PRIMARY KEY (`id`),
   KEY `flow_id` (`flow_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=90 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=89 ;
 
 --
 -- Dumping data for table `step`
@@ -942,6 +961,7 @@ INSERT INTO `step` (`id`, `step_id`, `flow_id`, `number`, `actor_id`, `text`, `r
 
 CREATE TABLE IF NOT EXISTS `stepform` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `stepform_id` int(11) NOT NULL,
   `step_id` int(11) NOT NULL,
   `form_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
@@ -953,8 +973,8 @@ CREATE TABLE IF NOT EXISTS `stepform` (
 -- Dumping data for table `stepform`
 --
 
-INSERT INTO `stepform` (`id`, `step_id`, `form_id`) VALUES
-(28, 83, 12);
+INSERT INTO `stepform` (`id`, `stepform_id`, `step_id`, `form_id`) VALUES
+(28, 28, 83, 12);
 
 -- --------------------------------------------------------
 
@@ -964,6 +984,7 @@ INSERT INTO `stepform` (`id`, `step_id`, `form_id`) VALUES
 
 CREATE TABLE IF NOT EXISTS `stepiface` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `stepiface_id` int(11) NOT NULL,
   `step_id` int(11) NOT NULL,
   `iface_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
@@ -975,28 +996,28 @@ CREATE TABLE IF NOT EXISTS `stepiface` (
 -- Dumping data for table `stepiface`
 --
 
-INSERT INTO `stepiface` (`id`, `step_id`, `iface_id`) VALUES
-(12, 54, 11),
-(16, 58, 18),
-(17, 58, 19),
-(18, 62, 20),
-(19, 63, 13),
-(20, 64, 5),
-(22, 70, 19),
-(25, 56, 12),
-(26, 61, 21),
-(27, 81, 22),
-(28, 81, 23),
-(29, 81, 24),
-(30, 81, 25),
-(31, 81, 26),
-(32, 81, 27),
-(33, 81, 28),
-(34, 81, 29),
-(35, 81, 30),
-(36, 84, 31),
-(37, 84, 32),
-(38, 79, 33);
+INSERT INTO `stepiface` (`id`, `stepiface_id`, `step_id`, `iface_id`) VALUES
+(12, 12, 54, 11),
+(16, 16, 58, 18),
+(17, 17, 58, 19),
+(18, 18, 62, 20),
+(19, 19, 63, 13),
+(20, 20, 64, 5),
+(22, 22, 70, 19),
+(25, 25, 56, 12),
+(26, 26, 61, 21),
+(27, 27, 81, 22),
+(28, 28, 81, 23),
+(29, 29, 81, 24),
+(30, 30, 81, 25),
+(31, 31, 81, 26),
+(32, 32, 81, 27),
+(33, 33, 81, 28),
+(34, 34, 81, 29),
+(35, 35, 81, 30),
+(36, 36, 84, 31),
+(37, 37, 84, 32),
+(38, 38, 79, 33);
 
 -- --------------------------------------------------------
 
@@ -1006,6 +1027,7 @@ INSERT INTO `stepiface` (`id`, `step_id`, `iface_id`) VALUES
 
 CREATE TABLE IF NOT EXISTS `steprule` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `steprule_id` int(11) NOT NULL,
   `step_id` int(11) NOT NULL,
   `rule_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
@@ -1017,13 +1039,13 @@ CREATE TABLE IF NOT EXISTS `steprule` (
 -- Dumping data for table `steprule`
 --
 
-INSERT INTO `steprule` (`id`, `step_id`, `rule_id`) VALUES
-(19, 55, 22),
-(20, 62, 23),
-(21, 58, 24),
-(30, 81, 46),
-(33, 84, 49),
-(34, 84, 50);
+INSERT INTO `steprule` (`id`, `steprule_id`, `step_id`, `rule_id`) VALUES
+(19, 19, 55, 22),
+(20, 20, 62, 23),
+(21, 21, 58, 24),
+(30, 30, 81, 46),
+(33, 33, 84, 49),
+(34, 34, 84, 50);
 
 -- --------------------------------------------------------
 
@@ -1119,7 +1141,7 @@ CREATE TABLE IF NOT EXISTS `testrun` (
   `status` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `project_id` (`project_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=14 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=10 ;
 
 --
 -- Dumping data for table `testrun`
@@ -1128,7 +1150,8 @@ CREATE TABLE IF NOT EXISTS `testrun` (
 INSERT INTO `testrun` (`id`, `project_id`, `number`, `status`) VALUES
 (1, 47, 1, 2),
 (2, 47, 2, 1),
-(4, 48, 1, 1);
+(4, 48, 1, 1),
+(9, 55, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -1280,7 +1303,7 @@ CREATE TABLE IF NOT EXISTS `version` (
   PRIMARY KEY (`id`),
   KEY `project_id` (`project_id`),
   KEY `create_user` (`create_user`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=134 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=207 ;
 
 --
 -- Dumping data for table `version`
@@ -1380,7 +1403,27 @@ INSERT INTO `version` (`id`, `number`, `release`, `project_id`, `status`, `objec
 (130, 33, '2', 48, 1, 6, 1, 12, 12, 0, '2014-01-28 12:27:35', 113),
 (131, 34, '2', 48, 1, 6, 3, 12, 12, 0, '2014-01-28 12:27:35', 113),
 (132, 35, '2', 48, 1, 6, 1, 13, 13, 0, '2014-01-28 12:29:59', 113),
-(133, 36, '2', 48, 1, 6, 2, 15, 13, 1, '2014-01-28 12:29:59', 113);
+(133, 36, '2', 48, 1, 6, 2, 15, 13, 1, '2014-01-28 12:29:59', 113),
+(143, 37, '2', 48, 1, 7, 2, 25, 20, 0, '2014-02-04 03:36:54', 113),
+(144, 38, '2', 48, 1, 7, 3, 25, 20, 0, '2014-02-04 03:36:55', 113),
+(170, 39, '2', 48, 1, 7, 3, 27, 17, 0, '2014-02-04 07:14:43', 113),
+(171, 40, '2', 48, 1, 7, 3, 27, 17, 0, '2014-02-04 07:14:50', 113),
+(172, 41, '2', 48, 1, 7, 2, 28, 16, 1, '2014-02-04 07:15:09', 113),
+(192, 0, '7', 55, 1, 6, 1, 23, 14, 1, '2014-02-04 10:54:36', 113),
+(193, 1, '7', 55, 1, 6, 1, 24, 15, 1, '2014-02-04 10:54:55', 113),
+(194, 2, '7', 55, 1, 6, 1, 25, 16, 0, '2014-02-04 10:59:53', 113),
+(195, 3, '7', 55, 1, 6, 1, 26, 17, 1, '2014-02-04 10:55:14', 113),
+(196, 4, '7', 55, 1, 6, 1, 27, 18, 0, '2014-02-04 10:59:50', 113),
+(197, 5, '7', 55, 1, 6, 1, 28, 19, 1, '2014-02-04 10:55:21', 113),
+(198, 6, '7', 55, 1, 6, 3, 27, 18, 0, '2014-02-04 10:59:50', 113),
+(199, 7, '7', 55, 1, 6, 3, 25, 16, 0, '2014-02-04 10:59:53', 113),
+(200, 8, '7', 55, 1, 7, 1, 38, 16, 0, '2014-02-04 11:11:52', 113),
+(201, 9, '7', 55, 1, 7, 1, 39, 17, 1, '2014-02-04 11:11:46', 113),
+(202, 10, '7', 55, 1, 7, 2, 40, 16, 1, '2014-02-04 11:11:52', 113),
+(203, 11, '7', 55, 1, 4, 1, 9, 7, 0, '2014-02-04 11:12:56', 113),
+(204, 12, '7', 55, 1, 4, 2, 10, 7, 1, '2014-02-04 11:12:56', 113),
+(205, 13, '7', 55, 1, 4, 1, 11, 8, 0, '2014-02-04 11:16:48', 113),
+(206, 14, '7', 55, 1, 4, 3, 11, 8, 0, '2014-02-04 11:16:48', 113);
 
 --
 -- Constraints for dumped tables
@@ -1397,6 +1440,12 @@ ALTER TABLE `actor`
 --
 ALTER TABLE `flow`
   ADD CONSTRAINT `flow_ibfk_1` FOREIGN KEY (`usecase_id`) REFERENCES `usecase` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `form`
+--
+ALTER TABLE `form`
+  ADD CONSTRAINT `form_ibfk_1` FOREIGN KEY (`project_id`) REFERENCES `project` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `formproperty`
@@ -1427,7 +1476,7 @@ ALTER TABLE `object`
 -- Constraints for table `objectproperty`
 --
 ALTER TABLE `objectproperty`
-  ADD CONSTRAINT `objectproperty_ibfk_1` FOREIGN KEY (`object_id`) REFERENCES `object` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `objectproperty_ibfk_1` FOREIGN KEY (`object_id`) REFERENCES `object` (`object_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `package`
@@ -1472,8 +1521,8 @@ ALTER TABLE `stepiface`
 -- Constraints for table `steprule`
 --
 ALTER TABLE `steprule`
-  ADD CONSTRAINT `steprule_ibfk_4` FOREIGN KEY (`rule_id`) REFERENCES `rule` (`rule_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `steprule_ibfk_3` FOREIGN KEY (`step_id`) REFERENCES `step` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `steprule_ibfk_3` FOREIGN KEY (`step_id`) REFERENCES `step` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `steprule_ibfk_4` FOREIGN KEY (`rule_id`) REFERENCES `rule` (`rule_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `testcaseresult`
