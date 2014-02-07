@@ -150,41 +150,7 @@ class Formproperty extends CActiveRecord
 		return $projects[0]['number'];
     }  
     
-        public function getVersions($id)
-    {
-        $sql="SELECT 
-                `f`.`id`,
-                `f`.`formproperty_id`,
-                `f`.`number`,
-                `f`.`name`,
-                `f`.`description`,
-                `v`.`active`,
-                `v`.`number` as ver_numb,
-                `v`.`release`,
-                `v`.`action`,
-                `v`.`create_date`,
-                `v`.`create_user`,
-                `u`.`firstname`,
-                `u`.`lastname`
-                FROM `formproperty` `f`
-                JOIN `version` `v`
-                ON
-                `f`.`id`=`v`.`foreign_key`
-                JOIN `user` `u`
-                ON
-                `u`.`id`=`v`.`create_user`
-                WHERE 
-                `v`.`object`=3
-                AND
-                `f`.`formproperty_id`=".$id." 
-                ORDER BY `v`.`active` DESC,
-                ver_numb DESC";
-		$connection=Yii::app()->db;
-		$command = $connection->createCommand($sql);
-		$projects = $command->queryAll();
-		
-		return $projects;
-    }  
+    
     
       public function getFormProperty($id)
     {
@@ -200,6 +166,8 @@ class Formproperty extends CActiveRecord
             JOIN `version` `v`
             ON `v`.`foreign_key`=`r`.`id`
             WHERE 
+              `v`.`object`=3
+            AND
             `v`.`active`=1 and            
             `r`.`form_id`=".$id." order by `r`.`number`";
 

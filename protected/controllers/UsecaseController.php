@@ -51,9 +51,11 @@ class UsecaseController extends Controller
 	 */
 	public function actionView($id)
 	{
-		$this->render('view',array(
-			'model'=>$this->loadModel($id),
-		));
+		$versions=Version::model()->getVersions($id,10,'usecase_id');
+                $model=$this->loadModel($versions[0]['id']);
+                $this->render('view',array('model'=>$model,
+			'versions'=>$versions
+        	));
 	}
 
 	/**
@@ -73,21 +75,30 @@ class UsecaseController extends Controller
 		{
 			
                     $model->attributes=$_POST['Usecase'];
+                    // set usecase_id
+                    $model->usecase_id=Version::model()->getNextID($id,10);
 			if($model->save()){
+                        $version=Version::model()->getNextNumber($id,10,1,$model->primaryKey,$model->usecase_id);   
                         $flow=new Flow;
                         $flow->name='Main';
                         $flow->main=1;
                         $flow->startstep_id=0;
                         $flow->rejoinstep_id=0;
-                        $flow->usecase_id=$model->getPrimaryKey();
+                        $flow->usecase_id=$model->usecase_id;
+                        $flow->flow_id=Version::model()->getNextID($id,8);
                         $flow->save(false);
+                        $version=Version::model()->getNextNumber($id,8,1,$model->primaryKey,$model->flow_id);
+                        //make version
                         $step=new Step;
-                          $step->flow_id=$flow->getPrimaryKey();
+                          $step->flow_id=$flow->flow_id;
                           $step->number=  Step::model()->getNextNumber($id);
                           $step->text='Actor action.';
                           $step->actor_id=$model->actor_id;
                           $step->result='System result.';
+                          $step->step_id=Version::model()->getNextID($id,9);
                           $step->save(false);
+                          // make version
+                          $version=Version::model()->getNextNumber($id,9,1,$step->primaryKey,$step->step_id);
 				$this->redirect(array('/package/view/tab/usecases/','id'=>$model->package->id));
                 }}
 
@@ -103,20 +114,29 @@ class UsecaseController extends Controller
 	 */
 	public function actionUpdate($id)
 	{
-		$model=$this->loadModel($id);
+		                
+                
+                
+                $model=$this->loadModel($id);
                 $package=Package::model()->findbyPK($model->package->id);
                 $number=$model->number;
+                $id=$model->project_id;
                 
-		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
-
-		if(isset($_POST['Usecase']))
+                $new= new Usecase;
+			
+                if(isset($_POST['Usecase']))
 		{
-			$model->attributes=$_POST['Usecase'];
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->id));
+		 $new->attributes=$_POST['Interfacetype'];
+                 $new->number=$model->number;
+                 $new->project_id=$model->project_id;
+                 $new->usecase_id=$model->usecase_id;	
+                 if($new->save()){
+                      $version=Version::model()->getNextNumber($id,10,2,$new->primaryKey,$new->usecase_id);   
+                      $this->redirect(array('/usecase/view/id/'.$new->usecase_id));
+                 }
+				
 		}
-
+                
 		$this->render('update',array(
 			'model'=>$model,'id'=>$id,'package'=>$package,'number'=>$number,
                             
@@ -158,12 +178,10 @@ class UsecaseController extends Controller
 	 */
 	public function actionDelete($id)
 	{
-		$model = $this->loadModel($id);
-        $id=$model->package->id;
-        $model->delete();
-
+	$model = $this->loadModel($id);
+        $version=Version::model()->getNextNumber($model->project_id,10,3,$model->id,$model->usecase_id);  
 	
-			$this->redirect(array('/package/view/tab/usecases/id/'.$id));
+      	$this->redirect(array('/project/view/tab/usecases/id/'.$model->project_id));
 	}
 
 	/**

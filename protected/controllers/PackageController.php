@@ -49,171 +49,88 @@ class PackageController extends Controller
 	 * Displays a particular model.
 	 * @param integer $id the ID of the model to be displayed
 	 */
-	public function actionView($id,$tab)
-	
-        {
-            $model = $this->loadModel($id);
-            $served=0; //variable to stop redirect to fail if a page is served
-           // if the user belongs to the owner company, show one view
-         
-           
-          
-           if(User::model()->myCompany()== $model->project->company_id)
-          {
-           
-                $served=1;
-		$this->render('view',array(
-			'model'=>$model,'tab'=>$tab
-		));
-          } 
-          // see if the current user is a follower.
-          $follower = Follower::model()->getFollowers($id,2);
-          
-          foreach($follower as $item)
-          {
-            if ($item['user_id']==Yii::app()->user->id)
-                {
-                $served=1;
-                $this->render('followview',array(
-			'model'=>$model,'tab'=>$tab));
-                } 
-           
-          }
-            $tenderer = Follower::model()->getTenderers($id,2);
-          foreach($tenderer as $item)
-          {
-            if ($item['user_id']==Yii::app()->user->id)
-                {
-                $served=1;
-                $this->render('tenderview',array(
-			'model'=>$model,'tab'=>$tab));
-                 } 
-          }
-       
-         if ($served != 1) $this->redirect(array('site/fail'));
-	
-          
-        }
+  public function actionView($id) // Note that this is actor_id not id
+	{
+             	$versions=Version::model()->getVersions($id,5);
+                $model=$this->loadModel($versions[0]['id']);
+                $this->render('view',array('model'=>$model,
+			'versions'=>$versions
+        	));
+	}
 
 	/**
 	 * Creates a new model.
 	 * If creation is successful, the browser will be redirected to the 'view' page.
 	 */
-	public function actionCreate()
+	  public function actionCreate($id)
 	{
-		$model=new Package;
-
-		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
+	
+                $model=new Package;
 
 		if(isset($_POST['Package']))
 		{
-			$model->attributes=$_POST['Package'];
-			if($model->save())
-				$this->redirect(array('/project/view','id'=>$model->project->id,'tab'=>'package'));
-		}
-
-		$this->render('create',array(
-			'model'=>$model,
-                   
+                   $model->attributes=$_POST['Package'];
+                   $model->package_id=Version::model()->getNextID($id,5);
+                   $model->number=Package::model()->getNextNumber($project);
+                    
+                    if($model->save())
+                    {
+                     $version=Version::model()->getNextNumber($id,5,1,$model->primaryKey,$model->package_id);   
+                     $this->redirect(array('/project/view/tab/packages/id/'.$id));
+		    }
+                        
+                }
+               
+                $this->render('create',array(
+			'model'=>$model,'id'=>$id,
 		));
 	}
 
         
-        public function actionsubcontractview($bidderid, $packid)
-	{
-		$this->render('subcontractview',array(
-			'model'=>$this->loadModel($packid),'bidderid'=>$bidderid, 'packid'=>$packid
-		));
-	}
+  
+     
         
-        public function actionAddPackage($id)
+        
+      	public function actionUpdate($id)
 	{
-		$model=new Package;
+                $model=$this->loadModel($id);
+                $new= new Package;
 
-		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
-
+            
 		if(isset($_POST['Package']))
 		{
-			$model->attributes=$_POST['Package'];
-                        $model->sequence=Package::model()->getNextNumber($model->project->id);
-			if($model->save())
-				$this->redirect(array('/project/view','id'=>$model->project->id,'tab'=>'packages'));
-		}
+                        
+			 $new->attributes=$_POST['Package'];
+                         $new->project_id=$model->project_id;
+                         $new->package_id=$model->package_id;
 
-		$this->render('addpackage',array(
-			'model'=>$model, 'id'=>$id,
-		));
-	}
-	/**
-	 * Updates a particular model.
-	 * If update is successful, the browser will be redirected to the 'view' page.
-	 * @param integer $id the ID of the model to be updated
-	 */
-        
-        
-        public function actionUpdatePackage()
-{
-    $es = new EditableSaver('Package');  //'User' is name of model to be updated
-    $es->update();
-}
-        
-	public function actionUpdate($id)
-	{
-		$model=$this->loadModel($id);
-
-		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
-
-		if(isset($_POST['Package']))
-		{
-			$model->attributes=$_POST['Package'];
-			if($model->save())
-				$this->redirect(array('/project/view','id'=>$model->project->id,'tab'=>'packages'));
+			if($new->save())
+                        {
+			$version=Version::model()->getNextNumber($model->project_id, 5, 2,$new->primaryKey,$model->actor_id);
+                        $this->redirect(array('/project/view/tab/packages/id/'.$model->project_id));
+                        }        
 		}
 
 		$this->render('update',array(
-			'model'=>$model,
+			'model'=>$model,'id'=>$model->project_id
 		));
 	}
+        
 
-	/**
-	 * Deletes a particular model.
-	 * If deletion is successful, the browser will be redirected to the 'admin' page.
-	 * @param integer $id the ID of the model to be deleted
-	 */
-	public function actionDelete($id)
+	
+public function actionDelete($id)
 	{
-		$this->loadModel($id)->delete();
-
-		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
-		if(!isset($_GET['ajax']))
-			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
-	}
-
-        
-        	public function actionRemove($id)
-	{
-		$model=$this->loadModel($id);
-                $project=$model->project->id;
-                $this->loadModel($id)->delete();
-
-		$this->redirect('/project/view/id/'.$project.'/tab/package');
-	}
+		
+            $model=$this->loadModel($id);
+            $version=Version::model()->getNextNumber($model->project_id,5,3,$id,$model->actor_id);  
+            $model->save();
+            $this->redirect(array('/project/view/tab/packages/id/'.$project));
+            
+            }
         
         
         
-         public function actionbidsubmit($id)
-    {
-        //Set the tender answers related to this package 
-        // from this company as status 5 - ie submitted
-        Tenderans::model()->bidsubmit($id);
-        $this->redirect(array('/package/view','id'=>$id,'tab'=>'bidder'));
-    }
-	/**
-	 * Lists all models.
-	 */
+  
 	public function actionIndex()
 	{
 		$dataProvider=new CActiveDataProvider('Package');

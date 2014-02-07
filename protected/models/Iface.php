@@ -32,11 +32,11 @@ class Iface extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('number, iface_id, name, type_id, project_id', 'required'),
-			array('iface_id, number, type_id, project_id', 'numerical', 'integerOnly'=>true),
+			array('iface_id, number, type_id, photo_id, project_id', 'numerical', 'integerOnly'=>true),
 			array('name', 'length', 'max'=>255),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, iface_id, number, name, type_id', 'safe', 'on'=>'search'),
+			array('id, iface_id, photo_id,number, name, type_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -66,7 +66,7 @@ class Iface extends CActiveRecord
 			'name' => 'Name',
 			'type_id' => 'Type',
                     'project_id' => 'Project',
-                    'file'=>'Image File'
+                    'photo_id'=>'Image'
 		);
 	}
 
@@ -161,8 +161,8 @@ class Iface extends CActiveRecord
     
           public function createTypes($id)
     {
-       $sql="INSERT INTO `interfacetype`(`number`, `name`, `project_id`) VALUES 
-           (0,'Not Classified', ".$id."),(1,'Web Interface', ".$id."),(2,'Email', ".$id.")";
+       $sql="INSERT INTO `interfacetype`(`number`, `interfacetype_id`, `name`, `project_id`) VALUES 
+           (0,1,'Not Classified', ".$id."),(1,2,'Web Interface', ".$id."),(2,3,'Email', ".$id.")";
                  $connection=Yii::app()->db;
         $command = $connection->createCommand($sql);
         $command->execute();

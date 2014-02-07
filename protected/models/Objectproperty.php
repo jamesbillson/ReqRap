@@ -45,16 +45,18 @@ class Objectproperty extends CActiveRecord
 	 */
 	public function relations()
 	{
-		// NOTE: you may need to adjust the relation name and the related
-		// class name for the relations automatically generated below.
+		
 		return array(
-			'object' => array(self::BELONGS_TO, 'Object', 'object_id'),
-		);
+			     
+                            'object'=>array(self::BELONGS_TO,
+                                    'object','object_id',
+                                    'joinType'=>'JOIN',
+                                    'foreignKey'=>'object_id')
+                    );
 	}
 
-	/**
-	 * @return array customized attribute labels (name=>label)
-	 */
+
+        
 	public function attributeLabels()
 	{
 		return array(
@@ -115,12 +117,36 @@ class Objectproperty extends CActiveRecord
     
     }   
         
-	/**
-	 * Returns the static model of the specified AR class.
-	 * Please note that you should have this exact method in all your CActiveRecord descendants!
-	 * @param string $className active record class name.
-	 * @return Objectproperty the static model class
-	 */
+	
+       public function getObjectProperty($id)
+    {
+        $sql="
+            SELECT 
+            `r`.`id`,
+            `r`.`objectproperty_id`,
+            `r`.`number`,
+            `r`.`description`,
+            `r`.`name`,
+            `v`.`active`
+            FROM `objectproperty` `r`
+            JOIN `version` `v`
+            ON `v`.`foreign_key`=`r`.`id`
+            WHERE 
+              `v`.`object`=7
+            AND
+            `v`.`active`=1 and            
+            `r`.`object_id`=".$id." order by `r`.`number`";
+
+     
+        
+        $connection=Yii::app()->db;
+		$command = $connection->createCommand($sql);
+		$projects = $command->queryAll();
+		
+		return $projects;
+    }  
+    
+    
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);

@@ -56,27 +56,29 @@ class StepruleController extends Controller
 		));
 	}
 
-        public function actionCreateInline()
+        public function actionCreateInline($project_id)
 	{
 		
                 $model=new Steprule;
-
+                $model->steprule_id=Version::model()->getNextID($project->id,16);
+                     
 		if(isset($_POST['step_id']))
 		{
-                    $model->step_id=$_POST['step_id'];
+                 $model->step_id=$_POST['step_id'];
+                 
                  $step=Step::model()->findbyPK($model->step_id);
                     
 		 if(!empty($_POST['new_rule'])){
                      $rule=new Rule;
                      
-                     $rule->number=Rule::model()->getNextNumber($step->flow->usecase->package->project->id);
-                     $rule->rule_id=Rule::model()->getNextID($step->flow->usecase->package->project->id);
+                     $rule->number=Rule::model()->getNextNumber($project->id);
+                     $rule->rule_id=Version::model()->getNextID($project->id,1);
                      $rule->text='stub';
                      $rule->title=$_POST['new_rule'];
                      $rule->project_id=$step->flow->usecase->package->project->id;
                      
                      $rule->save(false);
-                     $version=Version::model()->getNextNumber($step->flow->usecase->package->project->id,1,1,$rule->primaryKey,$rule->rule_id);
+                     $version=Version::model()->getNextNumber($project->id,1,1,$rule->primaryKey,$rule->rule_id);
                    
                      $model->rule_id=$rule->rule_id;
                  }	
@@ -85,15 +87,15 @@ class StepruleController extends Controller
                  }
                         
                         $model->save(false);
+                        $version=Version::model()->getNextNumber($project->id,1,16,$model->primaryKey,$model->steprule_id);
+                  
                 }
                         $this->redirect(array('/step/update/id/'.$model->step->id.'/flow/'.$model->step->flow->id));
 		
 	}
         
-	/**
-	 * Creates a new model.
-	 * If creation is successful, the browser will be redirected to the 'view' page.
-	 */
+	
+        
 	public function actionCreate()
 	{
 		$model=new Steprule;
@@ -104,7 +106,10 @@ class StepruleController extends Controller
 		if(isset($_POST['Steprule']))
 		{
 			$model->attributes=$_POST['Steprule'];
+                        $model->steprule_id=Version::model()->getNextID($project->id,16);
 			if($model->save())
+                        $version=Version::model()->getNextNumber($project->id,1,16,$model->primaryKey,$model->steprule_id);
+                      
 				$this->redirect(array('view','id'=>$model->step_id));
 		}
 
@@ -113,23 +118,24 @@ class StepruleController extends Controller
 		));
 	}
 
-	/**
-	 * Updates a particular model.
-	 * If update is successful, the browser will be redirected to the 'view' page.
-	 * @param integer $id the ID of the model to be updated
-	 */
+	
+        
 	public function actionUpdate($id)
 	{
 		$model=$this->loadModel($id);
 
-		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
-
+		
 		if(isset($_POST['Steprule']))
 		{
-			$model->attributes=$_POST['Steprule'];
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->step_id));
+			$new=new Steprule;
+                    
+                        $new->attributes=$_POST['Steprule'];
+                        $new->steprule_id=$model->steprule_id;
+                        if($new->save())
+			$version=Version::model()->getNextNumber($project->id,2,16,$model->id,$model->steprule_id);
+                
+                        $this->redirect(array('view','id'=>$model->step_id));
+                        
 		}
 
 		$this->render('update',array(
@@ -137,24 +143,19 @@ class StepruleController extends Controller
 		));
 	}
 
-	/**
-	 * Deletes a particular model.
-	 * If deletion is successful, the browser will be redirected to the 'admin' page.
-	 * @param integer $id the ID of the model to be deleted
-	 */
+ 
 	public function actionDelete($id)
 	{
 		$model=Steprule::model()->findbyPK($id);
                 $step_id=$model->step_id;
                 $flow=$model->step->flow_id;
-                $model->delete();
+                $version=Version::model()->getNextNumber($project->id,3,16,$model->id,$model->steprule_id);
+                  
 
 		$this->redirect(array('/step/update/flow/'.$flow.'/id/'.$step_id));
 	}
 
-	/**
-	 * Lists all models.
-	 */
+ 
 	public function actionIndex()
 	{
 		$dataProvider=new CActiveDataProvider('Steprule');
@@ -163,9 +164,8 @@ class StepruleController extends Controller
 		));
 	}
 
-	/**
-	 * Manages all models.
-	 */
+
+        
 	public function actionAdmin()
 	{
 		$model=new Steprule('search');
@@ -178,13 +178,8 @@ class StepruleController extends Controller
 		));
 	}
 
-	/**
-	 * Returns the data model based on the primary key given in the GET variable.
-	 * If the data model is not found, an HTTP exception will be raised.
-	 * @param integer $id the ID of the model to be loaded
-	 * @return Steprule the loaded model
-	 * @throws CHttpException
-	 */
+	
+        
 	public function loadModel($id)
 	{
 		$model=Steprule::model()->findByPk($id);

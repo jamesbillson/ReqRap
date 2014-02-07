@@ -49,54 +49,53 @@ class IfaceController extends Controller
 	 * Displays a particular model.
 	 * @param integer $id the ID of the model to be displayed
 	 */
-	public function actionView($id)
-	{
-		$this->render('view',array(
-			'model'=>$this->loadModel($id),
-		));
-	}
 
-	/**
-	 * Creates a new model.
-	 * If creation is successful, the browser will be redirected to the 'view' page.
-	 */
-	public function actionCreate($id,$uc)
+
+
+        public function actionView($id) // Note that this is form_id
+	{
+             	$versions=Version::model()->getVersions($id,12,'iface_id');
+                $model=$this->loadModel($versions[0]['id']);
+                $this->render('view',array('model'=>$model,
+			'versions'=>$versions
+        	));
+	}
+        
+        
+	public function actionCreate($id)
 	{
               
             
                 $model= new Iface;
-		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
+		
 
 		if(isset($_POST['Iface']))
 		{
-                    
+                  $model->attributes=$_POST['Iface'];
+                  $model->number=Iface::model()->getNextIfaceNumber($model->project->id);
+                  $model->iface_id=Version::model()->getNextID($id,12);
+                  //$model->file='default.png';
+                     
                   if(!empty($_POST['new_type']))
                     {
-               //echo "make new type with name".$_POST['new_type']." for project ".$_POST['Iface']['project_id'];
-               
-               $interfacetype=new Interfacetype;
-        	$interfacetype->project_id=$_POST['Iface']['project_id'];
-                $interfacetype->name=$_POST['new_type'];
-		if($interfacetype->save())
-                $_POST['Iface']['type_id']=$interfacetype->primarykey;  
-                
-                    }
-			$model->attributes=$_POST['Iface'];
-                     $model->number=Iface::model()->getNextIfaceNumber($model->project->id);
-                     $model->file='default.png';
-			if($model->save()){
-                            
-                  if($uc != -1){
-                   $ifuc= new Interfaceusecase;  
-                    $ifuc->usecase_id=$uc;
-                    $ifuc->interface_id=$model->primarykey;
-                    
+                   
+                        $interfacetype=new Interfacetype;
+                        $interfacetype->project_id=$_POST['Iface']['project_id'];
+                        $interfacetype->name=$_POST['new_type'];
+                        $interfacetype->interfacetype_id=Version::model()->getNextID($id,13);
 
-                    
-                    
-                    $ifuc->save();
-                  }
+                        if($interfacetype->save()){
+                        $version=Version::model()->getNextNumber($id,13,1,$interface->primaryKey,$interface->interfacetype_id);   
+                        $model->type_id=$interface->interfacetype_id; 
+                                                    }
+                    }
+                     
+                     
+                     
+			if($model->save()){
+                     $version=Version::model()->getNextNumber($id,12,1,$model->primaryKey,$model->iface_id);   
+                   
+                
                     	$this->redirect(array('/project/view/id/'.$model->project->id.'/tab/interfaces'));
 		   } }
 
@@ -105,41 +104,47 @@ class IfaceController extends Controller
 		));
 	}
 
-	/**
-	 * Updates a particular model.
-	 * If update is successful, the browser will be redirected to the 'view' page.
-	 * @param integer $id the ID of the model to be updated
-	 */
-	public function actionUpdate($id,$ucid)
+        
+        
+
+	public function actionUpdate($id)
 	{
 		$model=$this->loadModel($id);
-
-		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
+                $new= new Iface;
+		
                 $id=$model->project_id;
 		if(isset($_POST['Iface']))
 		{
-			$model->attributes=$_POST['Iface'];
-			if($model->save())
-				$this->redirect(array('/usecase/view/id/'.$ucid));
+		 $new->attributes=$_POST['Iface'];
+                 $new->number=$model->number;
+                 $new->project_id=$model->project_id;
+                 $new->iface_id=$model->iface_id;	
+                 if($new->save()){
+                      $version=Version::model()->getNextNumber($id,12,2,$new->primaryKey,$new->iface_id);   
+                      $this->redirect(array('/usecase/view/id/'.$ucid));
+                 }
+				
 		}
 
 		$this->render('update',array(
-			'model'=>$model,'id'=>$id
+			'model'=>$new,'id'=>$new->project_id
 		));
 	}
 
-	/**
-	 * Deletes a particular model.
-	 * If deletion is successful, the browser will be redirected to the 'admin' page.
-	 * @param integer $id the ID of the model to be deleted
-	 */
-	public function actionDelete($id,$ucid,$type)
+	
+	public function actionDelete($id,$ucid)
 	{
-		$this->loadModel($id)->delete();
-               if($type==1) $this->redirect(array('/usecase/view/id/'.$ucid));
-               if($type==2) $this->redirect(array('/project/view/tab/interfaces/id/'.$ucid));
-	}
+               
+            $model=$this->loadModel($id);
+            $version=Version::model()->getNextNumber($model->project_id,12,3,$id,$model->iface_id);  
+	       if($ucid!=-1) 
+               {
+               $this->redirect(array('/usecase/view/id/'.$ucid));
+               } ELSE {
+               $this->redirect(array('/project/view/tab/interfaces/id/'.$ucid));
+               }
+               
+         }
 
 
         

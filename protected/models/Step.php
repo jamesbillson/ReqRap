@@ -48,7 +48,11 @@ class Step extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'flow' => array(self::BELONGS_TO, 'Flow', 'flow_id'),
+			
+                    'folow'=>array(self::BELONGS_TO,
+                                    'flow','flow_id',
+                                    'joinType'=>'JOIN',
+                                    'foreignKey'=>'flow_id')
 		);
 	}
 

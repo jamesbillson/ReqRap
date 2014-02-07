@@ -49,11 +49,13 @@ class InterfacetypeController extends Controller
 	 * Displays a particular model.
 	 * @param integer $id the ID of the model to be displayed
 	 */
-	public function actionView($id)
+        public function actionView($id) // Note that this is interfacetype_id
 	{
-		$this->render('view',array(
-			'model'=>$this->loadModel($id),
-		));
+             	$versions=Version::model()->getVersions($id,13,'interfacetype_id');
+                $model=$this->loadModel($versions[0]['id']);
+                $this->render('view',array('model'=>$model,
+			'versions'=>$versions
+        	));
 	}
 
 	/**
@@ -64,61 +66,56 @@ class InterfacetypeController extends Controller
 	{
 		$model=new Interfacetype;
 
-		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
-
 		if(isset($_POST['Interfacetype']))
 		{
-                    
-             
-                    
-			$model->attributes=$_POST['Interfacetype'];
+                        $model->attributes=$_POST['Interfacetype'];
+                        $model->interfacetype_id=Version::model()->getNextID($id,13);
 			if($model->save())
+                                {
 				$this->redirect(array('/project/view/tab/interfaces/id/'.$model->id));
-		}
+                                $version=Version::model()->getNextNumber($id,13,1,$model->primaryKey,$model->interfacetype_id);   
+                                }
+                 }
 
 		$this->render('create',array(
 			'model'=>$model,
 		));
 	}
 
-	/**
-	 * Updates a particular model.
-	 * If update is successful, the browser will be redirected to the 'view' page.
-	 * @param integer $id the ID of the model to be updated
-	 */
+ 
 	public function actionUpdate($id)
 	{
-		$model=$this->loadModel($id);
-
-		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
-
-		if(isset($_POST['Interfacetype']))
+		
+            
+            $model=$this->loadModel($id);
+                $new= new Interfacetype;
+		
+                $id=$model->project_id;
+		if(isset($_POST['Iface']))
 		{
-			$model->attributes=$_POST['Interfacetype'];
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->id));
+		 $new->attributes=$_POST['Interfacetype'];
+                 $new->number=$model->number;
+                 $new->project_id=$model->project_id;
+                 $new->interfacetype_id=$model->interfacetype_id;	
+                 if($new->save()){
+                      $version=Version::model()->getNextNumber($id,13,2,$new->primaryKey,$new->interfacetype_id);   
+                      $this->redirect(array('/usecase/view/id/'.$ucid));
+                 }
+				
 		}
-
-		$this->render('update',array(
+                    $this->render('update',array(
 			'model'=>$model,
 		));
 	}
 
-	/**
-	 * Deletes a particular model.
-	 * If deletion is successful, the browser will be redirected to the 'admin' page.
-	 * @param integer $id the ID of the model to be deleted
-	 */
+	 
 	public function actionDelete($id)
 	{
-		$this->loadModel($id)->delete();
-
-		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
-		if(!isset($_GET['ajax']))
-			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
-	}
+		
+            $model=$this->loadModel($id);
+            $version=Version::model()->getNextNumber($model->project_id,13,3,$id,$model->interfacetype_id);  
+	     $this->redirect(array('/project/view/tab/interfaces/id/'.$model->project_id));
+        }
 
 	/**
 	 * Lists all models.

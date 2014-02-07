@@ -44,80 +44,87 @@ class ObjectController extends Controller
 			),
 		);
 	}
-
-	/**
-	 * Displays a particular model.
-	 * @param integer $id the ID of the model to be displayed
-	 */
-	public function actionView($id)
+     public function actionView($id) // Note that this is actor_id not id
 	{
-		$this->render('view',array(
-			'model'=>$this->loadModel($id),
-		));
+             	$versions=Version::model()->getVersions($id,6);
+                $model=$this->loadModel($versions[0]['id']);
+                $this->render('view',array('model'=>$model,
+			'versions'=>$versions
+        	));
 	}
-
-	/**
-	 * Creates a new model.
-	 * If creation is successful, the browser will be redirected to the 'view' page.
-	 */
-	public function actionCreate($id)
+        
+        
+        
+	  public function actionCreate($id)
 	{
-		$model=new Object;
-
-		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
+	$project_id=$id;
+                $model=new Object;
 
 		if(isset($_POST['Object']))
 		{
-			$model->attributes=$_POST['Object'];
-                        $model->number=Object::model()->getNextNumber($model->project_id);
-			if($model->save())
-				$this->redirect(array('/project/view/tab/objects/id/'.$model->project_id));
-		}
-
-		$this->render('create',array(
-			'model'=>$model,'id'=>$id
+                   $model->attributes=$_POST['Object'];
+                   $model->object_id=Version::model()->getNextID($project_id,6);
+                   $model->number=Object::model()->getNextNumber($project_id);
+                
+                    
+                    if($model->save())
+                    {
+                     $version=Version::model()->getNextNumber($project_id,6,1,$model->primaryKey,$model->object_id);   
+                     $this->redirect(array('/project/view/tab/objects/id/'.$id));
+		    }
+                        
+                }
+               
+                $this->render('create',array(
+			'model'=>$model,'project_id'=>$project_id,
 		));
 	}
 
-	/**
-	 * Updates a particular model.
-	 * If update is successful, the browser will be redirected to the 'view' page.
-	 * @param integer $id the ID of the model to be updated
-	 */
-	public function actionUpdate($id)
+
+        
+        
+        	public function actionUpdate($id)
 	{
-		$model=$this->loadModel($id);
-                $id=$model->project->id;
+                $model=$this->loadModel($id);
+                $new= new Object;
 
-		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
-
+            
 		if(isset($_POST['Object']))
 		{
-			$model->attributes=$_POST['Object'];
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->id));
+                        
+			 $new->attributes=$_POST['Object'];
+                         $new->project_id=$model->project_id;
+                         $new->object_id=$model->object_id;
+                         $new->number=$model->number;
+                      
+			if($new->save())
+                        {
+			$version=Version::model()->getNextNumber($model->project_id, 6, 2,$new->primaryKey,$model->object_id);
+                        $this->redirect(array('/project/view/tab/objects/id/'.$model->project_id));
+                        }        
 		}
 
 		$this->render('update',array(
-			'model'=>$model,'id'=>$id
+			'model'=>$model,'id'=>$model->project_id
 		));
 	}
+        
+        
+	
 
-	/**
-	 * Deletes a particular model.
-	 * If deletion is successful, the browser will be redirected to the 'admin' page.
-	 * @param integer $id the ID of the model to be deleted
-	 */
-	public function actionDelete($id)
+      
+public function actionDelete($id)
 	{
-		$model=$this->loadModel($id);
-                $id=$model->project->id;
-                $model->delete();
+		
+            $model=$this->loadModel($id);
+            
+            $version=Version::model()->getNextNumber($model->project_id,6,3,$id,$model->object_id); 
+            
+            $model->save();
+            $this->redirect(array('/project/view/tab/objects/id/'.$model->project_id));
+            
+            }
 
-		$this->redirect(array('/project/view/tab/objects/id/'.$id));
-	}
 
 	/**
 	 * Lists all models.

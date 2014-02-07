@@ -112,6 +112,29 @@ class Object extends CActiveRecord
       
     
     }   
+    
+      public function getProjectObjects($id)
+    {
+        $sql="
+            SELECT `r`.*,`v`.`active`
+            FROM `object` `r`
+            LEFT JOIN `version` `v`
+            ON `v`.`foreign_key`=`r`.`id`
+            WHERE 
+            `v`.`object`=6
+            AND
+            `v`.`active`=1
+            AND
+            `r`.`project_id`=".$id;
+
+     
+        
+        $connection=Yii::app()->db;
+		$command = $connection->createCommand($sql);
+		$projects = $command->queryAll();
+		
+		return $projects;
+    }  
         
 	/**
 	 * Returns the static model of the specified AR class.

@@ -1,6 +1,6 @@
  
 <?php 
-$data = Object::model()->findAll('project_id='.$model->id);
+$data = Object::model()->getProjectObjects($model->id);
 
 $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
     'title' => 'Objects',
@@ -34,7 +34,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                 <tr class="odd">  
                    
                     <td>
-                        <a href="/object/view/id/<?php echo $item['id'];?>">OB-<?php echo str_pad($item['number'], 3, "0", STR_PAD_LEFT); ?></a>
+                        <a href="/object/view/id/<?php echo $item['object_id'];?>">OB-<?php echo str_pad($item['number'], 3, "0", STR_PAD_LEFT); ?></a>
                     </td>
                     <td>
                         <b><?php echo $item['name'];?></b>
@@ -55,3 +55,39 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
     <?php endif;
 $this->endWidget(); ?>
 
+<?php $deleted = Version::model()->getProjectDeletedVersions($model->id,6);
+if (count($deleted)):?>
+    
+
+        
+<div class="accordion-group">
+        <div class="accordion-heading">
+
+         <a class="accordion-toggle" data-toggle="collapse"
+          data-parent="#accordionF" href="#collapseF">
+          Show Deleted Versions</a>
+           
+     </div>
+    
+     <div id="collapseF" class="accordion-body collapse">
+        <div class="accordion-inner">
+        <table class="table">
+        <tbody>
+        <?php foreach($deleted as $item) {?>
+           <tr class="odd">  
+                <td> <a href="/rule/view/id/<?php echo $item['object_id'];?>"> 
+                OI-<?php echo str_pad($item['number'], 3, "0", STR_PAD_LEFT); ?></a> 
+                </td>
+   
+                <td> 
+                <?php echo $item['name']; ?>
+                </td>
+    
+           </tr>
+        <?php }?>
+    	</tbody>
+        </table>   
+            </div>
+        </div>
+    </div>
+<?php  endif; ?>

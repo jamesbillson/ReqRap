@@ -32,7 +32,7 @@ class ActorController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update','delete','rollback'),
+				'actions'=>array('create','update','delete','rollback','history'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -53,14 +53,21 @@ class ActorController extends Controller
 	
         public function actionView($id) // Note that this is actor_id not id
 	{
-             	$versions=Actor::model()->getVersions($id);
+             	$versions=Version::model()->getVersions($id,4);
                 $model=$this->loadModel($versions[0]['id']);
                 $this->render('view',array('model'=>$model,
 			'versions'=>$versions
         	));
 	}
         
-        
+       	        public function actionHistory($id) // Note that this is form_id
+	{
+             	$versions=Version::model()->getVersions($id,4,'form_id');
+                $model=$this->loadModel($versions[0]['id']);
+                $this->render('history',array('model'=>$model,
+			'versions'=>$versions
+        	));
+	} 
         
 	  public function actionCreate($id)
 	{
@@ -70,7 +77,8 @@ class ActorController extends Controller
 		if(isset($_POST['Actor']))
 		{
                    $model->attributes=$_POST['Actor'];
-                   $model->actor_id=Actor::model()->getNextID($id);
+                   $model->number=Actor::model()->getNextNumber($project);
+                   $model->actor_id=Version::model()->getNextID($id,4);
                    $model->inherits=-1;
                     
                     if($model->save())
@@ -101,6 +109,7 @@ class ActorController extends Controller
 			 $new->attributes=$_POST['Actor'];
                          $new->project_id=$model->project_id;
                          $new->actor_id=$model->actor_id;
+                          $new->number=$model->number;
                          $new->inherits=$model->inherits;
 			if($new->save())
                         {
@@ -124,13 +133,12 @@ public function actionDelete($id)
             $model=$this->loadModel($id);
             $version=Version::model()->getNextNumber($model->project_id,4,3,$id,$model->actor_id);  
             $model->save();
-            $this->redirect(array('/project/view/tab/actors/id/'.$project));
+            $this->redirect(array('/project/view/tab/actors/id/'.$model->project_id));
             
             }
 
-	/**
-	 * Lists all models.
-	 */
+	
+            
 	public function actionIndex()
 	{
 		$dataProvider=new CActiveDataProvider('Actor');
@@ -139,9 +147,8 @@ public function actionDelete($id)
 		));
 	}
 
-	/**
-	 * Manages all models.
-	 */
+
+        
 	public function actionAdmin()
 	{
 		$model=new Actor('search');
@@ -154,13 +161,8 @@ public function actionDelete($id)
 		));
 	}
 
-	/**
-	 * Returns the data model based on the primary key given in the GET variable.
-	 * If the data model is not found, an HTTP exception will be raised.
-	 * @param integer $id the ID of the model to be loaded
-	 * @return Actor the loaded model
-	 * @throws CHttpException
-	 */
+
+        
 	public function loadModel($id)
 	{
 		$model=Actor::model()->findByPk($id);

@@ -29,7 +29,7 @@
 		<?php echo $form->textArea($model,'description'); ?>
 		<?php echo $form->error($model,'description'); ?>
 	</div>
-		<?php echo $form->hiddenField($model,'project_id',array('value'=>$id)); ?>
+		<?php echo $form->hiddenField($model,'project_id',array('value'=>$project_id)); ?>
 	
 
 	<div class="row buttons">

@@ -172,25 +172,7 @@ class Rule extends CActiveRecord
 		return $projects[0]['number'];
     }  
     
-     public function getNextID($id)
-    {
-       
-              
-        $sql="SELECT `r`.`rule_id` as `number`
-           From `rule` `r`
-          
-           ORDER BY `number` DESC
-           LIMIT 0,1";
-		$connection=Yii::app()->db;
-		$command = $connection->createCommand($sql);
-		$projects = $command->queryAll();
-		   if (!isset($projects[0]['number'])) {
-                    $projects[0]['number']='1';
-                } ELSE {
-                    $projects[0]['number']=$projects[0]['number']+1;
-                }
-		return $projects[0]['number'];
-    }  
+ 
     
       public function getProjectRules($id)
     {
@@ -200,6 +182,8 @@ class Rule extends CActiveRecord
             JOIN `version` `v`
             ON `v`.`foreign_key`=`r`.`id`
             WHERE 
+              `v`.`object`=1
+            AND
             `v`.`active`=1 and            
             `r`.`project_id`=".$id;
 
@@ -268,40 +252,7 @@ class Rule extends CActiveRecord
 
     
     
-         public function getVersions($id)
-    {
-        $sql="select `r`.`rule_id`,
-                `r`.`id`,
-                `r`.`number`,
-                `r`.`title`,
-                `r`.`text`,
-                `v`.`active`,
-                `v`.`number` as ver_numb,
-                `v`.`release`,
-                `v`.`action`,
-                `v`.`create_date`,
-                `v`.`create_user`,
-                `u`.`firstname`,
-                `u`.`lastname`
-                from `rule` `r`
-                join `version` `v`
-                ON
-                `r`.`id`=`v`.`foreign_key`
-                join `user` `u`
-                ON
-                `u`.`id`=`v`.`create_user`
-                WHERE 
-                `v`.`object`=1
-                AND
-                `r`.`rule_id`=".$id." 
-                ORDER BY `v`.`active` DESC,
-                ver_numb DESC";
-		$connection=Yii::app()->db;
-		$command = $connection->createCommand($sql);
-		$projects = $command->queryAll();
-		
-		return $projects;
-    }  
+   
 	/**
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!

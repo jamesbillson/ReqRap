@@ -51,7 +51,7 @@ class FormController extends Controller
 	 */
 	public function actionView($id) // Note that this is form_id
 	{
-             	$versions=Form::model()->getVersions($id);
+             	$versions=Version::model()->getVersions($id,2,'form_id');
                 $model=$this->loadModel($versions[0]['id']);
                 $this->render('view',array('model'=>$model,
 			'versions'=>$versions
@@ -60,7 +60,7 @@ class FormController extends Controller
 	
         public function actionHistory($id) // Note that this is form_id
 	{
-             	$versions=Form::model()->getVersions($id);
+             	$versions=Version::model()->getVersions($id,2,'form_id');
                 $model=$this->loadModel($versions[0]['id']);
                 $this->render('history',array('model'=>$model,
 			'versions'=>$versions
@@ -79,7 +79,7 @@ class FormController extends Controller
 		        
                     $model->attributes=$_POST['Form'];
                     $model->number=Form::model()->getNextNumber($id);
-                    $model->form_id=Form::model()->getNextID($id);
+                    $model->form_id=Version::model()->getNextID($id,2);
                     
                     if($model->save())
                     {
@@ -139,9 +139,8 @@ public function actionDelete($id)
 		
             $model=$this->loadModel($id);
             $version=Version::model()->getNextNumber($model->project_id,2,3,$id,$model->form_id);  
-	    //$model->active=0;
-            $model->save();
-            $this->redirect(array('/project/view/tab/forms/id/'.$project));
+	    $model->save();
+            $this->redirect(array('/project/view/tab/forms/id/'.$model->project_id));
             
             }
 

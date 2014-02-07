@@ -7,7 +7,7 @@
         
 <br>
 <?php 
-$data=  Objectproperty::model()->findAll('object_id='.$model->id);
+$data=  Objectproperty::model()->getObjectProperty($model->object_id);
 
 
 $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
@@ -56,6 +56,8 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                     <td>
                         <a href="/objectproperty/update/id/<?php echo $item['id'];?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
                         <a href="/objectproperty/delete?id=<?php echo $item['id'];?>"><i class="icon-remove-sign" rel="tooltip" title="Delete"></i></a> 
+                     <a href="/objectproperty/view/id/<?php echo $item['objectproperty_id'];?>"><i class="icon-calendar" rel="tooltip" title="History"></i></a> 
+                   
                     </td>
                 </tr>
             <?php endforeach ?>

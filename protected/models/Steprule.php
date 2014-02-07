@@ -25,11 +25,11 @@ class Steprule extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('id,step_id, rule_id', 'required'),
+			array('id,steprule_id,step_id, rule_id', 'required'),
 			array('id,step_id, rule_id', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id,step_id, rule_id', 'safe', 'on'=>'search'),
+			array('id,steprule_id,step_id, rule_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -53,6 +53,7 @@ class Steprule extends CActiveRecord
 	{
 		return array(
 		'id' => 'ID',	
+                'steprule_id'=>'steprule_id',
                 'step_id' => 'Step',
 		'rule_id' => 'Rule',
 		);

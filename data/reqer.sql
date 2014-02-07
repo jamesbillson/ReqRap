@@ -3,9 +3,9 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Jan 28, 2014 at 03:19 PM
--- Server version: 5.6.12
--- PHP Version: 5.4.16
+-- Generation Time: Feb 01, 2014 at 11:37 AM
+-- Server version: 5.5.19
+-- PHP Version: 5.3.8
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -450,7 +450,7 @@ CREATE TABLE IF NOT EXISTS `iface` (
   `iface_id` int(11) NOT NULL,
   `number` int(4) NOT NULL,
   `name` varchar(255) NOT NULL,
-  `file` varchar(60) NOT NULL,
+  `photo_id` int(11) NOT NULL,
   `type_id` int(11) NOT NULL,
   `project_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
@@ -462,31 +462,31 @@ CREATE TABLE IF NOT EXISTS `iface` (
 -- Dumping data for table `iface`
 --
 
-INSERT INTO `iface` (`id`, `iface_id`, `number`, `name`, `file`, `type_id`, `project_id`) VALUES
-(3, 3, 3, 'Login Page', '52d74dda8a85e.png', 1, 47),
-(5, 5, 4, 'Sorry Screen', '', 1, 47),
-(8, 8, 1, 'Success Screen', '', 1, 47),
-(11, 11, 5, 'Register Page', '', 1, 47),
-(12, 12, 6, 'Please Validate', '', 1, 47),
-(13, 13, 7, 'Welcome Email', '', 3, 47),
-(14, 14, 8, 'Ajax Site Search', '', 2, 47),
-(16, 16, 9, 'Wine Search Result Accordian', '', 2, 47),
-(18, 18, 0, 'Welcome Page', '', 1, 47),
-(19, 19, 1, 'Validation Email', '', 3, 47),
-(20, 20, 10, 'System Admin New Member Notification Email', '', 3, 47),
-(21, 21, 11, 'Form error highlight style', '', 1, 47),
-(22, 22, 1, 'Version selection accordian', 'default.png', 5, 48),
-(23, 23, 2, 'Rule View', 'default.png', 5, 48),
-(24, 24, 3, 'Use Case View', 'default.png', 5, 48),
-(25, 25, 4, 'Interface View', 'default.png', 5, 48),
-(26, 26, 5, 'Form View', 'default.png', 5, 48),
-(27, 27, 6, 'Project View', 'default.png', 5, 48),
-(28, 28, 7, 'Package View', 'default.png', 5, 48),
-(29, 29, 8, 'Actor View', 'default.png', 5, 48),
-(30, 30, 9, 'Object View', 'default.png', 5, 48),
-(31, 31, 10, 'Project - Use Case Tab', 'default.png', 5, 48),
-(32, 32, 11, 'Project - Rules List Tab', 'default.png', 4, 48),
-(33, 33, 12, 'Change Log', 'default.png', 4, 48);
+INSERT INTO `iface` (`id`, `iface_id`, `number`, `name`, `photo_id`, `type_id`, `project_id`) VALUES
+(3, 3, 3, 'Login Page', 0, 1, 47),
+(5, 5, 4, 'Sorry Screen', 0, 1, 47),
+(8, 8, 1, 'Success Screen', 0, 1, 47),
+(11, 11, 5, 'Register Page', 0, 1, 47),
+(12, 12, 6, 'Please Validate', 0, 1, 47),
+(13, 13, 7, 'Welcome Email', 0, 3, 47),
+(14, 14, 8, 'Ajax Site Search', 0, 2, 47),
+(16, 16, 9, 'Wine Search Result Accordian', 0, 2, 47),
+(18, 18, 0, 'Welcome Page', 0, 1, 47),
+(19, 19, 1, 'Validation Email', 0, 3, 47),
+(20, 20, 10, 'System Admin New Member Notification Email', 0, 3, 47),
+(21, 21, 11, 'Form error highlight style', 0, 1, 47),
+(22, 22, 1, 'Version selection accordian', 0, 5, 48),
+(23, 23, 2, 'Rule View', 0, 5, 48),
+(24, 24, 3, 'Use Case View', 0, 5, 48),
+(25, 25, 4, 'Interface View', 0, 5, 48),
+(26, 26, 5, 'Form View', 0, 5, 48),
+(27, 27, 6, 'Project View', 0, 5, 48),
+(28, 28, 7, 'Package View', 0, 5, 48),
+(29, 29, 8, 'Actor View', 0, 5, 48),
+(30, 30, 9, 'Object View', 0, 5, 48),
+(31, 31, 10, 'Project - Use Case Tab', 0, 5, 48),
+(32, 32, 11, 'Project - Rules List Tab', 0, 4, 48),
+(33, 33, 12, 'Change Log', 0, 4, 48);
 
 -- --------------------------------------------------------
 
@@ -496,7 +496,7 @@ INSERT INTO `iface` (`id`, `iface_id`, `number`, `name`, `file`, `type_id`, `pro
 
 CREATE TABLE IF NOT EXISTS `interfacetype` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `ifacetype_id` int(11) NOT NULL,
+  `interfacetype_id` int(11) NOT NULL,
   `number` varchar(30) NOT NULL DEFAULT '0',
   `name` varchar(255) NOT NULL,
   `project_id` int(11) NOT NULL,
@@ -508,7 +508,7 @@ CREATE TABLE IF NOT EXISTS `interfacetype` (
 -- Dumping data for table `interfacetype`
 --
 
-INSERT INTO `interfacetype` (`id`, `ifacetype_id`, `number`, `name`, `project_id`) VALUES
+INSERT INTO `interfacetype` (`id`, `interfacetype_id`, `number`, `name`, `project_id`) VALUES
 (1, 1, '1', 'Web Interfaces', 47),
 (2, 2, '0', 'Not Classified', 47),
 (3, 3, '2', 'Email', 47),
@@ -563,7 +563,7 @@ CREATE TABLE IF NOT EXISTS `object` (
   `project_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `project_id` (`project_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=11 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=16 ;
 
 --
 -- Dumping data for table `object`
@@ -578,7 +578,12 @@ INSERT INTO `object` (`id`, `object_id`, `number`, `name`, `description`, `proje
 (7, 7, '3', 'Use Cases', 'A list of steps defining interactions between an Actor and a system, to achieve a goal.', 48),
 (8, 8, '4', 'Flow', 'A grouping of steps within a Use Case which allows for alternate paths to reach the goal.', 48),
 (9, 9, '5', 'Step', 'A description of an Actors action and the resulting system response.', 48),
-(10, 10, '6', 'Interface', 'An interface used by an Actor as the interaction medium in a Use Case.', 48);
+(10, 10, '6', 'Interface', 'An interface used by an Actor as the interaction medium in a Use Case.', 48),
+(11, 11, '7', 'eui', 'euieui', 48),
+(12, 12, '8', 'eui', 'euieui', 48),
+(13, 13, '9', 'aoeu', 'aoeuaoeu', 48),
+(14, 13, '9', 'aoeu', 'aoeuaoeu', 48),
+(15, 13, '9', 'aoeu', 'aoeuaoeu', 48);
 
 -- --------------------------------------------------------
 
@@ -661,10 +666,7 @@ INSERT INTO `package` (`id`, `package_id`, `name`, `stage`, `sequence`, `project
 (693, 693, 'Public Website', 1, 1, 47, '0.00', '0.00', NULL),
 (694, 694, 'Membership', 1, 2, 47, '0.00', '0.00', NULL),
 (695, 695, 'Versioning', 1, 1, 48, '0.00', '0.00', NULL),
-(696, 696, 'Analysis', 1, 2, 48, '0.00', '0.00', NULL),
-(697, 697, 'Library', 1, 3, 48, '0.00', '0.00', NULL),
-(698, 698, 'Estimating', 1, 4, 48, '0.00', '0.00', NULL),
-(699, 699, 'Health', 1, 5, 48, '0.00', '0.00', NULL);
+(696, 696, 'Analysis', 1, 2, 48, '0.00', '0.00', NULL);
 
 -- --------------------------------------------------------
 
@@ -1278,7 +1280,7 @@ CREATE TABLE IF NOT EXISTS `version` (
   PRIMARY KEY (`id`),
   KEY `project_id` (`project_id`),
   KEY `create_user` (`create_user`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=120 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=134 ;
 
 --
 -- Dumping data for table `version`
@@ -1364,7 +1366,21 @@ INSERT INTO `version` (`id`, `number`, `release`, `project_id`, `status`, `objec
 (116, 19, '2', 48, 1, 3, 2, 40, 15, 1, '2014-01-27 09:56:40', 113),
 (117, 20, '2', 48, 1, 4, 1, 5, 5, 0, '2014-01-27 11:31:59', 113),
 (118, 21, '2', 48, 1, 4, 1, 6, 6, 1, '2014-01-27 11:18:52', 113),
-(119, 22, '2', 48, 1, 4, 2, 7, 5, 1, '2014-01-27 11:31:59', 113);
+(119, 22, '2', 48, 1, 4, 2, 7, 5, 1, '2014-01-27 11:31:59', 113),
+(120, 23, '2', 48, 1, 6, 3, 10, 10, 0, '2014-01-28 12:04:31', 113),
+(121, 24, '2', 48, 1, 6, 3, 5, 5, 0, '2014-01-28 12:04:42', 113),
+(122, 25, '2', 48, 1, 6, 3, 6, 6, 0, '2014-01-28 12:04:50', 113),
+(123, 26, '2', 48, 1, 6, 3, 9, 9, 0, '2014-01-28 12:04:58', 113),
+(124, 27, '2', 48, 1, 6, 3, 10, 10, 0, '2014-01-28 12:07:53', 113),
+(125, 28, '2', 48, 1, 6, 3, 7, 7, 0, '2014-01-28 12:13:36', 113),
+(126, 29, '2', 48, 1, 6, 3, 10, 10, 0, '2014-01-28 12:13:47', 113),
+(127, 30, '2', 48, 1, 6, 3, 7, 7, 0, '2014-01-28 12:14:08', 113),
+(128, 31, '2', 48, 1, 6, 3, 6, 6, 0, '2014-01-28 12:15:01', 113),
+(129, 32, '2', 48, 1, 6, 3, 7, 7, 0, '2014-01-28 12:17:47', 113),
+(130, 33, '2', 48, 1, 6, 1, 12, 12, 0, '2014-01-28 12:27:35', 113),
+(131, 34, '2', 48, 1, 6, 3, 12, 12, 0, '2014-01-28 12:27:35', 113),
+(132, 35, '2', 48, 1, 6, 1, 13, 13, 0, '2014-01-28 12:29:59', 113),
+(133, 36, '2', 48, 1, 6, 2, 15, 13, 1, '2014-01-28 12:29:59', 113);
 
 --
 -- Constraints for dumped tables

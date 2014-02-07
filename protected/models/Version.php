@@ -1,19 +1,30 @@
 <?php
 
-/**
- * This is the model class for table "version".
- *
- * The followings are the available columns in table 'version':
- * @property integer $id
- * @property string $number
- * @property string $release
- * @property integer $project_id
- * @property integer $status
- */
+
 class Version extends CActiveRecord
 {
- public static $objects= array(1=>'rule',2=>'form',3=>'formproperty',4=>'actor'); 
- public static $actions= array(1=>'create',2=>'update',3=>'delete'); 
+ public static $objects= array(1=>'rule',
+                                2=>'form',
+                                3=>'formproperty',
+                                4=>'actor',
+                                5=>'package',
+                                6=>'object',
+                                7=>'objectproperty',
+                                8=>'flow',
+                                9=>'step',
+                                10=>'usecase',
+                                11=>'photo',
+                                12=>'iface',
+                                13=>'interfacetype',
+                                14=>'stepform',
+                                15=>'stepiface',
+                                16=>'steprule',
+     
+     
+     ); 
+ public static $actions= array(1=>'create',
+                                2=>'update',
+                                3=>'delete'); 
    	
   
  
@@ -124,7 +135,10 @@ class Version extends CActiveRecord
            `status`,
            `object`,
            `action`,
-           `create_user`
+           `foreign_key`,
+           `foreign_id`,
+           `create_user`,
+
            ) VALUES (
            1,
            ".$release.",
@@ -173,7 +187,9 @@ class Version extends CActiveRecord
           
                  $connection=Yii::app()->db;
         $command = $connection->createCommand($sql);
-        $command->execute();      
+        $command->execute();    
+        $active=1;
+        if ($action==3) $active=0;
                 
           $sql="INSERT INTO `version`(
               `number`,
@@ -196,7 +212,7 @@ class Version extends CActiveRecord
                 ".$action.",
                 ".$fk.",
                 ".$fid.",
-                1,
+                ".$active.",
                 now(),
                 ".Yii::app()->user->id."
                 )";
@@ -211,6 +227,119 @@ class Version extends CActiveRecord
        
     }  
         
+         public function getNextID($id,$object)
+    {
+       
+              
+        $sql="SELECT `r`.`".Version::$objects[$object]."_id` as `number`
+           From `".Version::$objects[$object]."` `r`
+          
+           ORDER BY `number` DESC
+           LIMIT 0,1";
+		$connection=Yii::app()->db;
+		$command = $connection->createCommand($sql);
+		$projects = $command->queryAll();
+		   if (!isset($projects[0]['number'])) {
+                    $projects[0]['number']='1';
+                } ELSE {
+                    $projects[0]['number']=$projects[0]['number']+1;
+                }
+		return $projects[0]['number'];
+    }  
+    
+    
+       public function getProjectDeletedVersions($id,$object)
+    {
+        $sql="
+        SELECT *
+        from `".Version::$objects[$object]."` `r`
+        WHERE 
+        `r`.`project_id`=".$id."  
+        AND `r`.`".Version::$objects[$object]."_id` NOT IN (
+        SELECT `x`.`".Version::$objects[$object]."_id`
+        FROM `".Version::$objects[$object]."` `x`
+        JOIN `version` `v`
+        ON `v`.`foreign_key`=`x`.`id`
+        WHERE 
+        `v`.`active`=1 and            
+        `x`.`project_id`=".$id." 
+        )
+                
+        GROUP BY `r`.`number`
+        ORDER BY `r`.`id` DESC";
+
+     
+        
+                $connection=Yii::app()->db;
+		$command = $connection->createCommand($sql);
+		$projects = $command->queryAll();
+		
+		return $projects;
+    }  
+    
+    
+      public function getObjectDeletedVersions($id,$parent,$object)
+    {
+        $sql="
+        SELECT *
+        from `".Version::$objects[$object]."` `r`
+        WHERE 
+        `r`.`".Version::$objects[$parent]."_id`=".$id."  
+        AND `r`.`".Version::$objects[$object]."_id` NOT IN (
+        SELECT `x`.`".Version::$objects[$object]."_id`
+        FROM `".Version::$objects[$object]."` `x`
+        JOIN `version` `v`
+        ON `v`.`foreign_key`=`x`.`id`
+        WHERE 
+        `v`.`active`=1 and            
+        `x`.`".Version::$objects[$parent]."_id`=".$id." 
+        )
+                
+        GROUP BY `r`.`number`
+        ORDER BY `r`.`id` DESC";
+
+     
+        
+                $connection=Yii::app()->db;
+		$command = $connection->createCommand($sql);
+		$projects = $command->queryAll();
+		
+		return $projects;
+    }  
+    
+    
+    
+       public function getVersions($id,$object)
+    {
+        $sql="select `r`.*,
+                `v`.`active`,
+                `v`.`number` as ver_numb,
+                `v`.`release`,
+                `v`.`action`,
+                `v`.`create_date`,
+                `v`.`create_user`,
+                `u`.`firstname`,
+                `u`.`lastname`
+                from `".Version::$objects[$object]."` `r`
+                join `version` `v`
+                ON
+                `r`.`id`=`v`.`foreign_key`
+                join `user` `u`
+                ON
+                `u`.`id`=`v`.`create_user`
+                WHERE 
+                `v`.`object`=".$object."
+                AND
+                `r`.`".Version::$objects[$object]."_id`=".$id." 
+                ORDER BY `v`.`active` DESC,
+                ver_numb DESC";
+		$connection=Yii::app()->db;
+		$command = $connection->createCommand($sql);
+		$projects = $command->queryAll();
+		
+		return $projects;
+    }  
+    
 	/**
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!

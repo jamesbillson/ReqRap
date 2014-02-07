@@ -49,11 +49,13 @@ class StepController extends Controller
 	 * Displays a particular model.
 	 * @param integer $id the ID of the model to be displayed
 	 */
-	public function actionView($id)
+	public function actionView($id) // Note that this is form_id
 	{
-		$this->render('view',array(
-			'model'=>$this->loadModel($id),
-		));
+             	$versions=Version::model()->getVersions($id,9,'form_id');
+                $model=$this->loadModel($versions[0]['id']);
+                $this->render('view',array('model'=>$model,
+			'versions'=>$versions
+        	));
 	}
 
 	/**
@@ -73,9 +75,11 @@ class StepController extends Controller
                 $model->text = 'New step';
                 $model->result = 'Result';
                 $model->actor_id=$model->flow->usecase->actor_id;
+                $model->step_id=Version::model()->getNextID($id,9);
                 
                 $model->save();
-                
+                $version=Version::model()->getNextNumber($id,9,1,$model->getPrimaryKey(),$model->step_id);   
+                     
 		
 		$this->redirect(array('/step/update/flow/'.$model->flow_id.'/id/'.$model->id));
 		
@@ -98,9 +102,10 @@ class StepController extends Controller
                 $model->text = 'New step';
                 $model->result = 'Result';
                 $model->actor_id = $step->flow->usecase->actor_id;
-                
+                $model->step_id=Version::model()->getNextID($id,9);
                 $model->save();
-                
+                $version=Version::model()->getNextNumber($id,9,1,$model->getPrimaryKey(),$model->step_id);   
+                 
 		Step::model()->reNumber($flow);
 		
                 //add the actor
@@ -126,15 +131,27 @@ class StepController extends Controller
               $model=Flow::model()->findbyPK($flow);
               $step=array();
               }
-
+        $new= new Step;
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
                
 		if(isset($_POST['Step']))
 		{
-			$step->attributes=$_POST['Step'];
-			if($step->save())
-				$this->redirect(array('/step/update/flow/'.$model->id.'/id/-1'));
+			
+                         $new->attributes=$_POST['Step'];
+                         $new->number=$model->number;
+                         $new->flow_id=$model->flow_id;
+                         $new->step_id=$model->step_id;
+                         
+			if($new->save())
+                        {
+			$version=Version::model()->getNextNumber($model->project_id, 9, 2,$new->getPrimaryKey(),$model->step_id);
+                        $this->redirect(array('/step/update/flow/'.$model->id.'/id/-1'));
+                        
+                        }        
+                    
+                 
+				
 		}
 
 		$this->render('update',array(
@@ -150,16 +167,19 @@ class StepController extends Controller
 	public function actionDelete($id)
 	{
 		
-            $model=$this->loadModel($id);
+                $model=$this->loadModel($id);
                 $id=$model->flow->usecase_id;
                 $flow=$model->flow->id;
                 $flowmodel=Flow::model()->findbyPK($flow);
-                $model->delete();
-
+                $version=Version::model()->getNextNumber($model->project_id,9,3,$id,$model->rule_id);  
+	   
+            
                 //IF THIS IS THE LAST STEP, THEN DELETE THE FLOW, AND RENUMBER
-             $steps= Flow::model()->checkSteps($flow);
+             $steps= Flow::model()->checkSteps($flow); // Update for versions
              if ($steps==0){
-                 $flowmodel->delete();
+                 
+                 $flowmodel->delete();// Needs to be a version delete
+                 
                  FlowController::renumberFlows($id);
              }
                   Step::model()->reNumber($flow);

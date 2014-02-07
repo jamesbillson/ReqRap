@@ -56,18 +56,59 @@ class StepformController extends Controller
 		));
 	}
 
-	/**
-	 * Creates a new model.
-	 * If creation is successful, the browser will be redirected to the 'view' page.
-	 */
-	public function actionCreate()
+	        
+        
+        
+        public function actionCreateInline($project_id)
+	{
+		
+                $model=new Stepform;
+                $model->stepform_id=Version::model()->getNextID($project->id,14);
+                     
+		if(isset($_POST['step_id']))
+		{
+                 $model->step_id=$_POST['step_id'];
+                 
+                 $step=Step::model()->findbyPK($model->step_id);
+                    
+		 if(!empty($_POST['new_rule'])){
+                     $form=new Form;
+                     
+                     $form->number=Form::model()->getNextNumber($project->id);
+                     $form->form_id=Version::model()->getNextID($project->id,2);
+                     $form->name=$_POST['new_form'];
+                     $form->project_id=$project->id;
+                     
+                     $form->save(false);
+                     $version=Version::model()->getNextNumber($project->id,2,1,$form->primaryKey,$form->rule_id);
+                   
+                     $model->form_id=$form->form_id;
+                 }	
+             else {
+                     $model->form_id=$_POST['form'];
+                 }
+                        
+                        $model->save(false);
+                        $version=Version::model()->getNextNumber($project->id,1,14,$model->primaryKey,$model->steprule_id);
+                  
+                }
+                        $this->redirect(array('/step/update/id/'.$model->step->id.'/flow/'.$model->step->flow->id));
+		
+	}
+        
+        public function actionCreate()
 	{
 		$model=new Stepform;
 
+		
+                
 		if(isset($_POST['Stepform']))
 		{
 			$model->attributes=$_POST['Stepform'];
+                        $model->steprule_id=Version::model()->getNextID($project->id,14);
 			if($model->save())
+                        $version=Version::model()->getNextNumber($project->id,1,14,$model->primaryKey,$model->stepform_id);
+                      
 				$this->redirect(array('view','id'=>$model->step_id));
 		}
 
@@ -75,56 +116,28 @@ class StepformController extends Controller
 			'model'=>$model,
 		));
 	}
-public function actionCreateInline()
-	{
-		
-                $model=new Stepform;
+        
+        
 
-		if(isset($_POST['step_id']))
-		{
-                    $model->step_id=$_POST['step_id'];
-                    $step=Step::model()->findbyPK($model->step_id);
-                                   
-		 if(!empty($_POST['new_form'])){
-                     
-                     $form=new Form;
-                     $form->number=Form::model()->getNextNumber($step->flow->usecase->package->project->id);;
-                     $form->name=$_POST['new_form'];
-                     $form->project_id=$step->flow->usecase->package->project->id;
-                     $form->form_id=Form::model()->getNextID($form->project_id);
-                     $form->save(false);
-                     $model->form_id=$form->getprimaryKey();
-                     $version=Version::model()->getNextNumber($form->project_id,2,1,$form->getprimaryKey(),$form->form_id);
-                   
-                   //  make a new interface record
-                    // get the new PK() 
-                 }	
-		ELSE {
-                        
-			$model->form_id=$_POST['form'];
-                }
-                        $model->save(false);
-                }
-                        $this->redirect(array('/step/update/id/'.$model->step->id.'/flow/'.$model->step->flow->id));
-		
-	}
-	/**
-	 * Updates a particular model.
-	 * If update is successful, the browser will be redirected to the 'view' page.
-	 * @param integer $id the ID of the model to be updated
-	 */
-	public function actionUpdate($id)
+
+
+        
+          public function actionUpdate($id)
 	{
 		$model=$this->loadModel($id);
 
-		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
-
+		
 		if(isset($_POST['Stepform']))
 		{
-			$model->attributes=$_POST['Stepform'];
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->step_id));
+			$new=new Stepform;
+                    
+                        $new->attributes=$_POST['Stepform'];
+                        $new->stepform_id=$model->stepform_id;
+                        if($new->save())
+			$version=Version::model()->getNextNumber($project->id,2,14,$model->id,$model->stepiface_id);
+                
+                        $this->redirect(array('view','id'=>$model->step_id));
+                        
 		}
 
 		$this->render('update',array(
@@ -132,23 +145,21 @@ public function actionCreateInline()
 		));
 	}
 
-	/**
-	 * Deletes a particular model.
-	 * If deletion is successful, the browser will be redirected to the 'admin' page.
-	 * @param integer $id the ID of the model to be deleted
-	 */
-	public function actionDelete($id)
+        
+
+	 
+        public function actionDelete($id)
 	{
 		$model=Stepform::model()->findbyPK($id);
-                $step_id=$model->step->flow->id;
-                $model->delete();
+                $step_id=$model->step->flowid;
+                $flow=$model->step->flow_id;
+                $version=Version::model()->getNextNumber($project->id,3,14,$model->id,$model->stepform_id);
+                  
 
-		$this->redirect(array('/step/update/id/-1/flow/'.$step_id));
+		$this->redirect(array('/step/update/flow/'.$flow.'/id/'.$step_id));
 	}
-
-	/**
-	 * Lists all models.
-	 */
+        
+        
 	public function actionIndex()
 	{
 		$dataProvider=new CActiveDataProvider('Stepform');

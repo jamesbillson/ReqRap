@@ -49,57 +49,70 @@ class ObjectpropertyController extends Controller
 	 * Displays a particular model.
 	 * @param integer $id the ID of the model to be displayed
 	 */
-	public function actionView($id)
+	    public function actionView($id) // Note that this is formproperty_id
 	{
-		$this->render('view',array(
-			'model'=>$this->loadModel($id),
-		));
+             	$versions = Version::model()->getVersions($id,7);
+                $model=$this->loadModel($versions[0]['id']);
+                $this->render('view',array('model'=>$model,
+			'versions'=>$versions
+        	));
 	}
 
-	/**
-	 * Creates a new model.
-	 * If creation is successful, the browser will be redirected to the 'view' page.
-	 */
-	public function actionCreate($id)
+	
+	
+                 public function actionCreate($id)
 	{
-		$model=new Objectproperty;
-
-		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
+	
+                $object=Object::model()->findbyPK($id);
+                $project=$object->project_id;
+                $object_id=$object->object_id;
+                $model=new Objectproperty;
 
 		if(isset($_POST['Objectproperty']))
 		{
-			$model->attributes=$_POST['Objectproperty'];
-			if($model->save())
-				$this->redirect(array('/object/view','id'=>$model->object->id));
-		}
-
-		$this->render('create',array(
-			'model'=>$model,'id'=>$id
+                    
+		        
+                    $model->attributes=$_POST['Objectproperty'];
+                    $model->number=Objectproperty::model()->getNextNumber($object_id);
+                    $model->objectproperty_id=Version::model()->getNextID($project,7);
+                    
+                    if($model->save())
+                    {
+                     $version=Version::model()->getNextNumber($project,7,1,$model->primaryKey,$model->objectproperty_id);   
+                     $this->redirect(array('/object/view/id/'.$model->object_id));
+		    }
+                        
+                }
+               
+                $this->render('create',array(
+			'model'=>$model,'object_id'=>$object_id,
 		));
 	}
-
-	/**
-	 * Updates a particular model.
-	 * If update is successful, the browser will be redirected to the 'view' page.
-	 * @param integer $id the ID of the model to be updated
-	 */
-	public function actionUpdate($id)
+        
+        
+   public function actionUpdate($id)
 	{
-		$model=$this->loadModel($id);
-
-		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
+            //  The id should be the formproperty_id rather than the id? 
+            
+            $model=$this->loadModel($id);
+                $new= new Objectproperty;
 
 		if(isset($_POST['Objectproperty']))
 		{
-			$model->attributes=$_POST['Objectproperty'];
-			if($model->save())
-				$this->redirect(array('/object/view/','id'=>$model->object->id));
+                  	 $new->attributes=$_POST['Objectproperty'];
+                         $new->number=$model->number;
+                         $new->objectproperty_id=$model->objectproperty_id;
+                         
+                         
+			if($new->save())
+                        {
+			$version=Version::model()->getNextNumber($model->object->project_id, 7, 2,$new->primaryKey,$new->objectproperty_id);
+                        $this->redirect(array('/object/view/id/'.$model->object_id));
+                        }        
 		}
 
 		$this->render('update',array(
-			'model'=>$model,'id'=>$id,'object_id'=>$model->object->id
+			'model'=>$model,'object_id'=>$model->object_id
 		));
 	}
 
@@ -108,14 +121,16 @@ class ObjectpropertyController extends Controller
 	 * If deletion is successful, the browser will be redirected to the 'admin' page.
 	 * @param integer $id the ID of the model to be deleted
 	 */
-	public function actionDelete($id)
+ public function actionDelete($id)
 	{
-		$model=$this->loadModel($id);
-                $id=$model->object->id;
-                $model->delete();
-
-		$this->redirect(array('/object/view/id/'.$id));
-	}
+		
+            $model=$this->loadModel($id);
+            $version=Version::model()->getNextNumber($model->object->project_id,7,3,$id,$model->objectproperty_id);  
+	    //$model->active=0;
+            $model->save();
+            $this->redirect(array('/object/view/id/'.$model->object_id));
+            
+            }
 
 	/**
 	 * Lists all models.

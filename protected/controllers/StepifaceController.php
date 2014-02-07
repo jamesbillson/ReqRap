@@ -56,18 +56,22 @@ class StepifaceController extends Controller
 		));
 	}
 
-	/**
-	 * Creates a new model.
-	 * If creation is successful, the browser will be redirected to the 'view' page.
-	 */
+	
+        
 	public function actionCreate()
 	{
-		$model=new Stepiface;
+		$model=new Steprule;
 
-		if(isset($_POST['Stepiface']))
+		// Uncomment the following line if AJAX validation is needed
+		// $this->performAjaxValidation($model);
+
+		if(isset($_POST['Steprule']))
 		{
-			$model->attributes=$_POST['Stepiface'];
+			$model->attributes=$_POST['Steprule'];
+                        $model->steprule_id=Version::model()->getNextID($project->id,15);
 			if($model->save())
+                        $version=Version::model()->getNextNumber($project->id,1,15,$model->primaryKey,$model->steprule_id);
+                      
 				$this->redirect(array('view','id'=>$model->step_id));
 		}
 
@@ -75,17 +79,23 @@ class StepifaceController extends Controller
 			'model'=>$model,
 		));
 	}
-public function actionCreateInline()
+        
+        
+        
+     
+        
+        
+           public function actionCreateInline($project_id)
 	{
-		
-                $model=new Stepiface;
-
+		$model=new Stepiface;
+                $model->stepiface_id=Version::model()->getNextID($project->id,15);
+                     
 		if(isset($_POST['step_id']))
 		{
-                    $model->step_id=$_POST['step_id'];
-                    $step=Step::model()->findbyPK($model->step_id);
-                                   
-		 if(!empty($_POST['new_interface'])){
+                 $model->step_id=$_POST['step_id'];
+                 $step=Step::model()->findbyPK($model->step_id);
+                    
+	 if(!empty($_POST['new_interface'])){
                      
                      $iface=new Iface;
                      
@@ -93,63 +103,67 @@ public function actionCreateInline()
                      $iface->name=$_POST['new_interface'];
                      $iface->type_id=Interfacetype::model()->getUnclassified($step->flow->usecase->package->project->id);
                      $iface->project_id=$step->flow->usecase->package->project->id;
-                     $iface->file='default.png';
                      $iface->save(false);
+                     $version=Version::model()->getNextNumber($project->id,12,1,$iface->primaryKey,$iface->iface_id);
+                   
                      $model->iface_id=$iface->getprimaryKey();
-                     
-                   //  make a new interface record
-                    // get the new PK() 
+    
+                     $model->form_id=$form->form_id;
                  }	
-		ELSE {
+             else {
+                     $model->form_id=$_POST['interface'];
+                 }
                         
-			$model->iface_id=$_POST['interface'];
-                }
                         $model->save(false);
+                        $version=Version::model()->getNextNumber($project->id,1,15,$model->primaryKey,$model->stepiface_id);
+                  
                 }
                         $this->redirect(array('/step/update/id/'.$model->step->id.'/flow/'.$model->step->flow->id));
 		
 	}
-	/**
-	 * Updates a particular model.
-	 * If update is successful, the browser will be redirected to the 'view' page.
-	 * @param integer $id the ID of the model to be updated
-	 */
-	public function actionUpdate($id)
+        
+        
+	
+	
+                  public function actionUpdate($id)
 	{
 		$model=$this->loadModel($id);
 
-		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
-
+		
 		if(isset($_POST['Stepiface']))
 		{
-			$model->attributes=$_POST['Stepiface'];
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->step_id));
+			$new=new Stepform;
+                    
+                        $new->attributes=$_POST['Stepiface'];
+                        $new->stepiface_id=$model->stepiface_id;
+                        if($new->save())
+			$version=Version::model()->getNextNumber($project->id,2,15,$model->id,$model->stepiface_id);
+                
+                        $this->redirect(array('view','id'=>$model->step_id));
+                        
 		}
 
 		$this->render('update',array(
 			'model'=>$model,
 		));
 	}
+        
+	
+        
 
-	/**
-	 * Deletes a particular model.
-	 * If deletion is successful, the browser will be redirected to the 'admin' page.
-	 * @param integer $id the ID of the model to be deleted
-	 */
-	public function actionDelete($id)
+	
+        public function actionDelete($id)
 	{
-		$model=Stepiface::model()->findbyPK($id);
+		$model=Steprule::model()->findbyPK($id);
                 $flow_id=$model->step->flow->id;
-                $model->delete();
+                $version=Version::model()->getNextNumber($project->id,3,15,$model->id,$model->stepiface_id);
+                  
 
 		$this->redirect(array('/step/update/id/-1/flow/'.$flow_id));
 	}
-
-	/**
-	 * Lists all models.
-	 */
+        
+        
+        
 	public function actionIndex()
 	{
 		$dataProvider=new CActiveDataProvider('Stepiface');

@@ -1,6 +1,6 @@
 <?php 
 $data = Rule::model()->getProjectRules($model->id);
-$deleted = Rule::model()->getProjectDeletedRules($model->id);
+
         
         /*Rule::model()->findAll(array('order'=>'number ASC',
     'condition'=>'project_id=:x',
@@ -83,7 +83,8 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
 $this->endWidget(); ?>
 
 
-<?php if (count($deleted)):?>
+<?php $deleted = version::model()->getProjectDeletedVersions($model->id,1);
+if (count($deleted)):?>
     
 
         

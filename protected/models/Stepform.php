@@ -25,11 +25,11 @@ class Stepform extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('id, step_id, form_id', 'required'),
+			array('id, stepform_id, step_id, form_id', 'required'),
 			array('id, step_id, form_id', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, step_id, form_id', 'safe', 'on'=>'search'),
+			array('id, stepform_id, step_id, form_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -54,7 +54,8 @@ class Stepform extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'id' => 'ID',
+			'id' => 'versionID',
+                    'stepform_id'=>'ID',
                     'step_id' => 'Step',
 			'form_id' => 'Form',
 		);

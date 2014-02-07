@@ -49,13 +49,14 @@ class FlowController extends Controller
 	 * Displays a particular model.
 	 * @param integer $id the ID of the model to be displayed
 	 */
-	public function actionView($id)
+	public function actionView($id) // Note that this is form_id
 	{
-		$this->render('view',array(
-			'model'=>$this->loadModel($id),
-		));
+             	$versions=Version::model()->getVersions($id,8,'form_id');
+                $model=$this->loadModel($versions[0]['id']);
+                $this->render('view',array('model'=>$model,
+			'versions'=>$versions
+        	));
 	}
-
 	/**
 	 * Creates a new model.
 	 * If creation is successful, the browser will be redirected to the 'view' page.
@@ -69,17 +70,23 @@ class FlowController extends Controller
                         $flow->usecase_id=$id;
                         $flow->main=0;
                         $flow->name=Flow::model()->getNextFlow($id);
+                        $flow->flow_id=Version::model()->getNextID($id,8);
                         $flow->save();
-                        
+                        $version=Version::model()->getNextNumber($id,8,1,$flow->primaryKey,$flow->flow_id);   
+                    
              // ADD A STEP TO THE FLOW AND THEN SEND TO THE STEP EDIT FORM
              $step=new Step;
-                        $step->flow_id=$flow->getPrimaryKey();
+                        $step->flow_id=$flow->flow_id;
                         $step->number=1;
+                        $step->step_id=Version::model()->getNextID($id,9);
                         $step->text='New step.';
-                         $step->result='Result';
+                        $step->result='Result';
                         $step->save();
-                        $id=$step->getPrimaryKey();
-              $this->redirect(array('/step/update/flow/'.$step->flow_id.'/id/'.$id));
+                        $stepid=$step->getPrimaryKey();
+                        $version=Version::model()->getNextNumber($id,9,1,$stepid,$step->step_id);   
+                    
+                        
+              $this->redirect(array('/step/update/flow/'.$step->flow_id.'/id/'.$stepid));
 		
 
 	}
@@ -110,27 +117,30 @@ class FlowController extends Controller
 		$this->redirect(array('/step/update/flow/'.$model->id.'/id/-1'));
 		
 	}
-	/**
-	 * Updates a particular model.
-	 * If update is successful, the browser will be redirected to the 'view' page.
-	 * @param integer $id the ID of the model to be updated
-	 */
-	public function actionUpdate($id)
+ 
+		public function actionUpdate($id)
 	{
-		$model=$this->loadModel($id);
+	$model=$this->loadModel($id);
+                $new= new Flow;
 
-		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
-
+            
 		if(isset($_POST['Flow']))
 		{
-			$model->attributes=$_POST['Flow'];
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->id));
+                        
+			 $new->attributes=$_POST['Flow'];
+                         $new->name=$model->name;
+                         $new->project_id=$model->project_id;
+                         $new->flow_id=$model->flow_id;
+                         
+			if($new->save())
+                        {
+			$version=Version::model()->getNextNumber($model->project_id, 9, 2,$new->getPrimaryKey(),$model->flow_id);
+                        $this->redirect(array('/usecase/view/id/'.$model->project_id));
+                        }        
 		}
 
 		$this->render('update',array(
-			'model'=>$model,
+			'model'=>$model,'id'=>$model->project_id
 		));
 	}
 

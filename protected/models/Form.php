@@ -182,6 +182,8 @@ class Form extends CActiveRecord
             JOIN `version` `v`
             ON `v`.`foreign_key`=`r`.`id`
             WHERE 
+              `v`.`object`=2
+            AND
             `v`.`active`=1 and            
             `r`.`project_id`=".$id;
 
@@ -194,38 +196,7 @@ class Form extends CActiveRecord
 		return $projects;
     }  
     
-          public function getVersions($id)
-    {
-        $sql="SELECT 
-                `f`.`id`,
-                `f`.`form_id`,
-                `f`.`number`,
-                `f`.`name`,
-                `v`.`active`,
-                `v`.`number` as ver_numb,
-                `v`.`release`,
-                `v`.`action`,
-                `v`.`create_date`,
-                `v`.`create_user`,
-                `u`.`firstname`,
-                `u`.`lastname`
-                from `form` `f`
-                join `version` `v`
-                ON
-                `f`.`id`=`v`.`foreign_key`
-                join `user` `u`
-                ON
-                `u`.`id`=`v`.`create_user`
-                WHERE 
-                `v`.`object`=2
-                AND
-                `f`.`form_id`=".$id;
-		$connection=Yii::app()->db;
-		$command = $connection->createCommand($sql);
-		$projects = $command->queryAll();
-		
-		return $projects;
-    }  
+    
     
     /**
 	 * Returns the static model of the specified AR class.

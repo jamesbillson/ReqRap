@@ -1,6 +1,6 @@
 
 <?php 
-$data = Actor::model()->findAll('project_id='.$model->id);
+$data = Actor::model()->getProjectActors($model->id);
 
 $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
     'title' => 'Issues',
@@ -35,7 +35,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
             <?php foreach($data as $item):?>
                 <tr class="odd">  
                     <td>   
-                        <a href="/actor/view/id/<?php echo $item['id'];?>">
+                        <a href="/actor/view/id/<?php echo $item['actor_id'];?>">
                             <?php echo $item['name'];?>
                         </a>
                     </td>
@@ -54,7 +54,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                     <td>
                         <a href="/actor/update/id/<?php echo $item['id'];?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
                         <a href="/actor/delete/id/<?php echo $item['id'];?>"><i class="icon-remove-sign" rel="tooltip" title="Delete"></i></a> 
-                     <a href="/actor/history/id/<?php echo $item['id'];?>"><i class="icon-calendar" rel="tooltip" title="Version History"></i></a> 
+                     <a href="/actor/history/id/<?php echo $item['actor_id'];?>"><i class="icon-calendar" rel="tooltip" title="Version History"></i></a> 
                     
                     </td>
                 </tr>
@@ -65,3 +65,39 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
     <?php endif;
 $this->endWidget(); ?>
 
+<?php $deleted = Version::model()->getProjectDeletedVersions($model->id,4);
+if (count($deleted)):?>
+    
+
+        
+<div class="accordion-group">
+        <div class="accordion-heading">
+
+         <a class="accordion-toggle" data-toggle="collapse"
+          data-parent="#accordionx" href="#collapsex">
+          Show Deleted Versions</a>
+           
+     </div>
+    
+     <div id="collapsex" class="accordion-body collapse">
+        <div class="accordion-inner">
+        <table class="table">
+        <tbody>
+        <?php foreach($deleted as $item) {?>
+           <tr class="odd">  
+                <td> <a href="/actor/history/id/<?php echo $item['actor_id'];?>"> 
+                UF-<?php echo str_pad($item['number'], 3, "0", STR_PAD_LEFT); ?></a> 
+                </td>
+   
+                <td> 
+                <?php echo $item['name']; ?>
+                </td>
+    
+           </tr>
+        <?php }?>
+    	</tbody>
+        </table>   
+            </div>
+        </div>
+    </div>
+<?php  endif; ?>

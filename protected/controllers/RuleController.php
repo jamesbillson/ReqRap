@@ -49,14 +49,14 @@ class RuleController extends Controller
         
 	public function actionView($id) // Note that this is rule_id
 	{
-             	$versions=Rule::model()->getVersions($id);
+             	$versions=Version::model()->getVersions($id,1);
                 $model=$this->loadModel($versions[0]['id']);
                 $this->render('view',array('model'=>$model,
 			'versions'=>$versions
         	));
 	}
 
-	
+
         
 	public function actionCreate($type, $id)
 	{
@@ -80,7 +80,7 @@ class RuleController extends Controller
                        
                     $model->attributes=$_POST['Rule'];
                     $model->number=Rule::model()->getNextNumber($project);
-                    $model->rule_id=Rule::model()->getNextID($project);
+                    $model->rule_id=Version::model()->getNextID($project,1);
                    
                     if($model->save())
                     {
@@ -146,7 +146,7 @@ class RuleController extends Controller
             $version=Version::model()->getNextNumber($model->project_id,1,3,$id,$model->rule_id);  
 	    //$model->active=0;
             $model->save();
-	$this->redirect(array('/project/view/tab/rules/id/'.$project));
+	$this->redirect(array('/project/view/tab/rules/id/'.$model->project_id));
                         
             
             }

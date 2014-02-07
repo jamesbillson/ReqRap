@@ -50,7 +50,7 @@ class FormpropertyController extends Controller
 	
         public function actionView($id) // Note that this is formproperty_id
 	{
-             	$versions = Formproperty::model()->getVersions($id);
+             	$versions = Version::model()->getVersions($id,3);
                 $model=$this->loadModel($versions[0]['id']);
                 $this->render('view',array('model'=>$model,
 			'versions'=>$versions
@@ -68,7 +68,7 @@ class FormpropertyController extends Controller
 		        
                     $model->attributes=$_POST['Formproperty'];
                     $model->number=Formproperty::model()->getNextNumber($id);
-                    $model->formproperty_id=Formproperty::model()->getNextID($model->form->project->id);
+                    $model->formproperty_id=Version::model()->getNextID($model->form->project->id,3);
                     
                     if($model->save())
                     {
@@ -116,8 +116,7 @@ class FormpropertyController extends Controller
 	{
 		
             $model=$this->loadModel($id);
-            $version=Version::model()->getNextNumber($model->project_id,3,3,$id,$model->formproperty_id);  
-	    //$model->active=0;
+            $version=Version::model()->getNextNumber($model->form->project_id,3,3,$id,$model->formproperty_id);  
             $model->save();
             $this->redirect(array('/form/view/id/'.$model->form_id));
             

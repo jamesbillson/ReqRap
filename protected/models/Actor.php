@@ -30,12 +30,12 @@ class Actor extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('project_id, actor_id, name, description, alias, inherits', 'required'),
+			array('project_id, actor_id, number, name, description, alias, inherits', 'required'),
 			array('project_id, actor_id', 'numerical', 'integerOnly'=>true),
 			array('name', 'length', 'max'=>255),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, project_id, actor_id, name,description, alias', 'safe', 'on'=>'search'),
+			array('id, project_id, actor_id,number,  name,description, alias', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -61,7 +61,8 @@ class Actor extends CActiveRecord
 			'id' => 'ID',
                      'actor_id'=>'ACTORID',
 			'project_id' => 'Project',
-  			'name' => 'Name',
+  		'number' => 'Number',	
+                    'name' => 'Name',
                     'descripion'=>'Description',
                     'alias'=>'Aliases',
                     'inherits'=>'Inherits',
@@ -95,7 +96,47 @@ class Actor extends CActiveRecord
 		));
 	}
 
+           public function getProjectActors($id)
+    {
+        $sql="
+            SELECT `r`.*,`v`.`active`
+            FROM `actor` `r`
+            JOIN `version` `v`
+            ON `v`.`foreign_key`=`r`.`id`
+            WHERE 
+              `v`.`object`=4
+            AND
+            `v`.`active`=1 
+            and            
+            `r`.`project_id`=".$id;
+
+     
         
+        $connection=Yii::app()->db;
+		$command = $connection->createCommand($sql);
+		$projects = $command->queryAll();
+		
+		return $projects;
+    }  
+        
+        public function getNextNumber($id)
+    {
+                   
+        $sql="SELECT max(`r`.`number`)as number
+           From `actor` `r`
+            WHERE `r`.`project_id`=".$id;
+		$connection=Yii::app()->db;
+		$command = $connection->createCommand($sql);
+		$projects = $command->queryAll();
+		   if (!isset($projects[0]['number'])) {
+                    $projects[0]['number']='1';
+                } ELSE {
+                    $projects[0]['number']=$projects[0]['number']+1;
+                }
+		return $projects[0]['number'];
+      
+    
+    }   
          public function getActors($id)
     {
         $user= Yii::app()->user->id;   
@@ -156,41 +197,7 @@ class Actor extends CActiveRecord
     }  
     
     
-        public function getVersions($id)
-    {
-        $sql="select `r`.`actor_id`,
-                `r`.`id`,
-                `r`.`name`,
-                `r`.`description`,
-                `r`.`alias`,
-                `r`.`inherits`,
-                `v`.`active`,
-                `v`.`number` as ver_numb,
-                `v`.`release`,
-                `v`.`action`,
-                `v`.`create_date`,
-                `v`.`create_user`,
-                `u`.`firstname`,
-                `u`.`lastname`
-                from `actor` `r`
-                join `version` `v`
-                ON
-                `r`.`id`=`v`.`foreign_key`
-                join `user` `u`
-                ON
-                `u`.`id`=`v`.`create_user`
-                WHERE 
-                `v`.`object`=4
-                AND
-                `r`.`actor_id`=".$id." 
-                ORDER BY `v`.`active` DESC,
-                ver_numb DESC";
-		$connection=Yii::app()->db;
-		$command = $connection->createCommand($sql);
-		$projects = $command->queryAll();
-		
-		return $projects;
-    }  
+     
     
 	/**
 	 * Returns the static model of the specified AR class.

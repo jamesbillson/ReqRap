@@ -69,25 +69,27 @@ then you can rationalise later.
 VERSION CONTROL
 OBJECTS
 --------------
-1.Actor - M - 
-2.Flow - M -
-3.Form - M - C - V
-4.Formproperty - M - C - V
-5.Iface - M - 
-6.ifacetype - M - 
-7.object - M - 
-8.objectproperty - M - 
-9.package - M - 
-10.photo - M -
-11.rule - M - C - V
-12.step - M - 
-13.usecase - M -
+1.rule - M - C - V
+2.form - M - C - V
+3.formproperty - M - C - V (deleted versions link and interface)
+4.actor - M - C - V
+5.package - M - C
+6.object - M - C 
+7.objectproperty - M - C
+8.Flow - M - C (Need to update check steps)
+9.step - M - C(Step renumber probably needs work, delete needs work)
+10.usecase - M - C (Need to v control move function?)
+11.photo - M - C
+12.iface - M - C - (type select drop lists need to change from id to interfacetype_id)
+13.interfacetype - M - C
+
+
 
 RELATIONSHIPS
 ----------------
-StepRule
-StepIface
-StepForm
+StepRule - M - C
+StepIface - M - C
+StepForm - M - C
 
 Roll Back to a specific point.
 
@@ -99,3 +101,9 @@ Go through each Object.Number by version, DESC.
 Prior to RBP delete any objects that are created.
 From the RBP back, set the active version to the first version encountered.
 
+RELEASE VIEW
+
+Allow a session to view a release.
+This raises the issue about stuff that's created in say release 1 and still around in release 2.
+I guess we just say show everything up to and including release x.
+Editing should be disabled in release view mode.

@@ -49,39 +49,76 @@ class PhotoController extends Controller
      * Displays a particular model.
      * @param integer $id the ID of the model to be displayed
      */
-    public function actionView($id)
-    {
-        $this->render('view',array(
-            'model'=>$this->loadModel($id),
-        ));
-    }
+
+   public function actionView($photo_id)
+	{
+		$versions=Version::model()->getVersions($photo_id,11,'photo_id');
+                $model=$this->loadModel($versions[0]['id']);
+                $this->render('view',array('model'=>$model,
+			'versions'=>$versions
+        	));
+	}
 
     /**
      * Creates a new model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      */
-    public function actionCreate($gene_id)
+    public function actionProjectCreate($project_id)
     {
-        if(isset($gene_id) && Generations::model()->findByPk($gene_id)){
-            
+           
+        // Need to change this so the $iface_id is stored with the photo.
+        // idea is you can upload a bunch of photos and then associate them.
+        
+        
+        $versions=Version::model()->getVersions($iface_id,12,'iface_id');
+            $iface=Iface::model()->loadModel($versions[0]['id']);
+        
             $model=new Photo;
-
-            // Uncomment the following line if AJAX validation is needed
-            // $this->performAjaxValidation($model);
-
+            
             if(isset($_POST['Photo']))
             {
                 $model->attributes=$_POST['Photo'];
+                $model->photo_id=Version::model()->getNextID($project_id,11);
                 if($model->save())
-                    $this->redirect(array('view','id'=>$model->id));
+                    $version=Version::model()->getNextNumber($project_id,11,1,$model->primaryKey,$model->photo_id);   
+                     $this->redirect(array('/iface/view/id/'.$project));
             }
 
             $this->render('create',array(
                 'model'=>$model,
             ));         
         }
-    }
+    
 
+          public function actionInterfaceCreate($interface_id)
+    {
+           
+        // Need to change this so the $iface_id is stored with the photo.
+        // idea is you can upload a bunch of photos and then associate them.
+        
+        
+        $versions=Version::model()->getVersions($iface_id,12,'iface_id');
+            $iface=Iface::model()->loadModel($versions[0]['id']);
+        
+            $model=new Photo;
+            
+            if(isset($_POST['Photo']))
+            {
+                $model->attributes=$_POST['Photo'];
+                $model->photo_id=Version::model()->getNextID($project_id,11);
+                if($model->save())
+                    $version=Version::model()->getNextNumber($project_id,11,1,$model->primaryKey,$model->photo_id);   
+                     $this->redirect(array('/iface/view/id/'.$project));
+            }
+
+            $this->render('create',array(
+                'model'=>$model,
+            ));         
+        }
+        
+        
+        
+        
     /**
      * Updates a particular model.
      * If update is successful, the browser will be redirected to the 'view' page.

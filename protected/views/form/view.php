@@ -1,6 +1,6 @@
 
 <h3>Project: <a href="/project/view/tab/objects/id/<?php echo $model->project->id; ?>"><?php echo $model->project->name; ?></a></h3>
-<a href="/form/history/id/<?php echo $model->form_id; ?>">History</a>
+
 <br>
 <?php 
 //$data=Formproperty::model()->findAll('form_id='.$model->form_id);
@@ -53,8 +53,8 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                   
                     <td>
                         <a href="/formproperty/update/id/<?php echo $item['id'];?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
-                        <a href="/formroperty/delete?id=<?php echo $item['id'];?>"><i class="icon-remove-sign" rel="tooltip" title="Delete"></i></a> 
-                     <a href="/formroperty/view/id/<?php echo $item['formproperty_id'];?>"><i class="icon-calendar" rel="tooltip" title="History"></i></a> 
+                        <a href="/formproperty/delete?id=<?php echo $item['id'];?>"><i class="icon-remove-sign" rel="tooltip" title="Delete"></i></a> 
+                     <a href="/formproperty/view/id/<?php echo $item['formproperty_id'];?>"><i class="icon-calendar" rel="tooltip" title="History"></i></a> 
                    
                     </td>
                 </tr>
@@ -65,3 +65,39 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
     <?php endif;
 $this->endWidget(); ?>
 
+<?php $deleted = Version::model()->getObjectDeletedVersions($model->form_id,2,3);
+if (count($deleted)):?>
+    
+
+        
+<div class="accordion-group">
+        <div class="accordion-heading">
+
+         <a class="accordion-toggle" data-toggle="collapse"
+          data-parent="#accordionE" href="#collapseE">
+          Show Deleted Properties</a>
+           
+     </div>
+    
+     <div id="collapseE" class="accordion-body collapse">
+        <div class="accordion-inner">
+        <table class="table">
+        <tbody>
+        <?php foreach($deleted as $item) {?>
+           <tr class="odd">  
+                <td> <a href="/form/history/id/<?php echo $item['form_id'];?>"> 
+                <?php echo $item['number']; ?></a> 
+                </td>
+   
+                <td> 
+                <?php echo $item['name']; ?>
+                </td>
+    
+           </tr>
+        <?php }?>
+    	</tbody>
+        </table>   
+            </div>
+        </div>
+    </div>
+<?php  endif; ?>
