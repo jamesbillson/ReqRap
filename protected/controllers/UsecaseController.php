@@ -66,11 +66,10 @@ class UsecaseController extends Controller
 	{
 		$model=new Usecase;
 
-		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
+		
                 $number=Usecase::model()->getNextNumber($id);
                 $package=Package::model()->findbyPK($id);
-               // $packnum=$package->sequence;
+               
 		if(isset($_POST['Usecase']))
 		{
 			
@@ -78,7 +77,7 @@ class UsecaseController extends Controller
                     // set usecase_id
                     $model->usecase_id=Version::model()->getNextID($id,10);
 			if($model->save()){
-                        $version=Version::model()->getNextNumber($id,10,1,$model->primaryKey,$model->usecase_id);   
+                        $version=Version::model()->getNextNumber($package->project_id,10,1,$model->primaryKey,$model->usecase_id);   
                         $flow=new Flow;
                         $flow->name='Main';
                         $flow->main=1;
@@ -87,7 +86,7 @@ class UsecaseController extends Controller
                         $flow->usecase_id=$model->usecase_id;
                         $flow->flow_id=Version::model()->getNextID($id,8);
                         $flow->save(false);
-                        $version=Version::model()->getNextNumber($id,8,1,$model->primaryKey,$model->flow_id);
+                        $version=Version::model()->getNextNumber($package->project_id,8,1,$flow->primaryKey,$flow->flow_id);
                         //make version
                         $step=new Step;
                           $step->flow_id=$flow->flow_id;
@@ -98,7 +97,7 @@ class UsecaseController extends Controller
                           $step->step_id=Version::model()->getNextID($id,9);
                           $step->save(false);
                           // make version
-                          $version=Version::model()->getNextNumber($id,9,1,$step->primaryKey,$step->step_id);
+                          $version=Version::model()->getNextNumber($package->project_id,9,1,$step->primaryKey,$step->step_id);
 				$this->redirect(array('/package/view/tab/usecases/','id'=>$model->package->id));
                 }}
 

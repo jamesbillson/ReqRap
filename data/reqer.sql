@@ -3,9 +3,9 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Feb 07, 2014 at 06:19 PM
--- Server version: 5.5.19
--- PHP Version: 5.3.8
+-- Generation Time: Feb 09, 2014 at 08:04 PM
+-- Server version: 5.6.12
+-- PHP Version: 5.4.16
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -325,7 +325,7 @@ CREATE TABLE IF NOT EXISTS `flow` (
   KEY `usecase_id` (`usecase_id`),
   KEY `startstep_id` (`startstep_id`),
   KEY `rejoinstep_id` (`rejoinstep_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=65 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=69 ;
 
 --
 -- Dumping data for table `flow`
@@ -353,7 +353,11 @@ INSERT INTO `flow` (`id`, `flow_id`, `name`, `usecase_id`, `main`, `startstep_id
 (61, 61, 'Main', 26, 1, 0, 0),
 (62, 62, 'Main', 27, 1, 0, 0),
 (63, 63, 'A', 27, 0, 84, 84),
-(64, 64, 'B', 27, 0, 84, 84);
+(64, 64, 'B', 27, 0, 84, 84),
+(65, 65, 'Main', 30, 1, 0, 0),
+(66, 66, 'Main', 31, 1, 0, 0),
+(67, 67, 'Main', 32, 1, 0, 0),
+(68, 68, 'Main', 33, 1, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -397,7 +401,7 @@ CREATE TABLE IF NOT EXISTS `form` (
   PRIMARY KEY (`id`),
   KEY `project_id` (`project_id`),
   KEY `form_id` (`form_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=19 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=13 ;
 
 --
 -- Dumping data for table `form`
@@ -425,7 +429,7 @@ CREATE TABLE IF NOT EXISTS `formproperty` (
   `description` text NOT NULL,
   PRIMARY KEY (`id`),
   KEY `form_id` (`form_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=50 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=41 ;
 
 --
 -- Dumping data for table `formproperty`
@@ -614,7 +618,7 @@ CREATE TABLE IF NOT EXISTS `objectproperty` (
   `description` text NOT NULL,
   PRIMARY KEY (`id`),
   KEY `object_id` (`object_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=41 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=44 ;
 
 --
 -- Dumping data for table `objectproperty`
@@ -634,7 +638,10 @@ INSERT INTO `objectproperty` (`id`, `objectproperty_id`, `number`, `object_id`, 
 (15, 15, '3', 4, 'Value', 'Value of option'),
 (38, 16, '1', 14, 'qjkx', 'xk'),
 (39, 17, '2', 14, 'Is this one better', ';qjkqjk'),
-(40, 16, '1', 14, 'qjkx', 'xk eo uoaeu eoau');
+(40, 16, '1', 14, 'qjkx', 'xk eo uoaeu eoau'),
+(41, 18, '1', 19, 'aoeu', 'oeu'),
+(42, 18, '1', 19, 'aoeu', 'oeu aoeu  eou oeu oeu'),
+(43, 19, '2', 19, 'aoeuoe', 'uaoeuoeu');
 
 -- --------------------------------------------------------
 
@@ -666,24 +673,28 @@ CREATE TABLE IF NOT EXISTS `package` (
   `package_id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
   `stage` tinyint(1) NOT NULL DEFAULT '1',
-  `sequence` int(6) NOT NULL,
+  `number` int(6) NOT NULL,
   `project_id` int(11) NOT NULL,
   `budget` decimal(10,2) NOT NULL DEFAULT '0.00',
   `contract_amount` decimal(10,2) NOT NULL DEFAULT '0.00',
   `extlink` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `project_id` (`project_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=697 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=701 ;
 
 --
 -- Dumping data for table `package`
 --
 
-INSERT INTO `package` (`id`, `package_id`, `name`, `stage`, `sequence`, `project_id`, `budget`, `contract_amount`, `extlink`) VALUES
+INSERT INTO `package` (`id`, `package_id`, `name`, `stage`, `number`, `project_id`, `budget`, `contract_amount`, `extlink`) VALUES
 (693, 693, 'Public Website', 1, 1, 47, '0.00', '0.00', NULL),
 (694, 694, 'Membership', 1, 2, 47, '0.00', '0.00', NULL),
 (695, 695, 'Versioning', 1, 1, 48, '0.00', '0.00', NULL),
-(696, 696, 'Analysis', 1, 2, 48, '0.00', '0.00', NULL);
+(696, 696, 'Analysis', 1, 2, 48, '0.00', '0.00', NULL),
+(697, 697, 'aoeu', 1, 1, 55, '0.00', '0.00', NULL),
+(698, 698, 'eeuou', 1, 2, 55, '0.00', '0.00', NULL),
+(699, 697, 'aoeu', 1, 1, 55, '0.00', '0.00', NULL),
+(700, 697, 'aoeu', 1, 1, 55, '0.00', '0.00', NULL);
 
 -- --------------------------------------------------------
 
@@ -810,7 +821,7 @@ CREATE TABLE IF NOT EXISTS `rule` (
   PRIMARY KEY (`id`),
   KEY `project_id` (`project_id`),
   KEY `rule_id` (`rule_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=109 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=104 ;
 
 --
 -- Dumping data for table `rule`
@@ -915,7 +926,7 @@ CREATE TABLE IF NOT EXISTS `step` (
   `result` text NOT NULL,
   PRIMARY KEY (`id`),
   KEY `flow_id` (`flow_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=89 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=91 ;
 
 --
 -- Dumping data for table `step`
@@ -951,7 +962,9 @@ INSERT INTO `step` (`id`, `step_id`, `flow_id`, `number`, `actor_id`, `text`, `r
 (85, 85, 58, 2, 5, 'Actor selects a change to which he wants to roll back the current version.', 'System sets the current version of every object back to its state at that time.'),
 (86, 86, 63, 1, 5, 'New step', 'Result'),
 (87, 87, 63, 2, 5, 'New step', 'Result'),
-(88, 88, 62, 2, 5, 'Actor clicks link to view a deleted object.', 'System displays the object view page for that object.');
+(88, 88, 62, 2, 5, 'Actor clicks link to view a deleted object.', 'System displays the object view page for that object.'),
+(89, 89, 67, 1, 10, 'Actor action.', 'System result.'),
+(90, 90, 68, 1, 10, 'Actor action.', 'System result.');
 
 -- --------------------------------------------------------
 
@@ -1210,7 +1223,7 @@ CREATE TABLE IF NOT EXISTS `usecase` (
   `preconditions` text NOT NULL,
   PRIMARY KEY (`id`),
   KEY `package_id` (`package_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=28 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=34 ;
 
 --
 -- Dumping data for table `usecase`
@@ -1234,7 +1247,13 @@ INSERT INTO `usecase` (`id`, `usecase_id`, `package_id`, `number`, `actor_id`, `
 (24, 24, 695, '3', 5, 'Create a new release', 'Complete a release and upgrade the working release number.', 'None'),
 (25, 25, 695, '1', 5, 'Roll back individual object', 'Roll back a single object to a previous version.', 'None'),
 (26, 26, 695, '5', 5, 'View change log', 'See a log of all changes', 'None'),
-(27, 27, 695, '2', 5, 'View deleted items', 'This use case describes the process of viewing deleted objects.', 'Objects must have been deleted .');
+(27, 27, 695, '2', 5, 'View deleted items', 'This use case describes the process of viewing deleted objects.', 'Objects must have been deleted .'),
+(28, 28, 700, '1', 11, 'oeu', 'oeu', 'Noneoeu'),
+(29, 29, 700, '2', 10, 'uei', 'eui', 'None'),
+(30, 30, 700, '2', 10, 'uei', 'eui', 'None'),
+(31, 31, 700, '2', 10, 'uei', 'eui', 'None'),
+(32, 32, 700, '2', 10, 'uei', 'eui', 'None'),
+(33, 33, 700, '2', 10, 'uei', 'eui', 'None');
 
 -- --------------------------------------------------------
 
@@ -1303,7 +1322,7 @@ CREATE TABLE IF NOT EXISTS `version` (
   PRIMARY KEY (`id`),
   KEY `project_id` (`project_id`),
   KEY `create_user` (`create_user`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=207 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=222 ;
 
 --
 -- Dumping data for table `version`
@@ -1423,7 +1442,22 @@ INSERT INTO `version` (`id`, `number`, `release`, `project_id`, `status`, `objec
 (203, 11, '7', 55, 1, 4, 1, 9, 7, 0, '2014-02-04 11:12:56', 113),
 (204, 12, '7', 55, 1, 4, 2, 10, 7, 1, '2014-02-04 11:12:56', 113),
 (205, 13, '7', 55, 1, 4, 1, 11, 8, 0, '2014-02-04 11:16:48', 113),
-(206, 14, '7', 55, 1, 4, 3, 11, 8, 0, '2014-02-04 11:16:48', 113);
+(206, 14, '7', 55, 1, 4, 3, 11, 8, 0, '2014-02-04 11:16:48', 113),
+(207, 15, '7', 55, 1, 7, 1, 41, 18, 0, '2014-02-08 03:07:13', 113),
+(208, 16, '7', 55, 1, 7, 2, 42, 18, 0, '2014-02-08 03:07:49', 113),
+(209, 17, '7', 55, 1, 7, 3, 42, 18, 0, '2014-02-08 03:07:49', 113),
+(210, 18, '7', 55, 1, 7, 1, 43, 19, 0, '2014-02-08 03:38:51', 113),
+(211, 19, '7', 55, 1, 7, 3, 43, 19, 0, '2014-02-08 03:38:51', 113),
+(212, 20, '7', 55, 1, 5, 1, 697, 697, 0, '2014-02-08 03:59:25', 113),
+(213, 21, '7', 55, 1, 5, 1, 698, 698, 1, '2014-02-08 03:55:08', 113),
+(214, 22, '7', 55, 1, 5, 2, 700, 697, 1, '2014-02-08 03:59:25', 113),
+(215, 23, '7', 55, 1, 10, 1, 30, 30, 1, '2014-02-08 04:21:51', 113),
+(216, 24, '7', 55, 1, 10, 1, 31, 31, 1, '2014-02-08 04:22:52', 113),
+(217, 25, '7', 55, 1, 10, 1, 32, 32, 1, '2014-02-08 04:23:17', 113),
+(218, 26, '7', 55, 1, 8, 1, 67, 67, 1, '2014-02-08 04:23:17', 113),
+(219, 27, '7', 55, 1, 10, 1, 33, 33, 1, '2014-02-08 04:24:19', 113),
+(220, 28, '7', 55, 1, 8, 1, 68, 68, 1, '2014-02-08 04:24:20', 113),
+(221, 29, '7', 55, 1, 9, 1, 90, 90, 1, '2014-02-08 04:24:21', 113);
 
 --
 -- Constraints for dumped tables

@@ -14,7 +14,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
         'class' => 'bootstrap.widgets.TbButton',
         'type' => 'primary', // '', 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
         'label'=> 'Add Package',
-            'url'=>'/package/addPackage?id='.$model->id,
+            'url'=>'/package/create/id/'.$model->id,
     ),
     
 )));
@@ -41,7 +41,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                 
                 <tr class="odd">  
                     <td>   
-                        <a href="/package/view/id/<?php echo $item['id'];?>/tab/details"> PA-<?php echo $item['sequence'];?></a>
+                        <a href="/package/view/id/<?php echo $item['package_id'];?>/tab/details"> PA-<?php echo $item['number'];?></a>
                     </td>
  <td>   
                         <?php echo $item['name'];?>

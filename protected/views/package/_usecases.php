@@ -44,7 +44,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
          <?php } ?> 
               </td>
               <td> 
-                   <a href="/usecase/view/id/<?php echo $item['id'];?>"> UC-<?php echo str_pad($model->sequence, 2, "0", STR_PAD_LEFT).''.str_pad($item['number'], 3, "0", STR_PAD_LEFT); ?></a>
+                   <a href="/usecase/view/id/<?php echo $item['id'];?>"> UC-<?php echo str_pad($model->number, 2, "0", STR_PAD_LEFT).''.str_pad($item['number'], 3, "0", STR_PAD_LEFT); ?></a>
                </td> 
               <td>
                    <b><?php echo $item['name'];?></a></b>

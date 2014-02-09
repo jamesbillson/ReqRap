@@ -4,7 +4,7 @@ A list of questions/requirements that the bidders have to complete.<br />
 <?php 
 $justq = Tenderqs::model()->myNewBidqs($model->id);
 $data = Tenderqs::model()->bidqsAndAs($model->id);
-//findAll(array('order'=>'type, sequence', 'condition'=>'project_id=:x', 'params'=>array(':x'=>$model->id)));
+//findAll(array('order'=>'type, number', 'condition'=>'project_id=:x', 'params'=>array(':x'=>$model->id)));
 
 $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
     'title' => 'Tender Requirements',
@@ -39,7 +39,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
       foreach($justq as $item):?>
             <tr class="odd">  
               <td>   
-                  <?php echo $item['sequence'];?>
+                  <?php echo $item['number'];?>
               </td>
               <td>   
                   <?php echo $item['name'];?>
@@ -67,7 +67,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
       foreach($data as $item):?>
             <tr class="odd">  
               <td>   
-                  <?php echo $item['sequence'];?>
+                  <?php echo $item['number'];?>
               </td>
               <td>   
                   <?php echo $item['name'];?>

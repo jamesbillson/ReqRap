@@ -42,13 +42,13 @@ public static $packagestageicon= array(1=>'icon-time text-warning',
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('name, package_id, project_id, stage, sequence', 'required'),
+			array('name, package_id, project_id, stage, number', 'required'),
 			array('package_id, project_id', 'numerical', 'integerOnly'=>true),
                         array('budget, stage', 'numerical', 'integerOnly'=>false),
 			array('name', 'length', 'max'=>255),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, package_id, name, stage, project_id, sequence', 'safe', 'on'=>'search'),
+			array('id, package_id, name, stage, project_id, number', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -77,7 +77,7 @@ public static $packagestageicon= array(1=>'icon-time text-warning',
 		'name' => 'Name',
 		'project_id' => 'Project',
                 'budget'=>'Budget',
-                'sequence'=>'Sequence'
+                'number'=>'Sequence'
                    
 		);
 	}
@@ -106,7 +106,7 @@ public static $packagestageicon= array(1=>'icon-time text-warning',
     {
        
               
-        $sql="SELECT max(`p`.`sequence`)as number
+        $sql="SELECT max(`p`.`number`)as number
            From `package` `p`
             WHERE `p`.`project_id`=".$id;
 		$connection=Yii::app()->db;
@@ -124,15 +124,18 @@ public static $packagestageicon= array(1=>'icon-time text-warning',
     {
      
               
-        
-      $sql="SELECT p.id, p.name, p.sequence, p.budget,p.stage
-         FROM package  p
-         WHERE
-         p.project_id=".$id." 
-         group by p.id
-         order by p.sequence ASC";
+     
     
-  
+     $sql="
+            SELECT `r`.`id`,`r`.`package_id`,`r`.`number`,`r`.`name`,`v`.`active`
+            FROM `package` `r`
+            JOIN `version` `v`
+            ON `v`.`foreign_key`=`r`.`id`
+            WHERE 
+              `v`.`object`=5
+            AND
+            `v`.`active`=1 and            
+            `r`.`project_id`=".$id." order by number ASC";
       
         $connection=Yii::app()->db;
         $command = $connection->createCommand($sql);

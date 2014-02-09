@@ -1,7 +1,7 @@
 
 <?php 
 $data = Tenderans::model()->followerBidDetail($bidderid, $packid);
-//findAll(array('order'=>'type, sequence', 'condition'=>'project_id=:x', 'params'=>array(':x'=>$model->id)));
+//findAll(array('order'=>'type, number', 'condition'=>'project_id=:x', 'params'=>array(':x'=>$model->id)));
 
 $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
     'title' => 'Tender Requirements',
@@ -31,7 +31,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
       foreach($data as $item):?>
             <tr class="odd">  
               <td>   
-                  <?php echo $item['sequence'];?>
+                  <?php echo $item['number'];?>
               </td>
               <td>   
                   <?php echo $item['name'];?>

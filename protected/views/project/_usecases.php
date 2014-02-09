@@ -16,7 +16,7 @@ if($last_package != $line['packname']) {
             $package ++;
             $project[$package]['total']= 0;
             $project[$package]['name']=$line['packname'];
-            $project[$package]['number']=$line['sequence'];
+            $project[$package]['number']=$line['number'];
             $uc=0;
             $last_uc=''; // its a new package - reset Use Case in case the component name is the same
   }             

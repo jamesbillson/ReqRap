@@ -1,9 +1,3 @@
-<?php
-/* @var $this UsecaseController */
-/* @var $model Usecase */
-/* @var $form CActiveForm */
-?>
-
 <div class="form">
 
 <?php $form=$this->beginWidget('CActiveForm', array(
@@ -15,14 +9,14 @@
 	'enableAjaxValidation'=>false,
 )); ?>
 
-	  <?php echo $form->hiddenField($model,'package_id',array('value'=>$package->id)); ?>
+	 <?php echo $form->hiddenField($model,'package_id',array('value'=>$package->id)); ?>
 	<?php echo $form->errorSummary($model); ?>
 
-		<?php echo $form->hiddenField($model,'number',array('value'=>$number)); ?>
+	<?php echo $form->hiddenField($model,'number',array('value'=>$number)); ?>
 
     	<div class="row">
-                <?php echo $form->labelEx($model,'actor_id'); ?>
- <?php $actors = Actor::model()->findAll('project_id='.$package->project->id);    
+         <?php echo $form->labelEx($model,'actor_id'); ?>
+            <?php $actors = Actor::model()->getProjectActors($package->project_id);    
                         $data = array();
                     foreach($actors as $actor)
                                         $data[$actor['id']]=$actor['name'];

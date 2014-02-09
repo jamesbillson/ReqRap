@@ -71,7 +71,8 @@ class PackageController extends Controller
 		{
                    $model->attributes=$_POST['Package'];
                    $model->package_id=Version::model()->getNextID($id,5);
-                   $model->number=Package::model()->getNextNumber($project);
+                   $model->number=Package::model()->getNextNumber($id);
+                   $model->project_id=$id;
                     
                     if($model->save())
                     {
@@ -103,10 +104,11 @@ class PackageController extends Controller
 			 $new->attributes=$_POST['Package'];
                          $new->project_id=$model->project_id;
                          $new->package_id=$model->package_id;
+                         $new->number=$model->number;
 
 			if($new->save())
                         {
-			$version=Version::model()->getNextNumber($model->project_id, 5, 2,$new->primaryKey,$model->actor_id);
+			$version=Version::model()->getNextNumber($model->project_id, 5, 2,$new->primaryKey,$model->package_id);
                         $this->redirect(array('/project/view/tab/packages/id/'.$model->project_id));
                         }        
 		}

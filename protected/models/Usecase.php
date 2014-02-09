@@ -55,7 +55,12 @@ class Usecase extends CActiveRecord
 			'steps' => array(self::HAS_MANY, 'Step', 'usecase_id'),
 			'usedby' => array(self::HAS_MANY, 'Uses', 'usedby'),
 			'uses' => array(self::HAS_ONE, 'Uses', 'uses'),
-                    'package' => array(self::BELONGS_TO, 'Package', 'package_id'),
+                        
+                    'package'=>array(self::BELONGS_TO,
+                                    'package','package_id',
+                                    'joinType'=>'JOIN',
+                                    'foreignKey'=>'package_id'),
+                    
 		);
 	}
 
@@ -166,7 +171,7 @@ class Usecase extends CActiveRecord
         $user= Yii::app()->user->id;   
               
         $sql="SELECT `u`.`name`, `u`.`number`,`u`.`id`, `u`.`description`,
-            `p`.`name` as packname,`p`.`id` as packid,`p`.`sequence`,
+            `p`.`name` as packname,`p`.`id` as packid,`p`.`number`,
             `s`.`id` as steps
             FROM `package` `p`
             LEFT JOIN  `usecase` `u`
@@ -180,7 +185,7 @@ class Usecase extends CActiveRecord
             WHERE `r`.`id`=".$id." 
                 GROUP BY `u`.`id`
                 ORDER BY 
-             `p`.`sequence` ASC,              
+             `p`.`number` ASC,              
              `u`.`number` ASC";
 		$connection=Yii::app()->db;
 		$command = $connection->createCommand($sql);

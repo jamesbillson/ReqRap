@@ -67,3 +67,40 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
     <?php endif;
 $this->endWidget(); ?>
 
+
+<?php $deleted = Version::model()->getObjectDeletedVersions($model->object_id,6,7);
+if (count($deleted)):?>
+    
+
+        
+<div class="accordion-group">
+        <div class="accordion-heading">
+
+         <a class="accordion-toggle" data-toggle="collapse"
+          data-parent="#accordionF" href="#collapseF">
+          Show Deleted Versions</a>
+           
+     </div>
+    
+     <div id="collapseF" class="accordion-body collapse">
+        <div class="accordion-inner">
+        <table class="table">
+        <tbody>
+        <?php foreach($deleted as $item) {?>
+           <tr class="odd">  
+                <td> <a href="/objectproperty/view/id/<?php echo $item['objectproperty_id'];?>"> 
+                <?php echo $item['number']; ?></a> 
+                </td>
+   
+                <td> 
+                <?php echo $item['name']; ?>
+                </td>
+    
+           </tr>
+        <?php }?>
+    	</tbody>
+        </table>   
+            </div>
+        </div>
+    </div>
+<?php  endif; ?>
