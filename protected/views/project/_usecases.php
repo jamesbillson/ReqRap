@@ -16,7 +16,7 @@ if($last_package != $line['packname']) {
             $package ++;
             $project[$package]['total']= 0;
             $project[$package]['name']=$line['packname'];
-            $project[$package]['number']=$line['number'];
+            $project[$package]['packnumber']=$line['packnumber'];
             $uc=0;
             $last_uc=''; // its a new package - reset Use Case in case the component name is the same
   }             
@@ -35,6 +35,7 @@ if($last_package != $line['packname']) {
                
                 $project[$package][$uc]['description']= $line['description'];
                 $project[$package][$uc]['id']= $line['id'];
+                 $project[$package][$uc]['usecase_id']= $line['usecase_id'];
                 $project[$package][$uc]['number']= $line['number'];   
                  if(!empty($line['name'])){
                    
@@ -73,7 +74,7 @@ if($last_package != $line['packname']) {
        ?>
 
  <tr>
-        <td> <b>Package:</b> <?php  echo $project[$w]['name']." <br>";?></td>
+        <td> <b>Package:</b> <?php  echo 'PA-'.$project[$w]['packnumber'].' '.$project[$w]['name']." <br>";?></td>
         <td></td>
         <td><b><?php  echo number_format($project[$w]['total'], 0, '.', ',') ;?></b></td>
   </tr>
@@ -86,8 +87,8 @@ if($last_package != $line['packname']) {
         <tr>
           <td>
           <?php if (!empty($project[$w][$x]['id'])) {?>
-              <a href="/usecase/view/id/<?php echo $project[$w][$x]['id'];?>"><b>
-              <?php  echo 'UC-'.str_pad($project[$w]['number'], 2, "0", STR_PAD_LEFT).str_pad($project[$w][$x]['number'], 3, "0", STR_PAD_LEFT).'  '.$project[$w][$x]['name']." <br>";?></b></a></td> 
+              <a href="/usecase/view/id/<?php echo $project[$w][$x]['usecase_id'];?>"><b>
+              <?php  echo 'UC-'.str_pad($project[$w]['packnumber'], 2, "0", STR_PAD_LEFT).str_pad($project[$w][$x]['number'], 3, "0", STR_PAD_LEFT).'  '.$project[$w][$x]['name']." <br>";?></b></a></td> 
            
           <td><?php echo $project[$w][$x]['description']; ?></td>
         <td> <b><?php  echo number_format($project[$w][$x]['total'], 0, '.', ',') ;?></b></td>

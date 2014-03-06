@@ -19,7 +19,7 @@
             <?php $actors = Actor::model()->getProjectActors($package->project_id);    
                         $data = array();
                     foreach($actors as $actor)
-                                        $data[$actor['id']]=$actor['name'];
+                                        $data[$actor['actor_id']]=$actor['name'];
                             echo $form->dropdownlist($model,'actor_id',$data,array('prompt'=>'select')); ?> 
                   </div>          
                         

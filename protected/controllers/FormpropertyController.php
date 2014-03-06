@@ -68,7 +68,7 @@ class FormpropertyController extends Controller
 		        
                     $model->attributes=$_POST['Formproperty'];
                     $model->number=Formproperty::model()->getNextNumber($id);
-                    $model->formproperty_id=Version::model()->getNextID($model->form->project->id,3);
+                    $model->formproperty_id=Version::model()->getNextID(3);
                     
                     if($model->save())
                     {

@@ -49,7 +49,7 @@ class PackageController extends Controller
 	 * Displays a particular model.
 	 * @param integer $id the ID of the model to be displayed
 	 */
-  public function actionView($id) // Note that this is actor_id not id
+  public function actionView($id) // Note that this is package_id not id
 	{
              	$versions=Version::model()->getVersions($id,5);
                 $model=$this->loadModel($versions[0]['id']);
@@ -70,7 +70,7 @@ class PackageController extends Controller
 		if(isset($_POST['Package']))
 		{
                    $model->attributes=$_POST['Package'];
-                   $model->package_id=Version::model()->getNextID($id,5);
+                   $model->package_id=Version::model()->getNextID(5);
                    $model->number=Package::model()->getNextNumber($id);
                    $model->project_id=$id;
                     

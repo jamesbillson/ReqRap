@@ -41,11 +41,11 @@
                      
                      
  <?php     
-           $actors = Actor::model()->findAll('project_id='.$model->usecase->package->project->id); ?>
+           $actors = Actor::model()->getProjectActors($model->usecase->package->project->id); ?>
                      <select name="Step[actor_id]">
   <?php     foreach($actors as $actor){
-           echo '<option value="'.$actor['id'].'"';
-       if($actor['id']==$model->usecase->actor_id)  echo 'selected'; 
+           echo '<option value="'.$actor['actor_id'].'"';
+       if($actor['actor_id']==$model->usecase->actor_id)  echo 'selected'; 
        echo'>'.$actor['name'].'</option>';
   }
            ?> 

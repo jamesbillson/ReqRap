@@ -68,7 +68,7 @@ class StepifaceController extends Controller
 		if(isset($_POST['Steprule']))
 		{
 			$model->attributes=$_POST['Steprule'];
-                        $model->steprule_id=Version::model()->getNextID($project->id,15);
+                        $model->steprule_id=Version::model()->getNextID(15);
 			if($model->save())
                         $version=Version::model()->getNextNumber($project->id,1,15,$model->primaryKey,$model->steprule_id);
                       
@@ -88,7 +88,7 @@ class StepifaceController extends Controller
            public function actionCreateInline($project_id)
 	{
 		$model=new Stepiface;
-                $model->stepiface_id=Version::model()->getNextID($project->id,15);
+                $model->stepiface_id=Version::model()->getNextID(15);
                      
 		if(isset($_POST['step_id']))
 		{

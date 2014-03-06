@@ -47,8 +47,12 @@ class Flow extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
                     
-                    'usecase' => array(self::BELONGS_TO, 'Usecase', 'usecase_id'),
-		
+               
+                      'usecase'=>array(self::BELONGS_TO,
+                                    'Usecase','usecase_id',
+                                    'joinType'=>'JOIN',
+                                    'foreignKey'=>'usecase_id')
+                    
 		);
 	}
 
@@ -99,12 +103,12 @@ class Flow extends CActiveRecord
 	}
           public function getNextFlow($id)
     {
-        $user= Yii::app()->user->id;   
+           
               
         $sql="SELECT `f`.`name`
             FROM `flow` `f`
             Join `usecase` `u` 
-            on `f`.`usecase_id`=`u`.`id`
+            on `f`.`usecase_id`=`u`.`usecase_id`
             WHERE `u`.`id`=".$id."
             AND 
             `f`.`main`=0
@@ -139,6 +143,57 @@ class Flow extends CActiveRecord
 		return $projects[0]['steps'];
     }    
 
+         public function getUCFlow($id)
+    {
+       
+              
+        $sql="SELECT `f`.*,
+            
+                (SELECT `p`.`number` 
+                FROM `step` `p` 
+                JOIN `version` `pv`
+                ON `pv`.`foreign_key`=`p`.`id`
+                WHERE 
+                f.startstep_id=p.step_id
+                AND
+                `pv`.`active`=1
+                AND 
+                `pv`.`object`=9) as start, 
+
+                (SELECT `q`.`number` from `step` `q`  
+                JOIN `version` `qv`
+                ON qv.foreign_key=q.id
+                WHERE 
+                f.rejoinstep_id=q.step_id
+                AND
+                qv.active=1
+                AND 
+                qv.object=9
+
+                ) as rejoin
+
+
+              FROM `flow` `f`
+              JOIN `version` `v`
+              ON `v`.`foreign_id`=`f`.`flow_id`
+              JOIN `usecase` `u`
+              ON `u`.`usecase_id`=`f`.`usecase_id`
+              WHERE 
+              `v`.`object`=8
+              AND
+              `v`.`active`=1
+              AND
+              `u`.`id`=".$id."
+                  ORDER BY `f`.`main` DESC
+                ";
+		$connection=Yii::app()->db;
+		$command = $connection->createCommand($sql);
+		$projects = $command->queryAll();
+                
+		return $projects;
+    }    
+    
+    
 	/**
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!

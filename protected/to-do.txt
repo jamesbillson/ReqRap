@@ -73,14 +73,18 @@ OBJECTS
 2.form - M - C - V
 3.formproperty - M - C - V (deleted versions link and interface)
 4.actor - M - C - V
-5.package - M - C 
+5.package - M - C - V (package delete not handled, will need additional logic to handle
+                        orphaned UC's)
 6.object - M - C - V
-7.objectproperty - M - C - V
-8.Flow - M - C (Need to update check steps)
-9.step - M - C(Step renumber probably needs work, delete needs work)
-10.usecase - M - C (Need to v control move function?)
+7.objectproperty - M - C - V(deleted versions link and interface)
+8.Flow - M - C - V(
+        Renumber on delete step where step is last step)
+9.step - M - C - V
+  (Step renumber needs to be changed to create new versions of each step
+     , delete needs work)
+10.usecase - M - C - V(Need to v control move function?)
 11.photo - M - C
-12.iface - M - C - (type select drop lists need to change from id to interfacetype_id)
+12.iface - M - C - V (type select drop lists need to change from id to interfacetype_id)
 13.interfacetype - M - C
 
 

@@ -69,7 +69,7 @@ class InterfacetypeController extends Controller
 		if(isset($_POST['Interfacetype']))
 		{
                         $model->attributes=$_POST['Interfacetype'];
-                        $model->interfacetype_id=Version::model()->getNextID($id,13);
+                        $model->interfacetype_id=Version::model()->getNextID(13);
 			if($model->save())
                                 {
 				$this->redirect(array('/project/view/tab/interfaces/id/'.$model->id));

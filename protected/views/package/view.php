@@ -1,7 +1,7 @@
 
 
 <?php 
-$usecases = Usecase::model()->getUsecases($model->id); // get the requirements with answers
+$usecases = Usecase::model()->getPackageUsecases($model->package_id); // get the requirements with answers
 
 
 
@@ -44,7 +44,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
          <?php } ?> 
               </td>
               <td> 
-                   <a href="/usecase/view/id/<?php echo $item['id'];?>"> UC-<?php echo str_pad($model->number, 2, "0", STR_PAD_LEFT).''.str_pad($item['number'], 3, "0", STR_PAD_LEFT); ?></a>
+                   <a href="/usecase/view/id/<?php echo $item['usecase_id'];?>"> UC-<?php echo str_pad($model->number, 2, "0", STR_PAD_LEFT).''.str_pad($item['number'], 3, "0", STR_PAD_LEFT); ?></a>
                </td> 
               <td>
                    <b><?php echo $item['name'];?></a></b>
@@ -54,7 +54,9 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                <a href="/usecase/delete/id/<?php echo $item['id'];?>"><i class="icon-remove-sign text-error" rel="tooltip" title="Edit"></i> 
               
                   <a href="/usecase/update/id/<?php echo $item['id'];?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
-              </td>
+               <a href="/usecase/history/id/<?php echo $item['usecase_id'];?>"><i class="icon-calendar" rel="tooltip" title="History"></i></a> 
+             
+               </td>
          
         <?php 
         $counter++;
@@ -68,4 +70,39 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
   ?>
 
 
+<?php $deleted = version::model()->getObjectDeletedVersions($model->package_id,5,10);
+if (count($deleted)):?>
+    
 
+        
+<div class="accordion-group">
+        <div class="accordion-heading">
+
+         <a class="accordion-toggle" data-toggle="collapse"
+          data-parent="#accordionD" href="#collapseD">
+          Show Deleted Versions</a>
+           
+     </div>
+    
+     <div id="collapseD" class="accordion-body collapse">
+        <div class="accordion-inner">
+        <table class="table">
+        <tbody>
+        <?php foreach($deleted as $item) {?>
+           <tr class="odd">  
+                <td> <a href="/usecase/view/id/<?php echo $item['rule_id'];?>"> 
+                BR-<?php echo str_pad($item['number'], 3, "0", STR_PAD_LEFT); ?></a> 
+                </td>
+   
+                <td> 
+                <?php echo $item['title']; ?>
+                </td>
+    
+           </tr>
+        <?php }?>
+    	</tbody>
+        </table>   
+            </div>
+        </div>
+    </div>
+<?php  endif; ?>

@@ -77,8 +77,8 @@ class ActorController extends Controller
 		if(isset($_POST['Actor']))
 		{
                    $model->attributes=$_POST['Actor'];
-                   $model->number=Actor::model()->getNextNumber($project);
-                   $model->actor_id=Version::model()->getNextID($id,4);
+                   $model->number=Actor::model()->getNextNumber($id);
+                   $model->actor_id=Version::model()->getNextID(4);
                    $model->inherits=-1;
                     
                     if($model->save())

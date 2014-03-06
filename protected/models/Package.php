@@ -143,7 +143,22 @@ public static $packagestageicon= array(1=>'icon-time text-warning',
         return $contacts;
         }
         
-        
+                 public function createInitial($id)
+    {
+        $package_id=Version::model()->getNextID(5);
+           $sql="INSERT INTO `package`(`package_id`, `project_id`,`number`,`name`) VALUES 
+           (".$package_id.",".$id.",1,'System')";
+           $connection=Yii::app()->db;
+        $command = $connection->createCommand($sql);
+        $command->execute();
+        $sql="select p.id from package p where p.project_id=".$id;
+      
+        $connection=Yii::app()->db;
+        $command = $connection->createCommand($sql);
+        $result = $command->queryAll();
+        Version::model()->getNextNumber($id,5,1,$result[0]['id'],$package_id);   
+                     
+    }   
         
         
    

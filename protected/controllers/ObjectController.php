@@ -63,7 +63,7 @@ class ObjectController extends Controller
 		if(isset($_POST['Object']))
 		{
                    $model->attributes=$_POST['Object'];
-                   $model->object_id=Version::model()->getNextID($project_id,6);
+                   $model->object_id=Version::model()->getNextID(6);
                    $model->number=Object::model()->getNextNumber($project_id);
                 
                     
@@ -105,7 +105,7 @@ class ObjectController extends Controller
 		}
 
 		$this->render('update',array(
-			'model'=>$model,'id'=>$model->project_id
+			'model'=>$model,'project_id'=>$model->project_id
 		));
 	}
         

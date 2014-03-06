@@ -80,7 +80,7 @@ class RuleController extends Controller
                        
                     $model->attributes=$_POST['Rule'];
                     $model->number=Rule::model()->getNextNumber($project);
-                    $model->rule_id=Version::model()->getNextID($project,1);
+                    $model->rule_id=Version::model()->getNextID(1);
                    
                     if($model->save())
                     {

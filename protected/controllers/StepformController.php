@@ -63,7 +63,7 @@ class StepformController extends Controller
 	{
 		
                 $model=new Stepform;
-                $model->stepform_id=Version::model()->getNextID($project->id,14);
+                $model->stepform_id=Version::model()->getNextID(14);
                      
 		if(isset($_POST['step_id']))
 		{
@@ -75,7 +75,7 @@ class StepformController extends Controller
                      $form=new Form;
                      
                      $form->number=Form::model()->getNextNumber($project->id);
-                     $form->form_id=Version::model()->getNextID($project->id,2);
+                     $form->form_id=Version::model()->getNextID(2);
                      $form->name=$_POST['new_form'];
                      $form->project_id=$project->id;
                      
@@ -105,7 +105,7 @@ class StepformController extends Controller
 		if(isset($_POST['Stepform']))
 		{
 			$model->attributes=$_POST['Stepform'];
-                        $model->steprule_id=Version::model()->getNextID($project->id,14);
+                        $model->steprule_id=Version::model()->getNextID(14);
 			if($model->save())
                         $version=Version::model()->getNextNumber($project->id,1,14,$model->primaryKey,$model->stepform_id);
                       

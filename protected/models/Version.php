@@ -227,7 +227,7 @@ class Version extends CActiveRecord
        
     }  
         
-         public function getNextID($id,$object)
+         public function getNextID($object)
     {
        
               
@@ -261,7 +261,8 @@ class Version extends CActiveRecord
         JOIN `version` `v`
         ON `v`.`foreign_key`=`x`.`id`
         WHERE 
-        `v`.`active`=1 and            
+        `v`.`active`=1 and  
+        `v`.`object`=".$object." and
         `x`.`project_id`=".$id." 
         )
                 

@@ -49,7 +49,7 @@ class Step extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			
-                    'folow'=>array(self::BELONGS_TO,
+                    'flow'=>array(self::BELONGS_TO,
                                     'flow','flow_id',
                                     'joinType'=>'JOIN',
                                     'foreignKey'=>'flow_id')
@@ -68,7 +68,7 @@ class Step extends CActiveRecord
 			'flow_id' => 'Flow',
 			'number' => 'Number',
 			'text' => 'Text',
-                    'actor_id'=>'Actor'
+                    'actor_id'=>'Actor'                   
 		);
 	}
 
@@ -100,9 +100,11 @@ class Step extends CActiveRecord
 			'criteria'=>$criteria,
 		));
 	}
-   public function getSteps($id) // GET ALL FOR UC
+   
+
+       public function getAltSteps($id) // GET ALL FOR UC
     {
-        $user= Yii::app()->user->id;   
+          
               
         $sql="SELECT 
             `s`.`text`,
@@ -111,34 +113,77 @@ class Step extends CActiveRecord
             `f`.`main`,
             `f`.`name` as flow,
             `f`.`id` as flowid,
-            (SELECT `number` from step p where f.startstep_id=p.id) as start, 
-            (SELECT `number` from step q where f.rejoinstep_id=q.id) as rejoin,
+            `f`.`flow_id` as flow_id,
+(SELECT `p`.`number` 
+FROM `step` `p` 
+JOIN `version` `pv`
+ON `pv`.`foreign_key`=`p`.`id`
+WHERE 
+f.startstep_id=p.step_id
+AND
+`pv`.`active`=1
+AND 
+`pv`.`object`=9) as start, 
+
+(SELECT `q`.`number` from `step` `q`  
+JOIN `version` `qv`
+ON qv.foreign_key=q.id
+WHERE 
+f.rejoinstep_id=q.step_id
+AND
+qv.active=1
+AND 
+qv.object=9
+
+) as rejoin,
             `s`.`id`,
+            `s`.`step_id`,
             `s`.`number`
             FROM `step` `s`
-            Join `actor` `a` 
-            on `a`.`id`=`s`.`actor_id`
+            LEFT Join `actor` `a` 
+            on `a`.`actor_id`=`s`.`actor_id`
             Join `flow` `f` 
-            on `f`.`id`=`s`.`flow_id`
+            on `f`.`flow_id`=`s`.`flow_id`
             Join `usecase` `u` 
-            on `u`.`id`=`f`.`usecase_id`
+            on `u`.`usecase_id`=`f`.`usecase_id`
+             JOIN `version` `v`
+            ON `v`.`foreign_key`=`s`.`id`
+            JOIN `version` `av`
+            ON `av`.`foreign_key`=`a`.`id`
            WHERE `u`.`id`=".$id."
+           AND
+           `v`.`object`=9
+            AND
+            `v`.`active`=1
+            AND 
+            `av`.`object`=4
+            AND 
+            `av`.`active`=1
+     
+               
                ORDER BY main DESC, flow ASC, `s`.`number` ASC";
 		$connection=Yii::app()->db;
 		$command = $connection->createCommand($sql);
 		$projects = $command->queryAll();
 		return $projects;
     }
-
+    
           public function getFlowSteps($id) // GET FOR A FLOW
     {
-        $user= Yii::app()->user->id;   
+           
               
-        $sql="SELECT `s`.`text`,`s`.`actor_id`,`s`.`result`,`f`.`name` as flow, `s`.`id`,`s`.`number`
+        $sql="SELECT `s`.*,
+            `f`.`name` as flow
             FROM `step` `s`
             Join `flow` `f` 
-            on `f`.`id`=`s`.`flow_id`
+            on `f`.`flow_id`=`s`.`flow_id`
+            JOIN `version` `v`
+            ON `v`.`foreign_key`=`s`.`id`
             WHERE `f`.`id`=".$id."
+            AND
+           `v`.`object`=9
+            AND
+            `v`.`active`=1
             ORDER BY `s`.`number` ASC";
 		$connection=Yii::app()->db;
 		$command = $connection->createCommand($sql);

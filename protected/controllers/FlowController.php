@@ -63,30 +63,41 @@ class FlowController extends Controller
 	 */
 	public function actionCreate($start, $id)
 	{
+            $parent=Step::model()->find('step_id ='.$start);// get the start step to get the actor
 	// CREATE A NEW FLOW	
             $flow=new Flow;
-                        $flow->startstep_id=$start;
-                        $flow->rejoinstep_id=$start;
+                        $flow->startstep_id=$start; // Note these are now step_id not id
+                        $flow->rejoinstep_id=$start;// Note these are now step_id not id
                         $flow->usecase_id=$id;
-                        $flow->main=0;
-                        $flow->name=Flow::model()->getNextFlow($id);
-                        $flow->flow_id=Version::model()->getNextID($id,8);
-                        $flow->save();
-                        $version=Version::model()->getNextNumber($id,8,1,$flow->primaryKey,$flow->flow_id);   
+                        $flow->main=0; // new flow will always be ALT i.e. value 0
+                        $flow->name=Flow::model()->getNextFlow($parent->flow->usecase->id);
+                        $flow->flow_id=Version::model()->getNextID(8);
+                        if ($flow->save()){
+                        $flowid=$flow->getPrimaryKey();
+                        $project_id=$flow->usecase->package->project_id;
+                        $version=Version::model()->getNextNumber($flow->usecase->package->project_id,8,1,$flowid,$flow->flow_id);   
                     
              // ADD A STEP TO THE FLOW AND THEN SEND TO THE STEP EDIT FORM
              $step=new Step;
                         $step->flow_id=$flow->flow_id;
                         $step->number=1;
-                        $step->step_id=Version::model()->getNextID($id,9);
+                        $step->step_id=Version::model()->getNextID(9);
+                        $step->actor_id=$parent->actor_id;
                         $step->text='New step.';
                         $step->result='Result';
-                        $step->save();
+                       if($step->save())
+                           {
                         $stepid=$step->getPrimaryKey();
-                        $version=Version::model()->getNextNumber($id,9,1,$stepid,$step->step_id);   
-                    
-                        
-              $this->redirect(array('/step/update/flow/'.$step->flow_id.'/id/'.$stepid));
+                        $version=Version::model()->getNextNumber($flow->usecase->package->project_id,9,1,$stepid,$step->step_id);   
+                           }
+                           ELSE 
+                            {
+                                echo 'step did not save';
+                            }  
+            } ELSE {
+             echo 'flow did not save';
+             }   
+              $this->redirect(array('/step/update/flow/'.$step->flow->id.'/id/'.$step->id));
 		
 
 	}

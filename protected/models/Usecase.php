@@ -107,16 +107,24 @@ class Usecase extends CActiveRecord
 		));
 	}
 
-           public function getUsecases($id)
+           public function getPackageUsecases($id)
     {
-        $user= Yii::app()->user->id;   
-              
-        $sql="SELECT `u`.`name`, `u`.`id`, `u`.`number`
-            FROM `usecase` `u`
-            Join `package` `p` 
-            on `p`.`id`=`u`.`package_id`
-           WHERE `p`.`id`=".$id." 
-            ORDER BY number ASC";
+             
+          $sql="
+            SELECT `r`.*,`v`.`active`
+            FROM `usecase` `r`
+            LEFT JOIN `version` `v`
+            ON `v`.`foreign_key`=`r`.`id`
+            JOIN `package` `p` 
+            ON `p`.`package_id`=`r`.`package_id`
+            WHERE 
+            `v`.`object`=10
+            AND
+            `v`.`active`=1
+            AND
+            `p`.`package_id`=".$id;
+        
+        
 		$connection=Yii::app()->db;
 		$command = $connection->createCommand($sql);
 		$projects = $command->queryAll();
@@ -170,19 +178,27 @@ class Usecase extends CActiveRecord
     {
         $user= Yii::app()->user->id;   
               
-        $sql="SELECT `u`.`name`, `u`.`number`,`u`.`id`, `u`.`description`,
-            `p`.`name` as packname,`p`.`id` as packid,`p`.`number`,
+        $sql="SELECT `u`.*,
+            `p`.`name` as packname,`p`.`id` as packid,`p`.`number` as packnumber,
             `s`.`id` as steps
             FROM `package` `p`
+
             LEFT JOIN  `usecase` `u`
             on `p`.`id`=`u`.`package_id`
+                        JOIN `version` `v`
+            ON `v`.`foreign_key`=`u`.`id`
             Join `project` `r`
             ON `r`.`id` =`p`.`project_id`
             LEFT Join `flow` `f`
             ON `u`.`id`=`f`.`usecase_id`
             LEFT Join `step` `s`
             ON `f`.`id`=`s`.`flow_id`
-            WHERE `r`.`id`=".$id." 
+            WHERE 
+            `r`.`id`=".$id." 
+            AND
+            `v`.`active`=1  
+            AND
+            `v`.`object`=10
                 GROUP BY `u`.`id`
                 ORDER BY 
              `p`.`number` ASC,              
@@ -192,7 +208,27 @@ class Usecase extends CActiveRecord
 		$projects = $command->queryAll();
 		return $projects;
     }   
+             public function getProjectIfaces($id)
+    {
+        $sql="
+            SELECT `r`.*,`v`.`active`
+            FROM `iface` `r`
+            JOIN `version` `v`
+            ON `v`.`foreign_key`=`r`.`id`
+            WHERE 
+              `v`.`object`=12
+            AND
+            `v`.`active`=1 and            
+            `r`.`project_id`=".$id;
+
+     
         
+        $connection=Yii::app()->db;
+		$command = $connection->createCommand($sql);
+		$projects = $command->queryAll();
+		
+		return $projects;
+    }  
 	/**
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!

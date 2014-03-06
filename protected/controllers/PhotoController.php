@@ -78,7 +78,7 @@ class PhotoController extends Controller
             if(isset($_POST['Photo']))
             {
                 $model->attributes=$_POST['Photo'];
-                $model->photo_id=Version::model()->getNextID($project_id,11);
+                $model->photo_id=Version::model()->getNextID(11);
                 if($model->save())
                     $version=Version::model()->getNextNumber($project_id,11,1,$model->primaryKey,$model->photo_id);   
                      $this->redirect(array('/iface/view/id/'.$project));
@@ -105,7 +105,7 @@ class PhotoController extends Controller
             if(isset($_POST['Photo']))
             {
                 $model->attributes=$_POST['Photo'];
-                $model->photo_id=Version::model()->getNextID($project_id,11);
+                $model->photo_id=Version::model()->getNextID(11);
                 if($model->save())
                     $version=Version::model()->getNextNumber($project_id,11,1,$model->primaryKey,$model->photo_id);   
                      $this->redirect(array('/iface/view/id/'.$project));

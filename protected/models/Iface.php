@@ -140,6 +140,28 @@ class Iface extends CActiveRecord
     }   
   
       
+     public function getProjectIfaces($id)
+    {
+        $sql="
+            SELECT `r`.*,`v`.`active`
+            FROM `iface` `r`
+            JOIN `version` `v`
+            ON `v`.`foreign_key`=`r`.`id`
+            WHERE 
+              `v`.`object`=12
+            AND
+            `v`.`active`=1 and            
+            `r`.`project_id`=".$id;
+
+     
+        
+        $connection=Yii::app()->db;
+		$command = $connection->createCommand($sql);
+		$projects = $command->queryAll();
+		
+		return $projects;
+    }  
+    
       public function getNextIfaceNumber($id)
     {
                    

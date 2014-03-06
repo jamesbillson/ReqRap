@@ -1,8 +1,8 @@
  
 <?php 
 
-$data = Iface::model()->findAll(array('order'=>'type_id ASC, number ASC', 'condition'=>'project_id=:x', 'params'=>array(':x'=>$model->id)));
-
+$data = Iface::model()->getProjectIfaces($model->id);
+        
 $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
     'title' => 'Interfaces',
     'headerIcon' => 'icon-picture',
@@ -43,9 +43,9 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                     <td>   
                        
                         
-                     <a href="/iface/view/id/<?php echo $item['id'];?>">
+                     <a href="/iface/view/id/<?php echo $item['iface_id'];?>">
                           
-                        UI-<?php echo str_pad($item['number'], 3, "0", STR_PAD_LEFT); ?>
+                        IF-<?php echo str_pad($item['number'], 3, "0", STR_PAD_LEFT); ?>
                    </a>
                     </td>
                     <td>   
@@ -64,8 +64,10 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
 
                   
                     <td>
-                        <a href="/iface/update/id/<?php echo $item['id'];?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
+                        <a href="/iface/update/uc/-1/id/<?php echo $item['id'];?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
                         <a href="/iface/delete/ucid/<?php echo $model->id;?>/type/2/id/<?php echo $item['id'];?>"><i class="icon-remove-sign" rel="tooltip" title="Delete"></i></a> 
+                        <a href="/iface/history/id/<?php echo $item['iface_id'];?>"><i class="icon-calendar" rel="tooltip" title="Version History"></i></a> 
+                    
                     </td>
                 </tr>
             <?php endforeach ?>
@@ -75,3 +77,40 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
     <?php endif;
 $this->endWidget(); ?>
 
+
+<?php $deleted = Version::model()->getProjectDeletedVersions($model->id,12);
+if (count($deleted)):?>
+    
+
+        
+<div class="accordion-group">
+        <div class="accordion-heading">
+
+         <a class="accordion-toggle" data-toggle="collapse"
+          data-parent="#accordionI" href="#collapseI">
+          Show Deleted Versions</a>
+           
+     </div>
+    
+     <div id="collapseI" class="accordion-body collapse">
+        <div class="accordion-inner">
+        <table class="table">
+        <tbody>
+        <?php foreach($deleted as $item) {?>
+           <tr class="odd">  
+                <td> <a href="/rule/view/id/<?php echo $item['iface_id'];?>"> 
+                IF-<?php echo str_pad($item['number'], 3, "0", STR_PAD_LEFT); ?></a> 
+                </td>
+   
+                <td> 
+                <?php echo $item['name']; ?>
+                </td>
+    
+           </tr>
+        <?php }?>
+    	</tbody>
+        </table>   
+            </div>
+        </div>
+    </div>
+<?php  endif; ?>

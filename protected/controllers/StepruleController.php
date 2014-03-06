@@ -60,7 +60,7 @@ class StepruleController extends Controller
 	{
 		
                 $model=new Steprule;
-                $model->steprule_id=Version::model()->getNextID($project->id,16);
+                $model->steprule_id=Version::model()->getNextID(16);
                      
 		if(isset($_POST['step_id']))
 		{
@@ -72,7 +72,7 @@ class StepruleController extends Controller
                      $rule=new Rule;
                      
                      $rule->number=Rule::model()->getNextNumber($project->id);
-                     $rule->rule_id=Version::model()->getNextID($project->id,1);
+                     $rule->rule_id=Version::model()->getNextID(1);
                      $rule->text='stub';
                      $rule->title=$_POST['new_rule'];
                      $rule->project_id=$step->flow->usecase->package->project->id;
@@ -106,7 +106,7 @@ class StepruleController extends Controller
 		if(isset($_POST['Steprule']))
 		{
 			$model->attributes=$_POST['Steprule'];
-                        $model->steprule_id=Version::model()->getNextID($project->id,16);
+                        $model->steprule_id=Version::model()->getNextID(16);
 			if($model->save())
                         $version=Version::model()->getNextNumber($project->id,1,16,$model->primaryKey,$model->steprule_id);
                       

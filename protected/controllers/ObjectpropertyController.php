@@ -74,7 +74,7 @@ class ObjectpropertyController extends Controller
 		        
                     $model->attributes=$_POST['Objectproperty'];
                     $model->number=Objectproperty::model()->getNextNumber($object_id);
-                    $model->objectproperty_id=Version::model()->getNextID($project,7);
+                    $model->objectproperty_id=Version::model()->getNextID(7);
                     
                     if($model->save())
                     {

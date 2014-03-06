@@ -1,7 +1,7 @@
 
 
 <?php 
-$usecases = Usecase::model()->getUsecases($model->id); // get the requirements with answers
+$usecases = Usecase::model()->getPackageUsecases($model->package_id); // get the requirements with answers
 
 
 

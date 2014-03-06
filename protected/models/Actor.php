@@ -99,7 +99,7 @@ class Actor extends CActiveRecord
            public function getProjectActors($id)
     {
         $sql="
-            SELECT `r`.*,`v`.`active`
+            SELECT `r`.*
             FROM `actor` `r`
             JOIN `version` `v`
             ON `v`.`foreign_key`=`r`.`id`
@@ -139,19 +139,22 @@ class Actor extends CActiveRecord
     }   
          public function getActors($id)
     {
-        $user= Yii::app()->user->id;   
-              
-        $sql="  SELECT `a`.`name`,`a`.`id`,`a`.`alias`, `a`.`description`
+                     
+        $sql="  SELECT `a`.*
                 FROM `actor` `a`
-
-                Join `step` `s` 
-                on `s`.`actor_id`=`a`.`id`
-                join `flow` `f`
-                ON `f`.`id`=`s`.`flow_id`
-                join `usecase` `u` 
-                ON `u`.`id`=`f`.`usecase_id`
-                WHERE `u`.`id`=".$id."
-                GROUP BY `a`.`id`";
+                LEFT Join `step` `s` 
+                on `s`.`actor_id`=`a`.`actor_id`
+                LEFT join `flow` `f`
+                ON `f`.`flow_id`=`s`.`flow_id`
+                LEFT join `usecase` `u` 
+                ON `u`.`usecase_id`=`f`.`usecase_id`
+                LEFT join `version` `v`
+                ON `v`.`foreign_key`=`a`.`id`
+                WHERE `u`.`usecase_id`=".$id."
+                AND `v`.`object`=4
+                AND `v`.`active`=1
+                Group by `a`.`id`
+               ";
 		$connection=Yii::app()->db;
 		$command = $connection->createCommand($sql);
 		$projects = $command->queryAll();
@@ -162,7 +165,7 @@ class Actor extends CActiveRecord
     
          public function getCandidateActors($id)
     {
-        $user= Yii::app()->user->id;   
+      
               
         $sql="  SELECT  `a`.`name` ,  `a`.`id` ,`a`.`alias`, `a`.`description`
                 FROM  `actor`  `a` 
@@ -196,7 +199,22 @@ class Actor extends CActiveRecord
 		return $projects[0]['number'];
     }  
     
-    
+         public function createInitial($id)
+    {
+             $actor_id=Version::model()->getNextID(4);
+           $sql="INSERT INTO `actor`(`actor_id`, `project_id`,`number`,`name`,`description`,`alias`,`inherits`) VALUES 
+           (".$actor_id.",".$id.",1,'Actor','My First Actor','Placeholder',-1)";
+           $connection=Yii::app()->db;
+        $command = $connection->createCommand($sql);
+        $command->execute();
+        $sql="select a.id from actor a where a.project_id=".$id;
+      
+        $connection=Yii::app()->db;
+        $command = $connection->createCommand($sql);
+        $result = $command->queryAll();
+        Version::model()->getNextNumber($id,4,1,$result[0]['id'],$actor_id);   
+                    
+    }   
      
     
 	/**

@@ -125,6 +125,8 @@ class ProjectController extends Controller
                 Iface::model ()->createTypes($new_id);
                 Testrun::model ()->createInitial($new_id); 
                 Release::model ()->createInitial($new_id); 
+                Actor::model()->createInitial($new_id);
+                Package::model()->createInitial($new_id);
                // Version::model ()->createInitial($new_id); 
             $this->redirect(array('view','id'=>$model->id,'tab'=>'documents'));
         }

@@ -79,7 +79,7 @@ class FormController extends Controller
 		        
                     $model->attributes=$_POST['Form'];
                     $model->number=Form::model()->getNextNumber($id);
-                    $model->form_id=Version::model()->getNextID($id,2);
+                    $model->form_id=Version::model()->getNextID(2);
                     
                     if($model->save())
                     {

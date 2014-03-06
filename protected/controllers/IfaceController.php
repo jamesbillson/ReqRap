@@ -32,7 +32,7 @@ class IfaceController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update','delete'),
+				'actions'=>array('create','update','delete','history'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -73,7 +73,7 @@ class IfaceController extends Controller
 		{
                   $model->attributes=$_POST['Iface'];
                   $model->number=Iface::model()->getNextIfaceNumber($model->project->id);
-                  $model->iface_id=Version::model()->getNextID($id,12);
+                  $model->iface_id=Version::model()->getNextID(12);
                   //$model->file='default.png';
                      
                   if(!empty($_POST['new_type']))
@@ -82,7 +82,7 @@ class IfaceController extends Controller
                         $interfacetype=new Interfacetype;
                         $interfacetype->project_id=$_POST['Iface']['project_id'];
                         $interfacetype->name=$_POST['new_type'];
-                        $interfacetype->interfacetype_id=Version::model()->getNextID($id,13);
+                        $interfacetype->interfacetype_id=Version::model()->getNextID(13);
 
                         if($interfacetype->save()){
                         $version=Version::model()->getNextNumber($id,13,1,$interface->primaryKey,$interface->interfacetype_id);   
@@ -105,9 +105,16 @@ class IfaceController extends Controller
 	}
 
         
-        
+             public function actionHistory($id) // Note that this is form_id
+	{
+             	$versions=Version::model()->getVersions($id,12,'iface_id');
+                $model=$this->loadModel($versions[0]['id']);
+                $this->render('history',array('model'=>$model,
+			'versions'=>$versions
+        	));
+	} 
 
-	public function actionUpdate($id)
+	public function actionUpdate($uc,$id)
 	{
 		$model=$this->loadModel($id);
                 $new= new Iface;
@@ -121,13 +128,21 @@ class IfaceController extends Controller
                  $new->iface_id=$model->iface_id;	
                  if($new->save()){
                       $version=Version::model()->getNextNumber($id,12,2,$new->primaryKey,$new->iface_id);   
-                      $this->redirect(array('/usecase/view/id/'.$ucid));
+                      
+                      if($uc=-1){
+                           $this->redirect(array('project/view/id/'.$model->project_id.'/tab/interfaces')); 
+                        }
+                      ELSE {
+                        $this->redirect(array('/usecase/view/id/'.$uc));  
+                          
+                      }
+                      
                  }
 				
 		}
 
 		$this->render('update',array(
-			'model'=>$new,'id'=>$new->project_id
+			'model'=>$new,'id'=>$model->project_id
 		));
 	}
 
