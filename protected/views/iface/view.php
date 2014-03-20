@@ -4,23 +4,23 @@
                   </h2>
 
                    <h3>   <?php echo $model->name;?> </h3>
-<?php echo $model->type->name;?> <br /><br />
+Interface type: <?php echo $model->type->name;?> <br /><br />
 
  <?php 
- $stepiface=(Stepiface::model()->findAll('iface_id='.$model->id));
- if(!count($stepiface)){
+ $usecases=Usecase::model()->getIfaceUsecase($model->id);
+ if(!count($usecases)){
  ?>
  This Interface is not used.<br />
  Associate with Use Case
  <?php } ELSE { ?>
  Interface is used in the following UC's:<br />
-   <?php foreach($stepiface as $item){?>
- <a href="/usecase/view/id/<?php echo $item->step->flow->usecase->id;?>">
-       <?php  echo 'UC-'.str_pad($item->step->flow->usecase->package->sequence, 2, "0", STR_PAD_LEFT).
-         str_pad($item->step->flow->usecase->number, 3, "0", STR_PAD_LEFT);?>
+   <?php foreach($usecases as $item){?>
+ <a href="/usecase/view/id/<?php echo $item['usecase_id'];?>">
+       <?php  echo 'UC-'.str_pad($item['package_sequence'], 2, "0", STR_PAD_LEFT).
+         str_pad($item['usecase_number'], 3, "0", STR_PAD_LEFT);?>
  </a>
-         <?php echo $item->step->flow->usecase->name;?> 
-            (<a href="/step/update/id/-1/flow/<?php echo $item->step->flow->id;?>"><?php echo $item->step->flow->name;?> Flow</a>)
+         <?php echo $item['usecase_name'];?> 
+            (<a href="/step/update/id/-1/flow/<?php echo $item['flow_id'];?>"><?php echo $item['flow_name'];?> Flow</a>)
          
 
  <?php } ?>

@@ -114,12 +114,15 @@ class IfaceController extends Controller
         	));
 	} 
 
-	public function actionUpdate($uc,$id)
+	public function actionUpdate($ucid,$id)
 	{
 		$model=$this->loadModel($id);
                 $new= new Iface;
-		
-                $id=$model->project_id;
+		$id=$model->project_id;
+                $new->name=$model->name;
+                $new->iface_id=$model->iface_id;
+                $new->type_id=$model->type_id;
+                $new->number=$model->number;
 		if(isset($_POST['Iface']))
 		{
 		 $new->attributes=$_POST['Iface'];

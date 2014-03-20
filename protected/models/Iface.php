@@ -100,22 +100,51 @@ class Iface extends CActiveRecord
 
          public function getIfaces($id)
     {
-        $user= Yii::app()->user->id;   
-              
-        $sql="SELECT `i`.`number`,`i`.`name`, 
-            `i`.`type_id`,`i`.`id`,`t`.`name` as type, `t`.`number` as typenum
+   // GET All interfaces belonging to steps that belong to this UC.
+             
+        $sql="SELECT 
+            `i`.`number`,
+            `i`.`iface_id`,
+            `i`.`name`, 
+            `i`.`type_id`,
+            `i`.`id`,
+            `t`.`name` as type, 
+            `t`.`number` as typenum
             FROM `iface` `i`
-            Join `interfacetype` `t` 
-            on `i`.`type_id`=`t`.`id`
-            Join `stepiface` `x` 
-            on `x`.`iface_id`=`i`.`id`
-            Join `step` `s` 
-            on `x`.`step_id`=`s`.`id`
-            Join `flow` `f` 
-            on `f`.`id`=`s`.`flow_id`
-           WHERE `f`.`usecase_id`=".$id."
-               GROUP BY `i`.`id`
-               ORDER BY `t`.`number` ASC, `i`.`number` ASC";
+            JOIN `interfacetype` `t` 
+            on `i`.`type_id`=`t`.`interfacetype_id`
+            JOIN `version` `v`
+            ON `v`.`foreign_key`=`i`.`id`
+            WHERE `iface_id` IN
+            ( SELECT
+            `x`.`iface_id`
+            FROM 
+            `stepiface` `x`
+            
+            JOIN `step` `s`
+            ON `s`.`step_id`=`x`.`step_id`
+            JOIN `flow` `f` 
+            on `f`.`flow_id`=`s`.`flow_id`
+            JOIN `version` `v`
+            ON `v`.`foreign_key`=`x`.`id`
+            WHERE
+            `v`.`active`=1
+           AND 
+           `v`.`object` =15
+           AND
+            `f`.`usecase_id`=".$id."
+           )    
+
+
+             AND
+            `v`.`object` =12
+             AND
+             `v`.`active`=1
+             GROUP BY `i`.`id`
+             ORDER BY `t`.`number` ASC, `i`.`number` ASC";
+        
+      
+        
 		$connection=Yii::app()->db;
 		$command = $connection->createCommand($sql);
 		$projects = $command->queryAll();
@@ -125,20 +154,54 @@ class Iface extends CActiveRecord
         public function getStepIfaces($id)
     {
        
-              
-        $sql="SELECT `i`.`number`,`i`.`name`, `i`.`type_id`,`i`.`id`,`x`.`id` as xid
+            /*
+            
+             Query logic, is to select all the iface_id's  that relate to 
+             valid relationships.
+             Then select all the current versions of those. 
+             
+            
+            */
+        $sql="
+            SELECT 
+            `i`.`number`,
+            `i`.`name`, 
+            `i`.`type_id`,
+            `i`.`id`,
+            `i`.`iface_id`
             FROM `iface` `i`
-            Join `stepiface` `x` 
-            on `x`.`iface_id`=`i`.`id`
-            Join `step` `s` 
-            on `x`.`step_id`=`s`.`id`
-           WHERE `s`.`id`=".$id;
+            JOIN `version` `v`
+            ON `v`.`foreign_key`=`i`.`id`
+            WHERE 
+            `v`.`active`=1
+            AND 
+            `v`.`object` =12
+            AND `iface_id` IN
+           ( SELECT
+            `x`.`iface_id`
+            FROM 
+            `stepiface` `x`
+            JOIN `step` `s`
+            ON `s`.`step_id`=`x`.`step_id`
+            JOIN `version` `v`
+            ON `v`.`foreign_key`=`x`.`id`
+            WHERE
+            `v`.`active`=1
+           AND 
+           `v`.`object` =15
+           AND
+            `s`.`id`=".$id."
+           )    
+            ";
+            
+
 		$connection=Yii::app()->db;
 		$command = $connection->createCommand($sql);
 		$projects = $command->queryAll();
 		return $projects;
     }   
   
+   
       
      public function getProjectIfaces($id)
     {

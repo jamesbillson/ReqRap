@@ -56,45 +56,48 @@ class StepruleController extends Controller
 		));
 	}
 
-        public function actionCreateInline($project_id)
+
+        
+	
+        
+                 public function actionCreateInline()
 	{
-		
-                $model=new Steprule;
+		$model=new Steprule;
                 $model->steprule_id=Version::model()->getNextID(16);
-                     
+                $project_id=$_POST['project_id'];
 		if(isset($_POST['step_id']))
 		{
                  $model->step_id=$_POST['step_id'];
-                 
                  $step=Step::model()->findbyPK($model->step_id);
                     
-		 if(!empty($_POST['new_rule'])){
-                     $rule=new Rule;
-                     
-                     $rule->number=Rule::model()->getNextNumber($project->id);
-                     $rule->rule_id=Version::model()->getNextID(1);
-                     $rule->text='stub';
-                     $rule->title=$_POST['new_rule'];
-                     $rule->project_id=$step->flow->usecase->package->project->id;
-                     
-                     $rule->save(false);
-                     $version=Version::model()->getNextNumber($project->id,1,1,$rule->primaryKey,$rule->rule_id);
-                   
-                     $model->rule_id=$rule->rule_id;
-                 }	
-             else {
-                     $model->rule_id=$_POST['rule'];
-                 }
+                             if(!empty($_POST['new_rule'])){
+                                $rule=new Rule;
+
+                                $rule->number=Rule::model()->getNextNumber($project_id);
+                                $rule->rule_id=Version::model()->getNextID(1);
+                                $rule->text='stub';
+                                $rule->title=$_POST['new_rule'];
+                                $rule->project_id=$step->flow->usecase->package->project->id;
+
+                                $rule->save(false);
+                                $version=Version::model()->getNextNumber($project_id,1,1,$rule->primaryKey,$rule->rule_id);
+
+                                $model->rule_id=$rule->rule_id;
+                            }		
+                            else 
+                            {
+                                 $model->iface_id=$_POST['interface'];
+                             }
                         
-                        $model->save(false);
-                        $version=Version::model()->getNextNumber($project->id,1,16,$model->primaryKey,$model->steprule_id);
+                  $model->save(false);
+                  $version=Version::model()->getNextNumber($project_id,15,1,$model->primaryKey,$model->steprule_id);
                   
                 }
-                        $this->redirect(array('/step/update/id/'.$model->step->id.'/flow/'.$model->step->flow->id));
+             $this->redirect(array('/step/update/id/'.$model->step->id.'/flow/'.$model->step->flow->id));
 		
 	}
         
-	
+        
         
 	public function actionCreate()
 	{
@@ -144,17 +147,19 @@ class StepruleController extends Controller
 	}
 
  
-	public function actionDelete($id)
+            public function actionDelete($rule_id,$step_id)
 	{
-		$model=Steprule::model()->findbyPK($id);
-                $step_id=$model->step_id;
-                $flow=$model->step->flow_id;
-                $version=Version::model()->getNextNumber($project->id,3,16,$model->id,$model->steprule_id);
+           
+		$id=Steprule::model()->getCurrentSteprule($rule_id,$step_id);
+                $model=Steprule::model()->findByPK($id);
+                $flow_id=$model->step->flow->id;
+                $project_id=$model->step->flow->usecase->package->project_id;
+                $version=Version::model()->getNextNumber($project_id,3,16,$model->id,$model->steprule_id);
                   
 
 		$this->redirect(array('/step/update/flow/'.$flow.'/id/'.$step_id));
 	}
-
+        
  
 	public function actionIndex()
 	{

@@ -229,6 +229,72 @@ class Usecase extends CActiveRecord
 		
 		return $projects;
     }  
+    
+    
+       public function getIfaceUsecase($id)
+    {
+           //ID is the iface id.
+
+                   
+            $sql="
+                SELECT 
+                `f`.`id` as flow_id,
+                `f`.`name` as flow_name,
+                `u`.`id` as usecase_id,
+                `u`.`name` as usecase_name,
+                `u`.`number` as usecase_number,
+                `p`.`number` as package_sequence
+                FROM `iface` `i`
+                JOIN `stepiface` `x`
+                ON `x`.`iface_id`=`i`.`iface_id`
+                JOIN `step` `s`
+                ON `s`.`step_id`=`x`.`step_id`
+                JOIN `flow` `f`
+                ON `f`.`flow_id`=`s`.`flow_id`
+                JOIN `usecase` `u`
+                ON `f`.`usecase_id`=`u`.`usecase_id`
+                JOIN `package` `p`
+                ON `p`.`package_id`=`u`.`package_id`
+                JOIN `version` `v1`
+                ON `v1`.`foreign_key`=`i`.`id`
+                JOIN `version` `v2`
+                ON `v2`.`foreign_key`=`x`.`id`
+                JOIN `version` `v3`
+                ON `v3`.`foreign_key`=`s`.`id`
+                JOIN `version` `v4`
+                ON `v4`.`foreign_key`=`u`.`id`
+                JOIN `version` `v5`
+                ON `v5`.`foreign_key`=`p`.`id`
+                WHERE 
+                `i`.`id`=".$id."
+                AND
+                `v1`.`object`=12
+                AND
+                `v2`.`object`=15
+                AND
+                `v3`.`object`=9
+                AND
+                `v4`.`object`=10
+                AND
+                `v5`.`object`=5
+                AND
+                `v1`.`active`=1
+                AND
+                `v2`.`active`=1
+                AND
+                `v3`.`active`=1
+                AND
+                `v4`.`active`=1 
+                AND
+                `v5`.`active`=1
+";
+         
+        $connection=Yii::app()->db;
+        $command = $connection->createCommand($sql);
+	$projects = $command->queryAll();
+	return $projects;
+    }  
+    
 	/**
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!

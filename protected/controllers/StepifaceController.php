@@ -85,40 +85,40 @@ class StepifaceController extends Controller
      
         
         
-           public function actionCreateInline($project_id)
+           public function actionCreateInline()
 	{
 		$model=new Stepiface;
                 $model->stepiface_id=Version::model()->getNextID(15);
-                     
+                $project_id=$_POST['project_id'];
 		if(isset($_POST['step_id']))
 		{
                  $model->step_id=$_POST['step_id'];
                  $step=Step::model()->findbyPK($model->step_id);
                     
-	 if(!empty($_POST['new_interface'])){
-                     
-                     $iface=new Iface;
-                     
-                     $iface->number=Iface::model()->getNextIfaceNumber($step->flow->usecase->package->project->id);
-                     $iface->name=$_POST['new_interface'];
-                     $iface->type_id=Interfacetype::model()->getUnclassified($step->flow->usecase->package->project->id);
-                     $iface->project_id=$step->flow->usecase->package->project->id;
-                     $iface->save(false);
-                     $version=Version::model()->getNextNumber($project->id,12,1,$iface->primaryKey,$iface->iface_id);
-                   
-                     $model->iface_id=$iface->getprimaryKey();
-    
-                     $model->form_id=$form->form_id;
-                 }	
-             else {
-                     $model->form_id=$_POST['interface'];
-                 }
+                            if(!empty($_POST['new_interface']))
+                            {
+
+                                 $iface=new Iface;
+
+                                 $iface->number=Iface::model()->getNextIfaceNumber($project_id);
+                                 $iface->iface_id=Version::model()->getNextID(12);
+                                 $iface->name=$_POST['new_interface'];
+                                 $iface->type_id=Interfacetype::model()->getUnclassified($project_id);
+                                 $iface->project_id=$project_id;
+                                 $iface->save(false);
+                                 $version=Version::model()->getNextNumber($project_id,12,1,$iface->primaryKey,$iface->iface_id);
+                                 $model->iface_id=$iface->iface_id;
+                            }	
+                            else 
+                            {
+                                 $model->iface_id=$_POST['interface'];
+                             }
                         
-                        $model->save(false);
-                        $version=Version::model()->getNextNumber($project->id,1,15,$model->primaryKey,$model->stepiface_id);
+                  $model->save(false);
+                  $version=Version::model()->getNextNumber($project_id,15,1,$model->primaryKey,$model->stepiface_id);
                   
                 }
-                        $this->redirect(array('/step/update/id/'.$model->step->id.'/flow/'.$model->step->flow->id));
+             $this->redirect(array('/step/update/id/'.$model->step->id.'/flow/'.$model->step->flow->id));
 		
 	}
         
@@ -152,11 +152,14 @@ class StepifaceController extends Controller
         
 
 	
-        public function actionDelete($id)
+        public function actionDelete($iface_id,$step_id)
 	{
-		$model=Steprule::model()->findbyPK($id);
+           
+		$id=Stepiface::model()->getCurrentStepiface($iface_id,$step_id);
+                $model=Stepiface::model()->findByPK($id);
                 $flow_id=$model->step->flow->id;
-                $version=Version::model()->getNextNumber($project->id,3,15,$model->id,$model->stepiface_id);
+                $project_id=$model->step->flow->usecase->package->project_id;
+                $version=Version::model()->getNextNumber($project_id,15,3,$model->id,$model->stepiface_id);
                   
 
 		$this->redirect(array('/step/update/id/-1/flow/'.$flow_id));

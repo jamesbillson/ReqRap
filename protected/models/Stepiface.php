@@ -87,6 +87,62 @@ class Stepiface extends CActiveRecord
 		));
 	}
 
+              public function getCurrentStepiface($iface_id,$step_id)
+    {
+       
+         
+        $sql="
+            SELECT 
+            `x`.`id`
+            FROM `Stepiface` `x`
+            JOIN `version` `v`
+            ON `v`.`foreign_key`=`x`.`id`
+            WHERE 
+            `v`.`active`=1
+            AND 
+            `v`.`object` =15
+            AND  
+            `x`.`step_id`=".$step_id."
+            AND  
+            `x`.`iface_id`=".$iface_id;
+            
+
+		$connection=Yii::app()->db;
+		$command = $connection->createCommand($sql);
+		$projects = $command->queryAll();
+		return $projects[0]['id'];
+    }   
+        
+    
+          public function getActiveStepifaces($id)
+    {
+       
+// so we get the id of the interface.  
+// Look up if its got any active stepiface
+              
+        $sql="
+            SELECT
+            count(`x`.`id`) as number
+            FROM 
+            `stepiface` `x`
+            JOIN `iface` `i`
+            ON `i`.`iface_id`=`x`.`iface_id`
+            JOIN `version` `v`
+            ON `v`.`foreign_key`=`x`.`id`
+            WHERE
+            `v`.`active`=1
+            AND 
+            `v`.`object` =15
+            AND
+            `i`.`id`=".$id;
+            
+
+		$connection=Yii::app()->db;
+		$command = $connection->createCommand($sql);
+		$projects = $command->queryAll();
+		return $projects[0]['number'];
+    }   
+        
 	/**
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!

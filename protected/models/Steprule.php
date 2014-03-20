@@ -85,6 +85,32 @@ class Steprule extends CActiveRecord
 		));
 	}
 
+               public function getCurrentSteprule($rule_id,$step_id)
+    {
+       
+         
+        $sql="
+            SELECT 
+            `x`.`id`
+            FROM `Steprule` `x`
+            JOIN `version` `v`
+            ON `v`.`foreign_key`=`x`.`id`
+            WHERE 
+            `v`.`active`=1
+            AND 
+            `v`.`object` =16
+            AND  
+            `x`.`step_id`=".$step_id."
+            AND  
+            `x`.`rule_id`=".$rule_id;
+            
+
+		$connection=Yii::app()->db;
+		$command = $connection->createCommand($sql);
+		$projects = $command->queryAll();
+		return $projects[0]['id'];
+    }   
+        
 	/**
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!

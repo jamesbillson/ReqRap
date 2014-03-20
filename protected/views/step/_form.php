@@ -61,25 +61,27 @@
                      
                      
                  </td>
-                   <td>
+                 <td>
                        <strong>Interfaces</strong><br />
-                   <?php $links = Iface::model()->getStepIfaces($item['id']);
+                  <?php $links = Iface::model()->getStepIfaces($item['id']);
                   foreach($links as $link){?>
-                  UI-<?php echo str_pad($link['number'], 3, "0", STR_PAD_LEFT); ?>  <?php echo $link['name'];?> <a href="/stepiface/delete/id/<?php echo $link['xid'];?>"><i class="icon-remove-sign"></i></a><br />
+                 <a href="/iface/view/id/<?php echo $link['iface_id'];?>"> UI-<?php echo str_pad($link['number'], 4, "0", STR_PAD_LEFT); ?>  </a>
+                      <?php echo $link['name'];?> <a href="/stepiface/delete/iface_id/<?php echo $link['iface_id'];?>/step_id/<?php echo $item['step_id'];?>"><i class="icon-remove-sign"></i></a><br />
                   <?php }  ?>
                 <br />
                  
-                 <?php $interfaces = Iface::model()->findAll('project_id='.$model->usecase->package->project->id);?>   
+                 <?php $interfaces = Iface::model()->getProjectIfaces($model->usecase->package->project->id);?>   
                 <form action="/stepiface/createinline/" method="POST">
                     
-                    <input type="hidden" name="step_id" value="<?php echo $item['id'];?>">
+                 <input type="hidden" name="step_id" value="<?php echo $item['step_id'];?>">
+                 <input type="hidden" name="project_id" value="<?php echo $model->usecase->package->project->id;?>">
                  <select name="interface">
                  <?php foreach($interfaces as $iface){?>
-                     <option value="<?php echo $iface->id;?>"><?php echo $iface->name;?></option>
+                     <option value="<?php echo $iface['iface_id'];?>"><?php echo $iface['name'];?></option>
                  <?php } ?>
                      
                  </select>
-                  <br />Add a new one
+                     <br />Add a new one
                      <input type="text" name="new_interface">
                      <input type="submit" value="add" class="btn primary">
                </form>
@@ -90,13 +92,14 @@
                   <?php
                   $links = Rule::model()->getStepRules($item['id']);
                 foreach($links as $link){?>
-                 BR-<?php echo str_pad($link['number'], 3, "0", STR_PAD_LEFT); ?>  <?php echo $link['title'];?> <a href="/steprule/delete/id/<?php echo $link['xid'];?>"><i class="icon-remove-sign"></i></a><br/>
+                <a href="/rule/view/id/<?php echo $link['rule_id'];?>"> BR-<?php echo str_pad($link['number'], 3, "0", STR_PAD_LEFT); ?></a>  <?php echo $link['title'];?> <a href="/steprule/delete/rule_id/<?php echo $link['rule_id'];?>/step_id/<?php echo $item['step_id'];?>"><i class="icon-remove-sign"></i></a><br/>
                  <?php } ?>
                 <br />
                  
                  <?php $rules = Rule::model()->findAll('project_id='.$model->usecase->package->project->id); ?>   
                         <form action="/steprule/createinline/" method="POST">
                         <input type="hidden" name="step_id" value="<?php echo $item['id'];?>">
+                        <input type="hidden" name="project_id" value="<?php echo $model->usecase->package->project->id;?>">
                         <select name="rule">
                             <?php foreach($rules as $rule){?>
                             <option value="<?php echo $rule['id'];?>"><?php echo $rule['title'];?></option>
@@ -156,8 +159,8 @@
                     <br />
                         <?php
                         foreach($links as $link){?>
-                    <a href="/iface/view/id/<?php echo $link['id'];?>">UI-<?php echo str_pad($link['number'], 4, "0",STR_PAD_LEFT);?></a>  <?php echo $link['name'];?> 
-                         <a href="/stepiface/delete/id/<?php echo $link['xid'];?>"><i class="icon-remove-sign"></i></a><br/>
+                    <a href="/iface/view/id/<?php echo $link['iface_id'];?>">UI-<?php echo str_pad($link['number'], 4, "0",STR_PAD_LEFT);?></a>  <?php echo $link['name'];?> 
+                         <a href="/stepiface/delete/iface_id/<?php echo $link['iface_id'];?>/step_id/<?php echo $item['step_id'];?>"><i class="icon-remove-sign"></i></a><br/>
                         <?php }   ?>
                          <br />
               <?php }   ?>
@@ -172,7 +175,7 @@
                             <?php
                         foreach($links as $link){?>
                        <a href="/rule/view/id/<?php echo $link['rule_id'];?>">BR-<?php echo str_pad($link['number'], 4, "0",STR_PAD_LEFT);?></a>  <?php echo $link['title'];?> 
-                        <a href="/steprule/delete/id/<?php echo $link['xid'];?>"><i class="icon-remove-sign"></i></a>
+                        <a href="/steprule/delete/rule_id/<?php echo $link['rule_id'];?>/step_id/<?php echo $item['step_id'];?>"><i class="icon-remove-sign"></i></a>
                         <br />
                         <?php } ?>
                          <br />
@@ -188,7 +191,7 @@
                         <br />
                        <?php  foreach($links as $link){?>
                         <a href="/form/view/id/<?php echo $link['form_id'];?>">UF-<?php echo str_pad($link['number'], 4, "0",STR_PAD_LEFT);?> </a> <?php echo $link['name'];?> 
-                        <a href="/stepform/delete/id/<?php echo $link['xid'];?>"><i class="icon-remove-sign"></i></a>
+                        <a href="/stepform/delete/form_id/<?php echo $link['form_id'];?>/step_id/<?php echo $item['step_id'];?>"><i class="icon-remove-sign"></i></a>
                         <br />
                         <?php }?>
                         </td></tr>

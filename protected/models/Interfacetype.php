@@ -95,7 +95,7 @@ class Interfacetype extends CActiveRecord
     {
        
               
-        $sql="SELECT `i`.`id`
+        $sql="SELECT `i`.`interfacetype_id`
             FROM `interfacetype` `i`
             WHERE `i`.`project_id`=".$id."
             AND 
@@ -106,7 +106,7 @@ class Interfacetype extends CActiveRecord
 		$command = $connection->createCommand($sql);
 		$projects = $command->queryAll();
                
-		return $projects[0]['id'];
+		return $projects[0]['interfacetype_id'];
     }
         
 	/**

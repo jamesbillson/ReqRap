@@ -84,15 +84,15 @@ OBJECTS
      , delete needs work)
 10.usecase - M - C - V(Need to v control move function?)
 11.photo - M - C
-12.iface - M - C - V (type select drop lists need to change from id to interfacetype_id)
+12.iface - M - C - V (type select not working,
+                       orphan warning not working)
 13.interfacetype - M - C
-
 
 
 RELATIONSHIPS
 ----------------
 StepRule - M - C
-StepIface - M - C
+StepIface - M - C - V (orphaned interfaces not reporting correctly, interfaces should show the relationships in the history.)
 StepForm - M - C
 
 Roll Back to a specific point.

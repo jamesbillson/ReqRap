@@ -82,7 +82,7 @@
                         ?>
            <tr>
                <td colspan="5">
-                   <a href="/step/create/id/<?php echo $step['flow_id'];?>"><i class="icon-plus-sign-alt" rel="tooltip" title="Add another step"></i></a> 
+                   <a href="/step/create/id/<?php echo $line['id'];?>"><i class="icon-plus-sign-alt" rel="tooltip" title="Add another step"></i></a> 
                 </td>
            </tr>
      

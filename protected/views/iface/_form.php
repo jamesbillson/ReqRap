@@ -41,20 +41,21 @@
         
         <div class="row">
 
-        <?php  if (!empty($interfacetypes)){
-                echo $form->labelEx($model,'type_id'); ?>
-        <?php   echo $form->dropDownList($model, 'type_id',
-                    $interfacetypes,
-                    array('class'=>'span4')); 
-                }
-        ?>
+      
     
+             <?php $interfacetypes = Interfacetype::model()->findAll('project_id='.$id);?>   
+             <select name="Iface[type_id]">
+             <?php foreach($interfacetypes as $iface){?>
+                 
+             <option class="span4" value="<?php echo $iface->interfacetype_id;?>" <?php if($iface->interfacetype_id == $model->type_id)echo 'selected';?> ><?php echo $iface->name;?></option>
+             <?php } ?>
+             </select>
+            
         </div>
         <a href="/interfacetype/projectview?id=<?php echo $id; ?>">Edit Types</a>
 	<div class="row">
 	
-		Add a Type <br>
-                <input type="text" name="new_type" size="30">
+		
 		
 	</div>
         

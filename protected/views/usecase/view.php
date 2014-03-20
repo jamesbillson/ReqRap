@@ -194,7 +194,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
           
           <tr>
               <td>   
-                  <a href="/iface/view/id/<?php echo $item['id'];?>"><?php echo 'UI-'.str_pad($item['typenum'], 2, "0", STR_PAD_LEFT).'-'.str_pad($item['number'], 3, "0", STR_PAD_LEFT);?> </a>
+                  <a href="/iface/view/id/<?php echo $item['iface_id'];?>"><?php echo 'UI-'.str_pad($item['typenum'], 2, "0", STR_PAD_LEFT).'-'.str_pad($item['number'], 3, "0", STR_PAD_LEFT);?> </a>
                   <b><?php echo $item['name'];?></a>
                 
               </td> 

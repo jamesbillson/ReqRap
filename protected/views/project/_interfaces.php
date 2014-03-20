@@ -53,7 +53,9 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                          <i class="icon-picture text-warning" rel="tooltip" title="Incomplete Images"></i>
                         <?php
                           }
-                         if(!count(Stepiface::model()->findAll('iface_id='.$item['id']))){
+                          $uses=Stepiface::model()->getActiveStepifaces($item['id']);
+                         //echo 'uses: '.$uses; 
+                         if($uses==0){
                         ?>
                         <i class="icon-exclamation-sign text-warning" rel="tooltip" title="Orphan - this Interface is not used."></i>
                          <?php } ?>
@@ -64,7 +66,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
 
                   
                     <td>
-                        <a href="/iface/update/uc/-1/id/<?php echo $item['id'];?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
+                        <a href="/iface/update/ucid/-1/id/<?php echo $item['id'];?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
                         <a href="/iface/delete/ucid/<?php echo $model->id;?>/type/2/id/<?php echo $item['id'];?>"><i class="icon-remove-sign" rel="tooltip" title="Delete"></i></a> 
                         <a href="/iface/history/id/<?php echo $item['iface_id'];?>"><i class="icon-calendar" rel="tooltip" title="Version History"></i></a> 
                     
