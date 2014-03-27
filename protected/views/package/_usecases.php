@@ -27,7 +27,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
   
         <?php 
         $counter=0;
-        foreach($usecases as $item) : // Go through each un answered question??>
+        foreach($usecases as $item) : ?>
 
           <tr class="odd">
 

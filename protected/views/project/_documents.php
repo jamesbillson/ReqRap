@@ -13,7 +13,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
         'class' => 'bootstrap.widgets.TbButton',
         'type' => 'primary', // '', 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
         'label'=> 'Add Document',
-        'url'=>'/document/create?id='.$model->id,
+        'url'=>'/document/create?id='.Yii::app()->session['project'],
     ),
     
 )
@@ -36,7 +36,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
   $types = Documenttype::model()->findAll('company_id='.User::model()->myCompany());
  if (count($types)):
      foreach($types as $type):
-      $data = Document::model()->getDocs($model->id,$type['id']);
+      $data = Document::model()->getDocs(Yii::app()->session['project'],$type['id']);
     if (count($data)):
         ?>
     <tr class="odd">  

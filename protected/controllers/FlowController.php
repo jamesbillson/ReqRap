@@ -63,24 +63,31 @@ class FlowController extends Controller
 	 */
 	public function actionCreate($start, $id)
 	{
+ 
+            $project = Yii::app()->session['project'];
+            $release=  Release::model()->currentRelease($project);
             $parent=Step::model()->find('step_id ='.$start);// get the start step to get the actor
 	// CREATE A NEW FLOW	
             $flow=new Flow;
                         $flow->startstep_id=$start; // Note these are now step_id not id
                         $flow->rejoinstep_id=$start;// Note these are now step_id not id
                         $flow->usecase_id=$id;
+                        $flow->project_id=$project;
+                        $flow->release_id=$release;
                         $flow->main=0; // new flow will always be ALT i.e. value 0
                         $flow->name=Flow::model()->getNextFlow($parent->flow->usecase->id);
                         $flow->flow_id=Version::model()->getNextID(8);
                         if ($flow->save()){
                         $flowid=$flow->getPrimaryKey();
                         $project_id=$flow->usecase->package->project_id;
-                        $version=Version::model()->getNextNumber($flow->usecase->package->project_id,8,1,$flowid,$flow->flow_id);   
+                        $version=Version::model()->getNextNumber($project,8,1,$flowid,$flow->flow_id);   
                     
              // ADD A STEP TO THE FLOW AND THEN SEND TO THE STEP EDIT FORM
              $step=new Step;
                         $step->flow_id=$flow->flow_id;
                         $step->number=1;
+                        $step->project_id=$project;
+                        $step->release_id=$release;
                         $step->step_id=Version::model()->getNextID(9);
                         $step->actor_id=$parent->actor_id;
                         $step->text='New step.';
@@ -88,7 +95,7 @@ class FlowController extends Controller
                        if($step->save())
                            {
                         $stepid=$step->getPrimaryKey();
-                        $version=Version::model()->getNextNumber($flow->usecase->package->project_id,9,1,$stepid,$step->step_id);   
+                        $version=Version::model()->getNextNumber($project,9,1,$stepid,$step->step_id);   
                            }
                            ELSE 
                             {
@@ -141,6 +148,7 @@ class FlowController extends Controller
 			 $new->attributes=$_POST['Flow'];
                          $new->name=$model->name;
                          $new->project_id=$model->project_id;
+                         $new->release_id=$model->release_id;
                          $new->flow_id=$model->flow_id;
                          
 			if($new->save())

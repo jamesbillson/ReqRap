@@ -164,6 +164,21 @@ class Company extends CActiveRecord
     return $user;      
   }
       
+  
+  public function getProjects($id)
+  {
+    
+    $sql="SELECT `p`.*
+          FROM `project` `p`
+          WHERE 
+         `p`.`company_id`=".$id;
+    $connection=Yii::app()->db;
+    $command = $connection->createCommand($sql);
+    $user = $command->queryAll();
+    return $user;      
+  }
+      
+  
   public function myCompanies()
   {
       $company=User::model()->myCompany();

@@ -30,13 +30,13 @@ class Objectproperty extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('objectproperty_id, object_id, number, name, description', 'required'),
-			array('objectproperty_id, object_id', 'numerical', 'integerOnly'=>true),
+			array('objectproperty_id, object_id, number, name, description, project_id, release_id', 'required'),
+			array('objectproperty_id, object_id, project_id, release_id', 'numerical', 'integerOnly'=>true),
 			array('name', 'length', 'max'=>255),
                     array('number', 'length', 'max'=>30),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, objectproperty_id, object_id, number, name, description', 'safe', 'on'=>'search'),
+			array('id, objectproperty_id, object_id, number, name, description, project_id, release_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -51,7 +51,8 @@ class Objectproperty extends CActiveRecord
                             'object'=>array(self::BELONGS_TO,
                                     'object','object_id',
                                     'joinType'=>'JOIN',
-                                    'foreignKey'=>'object_id')
+                                    'foreignKey'=>'object_id',
+                                'on'=>'object.project_id=objectproperty.project_id')
                     );
 	}
 
@@ -62,6 +63,8 @@ class Objectproperty extends CActiveRecord
 		return array(
 			'id' => 'ID',
 			'objectproperty_id' => 'Objectprop_id',
+                     'project_id' => 'Project',
+                    'release_id' => 'Release',
                     'object_id' => 'Object',
 			'name' => 'Name',
                     'number'=>'Number',

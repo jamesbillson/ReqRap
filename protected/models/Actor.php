@@ -30,12 +30,12 @@ class Actor extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('project_id, actor_id, number, name, description, alias, inherits', 'required'),
-			array('project_id, actor_id', 'numerical', 'integerOnly'=>true),
+			array('actor_id, project_id, release_id,number, name, description, alias, inherits', 'required'),
+			array('project_id, actor_id, release_id', 'numerical', 'integerOnly'=>true),
 			array('name', 'length', 'max'=>255),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, project_id, actor_id,number,  name,description, alias', 'safe', 'on'=>'search'),
+			array('id, project_id, release_id, actor_id,number,  name,description, alias', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -48,7 +48,7 @@ class Actor extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'project' => array(self::BELONGS_TO, 'Project', 'project_id'),
-			'actorusecase' => array(self::HAS_ONE, 'Actorusecase', 'actor_id'),
+			
 		);
 	}
 
@@ -58,10 +58,11 @@ class Actor extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'id' => 'ID',
-                     'actor_id'=>'ACTORID',
-			'project_id' => 'Project',
-  		'number' => 'Number',	
+		    'id' => 'ID',
+                    'actor_id'=>'ACTORID',
+		    'project_id' => 'Project',
+                    'release_id' => 'Release',
+                    'number' => 'Number',	
                     'name' => 'Name',
                     'descripion'=>'Description',
                     'alias'=>'Aliases',
@@ -104,7 +105,7 @@ class Actor extends CActiveRecord
             JOIN `version` `v`
             ON `v`.`foreign_key`=`r`.`id`
             WHERE 
-              `v`.`object`=4
+            `v`.`object`=4
             AND
             `v`.`active`=1 
             and            
@@ -140,21 +141,44 @@ class Actor extends CActiveRecord
          public function getActors($id)
     {
                      
-        $sql="  SELECT `a`.*
-                FROM `actor` `a`
-                LEFT Join `step` `s` 
-                on `s`.`actor_id`=`a`.`actor_id`
-                LEFT join `flow` `f`
-                ON `f`.`flow_id`=`s`.`flow_id`
-                LEFT join `usecase` `u` 
-                ON `u`.`usecase_id`=`f`.`usecase_id`
-                LEFT join `version` `v`
-                ON `v`.`foreign_key`=`a`.`id`
-                WHERE `u`.`usecase_id`=".$id."
-                AND `v`.`object`=4
-                AND `v`.`active`=1
-                Group by `a`.`id`
-               ";
+       $project=Yii::App()->session['project']; 
+        
+         $sql="SELECT 
+            `i`.*
+            FROM `actor` `i`
+                       
+            JOIN `step` `s`
+            ON `s`.`actor_id`=`i`.`actor_id`
+            
+            JOIN `flow` `f`
+            ON `f`.`flow_id`=`s`.`flow_id`
+
+            JOIN `version` `vi`
+            ON `vi`.`foreign_key`=`i`.`id`
+            
+            JOIN `version` `vs`
+            ON `vs`.`foreign_key`=`s`.`id`
+            
+            JOIN `version` `vf`
+            ON `vf`.`foreign_key`=`f`.`id` 
+
+WHERE
+            `f`.`usecase_id`=".$id."
+            AND
+            `vi`.`object`=4 AND `vi`.`active`=1  AND `vi`.`project_id`=".$project."
+                
+            AND
+            `vs`.`object`=9 AND `vs`.`active`=1 AND `vs`.`project_id`=".$project."
+            AND
+            `vf`.`object`=8 AND `vf`.`active`=1  AND `vf`.`project_id`=".$project."
+ 
+
+
+
+             GROUP BY `i`.`id`
+             ORDER BY `i`.`number` ASC";
+        
+        
 		$connection=Yii::app()->db;
 		$command = $connection->createCommand($sql);
 		$projects = $command->queryAll();
@@ -202,8 +226,24 @@ class Actor extends CActiveRecord
          public function createInitial($id)
     {
              $actor_id=Version::model()->getNextID(4);
-           $sql="INSERT INTO `actor`(`actor_id`, `project_id`,`number`,`name`,`description`,`alias`,`inherits`) VALUES 
-           (".$actor_id.",".$id.",1,'Actor','My First Actor','Placeholder',-1)";
+           $sql="INSERT INTO `actor`(
+               `actor_id`,
+               `project_id`,
+               `release_id`,
+               `number`,
+               `name`,
+               `description`,
+               `alias`,
+               `inherits`
+               ) VALUES(
+               ".$actor_id.",
+               ".$id.",
+                ".Release::model()->currentRelease($id).",
+                1,
+                'Actor',
+                'My First Actor',
+                'Placeholder',
+                -1)";
            $connection=Yii::app()->db;
         $command = $connection->createCommand($sql);
         $command->execute();

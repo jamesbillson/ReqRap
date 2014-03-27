@@ -1,7 +1,6 @@
+<?php echo $this->renderPartial('/project/head',array('tab'=>'forms')); ?>
 
-<h3>Project: <a href="/project/view/tab/objects/id/<?php echo $model->project->id; ?>"><?php echo $model->project->name; ?></a></h3>
 
-<br>
 <?php 
 //$data=Formproperty::model()->findAll('form_id='.$model->form_id);
 $data = Formproperty::model()->getFormProperty($model->form_id);
@@ -54,7 +53,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                     <td>
                         <a href="/formproperty/update/id/<?php echo $item['id'];?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
                         <a href="/formproperty/delete?id=<?php echo $item['id'];?>"><i class="icon-remove-sign" rel="tooltip" title="Delete"></i></a> 
-                     <a href="/formproperty/view/id/<?php echo $item['formproperty_id'];?>"><i class="icon-calendar" rel="tooltip" title="History"></i></a> 
+                     <a href="/formproperty/history/id/<?php echo $item['formproperty_id'];?>"><i class="icon-calendar" rel="tooltip" title="History"></i></a> 
                    
                     </td>
                 </tr>
@@ -64,6 +63,10 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
 
     <?php endif;
 $this->endWidget(); ?>
+
+
+
+
 
 <?php $deleted = Version::model()->getObjectDeletedVersions($model->form_id,2,3);
 if (count($deleted)):?>

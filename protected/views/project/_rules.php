@@ -68,7 +68,8 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
       <td>
         <a href="/rule/update/id/<?php echo $item['id'];?>"><i class="icon-edit" rel="tooltip" title="Edit Details"></i></a> 
         <a href="/rule/delete/id/<?php echo $item['id'];?>"><i class="icon-remove-sign text-error" rel="tooltip" title="Remove/Uninvite"></i></a> 
-    
+       <a href="/rule/history/id/<?php echo $item['rule_id'];?>"><i class="icon-calendar" rel="tooltip" title="Version history"></i></a> 
+             
               
         </td>
         </tr>
@@ -92,12 +93,12 @@ if (count($deleted)):?>
         <div class="accordion-heading">
 
          <a class="accordion-toggle" data-toggle="collapse"
-          data-parent="#accordionD" href="#collapseD">
+          data-parent="#accordionJ" href="#collapseJ">
           Show Deleted Versions</a>
            
      </div>
     
-     <div id="collapseD" class="accordion-body collapse">
+     <div id="collapseJ" class="accordion-body collapse">
         <div class="accordion-inner">
         <table class="table">
         <tbody>

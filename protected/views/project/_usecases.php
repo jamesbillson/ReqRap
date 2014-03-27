@@ -1,112 +1,107 @@
 <?php 
-$data = Usecase::model()->getProjectUCs($model->id);
-$package=0;
-$uc=0;
-$project_total= 0;
-$last_package = '';
-$last_uc='';
-$project=array();
-$item=0;
-foreach($data as $line) {
-$item++;   
 
- 
 
-if($last_package != $line['packname']) {
-            $package ++;
-            $project[$package]['total']= 0;
-            $project[$package]['name']=$line['packname'];
-            $project[$package]['packnumber']=$line['packnumber'];
-            $uc=0;
-            $last_uc=''; // its a new package - reset Use Case in case the component name is the same
-  }             
-            //END show the package as header
+
+$data = Package::model()->getPackages($model->id);
+
+
+$box = $this->beginWidget('bootstrap.widgets.TbBox', array(
+    'title' => 'Usecases',
+    'headerIcon' => 'icon-film',
+    // when displaying a table, if we include bootstra-widget-table class
+    // the table will be 0-padding to the box
+    'htmlOptions' => array('class'=>'bootstrap-widget-table'),
+       'headerButtons' => array(
+    array(
+        'class' => 'bootstrap.widgets.TbButton',
+        'type' => 'primary', // '', 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
+        'label'=> 'Add Package',
+            'url'=>'/package/create',
+    ),
     
-  
-  if($last_uc !== $line['name']) {
-            $uc ++;
-            $project[$package][$uc]['total']= 0;
-            $project[$package][$uc]['name']=$line['name'];
-           
-              } 
-  
-
-                $project[$package][$uc]['name']= $line['name'];
-               
-                $project[$package][$uc]['description']= $line['description'];
-                $project[$package][$uc]['id']= $line['id'];
-                 $project[$package][$uc]['usecase_id']= $line['usecase_id'];
-                $project[$package][$uc]['number']= $line['number'];   
-                 if(!empty($line['name'])){
+)));
+    if (count($data)): ?>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Sequence</th>
+       
+                    <th>Name</th>
+                 
+ 
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            
+            <tbody>
+            <?php foreach($data as $item): ?>
+              
+                
+                <tr class="odd">  
+                    <td colspan="2">   
+                        <a href="/package/view/id/<?php echo $item['package_id'];?>/tab/details"> PA-<?php echo $item['number'];?></a>
+                  
+                        <?php echo $item['name'];?>
+                    </td>
+                
                    
-                $project[$package][$uc]['total']= $project[$package][$uc]['total'] + 1;
-                $project[$package]['total']= $project[$package]['total'] + 1;
-                $project_total=$project_total+1;
-                }
+                    <td>
+                  
+                        <a href="/package/update/id/<?php echo $item['id'];?>"><i class="icon-pencil" rel="tooltip" title="Edit Details"></i></a> 
 
-         $last_package=$line['packname'];
-         $last_uc=$line['name'];
-      
-      
-   }
-/* echo "<pre>";
- print_r($project);
- echo "</pre>";
-  */
-?>
-  
-
-
-<table>
-
-<tr>
-   <td> <b>Project Total</b></td> 
-
-   <td colspan=""></td>
-<td> <b><?php  echo number_format($project_total, 0, '.', ',') ;?></b></td>
-</tr>
-    <?php
-    
- $w=1;
-  $number_packages=count($project);  
-   while($w <= $number_packages) 
-   {    
-       ?>
-
- <tr>
-        <td> <b>Package:</b> <?php  echo 'PA-'.$project[$w]['packnumber'].' '.$project[$w]['name']." <br>";?></td>
-        <td></td>
-        <td><b><?php  echo number_format($project[$w]['total'], 0, '.', ',') ;?></b></td>
-  </tr>
-       <?php
-        $x=1; 
-        $number_ucs=count($project[$w])-3;
-        while($x <= $number_ucs)
-          {
-         ?>
-        <tr>
-          <td>
-          <?php if (!empty($project[$w][$x]['id'])) {?>
-              <a href="/usecase/view/id/<?php echo $project[$w][$x]['usecase_id'];?>"><b>
-              <?php  echo 'UC-'.str_pad($project[$w]['packnumber'], 2, "0", STR_PAD_LEFT).str_pad($project[$w][$x]['number'], 3, "0", STR_PAD_LEFT).'  '.$project[$w][$x]['name']." <br>";?></b></a></td> 
-           
-          <td><?php echo $project[$w][$x]['description']; ?></td>
-        <td> <b><?php  echo number_format($project[$w][$x]['total'], 0, '.', ',') ;?></b></td>
-          <?php } ?>
-         </td>
-
-
-        </tr>
-           <?php           
-          $x++;
-          } ?>
-    <?php           
-    $w++;
+                       
+                        <a href="/package/remove/id/<?php echo $item['id'];?>"><i class="icon-remove-sign text-error" rel="tooltip" title="Delete"></i></a> 
+                   <a href="/usecase/create/id/<?php echo $item['id'];?>"><i class="icon-plus-sign-alt" rel="tooltip" title="Add another usecase"></i> 
+                    <a href="/package/history/id/<?php echo $item['package_id'];?>"><i class="icon-calendar" rel="tooltip" title="Version history"></i></a> 
+             
+                   </td>
+                   <td></td>
+                </tr>
+               <?php 
+        $usecases = Usecase::model()->getPackageUsecases($item['id']); // get the requirements with answers
  
- 
-    }
+        $counter=0;
+        foreach($usecases as $uc) : // Go through each un answered question??>
 
-     ?>
-   
-</table>
+          <tr class="odd">
+
+              <td width="40"></td>
+              <td> 
+                   <a href="/usecase/view/id/<?php echo $uc['usecase_id'];?>"> UC-<?php echo str_pad($uc['packnumber'], 2, "0", STR_PAD_LEFT).''.str_pad($uc['number'], 3, "0", STR_PAD_LEFT); ?></a>
+               </td> 
+              <td>
+                   <b><?php echo $uc['name'];?></a></b>
+                
+              </td> 
+              <td>
+               <a href="/usecase/delete/id/<?php echo $uc['id'];?>"><i class="icon-remove-sign text-error" rel="tooltip" title="Edit"></i> 
+              
+                  <a href="/usecase/update/id/<?php echo $uc['id'];?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
+               <a href="/usecase/history/id/<?php echo $uc['usecase_id'];?>"><i class="icon-calendar" rel="tooltip" title="Version history"></i></a> 
+               <?php if($counter!=0) { ?>
+                           <a href="/usecase/move/dir/2/id/<?php echo $uc['id'];?>"><i class="icon-arrow-up" rel="tooltip" title="Move Up"></i></a> 
+                  <?php } ELSE {?>   
+                           
+                           <i class="icon-flag" rel="tooltip" title="Start"></i>
+                     <?php } ?>          
+                   <?php if($counter!=count($usecases)-1) { ?>        
+                           <a href="/usecase/move/dir/1/id/<?php echo $uc['id'];?>"><i class="icon-arrow-down" rel="tooltip" title="Move Down"></i></a> 
+         <?php } ?> 
+               </td></tr>
+         
+        <?php  $counter++;
+        endforeach ?>       
+
+                
+                
+            <?php endforeach ?>
+               <tr><td colspan="4"> <a href="/package/create/"><i class="icon-plus-sign-alt" rel="tooltip" title="Add another step"></i> Add Package</a> 
+ </td></tr>
+            </tbody>
+        </table>
+<?php endif;
+$this->endWidget(); ?>  
+
+
+
 

@@ -50,12 +50,5 @@
     <a href="contact/createfollow?id=<?php echo $fk; ?>&type=<?php echo $type; ?>">Create contact and invite</a>
 </div>
 
-Need to be able to pick the potential  bidders by company name, contact name or by trade.<br />
-<br />
-I think two paths 1. choose trade and get suggestions, or try to find a company/contact.<br />
-<br />
-One search box - if you pick a trade, returns all matching contacts.<br />
-If you pick a name, returns all matching contacts and companies.<br />
-If you select a contact, I guess the subcontract is with the related company<br />
-and the contact is added as the subcontract contact.
+
 

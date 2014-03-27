@@ -25,11 +25,11 @@ class Stepform extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('id, stepform_id, step_id, form_id', 'required'),
-			array('id, step_id, form_id', 'numerical', 'integerOnly'=>true),
+			array('id, stepform_id, step_id, form_id, project_id, release_id', 'required'),
+			array('id, step_id, form_id, project_id, release_id', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, stepform_id, step_id, form_id', 'safe', 'on'=>'search'),
+			array('id, stepform_id, step_id, form_id, project_id, release_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -42,9 +42,18 @@ class Stepform extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
                     
-        'step' => array(self::BELONGS_TO, 'Step', 'step_id'),
-	'form' => array(self::BELONGS_TO, 'Iface', 'form_id'),
-	
+     //  'step' => array(self::BELONGS_TO, 'Step', 'step_id'),
+       'step'=>array(self::BELONGS_TO,
+                                    'Step','step_id',
+                                    'joinType'=>'JOIN',
+                                    'foreignKey'=>'step_id',
+                                'on'=>'step.project_id=project_id'),
+	//'form' => array(self::BELONGS_TO, 'Iface', 'form_id'),
+	'form'=>array(self::BELONGS_TO,
+                                    'Form','step_id',
+                                    'joinType'=>'JOIN',
+                                    'foreignKey'=>'form_id',
+                                'on'=>'form.project_id=project_id'),
 		);
 	}
 
@@ -56,6 +65,8 @@ class Stepform extends CActiveRecord
 		return array(
 			'id' => 'versionID',
                     'stepform_id'=>'ID',
+                     'project_id' => 'Project',
+                    'release_id' => 'Release',
                     'step_id' => 'Step',
 			'form_id' => 'Form',
 		);

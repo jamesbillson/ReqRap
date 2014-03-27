@@ -30,12 +30,12 @@ class Form extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('name, form_id, number, project_id', 'required'),
-			array('form_id, project_id', 'numerical', 'integerOnly'=>true),
+			array('name, form_id,  number, project_id, release_id', 'required'),
+			array('form_id, project_id, release_id', 'numerical', 'integerOnly'=>true),
 			array('name', 'length', 'max'=>255),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, name, form_id, project_id', 'safe', 'on'=>'search'),
+			array('id, name, form_id, project_id, release_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -48,7 +48,12 @@ class Form extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'project' => array(self::BELONGS_TO, 'Project', 'project_id'),
-			'formproperties' => array(self::HAS_MANY, 'Formproperty', 'form_id'),
+			//'formproperties' => array(self::HAS_MANY, 'Formproperty', 'form_id'),
+                    'formpropeties'=>array(self::BELONGS_TO,
+                                    'Formproperty','form_id',
+                                    'joinType'=>'JOIN',
+                                    'foreignKey'=>'form_id',
+                          'on'=>'form.project_id=formproperty.project_id')
 		);
 	}
 
@@ -63,6 +68,8 @@ class Form extends CActiveRecord
                     'name' => 'Form Name',
 			'project_id' => 'Project',
                     'number'=>'Number',
+                     'project_id' => 'Project',
+                    'release_id' => 'Release',
 		);
 	}
 
@@ -138,6 +145,40 @@ class Form extends CActiveRecord
         public function getStepForms($id)
     {
        
+            
+             $sql="SELECT
+                 `r`.`name`,
+                 `r`.`form_id`,`
+                 r`.`number`, 
+                 `r`.`id`,
+                 `x`.`id` as xid
+            From `form` `r`
+            JOIN `stepform` `x`
+            ON `x`.`form_id`=`r`.`form_id`
+            JOIN `step` `s`
+            ON `s`.`step_id`=`x`.`step_id`
+
+            JOIN `version` `vr`
+            ON `vr`.`foreign_key`=`r`.`id`
+            JOIN `version` `vx`
+            ON `vx`.`foreign_key`=`x`.`id`
+            JOIN `version` `vs`
+            ON `vs`.`foreign_key`=`s`.`id`
+          
+        WHERE
+            `s`.`id`=".$id."
+            AND
+            `vr`.`object` =2 AND `vr`.`active`=1
+            AND
+            `vx`.`object` =14 AND `vx`.`active`=1            
+            AND
+            `vs`.`object` =9 AND `vs`.`active`=1
+
+
+
+             GROUP BY `r`.`id`
+             ORDER BY `r`.`number` ASC";
+            
               
         $sql="SELECT `r`.`name`,`r`.`form_id`,`r`.`number`, `r`.`id`,`x`.`id` as xid
            From `form` `r`
@@ -151,29 +192,52 @@ class Form extends CActiveRecord
 		$projects = $command->queryAll();
 		return $projects;
     }  
-	
+	/*
           public function getForms($id)
     {
-        $user= Yii::app()->user->id;   
-              
-        $sql="SELECT `i`.`number`,`i`.`name`, 
-            `i`.`id`
-            FROM `form` `i`
-            Join `stepform` `x` 
-            on `x`.`form_id`=`i`.`id`
-            Join `step` `s` 
-            on `x`.`step_id`=`s`.`id`
-            Join `flow` `f` 
-            on `f`.`id`=`s`.`flow_id`
-           WHERE `f`.`usecase_id`=".$id."
-             GROUP BY `i`.`id`
-               ORDER BY  `i`.`number` ASC";
+
+          $sql="
+          SELECT 
+            `r`.`number`,
+            `r`.`name`, 
+            `r`.`id`
+            FROM `form` `r`
+            JOIN `stepform` `x`
+            ON `x`.`form_id`=`r`.`form_id`
+            JOIN `step` `s`
+            ON `s`.`step_id`=`x`.`step_id`
+            JOIN `flow` `f`
+            ON `f`.`flow_id`=`s`.`flow_id`
+            JOIN `version` `vr`
+            ON `vr`.`foreign_key`=`r`.`id`
+            JOIN `version` `vx`
+            ON `vx`.`foreign_key`=`x`.`id`
+            JOIN `version` `vs`
+            ON `vs`.`foreign_key`=`s`.`id`
+            JOIN `version` `vf`
+            ON `vf`.`foreign_key`=`f`.`id` 
+        WHERE
+            `f`.`usecase_id`=".$id."
+            AND
+            `vr`.`object` =2 AND `vr`.`active`=1
+            AND
+            `vx`.`object` =14 AND `vx`.`active`=1            
+            AND
+            `vs`.`object` =9 AND `vs`.`active`=1
+            AND
+            `vf`.`object` =8 AND `vf`.`active`=1
+
+
+             GROUP BY `r`.`id`
+             ORDER BY `r`.`number` ASC";
+        
+         
 		$connection=Yii::app()->db;
 		$command = $connection->createCommand($sql);
 		$projects = $command->queryAll();
 		return $projects;
     }
-    
+    */
       public function getProjectForms($id)
     {
         $sql="

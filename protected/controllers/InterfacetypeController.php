@@ -70,6 +70,8 @@ class InterfacetypeController extends Controller
 		{
                         $model->attributes=$_POST['Interfacetype'];
                         $model->interfacetype_id=Version::model()->getNextID(13);
+                        $model->project_id= Yii::app()->session['project'];
+                        $model->release_id=Release::model()->currentRelease($model->project_id);
 			if($model->save())
                                 {
 				$this->redirect(array('/project/view/tab/interfaces/id/'.$model->id));
@@ -96,6 +98,7 @@ class InterfacetypeController extends Controller
 		 $new->attributes=$_POST['Interfacetype'];
                  $new->number=$model->number;
                  $new->project_id=$model->project_id;
+                 $new->release_id=$model->release_id;
                  $new->interfacetype_id=$model->interfacetype_id;	
                  if($new->save()){
                       $version=Version::model()->getNextNumber($id,13,2,$new->primaryKey,$new->interfacetype_id);   

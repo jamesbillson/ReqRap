@@ -1,6 +1,6 @@
  
 <?php 
-$data = Object::model()->getProjectObjects($model->id);
+$data = Object::model()->getProjectObjects(Yii::app()->session['project']);
 
 $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
     'title' => 'Objects',
@@ -46,6 +46,8 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                         
                         <a href="/object/update/id/<?php echo $item['id'];?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
                         <a href="/object/delete?id=<?php echo $item['id'];?>"><i class="icon-remove-sign text-error" rel="tooltip" title="Delete"></i></a> 
+                        <a href="/object/history/id/<?php echo $item['object_id'];?>"><i class="icon-calendar" rel="tooltip" title="Version history"></i></a> 
+             
                     </td>
                 </tr>
             <?php endforeach ?>

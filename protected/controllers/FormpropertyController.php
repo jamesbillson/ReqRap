@@ -32,7 +32,7 @@ class FormpropertyController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update','delete','rollback'),
+				'actions'=>array('create','update','history','delete','rollback'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -57,9 +57,17 @@ class FormpropertyController extends Controller
         	));
 	}
         
+            public function actionHistory($id) // Note that this is form_id
+	{
+             	$versions=Version::model()->getVersions($id,3,'form_id');
+                $model=$this->loadModel($versions[0]['id']);
+                $this->render('history',array('model'=>$model,
+			'versions'=>$versions
+        	));
+	}
           public function actionCreate($id)
 	{
-	
+	 $project=Yii::app()->session['project'];
                 $model=new Formproperty;
 
 		if(isset($_POST['Formproperty']))
@@ -67,13 +75,15 @@ class FormpropertyController extends Controller
                     
 		        
                     $model->attributes=$_POST['Formproperty'];
+                    $model->project_id= Yii::app()->session['project'];
+                    $model->release_id=Release::model()->currentRelease($project);
                     $model->number=Formproperty::model()->getNextNumber($id);
                     $model->formproperty_id=Version::model()->getNextID(3);
                     
                     if($model->save())
                     {
                    
-                     $version=Version::model()->getNextNumber($model->form->project->id,3,1,$model->primaryKey,$model->formproperty_id);   
+                     $version=Version::model()->getNextNumber($project,3,1,$model->primaryKey,$model->formproperty_id);   
                      $this->redirect(array('/form/view/id/'.$model->form_id));
 		    }
                         
@@ -96,6 +106,8 @@ class FormpropertyController extends Controller
                   	 $new->attributes=$_POST['Formproperty'];
                          $new->number=$model->number;
                          $new->form_id=$model->form_id;
+                         $new->release_id=$model->project_id;
+                         $new->project_id=$model->project_id;
                          $new->formproperty_id=$model->formproperty_id;
                          
 			if($new->save())

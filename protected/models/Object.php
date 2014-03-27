@@ -30,12 +30,12 @@ class Object extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('object_id, name, number, description, project_id', 'required'),
-			array('object_id, project_id', 'numerical', 'integerOnly'=>true),
+			array('object_id, name, number, description, project_id, release_id', 'required'),
+			array('object_id, project_id, release_id', 'numerical', 'integerOnly'=>true),
 			array('name', 'length', 'max'=>255),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, object_id, name, number, project_id', 'safe', 'on'=>'search'),
+			array('id, object_id, name, number, project_id, release_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -62,7 +62,8 @@ class Object extends CActiveRecord
                     'object_id'=>'Object_id',
 			'name' => 'Name',
                     'description'=>'Description',
-			'project_id' => 'Project',
+			 'project_id' => 'Project',
+                    'release_id' => 'Release',
                     'number'=>'Number'
 		);
 	}

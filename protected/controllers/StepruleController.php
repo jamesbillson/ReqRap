@@ -64,17 +64,23 @@ class StepruleController extends Controller
 	{
 		$model=new Steprule;
                 $model->steprule_id=Version::model()->getNextID(16);
+                $model->project_id= Yii::app()->session['project'];
+                $model->release_id=Release::model()->currentRelease($model->project_id);
                 $project_id=$_POST['project_id'];
 		if(isset($_POST['step_id']))
 		{
-                 $model->step_id=$_POST['step_id'];
-                 $step=Step::model()->findbyPK($model->step_id);
+                 
+                 
+                 $step=Step::model()->findbyPK($_POST['step_id']);
+                 $model->step_id=$step->step_id;
                     
                              if(!empty($_POST['new_rule'])){
                                 $rule=new Rule;
 
                                 $rule->number=Rule::model()->getNextNumber($project_id);
                                 $rule->rule_id=Version::model()->getNextID(1);
+                                $rule->project_id= Yii::app()->session['project'];
+                                $rule->release_id=Release::model()->currentRelease($rule->project_id);
                                 $rule->text='stub';
                                 $rule->title=$_POST['new_rule'];
                                 $rule->project_id=$step->flow->usecase->package->project->id;
@@ -86,11 +92,11 @@ class StepruleController extends Controller
                             }		
                             else 
                             {
-                                 $model->iface_id=$_POST['interface'];
+                                 $model->rule_id=$_POST['rule'];
                              }
                         
                   $model->save(false);
-                  $version=Version::model()->getNextNumber($project_id,15,1,$model->primaryKey,$model->steprule_id);
+                  $version=Version::model()->getNextNumber($project_id,16,1,$model->primaryKey,$model->steprule_id);
                   
                 }
              $this->redirect(array('/step/update/id/'.$model->step->id.'/flow/'.$model->step->flow->id));
@@ -110,6 +116,8 @@ class StepruleController extends Controller
 		{
 			$model->attributes=$_POST['Steprule'];
                         $model->steprule_id=Version::model()->getNextID(16);
+                        $model->project_id= Yii::app()->session['project'];
+                        $model->release_id=Release::model()->currentRelease($model->project_id);
 			if($model->save())
                         $version=Version::model()->getNextNumber($project->id,1,16,$model->primaryKey,$model->steprule_id);
                       
@@ -134,6 +142,8 @@ class StepruleController extends Controller
                     
                         $new->attributes=$_POST['Steprule'];
                         $new->steprule_id=$model->steprule_id;
+                        $new->project_id=$model->project_id;
+                        $new->release_id=$model->release_id;
                         if($new->save())
 			$version=Version::model()->getNextNumber($project->id,2,16,$model->id,$model->steprule_id);
                 
@@ -147,14 +157,13 @@ class StepruleController extends Controller
 	}
 
  
-            public function actionDelete($rule_id,$step_id)
+            public function actionDelete($id)
 	{
-           
-		$id=Steprule::model()->getCurrentSteprule($rule_id,$step_id);
                 $model=Steprule::model()->findByPK($id);
-                $flow_id=$model->step->flow->id;
+                $flow=$model->step->flow_id;
+                $step_id=$model->step->id;
                 $project_id=$model->step->flow->usecase->package->project_id;
-                $version=Version::model()->getNextNumber($project_id,3,16,$model->id,$model->steprule_id);
+                $version=Version::model()->getNextNumber($project_id,16,3,$model->id,$model->steprule_id);
                   
 
 		$this->redirect(array('/step/update/flow/'.$flow.'/id/'.$step_id));

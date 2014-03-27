@@ -29,12 +29,12 @@ class Flow extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('name, flow_id, usecase_id, main, startstep_id, rejoinstep_id', 'required'),
-			array('usecase_id,  flow_id, main, startstep_id, rejoinstep_id', 'numerical', 'integerOnly'=>true),
+			array('name, flow_id, usecase_id, project_id, release_id, main, startstep_id, rejoinstep_id', 'required'),
+			array('usecase_id, project_id, release_id, flow_id, main, startstep_id, rejoinstep_id', 'numerical', 'integerOnly'=>true),
 			array('name', 'length', 'max'=>30),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, name,  flow_id, usecase_id, main, startstep_id, rejoinstep_id', 'safe', 'on'=>'search'),
+			array('id, name, project_id, release_id, flow_id, usecase_id, main, startstep_id, rejoinstep_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -49,9 +49,9 @@ class Flow extends CActiveRecord
                     
                
                       'usecase'=>array(self::BELONGS_TO,
-                                    'Usecase','usecase_id',
-                                    'joinType'=>'JOIN',
-                                    'foreignKey'=>'usecase_id')
+                                    'Usecase',
+                          'usecase_id,usecase_id',
+                                                              )
                     
 		);
 	}
@@ -69,6 +69,8 @@ class Flow extends CActiveRecord
 			'main' => 'Main',
 			'startstep_id' => 'Startstep',
 			'rejoinstep_id' => 'Rejoinstep',
+                     'project_id' => 'Project',
+                    'release_id' => 'Release',
 		);
 	}
 
@@ -145,7 +147,7 @@ class Flow extends CActiveRecord
 
          public function getUCFlow($id)
     {
-       
+         $project=Yii::app()->session['project'];
               
         $sql="SELECT `f`.*,
             
@@ -158,7 +160,10 @@ class Flow extends CActiveRecord
                 AND
                 `pv`.`active`=1
                 AND 
-                `pv`.`object`=9) as start, 
+                `pv`.`object`=9
+                AND
+                pv.project_id=".$project."
+                    ) as start, 
 
                 (SELECT `q`.`number` from `step` `q`  
                 JOIN `version` `qv`
@@ -169,22 +174,33 @@ class Flow extends CActiveRecord
                 qv.active=1
                 AND 
                 qv.object=9
+                AND
+                qv.project_id=".$project."
 
                 ) as rejoin
 
 
               FROM `flow` `f`
-              JOIN `version` `v`
-              ON `v`.`foreign_id`=`f`.`flow_id`
               JOIN `usecase` `u`
               ON `u`.`usecase_id`=`f`.`usecase_id`
+              
+              JOIN `version` `vf`
+              ON `vf`.`foreign_key`=`f`.`id`
+              
+              JOIN `version` `vu`
+              ON `vu`.`foreign_key`=`u`.`id`
+              
               WHERE 
-              `v`.`object`=8
+              `u`.`project_id`=".$project."
+              AND 
+              `f`.`project_id`=".$project."
               AND
-              `v`.`active`=1
+                `vu`.`object`=10 AND `vu`.`active`=1 AND `vu`.`project_id`=".$project."
+              AND
+              `vf`.`object`=8 AND `vf`.`active`=1 AND `vf`.`project_id`=".$project."
               AND
               `u`.`id`=".$id."
-                  ORDER BY `f`.`main` DESC
+              ORDER BY `f`.`main` DESC
                 ";
 		$connection=Yii::app()->db;
 		$command = $connection->createCommand($sql);

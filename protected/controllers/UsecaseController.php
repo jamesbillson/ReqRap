@@ -51,7 +51,7 @@ class UsecaseController extends Controller
 	 */
 	public function actionView($id)
 	{
-		$versions=Version::model()->getVersions($id,10,'usecase_id');
+		$versions=Version::model()->getVersions($id,10);
                 $model=$this->loadModel($versions[0]['id']);
                 $this->render('view',array('model'=>$model,
 			'versions'=>$versions
@@ -72,7 +72,7 @@ class UsecaseController extends Controller
 	public function actionCreate($id)
 	{
 		$model=new Usecase;
-
+  $project=Yii::app()->session['project'];
 		
                 $number=Usecase::model()->getNextNumber($id);
                 $package=Package::model()->findbyPK($id);
@@ -82,10 +82,12 @@ class UsecaseController extends Controller
 			
                     $model->attributes=$_POST['Usecase'];
                     $model->package_id=$package->package_id;
+                    $model->project_id= $project;
+                    $model->release_id=Release::model()->currentRelease($project);
                     // set usecase_id
                     $model->usecase_id=Version::model()->getNextID(10);
 			if($model->save()){
-                        $version=Version::model()->getNextNumber($package->project_id,10,1,$model->primaryKey,$model->usecase_id);   
+                        $version=Version::model()->getNextNumber($project,10,1,$model->primaryKey,$model->usecase_id);   
                         $flow=new Flow;
                         $flow->name='Main';
                         $flow->main=1;
@@ -93,8 +95,10 @@ class UsecaseController extends Controller
                         $flow->rejoinstep_id=0;
                         $flow->usecase_id=$model->usecase_id;
                         $flow->flow_id=Version::model()->getNextID(8);
+                        $flow->project_id= $project;
+                        $flow->release_id=Release::model()->currentRelease($project);
                         $flow->save(false);
-                        $version=Version::model()->getNextNumber($package->project_id,8,1,$flow->primaryKey,$flow->flow_id);
+                        $version=Version::model()->getNextNumber($project,8,1,$flow->primaryKey,$flow->flow_id);
                         //make version
                         $step=new Step;
                           $step->flow_id=$flow->flow_id;
@@ -103,10 +107,12 @@ class UsecaseController extends Controller
                           $step->actor_id=$model->actor_id;
                           $step->result='System result.';
                           $step->step_id=Version::model()->getNextID(9);
+                          $step->project_id= Yii::app()->session['project'];
+                        $step->release_id=Release::model()->currentRelease($project);
                           $step->save(false);
                           // make version
-                          $version=Version::model()->getNextNumber($package->project_id,9,1,$step->primaryKey,$step->step_id);
-				$this->redirect(array('/package/view/tab/usecases/','id'=>$model->package->package_id));
+                          $version=Version::model()->getNextNumber($project,9,1,$step->primaryKey,$step->step_id);
+				$this->redirect(array('/project/view/tab/usecases/','id'=>$model->package->package_id));
                 }}
 
 		$this->render('create',array(
@@ -123,11 +129,11 @@ class UsecaseController extends Controller
 	{
 		                
                 
-                
+                  $project=Yii::app()->session['project'];
                 $model=$this->loadModel($id);
                 $package=Package::model()->findbyPK($model->package->id);
                 $number=$model->number;
-                $id=$model->package->project_id;
+               
                 
                 $new= new Usecase;
 			
@@ -136,9 +142,11 @@ class UsecaseController extends Controller
 		 $new->attributes=$_POST['Usecase'];
                  $new->number=$model->number;
                  $new->package_id=$model->package_id;
-                 $new->usecase_id=$model->usecase_id;	
+                 $new->usecase_id=$model->usecase_id;
+                 $new->project_id=$project;
+                 $new->release_id=$model->release_id;	
                  if($new->save()){
-                      $version=Version::model()->getNextNumber($id,10,2,$new->primaryKey,$new->usecase_id);   
+                      $version=Version::model()->getNextNumber($project,10,2,$new->primaryKey,$new->usecase_id);   
                       $this->redirect(array('/usecase/view/id/'.$new->usecase_id));
                  }
 				
@@ -174,7 +182,7 @@ class UsecaseController extends Controller
             // save them both
             
           
-		$this->redirect(array('/package/view/tab/usecases/id/'.$model->package->id));
+		$this->redirect(array('/project/view/tab/usecases/id/'));
 	
 	}
         
@@ -185,10 +193,12 @@ class UsecaseController extends Controller
 	 */
 	public function actionDelete($id)
 	{
-	$model = $this->loadModel($id);
-        $version=Version::model()->getNextNumber($model->package->project_id,10,3,$model->id,$model->usecase_id);  
 	
-      	$this->redirect(array('/project/view/tab/usecases/id/'.$model->package->project_id));
+        $project=Yii::app()->session['project'];
+        $model = $this->loadModel($id);
+        $version=Version::model()->getNextNumber($project,10,3,$model->id,$model->usecase_id);  
+	
+      	$this->redirect(array('/project/view/tab/usecases/id/'.$project));
 	}
 
 	/**

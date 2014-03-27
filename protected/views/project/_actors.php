@@ -1,6 +1,6 @@
 
 <?php 
-$data = Actor::model()->getProjectActors($model->id);
+$data = Actor::model()->getProjectActors(Yii::app()->session['project']);
 
 $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
     'title' => 'Issues',

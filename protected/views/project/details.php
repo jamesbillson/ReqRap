@@ -24,8 +24,6 @@
  <a href="/addresses/create/id/<?php echo $model->id; ?>/type/4">Add an address</a>
 <br />
 <b>Description</b><br /><?php echo $model->description; ?><br />
-<b>Subcontract retention terms</b>
-    <br /><?php echo $model->subcontractretention; ?><br />
- <b>Subcontract payment terms</b><br /><?php echo $model->subcontractterms; ?><br />
+
 
  

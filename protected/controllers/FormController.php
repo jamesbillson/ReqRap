@@ -78,8 +78,11 @@ class FormController extends Controller
                     
 		        
                     $model->attributes=$_POST['Form'];
+                    $model->project_id= Yii::app()->session['project'];
+                    $model->release_id=Release::model()->currentRelease($model->project);
                     $model->number=Form::model()->getNextNumber($id);
                     $model->form_id=Version::model()->getNextID(2);
+                    
                     
                     if($model->save())
                     {
@@ -115,6 +118,7 @@ class FormController extends Controller
 			 $new->attributes=$_POST['Form'];
                          $new->number=$model->number;
                          $new->project_id=$model->project_id;
+                         $new->release_id=$model->release_id;
                          $new->form_id=$model->form_id;
                          
 			if($new->save())

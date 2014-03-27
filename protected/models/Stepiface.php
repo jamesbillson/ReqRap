@@ -25,11 +25,11 @@ class Stepiface extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('id, stepiface_id, step_id, iface_id', 'required'),
-			array('id, stepiface_id, step_id, iface_id', 'numerical', 'integerOnly'=>true),
+			array('id, stepiface_id, step_id, iface_id, project_id, release_id', 'required'),
+			array('id, stepiface_id, step_id, iface_id, project_id, release_id', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, step_id, iface_id', 'safe', 'on'=>'search'),
+			array('id, step_id, iface_id, project_id, release_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -42,9 +42,19 @@ class Stepiface extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
                     
-        'step' => array(self::BELONGS_TO, 'Step', 'step_id'),
-	'iface' => array(self::BELONGS_TO, 'Iface', 'iface_id'),
-	
+       // 'step' => array(self::BELONGS_TO, 'Step', 'step_id'),
+	//'iface' => array(self::BELONGS_TO, 'Iface', 'iface_id'),
+	  'step'=>array(self::BELONGS_TO,
+                                    'Step','step_id',
+                                    'joinType'=>'JOIN',
+                                    'foreignKey'=>'step_id',
+                                'on'=>'step.project_id=project_id'),
+
+	'iface'=>array(self::BELONGS_TO,
+                                    'Iface','step_id',
+                                    'joinType'=>'JOIN',
+                                    'foreignKey'=>'iface_id',
+                                'on'=>'iface.project_id=project_id'),
 		);
 	}
 
@@ -56,6 +66,8 @@ class Stepiface extends CActiveRecord
 		return array(
 			'id' => 'ID',
                     'stepiface_id'=>'stepiface_id',
+                     'project_id' => 'Project',
+                    'release_id' => 'Release',
                     'step_id' => 'Step',
 			'iface_id' => 'Iface',
 		);

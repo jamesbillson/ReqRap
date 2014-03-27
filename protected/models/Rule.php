@@ -29,11 +29,12 @@ class Rule extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('rule_id,  number, title,text, project_id ', 'required'),
+			array('rule_id,  number, title,text, project_id, release_id ', 'required'),
 			array('number', 'length', 'max'=>4),
+                    array('rule_id, project_id, release_id', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, number, title, text', 'safe', 'on'=>'search'),
+			array('id, number, title, text, project_id, release_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -45,8 +46,7 @@ class Rule extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'ruleusecase' => array(self::HAS_ONE, 'Ruleusecase', 'rule_id'),
-                    'project' => array(self::BELONGS_TO, 'Project', 'project_id'),
+		'project' => array(self::BELONGS_TO, 'Project', 'project_id'),
 		);
 	}
 
@@ -61,24 +61,15 @@ class Rule extends CActiveRecord
 			'number' => 'Number',
                     'title' => 'Title',
 			'text' => 'Rule Text',
-                    'project_id'=>'Project',
+                     'project_id' => 'Project',
+                    'release_id' => 'Release',
                   
                     
 		);
 	}
 
-	/**
-	 * Retrieves a list of models based on the current search/filter conditions.
-	 *
-	 * Typical usecase:
-	 * - Initialize the model fields with values from filter form.
-	 * - Execute this method to get CActiveDataProvider instance which will filter
-	 * models according to data in model fields.
-	 * - Pass data provider to CGridView, CListView or any similar widget.
-	 *
-	 * @return CActiveDataProvider the data provider that can return the models
-	 * based on the search/filter conditions.
-	 */
+
+        
 	public function search()
 	{
 		// @todo Please modify the following code to remove attributes that should not be searched.
@@ -94,66 +85,57 @@ class Rule extends CActiveRecord
 		));
 	}
 
-        
+        /*
          public function getRules($id) // Get rules for a use case
     {
-        $user= Yii::app()->user->id;   
-              
-        $sql="SELECT `r`.`text`,
+        
+             
+             $sql="
+            SELECT
+            `r`.`text`,
             `r`.`number`, 
             `r`.`id`,
             `r`.`title`,
             `r`.`rule_id`
-           FROM `rule` `r`
-           JOIN `steprule` `x` 
-           ON `x`.`rule_id`=`r`.`rule_id`
-           JOIN `step` `s` 
-           ON `x`.`step_id`=`s`.`id`
-           JOIN `flow` `f`
-           ON `f`.`id`=`s`.`flow_id`
-           JOIN `version` `v` 
-           ON `v`.`foreign_key`=`r`.`id`
-           WHERE `f`.`usecase_id`=".$id."
+            FROM `rule` `r`
+            JOIN `steprule` `x`
+            ON `x`.`rule_id`=`r`.`rule_id`
+            JOIN `step` `s`
+            ON `s`.`step_id`=`x`.`step_id`
+            JOIN `flow` `f`
+            ON `f`.`flow_id`=`s`.`flow_id`
+            JOIN `version` `vr`
+            ON `vr`.`foreign_key`=`r`.`id`
+            JOIN `version` `vx`
+            ON `vx`.`foreign_key`=`x`.`id`
+            JOIN `version` `vs`
+            ON `vs`.`foreign_key`=`s`.`id`
+            JOIN `version` `vf`
+            ON `vf`.`foreign_key`=`f`.`id` 
+        WHERE
+            `f`.`usecase_id`=".$id."
             AND
-            `v`.`active`=1
+            `vr`.`object` =1 AND `vr`.`active`=1
             AND
-            `v`.`object`=1
-               GROUP BY `r`.`id`
-               ORDER BY `r`.`number`";
+            `vx`.`object` =16 AND `vx`.`active`=1            
+            AND
+            `vs`.`object` =9 AND `vs`.`active`=1
+            AND
+            `vf`.`object` =8 AND `vf`.`active`=1
+
+
+             GROUP BY `r`.`id`
+             ORDER BY `r`.`number` ASC";
+        
+         
+        
 		$connection=Yii::app()->db;
 		$command = $connection->createCommand($sql);
 		$projects = $command->queryAll();
 		return $projects;
     }
-        
-            public function getStepRules($id)
-    {
-       
-              
-        $sql="SELECT `r`.`text`,
-            `r`.`number`,
-            `r`.`rule_id`,
-            `r`.`id`,
-            `r`.`title`,
-            `x`.`id` as xid
-           From `rule` `r`
-            Join `steprule` `x` 
-            on `x`.`rule_id`=`r`.`rule_id`
-            Join `step` `s` 
-            on `x`.`step_id`=`s`.`id`
-             JOIN `version` `v` 
-           ON `v`.`foreign_key`=`r`.`id`
-           WHERE 
-            `v`.`active`=1
-            AND
-            `v`.`object`=1
-            AND
-            `s`.`id`=".$id;
-		$connection=Yii::app()->db;
-		$command = $connection->createCommand($sql);
-		$projects = $command->queryAll();
-		return $projects;
-    }  
+        */
+ 
         public function getNextNumber($id)
     {
        
@@ -223,7 +205,7 @@ class Rule extends CActiveRecord
 		
 		return $projects;
     }  
-    
+    /*
              public function rollback($number,$id)
             {
     
@@ -249,16 +231,10 @@ class Rule extends CActiveRecord
         
         
                  }  
+*/
+    
+    
 
-    
-    
-   
-	/**
-	 * Returns the static model of the specified AR class.
-	 * Please note that you should have this exact method in all your CActiveRecord descendants!
-	 * @param string $className active record class name.
-	 * @return Rule the static model class
-	 */
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);

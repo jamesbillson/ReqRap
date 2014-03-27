@@ -1,7 +1,7 @@
  
 <?php 
 
-$data = Iface::model()->getProjectIfaces($model->id);
+$data = Iface::model()->getProjectIfaces(Yii::app()->session['project']);
         
 $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
     'title' => 'Interfaces',

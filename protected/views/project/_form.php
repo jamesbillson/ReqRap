@@ -60,22 +60,9 @@ If (User::model()->myCompanyType()==3){
 		<?php echo $form->error($model,'budget'); ?>
 	</div>	
 
-        	<div class="row">
-		<?php echo $form->labelEx($model,'claimtype'); ?>
-		<?php echo $form->dropdownlist($model,'claimtype',$claimtype); ?>
-		<?php echo $form->error($model,'claimtype'); ?>
-	</div>	
         
-        <div class="row">
-		<?php echo $form->labelEx($model,'subcontractterms'); ?>
-		<?php echo $form->textArea($model,'subcontractterms',array('value'=>'30 Days after end of month of invoice','size'=>60,'maxlength'=>255)); ?>
-		<?php echo $form->error($model,'subcontractterms'); ?>
-	</div>
-        <div class="row">
-		<?php echo $form->labelEx($model,'subcontractretention'); ?>
-		<?php echo $form->textArea($model,'subcontractretention',array('value'=>'5% held for 45 days','size'=>60,'maxlength'=>255)); ?>
-		<?php echo $form->error($model,'subcontractretention'); ?>
-	</div>
+        
+       
 
        
 	

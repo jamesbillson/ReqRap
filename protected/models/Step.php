@@ -31,12 +31,12 @@ class Step extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('flow_id, step_id, number, text,result, actor_id', 'required'),
-			array('flow_id, step_id, number', 'numerical', 'integerOnly'=>true),
+			array('flow_id, step_id, number, text,result, actor_id, project_id, release_id', 'required'),
+			array('flow_id, step_id, number, project_id, release_id', 'numerical', 'integerOnly'=>true),
 			
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, step_id, usecase_id, flow, number, text', 'safe', 'on'=>'search'),
+			array('id, step_id, usecase_id, flow, number, text, project_id, release_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -52,7 +52,8 @@ class Step extends CActiveRecord
                     'flow'=>array(self::BELONGS_TO,
                                     'flow','flow_id',
                                     'joinType'=>'JOIN',
-                                    'foreignKey'=>'flow_id')
+                                    'foreignKey'=>'flow_id',
+                                'on'=>'flow.project_id=project_id')
 		);
 	}
 
@@ -64,6 +65,8 @@ class Step extends CActiveRecord
 		return array(
 			'id' => 'ID',
                     'step_id'=>'step_id',
+                     'project_id' => 'Project',
+                    'release_id' => 'Release',
 			'result'=>'Result',
 			'flow_id' => 'Flow',
 			'number' => 'Number',
@@ -105,7 +108,7 @@ class Step extends CActiveRecord
        public function getAltSteps($id) // GET ALL FOR UC
     {
           
-              
+          $project=Yii::App()->session['project'];     
         $sql="SELECT 
             `s`.`text`,
             `s`.`result`,
@@ -114,28 +117,28 @@ class Step extends CActiveRecord
             `f`.`name` as flow,
             `f`.`id` as flowid,
             `f`.`flow_id` as flow_id,
-(SELECT `p`.`number` 
-FROM `step` `p` 
-JOIN `version` `pv`
-ON `pv`.`foreign_key`=`p`.`id`
-WHERE 
-f.startstep_id=p.step_id
-AND
-`pv`.`active`=1
-AND 
-`pv`.`object`=9) as start, 
+                (SELECT `p`.`number` 
+                FROM `step` `p` 
+                JOIN `version` `pv`
+                ON `pv`.`foreign_key`=`p`.`id`
+                WHERE 
+                f.startstep_id=p.step_id
+                AND
+                `pv`.`active`=1
+                AND 
+                `pv`.`object`=9) as start, 
 
-(SELECT `q`.`number` from `step` `q`  
-JOIN `version` `qv`
-ON qv.foreign_key=q.id
-WHERE 
-f.rejoinstep_id=q.step_id
-AND
-qv.active=1
-AND 
-qv.object=9
+                (SELECT `q`.`number` from `step` `q`  
+                JOIN `version` `qv`
+                ON qv.foreign_key=q.id
+                WHERE 
+                f.rejoinstep_id=q.step_id
+                AND
+                qv.active=1
+                AND 
+                qv.object=9
 
-) as rejoin,
+                ) as rejoin,
             `s`.`id`,
             `s`.`step_id`,
             `s`.`number`
@@ -171,7 +174,7 @@ qv.object=9
           public function getFlowSteps($id) // GET FOR A FLOW
     {
            
-              
+            $project=Yii::App()->session['project'];   
         $sql="SELECT `s`.*,
             `f`.`name` as flow
             FROM `step` `s`
@@ -181,9 +184,7 @@ qv.object=9
             ON `v`.`foreign_key`=`s`.`id`
             WHERE `f`.`id`=".$id."
             AND
-           `v`.`object`=9
-            AND
-            `v`.`active`=1
+           `v`.`object`=9 AND `v`.`active`=1 AND `v`.`project_id`=".$project."
             ORDER BY `s`.`number` ASC";
 		$connection=Yii::app()->db;
 		$command = $connection->createCommand($sql);
@@ -269,6 +270,46 @@ qv.object=9
                 }
     }    
     
+               public function getStepLinks($id,$object,$relation)
+    {
+          $project=Yii::App()->session['project'];
+            $sql="
+            SELECT
+            `r`.*,
+            `x`.`id` as xid
+            
+            FROM `".Version::$objects[$object]."` `r`
+            JOIN `step".Version::$objects[$object]."` `x`
+            ON `x`.`".Version::$objects[$object]."_id`=`r`.`".Version::$objects[$object]."_id`
+            JOIN `step` `s`
+            ON `s`.`step_id`=`x`.`step_id`
+
+            JOIN `version` `vr`
+            ON `vr`.`foreign_key`=`r`.`id`
+            JOIN `version` `vx`
+            ON `vx`.`foreign_key`=`x`.`id`
+            JOIN `version` `vs`
+            ON `vs`.`foreign_key`=`s`.`id`
+          
+        WHERE
+            `s`.`id`=".$id."
+            AND
+            `vr`.`object` =".$object." AND `vr`.`active`=1 AND `vr`.`project_id`=".$project."
+            AND
+            `vx`.`object` =".$relation." AND `vx`.`active`=1 AND `vx`.`project_id`=".$project."            
+            AND
+            `vs`.`object` =9 AND `vs`.`active`=1 AND `vs`.`project_id`=".$project."
+
+
+
+             GROUP BY `r`.`id`
+             ORDER BY `r`.`number` ASC";
+        
+		$connection=Yii::app()->db;
+		$command = $connection->createCommand($sql);
+		$projects = $command->queryAll();
+		return $projects;
+    }  
 	/**
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!

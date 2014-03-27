@@ -32,7 +32,10 @@ class ProjectController extends Controller
                 'users'=>array('*'),
             ),
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
-                'actions'=>array('addprojectaddress','photo','diary','resetlink','details','packagescontract','stagescontract','templatepackage','responses','tendersubmit','mybids','mytenders','delete','create','update','myprojects','projectpackagelist','TenderSummary'),
+                'actions'=>array('addprojectaddress','set','photo',
+                    'diary','resetlink','details','packagescontract',
+                    'responses',
+                    'myrequirements','mytenders','delete','create','update','myprojects','projectpackagelist','TenderSummary'),
                 'users'=>array('@'),
             ),
             array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -49,8 +52,15 @@ class ProjectController extends Controller
      * Displays a particular model.
      * @param integer $id the ID of the model to be displayed
      */
-    public function actionView($id,$tab)
+     public function actionSet($id)
     {
+    Yii::app()->session['project']=$id;
+    $this->redirect(array('/project/view/tab/usecases'));
+        
+    }
+    public function actionView($tab)
+    {
+     $id=Yii::app()->session['project'];
         $model = $this->loadModel($id);
         $served=0; //variable to stop redirect to fail if a page is served
         // if the user belongs to the owner company, show one view
@@ -122,9 +132,11 @@ class ProjectController extends Controller
             $model->extlink = md5(uniqid(rand(), true));
             if($model->save())
                 $new_id=$model->getPrimaryKey();
-                Iface::model ()->createTypes($new_id);
-                Testrun::model ()->createInitial($new_id); 
+            Yii::app()->session['project'] = $new_id;
                 Release::model ()->createInitial($new_id); 
+            Iface::model ()->createTypes($new_id);
+                Testrun::model ()->createInitial($new_id); 
+ 
                 Actor::model()->createInitial($new_id);
                 Package::model()->createInitial($new_id);
                // Version::model ()->createInitial($new_id); 
@@ -266,9 +278,9 @@ class ProjectController extends Controller
             ));
     }
     
-    public function actionMyBids()
+    public function actionMyRequirements()
     {
-        $this->render('mybids');
+        $this->render('myrequirements');
     }
         
     public function actionprojectPackageList()

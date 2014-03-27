@@ -42,13 +42,13 @@ public static $packagestageicon= array(1=>'icon-time text-warning',
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('name, package_id, project_id, stage, number', 'required'),
-			array('package_id, project_id', 'numerical', 'integerOnly'=>true),
+			array('name, package_id, project_id, release_id, stage, number', 'required'),
+			array('package_id, project_id, release_id', 'numerical', 'integerOnly'=>true),
                         array('budget, stage', 'numerical', 'integerOnly'=>false),
 			array('name', 'length', 'max'=>255),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, package_id, name, stage, project_id, number', 'safe', 'on'=>'search'),
+			array('id, package_id, name, stage, project_id, release_id, number', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -61,7 +61,6 @@ public static $packagestageicon= array(1=>'icon-time text-warning',
 		// class name for the relations automatically generated below.
 		return array(
               'project' => array(self::BELONGS_TO, 'Project', 'project_id'),
-              'subcontract'=>array(self::HAS_ONE,'Subcontract','package_id'),
               'packagedocument'=>array(self::HAS_ONE,'Packagedocument','package_id'),
 		);
 	}
@@ -75,7 +74,8 @@ public static $packagestageicon= array(1=>'icon-time text-warning',
 		'id' => 'ID',
                     'package_id'=>'package id',
 		'name' => 'Name',
-		'project_id' => 'Project',
+		 'project_id' => 'Project',
+                    'release_id' => 'Release',
                 'budget'=>'Budget',
                 'number'=>'Sequence'
                    
@@ -146,12 +146,26 @@ public static $packagestageicon= array(1=>'icon-time text-warning',
                  public function createInitial($id)
     {
         $package_id=Version::model()->getNextID(5);
-           $sql="INSERT INTO `package`(`package_id`, `project_id`,`number`,`name`) VALUES 
-           (".$package_id.",".$id.",1,'System')";
+           $sql="INSERT INTO `package`(
+               `package_id`,
+               `project_id`,
+               `release_id`,
+               `number`,
+               `name`) VALUES 
+           (".$package_id.",
+               ".$id.",
+               ".Release::model()->currentRelease($id).",
+               1,
+               'System'
+               )";
            $connection=Yii::app()->db;
         $command = $connection->createCommand($sql);
         $command->execute();
-        $sql="select p.id from package p where p.project_id=".$id;
+        $sql="select `p`.`id` 
+            from 
+            `package` `p` 
+            where
+            `p`.`project_id`=".$id;
       
         $connection=Yii::app()->db;
         $command = $connection->createCommand($sql);

@@ -1,6 +1,6 @@
 <?php 
 echo $this->renderPartial('/project/head',array('tab'=>'details')); 
-?>    
+?>   
 <h3>Version History</h3>    
    <?php $collapse = $this->beginWidget('bootstrap.widgets.TbCollapse'); ?>
    <?php if (count($versions)){?>

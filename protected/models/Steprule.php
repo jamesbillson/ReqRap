@@ -25,11 +25,11 @@ class Steprule extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('id,steprule_id,step_id, rule_id', 'required'),
-			array('id,step_id, rule_id', 'numerical', 'integerOnly'=>true),
+			array('id,steprule_id,step_id, rule_id, project_id, release_id', 'required'),
+			array('id,step_id, rule_id, project_id, release_id', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id,steprule_id,step_id, rule_id', 'safe', 'on'=>'search'),
+			array('id,steprule_id,step_id, rule_id, project_id, release_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -41,8 +41,20 @@ class Steprule extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-                    'step' => array(self::BELONGS_TO, 'Step', 'step_id'),
-                    'rule' => array(self::BELONGS_TO, 'Rule', 'rule_id'),
+                  //  'step' => array(self::BELONGS_TO, 'Step', 'step_id'),
+                  //  'rule' => array(self::BELONGS_TO, 'Rule', 'rule_id'),
+                  'step'=>array(self::BELONGS_TO,
+                                    'Step','step_id',
+                                    'joinType'=>'JOIN',
+                                    'foreignKey'=>'step_id',
+                                'on'=>'step.project_id=project_id'),
+
+	'rule'=>array(self::BELONGS_TO,
+                                    'Rule','step_id',
+                                    'joinType'=>'JOIN',
+                                    'foreignKey'=>'rule_id',
+                                'on'=>'rule.project_id=project_id'),
+                    
 		);
 	}
 
@@ -54,6 +66,8 @@ class Steprule extends CActiveRecord
 		return array(
 		'id' => 'ID',	
                 'steprule_id'=>'steprule_id',
+                     'project_id' => 'Project',
+                    'release_id' => 'Release',
                 'step_id' => 'Step',
 		'rule_id' => 'Rule',
 		);

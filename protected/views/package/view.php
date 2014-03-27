@@ -90,12 +90,12 @@ if (count($deleted)):?>
         <tbody>
         <?php foreach($deleted as $item) {?>
            <tr class="odd">  
-                <td> <a href="/usecase/view/id/<?php echo $item['rule_id'];?>"> 
-                BR-<?php echo str_pad($item['number'], 3, "0", STR_PAD_LEFT); ?></a> 
+                <td> <a href="/usecase/view/id/<?php echo $item['usecase_id'];?>"> 
+                UC-<?php echo str_pad($item['number'], 3, "0", STR_PAD_LEFT); ?></a> 
                 </td>
    
                 <td> 
-                <?php echo $item['title']; ?>
+                <?php echo $item['name']; ?>
                 </td>
     
            </tr>

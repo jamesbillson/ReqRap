@@ -76,6 +76,10 @@ class ActorController extends Controller
 
 		if(isset($_POST['Actor']))
 		{
+                   
+
+                   $model->project_id= Yii::app()->session['project'];
+                   $model->release_id=Release::model()->currentRelease($model->project_id);
                    $model->attributes=$_POST['Actor'];
                    $model->number=Actor::model()->getNextNumber($id);
                    $model->actor_id=Version::model()->getNextID(4);
@@ -101,20 +105,19 @@ class ActorController extends Controller
 	{
                 $model=$this->loadModel($id);
                 $new= new Actor;
-
             
 		if(isset($_POST['Actor']))
 		{
-                        
-			 $new->attributes=$_POST['Actor'];
+                         $new->attributes=$_POST['Actor'];
                          $new->project_id=$model->project_id;
                          $new->actor_id=$model->actor_id;
-                          $new->number=$model->number;
+                         $new->release_id=$model->release_id;
+                         $new->number=$model->number;
                          $new->inherits=$model->inherits;
 			if($new->save())
                         {
 			$version=Version::model()->getNextNumber($model->project_id, 4, 2,$new->primaryKey,$model->actor_id);
-                        $this->redirect(array('/project/view/tab/actors/id/'.$model->project_id));
+                        $this->redirect(array('/project/view/tab/actors/'));
                         }        
 		}
 

@@ -30,12 +30,12 @@ class Formproperty extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('form_id, number, formproperty_id, name, description', 'required'),
-			array('formproperty_id,number, form_id', 'numerical', 'integerOnly'=>true),
+			array('form_id, number, formproperty_id, name, description, project_id, release_id', 'required'),
+			array('formproperty_id,number, form_id, project_id, release_id', 'numerical', 'integerOnly'=>true),
 			array('name', 'length', 'max'=>255),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, number, formproperty_id, form_id, name, description', 'safe', 'on'=>'search'),
+			array('id, number, formproperty_id, form_id, name, description, project_id, release_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -52,7 +52,8 @@ class Formproperty extends CActiveRecord
                             'form'=>array(self::BELONGS_TO,
                                     'form','form_id',
                                     'joinType'=>'JOIN',
-                                    'foreignKey'=>'form_id')
+                                    'foreignKey'=>'form_id',
+                                'on'=>'form.project_id=formproperty.project_id')
                     );
 	}
 
@@ -64,6 +65,8 @@ class Formproperty extends CActiveRecord
 		return array(
 			'id' => 'ID',
                     'formproperty_id' => 'Formpropertyid',
+                     'project_id' => 'Project',
+                    'release_id' => 'Release',
 			'form_id' => 'Form',
                     'number' => 'Number',
 			'name' => 'Name',
@@ -168,8 +171,14 @@ class Formproperty extends CActiveRecord
             WHERE 
               `v`.`object`=3
             AND
-            `v`.`active`=1 and            
-            `r`.`form_id`=".$id." order by `r`.`number`";
+            `v`.`project_id`=".Yii::App()->session['project']."
+                and
+            `v`.`active`=1 
+            and            
+            `r`.`form_id`=".$id." 
+             and 
+             `r`.`project_id`=".Yii::App()->session['project']."
+             order by `r`.`number`";
 
      
         

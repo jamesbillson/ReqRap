@@ -42,14 +42,10 @@ Rules - show deleted rules ?
 Create a new release.
 Snapshot
 
-# Object
-version control
-Create Form from Object.
 
 #USE CASE
 view - make the UC details Editable (Description and Preconditions)
 
-Create - add an actor. Select or add.
 
 
 
@@ -69,31 +65,51 @@ then you can rationalise later.
 VERSION CONTROL
 OBJECTS
 --------------
-1.rule - M - C - V
-2.form - M - C - V
-3.formproperty - M - C - V (deleted versions link and interface)
-4.actor - M - C - V
+1.rule - M - C - V - has project_id BUT NOT NEEDED
+2.form - M - C - V - has project_id BUT NOT NEEDED
+3.formproperty - M - C - V (deleted versions link and interface) NO PROJECT
+4.actor - M - C - V - has project_id
 5.package - M - C - V (package delete not handled, will need additional logic to handle
                         orphaned UC's)
-6.object - M - C - V
-7.objectproperty - M - C - V(deleted versions link and interface)
+6.object - M - C - V has project_id
+7.objectproperty - M - C - V(deleted versions link and interface) NO PROJECT
 8.Flow - M - C - V(
-        Renumber on delete step where step is last step)
+        Renumber on delete step where step is last step)NO PROJECT
 9.step - M - C - V
   (Step renumber needs to be changed to create new versions of each step
-     , delete needs work)
-10.usecase - M - C - V(Need to v control move function?)
+     , delete needs work)NO PROJECT
+10.usecase - M - C - V(Need to v control move function?)NO PROJECT
 11.photo - M - C
 12.iface - M - C - V (type select not working,
-                       orphan warning not working)
+                       orphan warning not working)has project_id BUT NOT NEEDED
 13.interfacetype - M - C
 
 
 RELATIONSHIPS
 ----------------
-StepRule - M - C
-StepIface - M - C - V (orphaned interfaces not reporting correctly, interfaces should show the relationships in the history.)
-StepForm - M - C
+StepRule - M - C - V NO PROJECT
+StepIface - M - C - V (interfaces should show the relationships in the history.)
+StepForm - M - C -V
+
+        1=>'rule'
+        2=>'form'
+        3=>'formproperty'
+        4=>'actor'
+
+        5=>'package'
+        6=>'object'
+        7=>'objectproperty'
+        8=>'flow'
+        9=>'step'
+        10=>'usecase'
+        11=>'photo'
+        12=>'iface'
+        13=>'interfacetype'
+        14=>'stepform'
+        15=>'stepiface'
+        16=>'steprule
+
+
 
 Roll Back to a specific point.
 

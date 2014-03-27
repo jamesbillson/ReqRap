@@ -32,7 +32,7 @@ class PackageController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('updatepackage','bidsubmit','create','update','remove','addPackage','subcontractview'),
+				'actions'=>array('updatepackage','history','bidsubmit','create','update','remove','addPackage','subcontractview'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -58,32 +58,40 @@ class PackageController extends Controller
         	));
 	}
 
-	/**
-	 * Creates a new model.
-	 * If creation is successful, the browser will be redirected to the 'view' page.
-	 */
-	  public function actionCreate($id)
-	{
 	
+            public function actionHistory($id) // Note that this is form_id
+	{
+             	$versions=Version::model()->getVersions($id,5);
+                $model=$this->loadModel($versions[0]['id']);
+                $this->render('history',array('model'=>$model,
+			'versions'=>$versions
+        	));
+	}
+        
+	  public function actionCreate()
+	{
+	  $project=Yii::app()->session['project'];
                 $model=new Package;
 
 		if(isset($_POST['Package']))
 		{
                    $model->attributes=$_POST['Package'];
+                   $model->project_id= Yii::app()->session['project'];
                    $model->package_id=Version::model()->getNextID(5);
-                   $model->number=Package::model()->getNextNumber($id);
-                   $model->project_id=$id;
+                   $model->number=Package::model()->getNextNumber($project);
+                   
+                   $model->release_id=Release::model()->currentRelease($project);
                     
                     if($model->save())
                     {
-                     $version=Version::model()->getNextNumber($id,5,1,$model->primaryKey,$model->package_id);   
-                     $this->redirect(array('/project/view/tab/packages/id/'.$id));
+                     $version=Version::model()->getNextNumber($project,5,1,$model->primaryKey,$model->package_id);   
+                     $this->redirect(array('/project/view/tab/packages/id/'.$project));
 		    }
                         
                 }
                
                 $this->render('create',array(
-			'model'=>$model,'id'=>$id,
+			'model'=>$model,'id'=>Yii::app()->session['project'],
 		));
 	}
 
@@ -96,25 +104,26 @@ class PackageController extends Controller
 	{
                 $model=$this->loadModel($id);
                 $new= new Package;
-
+  $project=Yii::app()->session['project'];
             
 		if(isset($_POST['Package']))
 		{
                         
 			 $new->attributes=$_POST['Package'];
-                         $new->project_id=$model->project_id;
+                         $new->project_id=$project;
                          $new->package_id=$model->package_id;
+                         $new->release_id=$model->release_id;
                          $new->number=$model->number;
 
 			if($new->save())
                         {
-			$version=Version::model()->getNextNumber($model->project_id, 5, 2,$new->primaryKey,$model->package_id);
-                        $this->redirect(array('/project/view/tab/packages/id/'.$model->project_id));
+			$version=Version::model()->getNextNumber($project, 5, 2,$new->primaryKey,$model->package_id);
+                        $this->redirect(array('/project/view/tab/packages/id/'.$project));
                         }        
 		}
 
 		$this->render('update',array(
-			'model'=>$model,'id'=>$model->project_id
+			'model'=>$model,'id'=>$project
 		));
 	}
         
@@ -122,9 +131,9 @@ class PackageController extends Controller
 	
 public function actionDelete($id)
 	{
-		
+	$project=Yii::app()->session['project'];
             $model=$this->loadModel($id);
-            $version=Version::model()->getNextNumber($model->project_id,5,3,$id,$model->actor_id);  
+            $version=Version::model()->getNextNumber($project,5,3,$id,$model->actor_id);  
             $model->save();
             $this->redirect(array('/project/view/tab/packages/id/'.$project));
             

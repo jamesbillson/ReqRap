@@ -1,10 +1,6 @@
-<h2> <?php echo $model->name; ?>
-    <a href="/project/details?id=<?php echo $model->id; ?>">
-        <i class="icon-cog"></i>
-    </a>
-</h2>
-  <a href="/project/diary?id=<?php echo $model->id; ?>">Project Diary</a>
-    <br />
+
+<?php 
+echo $this->renderPartial('/project/head',array('tab'=>'details')); ?>
 
  
 <?php // if this company project owner is current viewer
@@ -12,6 +8,7 @@
     $type = Company::model()->findbyPK($mycompany)->type; 
     $totalstages=0;
     $status = array('invited','confirmed');
+    
 ?>
 
 <!-- make tab -->
@@ -47,7 +44,7 @@ $active['testcases']=FALSE;
                 compact('model'),true,true),'active'=>$active['documents']);
  
     $tabs[] = array('id' => 'followers', 
-        'label' => 'Followers', 
+        'label' => 'Colaborators', 
         'content' => $this->renderPartial('_followers',
                 compact('model'),true,true),'active'=>$active['followers']);
     
@@ -60,12 +57,12 @@ $active['testcases']=FALSE;
             'label' => 'Actors',
             'content' => $this->renderPartial('_actors',
                     compact('model','status'),true,true),'active'=>$active['actors']);
-
+/*
     $tabs[] = array('id' => 'package',
             'label' => 'Packages', 
             'content' => $this->renderPartial('_packages',
                     compact('model'),true,true),'active'=>$active['packages']);
-   
+ */
     $tabs[] = array('id' => 'usecases',
             'label' => 'Use Cases',
             'content' => $this->renderPartial('_usecases',

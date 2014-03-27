@@ -44,16 +44,16 @@ class Project extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-		array('name, company_id, claimtype, description, subcontractterms, subcontractretention', 'required'),
-		array('company_id, claimtype', 'numerical', 'integerOnly'=>true),
+		array('name, company_id, description', 'required'),
+		array('company_id', 'numerical', 'integerOnly'=>true),
 		array('name', 'length', 'max'=>255),
                 array('budget', 'length', 'max'=>10),
                 array('extlink', 'length', 'max'=>50),
                 array('stage', 'length', 'max'=>4),
-                array('claimtype', 'length', 'max'=>1),
+                
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-		array('id, subcontractterms, subcontractretention, name, description, company_id,stage,claimtype', 'safe', 'on'=>'search'),
+		array('id, name, description, company_id,stage', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -70,8 +70,7 @@ class Project extends CActiveRecord
             'document'=>array(self::HAS_MANY,'Document','foreign_key'),
             'follower'=>array(self::HAS_MANY,'Follower','foreign_key','condition'=>'type = 1'),
             'tender'=>array(self::HAS_MANY,'Follower','foreign_key','condition'=>'type = 2'),
-		'tender_required'=>array(self::HAS_MANY,'Tenderqs','project_id'),
-		'photo'=>array(self::HAS_MANY,'Photo','project_id')
+            'photo'=>array(self::HAS_MANY,'Photo','project_id')
 		);
 	}
 
@@ -88,9 +87,7 @@ class Project extends CActiveRecord
                         'budget' => 'Budget',
                         'stage'=>'Stage',
                      'extlink'=>'External Link',
-                    'claimtype'=>'Claim Structure',
-                    'subcontractterms'=>'Standard Payment Terms for Subcontracts',
-                    'subcontractretention'=>'Standard Rentention for Subcontracts',
+                   
 		);
 	}
 
@@ -109,8 +106,7 @@ class Project extends CActiveRecord
 		$criteria->compare('name',$this->name,true);
 		$criteria->compare('company_id',$this->company_id);
                 $criteria->compare('description',$this->description,true);
-                $criteria->compare('subcontractterms',$this->description,true);
-                $criteria->compare('subcontractretention',$this->description,true);
+               
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));

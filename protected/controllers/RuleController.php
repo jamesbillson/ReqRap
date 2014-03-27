@@ -32,7 +32,7 @@ class RuleController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update','delete','rollback'),
+				'actions'=>array('create','update','delete','history','rollback'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -56,7 +56,14 @@ class RuleController extends Controller
         	));
 	}
 
-
+       public function actionHistory($id) // Note that this is rule_id
+	{
+             	$versions=Version::model()->getVersions($id,1);
+                $model=$this->loadModel($versions[0]['id']);
+                $this->render('history',array('model'=>$model,
+			'versions'=>$versions
+        	));
+	}
         
 	public function actionCreate($type, $id)
 	{
@@ -81,6 +88,8 @@ class RuleController extends Controller
                     $model->attributes=$_POST['Rule'];
                     $model->number=Rule::model()->getNextNumber($project);
                     $model->rule_id=Version::model()->getNextID(1);
+                    $model->project_id= Yii::app()->session['project'];
+                    $model->release_id=Release::model()->currentRelease($model->project);
                    
                     if($model->save())
                     {
@@ -111,6 +120,7 @@ class RuleController extends Controller
                          
                          $new->number=$model->number;
                          $new->project_id=$model->project_id;
+                         $new->release_id=$model->release_id;
                          $new->rule_id=$model->rule_id;
                          
 			if($new->save())
@@ -130,6 +140,7 @@ class RuleController extends Controller
 	 $model=$this->loadModel($id);
          $project=$model->project_id;
          Rule::model()->rollback($model->rule_id, $id);
+         //Version::model()->rollback($id,object)
          $this->redirect(array('/project/view/tab/rules/id/'.$project));
         }
         

@@ -32,7 +32,7 @@ class OrganisationtypeController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update'),
+				'actions'=>array('create','update','history'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -56,10 +56,16 @@ class OrganisationtypeController extends Controller
 		));
 	}
 
-	/**
-	 * Creates a new model.
-	 * If creation is successful, the browser will be redirected to the 'view' page.
-	 */
+
+                       public function actionHistory($id) // Note that this is form_id
+	{
+             	$versions=Version::model()->getVersions($id,7);
+                $model=$this->loadModel($versions[0]['id']);
+                $this->render('history',array('model'=>$model,
+			'versions'=>$versions
+        	));
+	}
+        
 	public function actionCreate()
 	{
 		$model=new Organisationtype;

@@ -32,7 +32,7 @@ class ObjectController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update','delete'),
+				'actions'=>array('create','update','delete','history'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -53,30 +53,38 @@ class ObjectController extends Controller
         	));
 	}
         
-        
-        
-	  public function actionCreate($id)
+             public function actionHistory($id) // Note that this is form_id
 	{
-	$project_id=$id;
+             	$versions=Version::model()->getVersions($id,6);
+                $model=$this->loadModel($versions[0]['id']);
+                $this->render('history',array('model'=>$model,
+			'versions'=>$versions
+        	));
+	}
+        
+	  public function actionCreate()
+	{
+            $project=Yii::app()->session['project'];
                 $model=new Object;
 
 		if(isset($_POST['Object']))
 		{
                    $model->attributes=$_POST['Object'];
                    $model->object_id=Version::model()->getNextID(6);
-                   $model->number=Object::model()->getNextNumber($project_id);
+                   $model->release_id=Release::model()->currentRelease($project);
+                   $model->number=Object::model()->getNextNumber($project);
                 
                     
                     if($model->save())
                     {
-                     $version=Version::model()->getNextNumber($project_id,6,1,$model->primaryKey,$model->object_id);   
-                     $this->redirect(array('/project/view/tab/objects/id/'.$id));
+                     $version=Version::model()->getNextNumber($project,6,1,$model->primaryKey,$model->object_id);   
+                     $this->redirect(array('/project/view/tab/objects/id/'.$project));
 		    }
                         
                 }
                
                 $this->render('create',array(
-			'model'=>$model,'project_id'=>$project_id,
+			'model'=>$model,'project_id'=>$project,
 		));
 	}
 

@@ -7,7 +7,7 @@
 Interface type: <?php echo $model->type->name;?> <br /><br />
 
  <?php 
- $usecases=Usecase::model()->getIfaceUsecase($model->id);
+ $usecases=Usecase::model()->getLinkUsecase($model->id,12,15);
  if(!count($usecases)){
  ?>
  This Interface is not used.<br />
@@ -16,7 +16,7 @@ Interface type: <?php echo $model->type->name;?> <br /><br />
  Interface is used in the following UC's:<br />
    <?php foreach($usecases as $item){?>
  <a href="/usecase/view/id/<?php echo $item['usecase_id'];?>">
-       <?php  echo 'UC-'.str_pad($item['package_sequence'], 2, "0", STR_PAD_LEFT).
+       <?php  echo 'UC-'.str_pad($item['package_number'], 2, "0", STR_PAD_LEFT).
          str_pad($item['usecase_number'], 3, "0", STR_PAD_LEFT);?>
  </a>
          <?php echo $item['usecase_name'];?> 

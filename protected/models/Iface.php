@@ -31,12 +31,12 @@ class Iface extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('number, iface_id, name, type_id, project_id', 'required'),
-			array('iface_id, number, type_id, photo_id, project_id', 'numerical', 'integerOnly'=>true),
+			array('number, iface_id, name, type_id, project_id, release_id', 'required'),
+			array('iface_id, number, type_id, photo_id, project_id, release_id', 'numerical', 'integerOnly'=>true),
 			array('name', 'length', 'max'=>255),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, iface_id, photo_id,number, name, type_id', 'safe', 'on'=>'search'),
+			array('id, iface_id, photo_id,number, name, type_id, project_id, release_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -50,8 +50,8 @@ class Iface extends CActiveRecord
 		return array(
 			'type' => array(self::BELONGS_TO, 'Interfacetype', 'type_id'),
                     'project' => array(self::BELONGS_TO, 'Project', 'project_id'),
-			'interfaceusecase' => array(self::HAS_ONE, 'Interfaceusecase', 'interface_id'),
-		);
+			
+                    );
 	}
 
 	/**
@@ -65,7 +65,8 @@ class Iface extends CActiveRecord
                         'number' => 'Number',
 			'name' => 'Name',
 			'type_id' => 'Type',
-                    'project_id' => 'Project',
+                     'project_id' => 'Project',
+                    'release_id' => 'Release',
                     'photo_id'=>'Image'
 		);
 	}
@@ -101,7 +102,7 @@ class Iface extends CActiveRecord
          public function getIfaces($id)
     {
    // GET All interfaces belonging to steps that belong to this UC.
-             
+             $project=Yii::App()->session['project']; 
         $sql="SELECT 
             `i`.`number`,
             `i`.`iface_id`,
@@ -113,33 +114,41 @@ class Iface extends CActiveRecord
             FROM `iface` `i`
             JOIN `interfacetype` `t` 
             on `i`.`type_id`=`t`.`interfacetype_id`
-            JOIN `version` `v`
-            ON `v`.`foreign_key`=`i`.`id`
-            WHERE `iface_id` IN
-            ( SELECT
-            `x`.`iface_id`
-            FROM 
-            `stepiface` `x`
-            
+            JOIN `stepiface` `x`
+            ON `x`.`iface_id`=`i`.`iface_id`            
             JOIN `step` `s`
             ON `s`.`step_id`=`x`.`step_id`
-            JOIN `flow` `f` 
-            on `f`.`flow_id`=`s`.`flow_id`
-            JOIN `version` `v`
-            ON `v`.`foreign_key`=`x`.`id`
-            WHERE
-            `v`.`active`=1
-           AND 
-           `v`.`object` =15
-           AND
+            JOIN `flow` `f`
+            ON `f`.`flow_id`=`s`.`flow_id`
+
+            JOIN `version` `vr`
+            ON `vr`.`foreign_key`=`i`.`id`
+            JOIN `version` `vx`
+            ON `vx`.`foreign_key`=`x`.`id`
+            JOIN `version` `vs`
+            ON `vs`.`foreign_key`=`s`.`id`
+            JOIN `version` `vf`
+            ON `vf`.`foreign_key`=`f`.`id` 
+
+WHERE
             `f`.`usecase_id`=".$id."
-           )    
+            AND `f`.`project_id`=".$project."    
+            AND `i`.`project_id`=".$project."
+            AND `s`.`project_id`=".$project."
+            AND `x`.`project_id`=".$project."
+            AND `t`.`project_id`=".$project."
+            AND
+            `vr`.`object` =12 AND `vr`.`active`=1  AND `vr`.`project_id`=".$project."
+            AND
+            `vx`.`object` =15 AND `vx`.`active`=1   AND `vx`.`project_id`=".$project."          
+            AND
+            `vs`.`object` =9 AND `vs`.`active`=1 AND `vs`.`project_id`=".$project."
+            AND
+            `vf`.`object` =8 AND `vf`.`active`=1  AND `vf`.`project_id`=".$project."
+ 
 
 
-             AND
-            `v`.`object` =12
-             AND
-             `v`.`active`=1
+
              GROUP BY `i`.`id`
              ORDER BY `t`.`number` ASC, `i`.`number` ASC";
         
@@ -151,70 +160,20 @@ class Iface extends CActiveRecord
 		return $projects;
     }
         
-        public function getStepIfaces($id)
-    {
-       
-            /*
-            
-             Query logic, is to select all the iface_id's  that relate to 
-             valid relationships.
-             Then select all the current versions of those. 
-             
-            
-            */
-        $sql="
-            SELECT 
-            `i`.`number`,
-            `i`.`name`, 
-            `i`.`type_id`,
-            `i`.`id`,
-            `i`.`iface_id`
-            FROM `iface` `i`
-            JOIN `version` `v`
-            ON `v`.`foreign_key`=`i`.`id`
-            WHERE 
-            `v`.`active`=1
-            AND 
-            `v`.`object` =12
-            AND `iface_id` IN
-           ( SELECT
-            `x`.`iface_id`
-            FROM 
-            `stepiface` `x`
-            JOIN `step` `s`
-            ON `s`.`step_id`=`x`.`step_id`
-            JOIN `version` `v`
-            ON `v`.`foreign_key`=`x`.`id`
-            WHERE
-            `v`.`active`=1
-           AND 
-           `v`.`object` =15
-           AND
-            `s`.`id`=".$id."
-           )    
-            ";
-            
-
-		$connection=Yii::app()->db;
-		$command = $connection->createCommand($sql);
-		$projects = $command->queryAll();
-		return $projects;
-    }   
-  
    
       
-     public function getProjectIfaces($id)
+     public function getProjectIfaces()
     {
+         $project=Yii::App()->session['project'];
         $sql="
             SELECT `r`.*,`v`.`active`
             FROM `iface` `r`
             JOIN `version` `v`
             ON `v`.`foreign_key`=`r`.`id`
             WHERE 
-              `v`.`object`=12
-            AND
-            `v`.`active`=1 and            
-            `r`.`project_id`=".$id;
+              `v`.`object`=12 AND `v`.`active`=1 AND `v`.`project_id`=".$project."
+              and            
+            `r`.`project_id`=".$project;
 
      
         
@@ -225,12 +184,12 @@ class Iface extends CActiveRecord
 		return $projects;
     }  
     
-      public function getNextIfaceNumber($id)
+      public function getNextIfaceNumber()
     {
-                   
+          $project=Yii::App()->session['project'];         
         $sql="SELECT max(`r`.`number`)as number
-           From `iface` `r`
-            WHERE `r`.`project_id`=".$id;
+                From `iface` `r`
+                WHERE `r`.`project_id`=".$project;
 		$connection=Yii::app()->db;
 		$command = $connection->createCommand($sql);
 		$projects = $command->queryAll();
@@ -246,18 +205,46 @@ class Iface extends CActiveRecord
     
           public function createTypes($id)
     {
-       $sql="INSERT INTO `interfacetype`(`number`, `interfacetype_id`, `name`, `project_id`) VALUES 
-           (0,1,'Not Classified', ".$id."),(1,2,'Web Interface', ".$id."),(2,3,'Email', ".$id.")";
-                 $connection=Yii::app()->db;
+      $initial=array(0=>'Not Classified',1=>'Web interface',2=>'Email');
+         for ($case = 0; $case <= 2; $case++) 
+         {       
+      
+       $type_id=Version::model()->getNextID(13);
+       $sql="INSERT INTO `interfacetype`(
+           `number`, 
+           `interfacetype_id`,
+           
+           `release_id`,
+           `name`,
+           `project_id`) 
+           VALUES 
+           (0,
+           ".$type_id.",
+               ".Release::model()->currentRelease(Yii::app()->session['project']).",
+           '".$initial[$case]."',
+           ".$id.")";
+       $connection=Yii::app()->db;
         $command = $connection->createCommand($sql);
         $command->execute();
+        
+        $sql="select `a`.`id` from `interfacetype` `a` 
+            where
+            `a`.`interfacetype_id` = ".$type_id."
+            AND                
+            `a`.`project_id`=".$id;
+      
+        $connection=Yii::app()->db;
+        $command = $connection->createCommand($sql);
+        $result = $command->queryAll();
+        Version::model()->getNextNumber($id,13,1,$result[0]['id'],$type_id); 
+           }
+    
+        
     }   
-	/**
-	 * Returns the static model of the specified AR class.
-	 * Please note that you should have this exact method in all your CActiveRecord descendants!
-	 * @param string $className active record class name.
-	 * @return Iface the static model class
-	 */
+
+            
+         
+                    
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);

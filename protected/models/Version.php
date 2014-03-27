@@ -22,6 +22,8 @@ class Version extends CActiveRecord
      
      
      ); 
+ 
+  
  public static $actions= array(1=>'create',
                                 2=>'update',
                                 3=>'delete'); 
@@ -157,16 +159,13 @@ class Version extends CActiveRecord
              public function getNextNumber($id,$object, $action, $fk,$fid)
     {
           $sql=" SELECT `v`.`number`
-                        FROM `version` `v`
-                        WHERE 
-                        `v`.`project_id`=".$id."
-                        ORDER BY
-                        `v`.`number` DESC
-                        Limit 0,1";
-
-
- 
-		$connection=Yii::app()->db;
+                 FROM `version` `v`
+                 WHERE 
+                 `v`.`project_id`=".$id."
+                 ORDER BY
+                 `v`.`number` DESC
+                 Limit 0,1";
+        	$connection=Yii::app()->db;
 		$command = $connection->createCommand($sql);
 		$projects = $command->queryAll();
 		   if (!isset($projects[0]['number'])) {
@@ -177,12 +176,12 @@ class Version extends CActiveRecord
           
            $sql="UPDATE `version` 
                 SET 
-              `active`=0
-              WHERE
-              `project_id`=".$id."
-              AND
-              `object`=".$object."
+               `active`=0
+                WHERE
+               `project_id`=".$id."
                AND
+               `object`=".$object."
+                AND
                `foreign_id`=".$fid;
           
                  $connection=Yii::app()->db;
@@ -229,13 +228,11 @@ class Version extends CActiveRecord
         
          public function getNextID($object)
     {
-       
-              
-        $sql="SELECT `r`.`".Version::$objects[$object]."_id` as `number`
-           From `".Version::$objects[$object]."` `r`
-          
-           ORDER BY `number` DESC
-           LIMIT 0,1";
+       $sql="SELECT `r`.`".Version::$objects[$object]."_id` as `number`
+       From `".Version::$objects[$object]."` `r`
+       where `r`.`project_id`=".Yii::App()->session['project']."
+       ORDER BY `number` DESC
+       LIMIT 0,1";
 		$connection=Yii::app()->db;
 		$command = $connection->createCommand($sql);
 		$projects = $command->queryAll();
@@ -281,6 +278,7 @@ class Version extends CActiveRecord
     
       public function getObjectDeletedVersions($id,$parent,$object)
     {
+          //this is for children of version controlled objects ie forms and objects
         $sql="
         SELECT *
         from `".Version::$objects[$object]."` `r`
@@ -312,7 +310,9 @@ class Version extends CActiveRecord
     
        public function getVersions($id,$object)
     {
-        $sql="select `r`.*,
+           $project=Yii::app()->session['project'];
+        $sql="SELECT 
+                `r`.*,
                 `v`.`active`,
                 `v`.`number` as ver_numb,
                 `v`.`release`,
@@ -321,15 +321,19 @@ class Version extends CActiveRecord
                 `v`.`create_user`,
                 `u`.`firstname`,
                 `u`.`lastname`
-                from `".Version::$objects[$object]."` `r`
-                join `version` `v`
+                FROM `".Version::$objects[$object]."` `r`
+                JOIN `version` `v`
                 ON
                 `r`.`id`=`v`.`foreign_key`
-                join `user` `u`
+                JOIN `user` `u`
                 ON
                 `u`.`id`=`v`.`create_user`
                 WHERE 
                 `v`.`object`=".$object."
+                AND
+                `v`.`project_id`=".$project."
+                AND 
+                `r`.`project_id`=".$project."    
                 AND
                 `r`.`".Version::$objects[$object]."_id`=".$id." 
                 ORDER BY `v`.`active` DESC,
@@ -341,12 +345,132 @@ class Version extends CActiveRecord
 		return $projects;
     }  
     
-	/**
-	 * Returns the static model of the specified AR class.
-	 * Please note that you should have this exact method in all your CActiveRecord descendants!
-	 * @param string $className active record class name.
-	 * @return Version the static model class
-	 */
+    
+        public function rollback($key,$id,$object,$project)
+            {
+    //SET ALL Existing TO INACTIVE
+              $sql="UPDATE `version`
+                  Set `active`=0
+                  WHERE
+                  `object`=".$object."
+                  AND
+                  `foreign_id`=".$id."
+                  AND
+                  `project_id`=".$project;
+                $connection=Yii::app()->db;
+                $command = $connection->createCommand($sql);
+                $command->execute();
+                
+        // set the rollback entry to be active, and update the user and time.
+          
+              $sql="UPDATE `version`
+                  Set active=1,
+                  create_date=".now().",
+                  create_user=".Yii::app()->user->id."
+                  WHERE
+                  `object`=".$object."
+                  AND
+                  `foreign_key`=".$key."
+                  AND
+                  `project_id`=".$project;
+                 $connection=Yii::app()->db;
+        $command = $connection->createCommand($sql);
+        $command->execute();        
+  
+                 }  
+
+    
+    public function objectList($object,$project)
+            {
+
+              $sql="
+                  SELECT `x`.`id` from
+                  `".Version::$objects[$object]."` `x`
+                  JOIN `version` `v`
+                  ON `x`.`id`=`v`.`foreign_key`
+                  WHERE
+                  `v`.`active`=1 AND `v`.`object`=".$object."
+                  AND
+                  `v`.`project_id`=".$project;
+
+        $connection=Yii::app()->db;
+		$command = $connection->createCommand($sql);
+		$projects = $command->queryAll();
+		
+		return $projects;       
+  
+                 }  
+
+ public function copyObject($object,$id,$project,$newrelease)
+            {
+
+    $number=0.1;
+     /*
+      *  $sql="
+    DROP TEMPORARY TABLE IF EXISTS tmptable_1;    
+    CREATE TEMPORARY TABLE tmptable_1
+    SELECT *
+    FROM ".Version::$objects[$object]." 
+    WHERE id=".$id.";
+    UPDATE tmptable_1 SET project_id = ".$project.";
+    ALTER TABLE  tmptable_1 MODIFY id INT NULL;
+    UPDATE tmptable_1 SET 
+    id=NULL,
+    release_id=".$newrelease.",
+    ".Version::$objects[$object]."_id=(SELECT 1+MAX(".Version::$objects[$object]."_id) 
+       From ".Version::$objects[$object].");
+    INSERT INTO ".Version::$objects[$object]." SELECT * FROM tmptable_1;
+      */
+//two lots of SQL - one if there is aproject relationship, and one if not.
+      $sql="
+    DROP TEMPORARY TABLE IF EXISTS tmptable_1;    
+    CREATE TEMPORARY TABLE tmptable_1
+    SELECT *
+    FROM ".Version::$objects[$object]." 
+    WHERE id=".$id.";
+    UPDATE tmptable_1 SET project_id = ".$project.";
+    ALTER TABLE  tmptable_1 MODIFY id INT NULL;
+    UPDATE tmptable_1 SET 
+    id=NULL,
+    release_id=".$newrelease.";
+    INSERT INTO ".Version::$objects[$object]." SELECT * FROM tmptable_1;
+    
+    DROP TEMPORARY TABLE IF EXISTS tmptable_1;
+    INSERT INTO `version`
+    (`number`, 
+    `release`, 
+    `project_id`, 
+    `status`, 
+    `object`, 
+    `action`, 
+    `foreign_key`, 
+    `foreign_id`, 
+    `active`, 
+    `create_date`, 
+    `create_user`
+    ) VALUES (
+    ".$number.",
+    ".$newrelease.",
+    ".$project.",
+    1,
+    ".$object.",
+    1,
+    LAST_INSERT_ID(),
+    (SELECT `".Version::$objects[$object]."_id` FROM ".Version::$objects[$object]." WHERE id=LAST_INSERT_ID()),
+    1,
+    now(),
+    ".Yii::App()->user->id."
+    )
+";
+        
+        
+         
+         $connection=Yii::app()->db;
+        $command = $connection->createCommand($sql);
+        $command->execute();      
+  
+                 }  
+                 
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);

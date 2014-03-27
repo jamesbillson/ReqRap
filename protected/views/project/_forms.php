@@ -1,7 +1,7 @@
  
 <?php 
 
-$data = Form::model()->getProjectForms($model->id);
+$data = Form::model()->getProjectForms(Yii::app()->session['project']);
 
 $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
     'title' => 'Forms',

@@ -65,14 +65,16 @@ class IfaceController extends Controller
 	public function actionCreate($id)
 	{
               
-            
+              $project=Yii::app()->session['project'];
                 $model= new Iface;
 		
 
 		if(isset($_POST['Iface']))
 		{
                   $model->attributes=$_POST['Iface'];
-                  $model->number=Iface::model()->getNextIfaceNumber($model->project->id);
+                  $model->project_id= Yii::app()->session['project'];
+                  $model->release_id=Release::model()->currentRelease($project);
+                  $model->number=Iface::model()->getNextIfaceNumber($project);
                   $model->iface_id=Version::model()->getNextID(12);
                   //$model->file='default.png';
                      
@@ -80,12 +82,13 @@ class IfaceController extends Controller
                     {
                    
                         $interfacetype=new Interfacetype;
-                        $interfacetype->project_id=$_POST['Iface']['project_id'];
+                       
                         $interfacetype->name=$_POST['new_type'];
                         $interfacetype->interfacetype_id=Version::model()->getNextID(13);
-
+                        $interfacetype->project_id= $project;
+                        $interfacetype->release_id=Release::model()->currentRelease($project);
                         if($interfacetype->save()){
-                        $version=Version::model()->getNextNumber($id,13,1,$interface->primaryKey,$interface->interfacetype_id);   
+                        $version=Version::model()->getNextNumber($project,13,1,$interface->primaryKey,$interface->interfacetype_id);   
                         $model->type_id=$interface->interfacetype_id; 
                                                     }
                     }
@@ -93,10 +96,10 @@ class IfaceController extends Controller
                      
                      
 			if($model->save()){
-                     $version=Version::model()->getNextNumber($id,12,1,$model->primaryKey,$model->iface_id);   
+                     $version=Version::model()->getNextNumber($project,12,1,$model->primaryKey,$model->iface_id);   
                    
                 
-                    	$this->redirect(array('/project/view/id/'.$model->project->id.'/tab/interfaces'));
+                    	$this->redirect(array('/project/view/id/'.$project.'/tab/interfaces'));
 		   } }
 
 		$this->render('create',array(
@@ -116,24 +119,26 @@ class IfaceController extends Controller
 
 	public function actionUpdate($ucid,$id)
 	{
-		$model=$this->loadModel($id);
+	  $project=Yii::app()->session['project'];	
+            $model=$this->loadModel($id);
                 $new= new Iface;
-		$id=$model->project_id;
+		
                 $new->name=$model->name;
-                $new->iface_id=$model->iface_id;
+               
                 $new->type_id=$model->type_id;
                 $new->number=$model->number;
 		if(isset($_POST['Iface']))
 		{
 		 $new->attributes=$_POST['Iface'];
                  $new->number=$model->number;
-                 $new->project_id=$model->project_id;
-                 $new->iface_id=$model->iface_id;	
+                 $new->project_id=$project;
+                 $new->iface_id=$model->iface_id;
+                 $new->release_id=$model->release_id;	
                  if($new->save()){
-                      $version=Version::model()->getNextNumber($id,12,2,$new->primaryKey,$new->iface_id);   
+                      $version=Version::model()->getNextNumber($project,12,2,$new->primaryKey,$new->iface_id);   
                       
                       if($uc=-1){
-                           $this->redirect(array('project/view/id/'.$model->project_id.'/tab/interfaces')); 
+                           $this->redirect(array('project/view/id/'.$project.'/tab/interfaces')); 
                         }
                       ELSE {
                         $this->redirect(array('/usecase/view/id/'.$uc));  
@@ -145,16 +150,16 @@ class IfaceController extends Controller
 		}
 
 		$this->render('update',array(
-			'model'=>$new,'id'=>$model->project_id
+			'model'=>$new,'id'=>$project
 		));
 	}
 
 	
 	public function actionDelete($id,$ucid)
 	{
-               
+              $project=Yii::app()->session['project'];   
             $model=$this->loadModel($id);
-            $version=Version::model()->getNextNumber($model->project_id,12,3,$id,$model->iface_id);  
+            $version=Version::model()->getNextNumber($project,12,3,$id,$model->iface_id);  
 	       if($ucid!=-1) 
                {
                $this->redirect(array('/usecase/view/id/'.$ucid));

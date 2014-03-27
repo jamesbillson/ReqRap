@@ -1,7 +1,4 @@
-
-<div class="row">
-    <h3> <a href="/project/view/tab/usecases/id/<?php echo $model->package->project->id; ?>"><?php echo $model->package->project->name; ?></a></h3>
-</div>
+ <?php echo $this->renderPartial('/project/head',array('tab'=>'usecases')); ?>
 
 
 
@@ -117,8 +114,8 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
       
      
  
-$rules = Rule::model()->getRules($model->usecase_id); // get the requirements with answers
-
+//$rules = Rule::model()->getRules($model->usecase_id); 
+$rules = Usecase::model()->getLinkedObjects($model->usecase_id,1,16);
 
 
 $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
@@ -142,6 +139,8 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
              <b><?php echo $item['title'];?></b>
                   </td>
               <td>
+                    <a href="/rule/delete/id/<?php echo $item['id'];?>/ucid/<?php echo $model->id;?>"><i class="icon-remove-sign text-error" rel="tooltip" title="Delete"></i></a> 
+                
                   <a href="/rule/update/id/<?php echo $item['id'];?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
               </td>
          
@@ -159,7 +158,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
    
        <?php 
 $interfaces = Iface::model()->getIfaces($model->usecase_id); // get the requirements with answers
-
+//$interfaces = Usecase::model()->getLinkedObjects($model->usecase_id,12,15,$model->);
 
 
 $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
@@ -213,7 +212,8 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
   ?>
      
        <?php 
-$forms = Form::model()->getForms($model->usecase_id); // get the requirements with answers
+$forms = Usecase::model()->getLinkedObjects($model->usecase_id,2,14) ;
+     //   Form::model()->getForms($model->usecase_id); // get the requirements with answers
 
 
 
@@ -236,7 +236,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
           <tr class="odd">
 
               <td>   
-                  <a href="/form/view/id/<?php echo $item['id'];?>"><?php echo 'UF-'.str_pad($item['number'], 3, "0", STR_PAD_LEFT);?> </a>
+                  <a href="/form/view/id/<?php echo $item['form_id'];?>"><?php echo 'UF-'.str_pad($item['number'], 3, "0", STR_PAD_LEFT);?> </a>
                   <b><?php echo $item['name'];?></b>
                 
               </td> 

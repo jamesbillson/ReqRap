@@ -91,54 +91,7 @@ class Release extends CActiveRecord
 			'criteria'=>$criteria,
 		));
 	}
-/*
-             public function getNextNumber($id,$object, $action)
-    {
-       
-              
-        $sql="select *
-            from release v
-            inner join(
-            select project_id, max(number) vers
-            from release
-             )ver on v.project_id = ver.project_id and v.number = ver.vers  
-            WHERE `v`.`project_id`=".$id;
-
-
-
-SELECT max(`v`.`number`)as number
-           From `release` `v`
-            WHERE `v`.`project_id`=".$id;
- * 
  
-		$connection=Yii::app()->db;
-		$command = $connection->createCommand($sql);
-		$projects = $command->queryAll();
-		   if (!isset($projects[0]['number'])) {
-                    $number='0';
-                } ELSE {
-                    $number=$projects[0]['number']+1;
-                }
-                
-          $sql="INSERT INTO `release`(`number`,
-              `release`, 
-              `project_id`,
-              `status`,
-              `object`,
-              `action`,
-              `create_date`,
-              `create_user`) 
-              VALUES
-              ('".$number."',"
-                  . " '".$projects[0]['release']."',".$id.",1,".$object.",".$action.",now(),".Yii::app()->user->id.")";
-          
-                 $connection=Yii::app()->db;
-        $command = $connection->createCommand($sql);
-        $command->execute();
-        
-		return $number;
-    }  
- */      
     public function currentRelease($id)
     {
                $sql="SELECT `r`.`id`
@@ -159,11 +112,20 @@ SELECT max(`v`.`number`)as number
     
          public function createInitial($id)
     {
-       $sql="INSERT INTO `release`(`number`, `status`, `project_id`,`create_user`) VALUES 
-           (0.1,1, ".$id.",".Yii::app()->user->id.")";
-                 $connection=Yii::app()->db;
+       $sql="INSERT INTO `release`(
+           `number`, 
+           `status`, 
+           `project_id`,
+           `create_user`
+           ) VALUES (
+           0.1,
+           1, 
+           ".$id.",
+           ".Yii::app()->user->id.")";
+           $connection=Yii::app()->db;
         $command = $connection->createCommand($sql);
         $command->execute();
+        
     }   
     
 	/**

@@ -14,10 +14,13 @@
 	<b><?php echo CHtml::encode($model->getAttributeLabel('text')); ?>:</b>
 	<br />
             <?php echo CHtml::encode($model->text); ?>
+       
+        
         <h3>Uses</h3>
         
         <?php 
- $steprule=(Steprule::model()->findAll('rule_id='.$model->rule_id));
+ //$steprule=(Steprule::model()->findAll('rule_id='.$model->rule_id));
+ $steprule=Usecase::getLinkUsecase($model->id,1,16);
  if(!count($steprule)){
  $usecases= Usecase::model()->getProjectUCs($model->project->id);
  ?>
@@ -50,12 +53,12 @@
  <?php } ELSE { ?>
  Interface is used in the following UC's:<br />
    <?php foreach($steprule as $item){?>
- <a href="/usecase/view/id/<?php echo $item->step->flow->usecase->id;?>">
-       <?php  echo 'UC-'.str_pad($item->step->flow->usecase->package->sequence, 2, "0", STR_PAD_LEFT).
-         str_pad($item->step->flow->usecase->number, 3, "0", STR_PAD_LEFT);?>
+ <a href="/usecase/view/id/<?php echo $item['usecase_id'];?>">
+       <?php  echo 'UC-'.str_pad($item['package_number'], 2, "0", STR_PAD_LEFT).
+         str_pad($item['usecase_number'], 3, "0", STR_PAD_LEFT);?>
  </a>
-         <?php echo $item->step->flow->usecase->name;?> 
-         (<a href="/step/update/id/-1/flow/<?php echo $item->step->flow->id;?>"><?php echo $item->step->flow->name;?> Flow</a>)
+         <?php echo $item['usecase_name'];?> 
+         (<a href="/step/update/id/-1/flow/<?php echo $item['flow_id'];?>"><?php echo $item['flow_name'];?> Flow</a>)
            
 
  <?php } ?>

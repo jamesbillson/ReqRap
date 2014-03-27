@@ -32,7 +32,7 @@ class ReleaseController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update'),
+				'actions'=>array('create','update','finalise','copy'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -56,10 +56,92 @@ class ReleaseController extends Controller
 		));
 	}
 
-	/**
-	 * Creates a new model.
-	 * If creation is successful, the browser will be redirected to the 'view' page.
-	 */
+
+        public function actionFinalise($id)
+	{
+		
+         $model= $this->loadModel($id);
+         $project=$model->project_id;
+         $release=new Release;
+         $release->attributes = $model->attributes;
+         $oldrelease=$model->id;
+         $release->number = $model->number +1;
+         
+         $model->status=2;
+         $model->save();
+         $release->save();
+         $newrelease=$release->getPrimaryKey();
+         for ($object = 1; $object <= 16; $object++) 
+         {
+        echo 'We are copying '.Version::$objects[$object].'<br />';
+        $objects = Version::model()->objectList($object,$project);
+       
+        foreach ($objects as $instance)
+            {
+            Version::model()->copyObject($object,$instance['id'],$project,$newrelease);
+            echo 'We are copying id '.$instance['id'].'<br />';
+            }
+            
+         }
+
+         
+             
+	// A new release has been created.
+        
+             
+             
+             
+
+		
+	}
+        
+       
+                public function actionCopy($id)
+	{
+	
+        // CREATE A NEW PROJECT
+        
+         $model=new Project;
+         $model->name='Copy';
+         $model->description='Copied from ';
+         $model->company_id = User::model()->myCompany();
+         $model->extlink = md5(uniqid(rand(), true));
+         if($model->save())
+         {
+                $project=$model->getPrimaryKey();
+            // CREATE AN INITIAL RELEASE and set newrelease
+                Release::model ()->createInitial($project); 
+                $release = Release::model()->find('project_id='.$project);    
+                $newrelease=$release->id;   
+       	
+        echo 'We are copying from Project id = '.$id.'to Project id='.$project.'<br /><br />'; 
+        for ($object = 1; $object <= 16; $object++) 
+         {
+        echo 'We are copying '.Version::$objects[$object].'<br />';
+        $objects = Version::model()->objectList($object,$id);    
+        foreach ($objects as $instance)
+            {
+            Version::model()->copyObject($object,$instance['id'],$project,$newrelease);
+            echo 'We are copying object '.Version::$objects[$object].'
+                with id '.$instance['id'].' to project '.$project.'<br />';
+            }
+            
+         } // end object loop
+         } // end model save
+         else {
+         echo "didn't save the new project";    
+         }
+             echo '<a href="/project/mybids">projects</a>';
+	// A new release has been created.
+        
+             
+             
+             
+
+		
+	}
+        
+        
 	public function actionCreate()
 	{
 		$model=new Release;

@@ -70,6 +70,8 @@ class StepController extends Controller
                 $number= 1+ Step::model()->getNextNumber($id);
                 $model->number=$number;
                 $model->flow_id= $flow->flow_id;
+                $model->project_id= Yii::app()->session['project'];
+                $model->release_id=Release::model()->currentRelease($model->project_id);
                 $model->text = 'New step';
                 $model->result = 'Result';
                 $model->actor_id=$flow->usecase->actor_id;
@@ -104,6 +106,8 @@ class StepController extends Controller
                 $model->result = 'Result';
                 $model->actor_id=$step->flow->usecase->actor_id;
                 $model->step_id=Version::model()->getNextID(9);
+                $model->project_id= Yii::app()->session['project'];
+                $model->release_id=Release::model()->currentRelease($model->project);
                 $model->save();
                 $version=Version::model()->getNextNumber($model->flow->usecase->package->project_id,9,1,$model->getPrimaryKey(),$model->step_id);   
                      
@@ -140,7 +144,8 @@ class StepController extends Controller
                          $new->number=$step->number;
                          $new->flow_id=$step->flow_id;
                          $new->step_id=$step->step_id;
-                        
+                        $new->project_id=$step->project_id;
+                         $new->release_id=$step->release_id;
                          
 			if($new->save())
                         {

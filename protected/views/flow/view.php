@@ -1,8 +1,4 @@
    <?php 
-   
-   
-   
-   
  $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
 	'title' => 'Steps',
 	'headerIcon' => 'icon-list-ol',
@@ -13,7 +9,7 @@
  <table class="table">
 <tbody>
 
-   
+   <?php //echo 'model id: '.$model->id.' project'.$model->package->project_id?>
     <?php 
      $data = Flow::model()->getUCFlow($model->id); // get flows
      foreach($data as $line) { // LOOP THRU FLOWS

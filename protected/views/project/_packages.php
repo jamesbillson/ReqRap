@@ -14,7 +14,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
         'class' => 'bootstrap.widgets.TbButton',
         'type' => 'primary', // '', 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
         'label'=> 'Add Package',
-            'url'=>'/package/create/id/'.$model->id,
+            'url'=>'/package/create',
     ),
     
 )));

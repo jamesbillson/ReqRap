@@ -1,4 +1,4 @@
-
+<?php echo $this->renderPartial('/project/head',array('tab'=>'usecase')); ?>
 <h2>Use Case UC-
     <?php echo str_pad($model->usecase->package->number, 2, "0", STR_PAD_LEFT); ?>
     <?php echo str_pad($model->usecase->number, 3, "0", STR_PAD_LEFT); ?>

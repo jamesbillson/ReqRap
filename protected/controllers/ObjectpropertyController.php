@@ -32,7 +32,7 @@ class ObjectpropertyController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update','delete'),
+				'actions'=>array('create','update','delete','history'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -58,13 +58,19 @@ class ObjectpropertyController extends Controller
         	));
 	}
 
-	
+	     public function actionHistory($id) // Note that this is form_id
+	{
+             	$versions=Version::model()->getVersions($id,7);
+                $model=$this->loadModel($versions[0]['id']);
+                $this->render('history',array('model'=>$model,
+			'versions'=>$versions
+        	));
+	}
 	
                  public function actionCreate($id)
 	{
-	
+	$project=Yii::App()->session['project'];
                 $object=Object::model()->findbyPK($id);
-                $project=$object->project_id;
                 $object_id=$object->object_id;
                 $model=new Objectproperty;
 
@@ -75,6 +81,8 @@ class ObjectpropertyController extends Controller
                     $model->attributes=$_POST['Objectproperty'];
                     $model->number=Objectproperty::model()->getNextNumber($object_id);
                     $model->objectproperty_id=Version::model()->getNextID(7);
+                    $model->project_id=$project;
+                    $model->release_id=Release::model()->currentRelease($project);
                     
                     if($model->save())
                     {
@@ -93,7 +101,7 @@ class ObjectpropertyController extends Controller
    public function actionUpdate($id)
 	{
             //  The id should be the formproperty_id rather than the id? 
-            
+            $project=Yii::App()->session['project'];
             $model=$this->loadModel($id);
                 $new= new Objectproperty;
 
@@ -102,11 +110,13 @@ class ObjectpropertyController extends Controller
                   	 $new->attributes=$_POST['Objectproperty'];
                          $new->number=$model->number;
                          $new->objectproperty_id=$model->objectproperty_id;
+                         $new->project_id=$project;
+                         $new->release_id=Release::model()->currentRelease($project);
                          
                          
 			if($new->save())
                         {
-			$version=Version::model()->getNextNumber($model->object->project_id, 7, 2,$new->primaryKey,$new->objectproperty_id);
+			$version=Version::model()->getNextNumber($project, 7, 2,$new->primaryKey,$new->objectproperty_id);
                         $this->redirect(array('/object/view/id/'.$model->object_id));
                         }        
 		}
