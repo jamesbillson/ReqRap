@@ -97,7 +97,7 @@ class Object extends CActiveRecord
 
             public function getNextNumber($id)
     {
-                   
+               
         $sql="SELECT max(`r`.`number`)as number
            From `object` `r`
             WHERE `r`.`project_id`=".$id;
@@ -114,8 +114,10 @@ class Object extends CActiveRecord
     
     }   
     
-      public function getProjectObjects($id)
+      public function getProjectObjects()
     {
+       $release=Yii::App()->session['release'];
+       $project=Yii::App()->session['project'];
         $sql="
             SELECT `r`.*,`v`.`active`
             FROM `object` `r`
@@ -125,8 +127,10 @@ class Object extends CActiveRecord
             `v`.`object`=6
             AND
             `v`.`active`=1
-            AND
-            `r`.`project_id`=".$id;
+        and            
+            `r`.`release_id`=".$release."         
+        and            
+            `r`.`project_id`=".$project;
 
      
         

@@ -123,6 +123,8 @@ class Objectproperty extends CActiveRecord
 	
        public function getObjectProperty($id)
     {
+          $project=Yii::App()->session['project'];
+          $release=Yii::App()->session['release'];
         $sql="
             SELECT 
             `r`.`id`,
@@ -137,7 +139,13 @@ class Objectproperty extends CActiveRecord
             WHERE 
               `v`.`object`=7
             AND
-            `v`.`active`=1 and            
+            `v`.`active`=1
+            AND
+            `v`.`release`=".$release."
+            AND 
+            `v`.`project_id`=".$project."
+            AND
+            
             `r`.`object_id`=".$id." order by `r`.`number`";
 
      

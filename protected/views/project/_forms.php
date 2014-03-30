@@ -1,6 +1,6 @@
  
 <?php 
-
+$permission=(Yii::App()->session['permission']==1)?true : false; 
 $data = Form::model()->getProjectForms(Yii::app()->session['project']);
 
 $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
@@ -14,6 +14,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
         'class' => 'bootstrap.widgets.TbButton',
         'type' => 'primary', // '', 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
         'label'=> 'Add Form',
+         'visible'=> $permission,
         'url'=>'/form/create/uc/-1/id/'.$model->id,
     ),
     
@@ -64,10 +65,11 @@ if (count($data)):?>
 
                   
                     <td>
+                          <?php if($permission){ ?>
                         <a href="/form/update/id/<?php echo $item['id'];?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
                         <a href="/form/delete/ucid/<?php echo $model->id;?>/type/2/id/<?php echo $item['id'];?>"><i class="icon-remove-sign" rel="tooltip" title="Delete"></i></a> 
                       <a href="/form/history/id/<?php echo $item['form_id'];?>"><i class="icon-calendar" rel="tooltip" title="History"></i></a> 
-                  
+                     <?php } ?>
                     </td>
                 </tr>
             <?php endforeach ?>
@@ -76,7 +78,7 @@ if (count($data)):?>
 
     <?php endif;
 $this->endWidget(); ?>
-
+<?php if($permission){ ?>
 <?php $deleted = Version::model()->getProjectDeletedVersions($model->id,2);
 if (count($deleted)):?>
     
@@ -112,4 +114,6 @@ if (count($deleted)):?>
             </div>
         </div>
     </div>
-<?php  endif; ?>
+<?php  endif; ?>  
+    
+    <?php } ?>

@@ -1,6 +1,6 @@
 <?php
 
-class VersionController extends Controller
+class LibraryController extends Controller
 {
 	/**
 	 * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
@@ -49,27 +49,28 @@ class VersionController extends Controller
 	 * Displays a particular model.
 	 * @param integer $id the ID of the model to be displayed
 	 */
-	public function actionView($id)
+	public function actionView()
 	{
-		$this->render('view',array(
-			'model'=>$this->loadModel($id),
-		));
+		$this->render('view');
 	}
 
 	/**
 	 * Creates a new model.
 	 * If creation is successful, the browser will be redirected to the 'view' page.
 	 */
-	public function actionCreate()
+	public function actionCreate($id)
 	{
-		$model=new Version;
+            $release=Release::model()->findbyPK($id);
+            $model=new Library;
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
-		if(isset($_POST['Version']))
+		if(isset($_POST['Library']))
 		{
-			$model->attributes=$_POST['Version'];
+			$model->attributes=$_POST['Library'];
+                         $model->owner_id=$mycompany=User::model()->myCompany();
+                         $model->release_id=$release->id;
 			if($model->save())
 				$this->redirect(array('view','id'=>$model->id));
 		}
@@ -91,9 +92,9 @@ class VersionController extends Controller
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
-		if(isset($_POST['Version']))
+		if(isset($_POST['Library']))
 		{
-			$model->attributes=$_POST['Version'];
+			$model->attributes=$_POST['Library'];
 			if($model->save())
 				$this->redirect(array('view','id'=>$model->id));
 		}
@@ -120,15 +121,11 @@ class VersionController extends Controller
 	/**
 	 * Lists all models.
 	 */
-	public function actionIndex($id)
+	public function actionIndex()
 	{
-            $model=Project::model()->findbyPK(Yii::app()->session['project']);
-            $dataProvider=new CActiveDataProvider('Version' ,
-                        array('criteria'=>array(
-                        'condition'=>'`release`='.$id, 'order'=>'number DESC')));
-                
-		$this->render('changelog',array(
-			'dataProvider'=>$dataProvider,'model'=>$model,
+		$dataProvider=new CActiveDataProvider('Library');
+		$this->render('index',array(
+			'dataProvider'=>$dataProvider,
 		));
 	}
 
@@ -137,10 +134,10 @@ class VersionController extends Controller
 	 */
 	public function actionAdmin()
 	{
-		$model=new Version('search');
+		$model=new Library('search');
 		$model->unsetAttributes();  // clear any default values
-		if(isset($_GET['Version']))
-			$model->attributes=$_GET['Version'];
+		if(isset($_GET['Library']))
+			$model->attributes=$_GET['Library'];
 
 		$this->render('admin',array(
 			'model'=>$model,
@@ -151,12 +148,12 @@ class VersionController extends Controller
 	 * Returns the data model based on the primary key given in the GET variable.
 	 * If the data model is not found, an HTTP exception will be raised.
 	 * @param integer $id the ID of the model to be loaded
-	 * @return Version the loaded model
+	 * @return Library the loaded model
 	 * @throws CHttpException
 	 */
 	public function loadModel($id)
 	{
-		$model=Version::model()->findByPk($id);
+		$model=Library::model()->findByPk($id);
 		if($model===null)
 			throw new CHttpException(404,'The requested page does not exist.');
 		return $model;
@@ -164,11 +161,11 @@ class VersionController extends Controller
 
 	/**
 	 * Performs the AJAX validation.
-	 * @param Version $model the model to be validated
+	 * @param Library $model the model to be validated
 	 */
 	protected function performAjaxValidation($model)
 	{
-		if(isset($_POST['ajax']) && $_POST['ajax']==='version-form')
+		if(isset($_POST['ajax']) && $_POST['ajax']==='library-form')
 		{
 			echo CActiveForm::validate($model);
 			Yii::app()->end();

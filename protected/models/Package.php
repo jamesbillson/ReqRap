@@ -123,7 +123,8 @@ public static $packagestageicon= array(1=>'icon-time text-warning',
          public function getPackages($id) // project id
     {
      
-              
+                 $release=Yii::App()->session['release'];
+       $project=Yii::App()->session['project'];    
      
     
      $sql="
@@ -134,8 +135,12 @@ public static $packagestageicon= array(1=>'icon-time text-warning',
             WHERE 
               `v`.`object`=5
             AND
-            `v`.`active`=1 and            
-            `r`.`project_id`=".$id." order by number ASC";
+            `v`.`active`=1 
+            and            
+            `r`.`project_id`=".$project." 
+            and
+            `r`.`release_id`=".$release."
+            order by number ASC";
       
         $connection=Yii::app()->db;
         $command = $connection->createCommand($sql);

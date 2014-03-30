@@ -119,7 +119,8 @@ class IfaceController extends Controller
 
 	public function actionUpdate($ucid,$id)
 	{
-	  $project=Yii::app()->session['project'];	
+	    $release=Yii::App()->session['release'];
+            $project=Yii::App()->session['project'];	
             $model=$this->loadModel($id);
                 $new= new Iface;
 		
@@ -133,7 +134,7 @@ class IfaceController extends Controller
                  $new->number=$model->number;
                  $new->project_id=$project;
                  $new->iface_id=$model->iface_id;
-                 $new->release_id=$model->release_id;	
+                 $new->release_id=$release;	
                  if($new->save()){
                       $version=Version::model()->getNextNumber($project,12,2,$new->primaryKey,$new->iface_id);   
                       

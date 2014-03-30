@@ -46,6 +46,8 @@ class Release extends CActiveRecord
 	{
 		
             return array(
+                
+                			'project' => array(self::BELONGS_TO, 'Project', 'project_id'),
 		);
 	}
 
@@ -92,12 +94,13 @@ class Release extends CActiveRecord
 		));
 	}
  
-    public function currentRelease($id)
+    public function currentRelease()
     {
+          
                $sql="SELECT `r`.`id`
             FROM `release` `r`
             WHERE 
-            `r`.`project_id`=".$id."
+            `r`.`project_id`=".Yii::App()->session['project']."
             ORDER BY
             `r`.`id` DESC
             Limit 0,1";
@@ -118,7 +121,7 @@ class Release extends CActiveRecord
            `project_id`,
            `create_user`
            ) VALUES (
-           0.1,
+           0,
            1, 
            ".$id.",
            ".Yii::app()->user->id.")";

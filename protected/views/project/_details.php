@@ -1,11 +1,13 @@
 <h3>Release History</h3>
 <?php
+
+
 $data = Release::model()->findAll('project_id='.Yii::app()->session['project']);
 
 
 
 ?>
-<a href="/version/index/id/<?php echo $model->id; ?> ">View Changelog</a>
+
 <table class="table">
 	<thead>
 	<tr>
@@ -36,13 +38,23 @@ $data = Release::model()->findAll('project_id='.Yii::app()->session['project']);
 
 
       <td>
-        <a href="/release/copy/id/<?php echo $model->id;?>"><i class="icon-flag" rel="tooltip" title="Copy Release to new project"></i></a>
-          <a href="/release/finalise/id/<?php echo $item['id'];?>"><i class="icon-flag" rel="tooltip" title="Finalise Release"></i></a> 
-      
+           <?php if ($item['id']==Yii::App()->session['release']){;?>
+          <a href="/release/finalise/id/<?php echo $item['id'];?>"><i class="icon-certificate" rel="tooltip" title="Finalise Release"></i></a> 
+           
+              <?php } ELSE {?>
+          
+            <a href="/library/create/id/<?php echo $item['id'];?>"><i class="icon-book text-success" rel="tooltip" title="Add to library"></i></a> 
+      <a href="/release/copy/id/<?php echo $model->id;?>"><i class="icon-copy" rel="tooltip" title="Copy Release to new project"></i></a>
+       
+             <?php } ?>
+          
+        
           
           <a href="/release/update/id/<?php echo $item['id'];?>"><i class="icon-edit" rel="tooltip" title="Edit Details"></i></a> 
-        <a href="/rule/delete/id/<?php echo $item['id'];?>"><i class="icon-remove-sign text-error" rel="tooltip" title="Remove/Uninvite"></i></a> 
+        <a href="/release/delete/id/<?php echo $item['id'];?>"><i class="icon-remove-sign text-error" rel="tooltip" title="Remove"></i></a> 
     
+        <a href="/release/set/id/<?php echo $item['id'];?>"><i class="icon-eye-open " rel="tooltip" title="Browse this release"></i></a> 
+       <a href="/version/index/id/<?php echo $item['id'];?>"><i class="icon-calendar " rel="tooltip" title="View change log"></i></a> 
               
         </td>
         </tr>

@@ -65,17 +65,18 @@ class InterfacetypeController extends Controller
 	public function actionCreate()
 	{
 		$model=new Interfacetype;
-
+            $release=Yii::App()->session['release'];
+            $project=Yii::App()->session['project'];
 		if(isset($_POST['Interfacetype']))
 		{
                         $model->attributes=$_POST['Interfacetype'];
                         $model->interfacetype_id=Version::model()->getNextID(13);
-                        $model->project_id= Yii::app()->session['project'];
-                        $model->release_id=Release::model()->currentRelease($model->project_id);
+                        $model->project_id=$project;
+                        $model->release_id=$release;
 			if($model->save())
                                 {
-				$this->redirect(array('/project/view/tab/interfaces/id/'.$model->id));
-                                $version=Version::model()->getNextNumber($id,13,1,$model->primaryKey,$model->interfacetype_id);   
+				$this->redirect(array('/project/view/tab/interfaces/'));
+                                $version=Version::model()->getNextNumber($project,13,1,$model->primaryKey,$model->interfacetype_id);   
                                 }
                  }
 
@@ -88,7 +89,8 @@ class InterfacetypeController extends Controller
 	public function actionUpdate($id)
 	{
 		
-            
+             $release=Yii::App()->session['release'];
+            $project=Yii::App()->session['project'];
             $model=$this->loadModel($id);
                 $new= new Interfacetype;
 		
@@ -97,11 +99,11 @@ class InterfacetypeController extends Controller
 		{
 		 $new->attributes=$_POST['Interfacetype'];
                  $new->number=$model->number;
-                 $new->project_id=$model->project_id;
-                 $new->release_id=$model->release_id;
+                 $new->project_id=$project;
+                 $new->release_id=$release;
                  $new->interfacetype_id=$model->interfacetype_id;	
                  if($new->save()){
-                      $version=Version::model()->getNextNumber($id,13,2,$new->primaryKey,$new->interfacetype_id);   
+                      $version=Version::model()->getNextNumber($project,13,2,$new->primaryKey,$new->interfacetype_id);   
                       $this->redirect(array('/usecase/view/id/'.$ucid));
                  }
 				

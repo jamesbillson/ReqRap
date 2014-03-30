@@ -44,18 +44,15 @@ class Stepiface extends CActiveRecord
                     
        // 'step' => array(self::BELONGS_TO, 'Step', 'step_id'),
 	//'iface' => array(self::BELONGS_TO, 'Iface', 'iface_id'),
-	  'step'=>array(self::BELONGS_TO,
-                                    'Step','step_id',
-                                    'joinType'=>'JOIN',
-                                    'foreignKey'=>'step_id',
-                                'on'=>'step.project_id=project_id'),
 
-	'iface'=>array(self::BELONGS_TO,
-                                    'Iface','step_id',
-                                    'joinType'=>'JOIN',
-                                    'foreignKey'=>'iface_id',
-                                'on'=>'iface.project_id=project_id'),
-		);
+   'step' => array(self::BELONGS_TO, 'Step', 
+                        array('step_id' => 'step_id'),
+                        'on' => 't.project_id = step.project_id',),
+                    
+   'iface' => array(self::BELONGS_TO, 'Iface', 
+                        array('iface_id' => 'iface_id'),
+                        'on' => 't.project_id = iface.project_id',)	
+                    );
 	}
 
 	/**

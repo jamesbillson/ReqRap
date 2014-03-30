@@ -49,11 +49,10 @@ class Step extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			
-                    'flow'=>array(self::BELONGS_TO,
-                                    'flow','flow_id',
-                                    'joinType'=>'JOIN',
-                                    'foreignKey'=>'flow_id',
-                                'on'=>'flow.project_id=project_id')
+                'flow' => array(self::BELONGS_TO, 'Flow', 
+                 array('flow_id' => 'flow_id'),
+                 'on' => 't.project_id = flow.project_id',)
+
 		);
 	}
 
@@ -173,7 +172,7 @@ class Step extends CActiveRecord
     
           public function getFlowSteps($id) // GET FOR A FLOW
     {
-           
+                  $release=Yii::App()->session['release'];
             $project=Yii::App()->session['project'];   
         $sql="SELECT `s`.*,
             `f`.`name` as flow
@@ -184,7 +183,7 @@ class Step extends CActiveRecord
             ON `v`.`foreign_key`=`s`.`id`
             WHERE `f`.`id`=".$id."
             AND
-           `v`.`object`=9 AND `v`.`active`=1 AND `v`.`project_id`=".$project."
+           `v`.`object`=9 AND `v`.`active`=1 AND `v`.`project_id`=".$project." AND `v`.`release`=".$release."
             ORDER BY `s`.`number` ASC";
 		$connection=Yii::app()->db;
 		$command = $connection->createCommand($sql);
@@ -196,16 +195,31 @@ class Step extends CActiveRecord
     
       public function getMainSteps($id) // GET MAIN FOR A UC
     {
-        $user= Yii::app()->user->id;   
+                $project=Yii::App()->session['project'];
+           $release=Yii::App()->session['release'];    
               
-        $sql="SELECT `s`.`text`,`s`.`actor_id`,`f`.`name` as flow, `s`.`id`,`s`.`number`
+        $sql="SELECT `s`.`text`,
+            `s`.`actor_id`,
+            `f`.`name` as flow,
+            `s`.`id`,`s`.`number`
             FROM `step` `s`
             Join `flow` `f` 
-            on `f`.`id`=`s`.`flow_id`
+            on `f`.`flow_id`=`s`.`flow_id`
             Join `usecase` `u` 
-            on `u`.`id`=`f`.`usecase_id`
+            on `u`.`usecase_id`=`f`.`usecase_id`
+             JOIN `version` `vs`
+            ON `vs`.`foreign_key`=`s`.`id`
+            JOIN `version` `vu`
+            ON `vu`.`foreign_key`=`u`.`id`
+          
             WHERE `u`.`id`=".$id."
-            AND main=1
+            AND `f`.`main`=1
+             AND
+            `vs`.`object` =9 AND `vs`.`active`=1 AND `vs`.`project_id`=".$project."
+                 AND `vs`.`release`=".$release."  
+              AND
+            `vu`.`object` =10 AND `vu`.`active`=1 AND `vu`.`project_id`=".$project."
+                 AND `vu`.`release`=".$release."  
             ORDER BY `s`.`number` ASC";
 		$connection=Yii::app()->db;
 		$command = $connection->createCommand($sql);
@@ -273,6 +287,7 @@ class Step extends CActiveRecord
                public function getStepLinks($id,$object,$relation)
     {
           $project=Yii::App()->session['project'];
+           $release=Yii::App()->session['release'];
             $sql="
             SELECT
             `r`.*,
@@ -295,10 +310,13 @@ class Step extends CActiveRecord
             `s`.`id`=".$id."
             AND
             `vr`.`object` =".$object." AND `vr`.`active`=1 AND `vr`.`project_id`=".$project."
+                 AND `vr`.`release`=".$release."    
             AND
-            `vx`.`object` =".$relation." AND `vx`.`active`=1 AND `vx`.`project_id`=".$project."            
+            `vx`.`object` =".$relation." AND `vx`.`active`=1 AND `vx`.`project_id`=".$project." 
+                AND `vx`.`release`=".$release."  
             AND
             `vs`.`object` =9 AND `vs`.`active`=1 AND `vs`.`project_id`=".$project."
+                AND `vs`.`release`=".$release."
 
 
 

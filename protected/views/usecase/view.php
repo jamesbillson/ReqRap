@@ -1,5 +1,9 @@
- <?php echo $this->renderPartial('/project/head',array('tab'=>'usecases')); ?>
+ <?php echo $this->renderPartial('/project/head',array('tab'=>'usecases')); 
+ $permission=(Yii::App()->session['permission']==1)?true : false; 
+ ?>
 
+<?php if($permission){ ?>
+<?php } ?> 
 
 
  <div class="row"> 
@@ -13,6 +17,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                     'class' => 'bootstrap.widgets.TbButton',
                     'type' => 'link', // '', 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
                     'icon'=> 'edit',
+                    'visible'=>$permission,
                     'url'=>'/usecase/update/id/'.$model->usecase_id,
                     
                       ),
@@ -20,6 +25,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                     'class' => 'bootstrap.widgets.TbButton',
                     'type' => 'link', // '', 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
                     'icon'=> 'calendar',
+                 'visible'=>$permission,
                     'url'=>'/usecase/history/id/'.$model->usecase_id,
                     
                       ),
@@ -139,9 +145,10 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
              <b><?php echo $item['title'];?></b>
                   </td>
               <td>
-                    <a href="/rule/delete/id/<?php echo $item['id'];?>/ucid/<?php echo $model->id;?>"><i class="icon-remove-sign text-error" rel="tooltip" title="Delete"></i></a> 
-                
-                  <a href="/rule/update/id/<?php echo $item['id'];?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
+                <?php if($permission){ ?>
+                <a href="/rule/delete/id/<?php echo $item['id'];?>/ucid/<?php echo $model->id;?>"><i class="icon-remove-sign text-error" rel="tooltip" title="Delete"></i></a> 
+                <a href="/rule/update/id/<?php echo $item['id'];?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
+             <?php } ?> 
               </td>
          
         <?php endforeach ?>       
@@ -198,8 +205,11 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                 
               </td> 
               <td>
+                  <?php if($permission){ ?>
+
                   <a href="/iface/delete/id/<?php echo $item['id'];?>/ucid/<?php echo $model->id;?>"><i class="icon-remove-sign text-error" rel="tooltip" title="Delete"></i></a> 
                   <a href="/iface/update/id/<?php echo $item['id'];?>/ucid/<?php echo $model->id;?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
+             <?php } ?> 
               </td>
          
         <?php endforeach ?>       
@@ -241,8 +251,11 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                 
               </td> 
               <td>
+                  <?php if($permission){ ?>
+
                   <a href="/form/delete/id/<?php echo $item['id'];?>/ucid/<?php echo $model->id;?>"><i class="icon-remove-sign text-error" rel="tooltip" title="Delete"></i></a> 
                   <a href="/form/update/id/<?php echo $item['id'];?>/ucid/<?php echo $model->id;?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
+             <?php } ?> 
               </td>
          
         <?php endforeach ?>       
@@ -257,7 +270,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
       
 
 <div class="row"> 
-    <?php 
+    <?php /*
 $testcases = Testcase::model()->findAll('usecase_id='.$model->usecase_id); // get the requirements with answers
 $run=Testrun::model()->getCurrentRun($model->package->project->id);
 
@@ -316,6 +329,8 @@ $result=Testcaseresult::model()->find('testrun_id='.$run.' AND testcase_id='.$it
   <?php endif; // end count of results
   
   $this->endWidget();
+     * 
+     */
   ?>
       </div>
 

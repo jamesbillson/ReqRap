@@ -1,10 +1,11 @@
 
 <?php 
+$permission=(Yii::App()->session['permission']==1)?true : false; 
 $data = Actor::model()->getProjectActors(Yii::app()->session['project']);
 
 $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
-    'title' => 'Issues',
-    'headerIcon' => 'icon-gift',
+    'title' => 'Actors',
+    'headerIcon' => 'icon-user',
     // when displaying a table, if we include bootstra-widget-table class
     // the table will be 0-padding to the box
     'htmlOptions' => array('class'=>'bootstrap-widget-table'),
@@ -13,6 +14,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
         'class' => 'bootstrap.widgets.TbButton',
         'type' => 'primary', // '', 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
         'label'=> 'Add Actor',
+         'visible'=> $permission,
         'url'=>'/actor/create/id/'.$model->id,
     ),
     
@@ -52,10 +54,11 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
 
                   
                     <td>
-                        <a href="/actor/update/id/<?php echo $item['id'];?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
-                        <a href="/actor/delete/id/<?php echo $item['id'];?>"><i class="icon-remove-sign" rel="tooltip" title="Delete"></i></a> 
+                      <?php if($permission){ ?>
+                     <a href="/actor/update/id/<?php echo $item['id'];?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
+                     <a href="/actor/delete/id/<?php echo $item['id'];?>"><i class="icon-remove-sign" rel="tooltip" title="Delete"></i></a> 
                      <a href="/actor/history/id/<?php echo $item['actor_id'];?>"><i class="icon-calendar" rel="tooltip" title="Version History"></i></a> 
-                    
+                      <?php  } ?>
                     </td>
                 </tr>
             <?php endforeach ?>
@@ -64,6 +67,9 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
 
     <?php endif;
 $this->endWidget(); ?>
+
+
+  <?php if($permission){ ?>
 
 <?php $deleted = Version::model()->getProjectDeletedVersions($model->id,4);
 if (count($deleted)):?>
@@ -100,4 +106,7 @@ if (count($deleted)):?>
             </div>
         </div>
     </div>
-<?php  endif; ?>
+<?php  endif;
+
+  }
+  ?>

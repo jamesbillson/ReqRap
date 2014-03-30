@@ -99,7 +99,10 @@ class Actor extends CActiveRecord
 
            public function getProjectActors($id)
     {
-        $sql="
+       $release=Yii::App()->session['release'];
+       $project=Yii::App()->session['project'];
+               $sql="
+           
             SELECT `r`.*
             FROM `actor` `r`
             JOIN `version` `v`
@@ -108,8 +111,10 @@ class Actor extends CActiveRecord
             `v`.`object`=4
             AND
             `v`.`active`=1 
-            and            
-            `r`.`project_id`=".$id;
+        and            
+            `r`.`release_id`=".$release."         
+        and            
+            `r`.`project_id`=".$project;
 
      
         
@@ -142,7 +147,7 @@ class Actor extends CActiveRecord
     {
                      
        $project=Yii::App()->session['project']; 
-        
+               $release=Yii::App()->session['release'];
          $sql="SELECT 
             `i`.*
             FROM `actor` `i`
@@ -166,12 +171,13 @@ WHERE
             `f`.`usecase_id`=".$id."
             AND
             `vi`.`object`=4 AND `vi`.`active`=1  AND `vi`.`project_id`=".$project."
-                
+                AND `vi`.`release`=".$release."
             AND
             `vs`.`object`=9 AND `vs`.`active`=1 AND `vs`.`project_id`=".$project."
-            AND
+             AND `vs`.`release`=".$release."           
+                AND
             `vf`.`object`=8 AND `vf`.`active`=1  AND `vf`.`project_id`=".$project."
- 
+            AND `vf`.`release`=".$release."
 
 
 

@@ -1,7 +1,8 @@
                 
                         
     <?php
-    
+    $project=Yii::App()->session['project']; 
+    $permission=(Yii::App()->session['permission']==1)?true : false; 
     $steps = Step::model()->getFlowSteps($model->id);
     if (count($steps)):
         
@@ -14,7 +15,7 @@
           <tr class="odd">
             
 
-                 <?php if($item['id']==$id) { // THIS IS THE STEP WE ARE EDITING?>
+                 <?php if($item['id']==$id && $permission) { // THIS IS THE STEP WE ARE EDITING?>
                  <td> 
                       <?php $form=$this->beginWidget('CActiveForm', array(
                     'id'=>'step-form',
@@ -41,7 +42,7 @@
                      
                      
  <?php     
-           $actors = Actor::model()->getProjectActors($model->usecase->package->project->id); ?>
+           $actors = Actor::model()->getProjectActors($project); ?>
                      <select name="Step[actor_id]">
   <?php     foreach($actors as $actor){
            echo '<option value="'.$actor['actor_id'].'"';
@@ -72,11 +73,13 @@
                   <?php }  ?>
                 <br />
                  
-                 <?php $interfaces = Iface::model()->getProjectIfaces($model->usecase->package->project->id);?>   
+                 <?php $interfaces = Iface::model()->getProjectIfaces($project);?>   
                 <form action="/stepiface/createinline/" method="POST">
                     
                  <input type="hidden" name="step_id" value="<?php echo $item['step_id'];?>">
-                 <input type="hidden" name="project_id" value="<?php echo $model->usecase->package->project->id;?>">
+                 <input type="hidden" name="project_id" value="<?php echo $project;?>">
+                 <input type="hidden" name="step_db_id" value="<?php echo $item['id'];?>">
+                 
                  <select name="interface">
                  <?php foreach($interfaces as $iface){?>
                      <option value="<?php echo $iface['iface_id'];?>"><?php echo $iface['name'];?></option>
@@ -100,10 +103,11 @@
                  <?php } ?>
                 <br />
                  
-                 <?php $rules = Rule::model()->findAll('project_id='.$model->usecase->package->project->id); ?>   
+                 <?php $rules = Rule::model()->findAll('project_id='.$project); ?>   
                         <form action="/steprule/createinline/" method="POST">
                         <input type="hidden" name="step_id" value="<?php echo $item['id'];?>">
-                        <input type="hidden" name="project_id" value="<?php echo $model->usecase->package->project->id;?>">
+                        <input type="hidden" name="project_id" value="<?php echo $project;?>">
+                        <input type="hidden" name="step_db_id" value="<?php echo $item['id'];?>">
                         <select name="rule">
                             <?php foreach($rules as $rule){?>
                             <option value="<?php echo $rule['rule_id'];?>"><?php echo $rule['title'];?></option>
@@ -126,11 +130,11 @@
                  <?php } ?>
                 <br />
                  
-                 <?php $forms = Form::model()->findAll('project_id='.$model->usecase->package->project->id); ?>   
+                 <?php $forms = Form::model()->findAll('project_id='.$project); ?>   
                         <form action="/stepform/createinline/" method="POST">
                         <input type="hidden" name="step_id" value="<?php echo $item['id'];?>">
-                         <input type="hidden" name="project_id" value="<?php echo $model->usecase->package->project->id;?>">
-                      
+                         <input type="hidden" name="project_id" value="<?php echo $project;?>">
+                      <input type="hidden" name="step_db_id" value="<?php echo $item['id'];?>">
                         <select name="form">
                             <?php foreach($forms as $form){?>
                             <option value="<?php echo $form['form_id'];?>"><?php echo $form['name'];?></option>
@@ -146,10 +150,12 @@
                       { // THIS IS NOT THE EDIT ROW, SHOW THE RELATED IFACE AND RULES ?>
                     
                     <td>  
+                          <?php if($permission){ ?>
                         <a href="/step/insert/id/<?php echo $item['id'];?>"><i class="icon-chevron-right" rel="tooltip" title="Insert a new step before this step"></i></a> 
                         <a href="/step/delete/id/<?php echo $item['id'];?>"><i class="icon-remove-sign" rel="tooltip" title="Delete this step"></i></a> 
                        <a href="/step/update/flow/1/id/<?php echo $item['id'];?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
-                        <b>Step <?php echo $item['number'];?>:</b> 
+                          <?php } ?> 
+                       <b>Step <?php echo $item['number'];?>:</b> 
                              </td> </tr>
           <tr>
               <td> <b>Action:</b><br />
@@ -213,8 +219,11 @@
       
     </tbody>
   </table>
+           <?php if($permission){ ?>
+                      
+
  <a href="/step/create/id/<?php echo $model->id;?>"><i class="icon-plus-sign-alt" rel="tooltip" title="Add another step"></i> Add Step</a> 
-         
+        <?php } ?>     
 
   <?php endif; // end count of results ?>
   

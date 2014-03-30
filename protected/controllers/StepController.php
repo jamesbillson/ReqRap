@@ -64,20 +64,23 @@ class StepController extends Controller
 	 */
 	public function actionCreate($id)
 	{
-            $flow=Flow::model()->findbyPK($id);	
+		$project=Yii::App()->session['project'];
+                //$flow=Flow::model()->findbyPK($id);	
+                $flow = Flow::model()->with('usecase')->findByPk($id);
+                
             $model=new Step;
                 
                 $number= 1+ Step::model()->getNextNumber($id);
                 $model->number=$number;
                 $model->flow_id= $flow->flow_id;
-                $model->project_id= Yii::app()->session['project'];
-                $model->release_id=Release::model()->currentRelease($model->project_id);
+                $model->project_id= $project;
+                $model->release_id=Release::model()->currentRelease($project);
                 $model->text = 'New step';
                 $model->result = 'Result';
                 $model->actor_id=$flow->usecase->actor_id;
                 $model->step_id=Version::model()->getNextID(9);
                 $model->save();
-                $version=Version::model()->getNextNumber($model->flow->usecase->package->project_id,9,1,$model->getPrimaryKey(),$model->step_id);   
+                $version=Version::model()->getNextNumber($project,9,1,$model->getPrimaryKey(),$model->step_id);   
                      
 		
 		$this->redirect(array('/step/update/flow/'.$model->flow_id.'/id/'.$model->id));
@@ -125,12 +128,19 @@ class StepController extends Controller
 	 */
 	public function actionUpdate($flow,$id)
 	{
+            $project=Yii::App()->session['project'];
 	if($id!=-1){
-            $step=$this->loadModel($id);
-            $model=Flow::model()->findbyPK($step->flow->id);
+            //$step=$this->loadModel($id);
+            $step= Step::model()->with('flow')->findByPk($id);
+            $model = Flow::model()->with('usecase')->findByPk($step->flow->id);
+            $usecase= Usecase::model()->with('package')->findByPk($model->usecase->id);
+            //$model=Flow::model()->findbyPK($step->flow->id);
+            
         }
         if($id==-1){
-              $model=Flow::model()->findbyPK($flow);
+              //$model=Flow::model()->findbyPK($flow);
+              $model = Flow::model()->with('usecase')->findByPk($flow);
+               $usecase= Usecase::model()->with('package')->findByPk($model->usecase->id);
               $step=array();
               }
         $new= new Step;
@@ -149,7 +159,7 @@ class StepController extends Controller
                          
 			if($new->save())
                         {
-			$version=Version::model()->getNextNumber($model->usecase->package->project_id, 9, 2,$new->getPrimaryKey(),$step->step_id);
+			$version=Version::model()->getNextNumber($project, 9, 2,$new->getPrimaryKey(),$step->step_id);
                         $this->redirect(array('/step/update/flow/'.$model->id.'/id/-1'));
                         
                         }        
@@ -159,7 +169,7 @@ class StepController extends Controller
 		}
 
 		$this->render('/step/update',array(
-			'model'=>$model,'step'=>$step,'id'=>$id
+			'model'=>$model,'step'=>$step,'id'=>$id,'usecase'=>$usecase
 		));
 	}
 

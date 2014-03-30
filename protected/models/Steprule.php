@@ -43,19 +43,14 @@ class Steprule extends CActiveRecord
 		return array(
                   //  'step' => array(self::BELONGS_TO, 'Step', 'step_id'),
                   //  'rule' => array(self::BELONGS_TO, 'Rule', 'rule_id'),
-                  'step'=>array(self::BELONGS_TO,
-                                    'Step','step_id',
-                                    'joinType'=>'JOIN',
-                                    'foreignKey'=>'step_id',
-                                'on'=>'step.project_id=project_id'),
-
-	'rule'=>array(self::BELONGS_TO,
-                                    'Rule','step_id',
-                                    'joinType'=>'JOIN',
-                                    'foreignKey'=>'rule_id',
-                                'on'=>'rule.project_id=project_id'),
+'step' => array(self::BELONGS_TO, 'Step', 
+                        array('step_id' => 'step_id'),
+                        'on' => 't.project_id = step.project_id',),
                     
-		);
+   'rule' => array(self::BELONGS_TO, 'Iface', 
+                        array('rule_id' => 'rule_id'),
+                        'on' => 't.project_id = iface.project_id',)	
+                    );
 	}
 
 	/**

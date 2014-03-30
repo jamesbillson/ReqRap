@@ -57,11 +57,14 @@ class Usecase extends CActiveRecord
 			'steps' => array(self::HAS_MANY, 'Step', 'usecase_id'),
 			'usedby' => array(self::HAS_MANY, 'Uses', 'usedby'),
 			'uses' => array(self::HAS_ONE, 'Uses', 'uses'),
+                        'package' => array(self::BELONGS_TO, 'Package', 
+                        array('package_id' => 'package_id'),
+                        'on' => 't.project_id = package.project_id',
+                ),
+   
+
                         
-                    'package'=>array(self::BELONGS_TO,
-                                    'Package',array ('package_id'=>'package_id'),
-                        
-                        'on'=>'project_id=package.project_id'),
+                    
                     
                     
 		);
@@ -114,7 +117,8 @@ class Usecase extends CActiveRecord
 
            public function getPackageUsecases($id)
     {
-             $project=Yii::app()->session['project'];
+            $project=Yii::app()->session['project'];
+            $release=Yii::App()->session['release'];
           $sql="
             SELECT `u`.*,`p`.`number` as packnumber
             FROM `usecase` `u`
@@ -132,6 +136,10 @@ class Usecase extends CActiveRecord
              `p`.`project_id`=".$project."
             AND 
             `u`.`project_id`=".$project."
+            AND
+             `p`.`release_id`=".$release."
+            AND 
+            `u`.`release_id`=".$release."
             AND
             `v1`.`active`=1 AND `v1`.`object`=10
             AND
@@ -186,7 +194,8 @@ class Usecase extends CActiveRecord
            $compare='<';
        }
               
-            $sql="SELECT `r`.`number`,`r`.`id`
+
+                     $sql=" SELECT `r`.`number`,`r`.`id`
                     From `usecase` `r`
                     WHERE `r`.`number`".$compare.$id."
                    
@@ -195,8 +204,8 @@ class Usecase extends CActiveRecord
                         AND
                        `r`.`release_id`=".$release."
                     ORDER BY `r`.`number` ".$order."
-                        LIMIT 0,1"
-                    ;
+                        LIMIT 0,1";
+                            
 		$connection=Yii::app()->db;
 		$command = $connection->createCommand($sql);
 		$projects = $command->queryAll();
@@ -209,7 +218,8 @@ class Usecase extends CActiveRecord
     {
         
         $project=Yii::App()->session['project'];
-        
+         $release=Yii::App()->session['release'];  
+
          $sql="SELECT 
             `u`.*,
             `p`.`name` as packname,
@@ -245,27 +255,32 @@ class Usecase extends CActiveRecord
             `r`.`id`=".$id." 
             
             AND
-            `v1`.`active`=1 AND `v1`.`object`=10 AND `v1`.`project_id`=".$project."
+            `v1`.`active`=1 AND `v1`.`object`=10 AND `v1`.`project_id`=".$project." 
+               AND `v1`.`release`=".$release." 
             AND
-            `v2`.`active`=1 AND `v2`.`object`=5 AND `v2`.`project_id`=".$project."
+            `v2`.`active`=1 AND `v2`.`object`=5 AND `v2`.`project_id`=".$project." 
+               AND `v2`.`release`=".$release." 
             AND
-            `v3`.`active`=1 AND `v3`.`object`=9 AND `v3`.`project_id`=".$project."
+            `v3`.`active`=1 AND `v3`.`object`=9 AND `v3`.`project_id`=".$project." 
+                AND `v3`.`release`=".$release." 
             AND
-            `v4`.`active`=1 AND `v4`.`object`=8 AND `v4`.`project_id`=".$project."
+            `v4`.`active`=1 AND `v4`.`object`=8 AND `v4`.`project_id`=".$project." 
+              AND `v4`.`release`=".$release." 
             
                 GROUP BY `u`.`id`
                 ORDER BY 
              `p`.`number` ASC,              
              `u`.`number` ASC";
-        
+  
 		$connection=Yii::app()->db;
 		$command = $connection->createCommand($sql);
 		$projects = $command->queryAll();
 		return $projects;
     }   
-             public function getProjectIfaces($id)
+             public function getProjectIfaces()
     {
-            $project=Yii::App()->session['project'];     
+            $project=Yii::App()->session['project']; 
+            $release=Yii::App()->session['release'];    
         $sql="
             SELECT `r`.*,`v`.`active`
             FROM `iface` `r`
@@ -273,8 +288,10 @@ class Usecase extends CActiveRecord
             ON `v`.`foreign_key`=`r`.`id`
             WHERE 
               `v`.`object`=12 AND `v`.`active`=1  AND `v`.`project_id`=".$project."
-            and            
-            `r`.`project_id`=".$id;
+            and        
+            `r`.`release_id`=".$release."
+            and
+            `r`.`project_id`=".$project;
 
      
         
@@ -289,7 +306,7 @@ class Usecase extends CActiveRecord
            public function getLinkUsecase($id,$object,$relationship)
     {
            //This is used to show back links from rules, forms and ifaces to UC's
-
+  $release=Yii::App()->session['release'];
                $project=Yii::App()->session['project'];      
             $sql="
                 SELECT 
@@ -329,15 +346,20 @@ class Usecase extends CActiveRecord
                 `f`.`project_id`=".$project."
                 AND
                 `v1`.`object`=".$object."  AND `v1`.`active`=1  AND `v1`.`project_id`=".$project."
-                AND
+                AND `v1`.`release`=".$release." AND
                 `v2`.`object`=".$relationship." AND `v2`.`active`=1  AND `v2`.`project_id`=".$project."
+                AND `v2`.`release`=".$release."
                 AND
                 `v3`.`object`=9 AND  `v3`.`active`=1  AND `v3`.`project_id`=".$project."
+                    AND `v3`.`release`=".$release."
                 AND
+                
                 `v4`.`object`=10  AND `v4`.`active`=1  AND `v4`.`project_id`=".$project."
+                AND `v4`.`release`=".$release."
                 AND
                 `v5`.`object`=5 AND `v5`.`active`=1  AND `v5`.`project_id`=".$project."
-              ";
+                AND `v5`.`release`=".$release."              
+                ";
          
         $connection=Yii::app()->db;
         $command = $connection->createCommand($sql);
@@ -349,9 +371,11 @@ class Usecase extends CActiveRecord
     
              public function getLinkedObjects($id,$object,$relationship)
     {
- $project=Yii::App()->session['project']; 
-          $sql="
-          SELECT 
+            $project=Yii::App()->session['project']; 
+            $release=Yii::App()->session['release'];
+            
+            $sql="
+            SELECT 
             `r`.*
             FROM `".Version::$objects[$object]."` `r`
             JOIN `step".Version::$objects[$object]."` `x`
@@ -372,15 +396,21 @@ class Usecase extends CActiveRecord
 
 WHERE
             `f`.`usecase_id`=".$id."
+        
             AND
-            `vr`.`object` =".$object." AND `vr`.`active`=1  AND `vr`.`project_id`=".$project."
+            `vr`.`object` =".$object." AND `vr`.`active`=1  AND `vr`.`project_id`=".$project." 
+               AND `vr`.`release`=".$release."
             AND
-            `vx`.`object` =".$relationship." AND `vx`.`active`=1   AND `vx`.`project_id`=".$project."          
+            `vx`.`object` =".$relationship." AND `vx`.`active`=1
+            AND `vx`.`project_id`=".$project."          
+            AND `vx`.`release`=".$release."   
             AND
-            `vs`.`object` =9 AND `vs`.`active`=1 AND `vs`.`project_id`=".$project."
+            `vs`.`object` =9 AND `vs`.`active`=1 
+            AND `vs`.`project_id`=".$project."
+            AND `vs`.`release`=".$release."
             AND
             `vf`.`object` =8 AND `vf`.`active`=1  AND `vf`.`project_id`=".$project."
-
+           AND `vf`.`release`=".$release."
              GROUP BY `r`.`id`
              ORDER BY `r`.`number` ASC";
         

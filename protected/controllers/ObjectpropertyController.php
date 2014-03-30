@@ -69,7 +69,8 @@ class ObjectpropertyController extends Controller
 	
                  public function actionCreate($id)
 	{
-	$project=Yii::App()->session['project'];
+	    $release=Yii::App()->session['release'];
+            $project=Yii::App()->session['project'];
                 $object=Object::model()->findbyPK($id);
                 $object_id=$object->object_id;
                 $model=new Objectproperty;
@@ -82,7 +83,7 @@ class ObjectpropertyController extends Controller
                     $model->number=Objectproperty::model()->getNextNumber($object_id);
                     $model->objectproperty_id=Version::model()->getNextID(7);
                     $model->project_id=$project;
-                    $model->release_id=Release::model()->currentRelease($project);
+                    $model->release_id=$release;
                     
                     if($model->save())
                     {
@@ -100,8 +101,10 @@ class ObjectpropertyController extends Controller
         
    public function actionUpdate($id)
 	{
-            //  The id should be the formproperty_id rather than the id? 
+            
+           $release=Yii::App()->session['release'];
             $project=Yii::App()->session['project'];
+            
             $model=$this->loadModel($id);
                 $new= new Objectproperty;
 
@@ -111,7 +114,7 @@ class ObjectpropertyController extends Controller
                          $new->number=$model->number;
                          $new->objectproperty_id=$model->objectproperty_id;
                          $new->project_id=$project;
-                         $new->release_id=Release::model()->currentRelease($project);
+                         $new->release_id=$release;
                          
                          
 			if($new->save())

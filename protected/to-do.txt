@@ -1,3 +1,11 @@
+Snippets
+
+
+
+
+       $project=Yii::App()->session['project'];
+
+
 ### ACTOR
 Actor should have a 'Test Case' pre-conditions (e.g. log in as user)
 

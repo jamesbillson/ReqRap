@@ -52,7 +52,11 @@ class UsecaseController extends Controller
 	public function actionView($id)
 	{
 		$versions=Version::model()->getVersions($id,10);
-                $model=$this->loadModel($versions[0]['id']);
+               // $model=$this->loadModel($versions[0]['id']);
+                
+                $model = Usecase::model()->with('package')->findByPk($versions[0]['id']);
+               // $foo = $bar->foo;
+                
                 $this->render('view',array('model'=>$model,
 			'versions'=>$versions
         	));
@@ -112,7 +116,7 @@ class UsecaseController extends Controller
                           $step->save(false);
                           // make version
                           $version=Version::model()->getNextNumber($project,9,1,$step->primaryKey,$step->step_id);
-				$this->redirect(array('/project/view/tab/usecases/','id'=>$model->package->package_id));
+			$this->redirect(array('/project/view/tab/usecases/'));
                 }}
 
 		$this->render('create',array(
@@ -129,7 +133,8 @@ class UsecaseController extends Controller
 	{
 		                
                 
-                  $project=Yii::app()->session['project'];
+            $release=Yii::App()->session['release'];
+            $project=Yii::App()->session['project'];
                 $model=$this->loadModel($id);
                 $package=Package::model()->findbyPK($model->package->id);
                 $number=$model->number;
@@ -144,7 +149,7 @@ class UsecaseController extends Controller
                  $new->package_id=$model->package_id;
                  $new->usecase_id=$model->usecase_id;
                  $new->project_id=$project;
-                 $new->release_id=$model->release_id;	
+                 $new->release_id=$release;	
                  if($new->save()){
                       $version=Version::model()->getNextNumber($project,10,2,$new->primaryKey,$new->usecase_id);   
                       $this->redirect(array('/usecase/view/id/'.$new->usecase_id));
@@ -164,16 +169,47 @@ class UsecaseController extends Controller
             // UP
             // load this one, and the next one.
             // 
-            $model=$this->loadModel($id);
+           // $model=$this->loadModel($id);
+            $model = Usecase::model()->with('package')->findByPk($id);
             $oldnum=$model->number;
-            $nextid=Usecase::model()->getNextUC($dir,$model->number);
-            $model2=$this->loadModel($nextid);
-            $newnum=$model2->number;
-            $model->number = $newnum;
-            $model2->number=$oldnum;
-            $model->save(false);
-            $model2->save(false);
+           //  echo 'moving old number'.$oldnum.'<br />';
+            $ucs=Usecase::model()->getPackageUsecases($model->package->id);
+           // echo 'getting them for '.$model->package_id.'<br />';
+           // echo 'number of results: '.count($ucs);
+          // echo '<pre>';
+            print_r($ucs);
+         // echo '</pre>'.'<br />';
+          
+            $nextid=0;
             
+            if($dir==1){
+                    for ($i = 0; $i <= count($ucs)-1; $i++) 
+                    {
+                       echo 'going up'.$i.'<br />';
+                    if ($ucs[$i]['number']==$oldnum) $nextid=$ucs[$i+1]['id'];
+                    }
+                } 
+          // echo '$nextid down ='.$nextid.'<br />';
+            if($dir==2){
+                    for ($i = count($ucs)-1; $i > 0; $i--) 
+                    {
+                       echo 'going down'.$i.'<br />';
+                    if ($ucs[$i]['number']==$oldnum) $nextid=$ucs[$i-1]['id'];
+                    }
+                } 
+                
+                   echo '$nextid up ='.$nextid.'<br />';     
+                
+      $model2 = $this->loadmodel($nextid);
+            
+            $model->number = $model2->number;
+            $model2->number=$oldnum;
+            
+          //  echo 'moved to  number'.$model->number.'<br />';
+          //  echo 'moved from number'.$model2->number.'<br />';
+           $model->save(false);
+          $model2->save(false);
+           
             
             
             // 
@@ -182,7 +218,7 @@ class UsecaseController extends Controller
             // save them both
             
           
-		$this->redirect(array('/project/view/tab/usecases/id/'));
+		$this->redirect(array('/project/view/tab/usecases/'));
 	
 	}
         

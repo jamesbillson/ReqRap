@@ -70,7 +70,8 @@ class PackageController extends Controller
         
 	  public function actionCreate()
 	{
-	  $project=Yii::app()->session['project'];
+	    $release=Yii::App()->session['release'];
+            $project=Yii::App()->session['project'];
                 $model=new Package;
 
 		if(isset($_POST['Package']))
@@ -80,7 +81,7 @@ class PackageController extends Controller
                    $model->package_id=Version::model()->getNextID(5);
                    $model->number=Package::model()->getNextNumber($project);
                    
-                   $model->release_id=Release::model()->currentRelease($project);
+                   $model->release_id=$release;
                     
                     if($model->save())
                     {
@@ -104,7 +105,9 @@ class PackageController extends Controller
 	{
                 $model=$this->loadModel($id);
                 $new= new Package;
-  $project=Yii::app()->session['project'];
+            $release=Yii::App()->session['release'];
+            $project=Yii::App()->session['project'];
+
             
 		if(isset($_POST['Package']))
 		{
@@ -112,7 +115,7 @@ class PackageController extends Controller
 			 $new->attributes=$_POST['Package'];
                          $new->project_id=$project;
                          $new->package_id=$model->package_id;
-                         $new->release_id=$model->release_id;
+                         $new->release_id=$release;
                          $new->number=$model->number;
 
 			if($new->save())

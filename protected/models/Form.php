@@ -192,54 +192,12 @@ class Form extends CActiveRecord
 		$projects = $command->queryAll();
 		return $projects;
     }  
-	/*
-          public function getForms($id)
-    {
-
-          $sql="
-          SELECT 
-            `r`.`number`,
-            `r`.`name`, 
-            `r`.`id`
-            FROM `form` `r`
-            JOIN `stepform` `x`
-            ON `x`.`form_id`=`r`.`form_id`
-            JOIN `step` `s`
-            ON `s`.`step_id`=`x`.`step_id`
-            JOIN `flow` `f`
-            ON `f`.`flow_id`=`s`.`flow_id`
-            JOIN `version` `vr`
-            ON `vr`.`foreign_key`=`r`.`id`
-            JOIN `version` `vx`
-            ON `vx`.`foreign_key`=`x`.`id`
-            JOIN `version` `vs`
-            ON `vs`.`foreign_key`=`s`.`id`
-            JOIN `version` `vf`
-            ON `vf`.`foreign_key`=`f`.`id` 
-        WHERE
-            `f`.`usecase_id`=".$id."
-            AND
-            `vr`.`object` =2 AND `vr`.`active`=1
-            AND
-            `vx`.`object` =14 AND `vx`.`active`=1            
-            AND
-            `vs`.`object` =9 AND `vs`.`active`=1
-            AND
-            `vf`.`object` =8 AND `vf`.`active`=1
-
-
-             GROUP BY `r`.`id`
-             ORDER BY `r`.`number` ASC";
-        
-         
-		$connection=Yii::app()->db;
-		$command = $connection->createCommand($sql);
-		$projects = $command->queryAll();
-		return $projects;
-    }
-    */
+	 
       public function getProjectForms($id)
     {
+          
+       $release=Yii::App()->session['release'];
+       $project=Yii::App()->session['project'];
         $sql="
             SELECT `r`.`id`,`r`.`form_id`,`r`.`number`,`r`.`name`,`v`.`active`
             FROM `form` `r`
@@ -248,9 +206,11 @@ class Form extends CActiveRecord
             WHERE 
               `v`.`object`=2
             AND
-            `v`.`active`=1 and            
-            `r`.`project_id`=".$id;
-
+            `v`.`active`=1 
+               and            
+            `r`.`release_id`=".$release."         
+        and            
+            `r`.`project_id`=".$project;
      
         
         $connection=Yii::app()->db;

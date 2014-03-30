@@ -1,5 +1,10 @@
-<h1><a href="/project/view/tab/rules/id/<?php echo $model->project->id;?>"><?php echo $model->project->name;?></a></h1>
+<?php 
+echo $this->renderPartial('/project/head',array('tab'=>'rules'));
 
+$permission=(Yii::App()->session['permission']==1)?true : false; 
+?>
+
+ 
 
 <h2>View Rule BR-<?php echo str_pad($model->number, 3, "0", STR_PAD_LEFT); ?>     
     <a href="/rule/update/id/<?php echo $model->id;?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 

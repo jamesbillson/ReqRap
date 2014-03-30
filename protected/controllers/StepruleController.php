@@ -62,11 +62,12 @@ class StepruleController extends Controller
         
                  public function actionCreateInline()
 	{
-		$model=new Steprule;
+	$project=Yii::App()->session['project'];
+                $model=new Steprule;
                 $model->steprule_id=Version::model()->getNextID(16);
-                $model->project_id= Yii::app()->session['project'];
-                $model->release_id=Release::model()->currentRelease($model->project_id);
-                $project_id=$_POST['project_id'];
+                $model->project_id= $project;
+                $model->release_id=Release::model()->currentRelease($project);
+                
 		if(isset($_POST['step_id']))
 		{
                  
@@ -77,16 +78,16 @@ class StepruleController extends Controller
                              if(!empty($_POST['new_rule'])){
                                 $rule=new Rule;
 
-                                $rule->number=Rule::model()->getNextNumber($project_id);
+                                $rule->number=Rule::model()->getNextNumber($project);
                                 $rule->rule_id=Version::model()->getNextID(1);
                                 $rule->project_id= Yii::app()->session['project'];
                                 $rule->release_id=Release::model()->currentRelease($rule->project_id);
                                 $rule->text='stub';
                                 $rule->title=$_POST['new_rule'];
-                                $rule->project_id=$step->flow->usecase->package->project->id;
+                                $rule->project_id=$project;
 
                                 $rule->save(false);
-                                $version=Version::model()->getNextNumber($project_id,1,1,$rule->primaryKey,$rule->rule_id);
+                                $version=Version::model()->getNextNumber($project,1,1,$rule->primaryKey,$rule->rule_id);
 
                                 $model->rule_id=$rule->rule_id;
                             }		
@@ -96,10 +97,11 @@ class StepruleController extends Controller
                              }
                         
                   $model->save(false);
-                  $version=Version::model()->getNextNumber($project_id,16,1,$model->primaryKey,$model->steprule_id);
+                  $version=Version::model()->getNextNumber($project,16,1,$model->primaryKey,$model->steprule_id);
                   
                 }
-             $this->redirect(array('/step/update/id/'.$model->step->id.'/flow/'.$model->step->flow->id));
+                  $step = Step::model()->with('flow')->findByPk($_POST['step_db_id']);
+             $this->redirect(array('/step/update/id/'.$step->id.'/flow/'.$step->flow->id));
 		
 	}
         
@@ -134,7 +136,8 @@ class StepruleController extends Controller
 	public function actionUpdate($id)
 	{
 		$model=$this->loadModel($id);
-
+            $release=Yii::App()->session['release'];
+            $project=Yii::App()->session['project'];
 		
 		if(isset($_POST['Steprule']))
 		{
@@ -142,8 +145,8 @@ class StepruleController extends Controller
                     
                         $new->attributes=$_POST['Steprule'];
                         $new->steprule_id=$model->steprule_id;
-                        $new->project_id=$model->project_id;
-                        $new->release_id=$model->release_id;
+                        $new->project_id=$project;
+                        $new->release_id=$release;
                         if($new->save())
 			$version=Version::model()->getNextNumber($project->id,2,16,$model->id,$model->steprule_id);
                 

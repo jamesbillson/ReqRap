@@ -109,27 +109,28 @@ class FormController extends Controller
 	public function actionUpdate($id)
 	{
 	$model=$this->loadModel($id);
-                $new= new Form;
-
+            $new= new Form;
+            $release=Yii::App()->session['release'];
+            $project=Yii::App()->session['project'];
             
 		if(isset($_POST['Form']))
 		{
                         
 			 $new->attributes=$_POST['Form'];
                          $new->number=$model->number;
-                         $new->project_id=$model->project_id;
-                         $new->release_id=$model->release_id;
+                         $new->project_id=$project;
+                         $new->release_id=$release;
                          $new->form_id=$model->form_id;
                          
 			if($new->save())
                         {
-			$version=Version::model()->getNextNumber($model->project_id, 2, 2,$new->primaryKey,$model->form_id);
-                        $this->redirect(array('/project/view/tab/forms/id/'.$model->project_id));
+			$version=Version::model()->getNextNumber($project, 2, 2,$new->primaryKey,$model->form_id);
+                        $this->redirect(array('/project/view/tab/forms/id/'.$project));
                         }        
 		}
 
 		$this->render('update',array(
-			'model'=>$model,'id'=>$model->project_id
+			'model'=>$model,'id'=>$project
 		));
 	}
 

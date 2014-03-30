@@ -15,8 +15,8 @@
  */
 class Company extends CActiveRecord
 {
-    public static $companytype = array(1=>'Developer', 3=>'Client or project manager', 4=>'I am consultant, I won\'t be creating projects');  
-    public static $companytypestatus = array(1=>'This company is a developer', 2=>'you are a contact?',3=>'This company is client or project manager', 4=>'This is a consultant');  
+    public static $companytype = array(1=>'Analyst', 3=>'Client or Project Manager', 4=>'Tester');  
+    public static $companytypestatus = array(1=>'This company is an analyst', 2=>'you are a contact?',3=>'This company is client or project manager', 4=>'This is a tester');  
       
   /**
    * Returns the static model of the specified AR class.

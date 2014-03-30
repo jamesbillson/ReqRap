@@ -214,7 +214,7 @@ if(!empty($bids)) {
      $this->widget('bootstrap.widgets.TbMenu', array(
     'type'=>'list',
     'items'=>array(
-        array('label'=>'Requirements', 'icon'=>'star-empty', 'url'=>array('project/mybids')),
+        array('label'=>'Requirements', 'icon'=>'star-empty', 'url'=>array('project/myrequirements')),
       
        ),
     
@@ -278,21 +278,6 @@ if(empty($tenders) && empty($construction)  && empty($bids) && $type !=4){
   
  ?>    
 </div>
-<div class="span6">
-<h3>Diary Feed</h3>
-<a href="/diary/create/id/-1">Add entry</a>
-<?php
-$diary=Diary::model()->getCompanyFeed();
-     foreach($diary as $entry) {?>
-<div class="well">  
-      <?php     echo $entry['title']; ?> - <a href="/project/view/tab/details/id/<?php  echo $entry['pid'];?>"><?php  echo $entry['name'];?></a> - <?php  echo $entry['create_date'];?> <br />
-          <?php    echo $entry['content'];?> <br />
-          
-         <?php  echo $entry['firstname'];?> 
-         <?php  echo $entry['lastname']; ?> <br />
-</div>
- <?php }?>
 
-</div>
     </div>
 

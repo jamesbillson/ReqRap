@@ -1,6 +1,6 @@
 <?php 
 
-
+$permission=(Yii::App()->session['permission']==1)?true : false; 
 
 $data = Package::model()->getPackages($model->id);
 
@@ -16,6 +16,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
         'class' => 'bootstrap.widgets.TbButton',
         'type' => 'primary', // '', 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
         'label'=> 'Add Package',
+        'visible'=>$permission,
             'url'=>'/package/create',
     ),
     
@@ -46,14 +47,12 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                 
                    
                     <td>
-                  
-                        <a href="/package/update/id/<?php echo $item['id'];?>"><i class="icon-pencil" rel="tooltip" title="Edit Details"></i></a> 
-
-                       
-                        <a href="/package/remove/id/<?php echo $item['id'];?>"><i class="icon-remove-sign text-error" rel="tooltip" title="Delete"></i></a> 
+                  <?php if($permission){ ?>
+                   <a href="/package/update/id/<?php echo $item['id'];?>"><i class="icon-pencil" rel="tooltip" title="Edit Details"></i></a> 
+                   <a href="/package/remove/id/<?php echo $item['id'];?>"><i class="icon-remove-sign text-error" rel="tooltip" title="Delete"></i></a> 
                    <a href="/usecase/create/id/<?php echo $item['id'];?>"><i class="icon-plus-sign-alt" rel="tooltip" title="Add another usecase"></i> 
-                    <a href="/package/history/id/<?php echo $item['package_id'];?>"><i class="icon-calendar" rel="tooltip" title="Version history"></i></a> 
-             
+                   <a href="/package/history/id/<?php echo $item['package_id'];?>"><i class="icon-calendar" rel="tooltip" title="Version history"></i></a> 
+                  <?php } ?>
                    </td>
                    <td></td>
                 </tr>
@@ -74,9 +73,9 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                 
               </td> 
               <td>
+              <?php if($permission){ ?>
                <a href="/usecase/delete/id/<?php echo $uc['id'];?>"><i class="icon-remove-sign text-error" rel="tooltip" title="Edit"></i> 
-              
-                  <a href="/usecase/update/id/<?php echo $uc['id'];?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
+               <a href="/usecase/update/id/<?php echo $uc['id'];?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
                <a href="/usecase/history/id/<?php echo $uc['usecase_id'];?>"><i class="icon-calendar" rel="tooltip" title="Version history"></i></a> 
                <?php if($counter!=0) { ?>
                            <a href="/usecase/move/dir/2/id/<?php echo $uc['id'];?>"><i class="icon-arrow-up" rel="tooltip" title="Move Up"></i></a> 
@@ -87,6 +86,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                    <?php if($counter!=count($usecases)-1) { ?>        
                            <a href="/usecase/move/dir/1/id/<?php echo $uc['id'];?>"><i class="icon-arrow-down" rel="tooltip" title="Move Down"></i></a> 
          <?php } ?> 
+            <?php } ?> 
                </td></tr>
          
         <?php  $counter++;
@@ -95,8 +95,16 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                 
                 
             <?php endforeach ?>
-               <tr><td colspan="4"> <a href="/package/create/"><i class="icon-plus-sign-alt" rel="tooltip" title="Add another step"></i> Add Package</a> 
- </td></tr>
+            
+            <?php if($permission){ ?> 
+               <tr>
+                   <td colspan="4"> 
+                     
+                       <a href="/package/create/"><i class="icon-plus-sign-alt" rel="tooltip" title="Add another step"></i> Add Package</a> 
+                    
+                   </td>
+               </tr>
+             <?php } ?>   
             </tbody>
         </table>
 <?php endif;

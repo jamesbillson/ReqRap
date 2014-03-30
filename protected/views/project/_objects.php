@@ -1,5 +1,8 @@
- 
+
 <?php 
+
+$permission=(Yii::App()->session['permission']==1)?true : false; 
+
 $data = Object::model()->getProjectObjects(Yii::app()->session['project']);
 
 $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
@@ -13,6 +16,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
         'class' => 'bootstrap.widgets.TbButton',
         'type' => 'primary', // '', 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
         'label'=> 'Add Object',
+         'visible'=> $permission,
         'url'=>'/object/create/id/'.$model->id,
     ),
     
@@ -43,11 +47,11 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                         <?php echo $item['description'];?>
                     </td>            
                     <td>
-                        
+                         <?php if($permission){ ?>
                         <a href="/object/update/id/<?php echo $item['id'];?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
                         <a href="/object/delete?id=<?php echo $item['id'];?>"><i class="icon-remove-sign text-error" rel="tooltip" title="Delete"></i></a> 
                         <a href="/object/history/id/<?php echo $item['object_id'];?>"><i class="icon-calendar" rel="tooltip" title="Version history"></i></a> 
-             
+                         <?php } ?>
                     </td>
                 </tr>
             <?php endforeach ?>
@@ -56,7 +60,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
 
     <?php endif;
 $this->endWidget(); ?>
-
+   <?php if($permission){ ?>
 <?php $deleted = Version::model()->getProjectDeletedVersions($model->id,6);
 if (count($deleted)):?>
     
@@ -92,4 +96,4 @@ if (count($deleted)):?>
             </div>
         </div>
     </div>
-<?php  endif; ?>
+<?php  endif; ?>  <?php } ?>

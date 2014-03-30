@@ -103,6 +103,7 @@ class Iface extends CActiveRecord
     {
    // GET All interfaces belonging to steps that belong to this UC.
              $project=Yii::App()->session['project']; 
+             $release=Yii::App()->session['release'];
         $sql="SELECT 
             `i`.`number`,
             `i`.`iface_id`,
@@ -137,14 +138,24 @@ WHERE
             AND `s`.`project_id`=".$project."
             AND `x`.`project_id`=".$project."
             AND `t`.`project_id`=".$project."
+                            AND
+            `f`.`release_id`=".$release."    
+            AND `i`.`release_id`=".$release."
+            AND `s`.`release_id`=".$release."
+            AND `x`.`release_id`=".$release."
+            AND `t`.`release_id`=".$release."
             AND
             `vr`.`object` =12 AND `vr`.`active`=1  AND `vr`.`project_id`=".$project."
+                 AND `vr`.`release`=".$release."
             AND
-            `vx`.`object` =15 AND `vx`.`active`=1   AND `vx`.`project_id`=".$project."          
+            `vx`.`object` =15 AND `vx`.`active`=1   AND `vx`.`project_id`=".$project."  
+                 AND `vx`.`release`=".$release."
             AND
             `vs`.`object` =9 AND `vs`.`active`=1 AND `vs`.`project_id`=".$project."
+                 AND `vs`.`release`=".$release."
             AND
             `vf`.`object` =8 AND `vf`.`active`=1  AND `vf`.`project_id`=".$project."
+                 AND `vf`.`release`=".$release."
  
 
 
@@ -165,6 +176,7 @@ WHERE
      public function getProjectIfaces()
     {
          $project=Yii::App()->session['project'];
+          $release=Yii::App()->session['release'];
         $sql="
             SELECT `r`.*,`v`.`active`
             FROM `iface` `r`
@@ -172,7 +184,9 @@ WHERE
             ON `v`.`foreign_key`=`r`.`id`
             WHERE 
               `v`.`object`=12 AND `v`.`active`=1 AND `v`.`project_id`=".$project."
-              and            
+                and            
+            `r`.`release_id`=".$release."         
+        and            
             `r`.`project_id`=".$project;
 
      

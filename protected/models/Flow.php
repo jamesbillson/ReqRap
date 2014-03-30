@@ -47,11 +47,10 @@ class Flow extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
                     
-               
-                      'usecase'=>array(self::BELONGS_TO,
-                                    'Usecase',
-                          'usecase_id,usecase_id',
-                                                              )
+                   'usecase' => array(self::BELONGS_TO, 'Usecase',
+                       array('usecase_id' => 'usecase_id'),
+                        'on' => 't.project_id = usecase.project_id',)
+                     
                     
 		);
 	}
@@ -148,6 +147,7 @@ class Flow extends CActiveRecord
          public function getUCFlow($id)
     {
          $project=Yii::app()->session['project'];
+         $release=Yii::App()->session['release'];
               
         $sql="SELECT `f`.*,
             
@@ -163,6 +163,8 @@ class Flow extends CActiveRecord
                 `pv`.`object`=9
                 AND
                 pv.project_id=".$project."
+                      AND
+                pv.release=".$release."
                     ) as start, 
 
                 (SELECT `q`.`number` from `step` `q`  
@@ -176,7 +178,8 @@ class Flow extends CActiveRecord
                 qv.object=9
                 AND
                 qv.project_id=".$project."
-
+                AND
+                qv.release=".$release."
                 ) as rejoin
 
 
@@ -192,12 +195,15 @@ class Flow extends CActiveRecord
               
               WHERE 
               `u`.`project_id`=".$project."
+
               AND 
               `f`.`project_id`=".$project."
               AND
+              `f`.`release_id`=".$release." 
+              AND 
                 `vu`.`object`=10 AND `vu`.`active`=1 AND `vu`.`project_id`=".$project."
               AND
-              `vf`.`object`=8 AND `vf`.`active`=1 AND `vf`.`project_id`=".$project."
+              `vf`.`object`=8 AND `vf`.`active`=1 AND `vf`.`project_id`=".$project." 
               AND
               `u`.`id`=".$id."
               ORDER BY `f`.`main` DESC

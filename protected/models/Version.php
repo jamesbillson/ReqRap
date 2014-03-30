@@ -158,7 +158,8 @@ class Version extends CActiveRecord
         
              public function getNextNumber($id,$object, $action, $fk,$fid)
     {
-          $sql=" SELECT `v`.`number`
+         $release=Yii::App()->session['release'];
+                 $sql=" SELECT `v`.`number`
                  FROM `version` `v`
                  WHERE 
                  `v`.`project_id`=".$id."
@@ -179,6 +180,8 @@ class Version extends CActiveRecord
                `active`=0
                 WHERE
                `project_id`=".$id."
+               AND
+               `release`=".$release."
                AND
                `object`=".$object."
                 AND
@@ -204,7 +207,7 @@ class Version extends CActiveRecord
               `create_user`) 
               VALUES
               ('".$number."',
-                '".Release::model()->currentRelease($id)."'
+                '".$release."'
                 ,".$id.",
                 1,
                 ".$object.",
@@ -380,7 +383,7 @@ class Version extends CActiveRecord
                  }  
 
     
-    public function objectList($object,$project)
+    public function objectList($object,$release)
             {
 
               $sql="
@@ -389,9 +392,11 @@ class Version extends CActiveRecord
                   JOIN `version` `v`
                   ON `x`.`id`=`v`.`foreign_key`
                   WHERE
-                  `v`.`active`=1 AND `v`.`object`=".$object."
+                  `v`.`active`=1 
+                  AND 
+                  `v`.`object`=".$object."
                   AND
-                  `v`.`project_id`=".$project;
+                  `v`.`release`=".$release;
 
         $connection=Yii::app()->db;
 		$command = $connection->createCommand($sql);

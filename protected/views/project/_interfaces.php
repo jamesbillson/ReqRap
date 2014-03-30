@@ -1,6 +1,6 @@
  
 <?php 
-
+$permission=(Yii::App()->session['permission']==1)?true : false; 
 $data = Iface::model()->getProjectIfaces(Yii::app()->session['project']);
         
 $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
@@ -14,12 +14,14 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
         'class' => 'bootstrap.widgets.TbButton',
         'type' => 'primary', // '', 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
         'label'=> 'Add Interface',
+        'visible'=> $permission,
         'url'=>'/iface/create/uc/-1/id/'.$model->id,
     ),
     array(
         'class' => 'bootstrap.widgets.TbButton',
         'type' => 'primary', // '', 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
         'label'=> 'Upload images',
+        'visible'=> $permission,
         'url'=>'/project/photo/id/'.$model->id,
     ),
 ))); 
@@ -66,10 +68,11 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
 
                   
                     <td>
+                          <?php if($permission){ ?>
                         <a href="/iface/update/ucid/-1/id/<?php echo $item['id'];?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
                         <a href="/iface/delete/ucid/<?php echo $model->id;?>/type/2/id/<?php echo $item['id'];?>"><i class="icon-remove-sign" rel="tooltip" title="Delete"></i></a> 
                         <a href="/iface/history/id/<?php echo $item['iface_id'];?>"><i class="icon-calendar" rel="tooltip" title="Version History"></i></a> 
-                    
+                          <?php } ?>
                     </td>
                 </tr>
             <?php endforeach ?>
@@ -79,7 +82,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
     <?php endif;
 $this->endWidget(); ?>
 
-
+  <?php if($permission){ ?>
 <?php $deleted = Version::model()->getProjectDeletedVersions($model->id,12);
 if (count($deleted)):?>
     
@@ -116,3 +119,4 @@ if (count($deleted)):?>
         </div>
     </div>
 <?php  endif; ?>
+    <?php } ?>

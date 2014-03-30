@@ -55,6 +55,7 @@ class ProjectController extends Controller
      public function actionSet($id)
     {
     Yii::app()->session['project']=$id;
+    Yii::app()->session['release']=  Release::model()->currentRelease();
     $this->redirect(array('/project/view/tab/usecases'));
         
     }
@@ -62,14 +63,16 @@ class ProjectController extends Controller
     {
      $id=Yii::app()->session['project'];
         $model = $this->loadModel($id);
-        $served=0; //variable to stop redirect to fail if a page is served
+        $this->render('view',array(
+                'model'=>$model,'tab'=>$tab ));
+        /*$served=0; //variable to stop redirect to fail if a page is served
         // if the user belongs to the owner company, show one view
         if(User::model()->myCompany()== $model->company_id)
         {
             $served=1;
             $this->render('view',array(
                 'model'=>$model,'tab'=>$tab
-            ));
+           
         } 
         // see if the current user is a follower.
         $follower = Follower::model()->getFollowers($id,1);
@@ -99,7 +102,10 @@ class ProjectController extends Controller
         }
         
         if ($served != 1) $this->redirect(array('site/fail/condition/no_access'));
+         * 
+         */
     }
+    
  public function actionExtView($id)
     {
         $model = Project::model()->find('extlink = \''.$id.'\'');
@@ -133,12 +139,11 @@ class ProjectController extends Controller
             if($model->save())
                 $new_id=$model->getPrimaryKey();
             Yii::app()->session['project'] = $new_id;
-                Release::model ()->createInitial($new_id); 
+            Release::model ()->createInitial($new_id); 
             Iface::model ()->createTypes($new_id);
-                Testrun::model ()->createInitial($new_id); 
- 
-                Actor::model()->createInitial($new_id);
-                Package::model()->createInitial($new_id);
+            Testrun::model ()->createInitial($new_id); 
+            Actor::model()->createInitial($new_id);
+            Package::model()->createInitial($new_id);
                // Version::model ()->createInitial($new_id); 
             $this->redirect(array('view','id'=>$model->id,'tab'=>'documents'));
         }

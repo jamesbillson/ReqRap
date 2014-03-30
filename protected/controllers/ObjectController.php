@@ -95,25 +95,27 @@ class ObjectController extends Controller
 	{
                 $model=$this->loadModel($id);
                 $new= new Object;
-
+            $release=Yii::App()->session['release'];
+            $project=Yii::App()->session['project'];
             
 		if(isset($_POST['Object']))
 		{
                         
 			 $new->attributes=$_POST['Object'];
-                         $new->project_id=$model->project_id;
+                         $new->project_id=$project;
+                         $new->release_id=$release;
                          $new->object_id=$model->object_id;
                          $new->number=$model->number;
                       
 			if($new->save())
                         {
-			$version=Version::model()->getNextNumber($model->project_id, 6, 2,$new->primaryKey,$model->object_id);
+			$version=Version::model()->getNextNumber($project, 6, 2,$new->primaryKey,$model->object_id);
                         $this->redirect(array('/project/view/tab/objects/id/'.$model->project_id));
                         }        
 		}
 
 		$this->render('update',array(
-			'model'=>$model,'project_id'=>$model->project_id
+			'model'=>$model,'project_id'=>$project
 		));
 	}
         

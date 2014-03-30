@@ -111,7 +111,8 @@ class RuleController extends Controller
 	{
 		$model=$this->loadModel($id);
                 $new= new Rule;
-
+            $release=Yii::App()->session['release'];
+            $project=Yii::App()->session['project'];
             
 		if(isset($_POST['Rule']))
 		{
@@ -119,8 +120,8 @@ class RuleController extends Controller
 			$new->attributes=$_POST['Rule'];
                          
                          $new->number=$model->number;
-                         $new->project_id=$model->project_id;
-                         $new->release_id=$model->release_id;
+                         $new->project_id=$project;
+                         $new->release_id=$release;
                          $new->rule_id=$model->rule_id;
                          
 			if($new->save())

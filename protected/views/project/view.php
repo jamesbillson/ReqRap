@@ -1,15 +1,18 @@
 
 <?php 
-echo $this->renderPartial('/project/head',array('tab'=>'details')); ?>
+echo $this->renderPartial('/project/head',array('tab'=>'usecases')); ?>
 
  
 <?php // if this company project owner is current viewer
-    $mycompany=User::model()->myCompany();
-    $type = Company::model()->findbyPK($mycompany)->type; 
+  
+    //$type = Company::model()->findbyPK($mycompany)->type; 
+    $permission=Yii::App()->session['permission'];
     $totalstages=0;
     $status = array('invited','confirmed');
-    
+    $owner=($permission==1)? True : False;
 ?>
+
+
 
 <!-- make tab -->
 <?php $tabs = array()?>
@@ -35,16 +38,19 @@ $active['testcases']=FALSE;
    
     $tabs[] = array('id' => 'details',
             'label' => 'Details',
+            'visible' => $owner,
             'content' => $this->renderPartial('_details',
                     compact('model'),true,true),'active'=>$active['details']);
    
     $tabs[] = array('id' => 'documents', 
-        'label' => 'Documents', 
+        'label' => 'Documents',
+        'visible' => $owner,
         'content' => $this->renderPartial('_documents',
                 compact('model'),true,true),'active'=>$active['documents']);
  
     $tabs[] = array('id' => 'followers', 
         'label' => 'Colaborators', 
+        'visible' => $owner,
         'content' => $this->renderPartial('_followers',
                 compact('model'),true,true),'active'=>$active['followers']);
     

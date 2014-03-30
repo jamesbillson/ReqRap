@@ -89,31 +89,32 @@ class StepifaceController extends Controller
         
            public function actionCreateInline()
 	{
-		$model=new Stepiface;
+		$project=Yii::App()->session['project'];
+                $model=new Stepiface;
                 $model->stepiface_id=Version::model()->getNextID(15);
-                $model->project_id= Yii::app()->session['project'];
-                $model->release_id=Release::model()->currentRelease($model->project_id);
+                $model->project_id= $project;
+                $model->release_id=Release::model()->currentRelease($project);
                        
-                $project_id=$_POST['project_id'];
+                
 		if(isset($_POST['step_id']))
 		{
                  $model->step_id=$_POST['step_id'];
-                 $step=Step::model()->findbyPK($model->step_id);
+   
                     
                             if(!empty($_POST['new_interface']))
                             {
 
                                  $iface=new Iface;
 
-                                 $iface->number=Iface::model()->getNextIfaceNumber($project_id);
+                                 $iface->number=Iface::model()->getNextIfaceNumber($project);
                                  $iface->iface_id=Version::model()->getNextID(12);
-                                $iface->project_id= Yii::app()->session['project'];
-                                $iface->release_id=Release::model()->currentRelease($iface->project_id);
+                                 $iface->project_id= $project;
+                                 $iface->release_id=Release::model()->currentRelease($project);
                                  $iface->name=$_POST['new_interface'];
-                                 $iface->type_id=Interfacetype::model()->getUnclassified($project_id);
-                                 $iface->project_id=$project_id;
+                                 $iface->type_id=Interfacetype::model()->getUnclassified($project);
+                                 $iface->project_id=$project;
                                  $iface->save(false);
-                                 $version=Version::model()->getNextNumber($project_id,12,1,$iface->primaryKey,$iface->iface_id);
+                                 $version=Version::model()->getNextNumber($project,12,1,$iface->primaryKey,$iface->iface_id);
                                  $model->iface_id=$iface->iface_id;
                             }	
                             else 
@@ -122,10 +123,13 @@ class StepifaceController extends Controller
                              }
                         
                   $model->save(false);
-                  $version=Version::model()->getNextNumber($project_id,15,1,$model->primaryKey,$model->stepiface_id);
+                  $version=Version::model()->getNextNumber($project,15,1,$model->primaryKey,$model->stepiface_id);
                   
                 }
-             $this->redirect(array('/step/update/id/'.$model->step->id.'/flow/'.$model->step->flow->id));
+          
+             $step = Step::model()->with('flow')->findByPk($_POST['step_db_id']);
+             
+             $this->redirect(array('/step/update/id/'.$step->id.'/flow/'.$step->flow->id));
 		
 	}
         
@@ -135,15 +139,16 @@ class StepifaceController extends Controller
                   public function actionUpdate($id)
 	{
 		$model=$this->loadModel($id);
-
+            $release=Yii::App()->session['release'];
+            $project=Yii::App()->session['project'];
 		
 		if(isset($_POST['Stepiface']))
 		{
 			$new=new Stepform;
                     
                         $new->attributes=$_POST['Stepiface']; 
-                        $new->project_id=$model->project_id;
-                        $new->release_id=$model->release_id;
+                        $new->project_id=$project;
+                        $new->release_id=$release;
                         $new->stepiface_id=$model->stepiface_id;
                         if($new->save())
 			$version=Version::model()->getNextNumber($project->id,2,15,$model->id,$model->stepiface_id);
@@ -163,11 +168,14 @@ class StepifaceController extends Controller
 	
         public function actionDelete($id)
 	{
-                $model=Stepiface::model()->findbyPK($id);
-                $flow_id=$model->step->flow->id;
+             	$project=Yii::App()->session['project'];   
+                //$model=Stepiface::model()->findbyPK($id);
+                $model = Stepiface::model()->with('step')->findByPk($id);
+                $step = Step::model()->with('flow')->findByPk($model->step->id);
+                $flow_id=$step->flow->id;
                 $step_id=$model->step->id;
-                $project_id=$model->step->flow->usecase->package->project_id;
-                $version=Version::model()->getNextNumber($project_id,15,3,$model->id,$model->stepiface_id);
+               
+                $version=Version::model()->getNextNumber($project,15,3,$model->id,$model->stepiface_id);
                   
 
 		$this->redirect(array('/step/update/id/'.$step_id.'/flow/'.$flow_id));

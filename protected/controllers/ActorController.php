@@ -105,13 +105,13 @@ class ActorController extends Controller
 	{
                 $model=$this->loadModel($id);
                 $new= new Actor;
-            
+             $release=Yii::App()->session['release'];
 		if(isset($_POST['Actor']))
 		{
                          $new->attributes=$_POST['Actor'];
                          $new->project_id=$model->project_id;
                          $new->actor_id=$model->actor_id;
-                         $new->release_id=$model->release_id;
+                         $new->release_id=$release;
                          $new->number=$model->number;
                          $new->inherits=$model->inherits;
 			if($new->save())

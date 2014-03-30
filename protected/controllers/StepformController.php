@@ -61,11 +61,11 @@ class StepformController extends Controller
         
         public function actionCreateInline()
 	{
-		$project_id= Yii::app()->session['project'];
+		$project= Yii::app()->session['project'];
                 $model=new Stepform;
                 $model->stepform_id=Version::model()->getNextID(14);
-                $model->project_id=$project_id;
-                $model->release_id=Release::model()->currentRelease($model->project_id);
+                $model->project_id=$project;
+                $model->release_id=Release::model()->currentRelease($project);
                     
 		if(isset($_POST['step_id']))
 		{
@@ -77,15 +77,14 @@ class StepformController extends Controller
 		 if(!empty($_POST['new_form'])){
                      $form=new Form;
                      
-                     $form->number=Form::model()->getNextNumber($project_id);
+                     $form->number=Form::model()->getNextNumber($project);
                      $form->form_id=Version::model()->getNextID(2);
-                     $form->project_id= $project_id;
-                     $form->release_id=Release::model()->currentRelease($form->project_id);
+                     $form->project_id= $project;
+                     $form->release_id=Release::model()->currentRelease($project);
                      $form->name=$_POST['new_form'];
-                     $form->project_id=$project_id;
-                     
+                     $form->project_id=$project;
                      $form->save(false);
-                     $version=Version::model()->getNextNumber($project_id,2,1,$form->primaryKey,$form->form_id);
+                     $version=Version::model()->getNextNumber($project,2,1,$form->primaryKey,$form->form_id);
                    
                      $model->form_id=$form->form_id;
                  }	
@@ -94,10 +93,11 @@ class StepformController extends Controller
                  }
                         
                         $model->save(false);
-                        $version=Version::model()->getNextNumber($project_id,14,1,$model->primaryKey,$model->stepform_id);
+                        $version=Version::model()->getNextNumber($project,14,1,$model->primaryKey,$model->stepform_id);
                   
                 }
-                        $this->redirect(array('/step/update/id/'.$model->step->id.'/flow/'.$model->step->flow->id));
+                  $step = Step::model()->with('flow')->findByPk($_POST['step_db_id']);
+                  $this->redirect(array('/step/update/id/'.$step->id.'/flow/'.$step->flow->id));
 		
 	}
         
@@ -132,7 +132,8 @@ class StepformController extends Controller
           public function actionUpdate($id)
 	{
 		$model=$this->loadModel($id);
-
+            $release=Yii::App()->session['release'];
+            $project=Yii::App()->session['project'];
 		
 		if(isset($_POST['Stepform']))
 		{
@@ -140,8 +141,8 @@ class StepformController extends Controller
                     
                         $new->attributes=$_POST['Stepform'];
                         $new->stepform_id=$model->stepform_id;
-                        $new->project_id=$model->project_id;
-                        $new->release_id=$model->release_id;
+                        $new->project_id=$project;
+                        $new->release_id=$release;
                         if($new->save())
 			$version=Version::model()->getNextNumber($project->id,2,14,$model->id,$model->stepiface_id);
                 

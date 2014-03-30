@@ -32,7 +32,7 @@ class ReleaseController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update','finalise','copy'),
+				'actions'=>array('create','update','finalise','copy','set'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -56,17 +56,25 @@ class ReleaseController extends Controller
 		));
 	}
 
-
-        public function actionFinalise($id)
+public function actionSet($id)
 	{
-		
+        Yii::App()->session['release']=$id;
+        $release=Release::model()->findbyPK($id);
+        Yii::App()->session['project']=$release->project->id;
+         $this->redirect(array('/project/view/tab/usecases/'));
+	}
+        
+public function actionFinalise($id)
+	{
+	// ID is the release we are finalising.
+    
          $model= $this->loadModel($id);
          $project=$model->project_id;
          $release=new Release;
          $release->attributes = $model->attributes;
          $oldrelease=$model->id;
          $release->number = $model->number +1;
-         
+         $release->status = 1; 
          $model->status=2;
          $model->save();
          $release->save();
@@ -74,7 +82,7 @@ class ReleaseController extends Controller
          for ($object = 1; $object <= 16; $object++) 
          {
         echo 'We are copying '.Version::$objects[$object].'<br />';
-        $objects = Version::model()->objectList($object,$project);
+        $objects = Version::model()->objectList($object,$oldrelease);
        
         foreach ($objects as $instance)
             {
@@ -99,7 +107,7 @@ class ReleaseController extends Controller
                 public function actionCopy($id)
 	{
 	
-        // CREATE A NEW PROJECT
+        // CREATE A NEW PROJECT and a New Release, copy the selected release to this new release.
         
          $model=new Project;
          $model->name='Copy';
@@ -108,37 +116,33 @@ class ReleaseController extends Controller
          $model->extlink = md5(uniqid(rand(), true));
          if($model->save())
          {
+                // CREATE AN INITIAL RELEASE and set newrelease
+// CREATE AN INITIAL RELEASE and set newrelease   
                 $project=$model->getPrimaryKey();
-            // CREATE AN INITIAL RELEASE and set newrelease
-                Release::model ()->createInitial($project); 
-                $release = Release::model()->find('project_id='.$project);    
-                $newrelease=$release->id;   
+                Yii::App()->session['project']=$project;
+                Release::model()->createInitial($project); 
+                $newrelease = Release::model()-> currentRelease();   
+                
        	
-        echo 'We are copying from Project id = '.$id.'to Project id='.$project.'<br /><br />'; 
+        //echo 'We are copying from Project id = '.$id.'to Project id='.$project.'<br /><br />'; 
         for ($object = 1; $object <= 16; $object++) 
          {
-        echo 'We are copying '.Version::$objects[$object].'<br />';
+       // echo 'We are copying '.Version::$objects[$object].'<br />';
         $objects = Version::model()->objectList($object,$id);    
         foreach ($objects as $instance)
             {
             Version::model()->copyObject($object,$instance['id'],$project,$newrelease);
-            echo 'We are copying object '.Version::$objects[$object].'
-                with id '.$instance['id'].' to project '.$project.'<br />';
-            }
+           // echo 'We are copying object '.Version::$objects[$object].'
+                //     with id '.$instance['id'].' to project '.$project.'<br />';
+           }
             
-         } // end object loop
+            } // end object loop
          } // end model save
-         else {
-         echo "didn't save the new project";    
-         }
-             echo '<a href="/project/mybids">projects</a>';
-	// A new release has been created.
-        
+     
+            // echo '<a href="/project/myrequirements">projects</a>';
+	
+        		$this->redirect(array('/project/myrequirements'));
              
-             
-             
-
-		
 	}
         
         

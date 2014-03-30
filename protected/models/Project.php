@@ -129,6 +129,13 @@ class Project extends CActiveRecord
 		return $projects;
     }
    
+  public function setPermissions($mycompany, $project, $release, $currentrelease)
+    {
+     Yii::App()->session['permission']=($project->company_id==$mycompany && $release==$currentrelease)?1 : 2;
+     
+    }
+        
+    
     public function projectPackageBudget($id)
     {
         $user= Yii::app()->user->id;   

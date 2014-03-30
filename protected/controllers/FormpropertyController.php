@@ -99,20 +99,22 @@ class FormpropertyController extends Controller
             //  The id should be the formproperty_id rather than the id? 
             
             $model=$this->loadModel($id);
-                $new= new Formproperty;
-
+            $new= new Formproperty;
+            $release=Yii::App()->session['release'];
+            $project=Yii::App()->session['project'];
+            
 		if(isset($_POST['Formproperty']))
 		{
                   	 $new->attributes=$_POST['Formproperty'];
                          $new->number=$model->number;
                          $new->form_id=$model->form_id;
-                         $new->release_id=$model->project_id;
-                         $new->project_id=$model->project_id;
+                         $new->release_id=$release;
+                         $new->project_id=$project;
                          $new->formproperty_id=$model->formproperty_id;
                          
 			if($new->save())
                         {
-			$version=Version::model()->getNextNumber($model->form->project_id, 3, 2,$new->primaryKey,$model->formproperty_id);
+			$version=Version::model()->getNextNumber($project, 3, 2,$new->primaryKey,$model->formproperty_id);
                         $this->redirect(array('/form/view/id/'.$model->form_id));
                         }        
 		}

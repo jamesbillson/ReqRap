@@ -67,17 +67,17 @@ if (!empty(Yii::app()->user->id) || !empty(Yii::app()->user->company_id)){
                             array('label'=>'Projects',
                                         'visible'=>!Yii::app()->user->isGuest && User::model()->myCompanyType()==1,
                                         'items'=>array(
-                                                        array('label'=>'Bids', 'url'=>'/project/mybids'),
-                                                        array('label'=>'Projects', 'url'=>'/project/myprojects'),
-                                                        
+                                                         array('label'=>'Projects', 'url'=>'/project/myprojects'),
+                                                        array('label'=>'Library', 'url'=>'/library/view'),
 				)),
          
                              // PM Menu
                             array('label'=>'Projects',
                                         'visible'=>!Yii::app()->user->isGuest && User::model()->myCompanyType()==3,
                                         'items'=>array(
-                                                        array('label'=>'Tenders', 'url'=>'/project/mytenders'),
+                                                       
                                                         array('label'=>'Projects', 'url'=>'/project/myprojects'),
+                                                        array('label'=>'Library', 'url'=>'/library/view'),
                                                         
 				)),
                             

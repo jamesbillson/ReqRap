@@ -1,12 +1,16 @@
+<?php 
+echo $this->renderPartial('/project/head',array('tab'=>'details'));
 
-<h3>Project: <a href="/project/view/tab/objects/id/<?php echo $model->project->id; ?>"><?php echo $model->project->name; ?></a></h3>
-
+$permission=(Yii::App()->session['permission']==1)?true : false; 
+?>
 
  
     	
         
 <br>
 <?php 
+
+$permission=(Yii::App()->session['permission']==1)?true : false; 
 $data=  Objectproperty::model()->getObjectProperty($model->object_id);
 
 
@@ -21,6 +25,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
         'class' => 'bootstrap.widgets.TbButton',
         'type' => 'primary', // '', 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
         'label'=> 'Add Property',
+        'visible'=>$permission,
         'url'=>array('objectproperty/create', 'id'=>$model->id)
     )),
 ));
@@ -54,10 +59,11 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
 
                   
                     <td>
+                        <?php if($permission){ ?>
                         <a href="/objectproperty/update/id/<?php echo $item['id'];?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
                         <a href="/objectproperty/delete?id=<?php echo $item['id'];?>"><i class="icon-remove-sign" rel="tooltip" title="Delete"></i></a> 
                      <a href="/objectproperty/history/id/<?php echo $item['objectproperty_id'];?>"><i class="icon-calendar" rel="tooltip" title="History"></i></a> 
-                   
+                        <?php } ?>
                     </td>
                 </tr>
             <?php endforeach ?>

@@ -85,56 +85,7 @@ class Rule extends CActiveRecord
 		));
 	}
 
-        /*
-         public function getRules($id) // Get rules for a use case
-    {
-        
-             
-             $sql="
-            SELECT
-            `r`.`text`,
-            `r`.`number`, 
-            `r`.`id`,
-            `r`.`title`,
-            `r`.`rule_id`
-            FROM `rule` `r`
-            JOIN `steprule` `x`
-            ON `x`.`rule_id`=`r`.`rule_id`
-            JOIN `step` `s`
-            ON `s`.`step_id`=`x`.`step_id`
-            JOIN `flow` `f`
-            ON `f`.`flow_id`=`s`.`flow_id`
-            JOIN `version` `vr`
-            ON `vr`.`foreign_key`=`r`.`id`
-            JOIN `version` `vx`
-            ON `vx`.`foreign_key`=`x`.`id`
-            JOIN `version` `vs`
-            ON `vs`.`foreign_key`=`s`.`id`
-            JOIN `version` `vf`
-            ON `vf`.`foreign_key`=`f`.`id` 
-        WHERE
-            `f`.`usecase_id`=".$id."
-            AND
-            `vr`.`object` =1 AND `vr`.`active`=1
-            AND
-            `vx`.`object` =16 AND `vx`.`active`=1            
-            AND
-            `vs`.`object` =9 AND `vs`.`active`=1
-            AND
-            `vf`.`object` =8 AND `vf`.`active`=1
-
-
-             GROUP BY `r`.`id`
-             ORDER BY `r`.`number` ASC";
-        
-         
-        
-		$connection=Yii::app()->db;
-		$command = $connection->createCommand($sql);
-		$projects = $command->queryAll();
-		return $projects;
-    }
-        */
+   
  
         public function getNextNumber($id)
     {
@@ -158,6 +109,9 @@ class Rule extends CActiveRecord
     
       public function getProjectRules($id)
     {
+       $release=Yii::App()->session['release'];
+       $project=Yii::App()->session['project'];
+          
         $sql="
             SELECT `r`.`id`,`r`.`rule_id`,`r`.`number`,`r`.`title`,`r`.`text`,`v`.`active`
             FROM `rule` `r`
@@ -166,8 +120,11 @@ class Rule extends CActiveRecord
             WHERE 
               `v`.`object`=1
             AND
-            `v`.`active`=1 and            
-            `r`.`project_id`=".$id;
+            `v`.`active`=1 
+            and            
+            `r`.`release_id`=".$release."         
+            and            
+            `r`.`project_id`=".$project;
 
      
         

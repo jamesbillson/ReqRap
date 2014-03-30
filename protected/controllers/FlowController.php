@@ -66,8 +66,10 @@ class FlowController extends Controller
  
             $project = Yii::app()->session['project'];
             $release=  Release::model()->currentRelease($project);
-            $parent=Step::model()->find('step_id ='.$start);// get the start step to get the actor
-	// CREATE A NEW FLOW	
+            //$parent=Step::model()->find('step_id ='.$start);// get the start step to get the actor
+            $parent = Step::model()->with('flow')->find('step_id ='.$start);
+            $parentusecase = Flow::model()->with('usecase')->findbyPK($parent->flow->id);
+// CREATE A NEW FLOW	
             $flow=new Flow;
                         $flow->startstep_id=$start; // Note these are now step_id not id
                         $flow->rejoinstep_id=$start;// Note these are now step_id not id
@@ -75,11 +77,11 @@ class FlowController extends Controller
                         $flow->project_id=$project;
                         $flow->release_id=$release;
                         $flow->main=0; // new flow will always be ALT i.e. value 0
-                        $flow->name=Flow::model()->getNextFlow($parent->flow->usecase->id);
+                        $flow->name=Flow::model()->getNextFlow($parentusecase->id);
                         $flow->flow_id=Version::model()->getNextID(8);
                         if ($flow->save()){
                         $flowid=$flow->getPrimaryKey();
-                        $project_id=$flow->usecase->package->project_id;
+                        
                         $version=Version::model()->getNextNumber($project,8,1,$flowid,$flow->flow_id);   
                     
              // ADD A STEP TO THE FLOW AND THEN SEND TO THE STEP EDIT FORM
@@ -104,6 +106,7 @@ class FlowController extends Controller
             } ELSE {
              echo 'flow did not save';
              }   
+                     $step = Step::model()->with('flow')->findByPk($stepid);
               $this->redirect(array('/step/update/flow/'.$step->flow->id.'/id/'.$step->id));
 		
 
@@ -140,15 +143,16 @@ class FlowController extends Controller
 	{
 	$model=$this->loadModel($id);
                 $new= new Flow;
-
+            $release=Yii::App()->session['release'];
+            $project=Yii::App()->session['project'];
             
 		if(isset($_POST['Flow']))
 		{
                         
 			 $new->attributes=$_POST['Flow'];
                          $new->name=$model->name;
-                         $new->project_id=$model->project_id;
-                         $new->release_id=$model->release_id;
+                         $new->project_id=$project;
+                         $new->release_id=$release;
                          $new->flow_id=$model->flow_id;
                          
 			if($new->save())

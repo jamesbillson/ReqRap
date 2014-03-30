@@ -1,20 +1,27 @@
 <?php
 
 /**
- * This is the model class for table "stepform".
+ * This is the model class for table "library".
  *
- * The followings are the available columns in table 'stepform':
- * @property integer $step_id
- * @property integer $form_id
+ * The followings are the available columns in table 'library':
+ * @property integer $id
+ * @property string $name
+ * @property string $description
+ * @property integer $release_id
+ * @property integer $owner_id
+ *
+ * The followings are the available model relations:
+ * @property Company $owner
+ * @property Project $project
  */
-class Stepform extends CActiveRecord
+class Library extends CActiveRecord
 {
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'stepform';
+		return 'library';
 	}
 
 	/**
@@ -25,11 +32,12 @@ class Stepform extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('id, stepform_id, step_id, form_id, project_id, release_id', 'required'),
-			array('id, step_id, form_id, project_id, release_id', 'numerical', 'integerOnly'=>true),
+			array('name, description, release_id, owner_id', 'required'),
+			array('release_id, owner_id', 'numerical', 'integerOnly'=>true),
+			array('name', 'length', 'max'=>255),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, stepform_id, step_id, form_id, project_id, release_id', 'safe', 'on'=>'search'),
+			array('id, name, description, release_id, owner_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -41,16 +49,9 @@ class Stepform extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-                    
-     //  'step' => array(self::BELONGS_TO, 'Step', 'step_id'),
-     'step' => array(self::BELONGS_TO, 'Step', 
-                        array('step_id' => 'step_id'),
-                        'on' => 't.project_id = step.project_id',),
-                    
-   'form' => array(self::BELONGS_TO, 'Iface', 
-                        array('form_id' => 'form_id'),
-                        'on' => 't.project_id = form.project_id',)	
-                    );
+			'owner' => array(self::BELONGS_TO, 'Company', 'owner_id'),
+			'project' => array(self::BELONGS_TO, 'Project', 'release_id'),
+		);
 	}
 
 	/**
@@ -59,12 +60,11 @@ class Stepform extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'id' => 'versionID',
-                    'stepform_id'=>'ID',
-                     'project_id' => 'Project',
-                    'release_id' => 'Release',
-                    'step_id' => 'Step',
-			'form_id' => 'Form',
+			'id' => 'ID',
+			'name' => 'Name',
+			'description' => 'Description',
+			'release_id' => 'Project',
+			'owner_id' => 'Owner',
 		);
 	}
 
@@ -86,8 +86,11 @@ class Stepform extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('step_id',$this->step_id);
-		$criteria->compare('form_id',$this->form_id);
+		$criteria->compare('id',$this->id);
+		$criteria->compare('name',$this->name,true);
+		$criteria->compare('description',$this->description,true);
+		$criteria->compare('release_id',$this->release_id);
+		$criteria->compare('owner_id',$this->owner_id);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -98,7 +101,7 @@ class Stepform extends CActiveRecord
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return Stepform the static model class
+	 * @return Library the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{
