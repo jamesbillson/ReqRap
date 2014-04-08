@@ -35,6 +35,9 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                     <th>Number</th>
                     <th>Name</th>
                     <th>Description</th>
+                    <th>Type</th>
+                    <th>Validation</th>
+                    <th>Required</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -51,9 +54,15 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                     <td>   
                         <?php echo $item['description'];?>
                     </td>                  
-                   
-
-                  
+                    <td>   
+                        <?php echo $item['type'];?>
+                    </td>                    
+                    <td>   
+                        <?php echo $item['valid'];?>
+                    </td> 
+                    <td>   
+                        <?php echo ($item['required']==1)?'Yes':'No';?>
+                    </td>                   
                     <td>
                    <?php if($permission){ ?>
                         <a href="/formproperty/update/id/<?php echo $item['id'];?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 

@@ -49,8 +49,8 @@ class Iface extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'type' => array(self::BELONGS_TO, 'Interfacetype', 'type_id'),
-                    'project' => array(self::BELONGS_TO, 'Project', 'project_id'),
-			
+                        'project' => array(self::BELONGS_TO, 'Project', 'project_id'),
+                        'photo' => array(self::BELONGS_TO, 'Photo', 'project_id'),	
                     );
 	}
 
@@ -178,16 +178,34 @@ WHERE
          $project=Yii::App()->session['project'];
           $release=Yii::App()->session['release'];
         $sql="
-            SELECT `r`.*,`v`.`active`
-            FROM `iface` `r`
+            SELECT 
+            `r`.*,
+            `p`.*,
+            `t`.`name` as type
+            FROM
+            `iface` `r`
+            JOIN `interfacetype` `t`
+            ON `t`.`interfacetype_id`=`r`.`type_id`            
+            JOIN `photo` `p`
+            ON `r`.`photo_id`=`p`.`id`
             JOIN `version` `v`
             ON `v`.`foreign_key`=`r`.`id`
+            JOIN `version` `vt`
+            ON `vt`.`foreign_key`=`t`.`id`
             WHERE 
-              `v`.`object`=12 AND `v`.`active`=1 AND `v`.`project_id`=".$project."
-                and            
-            `r`.`release_id`=".$release."         
-        and            
-            `r`.`project_id`=".$project;
+            `v`.`object`=12 
+            AND 
+            `v`.`active`=1 
+            AND 
+            `v`.`release`=".$release."
+            AND 
+            `vt`.`object`=13 
+            AND 
+            `vt`.`active`=1 
+            AND 
+            `vt`.`release`=".$release." 
+            AND           
+            `r`.`release_id`=".$release;
 
      
         
@@ -227,21 +245,21 @@ WHERE
        $sql="INSERT INTO `interfacetype`(
            `number`, 
            `interfacetype_id`,
-           
            `release_id`,
            `name`,
            `project_id`) 
            VALUES 
            (0,
            ".$type_id.",
-               ".Release::model()->currentRelease(Yii::app()->session['project']).",
+           ".Release::model()->currentRelease(Yii::app()->session['project']).",
            '".$initial[$case]."',
            ".$id.")";
-       $connection=Yii::app()->db;
+        $connection=Yii::app()->db;
         $command = $connection->createCommand($sql);
         $command->execute();
         
-        $sql="select `a`.`id` from `interfacetype` `a` 
+        $sql="select `a`.`id` 
+            from `interfacetype` `a` 
             where
             `a`.`interfacetype_id` = ".$type_id."
             AND                

@@ -1,0 +1,39 @@
+<?php 
+$flows = Flow::model()->getUCFlow($usecase); // get flows
+foreach($flows as $flow) { // LOOP THRU FLOWS
+$steps= Step::model()->getFlowSteps($flow['id']); // get steps
+$name = ($flow['main']==1)?'<strong>Scenario Text</strong> ':'<strong>Alternate Course '.$flow['name'].
+        '</strong><br />Start after main step '.$flow['start'].
+        ' re-join at main step '.$flow['rejoin'];
+?>
+         <tr> 
+             <td rowspan="<?php echo count($steps);?>">
+               <?php echo $name;?>
+             </td>    
+                    
+                        
+               
+         <?php   
+         
+         foreach($steps as $step) { 
+                 
+         if($step['number']!=1) echo '<tr>';
+         
+         ?>
+                   
+            <td>
+               Step <?php echo $step['number'];?>
+               <?php echo $step['text']." <br />".$step['result']."</td> "; ?>
+            </td>
+
+             <?php }  ?>
+            
+           </tr>   
+             <?php  } ?>
+     
+
+ 
+
+     
+   
+     

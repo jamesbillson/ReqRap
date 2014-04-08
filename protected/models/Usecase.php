@@ -115,6 +115,54 @@ class Usecase extends CActiveRecord
 		));
 	}
 
+        
+           
+        
+           public function getUsecaseActors($id)
+    {
+            $project=Yii::app()->session['project'];
+            $release=Yii::App()->session['release'];
+          $sql="
+
+            SELECT `a`.*
+            FROM `actor` `a`
+            JOIN `step` `s`
+            ON `s`.`actor_id`=`a`.`actor_id`
+            JOIN `flow` `f`
+            ON `f`.`flow_id`=`s`.`flow_id`
+            JOIN `usecase` `u`
+            ON `u`.`usecase_id`=`f`.`usecase_id`
+            
+            JOIN `version` `va`
+            ON `va`.`foreign_key`=`a`.`id`
+            JOIN `version` `vs`
+            ON `vs`.`foreign_key`=`s`.`id`
+            JOIN `version` `vf`
+            ON `vf`.`foreign_key`=`f`.`id`
+            JOIN `version` `vu`
+            ON `vu`.`foreign_key`=`u`.`id`            
+            
+
+            WHERE 
+            `va`.`object`=4 AND `va`.`active`=1 AND `va`.`release`=".$release."  AND  
+            `vs`.`object`=9 AND `vs`.`active`=1 AND `vs`.`release`=".$release."  AND                  
+            `vf`.`object`=8 AND `vf`.`active`=1 AND `vf`.`release`=".$release."  AND  
+            `vu`.`object`=10 AND `vu`.`active`=1 AND `vu`.`release`=".$release."  AND  
+           
+                      
+            `u`.`id`=".$id."
+                GROUP BY `a`.`actor_id`
+
+                ";
+        
+		$connection=Yii::app()->db;
+		$command = $connection->createCommand($sql);
+		$projects = $command->queryAll();
+		return $projects;
+    }
+        
+        
+        
            public function getPackageUsecases($id)
     {
             $project=Yii::app()->session['project'];
@@ -169,7 +217,9 @@ class Usecase extends CActiveRecord
                     From `usecase` `r`
                     JOIN `package` `p`
                     ON `p`.`package_id`=`r`.`package_id`
-                    WHERE `p`.`id`=".$id;
+                    WHERE `p`.`id`=".$id."
+                AND
+                `p`.`release_id`=".Yii::App()->session['release'];
 		$connection=Yii::app()->db;
 		$command = $connection->createCommand($sql);
 		$projects = $command->queryAll();

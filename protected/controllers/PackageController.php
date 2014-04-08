@@ -32,7 +32,7 @@ class PackageController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('updatepackage','history','bidsubmit','create','update','remove','addPackage','subcontractview'),
+				'actions'=>array('usecase','updatepackage','history','bidsubmit','create','update','remove','addPackage','subcontractview'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -58,7 +58,11 @@ class PackageController extends Controller
         	));
 	}
 
-	
+	   public function actionUsecase()
+	{
+             	
+                $this->render('usecase');
+	}
             public function actionHistory($id) // Note that this is form_id
 	{
              	$versions=Version::model()->getVersions($id,5);
@@ -105,8 +109,8 @@ class PackageController extends Controller
 	{
                 $model=$this->loadModel($id);
                 $new= new Package;
-            $release=Yii::App()->session['release'];
-            $project=Yii::App()->session['project'];
+                $release=Yii::App()->session['release'];
+                $project=Yii::App()->session['project'];
 
             
 		if(isset($_POST['Package']))
@@ -121,7 +125,10 @@ class PackageController extends Controller
 			if($new->save())
                         {
 			$version=Version::model()->getNextNumber($project, 5, 2,$new->primaryKey,$model->package_id);
-                        $this->redirect(array('/project/view/tab/packages/id/'.$project));
+                       
+//echo 'Project: '.$project.' db ID: '.$new->primaryKey.' Package_id: '.$model->package_id;
+//           break;            
+ $this->redirect(array('/project/view/tab/packages/id/'.$project));
                         }        
 		}
 

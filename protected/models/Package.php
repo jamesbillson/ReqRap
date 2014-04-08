@@ -128,7 +128,10 @@ public static $packagestageicon= array(1=>'icon-time text-warning',
      
     
      $sql="
-            SELECT `r`.`id`,`r`.`package_id`,`r`.`number`,`r`.`name`,`v`.`active`
+            SELECT `r`.`id`,
+            `r`.`package_id`,
+            `r`.`number`,
+            `r`.`name`
             FROM `package` `r`
             JOIN `version` `v`
             ON `v`.`foreign_key`=`r`.`id`
@@ -137,10 +140,14 @@ public static $packagestageicon= array(1=>'icon-time text-warning',
             AND
             `v`.`active`=1 
             and            
+            `v`.`project_id`=".$project." 
+            and
+            `v`.`release`=".$release."
+            and            
             `r`.`project_id`=".$project." 
             and
             `r`.`release_id`=".$release."
-            order by number ASC";
+order by `r`.`number` ASC";
       
         $connection=Yii::app()->db;
         $command = $connection->createCommand($sql);

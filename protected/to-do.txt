@@ -1,13 +1,16 @@
-Snippets
+BUGS
+
+Flows are not numbering correctly
+Alternate flow start and finish is getting multiple version instances
+Image numbering is not working should have Category Number - Image number
+Release numbering
 
 
-
-
-       $project=Yii::App()->session['project'];
-
+FEATURES
 
 ### ACTOR
 Actor should have a 'Test Case' pre-conditions (e.g. log in as user)
+
 
 ### USECASE
 Put 'This use case describes the process of:' in the system, 
@@ -17,19 +20,24 @@ then we can take the same thing and say 'this test case verifies the process of:
 ## COMMENTS / TO DO's.
 
 ### Copy: 
-UC's
-Objects
-Forms
-
-from one job to the next.
 
 ### Library items.
+Copy to a specific project function so you can add snippets/patterns
+
+### TRACEABILITY
+
+Add some form of free form requirement - maybe with an excel upload.
+Have to think about the ease of adding connection between any change and a requirement.
+
+### PRINTING
+Set up a configurable cover page.
+
+Company logo
 
 
-### Versions
+### Collaborators
+have an approver switch and a circulation switch so they print out in a table on the document.
 
-relationships are tricky.
-either log, or make multiple copies.
 
 
 
@@ -45,29 +53,13 @@ Rules - health check
     - number of rules not used.
 Rules - show deleted rules ?
 
-# Release
-
-Create a new release.
-Snapshot
-
-
 #USE CASE
 view - make the UC details Editable (Description and Preconditions)
 
 
 
 
-#FLOW / ACTOR
-Make the various actors associated with each step.  
-If one actor then by default they are associated with each step.
-If no actor - cannot create step.
-If more than one actor - choose actor per step.
-If remove actor - Cannot have no actor, so if you remove, you must add a new one.
-then when you remove one, it removes them from the steps, and adds asks who you want instead.
-Maybe like rules you actually add them via steps, 
-so that rather than add them first, 
-you add as you go, 
-then you can rationalise later.
+
 
 ############@@@@@@@@@@@@@@@#################
 VERSION CONTROL
@@ -129,9 +121,4 @@ Go through each Object.Number by version, DESC.
 Prior to RBP delete any objects that are created.
 From the RBP back, set the active version to the first version encountered.
 
-RELEASE VIEW
 
-Allow a session to view a release.
-This raises the issue about stuff that's created in say release 1 and still around in release 2.
-I guess we just say show everything up to and including release x.
-Editing should be disabled in release view mode.

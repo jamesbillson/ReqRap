@@ -56,6 +56,8 @@ Project::model()->setPermissions($mycompany, $project,$release, $currentrelease)
   }
     
        ?>
+          <a href="/project/print"><i class="icon-print " rel="tooltip" title="View Print Version"></i></a> 
+    
 </td>
     </tr>
 </table> 

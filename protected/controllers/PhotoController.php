@@ -50,9 +50,9 @@ class PhotoController extends Controller
      * @param integer $id the ID of the model to be displayed
      */
 
-   public function actionView($photo_id)
+   public function actionView($id)
 	{
-		$versions=Version::model()->getVersions($photo_id,11,'photo_id');
+		$versions=Version::model()->getVersions($photo_id,11,'id');
                 $model=$this->loadModel($versions[0]['id']);
                 $this->render('view',array('model'=>$model,
 			'versions'=>$versions
@@ -282,7 +282,10 @@ class PhotoController extends Controller
                     
                     //persist into database
                     $model = new Photo;
-                    $model->project_id = $id;
+                    $model->project_id = Yii::App()->session['project'];
+                    $model->release_id=Yii::App()->session['release'];
+                    $model->user_id=Yii::App()->user->id;
+                    
                     $model->file = $file_name;                    
                     
                     if($model->save()){

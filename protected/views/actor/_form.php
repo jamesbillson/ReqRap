@@ -40,7 +40,14 @@
 		<?php echo $form->textArea($model,'alias',array('rows'=>6, 'cols'=>50)); ?>
 		<?php echo $form->error($model,'alias'); ?>
 	</div>
-	<div class="row buttons">
+	</div>
+        	<div class="row">
+		<?php echo $form->labelEx($model,'type'); ?>
+		<?php echo $form->dropDownList($model,'type',array(0=>'Person',1=>'External System')); ?>
+		<?php echo $form->error($model,'type'); ?>
+	</div>
+        
+        <div class="row buttons">
 		<?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>
 	</div>
 

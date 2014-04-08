@@ -1,3 +1,11 @@
+
+<?php 
+echo $this->renderPartial('/project/head',array('tab'=>'usecases')); ?>
+
+<h2>Add interface images</h2>
+  
+
+
 <?php if(isset($model->id)): ?>
     <p><strong>More Interfaces:</strong></p>
 

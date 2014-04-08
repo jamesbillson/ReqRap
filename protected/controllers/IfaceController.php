@@ -32,7 +32,7 @@ class IfaceController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update','delete','history'),
+				'actions'=>array('create','update','delete','history','addphoto'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -139,7 +139,7 @@ class IfaceController extends Controller
                       $version=Version::model()->getNextNumber($project,12,2,$new->primaryKey,$new->iface_id);   
                       
                       if($uc=-1){
-                           $this->redirect(array('project/view/id/'.$project.'/tab/interfaces')); 
+                           $this->redirect(array('/iface/view/id/'.$new->iface_id)); 
                         }
                       ELSE {
                         $this->redirect(array('/usecase/view/id/'.$uc));  
@@ -155,7 +155,35 @@ class IfaceController extends Controller
 		));
 	}
 
-	
+	public function actionaddphoto()
+	{
+        
+            $release=Yii::App()->session['release'];
+            $project=Yii::App()->session['project'];
+            
+            $model=$this->loadModel($_POST['iface_id']);
+            if(isset($_POST['iface_id']))
+		{
+                 $new= new Iface;
+		 $new->name=$model->name;
+                 $new->type_id=$model->type_id;
+                 $new->number=$model->number;
+                 $new->photo_id=$_POST['photo_id'];
+		 $new->number=$model->number;
+                 $new->project_id=$project;
+                 $new->iface_id=$model->iface_id;
+                 $new->release_id=$release;	
+                 if($new->save()){
+                                 $version=Version::model()->getNextNumber($project,12,2,$new->primaryKey,$new->iface_id);   
+                                 }
+		}
+
+		$this->render('view',array(
+			'model'=>$model,'id'=>$project
+		));
+        }
+        
+        
 	public function actionDelete($id,$ucid)
 	{
               $project=Yii::app()->session['project'];   
@@ -165,7 +193,7 @@ class IfaceController extends Controller
                {
                $this->redirect(array('/usecase/view/id/'.$ucid));
                } ELSE {
-               $this->redirect(array('/project/view/tab/interfaces/id/'.$ucid));
+               $this->redirect(array('/iface/view/id/'.$ucid));
                }
                
          }

@@ -56,12 +56,12 @@ class Interfacetype extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'id' => 'ID',
-			'ifacetype_id' => 'typeID',
-                    'name' => 'Name',
-                    'number'=>'Number',
-                     'project_id' => 'Project',
-                    'release_id' => 'Release',
+		'id' => 'ID',
+		'ifacetype_id' => 'typeID',
+                'name' => 'Name',
+                'number'=>'Number',
+                'project_id' => 'Project',
+                'release_id' => 'Release',
 		);
 	}
 
@@ -110,12 +110,7 @@ class Interfacetype extends CActiveRecord
 		return $projects[0]['interfacetype_id'];
     }
         
-	/**
-	 * Returns the static model of the specified AR class.
-	 * Please note that you should have this exact method in all your CActiveRecord descendants!
-	 * @param string $className active record class name.
-	 * @return Interfacetype the static model class
-	 */
+
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);

@@ -20,10 +20,10 @@ class Photo extends CActiveRecord
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('photo_id, project_id, release_id, user_id', 'numerical', 'integerOnly'=>true),
+            array('project_id, release_id, user_id', 'numerical', 'integerOnly'=>true),
             array('file', 'length', 'max'=>255),
             array('file', 'file', 'types'=>'jpg,jpeg,gif,icon,png','maxSize'=>10*1024*1024,'allowEmpty'=>true),
-            array('photo_id, project_id, release_id', 'numerical', 'integerOnly'=>true),
+            array('project_id, release_id', 'numerical', 'integerOnly'=>true),
 // The following rule is used by search().
             // Please remove those attributes that should not be searched.
             array('id, photo_id, project_id, release_id, file, user_id, create_date', 'safe', 'on'=>'search'),
@@ -49,9 +49,9 @@ class Photo extends CActiveRecord
     {
         return array(
             'id' => 'ID',
-            'photo_id'=>'Photo ID',
-             'project_id' => 'Project',
-                    'release_id' => 'Release',
+            
+            'project_id' => 'Project',
+            'release_id' => 'Release',
             'file' => 'File',
             'user_id' => 'User',
             'create_date' => 'Create Date',
@@ -79,9 +79,41 @@ class Photo extends CActiveRecord
         ));
     }
     
+      public function orphanPics()
+    {
+       $release=Yii::App()->session['release'];
+              
+        $sql="SELECT
+            `p`.*
+            FROM `photo` `p`
+            WHERE `p`.`id` 
+            NOT IN (
+            SELECT `i`.`photo_id`
+            FROM `iface` `i`
+           
+            JOIN `version` `v`
+            ON `v`.`foreign_key`=`i`.`id`
+            WHERE
+            `v`.`active`=1
+            AND 
+            `v`.`object`=11
+            AND 
+            `v`.`release`=".$release." 
+                AND
+                `i`.`release_id`=".$release."
+            )";
+		$connection=Yii::app()->db;
+		$command = $connection->createCommand($sql);
+		$projects = $command->queryAll();
+		return $projects;
+          
+          
+    }
+     
+    
     public function thumbSearch($proj_id,$limit=6)
     {
-        if(isset($proj_id) && Diary::model()->findByPk($proj_id)){
+        if(isset($proj_id)){
             $criteria=new CDbCriteria;
             
             if($limit !== -1){

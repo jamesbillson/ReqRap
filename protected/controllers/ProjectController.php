@@ -32,7 +32,7 @@ class ProjectController extends Controller
                 'users'=>array('*'),
             ),
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
-                'actions'=>array('addprojectaddress','set','photo',
+                'actions'=>array('addprojectaddress','set','photo','print',
                     'diary','resetlink','details','packagescontract',
                     'responses',
                     'myrequirements','mytenders','delete','create','update','myprojects','projectpackagelist','TenderSummary'),
@@ -120,6 +120,11 @@ class ProjectController extends Controller
            $this->redirect(array('site/fail/condition/no_access'));
             }
     }
+ public function actionprint()
+    {
+                  $this->render('print');
+    }
+    
     /**
      * Creates a new model.
      * If creation is successful, the browser will be redirected to the 'view' page.
@@ -140,7 +145,22 @@ class ProjectController extends Controller
                 $new_id=$model->getPrimaryKey();
             Yii::app()->session['project'] = $new_id;
             Release::model ()->createInitial($new_id); 
-            Iface::model ()->createTypes($new_id);
+          //  Iface::model ()->createTypes($new_id);
+            
+            
+            $initial=array(0=>'Not Classified',1=>'Web interface',2=>'Email');
+            for ($case = 0; $case <= 2; $case++) 
+            {       
+               $type=new interfacetype;
+               $type->name=$initial[$case];
+               $type->interfacetype_id=Version::model()->getNextID(13);
+               $type->project_id=$project;
+               $type->release_id=$release;
+               $model->save(false);
+               $newid=getPrimanyKey($type);
+               $version=Version::model()->getNextNumber($project,13,1,$newid,$type->interfacetype_id);   
+            }          
+            
             Testrun::model ()->createInitial($new_id); 
             Actor::model()->createInitial($new_id);
             Package::model()->createInitial($new_id);

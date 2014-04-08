@@ -31,10 +31,31 @@
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'description'); ?>
-		<?php echo $form->textArea($model,'description',array('rows'=>6, 'cols'=>50)); ?>
+		<?php echo $form->textArea($model,'description',array('rows'=>6, 'cols'=>80)); ?>
 		<?php echo $form->error($model,'description'); ?>
 	</div>
 
+        	<div class="row">
+		<?php echo $form->labelEx($model,'valid'); ?>
+		<?php echo $form->textArea($model,'valid',array('rows'=>6, 'cols'=>80)); ?>
+		<?php echo $form->error($model,'valid'); ?>
+	</div>
+        
+        <div class="row">
+		<?php echo $form->labelEx($model,'type'); ?>
+		<?php echo $form->textField($model,'type',array('size'=>60,'maxlength'=>80)); ?>
+		<?php echo $form->error($model,'type'); ?>
+	</div>
+        
+        <div class="row">
+		<?php echo $form->labelEx($model,'required'); ?>
+		<?php echo $form->checkBox($model,'required'); ?>
+		
+	</div>
+        <div class="row">
+		&nbsp;
+		
+	</div>     
 	<div class="row buttons">
 		<?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>
 	</div>

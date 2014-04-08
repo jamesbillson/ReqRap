@@ -31,11 +31,13 @@ class Formproperty extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('form_id, number, formproperty_id, name, description, project_id, release_id', 'required'),
-			array('formproperty_id,number, form_id, project_id, release_id', 'numerical', 'integerOnly'=>true),
+			array('formproperty_id,number, form_id, project_id, release_id, required', 'numerical', 'integerOnly'=>true),
 			array('name', 'length', 'max'=>255),
+                    array('valid', 'length', 'max'=>1024),
+                        array('type', 'length', 'max'=>80),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, number, formproperty_id, form_id, name, description, project_id, release_id', 'safe', 'on'=>'search'),
+			array('id, number, formproperty_id, form_id, name, description, project_id, release_id, type, required, valid', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -71,6 +73,9 @@ class Formproperty extends CActiveRecord
                     'number' => 'Number',
 			'name' => 'Name',
 			'description' => 'Description',
+                    'type' => 'Field Type',
+                    'valid' => 'Validation',
+                    'required' => 'Required',
 		);
 	}
 
@@ -159,12 +164,7 @@ class Formproperty extends CActiveRecord
     {
         $sql="
             SELECT 
-            `r`.`id`,
-            `r`.`formproperty_id`,
-            `r`.`number`,
-            `r`.`description`,
-            `r`.`name`,
-            `v`.`active`
+            `r`.*
             FROM `formproperty` `r`
             JOIN `version` `v`
             ON `v`.`foreign_key`=`r`.`id`
@@ -173,7 +173,12 @@ class Formproperty extends CActiveRecord
             AND
             `v`.`project_id`=".Yii::App()->session['project']."
                 and
+                `v`.`release`=".Yii::App()->session['release']."
+                and
             `v`.`active`=1 
+            and            
+            `r`.`form_id`=".$id." 
+            
             and            
             `r`.`form_id`=".$id." 
              and 

@@ -11,16 +11,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
     // when displaying a table, if we include bootstra-widget-table class
     // the table will be 0-padding to the box
     'htmlOptions' => array('class'=>'bootstrap-widget-table'),
-       'headerButtons' => array(
-    array(
-        'class' => 'bootstrap.widgets.TbButton',
-        'type' => 'primary', // '', 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
-        'label'=> 'Add Package',
-        'visible'=>$permission,
-            'url'=>'/package/create',
-    ),
-    
-)));
+));
     if (count($data)): ?>
         <table class="table">
             <thead>

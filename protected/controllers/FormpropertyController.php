@@ -115,7 +115,8 @@ class FormpropertyController extends Controller
 			if($new->save())
                         {
 			$version=Version::model()->getNextNumber($project, 3, 2,$new->primaryKey,$model->formproperty_id);
-                        $this->redirect(array('/form/view/id/'.$model->form_id));
+                       $this->redirect(array('/form/view/id/'.$model->form_id));
+                        
                         }        
 		}
 

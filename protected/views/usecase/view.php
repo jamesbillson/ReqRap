@@ -29,6 +29,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                     'url'=>'/usecase/history/id/'.$model->usecase_id,
                     
                       ),
+                  
 )
           ));  
 ?>
@@ -235,7 +236,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
               
      
 )));  
-  if (count($interfaces)):?>
+  if (count($forms)):?>
 
   <table class="table">
   

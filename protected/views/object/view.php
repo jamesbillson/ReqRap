@@ -11,7 +11,6 @@ $permission=(Yii::App()->session['permission']==1)?true : false;
 <?php 
 
 $permission=(Yii::App()->session['permission']==1)?true : false; 
-$data=  Objectproperty::model()->getObjectProperty($model->object_id);
 
 
 $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
@@ -30,6 +29,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
     )),
 ));
 
+$data=  Objectproperty::model()->getObjectProperty($model->object_id);
 
   if (count($data)):?>
 
