@@ -111,7 +111,7 @@ class Iface extends CActiveRecord
             `i`.`type_id`,
             `i`.`id`,
             `t`.`name` as type, 
-            `t`.`number` as typenum
+            `t`.`interfacetype_id` as typenum
             FROM `iface` `i`
             JOIN `interfacetype` `t` 
             on `i`.`type_id`=`t`.`interfacetype_id`
@@ -161,7 +161,7 @@ WHERE
 
 
              GROUP BY `i`.`id`
-             ORDER BY `t`.`number` ASC, `i`.`number` ASC";
+             ORDER BY typenum ASC, `i`.`number` ASC";
         
       
         
@@ -179,14 +179,16 @@ WHERE
           $release=Yii::App()->session['release'];
         $sql="
             SELECT 
+            `r`.`id` itemid,
             `r`.*,
             `p`.*,
-            `t`.`name` as type
+            `t`.`name` as type,
+            `t`.`interfacetype_id` as typenumber
             FROM
             `iface` `r`
             JOIN `interfacetype` `t`
             ON `t`.`interfacetype_id`=`r`.`type_id`            
-            JOIN `photo` `p`
+            LEFT JOIN `photo` `p`
             ON `r`.`photo_id`=`p`.`id`
             JOIN `version` `v`
             ON `v`.`foreign_key`=`r`.`id`
@@ -205,7 +207,8 @@ WHERE
             AND 
             `vt`.`release`=".$release." 
             AND           
-            `r`.`release_id`=".$release;
+            `r`.`release_id`=".$release."
+                GROUP BY `r`.`iface_id`";
 
      
         

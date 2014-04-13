@@ -15,7 +15,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
         'type' => 'primary', // '', 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
         'label'=> 'Add Interface',
         'visible'=> $permission,
-        'url'=>'/iface/create/uc/-1/id/'.$model->id,
+        'url'=>'/iface/create/',
     ),
     array(
         'class' => 'bootstrap.widgets.TbButton',
@@ -47,7 +47,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                         
                      <a href="/iface/view/id/<?php echo $item['iface_id'];?>">
                           
-                        IF-<?php echo str_pad($item['number'], 3, "0", STR_PAD_LEFT); ?>
+                        IF-<?php echo str_pad($item['typenumber'], 2, "0", STR_PAD_LEFT); ?><?php echo str_pad($item['number'], 3, "0", STR_PAD_LEFT); ?>
                    </a>
                     </td>
                     <td>   
@@ -55,12 +55,13 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                          <i class="icon-picture text-warning" rel="tooltip" title="Incomplete Images"></i>
                         <?php
                           }
-                          $uses=Stepiface::model()->getActiveStepifaces($item['id']);
-                         //echo 'uses: '.$uses; 
+                          $uses=Stepiface::model()->getActiveStepifaces($item['itemid']);
+                         //echo $uses;
                          if($uses==0){
-                        ?>
+                        
+                             ?>
                         <i class="icon-exclamation-sign text-warning" rel="tooltip" title="Orphan - this Interface is not used."></i>
-                         <?php } ?>
+                         <?php  } ?>
                     <?php echo $item['name'];?>
                         
                        

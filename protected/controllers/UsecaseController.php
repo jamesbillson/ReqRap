@@ -136,7 +136,7 @@ class UsecaseController extends Controller
             $release=Yii::App()->session['release'];
             $project=Yii::App()->session['project'];
                 $model=$this->loadModel($id);
-                $package=Package::model()->findbyPK($model->package->id);
+                //$package=Package::model()->findbyPK($model->package->id);
                 $number=$model->number;
                
                 
@@ -158,7 +158,7 @@ class UsecaseController extends Controller
 		}
                 
 		$this->render('update',array(
-			'model'=>$model,'id'=>$id,'package'=>$package,'number'=>$number,
+			'model'=>$model,'id'=>$id,'number'=>$number,
                             
 		));
 	}

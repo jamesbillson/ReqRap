@@ -251,16 +251,16 @@ $steps = Step::model()->getMainSteps($model->usecase->id); // get the requiremen
                 
               </td> 
               <td>
-              <?php if($item['id']==$model->startstep_id ) { // THIS IS Start step?>
+              <?php if($item['step_id']==$model->startstep_id ) { // THIS IS Start step?>
                   Start
                  <?php } ELSE { ?>
-                    <a href="/flow/updateendpoints/end/1/flow/<?php echo $model->id;?>/id/<?php echo $item['id'];?>"><i class="icon-chevron-right" rel="tooltip" title="Move the START of this flow here"></i></a> 
+                    <a href="/flow/updateendpoints/end/1/flow/<?php echo $model->id;?>/id/<?php echo $item['step_id'];?>"><i class="icon-chevron-right" rel="tooltip" title="Move the START of this flow here"></i></a> 
                
                   <?php } ?>
-                  <?php if($item['id']==$model->rejoinstep_id) { // THIS IS Start step?>
+                  <?php if($item['step_id']==$model->rejoinstep_id) { // THIS IS Start step?>
                   END  
                       <?php } ELSE { ?>
-                  <a href="/flow/updateendpoints/end/2/id/<?php echo $item['id'];?>/flow/<?php echo $model->id;?>"><i class="icon-chevron-left" rel="tooltip" title="Move the END of this Flow Here"></i></a> 
+                  <a href="/flow/updateendpoints/end/2/id/<?php echo $item['step_id'];?>/flow/<?php echo $model->id;?>"><i class="icon-chevron-left" rel="tooltip" title="Move the END of this Flow Here"></i></a> 
               <?php } ?>
               </td>
          

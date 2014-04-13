@@ -98,7 +98,7 @@ class Actor extends CActiveRecord
 		));
 	}
 
-           public function getProjectActors($id)
+           public function getProjectActors()
     {
        $release=Yii::App()->session['release'];
        $project=Yii::App()->session['project'];

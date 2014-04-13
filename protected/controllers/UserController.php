@@ -123,14 +123,15 @@ class UserController extends Controller
                     $mail->setSubject('You have registered an account on Naild');
                     $mail->setBody('Dear '.$user->firstname.',
                     <br />
-                    Hi, it looks like you\'ve created an account on Naild, the 
-                    online construction management system.<br />
-                    To confirm your email address and activate your account follow the link below and complete the join form.
+                    Hi, it looks like you\'ve created a ReqRap account, the 
+                    rapid web requirements system.<br />
+                    To confirm your email address and activate your account follow 
+                    the link below and complete the join form.
                     <br />
                     Click here to accept <a href="http://'.Yii::app()->params['server'].'/user/active/verifycode/'.$link.'">'.Yii::app()->params['server'].'/user/active/verifycode/'.$link.'</a>                   
                     <br />   <br />.
                     Thanks, 
-                    from the Naild Team.
+                    from the ReqRap Team.
                     ');
 
                     $mail->Send();
@@ -173,14 +174,15 @@ class UserController extends Controller
                     $mail->setSubject('You have registered an account on Naild');
                     $mail->setBody('Dear '.$user->firstname.',
                     <br />
-                    Hi, it looks like you\'ve created an account on Naild, the 
-                    online construction management system.<br />
-                    To confirm your email address and activate your account follow the link below and complete the join form.
+                    Hi, it looks like you\'ve created an account on ReqRap, the 
+                    rapid web requirements system.<br />
+                    To confirm your email address and activate your account follow 
+                    the link below and complete the join form.
                     <br />
                     Click here to accept <a href="http://'.Yii::app()->params['server'].'/user/active/verifycode/'.$link.'">'.Yii::app()->params['server'].'/user/active/verifycode/'.$link.'</a>                   
                     <br />   <br />.
                     Thanks, 
-                    from the Naild Team.
+                    from the ReqRap Team.
                     ');
 
                     $mail->Send();
@@ -243,11 +245,11 @@ class UserController extends Controller
                     $mail = new YiiMailer();
                     $mail->setFrom($sender->email, $sender->firstname.' '.$sender->lastname);
                     $mail->setTo($message->email);
-                    $mail->setSubject('You have been invited to join '.$sender->company->name.' on Naild');
+                    $mail->setSubject('You have been invited to join '.$sender->company->name.' on ReqRap');
                     $mail->setBody($message->firstname.',
                     <br />
-                    You\'ve been invited to join '.$sender->company->name.' on Naild, the 
-                    online construction management system.<br />
+                    You\'ve been invited to join '.$sender->company->name.' on ReqRap, the 
+                    rapid web requirements system.<br />
                     To create your account follow the link below and complete the join form.
                     <br />
                     Click here to accept <a href="http://'.Yii::app()->params['server'].'/user/accept/id/'.$link.'">'.Yii::app()->params['server'].'/user/accept/id/'.$link.'</a>                   

@@ -1,44 +1,38 @@
-<h2>Why Use Nail'd?</h2>
+<h2>Rapid Web Requirements</h2>
 
-<h3>Builders</h3>
+
+<br />
+
+<h3>Good requirements = Good projects</h3>
 <p>
-You are busy getting the work done, but if you are savvy you know that contract 
-administration and having good cost controls and managing your subbies is the key
- to profitability.
-
-Nail'd helps you manage the paperwork and costs of your building project from site, or your office.
-Plan your project from the tender stage onwards.  <br />
-<br />Naild enables builders to:
+Well written requirements that are both understood by your client and accurate enough for 
+you developers will:</p>
 <ul>
-<li><h4>Put all the documentation in one place with version controls.</h4></li>
-<li><h4>Create a package structure to manage your projects.</h4></li>
-<li><h4>Formalise subcontracts, baseline the document sets and pricing.</h4></li>
-<li><h4>Avoid missing subbie's exclusions.</h4></li>
-<li><h4>Capture architects instructions, and make sure you are covered with your subbie's pricing.</h4></li>
+<li><h4>Save time and cost.</h4></li>
+<li><h4>Allow you to gain commitment from the client.</h4></li>
+<li><h4>Prevent scope creep.</h4></li>
+<li><h4>Provide a solid foundation for your price estimation.</h4></li>
+<li><h4>Be the basis of testing and acceptance.</h4></li>
 </ul>
 
 </p>
 <p>&nbsp;</p>
 
-<h3>Project Managers</h3>
+<h3>Features</h3>
 <p>
-Let projects by putting your tender requirements in one place and inviting 
-the companies you choose to bid. 
-</p>
-<p>
-Built in document management  and distribution makes sure all the bidders have the 
-right information without sending couriers or multiple emails.
-</p>
-<p>
-The Nail'd tender dashboard shows you how the bid is progressing, and simplifies adjudication 
-by comparing apples with apples.
-</p>
+ReqRap gets you working quickly by providing a built-in methodology.
+Manage the process of requirements development by constantly reporting on 
+completeness and complexity of your requirements.  Version controlled changes, 
+roll back, change logs and incremental releases are all built in to make the 
+process professional and rapid.</p>
 
 
-<br />Naild enables architects and PM's to:
+
+<br />
 <ul>
-<li><h4>Put all the documentation in one place with version controls.</h4></li>
-<li><h4>Create a tender with online/offline response formats.</h4></li>
-<li><h4>Invite and manage tenderers.</h4></li>
-<li><h4>Participate as a consultant to builder's projects.</h4></li>
+<li><h4>Creates structured, Use Case based web requirements.</h4></li>
+<li><h4>Private and Public library of pre-created requirements.</h4></li>
+<li><h4>Version controlled.</h4></li>
+<li><h4>Automated test plans.</h4></li>
+<li><h4>Cloud based.</h4></li>
 </ul>

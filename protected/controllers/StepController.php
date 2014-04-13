@@ -89,43 +89,54 @@ class StepController extends Controller
 
       	public function actionInsert($id)
 	{
-            $step=$this->loadModel($id);
-            
+            //$step=$this->loadModel($id);
+            $step = Step::model()->with('flow')->findByPk($id);
+            $flow = Flow::model()->with('usecase')->findbyPK($step->flow->id);
+            $project=Yii::App()->session['project'];
+            $release=Yii::App()->session['release'];
             $number=$step->number;
-            $flow=$step->flow_id;
+            $flow_id=$step->flow_id;
             
-            Step::model()->insertNumber($number,$flow);
+            Step::model()->insertNumber($number,$flow_id);
             
-            //load all the following steps.
-            
-            //loop through and create new versions with +1 on
             
             $model=new Step;
                
             $number= 1+ Step::model()->getNextNumber($id);
                 $model->number=$number;
-                $model->flow_id= $step->flow->flow_id;
+                $model->flow_id= $flow->flow_id;
                 $model->text = 'Inserted new step';
                 $model->result = 'Result';
-                $model->actor_id=$step->flow->usecase->actor_id;
+                $model->actor_id=$flow->usecase->actor_id;
                 $model->step_id=Version::model()->getNextID(9);
-                $model->project_id= Yii::app()->session['project'];
-                $model->release_id=Release::model()->currentRelease($model->project);
+                $model->project_id= $project;
+                $model->release_id=$release;
                 $model->save();
-                $version=Version::model()->getNextNumber($model->flow->usecase->package->project_id,9,1,$model->getPrimaryKey(),$model->step_id);   
+                $version=Version::model()->getNextNumber($project,9,1,$model->getPrimaryKey(),$model->step_id);   
                      
-		
+		$this->renumberSteps($flow->id);
 		$this->redirect(array('/step/update/flow/'.$model->flow_id.'/id/'.$model->id));
 		
 		
 	}
         
+        private function renumberSteps($id)
+       {
+               //echo 'Starting <br />';
+               $data = Step::model()->getFlowSteps($id);
+               $label=0;
+               //print_r($data);
+               foreach($data as $line) {
+                   $label= $label+1;
+                   $step=$this->loadModel($line['id']);
+                   $step->number = $label;
+                   $step->save(false);
+                   //echo 'name: '.$flow->name.'<br />';
+               }
+	}
+	
         
-	/**
-	 * Updates a particular model.
-	 * If update is successful, the browser will be redirected to the 'view' page.
-	 * @param integer $id the ID of the model to be updated
-	 */
+        
 	public function actionUpdate($flow,$id)
 	{
             $project=Yii::App()->session['project'];
@@ -140,7 +151,7 @@ class StepController extends Controller
         if($id==-1){
               //$model=Flow::model()->findbyPK($flow);
               $model = Flow::model()->with('usecase')->findByPk($flow);
-               $usecase= Usecase::model()->with('package')->findByPk($model->usecase->id);
+              $usecase= Usecase::model()->with('package')->findByPk($model->usecase->id);
               $step=array();
               }
         $new= new Step;
@@ -154,7 +165,7 @@ class StepController extends Controller
                          $new->number=$step->number;
                          $new->flow_id=$step->flow_id;
                          $new->step_id=$step->step_id;
-                        $new->project_id=$step->project_id;
+                         $new->project_id=$step->project_id;
                          $new->release_id=$step->release_id;
                          
 			if($new->save())

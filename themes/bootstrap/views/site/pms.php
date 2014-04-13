@@ -7,15 +7,13 @@
     </div>
      <div class="form" id="signupForm" style="max-width: 320px">  
          <h4>
-             Get a Nail'd account.
+             Get a ReqRap account.
          </h4>
        
         <p> Sign-up online and get organised straight away with:</p>
          <ul>  
          <li>Document register</li>
-         <li>Project tendering</li>
-         <li>Site instructions</li>
-         <li>Contract Management</li>
+         <li>Test Management</li>
   </ul>
         
         <?php $this->widget('bootstrap.widgets.TbButton', array(

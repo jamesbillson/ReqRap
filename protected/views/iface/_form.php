@@ -16,7 +16,7 @@
 )); 
 
 
-  $interfacetypes = CHtml::listData(Interfacetype::model()->findAll('project_id='.$id), 'id', 'name');
+  //$interfacetypes = CHtml::listData(Interfacetype::model()->findAll('project_id='.$id), 'id', 'name');
      
 
 ?>
@@ -25,8 +25,7 @@
 
 	<?php echo $form->errorSummary($model); ?>
 
-   		<?php echo $form->hiddenField($model,'project_id',array('value'=>$id)); ?>     
-        
+   		
 
 	
 
@@ -43,16 +42,18 @@
 
       
     
-             <?php $interfacetypes = Interfacetype::model()->findAll('project_id='.$id);?>   
+             <?php $interfacetypes = Interfacetype::model()->getInterfacetypes();?>   
              <select name="Iface[type_id]">
              <?php foreach($interfacetypes as $iface){?>
                  
-             <option class="span4" value="<?php echo $iface->interfacetype_id;?>" <?php if($iface->interfacetype_id == $model->type_id)echo 'selected';?> ><?php echo $iface->name;?></option>
+             <option class="span4" value="<?php echo $iface['interfacetype_id'];?>" 
+                 <?php if($iface['interfacetype_id'] == $model->type_id)echo 'selected';?> >
+                     <?php echo $iface['name'];?></option>
              <?php } ?>
              </select>
             
         </div>
-        <a href="/interfacetype/projectview?id=<?php echo $id; ?>">Edit Types</a>
+        <a href="/interfacetype/projectview?id=<?php echo Yii::App()->session['project']; ?>">Edit Types</a>
 	<div class="row">
 	
 		

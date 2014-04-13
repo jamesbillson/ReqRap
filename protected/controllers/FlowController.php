@@ -15,7 +15,7 @@ class FlowController extends Controller
 	{
 		return array(
 			'accessControl', // perform access control for CRUD operations
-			'postOnly + delete', // we only allow deletion via POST request
+			//'postOnly + delete', // we only allow deletion via POST request
 		);
 	}
 
@@ -32,7 +32,7 @@ class FlowController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update','updateendpoints'),
+				'actions'=>array('create','update','updateendpoints','delete'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -65,10 +65,10 @@ class FlowController extends Controller
 	{
  
             $project = Yii::app()->session['project'];
-            $release=  Release::model()->currentRelease($project);
+            $release=  Yii::app()->session['release'];
             //$parent=Step::model()->find('step_id ='.$start);// get the start step to get the actor
             $parent = Step::model()->with('flow')->find('step_id ='.$start);
-            $parentusecase = Flow::model()->with('usecase')->findbyPK($parent->flow->id);
+            $parentflow = Flow::model()->with('usecase')->findbyPK($parent->flow->id);
 // CREATE A NEW FLOW	
             $flow=new Flow;
                         $flow->startstep_id=$start; // Note these are now step_id not id
@@ -77,7 +77,8 @@ class FlowController extends Controller
                         $flow->project_id=$project;
                         $flow->release_id=$release;
                         $flow->main=0; // new flow will always be ALT i.e. value 0
-                        $flow->name=Flow::model()->getNextFlow($parentusecase->id);
+                        $flow->name=0;
+                    //$flow->name=
                         $flow->flow_id=Version::model()->getNextID(8);
                         if ($flow->save()){
                         $flowid=$flow->getPrimaryKey();
@@ -106,22 +107,30 @@ class FlowController extends Controller
             } ELSE {
              echo 'flow did not save';
              }   
-                     $step = Step::model()->with('flow')->findByPk($stepid);
-              $this->redirect(array('/step/update/flow/'.$step->flow->id.'/id/'.$step->id));
+             $this->renumberFlows($id);
+              $step = Step::model()->with('flow')->findByPk($stepid);
+             $this->redirect(array('/step/update/flow/'.$step->flow->id.'/id/'.$step->id));
 		
 
 	}
 
-        	public function renumberFlows($id)
+   
+        
+        
+        
+        
+        	private function renumberFlows($id)
        {
-               
-               $data = Flow::model()->findAll(array('order'=>'id ASC', 'condition'=>'usecase_id=:x and main=0', 'params'=>array(':x'=>$id)));
+               //echo 'Starting <br />';
+               $data = Flow::model()->getNextFlow($id);
                $label=chr(ord('A')-1);
-                       //
+               //print_r($data);
                foreach($data as $line) {
                    $label= chr(ord($label)+1);
-                   $line->name = $label;
-                   $line->save(false);
+                   $flow=$this->loadModel($line['id']);
+                   $flow->name = $label;
+                   $flow->save(false);
+                   //echo 'name: '.$flow->name.'<br />';
                }
 	}
         
@@ -167,20 +176,17 @@ class FlowController extends Controller
 		));
 	}
 
-	/**
-	 * Deletes a particular model.
-	 * If deletion is successful, the browser will be redirected to the 'admin' page.
-	 * @param integer $id the ID of the model to be deleted
-	 */
-	public function actionDelete($id)
+	
+        public function actionDelete($id)
 	{
-		$this->loadModel($id)->delete();
-
-		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
-		if(!isset($_GET['ajax']))
-			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
-	}
-
+	    $project=Yii::App()->session['project'];	
+            $model=$this->loadModel($id);
+            $version=Version::model()->getNextNumber($project,8,3,$id,$model->flow_id); 
+            $model->save();
+            $this->renumberFlows($model->usecase_id);
+            $this->redirect(array('/usecase/view/id/'.$model->usecase_id));
+         }
+        
 	/**
 	 * Lists all models.
 	 */

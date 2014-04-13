@@ -62,9 +62,9 @@ class IfaceController extends Controller
 	}
         
         
-	public function actionCreate($id)
+	public function actionCreate()
 	{
-              
+              $release=Yii::app()->session['release'];
               $project=Yii::app()->session['project'];
                 $model= new Iface;
 		
@@ -72,8 +72,8 @@ class IfaceController extends Controller
 		if(isset($_POST['Iface']))
 		{
                   $model->attributes=$_POST['Iface'];
-                  $model->project_id= Yii::app()->session['project'];
-                  $model->release_id=Release::model()->currentRelease($project);
+                  $model->project_id= $project;
+                  $model->release_id= $release;
                   $model->number=Iface::model()->getNextIfaceNumber($project);
                   $model->iface_id=Version::model()->getNextID(12);
                   //$model->file='default.png';
@@ -99,11 +99,11 @@ class IfaceController extends Controller
                      $version=Version::model()->getNextNumber($project,12,1,$model->primaryKey,$model->iface_id);   
                    
                 
-                    	$this->redirect(array('/project/view/id/'.$project.'/tab/interfaces'));
+                    	$this->redirect(array('/project/view/tab/interfaces'));
 		   } }
 
 		$this->render('create',array(
-			'model'=>$model,'id'=>$id,
+			'model'=>$model,
 		));
 	}
 

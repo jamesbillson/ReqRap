@@ -19,10 +19,13 @@ $name = ($flow['main']==1)?'<strong>Scenario Text</strong> ':'<strong>Alternate 
                  
          if($step['number']!=1) echo '<tr>';
          
+         
+         $actorname =(count($actors)>1)?'('.$step['actor'].')':''; 
          ?>
                    
             <td>
-               Step <?php echo $step['number'];?>
+               Step 
+               <?php echo $step['number'];?><?php echo $actorname;?>
                <?php echo $step['text']." <br />".$step['result']."</td> "; ?>
             </td>
 

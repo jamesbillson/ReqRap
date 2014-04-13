@@ -1,7 +1,6 @@
 BUGS
 
-Flows are not numbering correctly
-Alternate flow start and finish is getting multiple version instances
+
 Image numbering is not working should have Category Number - Image number
 Release numbering
 

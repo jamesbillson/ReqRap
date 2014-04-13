@@ -14,7 +14,7 @@ Yii::app()->params['server'] = 'Reqer';
 
 return array(
     'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
-    'name'=>'Reqer',
+    'name'=>'ReqRap',
     'defaultController' => 'site/login',
     
     // preloading 'log' component

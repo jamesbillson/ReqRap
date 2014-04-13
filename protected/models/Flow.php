@@ -105,26 +105,27 @@ class Flow extends CActiveRecord
           public function getNextFlow($id)
     {
            
-              
-        $sql="SELECT `f`.`name`
-            FROM `flow` `f`
-            Join `usecase` `u` 
-            on `f`.`usecase_id`=`u`.`usecase_id`
-            WHERE `u`.`id`=".$id."
-            AND 
-            `f`.`main`=0
-            order by name DESC
-            LIMIT 1
+               $release=Yii::App()->session['release'];
+        $sql="
+            SELECT  `f` . * 
+            FROM  `flow`  `f` 
+            JOIN  `usecase`  `u` ON  `f`.`usecase_id` =  `u`.`usecase_id` 
+            JOIN  `version`  `vu` ON  `vu`.`foreign_key` =  `u`.`id` 
+            JOIN  `version`  `vf` ON  `vf`.`foreign_key` =  `f`.`id` 
+            WHERE  `u`.`usecase_id` =".$id."
+            AND  `vu`.`object` =10
+            AND  `vu`.`active` =1
+            AND  `vu`.`release` =".$release."
+            AND  `vf`.`object` =8
+            AND  `vf`.`active` =1
+            AND  `vf`.`release` =".$release."
+            AND  `f`.`main` =0
+            ORDER BY  `f`.`id` 
             ";
 		$connection=Yii::app()->db;
 		$command = $connection->createCommand($sql);
 		$projects = $command->queryAll();
-                if (!isset($projects[0]['name'])) {
-                    $projects[0]['name']='A';
-                } ELSE {
-                    $projects[0]['name']=chr(ord($projects[0]['name'])+1);
-                }
-		return $projects[0]['name'];
+               return $projects;
     }    
     
               public function checkSteps($id)
@@ -136,7 +137,8 @@ class Flow extends CActiveRecord
               JOIN `step` `s` 
               ON `s`.`flow_id`=`f`.`id`
               WHERE `f`.`id`=".$id."
-              ";
+             
+";
 		$connection=Yii::app()->db;
 		$command = $connection->createCommand($sql);
 		$projects = $command->queryAll();
@@ -193,6 +195,7 @@ class Flow extends CActiveRecord
               JOIN `version` `vu`
               ON `vu`.`foreign_key`=`u`.`id`
               
+              
               WHERE 
               `u`.`project_id`=".$project."
 
@@ -200,13 +203,14 @@ class Flow extends CActiveRecord
               `f`.`project_id`=".$project."
               AND
               `f`.`release_id`=".$release." 
+             
               AND 
-                `vu`.`object`=10 AND `vu`.`active`=1 AND `vu`.`project_id`=".$project."
+              `vu`.`object`=10 AND `vu`.`active`=1 AND `vu`.`release`=".$release."
               AND
-              `vf`.`object`=8 AND `vf`.`active`=1 AND `vf`.`project_id`=".$project." 
+              `vf`.`object`=8 AND `vf`.`active`=1 AND `vf`.`release`=".$release." 
               AND
               `u`.`id`=".$id."
-              ORDER BY `f`.`main` DESC
+              ORDER BY `f`.`main` DESC, `f`.`name` ASC
                 ";
 		$connection=Yii::app()->db;
 		$command = $connection->createCommand($sql);

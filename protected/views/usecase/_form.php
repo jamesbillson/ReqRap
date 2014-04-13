@@ -9,14 +9,14 @@
 	'enableAjaxValidation'=>false,
 )); ?>
 
-	 <?php echo $form->hiddenField($model,'package_id',array('value'=>$package->id)); ?>
+	 <?php // echo $form->hiddenField($model,'package_id',array('value'=>$package->id)); ?>
 	<?php echo $form->errorSummary($model); ?>
 
 	<?php echo $form->hiddenField($model,'number',array('value'=>$number)); ?>
 
     	<div class="row">
          <?php echo $form->labelEx($model,'actor_id'); ?>
-            <?php $actors = Actor::model()->getProjectActors($package->project_id);    
+            <?php $actors = Actor::model()->getProjectActors();    
                         $data = array();
                     foreach($actors as $actor)
                                         $data[$actor['actor_id']]=$actor['name'];
@@ -26,7 +26,7 @@
                         
                         
                     
-                        <a href="/actor/create/id/<?php echo $package->project->id; ?>"> Add New Actor</a>
+                        <!--a href="/actor/create/id/<?php //echo $package->project->id; ?>"> Add New Actor</a-->
     <br />
      
 

@@ -175,16 +175,28 @@ class Step extends CActiveRecord
                   $release=Yii::App()->session['release'];
             $project=Yii::App()->session['project'];   
         $sql="SELECT `s`.*,
+            `a`.`name` as actor,
             `f`.`name` as flow
             FROM `step` `s`
             Join `flow` `f` 
             on `f`.`flow_id`=`s`.`flow_id`
-            JOIN `version` `v`
-            ON `v`.`foreign_key`=`s`.`id`
+            Join `actor` `a` 
+            on `a`.`actor_id`=`s`.`actor_id`
+            JOIN `version` `vs`
+            ON `vs`.`foreign_key`=`s`.`id`
+            JOIN `version` `vf`
+            ON `vf`.`foreign_key`=`f`.`id`
+            JOIN `version` `va`
+            ON `va`.`foreign_key`=`a`.`id`
             WHERE `f`.`id`=".$id."
             AND
-           `v`.`object`=9 AND `v`.`active`=1 AND `v`.`project_id`=".$project." AND `v`.`release`=".$release."
-            ORDER BY `s`.`number` ASC";
+           `vs`.`object`=9 AND `vs`.`active`=1 AND `vs`.`release`=".$release."
+            AND
+           `vf`.`object`=8 AND `vf`.`active`=1 AND `vf`.`release`=".$release."
+            AND
+           `va`.`object`=4 AND `va`.`active`=1 AND `va`.`release`=".$release."            
+               GROUP BY `s`.`id`
+               ORDER BY `s`.`number` ASC";
 		$connection=Yii::app()->db;
 		$command = $connection->createCommand($sql);
 		$projects = $command->queryAll();
@@ -198,10 +210,9 @@ class Step extends CActiveRecord
                 $project=Yii::App()->session['project'];
            $release=Yii::App()->session['release'];    
               
-        $sql="SELECT `s`.`text`,
-            `s`.`actor_id`,
-            `f`.`name` as flow,
-            `s`.`id`,`s`.`number`
+        $sql="SELECT `s`.*,
+            `f`.`name` as flow
+            
             FROM `step` `s`
             Join `flow` `f` 
             on `f`.`flow_id`=`s`.`flow_id`

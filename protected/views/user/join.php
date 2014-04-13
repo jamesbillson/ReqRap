@@ -1,5 +1,5 @@
-<h3 style="text-align:center;margin-bottom:10px"> Requirements management  </h3>
-<h3 style="text-align:center;margin-bottom:30px"> <a href="/site/benefits">Find out why -></a> </h3>
+<h3 style="text-align:center;margin-bottom:10px"> Rapid Web Requirements  </h3>
+<h3 style="text-align:center;margin-bottom:30px"> <a href="/site/benefits">Find out how -></a> </h3>
 
 <div class="row">
     <div class="span8">

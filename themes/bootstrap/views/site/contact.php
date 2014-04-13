@@ -9,15 +9,15 @@ $this->breadcrumbs=array(
 );
 ?>
 
-<h1>Contact Naild</h1>
+<h1>Contact Us</h1>
 
-If you need to get in contact with Naild Construction Systems,<br />
+If you need to get in contact with ReqRap,<br />
 we are at: <br />
 10 Rochester St,<br />
 Kew, 3101<br />
 Australia<br />
 T: +61 (3) 9014 9540<br />
-E: info@naild.com.au<br />
+E: info@ReqRap.com.au<br />
 Fax: its not 1985 any more<br />
 <br />
 <br />

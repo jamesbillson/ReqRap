@@ -143,6 +143,8 @@ class Stepiface extends CActiveRecord
             AND 
             `v`.`object` =15
             AND
+            `v`.`release`=".Yii::App()->session['release']."
+                AND
             `i`.`id`=".$id;
             
 
