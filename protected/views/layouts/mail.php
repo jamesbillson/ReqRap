@@ -17,10 +17,10 @@
 		</tr>
 		<tr>
             <td style="padding:15px 20px;padding-top:5px;">
-                Naild<br />
-                T. <br />
+                ReqRap<br />
+                T. +61 (3) 9014 9540<br />
                  <br /> 
-                <a href="http://www.naild.com.au/">www.naild.com.au</a><br /> 
+                 <a href="http://www.reqrap.com/"><img src="http://www.reqrap.com/images/furniture/logo.png" alt="www.reqrap.com" border="0"></a><br /> 
               	</td>
 		</tr>
 	</tbody>

@@ -4,4 +4,5 @@
 <?php $this->renderPartial('_form', array('model'=>$model,
                                 'id'=>$id,
                                 'number'=>$number,
+    'preload_description'=>$model->description,
                                 )); ?>

@@ -1,6 +1,6 @@
 <div class="row">
     <div class="span8">
-To access Naild and join the project you have been invited to, you first need to make an account.
+To access ReqRap and join the project you have been invited to, you first need to make an account.
 Its free, and only takes a minute.  You will be sent an email to confirm your email address, after that
 you'll be asked to enter your company name.  <br />
 Please let us know if you have any difficulties getting started.

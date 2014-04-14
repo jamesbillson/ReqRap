@@ -218,8 +218,8 @@ class Follower extends CActiveRecord
             $mail->setSubject('You have been invited to follow a project');
             $mail->setBody($contact->firstname.',
             <br /><br />
-            You\'ve been invited to follow a Naild project. 
-            <br />As you already have a Naild
+            You\'ve been invited to follow a ReqRap project. 
+            <br />As you already have a ReqRap
             account, just click the link below to get instant access to the project\'s
                     resources.
             <br />
@@ -237,8 +237,8 @@ class Follower extends CActiveRecord
             $mail->setSubject('You have been invited to follow a project');
             $mail->setBody($contact->firstname.',
             <br /><br />
-            You\'ve been invited to follow a Naild project.  You can follow the link below
-            to create an account on Naild and to get access to project resources.
+            You\'ve been invited to follow a ReqRap project.  You can follow the link below
+            to create an account on ReqRap and to get access to project resources.
             <br />
             Click here to accept <a href="http://'.Yii::app()->params['server'].'/follower/accept/id/'.$follower->link.'">'.Yii::app()->params['server'].'/follower/accept/id/'.$follower->link.'</a>                   
             <br />
@@ -281,13 +281,13 @@ class Follower extends CActiveRecord
             You\'ve accepted the invitation to follow '.$projectName.' managed by '.$companyName.'. 
             <br />The system will send you notifications when documents are updated by default, 
             but you can change the settings whenever you like by going to your account page.
-             <a href="http://www.naild.com.au/user/myaccount/">http://www.naild.com.au/user/myaccount/</a>
+             <a href="http://www.ReqRap.com/user/myaccount/">http://www.ReqRap.com/user/myaccount/</a>
             <br />
             Don\'t forget you can access the project documents without logging in directly here:
             <a href="http://'.Yii::app()->params['server'].'/project/extview/id/'.$extlink.'">'.Yii::app()->params['server'].'/project/extview/id/'.$extlink.'</a>          
                <br />
                   <br />
-                  Thanks for using Nail\'d.
+                  Thanks for using ReqRap.
             
             ');
 
@@ -295,7 +295,7 @@ class Follower extends CActiveRecord
         $mail->Send(); 
         
        $mail = new YiiMailer();
-       $mail->setFrom('info@naild.com.au','Nail\'d System - '.$companyName);
+       $mail->setFrom('info@reqrap.com','ReqRap System - '.$companyName);
        $mail->setTo($contact->email);
      
           
@@ -307,7 +307,7 @@ class Follower extends CActiveRecord
                 '.$contact->worksfor->name.' has accepted the invitation to follow your project '.$projectName.'. 
             <br />
             <br />
-            Thanks for keeping it Nail\'d.
+            Thanks for using ReqRap.
             
             ');
 
@@ -361,10 +361,10 @@ class Follower extends CActiveRecord
             http://'.Yii::app()->params['server'].'/project/extview/id/'.$extlink.'</a>          
             <br />
             <br />
-            Thanks for using Nail\'d.<br />
+            Thanks for using ReqRap.<br />
             Note: The system will send you notifications when documents are updated by default, 
             but you can change the settings whenever you like by going to your account page. 
-            <a href="http://www.naild.com.au/user/myaccount/">http://www.naild.com.au/user/myaccount/</a>
+            <a href="http://www.ReqRap.com/user/myaccount/">http://www.ReqRap.com/user/myaccount/</a>
             <br />
             ');
   

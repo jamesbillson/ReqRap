@@ -1,5 +1,6 @@
  <?php echo $this->renderPartial('/project/head',array('tab'=>'usecases')); 
- $permission=(Yii::App()->session['permission']==1)?true : false; 
+
+$permission=(Yii::App()->session['permission']==1)?true : false; 
  ?>
 
 <?php if($permission){ ?>
@@ -18,7 +19,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                     'type' => 'link', // '', 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
                     'icon'=> 'edit',
                     'visible'=>$permission,
-                    'url'=>'/usecase/update/id/'.$model->usecase_id,
+                    'url'=>'/usecase/update/id/'.$model->id,
                     
                       ),
      array(

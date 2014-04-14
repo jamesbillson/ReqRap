@@ -120,7 +120,7 @@ class UserController extends Controller
 
                     $mail->setFrom(Yii::app()->params['adminEmail']);
                     $mail->setTo($user->email);
-                    $mail->setSubject('You have registered an account on Naild');
+                    $mail->setSubject('You have registered an account on ReqRap');
                     $mail->setBody('Dear '.$user->firstname.',
                     <br />
                     Hi, it looks like you\'ve created a ReqRap account, the 
@@ -171,7 +171,7 @@ class UserController extends Controller
 
                     $mail->setFrom(Yii::app()->params['adminEmail']);
                     $mail->setTo($user->email);
-                    $mail->setSubject('You have registered an account on Naild');
+                    $mail->setSubject('You have registered an account on ReqRap');
                     $mail->setBody('Dear '.$user->firstname.',
                     <br />
                     Hi, it looks like you\'ve created an account on ReqRap, the 

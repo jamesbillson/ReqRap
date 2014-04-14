@@ -137,7 +137,7 @@ return array(
                 'autoStart' => true,
                 ),
         'db'=>array(
-            'connectionString' => 'mysql:host=localhost;dbname=reqer',
+            'connectionString' => 'mysql:host=localhost;dbname=req',
             'emulatePrepare' => true,
             'username' => 'root',
             'password' => 'root',

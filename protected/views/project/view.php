@@ -49,7 +49,7 @@ $active['testcases']=FALSE;
                 compact('model'),true,true),'active'=>$active['documents']);
  
     $tabs[] = array('id' => 'followers', 
-        'label' => 'Colaborators', 
+        'label' => 'Collaborators', 
         'visible' => $owner,
         'content' => $this->renderPartial('_followers',
                 compact('model'),true,true),'active'=>$active['followers']);

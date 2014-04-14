@@ -10,7 +10,7 @@
   
 
  
- Link: <input type="text" value ="http://www.naild.com.au/project/extview/id/<?php echo $model->extlink; ?>" onclick="this.select()">
+ Link: <input type="text" value ="http://www.reqrap.com/project/extview/id/<?php echo $model->extlink; ?>" onclick="this.select()">
  <a href="/project/resetlink/id/<?php echo $model->id; ?>">Reset the link</a>
  
  <br /> 

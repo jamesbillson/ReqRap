@@ -1,4 +1,4 @@
-<?
+<?php 
 $project=Project::model()->findbyPK(Yii::App()->session['project']); 
 $mycompany=User::model()->myCompany();
 $projectlist=Company::model()->getProjects($mycompany);
@@ -7,7 +7,7 @@ $currentrelease=Release::model()->currentRelease();
 $release=Yii::App()->session['release'];
 Project::model()->setPermissions($mycompany, $project,$release, $currentrelease);
 //echo 'release'.$release.'<br /> current release'.$currentrelease.'<br />';
-        
+    
 ?>
 
 <table><tr><td>
@@ -61,3 +61,5 @@ Project::model()->setPermissions($mycompany, $project,$release, $currentrelease)
 </td>
     </tr>
 </table> 
+
+  

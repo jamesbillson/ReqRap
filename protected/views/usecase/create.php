@@ -6,4 +6,5 @@
          <?php $this->renderPartial('_form', array('model'=>$model,  
                             'package'=>$package,
                             'number'=>$number,
+                 'preload_description'=>'This usecase describes the process of ...',
                             )); ?>
