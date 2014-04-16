@@ -23,6 +23,7 @@ $active = array();
 $active['details']=FALSE;
 $active['documents']=FALSE;
 $active['objects']=FALSE;
+$active['category']=FALSE;
 $active['packages']=FALSE;
 $active['actors']=FALSE;
 $active['followers']=FALSE;
@@ -53,6 +54,10 @@ $active['testcases']=FALSE;
         'visible' => $owner,
         'content' => $this->renderPartial('_followers',
                 compact('model'),true,true),'active'=>$active['followers']);
+    $tabs[] = array('id' => 'category', 
+        'label' => 'Simple Req\'s', 
+        'content' => $this->renderPartial('_category',
+                compact('model'),true,true),'active'=>$active['category']);
     
     $tabs[] = array('id' => 'objects', 
         'label' => 'Objects', 

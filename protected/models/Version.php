@@ -19,6 +19,8 @@ class Version extends CActiveRecord
                                 14=>'stepform',
                                 15=>'stepiface',
                                 16=>'steprule',
+                                17=>'category',
+                                18=>'simple',
      
      
      ); 

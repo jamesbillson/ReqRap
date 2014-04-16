@@ -5,6 +5,8 @@ Image numbering is not working should have Category Number - Image number
 Release numbering
 
 
+Follower - need to force use of the same email address, otherwise the accounts don't hook up.
+
 FEATURES
 
 ### ACTOR
