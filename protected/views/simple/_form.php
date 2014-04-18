@@ -7,7 +7,7 @@
 <div class="form">
 
 <?php $form=$this->beginWidget('CActiveForm', array(
-	'id'=>'objectproperty-form',
+	'id'=>'categoryproperty-form',
 	// Please note: When you enable ajax validation, make sure the corresponding
 	// controller action is handling ajax validation correctly.
 	// There is a call to performAjaxValidation() commented in generated controller code.
@@ -20,10 +20,10 @@
 	<?php echo $form->errorSummary($model); ?>
 
 
-	<?php echo $form->hiddenField($model,'object_id',array('value'=>$object_id)); ?>
+	<?php echo $form->hiddenField($model,'category_id',array('value'=>$category_id)); ?>
 		<div class="row">
 		<?php
-                $number=  Objectproperty::model()->getNextNumber($object_id);
+                $number=  Objectproperty::model()->getNextNumber($category_id);
 		 echo $form->hiddenField($model,'number',array('value'=>$number)); ?>
            Number: <?php echo $number; ?>. 
 		

@@ -1,3 +1,12 @@
-<h1>Create A Property for an Object</h1>
+<?php 
+echo $this->renderPartial('/project/head',array('tab'=>'details'));
 
-<?php $this->renderPartial('_form', array('model'=>$model,'object_id'=>$object_id,)); ?>
+$permission=(Yii::App()->session['permission']==1)?true : false; 
+?>
+<h3>Create A Simple Requirement</h3>
+
+<?php 
+if ($permission){
+$this->renderPartial('_form', array('model'=>$model,'category_id'=>$category_id,)); 
+}
+?>

@@ -38,7 +38,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                 <tr class="odd">  
                    
                     <td>
-                        <a href="/category/view/id/<?php echo $item['category_id'];?>">OB-<?php echo str_pad($item['number'], 3, "0", STR_PAD_LEFT); ?></a>
+                        <a href="/category/view/id/<?php echo $item['category_id'];?>">Section <?php echo str_pad($item['number'], 2, "0", STR_PAD_LEFT); ?></a>
                     </td>
                     <td>
                         <b><?php echo $item['name'];?></b>
