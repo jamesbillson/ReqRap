@@ -67,3 +67,52 @@ $data = Release::model()->findAll('project_id='.Yii::app()->session['project']);
 
 
 
+<h3>Document Structure</h3>
+<?php
+
+
+$sections = array('object'=>1,
+                  'actor'=>2, 
+                  'package'=>3,
+                  'rule'=>4,
+                  'form'=>5,
+                  'iface'=>6,
+                  'category'=>7 ); 
+ 
+
+?>
+
+<table class="table">
+	<thead>
+	<tr>
+		<th>Number</th>
+		<th>Object</th>
+             
+                <th>Actions</th>
+
+	</tr>
+	</thead>
+            <?php if (count($sections)):?>
+        <tbody>
+
+        <?php foreach($sections as $object => $order) {?>
+        <tr class="odd">  
+        <td>   
+        <?php echo $order; ?> 
+        </td>
+   
+<td>   
+       <?php echo $object;?>
+        </td>
+        <td>
+       <a href="/project/set/id/<?php echo $object;?>"><i class="icon-eye-open " rel="tooltip" title="Browse this release"></i></a> 
+       <a href="/version/index/id/<?php echo $object;?>"><i class="icon-calendar " rel="tooltip" title="View change log"></i></a> 
+              
+        </td>
+        </tr>
+      <?php } ?>
+</tbody>
+
+<?php endif; ?>        
+ 
+</table>
