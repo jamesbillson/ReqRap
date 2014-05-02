@@ -203,7 +203,31 @@ class Step extends CActiveRecord
 		return $projects;
     }
     
-       
+        public function getStepParentFlow($id) // GET MAIN FOR A UC
+    {
+        $release=Yii::App()->session['release'];    
+              
+        $sql="SELECT `f`.*
+            FROM `flow` `f` 
+            JOIN `step` `s`
+            on `f`.`flow_id`=`s`.`flow_id`
+            JOIN `version` `vs`
+            ON `vs`.`foreign_key`=`s`.`id`
+            JOIN `version` `vf`
+            ON `vf`.`foreign_key`=`f`.`id`
+          
+            WHERE 
+            `s`.`id`=".$id."
+            AND 
+            `vs`.`object` =9 AND `vs`.`active`=1 AND `vs`.`release`=".$release."
+              
+              AND
+            `vf`.`object` =8 AND `vf`.`active`=1 AND `vf`.`release`=".$release;
+		$connection=Yii::app()->db;
+		$command = $connection->createCommand($sql);
+		$projects = $command->queryAll();
+		return $projects[0];
+    }
     
       public function getMainSteps($id) // GET MAIN FOR A UC
     {

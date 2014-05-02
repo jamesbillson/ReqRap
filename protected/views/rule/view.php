@@ -6,26 +6,48 @@ $permission=(Yii::App()->session['permission']==1)?true : false;
 
  
 
-<h2>View Rule BR-<?php echo str_pad($model->number, 3, "0", STR_PAD_LEFT); ?>     
-    <a href="/rule/update/id/<?php echo $model->id;?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
-           </h2>
-
-
-	<b><?php echo CHtml::encode($model->getAttributeLabel('title')); ?>:</b>
-        <br />
-	<?php echo CHtml::encode($model->title); ?>
-	<br />
-
-	<b><?php echo CHtml::encode($model->getAttributeLabel('text')); ?>:</b>
-	<br />
-            <?php echo CHtml::encode($model->text); ?>
-       
+<h2>Business Rule BR-<?php echo str_pad($model->number, 3, "0", STR_PAD_LEFT); ?></h2>
+  
         
-        <h3>Uses</h3>
+            <?php 
+    $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
+    'title' => $model->title,
+    'headerIcon' => 'icon-cogs',
+    'htmlOptions' => array('class'=>'bootstrap-widget-table'),
+              'headerButtons' => array(
+                array(
+                    'class' => 'bootstrap.widgets.TbButton',
+                    'type' => 'link', // '', 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
+                    'icon'=> 'edit',
+                    'visible'=>$permission,
+                    'url'=>'/rule/update/id/'.$model->id,
+                    
+                      ),
+   
+                  
+)
+)); 
+   ?>
+
+        <table class="table">
+            <tbody>
+                <tr>
+       
+                    <td>
+                       <?php echo CHtml::encode($model->text); ?>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+    <?php $this->endWidget();  ?>
+
+
+       <h4>Traceability</h4>
         
         <?php 
  //$steprule=(Steprule::model()->findAll('rule_id='.$model->rule_id));
- $steprule=Usecase::getLinkUsecase($model->id,1,16);
+ $steprule=Usecase::model()->getLinkUsecase($model->id,1,16);
  if(!count($steprule)){
  $usecases= Usecase::model()->getProjectUCs($model->project->id);
  ?>

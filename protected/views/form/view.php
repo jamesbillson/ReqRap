@@ -3,7 +3,7 @@
 $permission=(Yii::App()->session['permission']==1)?true : false; 
 ?>
 
-
+<a href="/project/view/tab/forms">Back to Forms</a>
 <?php 
 //$data=Formproperty::model()->findAll('form_id='.$model->form_id);
 $data = Formproperty::model()->getFormProperty($model->form_id);
@@ -43,7 +43,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
             </thead>
             
             <tbody>
-            <?php foreach($data as $item):?>
+            <?php $counter=0; foreach($data as $item):?>
                 <tr class="odd">  
                     <td>   
                      <?php echo $item['number'];?>
@@ -66,12 +66,27 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                     <td>
                    <?php if($permission){ ?>
                         <a href="/formproperty/update/id/<?php echo $item['id'];?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
-                        <a href="/formproperty/delete?id=<?php echo $item['id'];?>"><i class="icon-remove-sign" rel="tooltip" title="Delete"></i></a> 
+                        <a href="/formproperty/delete/id/<?php echo $item['id'];?>"><i class="icon-remove-sign text-error" rel="tooltip" title="Delete"></i></a> 
                      <a href="/formproperty/history/id/<?php echo $item['formproperty_id'];?>"><i class="icon-calendar" rel="tooltip" title="History"></i></a> 
-                   <?php } ?>
+                   
+                            <?php if($counter!=0) { ?>
+                            <a href="/formproperty/move/dir/2/id/<?php echo $item['id'];?>"><i class="icon-arrow-up" rel="tooltip" title="Move Up"></i></a> 
+                            <?php } ELSEIF(count($data)>1) {?>   
+                           
+                            <i class="icon-flag" rel="tooltip" title="Start"></i>
+                            <?php } ?>          
+                            <?php if($counter!=count($data)-1) { ?>        
+                            <a href="/formproperty/move/dir/1/id/<?php echo $item['id'];?>"><i class="icon-arrow-down" rel="tooltip" title="Move Down"></i></a> 
+                            <?php } ELSEIF(count($data)>1) {?>
+                             <i class="icon-flag" rel="tooltip" title="End"></i>   
+                            <?php } ?>     
+                         
+                     <?php } ?>
+                     
+                     
                     </td>
                 </tr>
-            <?php endforeach ?>
+            <?php $counter++; endforeach ?>
             </tbody>
         </table>
 

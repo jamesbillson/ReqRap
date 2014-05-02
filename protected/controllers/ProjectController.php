@@ -52,11 +52,11 @@ class ProjectController extends Controller
      * Displays a particular model.
      * @param integer $id the ID of the model to be displayed
      */
-     public function actionSet($id)
+     public function actionSet($id,$tab)
     {
     Yii::app()->session['project']=$id;
     Yii::app()->session['release']=  Release::model()->currentRelease();
-    $this->redirect(array('/project/view/tab/usecases'));
+    $this->redirect(array('/project/view/tab/'.$tab));
         
     }
     public function actionView($tab)
@@ -142,35 +142,37 @@ class ProjectController extends Controller
             $model->company_id = User::model()->myCompany();
             $model->extlink = md5(uniqid(rand(), true));
             if($model->save())
-                $new_id=$model->getPrimaryKey();
-            Yii::app()->session['project'] = $new_id;
-            Release::model ()->createInitial($new_id); 
-          //  Iface::model ()->createTypes($new_id);
+            $project=$model->getPrimaryKey();
+            Yii::app()->session['project'] = $project;
+            Release::model ()->createInitial($project); 
+            $release=Release::model()->currentRelease();
+           Yii::App()->session['release']=$release;
             
-            
-            $initial=array(0=>'Not Classified',1=>'Web interface',2=>'Email');
-            for ($case = 0; $case <= 2; $case++) 
+            $initial=array(1=>'Not Classified',2=>'Web interface',3=>'Email');
+            for ($case = 1; $case <= 3; $case++) 
             {       
                $type=new interfacetype;
                $type->name=$initial[$case];
+               $type->number=$case;
                $type->interfacetype_id=Version::model()->getNextID(13);
                $type->project_id=$project;
                $type->release_id=$release;
-               $model->save(false);
-               $newid=getPrimanyKey($type);
+               $type->save(false);
+               $newid=$type->getPrimaryKey();
                $version=Version::model()->getNextNumber($project,13,1,$newid,$type->interfacetype_id);   
             }          
             
-            Testrun::model ()->createInitial($new_id); 
-            Actor::model()->createInitial($new_id);
-            Package::model()->createInitial($new_id);
-               // Version::model ()->createInitial($new_id); 
+            Testrun::model ()->createInitial($project); 
+            Actor::model()->createInitial($project);
+            Package::model()->createInitial($project);
+               // Version::model ()->createInitial($project); 
             $this->redirect(array('view','id'=>$model->id,'tab'=>'documents'));
         }
 
         $this->render('create',array(
             'model'=>$model,
         ));
+           
     }
 
     /**
@@ -226,7 +228,7 @@ class ProjectController extends Controller
 
         // if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
         if(!isset($_GET['ajax']))
-            $this->redirect('myprojects');
+            $this->redirect('myrequirements');
     }
 
     /**

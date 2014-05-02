@@ -36,7 +36,12 @@
 	</div>
 
 
-            
+            <div class="row">
+		<?php echo $form->labelEx($model,'text'); ?>
+		<?php echo $form->textArea($model,'text',array('rows'=>10, 'class'=>'span8')); ?>
+		<?php echo $form->error($model,'text'); ?>
+	</div>
+
         
         <div class="row">
 

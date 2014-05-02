@@ -1,18 +1,18 @@
 <?php
-/* @var $this RuleController */
+/* @var $this VersionController */
 /* @var $dataProvider CActiveDataProvider */
 
 $this->breadcrumbs=array(
-	'Rules',
+	'Versions',
 );
 
 $this->menu=array(
-	array('label'=>'Create Rule', 'url'=>array('create')),
-	array('label'=>'Manage Rule', 'url'=>array('admin')),
+	array('label'=>'Create Version', 'url'=>array('create')),
+	array('label'=>'Manage Version', 'url'=>array('admin')),
 );
 ?>
 
-<h1>Rules</h1>
+<h1>Versions</h1>
 
 <?php $this->widget('zii.widgets.CListView', array(
 	'dataProvider'=>$dataProvider,

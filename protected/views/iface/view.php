@@ -8,8 +8,12 @@ echo $this->renderPartial('/project/head',array('tab'=>'usecases')); ?>
 </h2>
 
 <h3>   <?php echo $model->name;?> </h3>
-Interface type: <?php echo $model->type->name;?> <br /><br />
-
+Interface type: 
+<?php foreach($types as $type):
+ if($type['interfacetype_id']==$model->type_id)  echo $type['name']; 
+endforeach;
+?>
+<br /><br />
 <?php
 //IF there is no photo
 //Form to add photos
@@ -19,7 +23,8 @@ if ($model->photo_id==0)
     //Need a query to find images not used.
     $orphans=Photo::model()->orphanPics();
     ?>
-        <form action="/iface/addphoto" method="post">
+       Associate image with this interface<br /> 
+<form action="/iface/addphoto" method="post">
         <input type="hidden" name="iface_id" value="<?php echo $model->id;?>">
         <select name="photo_id">
         <?php foreach ($orphans as $pic){  ?>
@@ -72,3 +77,5 @@ $src = Yii::app()->easyImage->thumbSrcOf(
 <?php
 } 
 ?>
+
+<?php echo $model->text;?>

@@ -176,7 +176,13 @@ public function actionDelete($id)
 			throw new CHttpException(404,'The requested page does not exist.');
 		return $model;
 	}
-
+        public function loadVersion($id)
+	{
+		$model=Object::model()->findByPk(Version::model()->getVersion($id,6));
+		if($model===null)
+			throw new CHttpException(404,'The requested version does not exist.');
+		return $model;
+	}
 	/**
 	 * Performs the AJAX validation.
 	 * @param Object $model the model to be validated

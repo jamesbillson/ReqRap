@@ -1,4 +1,8 @@
-<?php  $packages = Package::model()->getPackages($project);
+<?php  
+$numberucs=Version::model()->objectCount(10);
+//echo 'number ucs: '.$numberucs;
+if ($numberucs>0){ // check if there are any usecases
+$packages = Package::model()->getPackages($project);
   if (count($packages)): ?>
         
 
@@ -9,7 +13,7 @@
 foreach($packages as $package){
 $packusecases = Usecase::model()->getPackageUsecases($package['id']);
 
- ?>
+ //if (count($packusecases)>0){ ?>
 
               
 <h3>Package PA-<?php echo $package['number'];?> <?php echo $package['name'];?></h3>
@@ -122,9 +126,12 @@ if (count($forms)):?>
 <?php } // END LOOP THROUGH USE CASES ?>   
           
  
-<?php } // END LOOP THROUGH PACKAGES?>
-            
-            
-   
+<?php }  
 
-<?php endif; // END IF THERE ARE PACKAGES?> 
+             // }
+// END LOOP THROUGH PACKAGES?>
+            
+            
+ <?php endif;  // END IF THERE ARE PACKAGES?>   
+
+<?php } // END IF THERE ARE any usecases?> 

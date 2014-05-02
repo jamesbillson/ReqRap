@@ -32,7 +32,7 @@ class ReleaseController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update','finalise','copy','set'),
+				'actions'=>array('create','update','finalise','copy','set','import'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -73,21 +73,22 @@ public function actionFinalise($id)
          $release=new Release;
          $release->attributes = $model->attributes;
          $oldrelease=$model->id;
-         $release->number = $model->number +1;
+         $model->number = FLOOR($model->number) +1;
+         $release->number = $model->number+0.0001;
          $release->status = 1; 
          $model->status=2;
          $model->save();
          $release->save();
          $newrelease=$release->getPrimaryKey();
-         for ($object = 1; $object <= 16; $object++) 
+         for ($object = 1; $object <= 18; $object++) 
          {
-        echo 'We are copying '.Version::$objects[$object].'<br />';
+       // echo 'We are copying '.Version::$objects[$object].'<br />';
         $objects = Version::model()->objectList($object,$oldrelease);
        
         foreach ($objects as $instance)
             {
-            Version::model()->copyObject($object,$instance['id'],$project,$newrelease);
-            echo 'We are copying id '.$instance['id'].'<br />';
+            Version::model()->importObject($object,$instance['id'],$project,$newrelease,0);
+         //   echo 'We are copying id '.$instance['id'].'<br />';
             }
             
          }
@@ -96,28 +97,28 @@ public function actionFinalise($id)
              
 	// A new release has been created.
         
-             
-             
+        // set project to the new  release.
+         
+         
+             $this->redirect(array('/project/set/id/'.$project.'/tab/details'));
              
 
 		
 	}
         
-       
-                public function actionCopy($id)
+                 public function actionCopy($id) // id is the db id of the release
 	{
-	
+$library=  Release::model()->findbyPK($id);	
         // CREATE A NEW PROJECT and a New Release, copy the selected release to this new release.
         
          $model=new Project;
-         $model->name='Copy';
-         $model->description='Copied from ';
+         $model->name='Copy of '.$library->project->name;
+         $model->description='Copied from '.$library->project->name.'.';
          $model->company_id = User::model()->myCompany();
          $model->extlink = md5(uniqid(rand(), true));
          if($model->save())
          {
-                // CREATE AN INITIAL RELEASE and set newrelease
-// CREATE AN INITIAL RELEASE and set newrelease   
+    
                 $project=$model->getPrimaryKey();
                 Yii::App()->session['project']=$project;
                 Release::model()->createInitial($project); 
@@ -125,13 +126,13 @@ public function actionFinalise($id)
                 
        	
         //echo 'We are copying from Project id = '.$id.'to Project id='.$project.'<br /><br />'; 
-        for ($object = 1; $object <= 16; $object++) 
+        for ($object = 1; $object <= 18; $object++) 
          {
        // echo 'We are copying '.Version::$objects[$object].'<br />';
         $objects = Version::model()->objectList($object,$id);    
         foreach ($objects as $instance)
             {
-            Version::model()->copyObject($object,$instance['id'],$project,$newrelease);
+            Version::model()->importObject($object,$instance['id'],$project,$newrelease);
            // echo 'We are copying object '.Version::$objects[$object].'
                 //     with id '.$instance['id'].' to project '.$project.'<br />';
            }
@@ -144,6 +145,31 @@ public function actionFinalise($id)
         		$this->redirect(array('/project/myrequirements'));
              
 	}
+        
+        
+                public function actionImport($id)
+	{
+        $project=Yii::App()->session['project'];
+        $release=Yii::App()->session['release']; 
+        
+        $offset=  Version::model()->getMaxId($project);//get the max X_id from the existing job, and add this number to all the objects being imported
+       
+        for ($object = 1; $object <= 18; $object++) 
+         {
+        $objects = Version::model()->objectList($object,$id);
+        if(Version::$number[$object]!='none')
+         {
+          $numberoffset=Version::model ()->getMaxNumber($object, $release);
+         }
+        foreach ($objects as $instance)
+            {
+            Version::model()->importObject($object,$instance['id'],$project,$release,$offset,$numberoffset);
+            }
+         } 
+        Package::model()->Renumber();
+        Usecase::model()->Renumber();
+        $this->redirect(array('/project/view/tab/usecases'));
+        }
         
         
 	public function actionCreate()

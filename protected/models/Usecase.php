@@ -17,7 +17,10 @@
  */
 class Usecase extends CActiveRecord
 {
-	/**
+
+ public static $default_description = 'This usecase describes the process of ...';
+
+    /**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
@@ -115,7 +118,25 @@ class Usecase extends CActiveRecord
 		));
 	}
 
+        public function Renumber() // renumber all the packages in current release
+	{
+          
+            $packages=Package::model()->getPackages();
+            
+            foreach ($packages as $package) 
+            {
+            $ucs=$this->getPackageUsecases($package['package_id']);
+            $counter=1;
+                foreach ($ucs as $uc) 
+                {
+                $model=Usecase::model()->findbyPK($uc['id']);
+                $model->number = $counter;
+                $model->save(false);
+                $counter++;
+                }
+            }
         
+        }    
            
         
            public function getUsecaseActors($id)
@@ -163,41 +184,32 @@ class Usecase extends CActiveRecord
         
         
         
-           public function getPackageUsecases($id)
+           public function getPackageUsecases($id)// THIS IS package_id as used in 'Move' 
     {
             $project=Yii::app()->session['project'];
             $release=Yii::App()->session['release'];
           $sql="
-            SELECT `u`.*,`p`.`number` as packnumber
+            SELECT `u`.*,
+            `p`.`number` as packnumber
             FROM `usecase` `u`
             JOIN `package` `p` 
             ON `p`.`package_id`=`u`.`package_id`
             JOIN `project` `r`
             ON `r`.`id` =`p`.`project_id`
-            JOIN `version` `v1`
-            ON `v1`.`foreign_key`=`u`.`id`
-            JOIN `version` `v2`
-            ON `v2`.`foreign_key`=`p`.`id`
+            JOIN `version` `vu`
+            ON `vu`.`foreign_key`=`u`.`id`
+            JOIN `version` `vp`
+            ON `vp`.`foreign_key`=`p`.`id`
             WHERE 
-            `p`.`id`=".$id." 
-                AND
-             `p`.`project_id`=".$project."
-            AND 
-            `u`.`project_id`=".$project."
+            `p`.`package_id`=".$id." 
             AND
-             `p`.`release_id`=".$release."
-            AND 
-            `u`.`release_id`=".$release."
+            `vu`.`active`=1 AND `vu`.`object`=10 AND `vu`.`release`=".$release."
             AND
-            `v1`.`active`=1 AND `v1`.`object`=10
-            AND
-            `v2`.`active`=1 AND `v2`.`object`=5
-           
-            
-                GROUP BY `u`.`id`
-                ORDER BY 
-             `p`.`number` ASC,              
-             `u`.`number` ASC"
+            `vp`.`active`=1 AND `vp`.`object`=5 AND `vp`.`release`=".$release."
+            GROUP BY `u`.`id`
+            ORDER BY 
+            `p`.`number` ASC,              
+            `u`.`number` ASC"
 
 
           ;
@@ -208,6 +220,35 @@ class Usecase extends CActiveRecord
 		$projects = $command->queryAll();
 		return $projects;
     }
+    
+        public function getUsecaseParentPackage($id)
+    {
+            
+            $release=Yii::App()->session['release'];
+          $sql="
+            SELECT `p`.*
+            FROM `package` `p` 
+            JOIN `usecase` `u`
+            ON `p`.`package_id`=`u`.`package_id`
+            JOIN `version` `vu`
+            ON `vu`.`foreign_key`=`u`.`id`
+            JOIN `version` `vp`
+            ON `vp`.`foreign_key`=`p`.`id`
+            WHERE 
+            `u`.`id`=".$id." 
+            AND
+             
+            `vu`.`active`=1 AND `vu`.`object`=10 AND `vu`.`release`=".$release."
+            AND
+            `vp`.`active`=1 AND `vp`.`object`=5 AND `vp`.`release`=".$release;
+        
+        
+		$connection=Yii::app()->db;
+		$command = $connection->createCommand($sql);
+		$projects = $command->queryAll();
+		return $projects[0];
+    }
+    
     
       public function getNextNumber($id)
     {
@@ -290,8 +331,8 @@ class Usecase extends CActiveRecord
             Join `step` `s`
             ON `f`.`flow_id`=`s`.`flow_id`
 
-            JOIN `version` `v1`
-            ON `v1`.`foreign_key`=`u`.`id`
+            JOIN `version` `vu`
+            ON `vu`.`foreign_key`=`u`.`id`
             
             JOIN `version` `v2`
             ON `v2`.`foreign_key`=`p`.`id`
@@ -305,8 +346,8 @@ class Usecase extends CActiveRecord
             `r`.`id`=".$id." 
             
             AND
-            `v1`.`active`=1 AND `v1`.`object`=10 AND `v1`.`project_id`=".$project." 
-               AND `v1`.`release`=".$release." 
+            `vu`.`active`=1 AND `vu`.`object`=10 AND `vu`.`project_id`=".$project." 
+               AND `vu`.`release`=".$release." 
             AND
             `v2`.`active`=1 AND `v2`.`object`=5 AND `v2`.`project_id`=".$project." 
                AND `v2`.`release`=".$release." 
@@ -378,8 +419,8 @@ class Usecase extends CActiveRecord
                 ON `f`.`usecase_id`=`u`.`usecase_id`
                 JOIN `package` `p`
                 ON `p`.`package_id`=`u`.`package_id`
-                JOIN `version` `v1`
-                ON `v1`.`foreign_key`=`i`.`id` 
+                JOIN `version` `vu`
+                ON `vu`.`foreign_key`=`i`.`id` 
                 JOIN `version` `v2`
                 ON `v2`.`foreign_key`=`x`.`id`
                 JOIN `version` `v3`
@@ -395,8 +436,8 @@ class Usecase extends CActiveRecord
                 AND 
                 `f`.`project_id`=".$project."
                 AND
-                `v1`.`object`=".$object."  AND `v1`.`active`=1  AND `v1`.`project_id`=".$project."
-                AND `v1`.`release`=".$release." AND
+                `vu`.`object`=".$object."  AND `vu`.`active`=1  AND `vu`.`project_id`=".$project."
+                AND `vu`.`release`=".$release." AND
                 `v2`.`object`=".$relationship." AND `v2`.`active`=1  AND `v2`.`project_id`=".$project."
                 AND `v2`.`release`=".$release."
                 AND

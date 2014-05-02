@@ -30,12 +30,13 @@ class Category extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('category_id, name, number, description, project_id, release_id', 'required'),
+			array('category_id, name, number, description, order, project_id, release_id', 'required'),
 			array('category_id, project_id, release_id', 'numerical', 'integerOnly'=>true),
 			array('name', 'length', 'max'=>255),
+                        array('order', 'length', 'max'=>4),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, category_id, name, number, project_id, release_id', 'safe', 'on'=>'search'),
+			array('id, category_id, name, number, order, description, project_id, release_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -59,12 +60,13 @@ class Category extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-                    'category_id'=>'Category_id',
+                        'category_id'=>'Category_id',
 			'name' => 'Name',
-                    'description'=>'Description',
-			 'project_id' => 'Project',
-                    'release_id' => 'Release',
-                    'number'=>'Number'
+                        'description'=>'Description',
+                        'order'=>'Order',
+			'project_id' => 'Project',
+                        'release_id' => 'Release',
+                        'number'=>'Number'
 		);
 	}
 

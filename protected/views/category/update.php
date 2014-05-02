@@ -1,5 +1,5 @@
 
 
-<h1>Update Object <?php echo $model->number; ?><?php echo $model->name; ?></h1>
+<h1>Update Section <?php echo $model->name; ?></h1>
 
-<?php $this->renderPartial('_form', array('model'=>$model,'project_id'=>$id)); ?>
+<?php $this->renderPartial('_form', array('model'=>$model)); ?>

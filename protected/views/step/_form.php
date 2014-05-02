@@ -46,7 +46,7 @@
                      <select name="Step[actor_id]">
   <?php     foreach($actors as $actor){
            echo '<option value="'.$actor['actor_id'].'"';
-       if($actor['actor_id']==$model->usecase->actor_id)  echo 'selected'; 
+       if($actor['actor_id']==$usecase['actor_id'])  echo 'selected'; 
        echo'>'.$actor['name'].'</option>';
   }
            ?> 
@@ -235,7 +235,7 @@
     
  <?php
  
-$steps = Step::model()->getMainSteps($model->usecase->id); // get the requirements with answers
+$steps = Step::model()->getMainSteps($usecase['id']); // get the requirements with answers
  if (count($steps)):?>
 
   <table class="table">

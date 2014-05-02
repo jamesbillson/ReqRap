@@ -141,17 +141,21 @@ class StepController extends Controller
 	{
             $project=Yii::App()->session['project'];
 	if($id!=-1){
-            //$step=$this->loadModel($id);
-            $step= Step::model()->with('flow')->findByPk($id);
-            $model = Flow::model()->with('usecase')->findByPk($step->flow->id);
-            $usecase= Usecase::model()->with('package')->findByPk($model->usecase->id);
-            //$model=Flow::model()->findbyPK($step->flow->id);
+           
+            $step= Step::model()->findByPk($id);
+            $flow = Step::model()->getStepParentFlow($id);
+            $usecase= Flow::model()->getFlowParentUsecase($flow['id']);
+            $package= Usecase::model()->getUsecaseParentPackage($usecase['id']);
+            $model = Flow::model()->findByPk($flow['id']);
+            $usecase= Flow::model()->getFlowParentUsecase($flow['id']);
+            
             
         }
         if($id==-1){
-              //$model=Flow::model()->findbyPK($flow);
-              $model = Flow::model()->with('usecase')->findByPk($flow);
-              $usecase= Usecase::model()->with('package')->findByPk($model->usecase->id);
+              
+              $model = Flow::model()->findByPk($flow);
+              $usecase= Flow::model()->getFlowParentUsecase($flow);
+              $package= Usecase::model()->getUsecaseParentPackage($usecase['id']);
               $step=array();
               }
         $new= new Step;
@@ -180,7 +184,7 @@ class StepController extends Controller
 		}
 
 		$this->render('/step/update',array(
-			'model'=>$model,'step'=>$step,'id'=>$id,'usecase'=>$usecase
+			'model'=>$model,'step'=>$step,'id'=>$id,'usecase'=>$usecase, 'package'=>$package
 		));
 	}
 

@@ -1,11 +1,21 @@
 <?php 
-$project=Project::model()->findbyPK(Yii::App()->session['project']); 
 $mycompany=User::model()->myCompany();
 $projectlist=Company::model()->getProjects($mycompany);
+$no_project=true;
+if(isset(Yii::App()->session['project'])) {
+    $project=Project::model()->findbyPK(Yii::App()->session['project']); 
+    $currentrelease=Release::model()->currentRelease();
+    $release=Yii::App()->session['release'];
+    Project::model()->setPermissions($mycompany, $project,$release, $currentrelease);
+} ELSE {
+    $no_project=false;
+    
+    Yii::App()->session['permission']=0;
+}
 
-$currentrelease=Release::model()->currentRelease();
-$release=Yii::App()->session['release'];
-Project::model()->setPermissions($mycompany, $project,$release, $currentrelease);
+
+
+
 //echo 'release'.$release.'<br /> current release'.$currentrelease.'<br />';
     
 ?>
@@ -13,7 +23,7 @@ Project::model()->setPermissions($mycompany, $project,$release, $currentrelease)
 <table><tr><td>
     <h1> 
     <a href="/project/view/tab/<?php echo $tab; ?>">
-       <?php echo $project->name; ?> 
+       <?php if ($no_project) echo $project->name  ; ?> 
     </a> 
     </h1>    </td>
         <td>
@@ -25,7 +35,9 @@ Project::model()->setPermissions($mycompany, $project,$release, $currentrelease)
 </td>
 <td> 
     <form action="/project/set/">
+        <input type="hidden" name="tab" value="details">
         <select name="id" onchange="this.form.submit()">
+            
             <option>Change Project</option>
     <?php 
    foreach($projectlist as $proj)
@@ -54,10 +66,9 @@ Project::model()->setPermissions($mycompany, $project,$release, $currentrelease)
       
          <?php
   }
-    
-       ?>
+    if($no_project){  ?>
           <a target="_new" href="/project/print" ><i class="icon-print " rel="tooltip" title="View Print Version"></i></a> 
-    
+       <?php  } ?>
 </td>
     </tr>
 </table> 

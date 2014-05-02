@@ -49,7 +49,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                 <?php    foreach($data as $item): ?>
                 <tr class="odd">  
                     <td>
-                       <a href="/project/set/id/<?php echo $item['id'];?>"><?php echo $item['name'];?></a> 
+                       <a href="/project/set/id/<?php echo $item['id'];?>/tab/usecases"><?php echo $item['name'];?></a> 
                     </td>
                     
                     <td>

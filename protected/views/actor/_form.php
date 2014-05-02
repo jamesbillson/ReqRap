@@ -1,9 +1,3 @@
-<?php
-/* @var $this ActorController */
-/* @var $model Actor */
-/* @var $form CActiveForm */
-?>
-
 <div class="form">
 
 <?php $form=$this->beginWidget('CActiveForm', array(
@@ -32,12 +26,48 @@
 	</div>
 	<div class="row">
 		<?php echo $form->labelEx($model,'description'); ?>
-		<?php echo $form->textArea($model,'description',array('rows'=>6, 'cols'=>50)); ?>
+		<?php echo $form->textArea($model,'description',array('rows'=>4, 'class'=>'span8')); ?>
 		<?php echo $form->error($model,'description'); ?>
+	</div>
+        
+        <div class="row">
+         Actor inherits:<br />
+            <?php  $actors = array();
+                  $actors[-1]['name']='None';
+                  $actors[-1]['actor_id']='-1';
+                  $actors[-1]['inherits']='-1';
+                  $actors = $actors + Actor::model()->getProjectActors();
+                    //echo "<pre>";
+                // print_r($actors);
+                 ?>
+                       <select name="Actor[inherits]">
+                  <?php     
+                  foreach($actors as $actor){
+                  if ($actor['actor_id']!=$model->actor_id && $actor['inherits']!=$model->actor_id)
+                      {
+                  
+                  echo '<option value="'.$actor['actor_id'].'"';
+                  if ($actor['actor_id']==$model->inherits) {
+                      echo 'SELECTED';
+                  }
+                  echo'>'.$actor['name'].'</option>';
+                  }  }  
+                  ?>
+                   <select>
+                  
+                  <?php //echo $form->dropdownlist($model,'actor_id',$data,array('prompt'=>'None')); ?> 
+         </div>          
+                        
+                      
+        
+        <div class="row">
+		<?php echo $form->labelEx($model,'pretest'); ?>
+		<?php echo $form->textArea($model,'pretest',array('rows'=>4, 'class'=>'span8')); ?>
+		<?php echo $form->error($model,'pretest'); ?>
 	</div>
         	<div class="row">
 		<?php echo $form->labelEx($model,'alias'); ?>
-		<?php echo $form->textArea($model,'alias',array('rows'=>6, 'cols'=>50)); ?>
+		<?php echo $form->textArea($model,'alias',array('rows'=>4, 'class'=>'span8')); ?>
 		<?php echo $form->error($model,'alias'); ?>
 	</div>
 	</div>

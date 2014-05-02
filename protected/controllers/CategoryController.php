@@ -32,7 +32,7 @@ class CategoryController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update','delete','history'),
+				'actions'=>array('create','update','delete','history','up','down'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -73,6 +73,8 @@ class CategoryController extends Controller
                    $model->category_id=Version::model()->getNextID(17);
                    $model->release_id=Release::model()->currentRelease($project);
                    $model->number=Category::model()->getNextNumber($project);
+                   $model->order=1.5;
+                   $model->project_id=$project;
                 
                     
                     if($model->save())
@@ -105,6 +107,7 @@ class CategoryController extends Controller
                          $new->project_id=$project;
                          $new->release_id=$release;
                          $new->category_id=$model->category_id;
+                         $new->order=$model->order;
                          $new->number=$model->number;
                       
 			if($new->save())
@@ -118,6 +121,59 @@ class CategoryController extends Controller
 			'model'=>$model,'project_id'=>$project
 		));
 	}
+        
+        
+        
+          
+        	public function actionUp($id)
+	{
+                $model=$this->loadModel($id);
+                $release=Yii::App()->session['release'];
+            $project=Yii::App()->session['project'];
+                $new= new Category;
+                        $new->attributes=$model->attributes;
+                        $new->order=$model->order-1;
+                      
+			if($new->save())
+                        {
+			$version=Version::model()->getNextNumber($project, 17, 2,$new->primaryKey,$model->category_id);
+                        $this->redirect(array('/project/view/tab/details/id/'.$model->project_id));
+                        }        
+		
+
+		$this->render('update',array(
+			'model'=>$model,'project_id'=>$project
+		));
+	}
+        
+        
+          
+        	public function actionDown($id)
+	{
+                $model=$this->loadModel($id);
+                           $release=Yii::App()->session['release'];
+            $project=Yii::App()->session['project'];
+                $new= new Category;
+            $release=Yii::App()->session['release'];
+            $project=Yii::App()->session['project'];
+            
+		
+                        
+			 $new->attributes=$model->attributes;
+                         $new->order=$model->order+1;
+                         
+                      
+			if($new->save())
+                        {
+			$version=Version::model()->getNextNumber($project, 17, 2,$new->primaryKey,$model->category_id);
+                        $this->redirect(array('/project/view/tab/details/id/'.$model->project_id));
+                        }        
+		
+		$this->render('update',array(
+			'model'=>$model,'project_id'=>$project
+		));
+	}
+        
         
         
 	

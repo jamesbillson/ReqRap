@@ -80,10 +80,10 @@ class UsecaseController extends Controller
 		
                 $number=Usecase::model()->getNextNumber($id);
                 $package=Package::model()->findbyPK($id);
-               
+               $description=Usecase::$default_description;
 		if(isset($_POST['Usecase']))
 		{
-			
+			$description=$model->description;
                     $model->attributes=$_POST['Usecase'];
                     $model->package_id=$package->package_id;
                     $model->project_id= $project;
@@ -120,7 +120,7 @@ class UsecaseController extends Controller
                 }}
 
 		$this->render('create',array(
-			'model'=>$model,'package'=>$package,'number'=>$number
+			'model'=>$model,'package'=>$package,'number'=>$number,'description'=>$description
 		));
 	}
 
@@ -139,13 +139,14 @@ class UsecaseController extends Controller
                 //$package=Package::model()->findbyPK($model->package->id);
                 $number=$model->number;
                
-                
+                $description=$model->description;
                 $new= new Usecase;
 			
                 if(isset($_POST['Usecase']))
 		{
-		 $new->attributes=$_POST['Usecase'];
-                 $new->number=$model->number;
+                 $new->attributes=$_POST['Usecase'];
+                 $description=$new->description;  
+		 $new->number=$model->number;
                  $new->package_id=$model->package_id;
                  $new->usecase_id=$model->usecase_id;
                  $new->project_id=$project;
@@ -158,7 +159,7 @@ class UsecaseController extends Controller
 		}
                 
 		$this->render('update',array(
-			'model'=>$model,'id'=>$id,'number'=>$number,
+			'model'=>$model,'id'=>$id,'number'=>$number,'description'=>$description
                             
 		));
 	}
@@ -170,15 +171,15 @@ class UsecaseController extends Controller
             // load this one, and the next one.
             // 
            // $model=$this->loadModel($id);
-            $model = Usecase::model()->with('package')->findByPk($id);
+            $model = Usecase::model()->findByPk($id);
             $oldnum=$model->number;
-           //  echo 'moving old number'.$oldnum.'<br />';
-            $ucs=Usecase::model()->getPackageUsecases($model->package->id);
-           // echo 'getting them for '.$model->package_id.'<br />';
-           // echo 'number of results: '.count($ucs);
-          // echo '<pre>';
-            print_r($ucs);
-         // echo '</pre>'.'<br />';
+            //echo 'moving old number'.$oldnum.'<br />';
+            $ucs=Usecase::model()->getPackageUsecases($model->package_id);
+            //echo 'getting them for '.$model->package_id.'<br />';
+            //echo 'number of results: '.count($ucs);
+            //echo '<pre>';
+            //print_r($ucs);
+            //echo '</pre>'.'<br />';
           
             $nextid=0;
             
@@ -218,7 +219,7 @@ class UsecaseController extends Controller
             // save them both
             
           
-		$this->redirect(array('/project/view/tab/usecases/'));
+		$this->redirect(array('/project/view/tab/usecases'));
 	
 	}
         
@@ -233,7 +234,7 @@ class UsecaseController extends Controller
         $project=Yii::app()->session['project'];
         $model = $this->loadModel($id);
         $version=Version::model()->getNextNumber($project,10,3,$model->id,$model->usecase_id);  
-	
+	Usecase::model()->Renumber();
       	$this->redirect(array('/project/view/tab/usecases/id/'.$project));
 	}
 

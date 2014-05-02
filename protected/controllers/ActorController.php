@@ -106,14 +106,19 @@ class ActorController extends Controller
                 $model=$this->loadModel($id);
                 $new= new Actor;
              $release=Yii::App()->session['release'];
+         //   echo "about to check";
 		if(isset($_POST['Actor']))
 		{
+                  //   echo "CUNT:<pre>";
+            // print_r($_POST['Actor']);
+            // echo "</pre>";
                          $new->attributes=$_POST['Actor'];
+                         //$new->inherits=$_POST['Actor']['inherits'];
                          $new->project_id=$model->project_id;
                          $new->actor_id=$model->actor_id;
                          $new->release_id=$release;
                          $new->number=$model->number;
-                         $new->inherits=$model->inherits;
+                         //$new->inherits=$model->inherits;
 			if($new->save())
                         {
 			$version=Version::model()->getNextNumber($model->project_id, 4, 2,$new->primaryKey,$model->actor_id);
@@ -121,9 +126,7 @@ class ActorController extends Controller
                         }        
 		}
 
-		$this->render('update',array(
-			'model'=>$model,'id'=>$model->project_id
-		));
+		$this->render('update',array('model'=>$model,'id'=>$model->project_id));
 	}
         
         
@@ -134,12 +137,34 @@ public function actionDelete($id)
 	{
 		
             $model=$this->loadModel($id);
+            
+            // Need to test if it is used.  If so cannot delete. 
+            // Instead load a 'replace' actor form.
+            
+            // query to get any active steps that use this actor.
+            
+            $actor_step=Actor::model()->getActorParentSteps($id);
+            // going to need the same for an UC being rolled back to a point where a deleted actor was used.
+            $default_actor=Actor::model()->getActorParentDefaultUC($id);
+            // also need to check if this is the default actor
+            $number=count($actor_step)+count($default_actor);
+            if($number==0){
+            
             $version=Version::model()->getNextNumber($model->project_id,4,3,$id,$model->actor_id);  
             $model->save();
-            $this->redirect(array('/project/view/tab/actors/id/'.$model->project_id));
+            $this->redirect(array('/project/view/tab/actors'));
+            //echo 'deleted number is '.$number;
             
+            //echo  'number steps '.count($actor_step).'number defaults '.count($default_actor);
+            
+            //break;
+            } ELSE {
+              $this->redirect(array('/actor/view/id/'.$model->actor_id));
+              
             }
 
+            
+        }
 	
             
 	public function actionIndex()

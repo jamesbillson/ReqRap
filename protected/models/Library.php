@@ -32,12 +32,12 @@ class Library extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('name, description, release_id, owner_id', 'required'),
-			array('release_id, owner_id', 'numerical', 'integerOnly'=>true),
+			array('name, description, release_id, public, owner_id', 'required'),
+			array('release_id, owner_id, public', 'numerical', 'integerOnly'=>true),
 			array('name', 'length', 'max'=>255),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, name, description, release_id, owner_id', 'safe', 'on'=>'search'),
+			array('id, name, description, public, release_id, owner_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -50,7 +50,7 @@ class Library extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'owner' => array(self::BELONGS_TO, 'Company', 'owner_id'),
-			'project' => array(self::BELONGS_TO, 'Project', 'release_id'),
+			'release' => array(self::BELONGS_TO, 'Release', 'release_id'),
 		);
 	}
 
@@ -62,24 +62,29 @@ class Library extends CActiveRecord
 		return array(
 			'id' => 'ID',
 			'name' => 'Name',
+                        'public'=>'Public',
 			'description' => 'Description',
 			'release_id' => 'Project',
 			'owner_id' => 'Owner',
 		);
 	}
 
-	/**
-	 * Retrieves a list of models based on the current search/filter conditions.
-	 *
-	 * Typical usecase:
-	 * - Initialize the model fields with values from filter form.
-	 * - Execute this method to get CActiveDataProvider instance which will filter
-	 * models according to data in model fields.
-	 * - Pass data provider to CGridView, CListView or any similar widget.
-	 *
-	 * @return CActiveDataProvider the data provider that can return the models
-	 * based on the search/filter conditions.
-	 */
+	  public function libraryOwner($id)
+    {
+       
+              
+        $sql="SELECT `l`.`owner_id`
+            FROM `library` `l`
+            WHERE `l`.`id`=".$id;
+           
+		$connection=Yii::app()->db;
+		$command = $connection->createCommand($sql);
+		$projects = $command->queryAll();
+		return $projects[0]['owner_id'];
+    }
+        
+        
+        
 	public function search()
 	{
 		// @todo Please modify the following code to remove attributes that should not be searched.

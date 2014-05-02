@@ -48,7 +48,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                         <?php echo $item['alias'];?>
                     </td>                  
                     <td>   
-                        <?php echo $item['inherits'];?>
+                        <?php echo($item['inherits']!=-1)? $item['iname'] : '';?>
                     </td>   
   
 
@@ -56,7 +56,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                     <td>
                       <?php if($permission){ ?>
                      <a href="/actor/update/id/<?php echo $item['id'];?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
-                     <a href="/actor/delete/id/<?php echo $item['id'];?>"><i class="icon-remove-sign" rel="tooltip" title="Delete"></i></a> 
+                     <a href="/actor/delete/id/<?php echo $item['id'];?>"><i class="icon-remove-sign text-error" rel="tooltip" title="Delete"></i></a> 
                      <a href="/actor/history/id/<?php echo $item['actor_id'];?>"><i class="icon-calendar" rel="tooltip" title="Version History"></i></a> 
                       <?php  } ?>
                     </td>

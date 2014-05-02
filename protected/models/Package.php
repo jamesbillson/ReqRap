@@ -102,6 +102,22 @@ public static $packagestageicon= array(1=>'icon-time text-warning',
 		));
 	}
         
+        
+         public function Renumber() // renumber all the packages in current release
+	{
+          
+            $packages=$this->getPackages();
+            $counter=1;     
+           
+            foreach ($packages as $package) {
+            $model=Package::model()->findbyPK($package['id']);
+            $model->number = $counter;
+            $model->save(false);
+            $counter++;
+          } 
+        
+        }
+        
          public function getNextNumber($id)
     {
        
@@ -120,34 +136,19 @@ public static $packagestageicon= array(1=>'icon-time text-warning',
 		return $projects[0]['number'];
     }  
         
-         public function getPackages($id) // project id
+         public function getPackages() // project id
     {
      
-                 $release=Yii::App()->session['release'];
-       $project=Yii::App()->session['project'];    
-     
-    
+       $release=Yii::App()->session['release'];
+         
      $sql="
-            SELECT `r`.`id`,
-            `r`.`package_id`,
-            `r`.`number`,
-            `r`.`name`
+            SELECT `r`.*
             FROM `package` `r`
             JOIN `version` `v`
             ON `v`.`foreign_key`=`r`.`id`
             WHERE 
-              `v`.`object`=5
-            AND
-            `v`.`active`=1 
-            and            
-            `v`.`project_id`=".$project." 
-            and
-            `v`.`release`=".$release."
-            and            
-            `r`.`project_id`=".$project." 
-            and
-            `r`.`release_id`=".$release."
-order by `r`.`number` ASC";
+            `v`.`object`=5 AND `v`.`active`=1 AND  `v`.`release`=".$release."
+            order by `r`.`number` ASC";
       
         $connection=Yii::app()->db;
         $command = $connection->createCommand($sql);

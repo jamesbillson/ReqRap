@@ -1,9 +1,13 @@
-<h1><a href="/project/view/tab/rules/id/<?php echo $model->project->id;?>"><?php echo $model->project->name;?></a></h1>
+<?php 
+echo $this->renderPartial('/project/head',array('tab'=>'rules'));
+
+$permission=(Yii::App()->session['permission']==1)?true : false; 
+?>
 <h2>Actor <?php echo $model->name; ?>     
 
     <a href="/actor/update/id/<?php echo $model->id;?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
            </h2>
-
+<a href="/project/view/tab/actors/">Back to Actors</a><br />
 
 	<b><?php echo CHtml::encode($model->getAttributeLabel('name')); ?>:</b>
         <br />
@@ -13,8 +17,98 @@
 	<b><?php echo CHtml::encode($model->getAttributeLabel('description')); ?>:</b>
 	<br />
             <?php echo CHtml::encode($model->description); ?>
+        <br />
+<b><?php echo CHtml::encode($model->getAttributeLabel('pretest')); ?>:</b>
+	<br />
+            <?php echo CHtml::encode($model->pretest); ?>
 
-    
+        <h4>Traceability</h4>
+<?php 
+$permission=(Yii::App()->session['permission']==1)?true : false; 
+$data = Actor::model()->getActorParentSteps($model->id);
+if (count($data)){
+$box = $this->beginWidget('bootstrap.widgets.TbBox', array(
+    'title' => 'Uses',
+    'headerIcon' => 'icon-film',
+    'htmlOptions' => array('class'=>'bootstrap-widget-table'),
+)); 
+    if (count($data)):?>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    
+                    <th>Usecase</th>
+                   
+                    
+                    
+                </tr>
+            </thead>
+            
+            <tbody>
+            <?php foreach($data as $item):?>
+                <tr class="odd">  
+                    <td>   
+                        <a href="/usecase/view/id/<?php echo $item['usecaseid'];?>">UC-<?php echo str_pad($item['packagenumber'], 2, "0", STR_PAD_LEFT); ?><?php echo str_pad($item['usecasenumber'], 3, "0", STR_PAD_LEFT); ?></a>
+ <?php echo $item['usecasename'];?>
+                    </td>
+                  
+                </tr>
+            <?php endforeach ?>
+            </tbody>
+        </table>
+
+    <?php endif;
+$this->endWidget();
+} ELSE {// end if any uses  ?>
+<br />This actor has not been used for any use cases.
+<?php  }?>
+
+<?php 
+ 
+$data = Actor::model()->getActorParentDefaultUC($model->actor_id);
+if (count($data)){
+$box = $this->beginWidget('bootstrap.widgets.TbBox', array(
+    'title' => 'Default Actor',
+    'headerIcon' => 'icon-film',
+    'htmlOptions' => array('class'=>'bootstrap-widget-table'),
+)); 
+    if (count($data)):?>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    
+                    <th>Usecase</th>
+                   
+                    
+                   
+                </tr>
+            </thead>
+            
+            <tbody>
+            <?php foreach($data as $item):?>
+                <tr class="odd">  
+                    <td>   
+                        <a href="/usecase/view/id/<?php echo $item['usecase_id'];?>">UC-<?php echo str_pad($item['packagenumber'], 2, "0", STR_PAD_LEFT); ?><?php echo str_pad($item['number'], 3, "0", STR_PAD_LEFT); ?></a>
+ <?php echo $item['name'];?>
+                    </td>
+                   
+                </tr>
+            <?php endforeach ?>
+            </tbody>
+        </table>
+
+    <?php endif;
+$this->endWidget();
+} ELSE {// end if any uses  ?>
+<br />This actor has not been assigned as default actor to any usecases.
+<?php  }?>
+
+
+  <?php if($permission){ ?>
+
+  
 <h3>Version History</h3>    
         
    
@@ -56,5 +150,7 @@
         </div>
     </div>
   <?php } } ?>
-<?php $this->endWidget(); ?>
+<?php $this->endWidget(); 
+
+  }?>
 

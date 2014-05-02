@@ -34,6 +34,8 @@ class Iface extends CActiveRecord
 			array('number, iface_id, name, type_id, project_id, release_id', 'required'),
 			array('iface_id, number, type_id, photo_id, project_id, release_id', 'numerical', 'integerOnly'=>true),
 			array('name', 'length', 'max'=>255),
+                        array('text', 'safe'),
+		
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('id, iface_id, photo_id,number, name, type_id, project_id, release_id', 'safe', 'on'=>'search'),
@@ -64,6 +66,7 @@ class Iface extends CActiveRecord
 			'iface_id' => 'ifaceID',
                         'number' => 'Number',
 			'name' => 'Name',
+                    'text' => 'Text',
 			'type_id' => 'Type',
                      'project_id' => 'Project',
                     'release_id' => 'Release',
@@ -208,6 +211,45 @@ WHERE
             `vt`.`release`=".$release." 
             AND           
             `r`.`release_id`=".$release."
+                GROUP BY `r`.`iface_id`";
+
+     
+        
+        $connection=Yii::app()->db;
+		$command = $connection->createCommand($sql);
+		$projects = $command->queryAll();
+		
+		return $projects;
+    }  
+       public function getCategoryIfaces($type_id)
+    {
+         
+           
+          $release=Yii::App()->session['release'];
+        $sql="
+            SELECT 
+            `r`.`id` itemid,
+            `r`.*,
+            `p`.*,
+            `t`.`name` as type,
+            `t`.`interfacetype_id` as typenumber
+            FROM
+            `iface` `r`
+            JOIN `interfacetype` `t`
+            ON `t`.`interfacetype_id`=`r`.`type_id`            
+            LEFT JOIN `photo` `p`
+            ON `r`.`photo_id`=`p`.`id`
+            JOIN `version` `v`
+            ON `v`.`foreign_key`=`r`.`id`
+            JOIN `version` `vt`
+            ON `vt`.`foreign_key`=`t`.`id`
+            WHERE 
+            `v`.`object`=12 AND `v`.`active`=1 AND `v`.`release`=".$release."
+            AND `vt`.`object`=13 AND `vt`.`active`=1 AND `vt`.`release`=".$release." 
+            AND           
+            `r`.`release_id`=".$release."
+            AND
+            `t`.`interfacetype_id`=".$type_id."
                 GROUP BY `r`.`iface_id`";
 
      

@@ -27,15 +27,27 @@
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'description'); ?>
-		<?php echo $form->textArea($model,'description',array('rows'=>6, 'cols'=>50)); ?>
+		<?php echo $form->textArea($model,'description',array('rows'=>10, 'class'=>'span8')); ?>
 		<?php echo $form->error($model,'description'); ?>
 	</div>
 
-
+      
+        	
+       	<div class="row">
+		<?php echo $form->labelEx($model,'public'); ?>
+		<?php echo $form->checkbox($model,'public'); ?>
+		<?php echo $form->error($model,'public'); ?>
+	</div>
+	<div class="row">
+		&nbsp;
+	</div>
 	<div class="row buttons">
 		<?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>
 	</div>
 
+        
+        
+        
 <?php $this->endWidget(); ?>
 
 </div><!-- form -->

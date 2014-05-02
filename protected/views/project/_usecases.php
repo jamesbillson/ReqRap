@@ -26,7 +26,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
             </thead>
             
             <tbody>
-            <?php foreach($data as $item): ?>
+            <?php $pack_counter=0;foreach($data as $item): ?>
               
                 
                 <tr class="odd">  
@@ -40,15 +40,30 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                     <td>
                   <?php if($permission){ ?>
                    <a href="/package/update/id/<?php echo $item['id'];?>"><i class="icon-pencil" rel="tooltip" title="Edit Details"></i></a> 
-                   <a href="/package/remove/id/<?php echo $item['id'];?>"><i class="icon-remove-sign text-error" rel="tooltip" title="Delete"></i></a> 
+                   <a href="/package/delete/id/<?php echo $item['id'];?>"><i class="icon-remove-sign text-error" rel="tooltip" title="Delete"></i></a> 
                    <a href="/usecase/create/id/<?php echo $item['id'];?>"><i class="icon-plus-sign-alt" rel="tooltip" title="Add another usecase"></i> 
                    <a href="/package/history/id/<?php echo $item['package_id'];?>"><i class="icon-calendar" rel="tooltip" title="Version history"></i></a> 
+                  
+                            <?php if($pack_counter!=0) { ?>
+                            <a href="/package/move/dir/2/id/<?php echo $item['id'];?>"><i class="icon-arrow-up" rel="tooltip" title="Move Up"></i></a> 
+                            <?php } ELSEIF(count($data)>1) {?>   
+                           
+                            <i class="icon-flag" rel="tooltip" title="Start"></i>
+                            <?php } ?>          
+                            <?php if($pack_counter!=count($data)-1) { ?>        
+                            <a href="/package/move/dir/1/id/<?php echo $item['id'];?>"><i class="icon-arrow-down" rel="tooltip" title="Move Down"></i></a> 
+                            <?php } ELSEIF(count($data)>1) {?>
+                             <i class="icon-flag" rel="tooltip" title="End"></i>   
+                            <?php } ?> 
+                   
+                       
+                       
                   <?php } ?>
                    </td>
                    <td></td>
                 </tr>
                <?php 
-        $usecases = Usecase::model()->getPackageUsecases($item['id']); // get the requirements with answers
+        $usecases = Usecase::model()->getPackageUsecases($item['package_id']); // get the requirements with answers
  
         $counter=0;
         foreach($usecases as $uc) : // Go through each un answered question??>
@@ -60,7 +75,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                    <a href="/usecase/view/id/<?php echo $uc['usecase_id'];?>"> UC-<?php echo str_pad($uc['packnumber'], 2, "0", STR_PAD_LEFT).''.str_pad($uc['number'], 3, "0", STR_PAD_LEFT); ?></a>
                </td> 
               <td>
-                   <b><?php echo $uc['name'];?></a></b>
+                  <b><?php echo $uc['name'];?></a></b>
                 
               </td> 
               <td>
@@ -68,16 +83,18 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                <a href="/usecase/delete/id/<?php echo $uc['id'];?>"><i class="icon-remove-sign text-error" rel="tooltip" title="Edit"></i> 
                <a href="/usecase/update/id/<?php echo $uc['id'];?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
                <a href="/usecase/history/id/<?php echo $uc['usecase_id'];?>"><i class="icon-calendar" rel="tooltip" title="Version history"></i></a> 
+               
                <?php if($counter!=0) { ?>
-                           <a href="/usecase/move/dir/2/id/<?php echo $uc['id'];?>"><i class="icon-arrow-up" rel="tooltip" title="Move Up"></i></a> 
-                  <?php } ELSE {?>   
-                           
-                           <i class="icon-flag" rel="tooltip" title="Start"></i>
-                     <?php } ?>          
-                   <?php if($counter!=count($usecases)-1) { ?>        
-                           <a href="/usecase/move/dir/1/id/<?php echo $uc['id'];?>"><i class="icon-arrow-down" rel="tooltip" title="Move Down"></i></a> 
-         <?php } ?> 
-            <?php } ?> 
+               <a href="/usecase/move/dir/2/id/<?php echo $uc['id'];?>"><i class="icon-arrow-up" rel="tooltip" title="Move Up"></i></a> 
+               <?php } ELSEIF(count($usecases)>1) {?>   
+               <i class="icon-flag" rel="tooltip" title="Start"></i>
+               <?php } ?>           
+               <?php if($counter!=count($usecases)-1) { ?>        
+               <a href="/usecase/move/dir/1/id/<?php echo $uc['id'];?>"><i class="icon-arrow-down" rel="tooltip" title="Move Down"></i></a> 
+               <?php } ELSEIF(count($usecases)>1) {?>
+               <i class="icon-flag" rel="tooltip" title="End"></i>   
+               <?php } ?>  
+               <?php } ?> 
                </td></tr>
          
         <?php  $counter++;
@@ -85,7 +102,8 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
 
                 
                 
-            <?php endforeach ?>
+            <?php $pack_counter++; endforeach; 
+            endif;?>
             
             <?php if($permission){ ?> 
                <tr>
@@ -98,7 +116,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
              <?php } ?>   
             </tbody>
         </table>
-<?php endif;
+<?php 
 $this->endWidget(); ?>  
 
 

@@ -32,7 +32,7 @@ class FormpropertyController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update','history','delete','rollback'),
+				'actions'=>array('create','update','history','delete','rollback','move'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -129,10 +129,11 @@ class FormpropertyController extends Controller
         
         public function actionDelete($id)
 	{
-		
+	    $project=Yii::App()->session['project'];
             $model=$this->loadModel($id);
-            $version=Version::model()->getNextNumber($model->form->project_id,3,3,$id,$model->formproperty_id);  
+            $version=Version::model()->getNextNumber($project,3,3,$id,$model->formproperty_id);  
             $model->save();
+            Formproperty::model()->renumber($model->form_id);
             $this->redirect(array('/form/view/id/'.$model->form_id));
             
             }
@@ -153,6 +154,43 @@ class FormpropertyController extends Controller
 		));
 	}
 
+        
+              public function actionMove($dir, $id) //down 1, up 2
+	{
+          
+            $model = FormProperty::model()->findByPk($id);
+            $oldnum=$model->number;
+            $objects=FormProperty::model()->getFormProperty($model->form_id);
+            $nextid=0;
+            
+            if($dir==1){ // DOWN
+                    for ($i = 0; $i <= count($objects)-1; $i++) {
+                    if ($objects[$i]['number']==$oldnum) $nextid=$objects[$i+1]['id'];
+                    }
+                } 
+ 
+            if($dir==2){ // UP
+                    for ($i = count($objects)-1; $i > 0; $i--) {
+                    if ($objects[$i]['number']==$oldnum) $nextid=$objects[$i-1]['id'];
+                    }
+                } 
+                
+          $model2 = $this->loadmodel($nextid);
+          $model->number = $model2->number;
+          $model2->number=$oldnum;
+            
+          $model->save(false);
+          $model2->save(false);
+          
+          
+           
+          $this->redirect(array('/form/view/id/'.$model->form_id));
+	
+	}
+        
+        
+        
+        
 	/**
 	 * Manages all models.
 	 */

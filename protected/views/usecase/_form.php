@@ -26,7 +26,7 @@
                         
                         
                     
-                        <!--a href="/actor/create/id/<?php //echo $package->project->id; ?>"> Add New Actor</a-->
+                      
     <br />
      
 
@@ -41,12 +41,12 @@
 	
         <div class="row">  
           <?php echo $form->labelEx($model,'description'); ?>
-          <?php echo $form->textArea($model,'description',array('value'=>$preload_description)); ?>
+          <?php echo $form->textArea($model,'description',array('value'=>$description,'rows'=>4, 'class'=>'span8')); ?>
           <?php echo $form->error($model,'description'); ?>
       </div>
              <div class="row">  
           <?php echo $form->labelEx($model,'preconditions'); ?>
-          <?php echo $form->textArea($model,'preconditions',array('value'=>'None')); ?>
+          <?php echo $form->textArea($model,'preconditions',array('value'=>'None','rows'=>2, 'class'=>'span8')); ?>
           <?php echo $form->error($model,'preconditions'); ?>
       </div>
 

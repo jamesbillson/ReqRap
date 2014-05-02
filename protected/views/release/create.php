@@ -1,5 +1,18 @@
+<?php
+/* @var $this VersionController */
+/* @var $model Version */
 
+$this->breadcrumbs=array(
+	'Versions'=>array('index'),
+	'Create',
+);
 
-<h3>Create Rule</h3>
+$this->menu=array(
+	array('label'=>'List Version', 'url'=>array('index')),
+	array('label'=>'Manage Version', 'url'=>array('admin')),
+);
+?>
 
-<?php $this->renderPartial('_form', array('model'=>$model,'id'=>$id,'project'=>$project)); ?>
+<h1>Create Version</h1>
+
+<?php $this->renderPartial('_form', array('model'=>$model)); ?>

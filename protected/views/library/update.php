@@ -1,21 +1,9 @@
-<?php
-/* @var $this LibraryController */
-/* @var $model Library */
+<?php 
 
-$this->breadcrumbs=array(
-	'Libraries'=>array('index'),
-	$model->name=>array('view','id'=>$model->id),
-	'Update',
-);
+echo $this->renderPartial('/project/head',array('tab'=>'usecases')); 
 
-$this->menu=array(
-	array('label'=>'List Library', 'url'=>array('index')),
-	array('label'=>'Create Library', 'url'=>array('create')),
-	array('label'=>'View Library', 'url'=>array('view', 'id'=>$model->id)),
-	array('label'=>'Manage Library', 'url'=>array('admin')),
-);
 ?>
 
-<h1>Update Library <?php echo $model->id; ?></h1>
+<h2>Update Library <?php echo $model->name; ?></h2>
 
 <?php $this->renderPartial('_form', array('model'=>$model)); ?>

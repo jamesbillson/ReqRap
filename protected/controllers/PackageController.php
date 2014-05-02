@@ -15,7 +15,7 @@ class PackageController extends Controller
 	{
 		return array(
 			'accessControl', // perform access control for CRUD operations
-			'postOnly + delete', // we only allow deletion via POST request
+			//'postOnly + delete', // we only allow deletion via POST request
 		);
 	}
 
@@ -32,7 +32,7 @@ class PackageController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('usecase','updatepackage','history','bidsubmit','create','update','remove','addPackage','subcontractview'),
+				'actions'=>array('delete','printdiagram', 'move','usecase','updatepackage','history','create','update','remove','addPackage','subcontractview'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -57,7 +57,11 @@ class PackageController extends Controller
 			'versions'=>$versions
         	));
 	}
-
+ public function actionPrintDiagram($id) // Note that this is db id
+	{
+        $model=Package::model()->findbyPK($id);     	
+        $this->render('printdiagram',array('package'=>$model));
+	}
 	   public function actionUsecase()
 	{
              	
@@ -71,6 +75,43 @@ class PackageController extends Controller
 			'versions'=>$versions
         	));
 	}
+        
+           public function actionMove($dir, $id)
+	{
+		
+            $model = Package::model()->findByPk($id);
+            $oldnum=$model->number;
+            $packages=Package::model()->getPackages();
+            $nextid=0;
+            
+            if($dir==1){
+                    for ($i = 0; $i <= count($packages)-1; $i++) 
+                    {
+                       echo 'going up'.$i.'<br />';
+                    if ($packages[$i]['number']==$oldnum) $nextid=$packages[$i+1]['id'];
+                    }
+                } 
+            if($dir==2){
+                    for ($i = count($packages)-1; $i > 0; $i--) 
+                    {
+                       echo 'going down'.$i.'<br />';
+                    if ($packages[$i]['number']==$oldnum) $nextid=$packages[$i-1]['id'];
+                    }
+                } 
+                
+                   echo '$nextid up ='.$nextid.'<br />';     
+                
+            $model2 = $this->loadmodel($nextid);
+            
+            $model->number = $model2->number;
+            $model2->number=$oldnum;
+            $model->save(false);
+            $model2->save(false);
+            $this->redirect(array('/project/view/tab/usecases'));
+	
+	}
+        
+        
         
 	  public function actionCreate()
 	{
@@ -90,7 +131,7 @@ class PackageController extends Controller
                     if($model->save())
                     {
                      $version=Version::model()->getNextNumber($project,5,1,$model->primaryKey,$model->package_id);   
-                     $this->redirect(array('/project/view/tab/packages/id/'.$project));
+                     $this->redirect(array('/project/view/tab/usecases'));
 		    }
                         
                 }
@@ -125,11 +166,9 @@ class PackageController extends Controller
 			if($new->save())
                         {
 			$version=Version::model()->getNextNumber($project, 5, 2,$new->primaryKey,$model->package_id);
-                       
-//echo 'Project: '.$project.' db ID: '.$new->primaryKey.' Package_id: '.$model->package_id;
-//           break;            
- $this->redirect(array('/project/view/tab/packages/id/'.$project));
-                        }        
+                           
+                         $this->redirect(array('/project/view/tab/usecases/'));
+                         }        
 		}
 
 		$this->render('update',array(
@@ -143,10 +182,9 @@ public function actionDelete($id)
 	{
 	$project=Yii::app()->session['project'];
             $model=$this->loadModel($id);
-            $version=Version::model()->getNextNumber($project,5,3,$id,$model->actor_id);  
+            $version=Version::model()->getNextNumber($project,5,3,$id,$model->package_id);  
             $model->save();
-            $this->redirect(array('/project/view/tab/packages/id/'.$project));
-            
+             $this->redirect(array('/project/view/tab/usecases/'));
             }
         
         

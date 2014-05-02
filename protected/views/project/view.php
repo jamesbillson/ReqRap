@@ -55,7 +55,7 @@ $active['testcases']=FALSE;
         'content' => $this->renderPartial('_followers',
                 compact('model'),true,true),'active'=>$active['followers']);
     $tabs[] = array('id' => 'category', 
-        'label' => 'Simple Req\'s', 
+        'label' => 'Sections', 
         'content' => $this->renderPartial('_category',
                 compact('model'),true,true),'active'=>$active['category']);
     

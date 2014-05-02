@@ -1,5 +1,6 @@
+<?php echo $this->renderPartial('/project/head',array('tab'=>'details')); ?>
 
 
-<h1>Update Object <?php echo $model->number; ?><?php echo $model->name; ?></h1>
+<h3>Update Object <?php echo $model->number; ?><?php echo $model->name; ?></h3>
 
 <?php $this->renderPartial('_form', array('model'=>$model,'project_id'=>$id)); ?>

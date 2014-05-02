@@ -8,6 +8,7 @@ $permission=(Yii::App()->session['permission']==1)?true : false;
     	
         
 <br>
+<a href="/project/view/tab/objects">Back to Objects</a>
 <?php 
 
 $permission=(Yii::App()->session['permission']==1)?true : false; 
@@ -30,7 +31,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
 ));
 
 $data=  Objectproperty::model()->getObjectProperty($model->object_id);
-
+$counter=0;
   if (count($data)):?>
 
         <table class="table">
@@ -61,12 +62,29 @@ $data=  Objectproperty::model()->getObjectProperty($model->object_id);
                     <td>
                         <?php if($permission){ ?>
                         <a href="/objectproperty/update/id/<?php echo $item['id'];?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
-                        <a href="/objectproperty/delete?id=<?php echo $item['id'];?>"><i class="icon-remove-sign" rel="tooltip" title="Delete"></i></a> 
-                     <a href="/objectproperty/history/id/<?php echo $item['objectproperty_id'];?>"><i class="icon-calendar" rel="tooltip" title="History"></i></a> 
+                        <a href="/objectproperty/delete?id=<?php echo $item['id'];?>"><i class="icon-remove-sign text-error" rel="tooltip" title="Delete"></i></a> 
+                        <a href="/objectproperty/history/id/<?php echo $item['objectproperty_id'];?>"><i class="icon-calendar" rel="tooltip" title="History"></i></a> 
+                        
+                            <?php if($counter!=0) { ?>
+                            <a href="/objectproperty/move/dir/2/id/<?php echo $item['id'];?>"><i class="icon-arrow-up" rel="tooltip" title="Move Up"></i></a> 
+                            <?php } ELSEIF(count($data)>1) {?>   
+                           
+                            <i class="icon-flag" rel="tooltip" title="Start"></i>
+                            <?php } ?>          
+                            <?php if($counter!=count($data)-1) { ?>        
+                            <a href="/objectproperty/move/dir/1/id/<?php echo $item['id'];?>"><i class="icon-arrow-down" rel="tooltip" title="Move Down"></i></a> 
+                            <?php } ELSEIF(count($data)>1) {?>
+                             <i class="icon-flag" rel="tooltip" title="End"></i>   
+                            <?php } ?> 
+                         
+                         
+                         
                         <?php } ?>
+                     
+                     
                     </td>
                 </tr>
-            <?php endforeach ?>
+            <?php $counter++; endforeach ?>
             </tbody>
         </table>
 

@@ -14,7 +14,8 @@
  */
 class Objectproperty extends CActiveRecord
 {
-	/**
+	public static $objectnumber=7;
+    /**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
@@ -103,10 +104,23 @@ class Objectproperty extends CActiveRecord
         
                      public function getNextNumber($id)
     {
-                   
-        $sql="SELECT max(`r`.`number`)as number
+          $release=Yii::App()->session['release'];
+                  
+        $sql="SELECT 
+            max(`r`.`number`)as number
            From `objectproperty` `r`
-            WHERE `r`.`object_id`=".$id;
+           JOIN `version` `v`
+           ON `v`.`foreign_key`=`r`.`id`
+            WHERE
+            `v`.`object`=".Objectproperty::$objectnumber."
+            AND
+            `v`.`active`=1
+            AND
+            `v`.`release`=".$release."
+            AND
+            `r`.`object_id`=".$id;
+        
+        
 		$connection=Yii::app()->db;
 		$command = $connection->createCommand($sql);
 		$projects = $command->queryAll();
@@ -119,7 +133,25 @@ class Objectproperty extends CActiveRecord
       
     
     }   
-        
+    
+    
+           public function Renumber($id) //id is the object_id
+	{
+          
+            $objects=ObjectProperty::model()->getObjectProperty($id);
+            $counter=1;
+            
+           
+            foreach ($objects as $object) {
+            $model=ObjectProperty::model()->findbyPK($object['id']);
+            $model->number = $counter;
+            $model->save(false);
+            $counter++;
+          } 
+           
+          
+	
+	}
 	
        public function getObjectProperty($id)
     {
@@ -142,8 +174,7 @@ class Objectproperty extends CActiveRecord
             `v`.`active`=1
             AND
             `v`.`release`=".$release."
-            AND 
-            `v`.`project_id`=".$project."
+            
             AND
             
             `r`.`object_id`=".$id." order by `r`.`number`";

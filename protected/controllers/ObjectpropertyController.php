@@ -32,7 +32,7 @@ class ObjectpropertyController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update','delete','history'),
+				'actions'=>array('create','update','delete','history','move'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -72,15 +72,18 @@ class ObjectpropertyController extends Controller
 	    $release=Yii::App()->session['release'];
             $project=Yii::App()->session['project'];
                 $object=Object::model()->findbyPK($id);
-                $object_id=$object->object_id;
+                //$parentobject=Object::model()->findByPk(Version::model()->getVersion($object->object_id,6));
+          
+                
                 $model=new Objectproperty;
-
+                $model->object_id=$object->object_id;
+                $model->number=Objectproperty::model()->getNextNumber($model->object_id);
 		if(isset($_POST['Objectproperty']))
 		{
                     
 		        
                     $model->attributes=$_POST['Objectproperty'];
-                    $model->number=Objectproperty::model()->getNextNumber($object_id);
+                    //$model->number=Objectproperty::model()->getNextNumber($object_id);
                     $model->objectproperty_id=Version::model()->getNextID(7);
                     $model->project_id=$project;
                     $model->release_id=$release;
@@ -94,7 +97,7 @@ class ObjectpropertyController extends Controller
                 }
                
                 $this->render('create',array(
-			'model'=>$model,'object_id'=>$object_id,
+			'model'=>$model,'parentobject'=>$object,
 		));
 	}
         
@@ -106,6 +109,7 @@ class ObjectpropertyController extends Controller
             $project=Yii::App()->session['project'];
             
             $model=$this->loadModel($id);
+            $parentobject=Object::model()->findByPk(Version::model()->getVersion($model->object_id,6));
                 $new= new Objectproperty;
 
 		if(isset($_POST['Objectproperty']))
@@ -125,7 +129,7 @@ class ObjectpropertyController extends Controller
 		}
 
 		$this->render('update',array(
-			'model'=>$model,'object_id'=>$model->object_id
+			'model'=>$model,'object'=>$parentobject,
 		));
 	}
 
@@ -136,11 +140,12 @@ class ObjectpropertyController extends Controller
 	 */
  public function actionDelete($id)
 	{
-		
+        $project=Yii::App()->session['project'];
             $model=$this->loadModel($id);
-            $version=Version::model()->getNextNumber($model->object->project_id,7,3,$id,$model->objectproperty_id);  
+            $version=Version::model()->getNextNumber($project,7,3,$id,$model->objectproperty_id);  
 	    //$model->active=0;
             $model->save();
+            Objectproperty::model()->renumber($model->object_id);
             $this->redirect(array('/object/view/id/'.$model->object_id));
             
             }
@@ -156,6 +161,43 @@ class ObjectpropertyController extends Controller
 		));
 	}
 
+        
+                public function actionMove($dir, $id) //down 1, up 2
+	{
+          
+            $model = ObjectProperty::model()->findByPk($id);
+            $oldnum=$model->number;
+            $objects=ObjectProperty::model()->getObjectProperty($model->object_id);
+            $nextid=0;
+            
+            if($dir==1){ // DOWN
+                    for ($i = 0; $i <= count($objects)-1; $i++) {
+                    if ($objects[$i]['number']==$oldnum) $nextid=$objects[$i+1]['id'];
+                    }
+                } 
+ 
+            if($dir==2){ // UP
+                    for ($i = count($objects)-1; $i > 0; $i--) {
+                    if ($objects[$i]['number']==$oldnum) $nextid=$objects[$i-1]['id'];
+                    }
+                } 
+                
+          $model2 = $this->loadmodel($nextid);
+          $model->number = $model2->number;
+          $model2->number=$oldnum;
+            
+          $model->save(false);
+          $model2->save(false);
+          
+          
+           
+          $this->redirect(array('/object/view/id/'.$model->object_id));
+	
+	}
+        
+        
+        
+        
 	/**
 	 * Manages all models.
 	 */

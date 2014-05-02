@@ -39,7 +39,7 @@ if (count($data)):?>
             
             <tbody>
             <?php foreach($data as $item):
-                $fields=  Formproperty::model()->find('form_id='.$item['id']);
+                $fields=  Formproperty::model()->getFormProperty($item['form_id']);
                 ?>
                 
                 <tr class="odd">  
@@ -67,7 +67,7 @@ if (count($data)):?>
                     <td>
                           <?php if($permission){ ?>
                         <a href="/form/update/id/<?php echo $item['id'];?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
-                        <a href="/form/delete/ucid/<?php echo $model->id;?>/type/2/id/<?php echo $item['id'];?>"><i class="icon-remove-sign" rel="tooltip" title="Delete"></i></a> 
+                        <a href="/form/delete/ucid/<?php echo $model->id;?>/type/2/id/<?php echo $item['id'];?>"><i class="icon-remove-sign text-error" rel="tooltip" title="Delete"></i></a> 
                       <a href="/form/history/id/<?php echo $item['form_id'];?>"><i class="icon-calendar" rel="tooltip" title="History"></i></a> 
                      <?php } ?>
                     </td>

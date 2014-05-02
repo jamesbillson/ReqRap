@@ -1,6 +1,6 @@
 <?php
-/* @var $this RuleController */
-/* @var $model Rule */
+/* @var $this VersionController */
+/* @var $model Version */
 /* @var $form CActiveForm */
 ?>
 
@@ -18,12 +18,22 @@
 
 	<div class="row">
 		<?php echo $form->label($model,'number'); ?>
-		<?php echo $form->textField($model,'number',array('size'=>4,'maxlength'=>4)); ?>
+		<?php echo $form->textField($model,'number',array('size'=>6,'maxlength'=>6)); ?>
 	</div>
 
 	<div class="row">
-		<?php echo $form->label($model,'text'); ?>
-		<?php echo $form->textArea($model,'text',array('rows'=>6, 'cols'=>50)); ?>
+		<?php echo $form->label($model,'release'); ?>
+		<?php echo $form->textField($model,'release',array('size'=>6,'maxlength'=>6)); ?>
+	</div>
+
+	<div class="row">
+		<?php echo $form->label($model,'project_id'); ?>
+		<?php echo $form->textField($model,'project_id'); ?>
+	</div>
+
+	<div class="row">
+		<?php echo $form->label($model,'status'); ?>
+		<?php echo $form->textField($model,'status'); ?>
 	</div>
 
 	<div class="row buttons">

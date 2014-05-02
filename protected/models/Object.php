@@ -113,7 +113,7 @@ class Object extends CActiveRecord
       
     
     }   
-    
+           
       public function getProjectObjects()
     {
        $release=Yii::App()->session['release'];

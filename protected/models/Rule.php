@@ -162,6 +162,24 @@ class Rule extends CActiveRecord
 		
 		return $projects;
     }  
+    
+    
+    
+        public function Renumber() // renumber all the packages in current release
+	{
+          
+            $rules=$this->getProjectRules();
+            $counter=1;     
+            foreach ($rules as $rule) {
+            $model= $this->findbyPK($rule['id']);
+            $model->number = $counter;
+            $model->save(false);
+            $counter++;
+          } 
+        
+        }
+    
+    
     /*
              public function rollback($number,$id)
             {

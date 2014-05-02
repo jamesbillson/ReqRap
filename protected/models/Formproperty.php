@@ -79,6 +79,29 @@ class Formproperty extends CActiveRecord
 		);
 	}
 
+        
+        
+           public function Renumber($id) //id is the object_id
+	{
+          
+            $objects=FormProperty::model()->getFormProperty($id);
+            $counter=1;
+            
+           
+            foreach ($objects as $object) {
+            $model=FormProperty::model()->findbyPK($object['id']);
+            $model->number = $counter;
+            $model->save(false);
+            $counter++;
+          } 
+           
+          
+	
+	}
+	
+        
+        
+        
 	/**
 	 * Retrieves a list of models based on the current search/filter conditions.
 	 *
@@ -160,8 +183,9 @@ class Formproperty extends CActiveRecord
     
     
     
-      public function getFormProperty($id)
+      public function getFormProperty($id) // expecting form_id
     {
+          $release=Yii::App()->session['release'];
         $sql="
             SELECT 
             `r`.*
@@ -169,29 +193,15 @@ class Formproperty extends CActiveRecord
             JOIN `version` `v`
             ON `v`.`foreign_key`=`r`.`id`
             WHERE 
-              `v`.`object`=3
-            AND
-            `v`.`project_id`=".Yii::App()->session['project']."
-                and
-                `v`.`release`=".Yii::App()->session['release']."
-                and
-            `v`.`active`=1 
-            and            
-            `r`.`form_id`=".$id." 
-            
-            and            
-            `r`.`form_id`=".$id." 
-             and 
-             `r`.`project_id`=".Yii::App()->session['project']."
-             order by `r`.`number`";
-
-     
-        
-        $connection=Yii::app()->db;
-		$command = $connection->createCommand($sql);
-		$projects = $command->queryAll();
+            `v`.`object`=3 AND `v`.`release`=".$release." AND `v`.`active`=1 
+            AND `r`.`form_id`=".$id." 
+            ORDER BY `r`.`number`";
+ 
+            $connection=Yii::app()->db;
+            $command = $connection->createCommand($sql);
+            $projects = $command->queryAll();
 		
-		return $projects;
+            return $projects;
     }  
     
          public function rollback($number,$id)

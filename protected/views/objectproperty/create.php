@@ -1,3 +1,6 @@
-<h1>Create A Property for an Object</h1>
+<?php echo $this->renderPartial('/project/head',array('tab'=>'details')); ?>
 
-<?php $this->renderPartial('_form', array('model'=>$model,'object_id'=>$object_id,)); ?>
+<h3>Create An Object Property for <a href="/object/view/id/<?php echo $parentobject->object_id; ?>"><?php echo $parentobject->name; ?></a></h3>
+
+
+<?php $this->renderPartial('_form', array('model'=>$model,'parentobject'=>$parentobject,)); ?>

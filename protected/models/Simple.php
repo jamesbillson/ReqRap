@@ -101,6 +101,21 @@ class Simple extends CActiveRecord
 	}
 
         
+          public function Renumber($id) // renumber all the packages in current release
+	{
+          
+            $simples=$this->getCategorySimple($id);
+            $counter=1;     
+            foreach ($simples as $simple) {
+            $model=  $this->findbyPK($simple['id']);
+            $model->number = $counter;
+            $model->save(false);
+            $counter++;
+          } 
+        
+        }
+        
+        
                      public function getNextNumber($id)
     {
                    

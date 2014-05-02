@@ -1,17 +1,7 @@
-<?php
-/* @var $this ObjectpropertyController */
-/* @var $model Objectproperty */
-/* @var $form CActiveForm */
-?>
-
 <div class="form">
 
 <?php $form=$this->beginWidget('CActiveForm', array(
 	'id'=>'objectproperty-form',
-	// Please note: When you enable ajax validation, make sure the corresponding
-	// controller action is handling ajax validation correctly.
-	// There is a call to performAjaxValidation() commented in generated controller code.
-	// See class documentation of CActiveForm for details on this.
 	'enableAjaxValidation'=>false,
 )); ?>
 
@@ -20,12 +10,12 @@
 	<?php echo $form->errorSummary($model); ?>
 
 
-	<?php echo $form->hiddenField($model,'object_id',array('value'=>$object_id)); ?>
-		<div class="row">
-		<?php
-                $number=  Objectproperty::model()->getNextNumber($object_id);
-		 echo $form->hiddenField($model,'number',array('value'=>$number)); ?>
-           Number: <?php echo $number; ?>. 
+	<?php echo $form->hiddenField($model,'object_id',array('value'=>$model->object_id)); ?>
+        
+	<div class="row">
+            
+	<?php  echo $form->hiddenField($model,'number',array('value'=>$model->number)); ?>
+        Number: <?php echo $model->number; ?>
 		
 	</div>
 
@@ -37,7 +27,7 @@
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'description'); ?>
-		<?php echo $form->textArea($model,'description',array('rows'=>6, 'cols'=>50)); ?>
+		<?php echo $form->textArea($model,'description',array('rows'=>6, 'class'=>'span8')); ?>
 		<?php echo $form->error($model,'description'); ?>
 	</div>
 

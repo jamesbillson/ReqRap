@@ -100,7 +100,7 @@ class Interfacetype extends CActiveRecord
             FROM `interfacetype` `i`
             WHERE `i`.`project_id`=".$id."
             AND 
-            `i`.`number`=0
+            `i`.`number`=1
             LIMIT 1
             ";
 		$connection=Yii::app()->db;

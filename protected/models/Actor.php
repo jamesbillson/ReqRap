@@ -32,10 +32,11 @@ class Actor extends CActiveRecord
 		return array(
 			array('actor_id, type, project_id, release_id,number, name, description, alias, inherits', 'required'),
 			array('type, project_id, actor_id, release_id', 'numerical', 'integerOnly'=>true),
-			array('name', 'length', 'max'=>255),
+			array('name, inherits', 'length', 'max'=>255),
+                        array('pretest', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, project_id, release_id, actor_id,number,  name,description, alias', 'safe', 'on'=>'search'),
+			array('id, project_id, release_id, pre-test, actor_id,number,  name,description, alias', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -65,6 +66,7 @@ class Actor extends CActiveRecord
                     'release_id' => 'Release',
                     'number' => 'Number',	
                     'name' => 'Name',
+                    'pretest' => 'Pre Condition for Test',
                     'descripion'=>'Description',
                     'alias'=>'Aliases',
                     'inherits'=>'Inherits',
@@ -104,18 +106,24 @@ class Actor extends CActiveRecord
        $project=Yii::App()->session['project'];
                $sql="
            
-            SELECT `r`.*
+            SELECT `r`.*,
+            `i`.`name` as iname,
+            `i`.`actor_id` as iactor_id
             FROM `actor` `r`
-            JOIN `version` `v`
-            ON `v`.`foreign_key`=`r`.`id`
+            JOIN `actor` `i`
+            ON `r`.`actor_id`=`i`.`actor_id`            
+            JOIN `version` `vi`
+            ON `vi`.`foreign_key`=`i`.`id`
+            JOIN `version` `vr`
+            ON `vr`.`foreign_key`=`r`.`id`            
+
             WHERE 
-            `v`.`object`=4
+            `vr`.`object`=4 AND `vr`.`active`=1 AND `vr`.`release`=".$release."
+            AND   
+            `vi`.`object`=4 AND `vi`.`active`=1 AND `vi`.`release`=".$release."
             AND
-            `v`.`active`=1 
-        and            
-            `v`.`release`=".$release."         
-        and            
-            `v`.`project_id`=".$project;
+           
+           `r`.`project_id`=".$project;
 
      
         
@@ -172,6 +180,90 @@ class Actor extends CActiveRecord
 		return $projects;
     }  
     
+    public function getActorParentDefaultUC($id)
+    {
+     $release=Yii::App()->session['release'];
+
+               $sql="
+            SELECT 
+            `u`.*,
+            `p`.`number` as packagenumber
+            FROM `usecase` `u`
+            JOIN `actor` `a`
+            ON `u`.`actor_id`=`a`.`actor_id`
+            JOIN `package` `p`
+            ON `p`.`package_id`=`u`.`package_id`
+          
+            JOIN `version` `va`
+            ON `va`.`foreign_key`=`a`.`id`
+           JOIN `version` `vu`
+            ON `vu`.`foreign_key`=`u`.`id`
+               JOIN `version` `vp`
+            ON `vp`.`foreign_key`=`p`.`id` 
+           WHERE
+            `va`.`object`=4  AND `va`.`active`=1 AND `va`.`release`=".$release."  AND  
+            `vu`.`object`=10 AND `vu`.`active`=1 AND `vu`.`release`=".$release."  AND 
+            `vp`.`object`=5 AND `vp`.`active`=1 AND `vp`.`release`=".$release."  AND  
+            
+            `u`.`actor_id`=".$id." GROUP BY `u`.`usecase_id`";
+                      
+
+        $connection=Yii::app()->db;
+		$command = $connection->createCommand($sql);
+		$projects = $command->queryAll();
+		
+		return $projects;   
+        
+    }
+    
+    
+      public function getActorParentSteps($id)
+              // RETURNS NUMBER OF STEPS THAT USE THIS ACTOR
+    {
+       $release=Yii::App()->session['release'];
+
+               $sql="
+            SELECT 
+            `s`.*,
+            `u`.`name` as usecasename,
+            `u`.`number` as usecasenumber,
+            `p`.`number` as packagenumber,
+            `u`.`usecase_id` as usecaseid
+            FROM `step` `s`
+            JOIN `actor` `a`
+            ON `s`.`actor_id`=`a`.`actor_id`
+
+            JOIN `flow` `f`
+            ON `s`.`flow_id`=`f`.`flow_id`
+            JOIN `usecase` `u`
+            ON `f`.`usecase_id`=`u`.`usecase_id`
+            JOIN `package` `p`
+            ON `p`.`package_id`=`u`.`package_id`
+            JOIN `version` `va`
+            ON `va`.`foreign_key`=`a`.`id`
+            JOIN `version` `vs`
+            ON `vs`.`foreign_key`=`s`.`id`
+             JOIN `version` `vu`
+            ON `vu`.`foreign_key`=`u`.`id`
+             JOIN `version` `vf`
+            ON `vf`.`foreign_key`=`f`.`id`
+             JOIN `version` `vp`
+            ON `vp`.`foreign_key`=`p`.`id`
+            WHERE 
+            `va`.`object`=4  AND `va`.`active`=1 AND `va`.`release`=".$release."  AND  
+            `vs`.`object`=9  AND `vs`.`active`=1 AND `vs`.`release`=".$release."  AND   
+            `vu`.`object`=10 AND `vu`.`active`=1 AND `vu`.`release`=".$release."  AND 
+            `vp`.`object`=5  AND `vp`.`active`=1 AND `vp`.`release`=".$release."  AND
+                `vf`.`object`=8  AND `vf`.`active`=1 AND `vf`.`release`=".$release."  AND
+           `a`.`id`=".$id."  GROUP BY `u`.`usecase_id`";
+                      
+
+        $connection=Yii::app()->db;
+		$command = $connection->createCommand($sql);
+		$projects = $command->queryAll();
+		
+		return $projects;
+    }  
     
         public function getNextNumber($id)
     {

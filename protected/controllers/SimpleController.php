@@ -88,11 +88,12 @@ class SimpleController extends Controller
                     if($model->save())
                     {
                      $version=Version::model()->getNextNumber($project,18,1,$model->primaryKey,$model->simple_id);   
+                     Simple::model()->Renumber($category_id);
+     
                      $this->redirect(array('/category/view/id/'.$model->category_id));
 		    }
                         
                 }
-               
                 $this->render('create',array(
 			'model'=>$model,'category_id'=>$category_id,
 		));

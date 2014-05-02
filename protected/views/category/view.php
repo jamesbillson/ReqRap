@@ -55,7 +55,7 @@ $data=  Simple::model()->getCategorySimple($model->category_id); ?>
                     <td>
                         <?php if($permission){ ?>
                         <a href="/simple/update/id/<?php echo $item['id'];?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
-                        <a href="/simple/delete?id=<?php echo $item['id'];?>"><i class="icon-remove-sign" rel="tooltip" title="Delete"></i></a> 
+                        <a href="/simple/delete?id=<?php echo $item['id'];?>"><i class="icon-remove-sign text-error" rel="tooltip" title="Delete"></i></a> 
                      <a href="/simple/history/id/<?php echo $item['simple_id'];?>"><i class="icon-calendar" rel="tooltip" title="History"></i></a> 
                         <?php } ?>
                     </td>

@@ -14,7 +14,8 @@
 <?php
    * */
    
-$usecases = Usecase::model()->getPackageUsecases($package['id']); 
+$usecases = Usecase::model()->getPackageUsecases($package['package_id']); 
+
 $actors = Actor::model()->getPackageActors($package['id']);
 ?>
 
