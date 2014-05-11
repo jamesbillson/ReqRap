@@ -26,7 +26,7 @@
 	</div>
 	<div class="row">
 		<?php echo $form->labelEx($model,'description'); ?>
-		<?php echo $form->textArea($model,'description'); ?>
+		<?php echo $form->textArea($model,'description',array('rows'=>6, 'class'=>'span8')); ?>
 		<?php echo $form->error($model,'description'); ?>
                 <?php //echo $form->html5EditorRow($model, 'description' ?>
     

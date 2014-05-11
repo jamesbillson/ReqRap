@@ -3,7 +3,7 @@
 <div class="fileupload-buttonbar">
     <div class="row-fluid">
         <!-- The fileinput-button span is used to style the file input field as button -->
-		<span class="btn btn-success fileinput-button"> <i class="icon-plus icon-white"></i> <span>Add files...</span>
+		<span class="btn btn-success fileinput-button"> <i class="icon-plus icon-white"></i> <span>Upload Interface</span>
 			<?php
 			if ($this->hasModel()) :
 				echo CHtml::activeFileField($this->model, $this->attribute, $htmlOptions) . "\n"; else :
@@ -11,10 +11,14 @@
 			endif;
 			?>
 		</span>
-     
+       
+        
     </div>
     <div class="row-fluid fileupload-progress fade">
-       
+        <!-- The global progress bar -->
+        <div class="progress progress-success progress-striped active" role="progressbar">
+            <div class="bar" style="width:0%;"></div>
+        </div>
         <!-- The extended global progress information -->
         <div class="progress-extended">&nbsp;</div>
     </div>

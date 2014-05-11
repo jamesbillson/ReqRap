@@ -65,17 +65,20 @@ $counter=0;
                         <a href="/objectproperty/delete?id=<?php echo $item['id'];?>"><i class="icon-remove-sign text-error" rel="tooltip" title="Delete"></i></a> 
                         <a href="/objectproperty/history/id/<?php echo $item['objectproperty_id'];?>"><i class="icon-calendar" rel="tooltip" title="History"></i></a> 
                         
-                            <?php if($counter!=0) { ?>
-                            <a href="/objectproperty/move/dir/2/id/<?php echo $item['id'];?>"><i class="icon-arrow-up" rel="tooltip" title="Move Up"></i></a> 
-                            <?php } ELSEIF(count($data)>1) {?>   
+                     
+                        <?php if($counter!=0) { ?>
+                            <a href="/version/move/object/7/dir/2/id/<?php echo $item['id'];?>"><i class="icon-arrow-up" rel="tooltip" title="Move Up"></i></a> 
+                           
+                        <?php } ELSEIF(count($data)>1) {?>   
                            
                             <i class="icon-flag" rel="tooltip" title="Start"></i>
                             <?php } ?>          
                             <?php if($counter!=count($data)-1) { ?>        
-                            <a href="/objectproperty/move/dir/1/id/<?php echo $item['id'];?>"><i class="icon-arrow-down" rel="tooltip" title="Move Down"></i></a> 
+                            <a href="/version/move/object/7/dir/1/id/<?php echo $item['id'];?>"><i class="icon-arrow-down" rel="tooltip" title="Move Down"></i></a> 
                             <?php } ELSEIF(count($data)>1) {?>
                              <i class="icon-flag" rel="tooltip" title="End"></i>   
                             <?php } ?> 
+
                          
                          
                          

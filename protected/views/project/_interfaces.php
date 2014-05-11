@@ -33,6 +33,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                 <tr>
                     <th>Number</th>
                     <th>Name</th>
+                    <th>Notes</th>
                    <th>Actions</th>
                 </tr>
             </thead>
@@ -40,12 +41,18 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
             <tbody>
 <?php
 $types = Interfacetype::model()->getInterfacetypes();
+      // echo "<pre>";
+      // print_r($types);
+      // echo "</pre>";         
 foreach($types as $type){
 $data = Iface::model()->getCategoryIfaces($type['interfacetype_id']);
+        //echo "<pre>";
+       //print_r($data);
+       //echo "</pre>"; 
 if (count($data)):?>
 
                 <tr class="odd">  
-                    <td colspan="3">   
+                    <td colspan="4">   
                     <?php echo $type['name'];?>
                     </td>
                 </tr>
@@ -63,27 +70,30 @@ if (count($data)):?>
                    </a>
                     </td>
                     <td>   
-                          <?php if(empty($item['file'])){ ?>
-                         <i class="icon-picture text-warning" rel="tooltip" title="Incomplete Images"></i>
+                          <?php 
+                          
+                          if(!count(Iface::model()->getCurrentImage($item['iface_id']))){ ?>
+                         <i class="icon-picture text-warning" rel="tooltip" title="No Image"></i>
                         <?php
                           }
-                          $uses=Stepiface::model()->getActiveStepifaces($item['itemid']);
-                         //echo $uses;
-                         if($uses==0){
-                        
-                             ?>
+                          $uses=Usecase::model()->getLinkUsecase($item['iface_id'],12,15);
+                         if(count($uses)==0){
+                         ?>
                         <i class="icon-exclamation-sign text-warning" rel="tooltip" title="Orphan - this Interface is not used."></i>
                          <?php  } ?>
                     <?php echo $item['name'];?>
                         
-                       
+                    <td>
+                        <?php echo $item['text'];?>
+                        
+                    </td> 
                    
 
                   
                     <td>
                           <?php if($permission){ ?>
                         <a href="/iface/update/ucid/-1/id/<?php echo $item['id'];?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
-                        <a href="/iface/delete/ucid/<?php echo $model->id;?>/type/2/id/<?php echo $item['id'];?>"><i class="icon-remove-sign text-error" rel="tooltip" title="Delete"></i></a> 
+                        <a href="/iface/delete/ucid/-1/id/<?php echo $item['id'];?>"><i class="icon-remove-sign text-error" rel="tooltip" title="Delete"></i></a> 
                         <a href="/iface/history/id/<?php echo $item['iface_id'];?>"><i class="icon-calendar" rel="tooltip" title="Version History"></i></a> 
                           <?php } ?>
                     </td>

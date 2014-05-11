@@ -32,7 +32,7 @@ class IfaceController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update','delete','history','addphoto'),
+				'actions'=>array('create','update','delete','history','addimage'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -157,20 +157,17 @@ class IfaceController extends Controller
 		));
 	}
 
-	public function actionaddphoto()
+	public function actionaddimage($iface, $id)
 	{
         
             $release=Yii::App()->session['release'];
             $project=Yii::App()->session['project'];
-            
-            $model=$this->loadModel($_POST['iface_id']);
-            if(isset($_POST['iface_id']))
-		{
+            $model=$this->loadVersion($iface);
                  $new= new Iface;
 		 $new->name=$model->name;
                  $new->type_id=$model->type_id;
                  $new->number=$model->number;
-                 $new->photo_id=$_POST['photo_id'];
+                 $new->photo_id=$id;
 		 $new->number=$model->number;
                  $new->project_id=$project;
                  $new->iface_id=$model->iface_id;
@@ -178,11 +175,8 @@ class IfaceController extends Controller
                  if($new->save()){
                                  $version=Version::model()->getNextNumber($project,12,2,$new->primaryKey,$new->iface_id);   
                                  }
-		}
-
-		$this->render('view',array(
-			'model'=>$model,'id'=>$project
-		));
+		
+		$this->redirect('/iface/view/id/'.$new->iface_id);
         }
         
         
@@ -195,7 +189,7 @@ class IfaceController extends Controller
                {
                $this->redirect(array('/usecase/view/id/'.$ucid));
                } ELSE {
-               $this->redirect(array('/iface/view/id/'.$ucid));
+               $this->redirect(array('/project/view/tab/interfaces/'));
                }
                
          }
@@ -243,6 +237,14 @@ class IfaceController extends Controller
 		return $model;
 	}
 
+        
+         public function loadVersion($id)
+	{
+		$model=Iface::model()->findByPk(Version::model()->getVersion($id,12));
+		if($model===null)
+			throw new CHttpException(404,'The requested version does not exist.');
+		return $model;
+	}
 	/**
 	 * Performs the AJAX validation.
 	 * @param Iface $model the model to be validated

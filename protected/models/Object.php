@@ -1,17 +1,6 @@
 <?php
 
-/**
- * This is the model class for table "object".
- *
- * The followings are the available columns in table 'object':
- * @property integer $id
- * @property string $name
- * @property integer $project_id
- *
- * The followings are the available model relations:
- * @property Project $project
- * @property Objectproperty[] $objectproperties
- */
+
 class Object extends CActiveRecord
 {
 	/**
@@ -68,18 +57,7 @@ class Object extends CActiveRecord
 		);
 	}
 
-	/**
-	 * Retrieves a list of models based on the current search/filter conditions.
-	 *
-	 * Typical usecase:
-	 * - Initialize the model fields with values from filter form.
-	 * - Execute this method to get CActiveDataProvider instance which will filter
-	 * models according to data in model fields.
-	 * - Pass data provider to CGridView, CListView or any similar widget.
-	 *
-	 * @return CActiveDataProvider the data provider that can return the models
-	 * based on the search/filter conditions.
-	 */
+
 	public function search()
 	{
 		// @todo Please modify the following code to remove attributes that should not be searched.
@@ -117,9 +95,8 @@ class Object extends CActiveRecord
       public function getProjectObjects()
     {
        $release=Yii::App()->session['release'];
-       $project=Yii::App()->session['project'];
         $sql="
-            SELECT `r`.*,`v`.`active`
+            SELECT `r`.*
             FROM `object` `r`
             LEFT JOIN `version` `v`
             ON `v`.`foreign_key`=`r`.`id`
@@ -127,10 +104,10 @@ class Object extends CActiveRecord
             `v`.`object`=6
             AND
             `v`.`active`=1
-        and            
-            `r`.`release_id`=".$release."         
-        and            
-            `r`.`project_id`=".$project;
+            AND
+            `v`.`release`=".$release."         
+            ORDER BY `number`";         
+     
 
      
         
@@ -141,12 +118,7 @@ class Object extends CActiveRecord
 		return $projects;
     }  
         
-	/**
-	 * Returns the static model of the specified AR class.
-	 * Please note that you should have this exact method in all your CActiveRecord descendants!
-	 * @param string $className active record class name.
-	 * @return Object the static model class
-	 */
+	
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);

@@ -2,7 +2,7 @@
 $this->layout = "//layouts/print";
 $project=Yii::App()->session['project'];
 $packages = Package::model()->getPackages($project);
-$heading=0;
+$heading=1;
 $cats = Category::model()->getProjectCategory();
 
 $model=Project::model()->findbyPK($project);
@@ -19,7 +19,7 @@ $model=Project::model()->findbyPK($project);
  ?>
 
 <?php 
-$heading++; 
+
 $section=0;
         foreach($cats as $cat){
          if ($cat['order']>$section && $cat['order']<=1+$section){ 
@@ -29,10 +29,14 @@ $section=0;
           }
 ?>
 
-<?php $this->renderPartial('/object/print',array('heading'=>$heading)); 
- ?>
 <?php 
+$objects = Object::model()->getProjectObjects(Yii::app()->session['project']); 
+if (count($objects)):
+$this->renderPartial('/object/print',array('heading'=>$heading,'objects'=>$objects)); 
 $heading++; 
+endif;
+
+
 $section=1;
 
     
@@ -43,19 +47,15 @@ $section=1;
           
             }
           }
- ?>
-  
 
-
-
-
-
-
-
-<?php $this->renderPartial('/actor/print',array('heading'=>$heading)); 
- ?>
-<?php 
+          
+$actors = Actor::model()->getProjectActors(Yii::app()->session['project']);
+if (count($actors)):
+$this->renderPartial('/actor/print',array('heading'=>$heading,'actors'=>$actors)); 
 $heading++; 
+endif;
+ 
+
 $section=2;
         foreach($cats as $cat){
          if ($cat['order']>$section && $cat['order']<=1+$section){ 
@@ -63,15 +63,18 @@ $section=2;
           $heading++;
           }
           }
-?>
 
-
-
-
-<?php $this->renderPartial('/package/print',array('heading'=>$heading,'project'=>$project)); 
- ?>
-<?php 
+ 
+$numberucs=Version::model()->objectCount(10);
+if ($numberucs>0): // check if there are any usecases
+$packages = Package::model()->getPackages($project);
+if (count($packages)):      
+$this->renderPartial('/package/print',array('heading'=>$heading,'packages'=>$packages)); 
 $heading++; 
+endif;
+endif;
+          
+
 $section=3;
         foreach($cats as $cat){
          if ($cat['order']>$section && $cat['order']<=1+$section){ 
@@ -81,10 +84,20 @@ $section=3;
           }
 ?>
 
-<?php $this->renderPartial('/rule/print',array('heading'=>$heading,'project'=>$project)); 
- ?>
 <?php 
-$heading++; 
+
+
+$rules = Rule::model()->getProjectRules($project);
+if (count($rules)):
+
+$this->renderPartial('/rule/print',array('heading'=>$heading,'project'=>$project, 'rules'=>$rules)); 
+$heading++;
+endif;
+
+
+?>
+<?php 
+
 $section=4;
         foreach($cats as $cat){
          if ($cat['order']>$section && $cat['order']<=1+$section){ 
@@ -92,15 +105,14 @@ $section=4;
           $heading++;
           }
           }
-?>
 
+  $numberifaces=Version::model()->objectCount(12);        
+          if(count($numberifaces)):
+          $this->renderPartial('/iface/print',array('heading'=>$heading)); 
 
-
-
-<?php $this->renderPartial('/iface/print',array('heading'=>$heading)); 
- ?>
-<?php 
 $heading++; 
+endif;
+
 $section=5;
         foreach($cats as $cat){
          if ($cat['order']>$section && $cat['order']<=1+$section){ 
@@ -108,13 +120,18 @@ $section=5;
           $heading++;
           }
           }
-?>
 
+          
+          
+$forms = Form::model()->getProjectForms(Yii::app()->session['project']);
 
-<?php $this->renderPartial('/form/print',array('heading'=>$heading)); 
+if (count($forms)):
 
-
+$this->renderPartial('/form/print',array('heading'=>$heading,'forms'=>$forms)); 
 $heading++; 
+endif;
+
+
 $section=6;
         foreach($cats as $cat){
          if ($cat['order']>$section && $cat['order']<=1+$section){ 

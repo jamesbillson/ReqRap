@@ -226,6 +226,14 @@ public function actionDelete($id)
 		return $model;
 	}
 
+           public function loadVersion($id)
+	{
+		$model=Package::model()->findByPk(Version::model()->getVersion($id,5));
+		if($model===null)
+			throw new CHttpException(404,'The requested version does not exist.');
+		return $model;
+	}
+        
 	/**
 	 * Performs the AJAX validation.
 	 * @param CModel the model to be validated

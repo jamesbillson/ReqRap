@@ -32,7 +32,7 @@ class SimpleController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update','delete','history'),
+				'actions'=>array('create','update','delete','history','move'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -137,15 +137,53 @@ class SimpleController extends Controller
 	 */
  public function actionDelete($id)
 	{
-		
+		$project=Yii::app()->session['project'];
             $model=$this->loadModel($id);
-            $version=Version::model()->getNextNumber($model->category->project_id,18,3,$id,$model->simple_id);  
+            $version=Version::model()->getNextNumber($project,18,3,$id,$model->simple_id);  
 	    //$model->active=0;
             $model->save();
+            Simple::model()->Renumber($model->category_id);
+     
             $this->redirect(array('/category/view/id/'.$model->category_id));
+            
             
             }
 
+                       public function actionMove($dir, $id) //down 1, up 2
+	{
+          
+            $model = Simple::model()->findByPk($id);
+            $oldnum=$model->number;
+            $objects=Simple::model()->getCategorySimple($model->category_id);
+            $nextid=0;
+            
+            if($dir==1){ // DOWN
+                    for ($i = 0; $i <= count($objects)-1; $i++) {
+                    if ($objects[$i]['number']==$oldnum) $nextid=$objects[$i+1]['id'];
+                    }
+                } 
+ 
+            if($dir==2){ // UP
+                    for ($i = count($objects)-1; $i > 0; $i--) {
+                    if ($objects[$i]['number']==$oldnum) $nextid=$objects[$i-1]['id'];
+                    }
+                } 
+                
+          $model2 = $this->loadmodel($nextid);
+          $model->number = $model2->number;
+          $model2->number=$oldnum;
+            
+          $model->save(false);
+          $model2->save(false);
+          
+          
+           
+          $this->redirect(array('/category/view/id/'.$model->category_id));
+	
+	}
+        
+            
+            
 	/**
 	 * Lists all models.
 	 */

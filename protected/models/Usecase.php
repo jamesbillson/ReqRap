@@ -394,7 +394,7 @@ class Usecase extends CActiveRecord
     }  
     
   
-           public function getLinkUsecase($id,$object,$relationship)
+           public function getLinkUsecase($id,$object,$relationship) // id is object_id
     {
            //This is used to show back links from rules, forms and ifaces to UC's
   $release=Yii::App()->session['release'];
@@ -408,9 +408,9 @@ class Usecase extends CActiveRecord
                 `u`.`name` as usecase_name,
                 `u`.`number` as usecase_number,
                 `p`.`number` as package_number
-                FROM `".Version::$objects[$object]."` `i`
+                FROM `".Version::$objects[$object]."` `o`
                 JOIN `step".Version::$objects[$object]."` `x`
-                ON `x`.`".Version::$objects[$object]."_id`=`i`.`".Version::$objects[$object]."_id`
+                ON `x`.`".Version::$objects[$object]."_id`=`o`.`".Version::$objects[$object]."_id`
                 JOIN `step` `s`
                 ON `s`.`step_id`=`x`.`step_id`
                 JOIN `flow` `f`
@@ -419,38 +419,29 @@ class Usecase extends CActiveRecord
                 ON `f`.`usecase_id`=`u`.`usecase_id`
                 JOIN `package` `p`
                 ON `p`.`package_id`=`u`.`package_id`
+                JOIN `version` `vo`
+                ON `vo`.`foreign_key`=`o`.`id` 
+                JOIN `version` `vx`
+                ON `vx`.`foreign_key`=`x`.`id`
+                JOIN `version` `vs`
+                ON `vs`.`foreign_key`=`s`.`id`
                 JOIN `version` `vu`
-                ON `vu`.`foreign_key`=`i`.`id` 
-                JOIN `version` `v2`
-                ON `v2`.`foreign_key`=`x`.`id`
-                JOIN `version` `v3`
-                ON `v3`.`foreign_key`=`s`.`id`
-                JOIN `version` `v4`
-                ON `v4`.`foreign_key`=`u`.`id`
-                JOIN `version` `v5`
-                ON `v5`.`foreign_key`=`p`.`id`
+                ON `vu`.`foreign_key`=`u`.`id`
+                JOIN `version` `vp`
+                ON `vp`.`foreign_key`=`p`.`id`
                 WHERE 
-                `i`.`id`=".$id."
-                AND 
-                `s`.`project_id`=".$project."
-                AND 
-                `f`.`project_id`=".$project."
+                `o`.`".Version::$objects[$object]."_id`=".$id."
                 AND
-                `vu`.`object`=".$object."  AND `vu`.`active`=1  AND `vu`.`project_id`=".$project."
-                AND `vu`.`release`=".$release." AND
-                `v2`.`object`=".$relationship." AND `v2`.`active`=1  AND `v2`.`project_id`=".$project."
-                AND `v2`.`release`=".$release."
+                `vo`.`object`=".$object."  AND `vo`.`active`=1  AND `vo`.`release`=".$release." 
                 AND
-                `v3`.`object`=9 AND  `v3`.`active`=1  AND `v3`.`project_id`=".$project."
-                    AND `v3`.`release`=".$release."
+                `vx`.`object`=".$relationship." AND `vx`.`active`=1  AND `vx`.`release`=".$release."
                 AND
-                
-                `v4`.`object`=10  AND `v4`.`active`=1  AND `v4`.`project_id`=".$project."
-                AND `v4`.`release`=".$release."
+                `vs`.`object`=9 AND  `vs`.`active`=1  AND `vs`.`release`=".$release."
                 AND
-                `v5`.`object`=5 AND `v5`.`active`=1  AND `v5`.`project_id`=".$project."
-                AND `v5`.`release`=".$release."              
-                ";
+                `vu`.`object`=10  AND `vu`.`active`=1  AND `vu`.`release`=".$release."
+                AND
+                `vp`.`object`=5 AND `vp`.`active`=1  AND `vp`.`release`=".$release."              
+                GROUP BY `usecase_id`";
          
         $connection=Yii::app()->db;
         $command = $connection->createCommand($sql);

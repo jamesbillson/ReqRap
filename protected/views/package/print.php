@@ -1,9 +1,4 @@
-<?php  
-$numberucs=Version::model()->objectCount(10);
-//echo 'number ucs: '.$numberucs;
-if ($numberucs>0){ // check if there are any usecases
-$packages = Package::model()->getPackages($project);
-  if (count($packages)): ?>
+
         
 
 <h2><?php echo $heading; ?>. Use Case Analysis</h2>
@@ -11,20 +6,22 @@ $packages = Package::model()->getPackages($project);
 
 <?php 
 foreach($packages as $package){
-$packusecases = Usecase::model()->getPackageUsecases($package['id']);
+$packusecases = Usecase::model()->getPackageUsecases($package['package_id']);
 
  //if (count($packusecases)>0){ ?>
 
               
-<h3>Package PA-<?php echo $package['number'];?> <?php echo $package['name'];?></h3>
-<h4>Usecase Diagram</h4>
-<?php $this->renderPartial('/package/printdiagram',array('package'=>$package)); 
- ?>
- <h4>&nbsp;</h4>
-<h4>Usecase Descriptions</h4>           
- <?php foreach($packusecases as $uc){ ?>
+<h3>Package PA-<?php echo $package['number'];?> <?php echo $package['name'];?> Usecase Diagram</h3>
 
-<h5>UC-<?php echo str_pad($uc['packnumber'], 2, "0", STR_PAD_LEFT).''.str_pad($uc['number'], 3, "0", STR_PAD_LEFT); ?> <?php echo $uc['name'];?></h5>
+<?php $this->renderPartial('/package/printdiagram',array('package'=>$package));  ?>
+
+<h4>&nbsp;</h4>
+<h3>Package PA-<?php echo $package['number'];?> <?php echo $package['name'];?> Usecase Descriptions</h3>           
+
+
+<?php foreach($packusecases as $uc){ ?>
+
+<h4>UC-<?php echo str_pad($uc['packnumber'], 2, "0", STR_PAD_LEFT).''.str_pad($uc['number'], 3, "0", STR_PAD_LEFT); ?> <?php echo $uc['name'];?></h4>
 
 
   <table class="table">
@@ -72,7 +69,7 @@ $rules = Usecase::model()->getLinkedObjects($uc['usecase_id'],1,16);
               <td><b>Business Rules</b></td>
               <td>
         <?php foreach($rules as $rule) : // Go through each un answered question??>
-        BR-<?php echo str_pad($rule['number'], 4, "0", STR_PAD_LEFT); ?> 
+                  BR-<?php echo str_pad($rule['number'], 4, "0", STR_PAD_LEFT); ?>
         <?php echo $rule['title'];?>
          <br />
         <?php endforeach ?>       
@@ -131,7 +128,4 @@ if (count($forms)):?>
              // }
 // END LOOP THROUGH PACKAGES?>
             
-            
- <?php endif;  // END IF THERE ARE PACKAGES?>   
-
-<?php } // END IF THERE ARE any usecases?> 
+ 

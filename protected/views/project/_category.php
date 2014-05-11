@@ -79,8 +79,8 @@ if (count($deleted)):?>
         <tbody>
         <?php foreach($deleted as $item) {?>
            <tr class="odd">  
-                <td> <a href="/rule/view/id/<?php echo $item['category_id'];?>"> 
-                OI-<?php echo str_pad($item['number'], 3, "0", STR_PAD_LEFT); ?></a> 
+                <td> <a href="/category/view/id/<?php echo $item['id'];?>"> 
+                Section-<?php echo str_pad($item['number'], 3, "0", STR_PAD_LEFT); ?></a> 
                 </td>
    
                 <td> 

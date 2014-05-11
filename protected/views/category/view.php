@@ -4,6 +4,7 @@ $permission=(Yii::App()->session['permission']==1)?true : false;
 ?>
    
 <br>
+<a href="/project/view/tab/category">Back to all sections</a>
 <?php 
 
 $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
@@ -22,7 +23,8 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
     )),
 ));
 
-$data=  Simple::model()->getCategorySimple($model->category_id); ?>
+$data=  Simple::model()->getCategorySimple($model->category_id);
+$counter=0; ?>
         <table class="table">
             <thead>
                 <tr>
@@ -44,8 +46,8 @@ $data=  Simple::model()->getCategorySimple($model->category_id); ?>
                         <?php echo $item['number'];?>
                     </td>
                     <td>   
-                        <?php echo $item['name'];?>
-                    </td>
+                     <?php echo CHtml::encode($item['name']); ?>
+	 </td>
                     <td>   
                         <?php echo $item['description'];?>
                     </td>                  
@@ -57,10 +59,29 @@ $data=  Simple::model()->getCategorySimple($model->category_id); ?>
                         <a href="/simple/update/id/<?php echo $item['id'];?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
                         <a href="/simple/delete?id=<?php echo $item['id'];?>"><i class="icon-remove-sign text-error" rel="tooltip" title="Delete"></i></a> 
                      <a href="/simple/history/id/<?php echo $item['simple_id'];?>"><i class="icon-calendar" rel="tooltip" title="History"></i></a> 
-                        <?php } ?>
+                        
+
+ <?php if($counter!=0) { ?>
+                            <a href="/version/move/object/18/dir/2/id/<?php echo $item['id'];?>"><i class="icon-arrow-up" rel="tooltip" title="Move Up"></i></a> 
+                           
+ <?php } ELSEIF(count($data)>1) {?>   
+                           
+                            <i class="icon-flag" rel="tooltip" title="Start"></i>
+                            <?php } ?>          
+                            <?php if($counter!=count($data)-1) { ?>        
+                            <a href="/version/move/object/18/dir/1/id/<?php echo $item['id'];?>"><i class="icon-arrow-down" rel="tooltip" title="Move Down"></i></a> 
+                            <?php } ELSEIF(count($data)>1) {?>
+                             <i class="icon-flag" rel="tooltip" title="End"></i>   
+                            <?php } ?> 
+
+
+
+ <?php } ?>
                     </td>
                 </tr>
-            <?php endforeach ?>
+            <?php 
+            $counter++;
+            endforeach ?>
 
 
   <?php } ?>

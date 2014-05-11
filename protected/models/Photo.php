@@ -20,10 +20,11 @@ class Photo extends CActiveRecord
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('project_id, release_id, user_id', 'numerical', 'integerOnly'=>true),
+            array('project_id, photo_id, release_id, user_id', 'numerical', 'integerOnly'=>true),
             array('file', 'length', 'max'=>255),
+            array('description', 'safe'),
             array('file', 'file', 'types'=>'jpg,jpeg,gif,icon,png','maxSize'=>10*1024*1024,'allowEmpty'=>true),
-            array('project_id, release_id', 'numerical', 'integerOnly'=>true),
+            array('project_id, release_id, photo_id', 'numerical', 'integerOnly'=>true),
 // The following rule is used by search().
             // Please remove those attributes that should not be searched.
             array('id, photo_id, project_id, release_id, file, user_id, create_date', 'safe', 'on'=>'search'),
@@ -49,8 +50,9 @@ class Photo extends CActiveRecord
     {
         return array(
             'id' => 'ID',
-            
+            'photo_id' => 'Photo',
             'project_id' => 'Project',
+            'description' => 'Description',
             'release_id' => 'Release',
             'file' => 'File',
             'user_id' => 'User',
@@ -79,6 +81,32 @@ class Photo extends CActiveRecord
         ));
     }
     
+         public function getProjectImages()
+    {
+       $release=Yii::App()->session['release'];
+        $sql="
+            SELECT `r`.*,`v`.`active`
+            FROM `photo` `r`
+            LEFT JOIN `version` `v`
+            ON `v`.`foreign_key`=`r`.`id`
+            WHERE 
+            `v`.`object`=11
+            AND
+            `v`.`active`=1
+        and            
+            `r`.`release_id`=".$release;         
+     
+
+     
+        
+        $connection=Yii::app()->db;
+	$command = $connection->createCommand($sql);
+	$projects = $command->queryAll();
+		
+	return $projects;
+    }  
+        
+    
       public function orphanPics()
     {
        $release=Yii::App()->session['release'];
@@ -86,21 +114,16 @@ class Photo extends CActiveRecord
         $sql="SELECT
             `p`.*
             FROM `photo` `p`
-            WHERE `p`.`id` 
+            where `p`.`release_id`=".$release."
+                
+            and `p`.`photo_id` 
             NOT IN (
             SELECT `i`.`photo_id`
             FROM `iface` `i`
-           
             JOIN `version` `v`
             ON `v`.`foreign_key`=`i`.`id`
             WHERE
-            `v`.`active`=1
-            AND 
-            `v`.`object`=11
-            AND 
-            `v`.`release`=".$release." 
-                AND
-                `i`.`release_id`=".$release."
+            `v`.`active`=1 AND `v`.`object`=12 AND `v`.`release`=".$release." 
             )";
 		$connection=Yii::app()->db;
 		$command = $connection->createCommand($sql);

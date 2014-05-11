@@ -116,9 +116,9 @@ class CompanyController extends Controller
             
                             Documenttype::model()->preload();
                             
-                //$user=User::model()->findbyPK($model->owner_id);
-                //$user->company_id=$cid;//get new id
-               //$user->save();
+                $user=User::model()->findbyPK($model->owner_id);
+                $user->admin=1;
+               $user->save();
                             
                             
 			$this->redirect(array('site/index'));

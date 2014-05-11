@@ -10,7 +10,7 @@
 
 	<b><?php echo CHtml::encode($model->getAttributeLabel('name')); ?>:</b>
         <br />
-	<?php echo CHtml::encode($model->name); ?>
+        <a href="/category/view/id/".<?php echo CHtml::encode($model->category_id); ?>><?php echo CHtml::encode($model->name); ?></a>
 	<br />
 
 	<b><?php echo CHtml::encode($model->getAttributeLabel('description')); ?>:</b>
@@ -30,7 +30,7 @@
                 <tr>
                     <td>
                 <?php if ($item['active'] != 1 && $item['action']!=3){    ?> 
-                <a href="/formproperty/rollback/id/<?php echo $item['id'];?>"><i class="icon-repeat" rel="tooltip" data-placement="right" title="Roll Back to this Version"></i></a> 
+                <a href="/version/rollback/id/<?php echo $item['versionid'];?>"><i class="icon-repeat" rel="tooltip" data-placement="right" title="Roll Back to this Version"></i></a> 
                 <?php  } ELSE { ?> 
                 <i class="icon-circle-arrow-right" rel="tooltip" data-placement="right" title="Current Version"></i> 
                 <?php   } ?>  

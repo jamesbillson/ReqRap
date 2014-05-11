@@ -32,7 +32,7 @@ class CategoryController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update','delete','history','up','down'),
+				'actions'=>array('create','update','delete','history','up','down','rollback'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -174,9 +174,7 @@ class CategoryController extends Controller
 		));
 	}
         
-        
-        
-	
+
 
       
 public function actionDelete($id)

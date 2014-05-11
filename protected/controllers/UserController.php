@@ -148,20 +148,24 @@ class UserController extends Controller
     }
 
     
-     public function actionJoinfollower()
+     public function actionJoinfollower($id)
     {
-         // version of join that is used for followers
+         $contact = Contact::model()->findbyPk($id);
+      
+         
+// version of join that is used for followers
         $this->layout='column1';
         
-        $model = new RegisterForm;
+        $model = new FollowerForm;
         
-        if(isset($_POST['RegisterForm'])){
-            $model->attributes = $_POST['RegisterForm'];
-
+        if(isset($_POST['FollowerForm'])){
+            $model->attributes = $_POST['FollowerForm'];
+           
             if($model->validate()){
                 $user = new User;
-                $user->attributes = $_POST['RegisterForm'];
+                $user->attributes = $_POST['FollowerForm'];
                 $user->active = 0;
+                $user->email=$contact->email;
                 $user->username = $user->email;
 
                 if($user->save()){

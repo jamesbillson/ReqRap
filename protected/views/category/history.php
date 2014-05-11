@@ -11,7 +11,7 @@ echo $this->renderPartial('/project/head',array('tab'=>'details'));
                 <tr>
                     <td>
                 <?php if ($item['active'] != 1 && $item['action']!=3){    ?> 
-                <a href="/form/rollback/id/<?php echo $item['id'];?>"><i class="icon-repeat" rel="tooltip" data-placement="right" title="Roll Back to this Version"></i></a> 
+                <a href="/version/rollback/id/<?php echo $item['versionid'];?>"><i class="icon-repeat" rel="tooltip" data-placement="right" title="Roll Back to this Version"></i></a> 
                 <?php  } ELSE { ?> 
                 <i class="icon-circle-arrow-right" rel="tooltip" data-placement="right" title="Current Version"></i> 
                 <?php   } ?>  
@@ -35,7 +35,8 @@ echo $this->renderPartial('/project/head',array('tab'=>'details'));
         <div id="collapse<?php echo $item['ver_numb']; ?>" class="accordion-body collapse">
             <div class="accordion-inner">
                 <strong><?php echo $item['name']; ?></strong><br />
-                   
+                   <?php echo $item['description']; ?><br />
+                (Ordered before document section <?php echo floor($item['order'])+1; ?>)
             </div>
         </div>
     </div>

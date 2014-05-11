@@ -53,7 +53,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                     </td>
                     
                     <td>
-                        <a href="/project/delete?id=<?php echo $item['id'];?>"><i class="icon-remove-sign" rel="tooltip" title="Delete Application"></i></a> 
+                        <a href="/project/delete?id=<?php echo $item['id'];?>"><i class="icon-remove-sign text-error" rel="tooltip" title="Delete Application"></i></a> 
                   <a href="/project/update?id=<?php echo $item['id'];?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
                 
                     </td>
@@ -67,7 +67,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                 if (count($invites)):?>
                     <tr class="even">  
                     <td colspan="2">
-                     Invited Bids 
+                     Collaboration Projects 
                     </td>
                     </tr>
                       
@@ -75,11 +75,11 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                 <tr class="odd"> 
              
                     <td>
-                       <a href="/project/view/id/<?php echo $item['id'];?>/tab/documents"><?php echo $item['name'];?></a> 
+                       <a href="/project/view/id/<?php echo $item['id'];?>/tab/documents"><?php echo $item['pname'];?></a> 
                        
                     </td>
                     <td>
-                        <a href="/project/delete?id=<?php echo $item['id'];?>"><i class="icon-remove-sign" rel="tooltip" title="Remove/Uninvite"></i></a>
+                        <a href="/project/delete?id=<?php echo $item['id'];?>"><i class="icon-remove-sign text-error" rel="tooltip" title="Remove/Uninvite"></i></a>
                     </td>
                 </tr>
                <?php endforeach?>

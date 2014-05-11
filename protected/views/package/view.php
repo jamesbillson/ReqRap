@@ -1,9 +1,17 @@
+<?php 
+echo $this->renderPartial('/project/head',array('tab'=>'details'));
+
+$permission=(Yii::App()->session['permission']==1)?true : false; 
+?>
 
 
 <?php 
 $usecases = Usecase::model()->getPackageUsecases($model->package_id); // get the requirements with answers
 
+$this->renderPartial('/package/printdiagram',array('package'=>$model)); ?>
 
+<br /><br />
+<?php
 
 $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
 	'title' => 'Use Cases',
@@ -15,7 +23,6 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                     'type' => 'primary', // '', 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
                     'label'=> 'Add Use Case',
                     'url'=>'/usecase/create/id/'.$model->id,
-                    
                       ),
      
 )));  
@@ -31,18 +38,6 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
 
           <tr class="odd">
 
-              <td>
-                  
-                  <?php if($counter!=0) { ?>
-                           <a href="/usecase/move/dir/2/id/<?php echo $item['id'];?>"><i class="icon-arrow-up" rel="tooltip" title="Move Up"></i></a> 
-                  <?php } ELSE {?>   
-                           
-                           <i class="icon-flag" rel="tooltip" title="Start"></i>
-                     <?php } ?>          
-                   <?php if($counter!=count($usecases)-1) { ?>        
-                           <a href="/usecase/move/dir/1/id/<?php echo $item['id'];?>"><i class="icon-arrow-down" rel="tooltip" title="Move Down"></i></a> 
-         <?php } ?> 
-              </td>
               <td> 
                    <a href="/usecase/view/id/<?php echo $item['usecase_id'];?>"> UC-<?php echo str_pad($model->number, 2, "0", STR_PAD_LEFT).''.str_pad($item['number'], 3, "0", STR_PAD_LEFT); ?></a>
                </td> 
@@ -51,11 +46,24 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                 
               </td> 
               <td>
+                  <?php if($permission){ ?>
                <a href="/usecase/delete/id/<?php echo $item['id'];?>"><i class="icon-remove-sign text-error" rel="tooltip" title="Edit"></i> 
-              
-                  <a href="/usecase/update/id/<?php echo $item['id'];?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
+               <a href="/usecase/update/id/<?php echo $item['id'];?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
                <a href="/usecase/history/id/<?php echo $item['usecase_id'];?>"><i class="icon-calendar" rel="tooltip" title="History"></i></a> 
-             
+              
+                            <?php if($counter!=0) { ?>
+                            <a href="/version/move/object/10/dir/2/id/<?php echo $item['id'];?>"><i class="icon-arrow-up" rel="tooltip" title="Move Up"></i></a> 
+                           
+                            <?php } ELSEIF(count($usecases)>1) {?>   
+                           
+                            <i class="icon-flag" rel="tooltip" title="Start"></i>
+                            <?php } ?>          
+                            <?php if($counter!=count($usecases)-1) { ?>        
+                            <a href="/version/move/object/10/dir/1/id/<?php echo $item['id'];?>"><i class="icon-arrow-down" rel="tooltip" title="Move Down"></i></a> 
+                            <?php } ELSEIF(count($usecases)>1) {?>
+                             <i class="icon-flag" rel="tooltip" title="End"></i>   
+                            <?php } ?> 
+                              <?php } ?> 
                </td>
          
         <?php 

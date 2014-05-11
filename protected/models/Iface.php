@@ -226,6 +226,7 @@ WHERE
          
            
           $release=Yii::App()->session['release'];
+          /*
         $sql="
             SELECT 
             `r`.`id` itemid,
@@ -237,22 +238,59 @@ WHERE
             `iface` `r`
             JOIN `interfacetype` `t`
             ON `t`.`interfacetype_id`=`r`.`type_id`            
-            LEFT JOIN `photo` `p`
-            ON `r`.`photo_id`=`p`.`id`
+            LEFT OUTER JOIN `photo` `p`
+            ON `r`.`photo_id`=`p`.`photo_id`
             JOIN `version` `v`
             ON `v`.`foreign_key`=`r`.`id`
+            LEFT OUTER JOIN `version` `vp`
+            ON `vp`.`foreign_key`=`p`.`id`
             JOIN `version` `vt`
             ON `vt`.`foreign_key`=`t`.`id`
             WHERE 
             `v`.`object`=12 AND `v`.`active`=1 AND `v`.`release`=".$release."
-            AND `vt`.`object`=13 AND `vt`.`active`=1 AND `vt`.`release`=".$release." 
+            AND 
+            `vt`.`object`=13 AND `vt`.`active`=1 AND `vt`.`release`=".$release." 
+            AND  
+             `vp`.`object`=11 AND `vp`.`active`=1 AND `vp`.`release`=".$release." 
             AND           
+           
             `r`.`release_id`=".$release."
             AND
             `t`.`interfacetype_id`=".$type_id."
                 GROUP BY `r`.`iface_id`";
 
-     
+     */
+         $sql="
+            SELECT 
+            `r`.`id` itemid,
+            `r`.*,
+          
+            `t`.`name` as type,
+            `t`.`interfacetype_id` as typenumber
+            FROM
+            `iface` `r`
+            JOIN `interfacetype` `t`
+            ON `t`.`interfacetype_id`=`r`.`type_id`            
+        
+            JOIN `version` `v`
+            ON `v`.`foreign_key`=`r`.`id`
+           
+            JOIN `version` `vt`
+            ON `vt`.`foreign_key`=`t`.`id`
+            WHERE 
+            `v`.`object`=12 AND `v`.`active`=1 AND `v`.`release`=".$release."
+            AND 
+            `vt`.`object`=13 AND `vt`.`active`=1 AND `vt`.`release`=".$release." 
+            AND  
+                 
+           
+            `r`.`release_id`=".$release."
+            AND
+            `t`.`interfacetype_id`=".$type_id."
+                GROUP BY `r`.`iface_id`";
+
+        
+        
         
         $connection=Yii::app()->db;
 		$command = $connection->createCommand($sql);
@@ -260,6 +298,40 @@ WHERE
 		
 		return $projects;
     }  
+    
+         public function getCurrentImage($iface_id)
+    {
+         
+           
+          $release=Yii::App()->session['release'];
+          
+        $sql="
+            SELECT 
+            
+            `p`.*
+            
+            FROM
+            `photo` `p`
+                      
+            JOIN `iface` `r`
+            ON `r`.`photo_id`=`p`.`photo_id`
+            
+            LEFT OUTER JOIN `version` `vp`
+            ON `vp`.`foreign_key`=`p`.`id`
+            WHERE 
+            `r`.`iface_id`=".$iface_id." AND
+            `vp`.`object`=11 AND `vp`.`active`=1 AND `vp`.`release`=".$release;
+
+   
+        
+        $connection=Yii::app()->db;
+		$command = $connection->createCommand($sql);
+		$projects = $command->queryAll();
+		
+		return $projects;
+    }  
+    
+    
     
       public function getNextIfaceNumber()
     {

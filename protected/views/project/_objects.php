@@ -4,6 +4,7 @@
 $permission=(Yii::App()->session['permission']==1)?true : false; 
 
 $data = Object::model()->getProjectObjects(Yii::app()->session['project']);
+$counter=0;
 
 $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
     'title' => 'Objects',
@@ -51,10 +52,25 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                         <a href="/object/update/id/<?php echo $item['id'];?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
                         <a href="/object/delete?id=<?php echo $item['id'];?>"><i class="icon-remove-sign text-error" rel="tooltip" title="Delete"></i></a> 
                         <a href="/object/history/id/<?php echo $item['object_id'];?>"><i class="icon-calendar" rel="tooltip" title="Version history"></i></a> 
+                        
+
+                            <?php if($counter!=0) { ?>
+                            <a href="/version/move/object/6/dir/2/id/<?php echo $item['id'];?>"><i class="icon-arrow-up" rel="tooltip" title="Move Up"></i></a> 
+                           
+                            <?php } ELSEIF(count($data)>1) {?>   
+                           
+                            <i class="icon-flag" rel="tooltip" title="Start"></i>
+                            <?php } ?>          
+                            <?php if($counter!=count($data)-1) { ?>        
+                            <a href="/version/move/object/6/dir/1/id/<?php echo $item['id'];?>"><i class="icon-arrow-down" rel="tooltip" title="Move Down"></i></a> 
+                            <?php } ELSEIF(count($data)>1) {?>
+                             <i class="icon-flag" rel="tooltip" title="End"></i>   
+                            <?php } ?> 
+
                          <?php } ?>
                     </td>
                 </tr>
-            <?php endforeach ?>
+            <?php $counter++; endforeach ?>
             </tbody>
         </table>
 

@@ -47,7 +47,9 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
         <?php if ($item['text']=='stub')echo '<i class="icon-cogs text-warning" rel="tooltip" title="Incomplete Rule"></i>';?>
 
                <?php
-                         if(!count(Steprule::model()->findAll('rule_id='.$item['rule_id']))){
+                      
+                        $uses=Usecase::model()->getLinkUsecase($item['rule_id'],1,16);
+                         if(count($uses)==0){
                         ?>
                         <i class="icon-exclamation-sign text-warning" rel="tooltip" title="Orphan - this Rule is not used."></i>
                          <?php } ?>

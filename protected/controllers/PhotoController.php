@@ -32,7 +32,7 @@ class PhotoController extends Controller
                 'users'=>array('*'),
             ),
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
-                'actions'=>array('create','update','ajaxSave','ajaxDelete','admin','upload'),
+                'actions'=>array('create','list','update','ajaxSave','ajaxDelete','admin','upload'),
                 'users'=>array('@'),
             ),
             array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -52,13 +52,19 @@ class PhotoController extends Controller
 
    public function actionView($id)
 	{
-		$versions=Version::model()->getVersions($photo_id,11,'id');
+		$versions=Version::model()->getVersions($id,11);
                 $model=$this->loadModel($versions[0]['id']);
                 $this->render('view',array('model'=>$model,
-			'versions'=>$versions
-        	));
+                              'versions'=>$versions
+                              ));
 	}
 
+         public function actionList()
+	{
+		
+                $this->render('list');
+	}
+        
     /**
      * Creates a new model.
      * If creation is successful, the browser will be redirected to the 'view' page.
@@ -206,7 +212,13 @@ class PhotoController extends Controller
             throw new CHttpException(404,'The requested page does not exist.');
         return $model;
     }
-
+  public function loadVersion($id)
+	{
+		$model=Photo::model()->findByPk(Version::model()->getVersion($id,11));
+		if($model===null)
+			throw new CHttpException(404,'The requested version does not exist.');
+		return $model;
+	}
     /**
      * Performs the AJAX validation.
      * @param Photo $model the model to be validated
@@ -279,17 +291,22 @@ class PhotoController extends Controller
                     $src = Yii::app()->easyImage->thumbSrcOf(
                                 $path.$file_name, 
                                 array('resize' => array('width' => 150, 'height' => 150)));
-                    
+                    $project = Yii::App()->session['project'];
+                    $release=Yii::App()->session['release'];
                     //persist into database
                     $model = new Photo;
-                    $model->project_id = Yii::App()->session['project'];
-                    $model->release_id=Yii::App()->session['release'];
+                    $model->photo_id=Version::model()->getNextID(11);
+                    $model->project_id = $project;
+                    $model->description = 'Uploaded file with filename '.$upload->name;
+                    $model->release_id=$release;
                     $model->user_id=Yii::App()->user->id;
                     
                     $model->file = $file_name;                    
                     
                     if($model->save()){
                         // return data to the fileuploader
+                        Version::model()->getNextNumber($project,11,1,$model->primaryKey,$model->photo_id);   
+                   
                         $data[] = array(
                             'name' => $upload->name,
                             'type' => $upload->type,
@@ -299,6 +316,9 @@ class PhotoController extends Controller
                             'delete_url' => Controller::createUrl('photo/ajaxDelete',array('photo_id' => $model->id, 'method' => 'uploader')),
                             'delete_type' => 'POST'
                         );
+                  
+                    
+                 //     $this->redirect('/project/photo/id/'.$project);
                     }
                 } else {
                     $data[] = array('error' => 'Unable to save model after saving picture');

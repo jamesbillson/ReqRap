@@ -4,30 +4,12 @@ echo $this->renderPartial('/project/head',array('tab'=>'usecases')); ?>
 
 <h2>Add interface images</h2>
   
-
+<a href="/photo/list/">View all images</a>
 
 <?php if(isset($model->id)): ?>
-    <p><strong>More Interfaces:</strong></p>
-
-    <div class="row-fluid">
-        <div class="well span12">
-            <?php if(isset($model->photo)): ?>
-                <?php foreach($model->photo as $item): ?>
-                    <div class="span3 thumPro" data-photo-id="<?php echo $item->id ?>">
-                        <?php $src = Yii::app()->easyImage->thumbSrcOf(
-                                    Yii::app()->params['photo_folder'].$item->file, 
-                                    array('resize' => array('width' => 154))); ?>
-
-                        <a href="/photo/view/id/<?php echo $item->id; ?>"> <img src="<?php echo $src ?>"/></a>
-                      
-                    </div>
-                <?php endforeach ?>
-            <?php endif ?>
-        </div>
-    </div>
-    <div class="row-fluid">
-        <label><strong>Upload More Interfaces:</strong></label>
-        <div class="span11">
+   
+     <div class="row-fluid">
+         <div class="span11">
             <?php $photo = new Photo;
 
             $this->widget('bootstrap.widgets.TbFileUpload', array(
@@ -43,7 +25,8 @@ echo $this->renderPartial('/project/head',array('tab'=>'usecases')); ?>
 
         </div>
     </div>
-<?php endif ?>
+    
+<?php endif; ?>
 
 <script type="text/javascript">
     $(document).ready(function(){

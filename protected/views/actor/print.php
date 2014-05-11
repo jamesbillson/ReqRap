@@ -1,9 +1,8 @@
-<?php 
 
-$actors = Actor::model()->getProjectActors(Yii::app()->session['project']);
-    if (count($actors)):?>
+
+
 <h2><?php echo $heading; ?>. Actors</h2>
-<?php $heading++; ?>
+
         <table class="table">
             <thead>
                 <tr>
@@ -36,6 +35,6 @@ $actors = Actor::model()->getProjectActors(Yii::app()->session['project']);
             </tbody>
         </table>
 
-    <?php endif;?>
+  
 
 

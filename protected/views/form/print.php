@@ -1,9 +1,6 @@
-<?php 
-$forms = Form::model()->getProjectForms(Yii::app()->session['project']);
 
-if (count($forms)):?>
 <h2><?php echo $heading; ?>. Forms</h2>
-<?php $heading++; ?>
+
 
 <?php foreach($forms as $form): ?>
 
@@ -67,4 +64,4 @@ if (count($forms)):?>
             </tbody>
         </table>
  <?php endforeach ?>
-    <?php endif; ?>
+  

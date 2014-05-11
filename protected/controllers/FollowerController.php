@@ -129,7 +129,7 @@ class FollowerController extends Controller
         if(!isset($_GET['ajax']))
         {
                 
-                $this->redirect(array('/'.$controller.'/view/tab/follower/id/'.$action));
+                $this->redirect(array('/project/view/tab/followers/'));
                 }
                 
         }
@@ -274,7 +274,7 @@ class FollowerController extends Controller
         //give them a join form.
         if (!isset($matchuser->id)) {
             Yii::app()->user->logout();
-            $this->redirect(array('user/joinfollower'));
+            $this->redirect(array('user/joinfollower/id/'.$contact->id));
         }
         //on successful save of the user,                  
         //confirm them  (Do this on home page - show follower invites, send email on join).              

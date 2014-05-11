@@ -130,7 +130,12 @@ class ActorController extends Controller
 	}
         
         
-	
+	    public function actionRollBack($object_id, $versionid)
+	{
+	$release=Yii::App()->session['release'];
+        Version::model()->rollback($object_id,4,$versionid);
+        $this->redirect(array('/rules/view/id/'.$object_id));
+        }
 
       
 public function actionDelete($id)

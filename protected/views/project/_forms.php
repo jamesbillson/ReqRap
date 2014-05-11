@@ -54,7 +54,9 @@ if (count($data)):?>
                         ?>
                         <i class="icon-list-alt text-warning" rel="tooltip" title="Incomplete Form"></i>
                         <?php } 
-                          if(!count(Stepform::model()->findAll('form_id='.$item['id']))){
+                       
+                         $uses=Usecase::model()->getLinkUsecase($item['form_id'],2,14);
+                         if(count($uses)==0){
                         ?>
                         <i class="icon-exclamation-sign text-warning" rel="tooltip" title="Orphan - this Form is not used."></i>
                          <?php } ?>

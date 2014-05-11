@@ -32,7 +32,7 @@ class VersionController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update'),
+				'actions'=>array('create','update','rollback', 'move'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -117,6 +117,81 @@ class VersionController extends Controller
 			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
 	}
 
+                public function actionRollBack($id)
+	{
+	 $model=Version::model()->findbyPK($id);
+         Version::model()->rollback($model->foreign_id, $model->object, $id);
+         $url=Version::$display[$model->object]['url'];
+         $object_id=$model->foreign_id;
+         if (Version::$display[$model->object]['parent'] !='none') $object_id=Version::model()->getParent($model->object, $id);
+         $url=str_replace('#', $object_id, $url);
+        $this->redirect(array($url));
+        }
+	        public function actionRenumber($object,$id)
+	{
+	 
+                    
+                    
+                    
+                    $model=Version::model()->findbyPK($id);
+         Version::model()->rollback($model->foreign_id, $model->object, $id);
+         $url=Version::$display[$model->object]['url'];
+         $object_id=$model->foreign_id;
+         if (Version::$display[$model->object]['parent'] !='none') $object_id=Version::model()->getParent($model->object, $id);
+         $url=str_replace('#', $object_id, $url);
+        $this->redirect(array($url));
+        }
+        
+              public function actionMove($dir, $id, $object) //down 1, up 2
+	{
+            $object_model= Version::$objects[$object];
+            $model = $object_model::model()->findbyPK($id);
+            $parent=Version::$display[$object]['parent'].'_id';
+            $oldnum=$model->number;
+            $objects=Version::model()->getChildObjects($model->$parent,$object);
+            //$objects=Simple::model()->getCategorySimple($model->category_id);
+            
+            //echo "<pre>";
+            //print_r($objects);
+            //echo "</pre>";
+            $nextid=0;
+            
+            if($dir==1){ // DOWN
+                    for ($i = 0; $i <= count($objects)-1; $i++) {
+                    if ($objects[$i]['number']==$oldnum) $nextid=$objects[$i+1]['id'];
+                    }
+                } 
+ 
+            if($dir==2){ // UP
+                    for ($i = count($objects)-1; $i > 0; $i--) {
+                    if ($objects[$i]['number']==$oldnum) $nextid=$objects[$i-1]['id'];
+                    }
+                } 
+                
+          //$model2 = $this->loadmodel($nextid);
+          $model2 = $object_model::model()->findbyPK($nextid);
+          $model->number = $model2->number;
+          $model2->number=$oldnum;
+            
+          $model->save(false);
+          $model2->save(false);
+          
+         // get the url to load after operation is done
+         $url=Version::$display[$object]['url'];
+         
+         // get the parent_id based on the display parent 
+         $object_id=$model->$parent;
+         
+         // check if we are displaying an object with a parent and set.
+         if (Version::$display[$object]['parent'] !='project') 
+             $url=str_replace('#', $object_id, $url);
+         // redirect to the url
+         $this->redirect(array($url));
+         
+         // $this->redirect(array('/category/view/id/'.$model->category_id));
+	
+	}
+        
 	/**
 	 * Lists all models.
 	 */

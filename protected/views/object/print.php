@@ -1,8 +1,7 @@
-    <?php 
-  $objects = Object::model()->getProjectObjects(Yii::app()->session['project']); 
-    if (count($objects)):?>
+   
+
 <h2><?php echo $heading; ?>. Objects</h2>
-<?php $heading++; ?>
+
         <?php foreach($objects as $object):?>
         
         <h3>OB-<?php echo str_pad($object['number'], 3, "0", STR_PAD_LEFT); ?> <?php echo $object['name'];?></h3>
@@ -51,4 +50,4 @@ $objectproperties=  Objectproperty::model()->getObjectProperty($object['object_i
     <?php endif;
  endforeach ?>
         
-    <?php endif; ?>
+  

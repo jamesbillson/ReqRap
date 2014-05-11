@@ -1,9 +1,6 @@
-<?php 
-$rules = Rule::model()->getProjectRules($project);
-if (count($rules)):?>
 
 <h2><?php echo $heading; ?>. Business Rule Register</h2>
-<?php $heading++; ?>
+
 
 
 <table class="table">
@@ -42,5 +39,3 @@ if (count($rules)):?>
         
    	</tbody>
 </table>
-
-<?php     endif; ?>

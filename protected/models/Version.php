@@ -40,26 +40,30 @@ class Version extends CActiveRecord {
         17 => 'none', //category
         18 => 'category'//simple
     );
-    public static $number = array(
-        1 => 'rule', // whether a object needs its number offset on import
-        2 => 'form',
-        3 => 'none',
-        4 => 'none',
-        5 => 'package',
-        6 => 'object',
-        7 => 'none',
-        8 => 'none',
-        9 => 'none',
-        10 => 'none',
-        11 => 'none',
-        12 => 'iface',
-        13 => 'interfacetype',
-        14 => 'none',
-        15 => 'none',
-        16 => 'none',
-        17 => 'category',
-        18 => 'none',
+    
+       public static $display = array(
+        1 => array('parent'=>'project','url'=>'/project/view/tab/rules'), //rule
+        2 => array('parent'=>'project','url'=>'/project/view/tab/forms'), //form
+        3 => array('parent'=>'form','url'=>'/form/view/id/#'), //formproperty
+        4 => array('parent'=>'project','url'=>'/project/view/tab/actors'), //actor
+        5 => array('parent'=>'project','url'=>'/project/view/tab/usecases'), //package
+        6 => array('parent'=>'project','url'=>'/project/view/tab/objects/'), //object
+        7 => array('parent'=>'object','url'=>'/object/view/id/#'), //objectproperty
+        8 => array('parent'=>'usecase','url'=>'/usecase/view/id/#'), //flow
+        9 => array('parent'=>'flow','url'=>'/flow/view/id/#'), //step
+        10 => array('parent'=>'package','url'=>'/package/view/id/#'), //usecase
+        11 => array('parent'=>'project','url'=>'none'), //photo
+        12 => array('parent'=>'project','url'=>'/project/view/tab/ifaces'), //iface
+        13 => array('parent'=>'interfacetype','url'=>'/interfacetype/view/id/#'), //interfacetype
+        14 => array('parent'=>'project','url'=>'none'), //stepform
+        15 => array('parent'=>'project','url'=>'none'), //stepiface
+        16 => array('parent'=>'project','url'=>'none'), //steprule
+        17 => array('parent'=>'project','url'=>'/project/view/tab/category'), //category
+        18 => array('parent'=>'category','url'=>'/category/view/id/#'),//simple
     );
+    
+      
+    
     public static $actions = array(1 => 'create',
         2 => 'update',
         3 => 'delete');
@@ -370,10 +374,78 @@ class Version extends CActiveRecord {
         return $projects[0]['id'];
     }
 
-    public function getVersions($id, $object) {
-        $project = Yii::app()->session['project'];
+      public function getObject($id, $object) {
+       $sql = "SELECT `r`.id
+            FROM `" . Version::$objects[$object] . "` `r`
+            WHERE 
+            `r`.`id`=" . $id;
+
+        $connection = Yii::app()->db;
+        $command = $connection->createCommand($sql);
+        $projects = $command->queryAll();
+
+        return $projects[0];
+    }
+    public function renumber($object,$parentid) {
+        $parent=Version::$display[$object]['parent'].'_id';
+        $sql="SELECT * FROM `".Version::$objects[$object]."` `s`
+             WHERE  `s`.`".$parent."`=".$parentid."
+                 ORDER BY `s`.`number` ASC";
+	
+             	$connection=Yii::app()->db;
+		$command = $connection->createCommand($sql);
+		$projects = $command->queryAll();
+                if (count($projects)){
+                    $x=0;
+                     foreach($projects as $object){
+                         $x++;
+                $sql="UPDATE `".Version::$objects[$object]."` SET `number`=".$x."
+                    WHERE `id`=".$object['id'];
+	
+                $connection=Yii::app()->db;
+                $command = $connection->createCommand($sql);
+                $command->execute();      
+                         
+                }
+                }
+        
+        
+    }
+            
+      public function getChildObjects($id,$object)
+    {
+          $project=Yii::App()->session['project'];
+          $release=Yii::App()->session['release'];
+        $sql="
+            SELECT 
+            `r`.*
+            FROM `".Version::$objects[$object]."` `r`
+            JOIN `version` `v`
+            ON `v`.`foreign_key`=`r`.`id`
+            WHERE 
+            `v`.`object`=".$object."
+            AND
+            `v`.`active`=1
+            AND
+            `v`.`release`=".$release."
+            AND
+            `r`.`".Version::$display[$object]['parent']."_id`=".$id." order by `r`.`number`";
+
+     
+        
+        $connection=Yii::app()->db;
+		$command = $connection->createCommand($sql);
+		$projects = $command->queryAll();
+		
+		return $projects;
+    }  
+    
+    
+    public function getVersions($id, $object) {  // Object_id
+        $release = Yii::app()->session['release'];
         $sql = "SELECT 
                 `r`.*,
+                `v`.`id` as versionid,
                 `v`.`active`,
                 `v`.`number` as ver_numb,
                 `v`.`release`,
@@ -383,18 +455,15 @@ class Version extends CActiveRecord {
                 `u`.`firstname`,
                 `u`.`lastname`
                 FROM `" . Version::$objects[$object] . "` `r`
+                
                 JOIN `version` `v`
-                ON
-                `r`.`id`=`v`.`foreign_key`
+                ON `r`.`id`=`v`.`foreign_key`
                 JOIN `user` `u`
-                ON
-                `u`.`id`=`v`.`create_user`
+                ON `u`.`id`=`v`.`create_user`
+               
                 WHERE 
-                `v`.`object`=" . $object . "
-                AND
-                `v`.`project_id`=" . $project . "
-                AND 
-                `r`.`project_id`=" . $project . "    
+                `v`.`object`=" . $object . " AND `v`.`release`=" . $release . "
+               
                 AND
                 `r`.`" . Version::$objects[$object] . "_id`=" . $id . " 
                 ORDER BY `v`.`active` DESC,
@@ -406,16 +475,19 @@ class Version extends CActiveRecord {
         return $projects;
     }
 
-    public function rollback($key, $id, $object, $project) {
+    public function rollback($object_id, $object, $id) 
+                {
+        $release=Yii::App()->session['release'];
+        
         //SET ALL Existing TO INACTIVE
         $sql = "UPDATE `version`
                   Set `active`=0
                   WHERE
                   `object`=" . $object . "
                   AND
-                  `foreign_id`=" . $id . "
+                  `foreign_id`=" . $object_id . "
                   AND
-                  `project_id`=" . $project;
+                  `release`=" . $release;
         $connection = Yii::app()->db;
         $command = $connection->createCommand($sql);
         $command->execute();
@@ -424,38 +496,37 @@ class Version extends CActiveRecord {
 
         $sql = "UPDATE `version`
                   Set active=1,
-                  create_date=" . now() . ",
+                  create_date='" . date('Y-m-d h:m:s')  . "',
                   create_user=" . Yii::app()->user->id . "
                   WHERE
-                  `object`=" . $object . "
-                  AND
-                  `foreign_key`=" . $key . "
-                  AND
-                  `project_id`=" . $project;
+                  `id`=" . $id;
+        
+              
+        
         $connection = Yii::app()->db;
         $command = $connection->createCommand($sql);
         $command->execute();
     }
 
-    public function objectList($object, $release) {
-
-        $sql = "
-                  SELECT `x`.`id` from
+    
+  
+    
+    
+    public function getParent($object, $id) {
+       $sql = "
+                  SELECT `x`.`".Version::$display[$object]['parent']."_id` as `id`
+                  from
                   `" . Version::$objects[$object] . "` `x`
                   JOIN `version` `v`
                   ON `x`.`id`=`v`.`foreign_key`
                   WHERE
-                  `v`.`active`=1 
-                  AND 
-                  `v`.`object`=" . $object . "
-                  AND
-                  `v`.`release`=" . $release;
+                  `v`.`id`=".$id;
 
         $connection = Yii::app()->db;
         $command = $connection->createCommand($sql);
         $projects = $command->queryAll();
 
-        return $projects;
+        return $projects[0]['id'];
     }
 
     public function objectCount($object) {
