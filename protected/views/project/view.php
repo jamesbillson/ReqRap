@@ -41,33 +41,33 @@ $active['testcases']=FALSE;
             'label' => 'Details',
             'visible' => $owner,
             'content' => $this->renderPartial('_details',
-                    compact('model'),true,true),'active'=>$active['details']);
+                    compact('model'),true,false),'active'=>$active['details']);
    
     $tabs[] = array('id' => 'documents', 
         'label' => 'Documents',
         'visible' => $owner,
         'content' => $this->renderPartial('_documents',
-                compact('model'),true,true),'active'=>$active['documents']);
+                compact('model'),true,false),'active'=>$active['documents']);
  
     $tabs[] = array('id' => 'followers', 
         'label' => 'Collaborators', 
         'visible' => $owner,
         'content' => $this->renderPartial('_followers',
-                compact('model'),true,true),'active'=>$active['followers']);
+                compact('model'),true,false),'active'=>$active['followers']);
     $tabs[] = array('id' => 'category', 
         'label' => 'Sections', 
         'content' => $this->renderPartial('_category',
-                compact('model'),true,true),'active'=>$active['category']);
+                compact('model'),true,false),'active'=>$active['category']);
     
     $tabs[] = array('id' => 'objects', 
         'label' => 'Objects', 
         'content' => $this->renderPartial('_objects',
-                compact('model'),true,true),'active'=>$active['objects']);
+                compact('model'),true,false),'active'=>$active['objects']);
     
     $tabs[] = array('id' => 'actors',
             'label' => 'Actors',
             'content' => $this->renderPartial('_actors',
-                    compact('model','status'),true,true),'active'=>$active['actors']);
+                    compact('model','status'),true,false),'active'=>$active['actors']);
 /*
     $tabs[] = array('id' => 'package',
             'label' => 'Packages', 
@@ -77,28 +77,28 @@ $active['testcases']=FALSE;
     $tabs[] = array('id' => 'usecases',
             'label' => 'Use Cases',
             'content' => $this->renderPartial('_usecases',
-                    compact('model','status'),true,true),'active'=>$active['usecases']);
+                    compact('model','status'),true,false),'active'=>$active['usecases']);
     
     $tabs[] = array('id' => 'rules',
             'label' => 'Rules',
             'content' => $this->renderPartial('_rules',
-                    compact('model','status'),true,true),'active'=>$active['rules']);
+                    compact('model','status'),true,false),'active'=>$active['rules']);
 
     $tabs[] = array('id' => 'forms',
             'label' => 'Forms',
             'content' => $this->renderPartial('_forms',
-                    compact('model','status'),true,true),'active'=>$active['forms']);
+                    compact('model','status'),true,false),'active'=>$active['forms']);
     
     $tabs[] = array('id' => 'interfaces',
             'label' => 'Interfaces',
             'content' => $this->renderPartial('_interfaces',
-                    compact('model','status'),true,true),'active'=>$active['interfaces']);
+                    compact('model','status'),true,false),'active'=>$active['interfaces']);
 
  
        $tabs[] = array('id' => 'testcases',
             'label' => 'Test Cases',
             'content' => $this->renderPartial('_testcases',
-                    compact('model','status'),true,true),'active'=>$active['testcases']); 
+                    compact('model','status'),true,false),'active'=>$active['testcases']); 
 
     
 ?>

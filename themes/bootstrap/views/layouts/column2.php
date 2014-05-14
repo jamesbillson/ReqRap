@@ -2,7 +2,7 @@
 <?php $this->beginContent('//layouts/main'); ?>
 <!-- <div class="row"> -->
 <div class="row-fluid" style="padding-left:20px">
-    <div class="span9">
+    <div class="span11">
         <div id="content">
             <?php echo $content; ?>
         </div><!-- content -->
