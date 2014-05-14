@@ -1,9 +1,13 @@
+<?php
+$types = Interfacetype::model()->getInterfacetypes(); 
+if (Version::model()->objectCount(12)!=0){
+?>
 <h2><?php echo $heading; ?>. Interfaces</h2>
 
 <?php 
 $subheading=1;
 // load all the categories
-$types = Interfacetype::model()->getInterfacetypes();
+
 foreach($types as $type){
 $ifacedetails = Iface::model()->getCategoryIfaces($type['interfacetype_id']);
 if (count($ifacedetails)):
@@ -23,6 +27,10 @@ if (count($ifacedetails)):
 }
 $subheading++;
 endforeach ?>
-<?php endif;
-}?>
+<?php 
+endif;
+}
+
+}
+?>
 

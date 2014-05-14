@@ -39,9 +39,9 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                    
                     <td>
                   <?php if($permission){ ?>
-                   <a href="/package/update/id/<?php echo $item['id'];?>"><i class="icon-pencil" rel="tooltip" title="Edit Details"></i></a> 
-                   <a href="/package/delete/id/<?php echo $item['id'];?>"><i class="icon-remove-sign text-error" rel="tooltip" title="Delete"></i></a> 
-                   <a href="/usecase/create/id/<?php echo $item['id'];?>"><i class="icon-plus-sign-alt" rel="tooltip" title="Add another usecase"></i> 
+                   <a href="/package/update/id/<?php echo $item['id'];?>"><i class="icon-pencil" rel="tooltip" title="Edit Details"></i></a>
+                   <a href="/package/delete/id/<?php echo $item['id'];?>"><i class="icon-remove-sign text-error" rel="tooltip" title="Delete"></i></a>
+                   <a href="/usecase/create/id/<?php echo $item['id'];?>"><i class="icon-plus-sign-alt" rel="tooltip" title="Add another usecase"></i></a> 
                    <a href="/package/history/id/<?php echo $item['package_id'];?>"><i class="icon-calendar" rel="tooltip" title="Version history"></i></a> 
                   
                             <?php if($pack_counter!=0) { ?>
@@ -80,7 +80,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
               </td> 
               <td>
               <?php if($permission){ ?>
-               <a href="/usecase/delete/id/<?php echo $uc['id'];?>"><i class="icon-remove-sign text-error" rel="tooltip" title="Edit"></i> 
+                  <a href="/usecase/delete/id/<?php echo $uc['id'];?>"><i class="icon-remove-sign text-error" rel="tooltip" title="Edit"></i> </a>
                <a href="/usecase/update/id/<?php echo $uc['id'];?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
                <a href="/usecase/history/id/<?php echo $uc['usecase_id'];?>"><i class="icon-calendar" rel="tooltip" title="Version history"></i></a> 
                

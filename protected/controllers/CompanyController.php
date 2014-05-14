@@ -96,29 +96,23 @@ class CompanyController extends Controller
 	{
 		$model=new Company;
 
-		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
-
+		
 		if(isset($_POST['Company']))
 		{
 			$model->attributes=$_POST['Company'];
                         $model->owner_id=Yii::app()->user->id;
                         
-                        
 			if($model->save())
                             $cid=$model->primaryKey;
-                            //need to update the user so they have this company
-                         User::model()->setcompany($cid);
+                            //need to update the user so they own this company
+                        User::model()->setcompanyowner($cid);
                             //setup the trades .
 
+                        Documenttype::model()->preload();
                             
-                                     
-            
-                            Documenttype::model()->preload();
-                            
-                $user=User::model()->findbyPK($model->owner_id);
-                $user->admin=1;
-               $user->save();
+                //$user=User::model()->findbyPK($model->owner_id);
+                //$user->admin=1;
+                //$user->save();
                             
                             
 			$this->redirect(array('site/index'));

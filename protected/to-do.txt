@@ -1,29 +1,92 @@
-BUGS
+PRE DEMO Changes
+----------------------------------------
+
+Index page is messed up 
+   - remove Reqer from title.
+   - change Requirements to Applications
+
+Tabs and heading conflict.
+
+Step edit interface. Make the 3 forms editable.
 
 
-Image numbering is not working should have Category Number - Image number
-Release numbering
 
 
-Follower - need to force use of the same email address, otherwise the accounts don't hook up.
+
+
+
+
+
+----------------------------------------
+
+Clean up all interfaces for each object
+
+1=>'rule',          Renumber Create   Update   History  Rollback
+2=>'form',          Renumber Create   Update   History  Rollback
+3=>'formproperty',  #R#  #C#   #U#   History  Rollback
+4=>'actor',         Create   Update   History  Rollback
+5=>'package',       Renumber Create   Update   History  Rollback
+6=>'object',        #R  History  Rollback #LoadVersion
+7=>'objectproperty' Renumber Create   Update   History  Rollback
+8=>'flow',          Create   Update   History  Rollback
+9=>'step',          Renumber Create   Update   History  Rollback
+10=>'usecase',      Renumber Create   Update   History  Rollback
+11=>'photo',        Renumber Create   Update   History  Rollback
+12=>'iface',        Renumber Create   Update   History  Rollback #LoadVersion
+13=>'interfacetype',Renumber Create   Update   History  Rollback
+17=>'category',     Renumber Create   Update   History  #RB
+18=>'simple',       #R Create   Update   History  #RB 
+
+
+Rich text entry into all description fields
+
+Order/re-order of:
+     Simple Requirements within Category
+     Objects
+     Object properties
+     Forms
+     Form properties
+?? other?
+
+When deleting a release, there must be a draft release left at the end of the process - 
+make it so we can't delete the draft, you would have to finalise it first.
+
+Photo import - not currently handled.  Needs to make a copy of the image files.
+
+Number displayed at the top of the add simple screen is incorrect, and probably un-necessary.
+
+Package name on use case view is wrong version ?? Not sure if still an issue
+
+Usecase numbering seems to be wierd..  Allocating a higher number than needed. 
+Perhaps run a renumber on import is needed.
+
+
+
 
 FEATURES
 
-### ACTOR
-Actor should have a 'Test Case' pre-conditions (e.g. log in as user)
+### PROJECT
+Need a flag for auto-re-numbering.  If the project has been released, then the numbering should stop re-numbering.
+But add an explicit setting.
 
+### ACTOR
+Delete an actor either from a use case, or from a project requires you to move their steps to another actor.
+Need to create the form to re-assign them.
 
 ### USECASE
 Put 'This use case describes the process of:' in the system, 
 then we can take the same thing and say 'this test case verifies the process of:'
 
-## Status
-## COMMENTS / TO DO's.
+Notes field, 
+To do which causes a flag.
 
-### Copy: 
+### LIBRARY ITEMS.
+Tags on library items
+Search
+Classifications
 
-### Library items.
-Copy to a specific project function so you can add snippets/patterns
+### OBJECT
+Make a form automatically from an object
 
 ### TRACEABILITY
 
@@ -32,88 +95,37 @@ Have to think about the ease of adding connection between any change and a requi
 
 ### PRINTING
 Set up a configurable cover page.
-
 Company logo
 
 
 ### Collaborators
 have an approver switch and a circulation switch so they print out in a table on the document.
-
-
-
+also an edit switch, we already have upload.
 
 ### TEST RUNS
 create the first test run when the project gets switched to testing.
 
 ### NON FUNCTIONAL REQ's.
 
-free form.
-
 Rules - Text needs to accept some formatting - bullets, line breaks.
 Rules - health check
     - number of rules not used.
 Rules - show deleted rules ?
 
-#USE CASE
-view - make the UC details Editable (Description and Preconditions)
 
 
 
 
 
 
-############@@@@@@@@@@@@@@@#################
-VERSION CONTROL
-OBJECTS
---------------
-1.rule - M - C - V - has project_id BUT NOT NEEDED
-2.form - M - C - V - has project_id BUT NOT NEEDED
-3.formproperty - M - C - V (deleted versions link and interface) NO PROJECT
-4.actor - M - C - V - has project_id
-5.package - M - C - V (package delete not handled, will need additional logic to handle
-                        orphaned UC's)
-6.object - M - C - V has project_id
-7.objectproperty - M - C - V(deleted versions link and interface) NO PROJECT
-8.Flow - M - C - V(
-        Renumber on delete step where step is last step)NO PROJECT
-9.step - M - C - V
-  (Step renumber needs to be changed to create new versions of each step
-     , delete needs work)NO PROJECT
-10.usecase - M - C - V(Need to v control move function?)NO PROJECT
-11.photo - M - C
-12.iface - M - C - V (type select not working,
-                       orphan warning not working)has project_id BUT NOT NEEDED
-13.interfacetype - M - C
+## VERSION CONTROL ###
+
+Roll Back for all objects individually - but some confusion on steps.
+
+If I have step-flow and flow is versioned, it doesn't really mean much as its only a container.
 
 
-RELATIONSHIPS
-----------------
-StepRule - M - C - V NO PROJECT
-StepIface - M - C - V (interfaces should show the relationships in the history.)
-StepForm - M - C -V
-
-        1=>'rule'
-        2=>'form'
-        3=>'formproperty'
-        4=>'actor'
-
-        5=>'package'
-        6=>'object'
-        7=>'objectproperty'
-        8=>'flow'
-        9=>'step'
-        10=>'usecase'
-        11=>'photo'
-        12=>'iface'
-        13=>'interfacetype'
-        14=>'stepform'
-        15=>'stepiface'
-        16=>'steprule
-
-
-
-Roll Back to a specific point.
-
+Project Roll Back - at the moment use releases instead.
 Objects created after the roll back point (RBP) to be deleted.
 Objects active version to be the version prior to the RBP.
 

@@ -223,9 +223,21 @@ class User extends CActiveRecord
             SET company_id=".$id."
             WHERE
             `id`=".Yii::app()->user->id;
-     $connection=Yii::app()->db;
+        $connection=Yii::app()->db;
         $command = $connection->createCommand($sql);
         $command->execute();
     } 
-    
+         public function setcompanyowner($id)
+    {
+               
+              
+        $sql="UPDATE user
+            SET company_id=".$id.",
+                admin=1
+            WHERE
+            `id`=".Yii::app()->user->id;
+        $connection=Yii::app()->db;
+        $command = $connection->createCommand($sql);
+        $command->execute();
+    } 
 }

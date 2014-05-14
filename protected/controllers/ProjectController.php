@@ -151,7 +151,7 @@ class ProjectController extends Controller
             $initial=array(1=>'Not Classified',2=>'Web interface',3=>'Email');
             for ($case = 1; $case <= 3; $case++) 
             {       
-               $type=new interfacetype;
+               $type=new Interfacetype;
                $type->name=$initial[$case];
                $type->number=$case;
                $type->interfacetype_id=Version::model()->getNextID(13);

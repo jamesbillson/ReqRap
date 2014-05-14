@@ -7,10 +7,10 @@
         <h3>OB-<?php echo str_pad($object['number'], 3, "0", STR_PAD_LEFT); ?> <?php echo $object['name'];?></h3>
         <?php echo $object['description'];?>
              
-        <?php endforeach ?>
+     
         
 
-        <?php foreach($objects as $object):
+    <?php       
 $objectproperties=  Objectproperty::model()->getObjectProperty($object['object_id']);
 
   if (count($objectproperties)):?>
@@ -47,7 +47,6 @@ $objectproperties=  Objectproperty::model()->getObjectProperty($object['object_i
             </tbody>
         </table>
 
-    <?php endif;
- endforeach ?>
+    <?php endif;?>
         
-  
+     <?php endforeach; ?>

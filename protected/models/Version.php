@@ -41,6 +41,27 @@ class Version extends CActiveRecord {
         18 => 'category'//simple
     );
     
+      public static $number = array( // used for Import
+        1 => 'rule', // whether a object needs its number offset on import
+        2 => 'form',
+        3 => 'none',
+        4 => 'none',
+        5 => 'package',
+        6 => 'object',
+        7 => 'none',
+        8 => 'none',
+        9 => 'none',
+        10 => 'none',
+        11 => 'none',
+        12 => 'iface',
+        13 => 'interfacetype',
+        14 => 'none',
+        15 => 'none',
+        16 => 'none',
+        17 => 'category',
+        18 => 'none',
+    );
+    
        public static $display = array(
         1 => array('parent'=>'project','url'=>'/project/view/tab/rules'), //rule
         2 => array('parent'=>'project','url'=>'/project/view/tab/forms'), //form
@@ -529,6 +550,29 @@ class Version extends CActiveRecord {
         return $projects[0]['id'];
     }
 
+    
+     public function objectList($object, $release) {
+
+        $sql = "
+                  SELECT `x`.`id` from
+                  `" . Version::$objects[$object] . "` `x`
+                  JOIN `version` `v`
+                  ON `x`.`id`=`v`.`foreign_key`
+                  WHERE
+                  `v`.`active`=1 
+                  AND 
+                  `v`.`object`=" . $object . "
+                  AND
+                  `v`.`release`=" . $release;
+
+        $connection = Yii::app()->db;
+        $command = $connection->createCommand($sql);
+        $projects = $command->queryAll();
+
+        return $projects;
+    }
+    
+    
     public function objectCount($object) {
         $release = Yii::App()->session['release'];
         $sql = "

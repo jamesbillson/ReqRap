@@ -87,7 +87,7 @@ public function actionFinalise($id)
        
         foreach ($objects as $instance)
             {
-            Version::model()->importObject($object,$instance['id'],$project,$newrelease,0);
+            Version::model()->importObject($object,$instance['id'],$project,$newrelease,0,0);
          //   echo 'We are copying id '.$instance['id'].'<br />';
             }
             
