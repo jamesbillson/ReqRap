@@ -637,7 +637,7 @@ class Version extends CActiveRecord {
 
         if (Version::$number[$object]!='none') {
             $sql .= " UPDATE tmptable_1 SET number = (number)+$numberoffset ;";
-
+//test
             $connection = Yii::app()->db;
             $command = $connection->createCommand($sql);
             $command->execute();
