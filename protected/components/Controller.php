@@ -47,7 +47,10 @@ $action=$action->id;
          !($controller == 'site' && $action == 'privacy') &&
          !($controller == 'site' && $action == 'manage_drawings_and_tenders_online') &&
          !($controller == 'site' && $action == 'manage_construction_online') &&
-         !($controller == 'site' && $action == 'login'))
+         !($controller == 'site' && $action == 'login') &&
+         !($controller == 'site' && $action == 'forgotpassword') &&
+         !($controller == 'site' && $action == 'newpassword')
+             )
          {
             
             if (Yii::app()->user->isGuest){

@@ -48,11 +48,12 @@ class User extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('password','safe', 'on'=>'update'),
-                    array('email','email'),
-                    array('username', 'unique','message'=>'User ID/email must be unique.'),
+                        array('email','email'),
+                        array('username', 'unique','message'=>'User ID/email must be unique.'),
                     
+                        array('email', 'required', 'on' => 'resendConfirmation'),                    
 			array('firstname, lastname, email, username', 'required', 'on'=>'update'),
-			array('firstname, lastname, email, password, salt, username', 'required','except'=>'update'),
+			array('firstname, lastname, email, password, salt, username', 'required','except'=>'update,resendConfirmation'),
 			array('address_id', 'numerical', 'integerOnly'=>true),
 			array('firstname, lastname, email, password', 'length', 'max'=>255),
 			array('salt, username', 'length', 'max'=>50),

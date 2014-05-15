@@ -10,8 +10,8 @@ class LoginForm extends CFormModel
 	public $username;
 	public $password;
 	public $rememberMe;
-
-	private $_identity;
+        public $email;
+        private $_identity;
 
 	/**
 	 * Declares the validation rules.
@@ -22,11 +22,12 @@ class LoginForm extends CFormModel
 	{
 		return array(
 			// username and password are required
-			array('username, password', 'required'),
+			array('username, password, email', 'required'),
 			// rememberMe needs to be a boolean
 			array('rememberMe', 'boolean'),
 			// password needs to be authenticated
 			array('password', 'authenticate'),
+                        array('email','email')
 		);
 	}
 

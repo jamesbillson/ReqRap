@@ -10,6 +10,9 @@ class SiteController extends Controller
                 array('allow',  // deny all users
                 'users'=>array('terms'),
             ),
+            array('allow', // allow all users to perform '' actions
+            'actions' => array('forgotpassword', 'newpassword'),
+            'users' => array('*')),
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
                 'actions'=>array('view', 'create','quickaddvintage','update','inlineupdate','addvintage','addvariety','addregion'),
                //'roles'=>array('@'),
@@ -163,6 +166,7 @@ class SiteController extends Controller
      */
     public function actionLogin()
     {
+       
         $model=new LoginForm;
 
         // if it is ajax validation request
@@ -201,5 +205,80 @@ class SiteController extends Controller
     {
         Yii::app()->user->logout();
         $this->redirect(Yii::app()->homeUrl);
-    }      
+    }  
+    
+    
+    
+    
+    
+  public function actionForgotPassword() {
+           
+            $model = new User('resendConfirmation');
+    
+            if(isset($_POST['LoginForm'])){
+                
+                $model->attributes = $_POST['LoginForm'];
+                
+                $errors = CActiveForm::validate($model);
+                if($errors == '[]') {
+                    $model = User::model()->find('email = :email', array(':email' => $model->email));
+                    if($model){
+                        //send the email
+                        $model->verification_code = substr(sha1($model->email.time()), 0, 10);
+                        $model->save(false);
+
+                        $message = $this->renderPartial('confirmation', array('code' => $model->verification_code), true);
+                        $headers  = 'MIME-Version: 1.0' . "\r\n";
+                        $headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+                        $headers .= 'From: '. Yii::app()->params['fromName'] .' <'. Yii::app()->params['fromEmail'] .'>' . "\r\n";
+
+                        mail($model->email, 'ReConfirmation Email', $message, $headers);
+
+                        $errors = CJSON::encode(array('success' => 'true', 'message' => 'Reset password link sent to your email'));
+                    }else{
+                        $errors = CJSON::encode(array('message' => 'This email does not exist.'));
+                    }
+                }
+                
+                echo $errors;
+                Yii::app()->end();
+            }
+        }
+
+  public function actionNewPassword() {
+
+    $this->layout = '//layouts/front_main';
+
+    if (empty($_GET['code']))
+      $this->redirect('/site/login');
+
+    $model = new Users('newPassword');
+
+    if (isset($_POST['Users'])) {
+
+      $model->attributes = $_POST['Users'];
+      $errors = CActiveForm::validate($model);
+
+      if ($errors == '[]') {
+
+        $user = $model->find('verification_code = :vc', array(':vc' => $_GET['code']));
+
+        if ($user) {
+
+          $user->verification_code = '';
+          $user->password = md5($model->password);
+          $user->save(false);
+
+          $errors = CJSON::encode(array('success' => 'true', 'message' => 'Password updated successfully'));
+        } else
+          $errors = CJSON::encode(array('success' => 'true', 'message' => 'Code expired, please try again'));
+      }
+
+      echo $errors;
+      Yii::app()->end();
+    }
+
+    $this->render('new_password', array('model' => $model));
+  }
+
 }
