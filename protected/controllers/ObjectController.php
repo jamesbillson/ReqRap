@@ -32,7 +32,7 @@ class ObjectController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update','delete','history'),
+				'actions'=>array('create','update','delete','history','convert'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -88,6 +88,65 @@ class ObjectController extends Controller
 		));
 	}
 
+        
+        	  public function actionConvert($id)
+	{
+            $project=Yii::app()->session['project'];
+            $release=Yii::app()->session['release'];
+            $form=new Form;
+            
+            $object=$this->loadVersion($id);
+       
+            $form->project_id=$project;
+            $form->release_id=$release;
+            $form->number=Form::model()->getNextNumber();
+            $form->form_id=Version::model()->getNextID(2);
+            $form->name=$object->name.' Form';        
+                    
+                    if($form->save())
+                    {
+                     $version=Version::model()->getNextNumber($project,2,1,$form->primaryKey,$form->form_id);   
+                    
+		    }
+            
+            
+            
+		
+            $objectproperties=Version::model()->getChildObjects($id,7);
+            
+          
+            foreach($objectproperties as $objectproperty){
+                //get the object property and save as an form property.
+                
+                
+                  $model=new Formproperty;
+                       
+                    $model->project_id= $project;
+                    $model->release_id=$release;
+                    $model->number=$objectproperty['number'];
+                    $model->formproperty_id=Version::model()->getNextID(3);
+                    $model->form_id=$form->form_id;
+                    $model->name=$objectproperty['name'];
+                    $model->description= $objectproperty['description'];
+                    $model->type = '';
+                    $model->valid = '';
+                    $model->required = 0;
+                    
+                    if($model->save())
+                    {
+                     $version=Version::model()->getNextNumber($project,3,1,$model->primaryKey,$model->formproperty_id);   
+                    }
+                
+                
+                
+            }
+            
+              
+                 
+                  
+                $this->redirect(array('/project/view/tab/forms'));        
+            
+	}
 
         
         
