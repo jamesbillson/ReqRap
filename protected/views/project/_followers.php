@@ -11,7 +11,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
     array(
         'class' => 'bootstrap.widgets.TbButton',
         'type' => 'primary', // '', 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
-        'label'=> 'Add Colaborator',
+        'label'=> 'Add Collaborator',
         'url'=>array('follower/addFollower', 'id'=>$model->id, 'type'=>1)
     )),
 ));
@@ -62,7 +62,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                         <?php echo $item['email'];?>
                     </td>
                     <td>   
-                        <?php echo $item['confirmed'];?>
+                        <?php echo Follower::$followerstatus[$item['confirmed']];?>
                     </td>
                     <td>
                         <a href="/contact/view/id/<?php echo $item['id'];?>"><i class="icon-eye-open" rel="tooltip" title="View"></i></a> 
