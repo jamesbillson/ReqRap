@@ -235,11 +235,13 @@ class SiteController extends Controller {
       if ($errors == '[]') {
 
         $user = $model->find('verification_code = :vc', array(':vc' => $_GET['code']));
-
+        
+        
         if ($user) {
-
+          
           $user->verification_code = '';
-          $user->password = md5($model->password);
+          $user->password = $model->password;
+          
           $user->save(false);
 
           $errors = CJSON::encode(array('success' => 'true', 'message' => 'Password updated successfully'));
