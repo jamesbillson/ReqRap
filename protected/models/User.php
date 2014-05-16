@@ -21,7 +21,9 @@
  */
 class User extends CActiveRecord
 {
-	/**
+  
+  public $cpassword;
+  /**
 	 * Returns the static model of the specified AR class.
 	 * @param string $className active record class name.
 	 * @return User the static model class
@@ -51,9 +53,12 @@ class User extends CActiveRecord
                         array('email','email'),
                         array('username', 'unique','message'=>'User ID/email must be unique.'),
                     
-                        array('email', 'required', 'on' => 'resendConfirmation'),                    
+                        array('email', 'required', 'on' => 'resendConfirmation'),
+                        array('password, cpassword', 'required', 'on' => 'newPassword'),
+                        array('password', 'compare', 'skipOnError'=>false, 'compareAttribute'=>'cpassword', 'on' => 'newPassword'),
+                        array('password', 'length', 'min' => 4),                    
 			array('firstname, lastname, email, username', 'required', 'on'=>'update'),
-			array('firstname, lastname, email, password, salt, username', 'required','except'=>'update,resendConfirmation'),
+			array('firstname, lastname, email, password, salt, username', 'required','except' => 'register, resendConfirmation, newPassword'),
 			array('address_id', 'numerical', 'integerOnly'=>true),
 			array('firstname, lastname, email, password', 'length', 'max'=>255),
 			array('salt, username', 'length', 'max'=>50),
@@ -90,7 +95,7 @@ class User extends CActiveRecord
 			'address_id' => 'Address',
 			'salt' => 'Salt',
 			'username' => 'Username',
-
+      'cpassword'=>'Confirm Password'
 		);
 	}
 
