@@ -167,7 +167,6 @@ class SiteController extends Controller {
     }
     
     
-    die(print_r($model));
     // display the login form
     //CHECK IF A USER IS LOGGED IN AND REDIRECT TO INDEX IF NOT, REDIRECT TO LOGIN
     if (Yii::app()->user->isGuest) { // not logged in 
