@@ -28,6 +28,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
             <thead>
                 <tr>
                     <th>Number</th>
+                    <th></th>
                     <th>Name</th>
                      <th>Description</th>
                     <th>Actions</th>
@@ -45,9 +46,9 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                     </td>
                     <td>
                         <?php if(Version::model()->objectChildCount(7,$item['object_id'])==0)
-                                echo ' <i class="icon-exclamation-sign text-warning" rel="tooltip" title="This Object has no Properties."></i>
-                       ' ?>
-                        
+                                echo '<i class="icon-exclamation-sign text-warning" rel="tooltip" title="This Object has no Properties."></i>' ?>
+                     </td>
+                    <td>    
                         <b><?php echo $item['name'];?></b>
                     </td>
                     <td>
