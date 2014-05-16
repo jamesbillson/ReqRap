@@ -4,6 +4,7 @@ class Follower extends CActiveRecord
 {
     public static $foreigntype= array(1=>'project', 2=>'package');  
     public static $followerupload= array(0=>'view only', 2=>'can upload');
+    public static $followerstatus= array(0=>'invited', 2=>'accepted');
     /**
      * Returns the static model of the specified AR class.
      * @param string $className active record class name.
