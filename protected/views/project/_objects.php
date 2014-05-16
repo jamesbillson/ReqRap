@@ -58,6 +58,8 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                          <?php if($permission){ ?>
                         <a href="/object/update/id/<?php echo $item['id'];?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
                         <a href="/object/delete?id=<?php echo $item['id'];?>"><i class="icon-remove-sign text-error" rel="tooltip" title="Delete"></i></a> 
+                        <a href="/object/convert/id/<?php echo $item['object_id'];?>"><i class="icon-list-alt" rel="tooltip" title="Make a Form for this Object"></i></a> 
+              
                         <a href="/object/history/id/<?php echo $item['object_id'];?>"><i class="icon-calendar" rel="tooltip" title="Version history"></i></a> 
                         
 
