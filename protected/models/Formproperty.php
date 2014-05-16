@@ -65,17 +65,17 @@ class Formproperty extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'id' => 'ID',
-                    'formproperty_id' => 'Formpropertyid',
-                     'project_id' => 'Project',
-                    'release_id' => 'Release',
-			'form_id' => 'Form',
-                    'number' => 'Number',
-			'name' => 'Name',
-			'description' => 'Description',
-                    'type' => 'Field Type',
-                    'valid' => 'Validation',
-                    'required' => 'Required',
+		'id' => 'ID',
+                'formproperty_id' => 'Formpropertyid',
+                'project_id' => 'Project',
+                'release_id' => 'Release',
+		'form_id' => 'Form',
+                'number' => 'Number',
+		'name' => 'Name',
+		'description' => 'Description',
+                'type' => 'Field Type',
+                'valid' => 'Validation',
+                'required' => 'Required',
 		);
 	}
 

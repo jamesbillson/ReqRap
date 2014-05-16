@@ -63,12 +63,12 @@ class Form extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'id' => 'ID',
-			'form_id' => 'FormID',
+                    'id' => 'ID',
+                    'form_id' => 'FormID',
                     'name' => 'Form Name',
-			'project_id' => 'Project',
+                    'project_id' => 'Project',
                     'number'=>'Number',
-                     'project_id' => 'Project',
+                    'project_id' => 'Project',
                     'release_id' => 'Release',
 		);
 	}
@@ -102,12 +102,12 @@ class Form extends CActiveRecord
 	}
         
         
-        public function getNextNumber($id)
+        public function getNextNumber()
     {
-                   
+               $project=Yii::App()->session['project'];    
         $sql="SELECT max(`r`.`number`)as number
            From `form` `r`
-            WHERE `r`.`project_id`=".$id;
+            WHERE `r`.`project_id`=".$project;
 		$connection=Yii::app()->db;
 		$command = $connection->createCommand($sql);
 		$projects = $command->queryAll();

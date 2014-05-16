@@ -62,14 +62,14 @@ class Objectproperty extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'id' => 'ID',
-			'objectproperty_id' => 'Objectprop_id',
-                     'project_id' => 'Project',
+                    'id' => 'ID',
+                    'objectproperty_id' => 'Objectprop_id',
+                    'project_id' => 'Project',
                     'release_id' => 'Release',
                     'object_id' => 'Object',
-			'name' => 'Name',
+                    'name' => 'Name',
                     'number'=>'Number',
-			'description' => 'Description',
+                    'description' => 'Description',
 		);
 	}
 

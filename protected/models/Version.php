@@ -386,7 +386,7 @@ class Version extends CActiveRecord {
             AND            
             `v`.`release`=" . $release . "         
             AND            
-            `v`.`project_id`=" . $project;
+            `v`.`foreign_id`=" . $id;
 
         $connection = Yii::app()->db;
         $command = $connection->createCommand($sql);
@@ -433,7 +433,7 @@ class Version extends CActiveRecord {
         
     }
             
-      public function getChildObjects($id,$object)
+      public function getChildObjects($id,$object) // $object is the Child object type
     {
           $project=Yii::App()->session['project'];
           $release=Yii::App()->session['release'];
@@ -593,6 +593,28 @@ class Version extends CActiveRecord {
         return $projects[0]['number'];
     }
 
+    public function objectChildCount($object,$id) { // the object is child, the id is the parent
+        $release = Yii::App()->session['release'];
+        $sql = "
+                SELECT count(`c`.`id`) as number
+                FROM
+                ".Version::$objects[$object]." `c`
+                JOIN `version` `v`
+                ON `v`.`foreign_key`=`c`.`id`
+                WHERE `".Version::$display[$object]['parent']."_id`=".$id." 
+                AND
+                `v`.`active`=1 
+                AND 
+                `v`.`object`=" . $object . "
+                AND
+                `v`.`release`=" . $release;
+
+        $connection = Yii::app()->db;
+        $command = $connection->createCommand($sql);
+        $projects = $command->queryAll();
+
+        return $projects[0]['number'];
+    }
     public function getMaxNumber($object, $release) {
 
         $sql = "
