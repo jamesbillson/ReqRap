@@ -16,7 +16,7 @@
 	<div class="row" style="position: relative;margin-bottom: 2px;height:50px;">
 		<?php //echo $form->labelEx($model,'New Password'); ?>
             <div class="w100">
-		<?php echo $form->textField($model,'password', array('class' => 'login-input border-box', 'placeholder' => 'New Password','style'=>'margin:0px')); ?>
+		<?php echo $form->passwordField($model,'password', array('class' => 'login-input border-box', 'placeholder' => 'New Password','style'=>'margin:0px')); ?>
 		<?php echo $form->error($model,'password', array('style' => 'font-size:12px;margin:0px;padding:0px;')); ?>
             </div>
 	</div>
@@ -24,7 +24,7 @@
         <div class="row">
 		<?php //echo $form->labelEx($model,'Confrim Password'); ?>
             <div class="w100" style="position: relative;margin-bottom: 2px;height:50px;">
-		<?php echo $form->textField($model,'cpassword', array('class' => 'login-input border-box', 'placeholder' => 'Confrim Password','style'=>'margin:0px')); ?>
+		<?php echo $form->passwordField($model,'cpassword', array('class' => 'login-input border-box', 'placeholder' => 'Confrim Password','style'=>'margin:0px')); ?>
 		<?php echo $form->error($model,'cpassword', array('style' => 'font-size:12px;margin:0px;padding:0px;')); ?>
             </div>
 	</div>

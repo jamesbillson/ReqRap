@@ -45,7 +45,7 @@ $this->breadcrumbs = array(
             </div>
         </div>
         <div class="row"style="margin-top: 10px;"> 
-            <div class="span3">
+            <div class="span3" style="width:230px;">
                 <?php echo $form->checkBox($model, 'rememberMe'); ?> Remember me on this computer<br />
             </div>
         </div>
@@ -54,17 +54,14 @@ $this->breadcrumbs = array(
                 
                 <?php $this->widget('bootstrap.widgets.TbButton', array(
                     'label'=>'Forgot Password',
-                    'type'=>'primary',
-                    'htmlOptions'=>array(
+                    'type'=>'link',
+                    'htmlOptions'=>array(                       
                         'data-toggle'=>'modal',
                         'data-target'=>'#myModal',
                         ),
                     )); 
                 ?>
             </div>
-        </div>
-        <div class="row">
-            <div class="span3"></div>
             <div class="span1">	<?php
                 $this->widget('bootstrap.widgets.TbButton', array(
                     'buttonType' => 'submit',

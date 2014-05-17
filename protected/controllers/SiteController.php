@@ -204,13 +204,13 @@ class SiteController extends Controller {
           $message = $this->renderPartial('email_newpassword', array('code' => $model->verification_code), true);
           $headers = 'MIME-Version: 1.0' . "\r\n";
           $headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
-          $headers .= 'From: ' . Yii::app()->params['fromName'] . ' <' . Yii::app()->params['fromEmail'] . '>' . "\r\n";
+          $headers .= 'From: '  .Yii::app()->params['adminEmail'] . "\r\n";
 
-          mail($model->email, 'ReConfirmation Email', $message, $headers);
+          mail($model->email, 'Forgot Password Email', $message, $headers);
 
-          $errors = CJSON::encode(array('success' => 'true', 'message' => 'Reset password link sent to your email'));
+          $errors = CJSON::encode(array('success' => 'true', 'message' => 'Reset Password link sent to your email'));
         } else {
-          $errors = CJSON::encode(array('success' => 'true', 'message' => 'Reset password link sent to your email'));
+          $errors = CJSON::encode(array('success' => 'true', 'message' => 'Reset Password link sent to your email'));
         }
       }
 
