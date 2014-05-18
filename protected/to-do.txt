@@ -5,17 +5,6 @@ Index page is messed up
    - remove Reqer from title.
    - change Requirements to Applications
 
-Tabs and heading conflict.
-
-Step edit interface. Make the 3 forms editable.
-
-
-
-
-
-
-
-
 
 ----------------------------------------
 
@@ -57,9 +46,6 @@ Number displayed at the top of the add simple screen is incorrect, and probably 
 
 Package name on use case view is wrong version ?? Not sure if still an issue
 
-Usecase numbering seems to be wierd..  Allocating a higher number than needed. 
-Perhaps run a renumber on import is needed.
-
 
 
 
@@ -76,9 +62,16 @@ Need to create the form to re-assign them.
 ### USECASE
 Put 'This use case describes the process of:' in the system, 
 then we can take the same thing and say 'this test case verifies the process of:'
+Make this configurable for the project, e.g. have a 'use case description template', 
+and a 'test case description template' - use a meta table.
+Option to copy a use case to the same, or other package.  E.g. a 'Create/Edit' stub could be replicated for different objects. 
+
 
 Notes field, 
 To do which causes a flag.
+Maturity field, or this could be stored in the version? there is a status field there.
+Create is immediately 'initial', then a little button in the header to make
+ each UC move forward or backward
 
 ### LIBRARY ITEMS.
 Tags on library items
@@ -86,7 +79,7 @@ Search
 Classifications
 
 ### OBJECT
-Make a form automatically from an object
+Potentially objects could be selected to create Create, Edit and Delete usecases from templates?
 
 ### TRACEABILITY
 

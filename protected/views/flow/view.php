@@ -51,7 +51,7 @@
          
   
           
-          $steps= Step::model()->getFlowSteps($line['id']); // get steps
+          $steps= Step::model()->getFlowSteps($line['flow_id']); // get steps
        
                         foreach($steps as $step) { // LOOP THRU STEPS
                           ?>

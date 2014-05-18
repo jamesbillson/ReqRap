@@ -52,13 +52,14 @@ class UsecaseController extends Controller
 	public function actionView($id)
 	{
 		$versions=Version::model()->getVersions($id,10);
-               // $model=$this->loadModel($versions[0]['id']);
-                
-                $model = Usecase::model()->with('package')->findByPk($versions[0]['id']);
+                $model=$this->loadModel($versions[0]['id']);
+                $package=Package::model()->findbyPK(Version::model()->getVersion($model->package_id,5));
+       
+               // $model = Usecase::model()->with('package')->findByPk($versions[0]['id']);
                // $foo = $bar->foo;
                 
                 $this->render('view',array('model'=>$model,
-			'versions'=>$versions
+			'versions'=>$versions,'package'=>$package
         	));
 	}
        public function actionHistory($id) // Note that this is form_id

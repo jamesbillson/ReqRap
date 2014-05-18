@@ -11,7 +11,7 @@ $permission=(Yii::App()->session['permission']==1)?true : false;
     <?php
 
 $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
-        'title' => 'Use Case : UC-'.str_pad($model->package->number, 2, "0", STR_PAD_LEFT).str_pad($model->number, 3, "0", STR_PAD_LEFT).'-'.$model->name,
+        'title' => 'Use Case : UC-'.str_pad($package['number'], 2, "0", STR_PAD_LEFT).str_pad($model->number, 3, "0", STR_PAD_LEFT).'-'.$model->name,
         'htmlOptions' => array('class'=>'bootstrap-widget-table'),
                'headerButtons' => array(
                 array(
@@ -30,6 +30,15 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                     'url'=>'/usecase/history/id/'.$model->usecase_id,
                     
                       ),
+       array(
+                    'class' => 'bootstrap.widgets.TbButton',
+                    'type' => 'link', // '', 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
+                    'icon'=> 'check',
+                 'visible'=>$permission,
+
+                    'url'=>'/testcase/make/id/'.$model->id,
+                    
+                      ),
                   
 )
           ));  
@@ -43,7 +52,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
 
               <td>  <b>Package</b> 
               </td>
-              <td>   <a href="/package/view/tab/usecases/id/<?php echo $model->package->id; ?>"><?php echo $model->package->name ; ?></a>
+              <td>   <a href="/package/view/tab/usecases/id/<?php echo $package['id']; ?>"><?php echo $package['name'] ; ?></a>
               </td>
                   
           </tr>

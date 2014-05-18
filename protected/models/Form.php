@@ -145,12 +145,9 @@ class Form extends CActiveRecord
         public function getStepForms($id)
     {
        
-            
+             $release=Yii::App()->session['release'];
              $sql="SELECT
-                 `r`.`name`,
-                 `r`.`form_id`,`
-                 r`.`number`, 
-                 `r`.`id`,
+                 `r`.*,
                  `x`.`id` as xid
             From `form` `r`
             JOIN `stepform` `x`
@@ -165,28 +162,20 @@ class Form extends CActiveRecord
             JOIN `version` `vs`
             ON `vs`.`foreign_key`=`s`.`id`
           
-        WHERE
+            WHERE
             `s`.`id`=".$id."
             AND
-            `vr`.`object` =2 AND `vr`.`active`=1
-            AND
-            `vx`.`object` =14 AND `vx`.`active`=1            
-            AND
-            `vs`.`object` =9 AND `vs`.`active`=1
 
-
+            `vr`.`object` =2 AND `vr`.`active`=1 AND `vr`.`release`=".$release."
+            AND
+            `vx`.`object` =14 AND `vx`.`active`=1  AND `vx`.`release`=".$release."           
+            AND
+            `vs`.`object` =9 AND `vs`.`active`=1  AND `vs`.`release`=".$release."
 
              GROUP BY `r`.`id`
              ORDER BY `r`.`number` ASC";
-            
-              
-        $sql="SELECT `r`.`name`,`r`.`form_id`,`r`.`number`, `r`.`id`,`x`.`id` as xid
-           From `form` `r`
-            Join `stepform` `x` 
-            on `x`.`form_id`=`r`.`id`
-            Join `step` `s` 
-            on `x`.`step_id`=`s`.`id`
-           WHERE `s`.`id`=".$id;
+         
+
 		$connection=Yii::app()->db;
 		$command = $connection->createCommand($sql);
 		$projects = $command->queryAll();

@@ -305,10 +305,10 @@ class Usecase extends CActiveRecord
     }  
     
     
-               public function getProjectUCs($id)
+               public function getProjectUCs()
     {
         
-        $project=Yii::App()->session['project'];
+      
          $release=Yii::App()->session['release'];  
 
          $sql="SELECT 
@@ -343,19 +343,17 @@ class Usecase extends CActiveRecord
             JOIN `version` `v4`
             ON `v4`.`foreign_key`=`f`.`id`
             WHERE 
-            `r`.`id`=".$id." 
             
-            AND
-            `vu`.`active`=1 AND `vu`.`object`=10 AND `vu`.`project_id`=".$project." 
+            `vu`.`active`=1 AND `vu`.`object`=10 
                AND `vu`.`release`=".$release." 
             AND
-            `v2`.`active`=1 AND `v2`.`object`=5 AND `v2`.`project_id`=".$project." 
+            `v2`.`active`=1 AND `v2`.`object`=5  
                AND `v2`.`release`=".$release." 
             AND
-            `v3`.`active`=1 AND `v3`.`object`=9 AND `v3`.`project_id`=".$project." 
+            `v3`.`active`=1 AND `v3`.`object`=9  
                 AND `v3`.`release`=".$release." 
             AND
-            `v4`.`active`=1 AND `v4`.`object`=8 AND `v4`.`project_id`=".$project." 
+            `v4`.`active`=1 AND `v4`.`object`=8  
               AND `v4`.`release`=".$release." 
             
                 GROUP BY `u`.`id`

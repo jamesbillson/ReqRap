@@ -131,14 +131,23 @@ class Flow extends CActiveRecord
               public function checkSteps($id)
     {
        
-              
+              $release=Yii::App()->session['release'];
         $sql="SELECT `f`.`id`,count(`s`.`id`) as steps
-              FROM `flow` `f`
-              JOIN `step` `s` 
-              ON `s`.`flow_id`=`f`.`id`
-              WHERE `f`.`id`=".$id."
-             
-";
+            
+
+            FROM  `flow`  `f` 
+            JOIN  `step`  `s` ON  `f`.`flow_id` =  `s`.`flow_id` 
+            JOIN  `version`  `vs` ON  `vs`.`foreign_key` =  `s`.`id` 
+            JOIN  `version`  `vf` ON  `vf`.`foreign_key` =  `f`.`id` 
+            WHERE
+            `f`.`id` =".$id."
+            AND  `vs`.`object` =9
+            AND  `vs`.`active` =1
+            AND  `vs`.`release` =".$release."
+            AND  `vf`.`object` =8
+            AND  `vf`.`active` =1
+            AND  `vf`.`release` =".$release;
+        
 		$connection=Yii::app()->db;
 		$command = $connection->createCommand($sql);
 		$projects = $command->queryAll();
@@ -218,6 +227,9 @@ class Flow extends CActiveRecord
                 
 		return $projects;
     }    
+    
+  
+    
     
            public function getFlowParentUsecase($id)
     {

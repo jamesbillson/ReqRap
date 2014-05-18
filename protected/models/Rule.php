@@ -163,7 +163,46 @@ class Rule extends CActiveRecord
 		return $projects;
     }  
     
-    
+          public function getStepRules($id)  //this is step_id
+    {
+       $release=Yii::App()->session['release'];
+          
+             $sql="SELECT
+                 `r`.*,
+                 `x`.`id` as xid
+            From `rule` `r`
+            JOIN `steprule` `x`
+            ON `x`.`rule_id`=`r`.`rule_id`
+            JOIN `step` `s`
+            ON `s`.`step_id`=`x`.`step_id`
+
+            JOIN `version` `vr`
+            ON `vr`.`foreign_key`=`r`.`id`
+            JOIN `version` `vx`
+            ON `vx`.`foreign_key`=`x`.`id`
+            JOIN `version` `vs`
+            ON `vs`.`foreign_key`=`s`.`id`
+          
+        WHERE
+            `s`.`step_id`=".$id."
+            AND
+            `vr`.`object` =1 AND `vr`.`active`=1 AND `vr`.`release`=".$release."
+            AND
+            `vx`.`object` =16 AND `vx`.`active`=1  AND `vx`.`release`=".$release."           
+            AND
+            `vs`.`object` =9 AND `vs`.`active`=1  AND `vs`.`release`=".$release."
+
+
+
+             GROUP BY `r`.`id`
+             ORDER BY `r`.`number` ASC";
+         
+          
+		$connection=Yii::app()->db;
+		$command = $connection->createCommand($sql);
+		$projects = $command->queryAll();
+		return $projects;
+    }  
     
         public function Renumber() // renumber all the packages in current release
 	{

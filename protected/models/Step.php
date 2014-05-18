@@ -170,7 +170,7 @@ class Step extends CActiveRecord
 		return $projects;
     }
     
-          public function getFlowSteps($id) // GET FOR A FLOW
+          public function getFlowSteps($id) // id is flow_id GET FOR A FLOW
     {
                   $release=Yii::App()->session['release'];
             $project=Yii::App()->session['project'];   
@@ -188,7 +188,7 @@ class Step extends CActiveRecord
             ON `vf`.`foreign_key`=`f`.`id`
             JOIN `version` `va`
             ON `va`.`foreign_key`=`a`.`id`
-            WHERE `f`.`id`=".$id."
+            WHERE `f`.`flow_id`=".$id."
             AND
            `vs`.`object`=9 AND `vs`.`active`=1 AND `vs`.`release`=".$release."
             AND
@@ -250,11 +250,10 @@ class Step extends CActiveRecord
             WHERE `u`.`id`=".$id."
             AND `f`.`main`=1
              AND
-            `vs`.`object` =9 AND `vs`.`active`=1 AND `vs`.`project_id`=".$project."
-                 AND `vs`.`release`=".$release."  
+            `vs`.`object` =9 AND `vs`.`active`=1 AND `vs`.`release`=".$release."  
               AND
-            `vu`.`object` =10 AND `vu`.`active`=1 AND `vu`.`project_id`=".$project."
-                 AND `vu`.`release`=".$release."  
+            `vu`.`object` =10 AND `vu`.`active`=1 AND `vu`.`release`=".$release."  
+            GROUP BY `s`.`number`
             ORDER BY `s`.`number` ASC";
 		$connection=Yii::app()->db;
 		$command = $connection->createCommand($sql);
@@ -263,13 +262,19 @@ class Step extends CActiveRecord
     }
     public function getNextNumber($id)
     {
-        $user= Yii::app()->user->id;   
+        $release= Yii::app()->session['release'];   
               
-        $sql="SELECT max(`s`.`number`) as x
+        $sql="
+            SELECT 
+            max(`s`.`number`) as x
             FROM `step` `s`
             Join `flow` `f` 
-            on `f`.`id`=`s`.`flow_id`
-            WHERE `f`.`id`=".$id;
+            on `f`.`flow_id`=`s`.`flow_id`
+            JOIN `version` `vs`
+            ON `vs`.`foreign_key`=`s`.`id`
+            WHERE `f`.`id`=".$id."
+            AND
+            `vs`.`object` =9 AND `vs`.`active`=1 AND `vs`.`release`=".$release;
 		$connection=Yii::app()->db;
 		$command = $connection->createCommand($sql);
 		$projects = $command->queryAll();
@@ -293,30 +298,37 @@ class Step extends CActiveRecord
     }    
     
     
-       public function reNumber($flow)
+       public function reNumber($flow_id)
     {
-     
+                  $release=Yii::App()->session['release'];
               
-        $sql="SELECT * FROM `step` `s`
-             WHERE  `s`.`flow_id`=".$flow."
-                 ORDER BY `s`.`number` ASC";
+        $sql="SELECT `s`.*
+            FROM `step` `s`
+            JOIN `version` `vs`
+            ON `vs`.`foreign_key`=`s`.`id`
+            WHERE
+            `vs`.`object` =9 AND `vs`.`active`=1 AND `vs`.`release`=".$release." 
+            AND
+            `s`.`flow_id`=".$flow_id."
+            ORDER BY `s`.`number` ASC";
 	
              	$connection=Yii::app()->db;
 		$command = $connection->createCommand($sql);
 		$projects = $command->queryAll();
-                if (count($projects)){
+                if (count($projects))
+                    {
                     $x=0;
-                     foreach($projects as $step){
-                         $x++;
-                $sql="UPDATE `step` SET `number`=".$x."
-                    WHERE `id`=".$step['id'];
-	
-                $connection=Yii::app()->db;
-                $command = $connection->createCommand($sql);
-                $command->execute();      
-                         
-                }
-                }
+                     foreach($projects as $step)
+                        {
+                        $x++;
+                        $sql="UPDATE `step` SET `number`=".$x."
+                        WHERE `id`=".$step['id'];
+                        //echo $sql.'<br />';
+                        $connection=Yii::app()->db;
+                        $command = $connection->createCommand($sql);
+                        $command->execute();      
+                        }
+                    }
     }    
     
                public function getStepLinks($id,$object,$relation)

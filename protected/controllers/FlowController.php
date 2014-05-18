@@ -119,10 +119,10 @@ class FlowController extends Controller
         
         
         
-        	private function renumberFlows($id)
+        	public function renumberFlows($usecase_id)
        {
                //echo 'Starting <br />';
-               $data = Flow::model()->getNextFlow($id);
+               $data = Flow::model()->getNextFlow($usecase_id);
                $label=chr(ord('A')-1);
                //print_r($data);
                foreach($data as $line) {
@@ -180,9 +180,9 @@ class FlowController extends Controller
         public function actionDelete($id)
 	{
 	    $project=Yii::App()->session['project'];	
-            $model=$this->loadModel($id);
+            //$model=$this->loadModel($id);
             $version=Version::model()->getNextNumber($project,8,3,$id,$model->flow_id); 
-            $model->save();
+            //$model->save();
             $this->renumberFlows($model->usecase_id);
             $this->redirect(array('/usecase/view/id/'.$model->usecase_id));
          }

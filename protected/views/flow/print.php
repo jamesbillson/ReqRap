@@ -1,7 +1,7 @@
 <?php 
 $flows = Flow::model()->getUCFlow($usecase); // get flows
 foreach($flows as $flow) { // LOOP THRU FLOWS
-$steps= Step::model()->getFlowSteps($flow['id']); // get steps
+$steps= Step::model()->getFlowSteps($flow['flow_id']); // get steps
 $name = ($flow['main']==1)?'<strong>Scenario Text</strong> ':'<strong>Alternate Course '.$flow['name'].
         '</strong><br />Start after main step '.$flow['start'].
         ' re-join at main step '.$flow['rejoin'];

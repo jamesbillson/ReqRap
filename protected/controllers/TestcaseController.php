@@ -154,48 +154,63 @@ class TestcaseController extends Controller
 	 */
 	public function actionCreate()
 	{
-		$model=new Testcase;
-
-		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
-
-		if(isset($_POST['Testcase']))
-		{
-			$model->attributes=$_POST['Testcase'];
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->id));
-		}
-
-		$this->render('create',array(
-			'model'=>$model,
-		));
+		
+            
+            //Load a list of all the UC's
+            $data = Usecase::model()->getProjectUCs();
+            
+            //Call actionMake for each UC.
+            if(count($data)){
+                
+                foreach($data as $usecase){
+                $this->actionMake($usecase['id']);
+                    
+                }
+                
+            }
+            
+            
+            //Display the Test Case page at the end.
+            
+            $this->redirect('project/view/tab/testcases');
+            
+            
+            
 	}
 
         
-        public function actionMake($id)
+        public function actionMake($id) // this is the db id
 	{
-
+$project=Yii::App()->session['project'];
+$release=Yii::App()->session['release'];
         // Get the UC details
             
             $uc=Usecase::model()->findbyPK($id);
             // MAKE MAIN TEST CASE
-            $mainflow=Flow::model()->findAll('main=1 and usecase_id='.$id);
             
-if (count($mainflow)){
+           // print_r($uc);
+            $all_flows=Flow::model()->getUCFlow($uc->id);
+            //echo "<pre>";
+            //print_r($all_flows);
+            //echo "</pre>"; 
+            $mainflow=$all_flows[0];
+            
+            
+if (!empty($mainflow)){
         
     // Make a TC for this flow.        
         $testcase=new Testcase;
 
-	$testcase->number=Testcase::model()->getNextNumber($uc->package->project->id);
+	$testcase->number=Testcase::model()->getNextNumber($project);
 	$testcase->usecase_id=$id;
-        $testcase->project_id=$uc->package->project->id;
+        $testcase->project_id=$project;
         $testcase->name=$uc->name.'(main)';
         $testcase->preparation='None';
         $testcase->active=1;
         if($testcase->save()){
             $testcase_id=$testcase->getPrimaryKey();
                   // GET STEPS IN FLOW.    
-              $steps=Step::model()->findAll('flow_id='.$mainflow[0]['id']);
+              $steps=Step::model()->getFlowSteps($mainflow['flow_id']);
               if (count($steps)){
               $x=0;
           
@@ -210,58 +225,9 @@ if (count($mainflow)){
                   
                   
                                     // Get any intefaces, forms and rules.
-                  
-                     $forms=Stepform::model()->findAll('step_id='.$step['id']);
-             if (count($forms)){
-             foreach($forms as $form){ 
-                      
-                         $formproperties=  Formproperty::model()->findAll('form_id='.$form->form_id);
-                        if (count($formproperties)){
-                        foreach($formproperties as $property){ 
-                       
-                       $x++;  
-                        $teststep=new Teststep;
-                        $teststep->number=$x;
-                        $teststep->testcase_id=$testcase_id;
-                        $teststep->action='Test Validation Rules';
-                        $teststep->result='UF-'.str_pad($property->form->number, 4, "0", STR_PAD_LEFT).' '.$property->form->name.' - field: '.$property->name;
-                        $teststep->save();
-                            }
-                          }
-                    }
-                  }
-                  
-            $rules=Steprule::model()->findAll('step_id='.$step['id']);
-             if (count($rules)){
-                   foreach($rules as $rule){ 
-                       $x++;  
-                       $teststep=new Teststep;
-                  
-                  $teststep->number=$x;
-                  $teststep->testcase_id=$testcase_id;
-                  $teststep->action='Verify rule';
-                  $teststep->result='BR-'.str_pad($rule->rule->number, 4, "0", STR_PAD_LEFT).' '.$rule->rule->title;
-                  $teststep->save();
-                   }
-             }
-             
-             
-                 $ifaces=Stepiface::model()->findAll('step_id='.$step['id']);
-             if (count($ifaces)){
-                   foreach($ifaces as $iface){ 
-                       $x++;  
-                       $teststep=new Teststep;
-                  
-                  $teststep->number=$x;
-                  $teststep->testcase_id=$testcase_id;
-                  $teststep->action='Verify interface';
-                  $teststep->result='UI-'.str_pad($iface->iface->number, 4, "0", STR_PAD_LEFT).' '.$iface->iface->name;
-                  $teststep->save();
-                   }
-             }
-             
-             
-          
+            $this->stepForms($step['id'],$testcase_id);    
+            $this->stepRules($step['step_id'],$testcase_id);
+            $this->stepIfaces($step['step_id'],$testcase_id);    
              
               }
                     
@@ -289,49 +255,57 @@ if (count($mainflow)){
    //Then get each alternate flow.
    
  
-$flows=Flow::model()->findAll('main=0 and usecase_id='.$id);
-if (count($flows)){
-foreach($flows as $flow){         
+for($i=1;$i<=count($all_flows);$i++){  
+if (!empty($all_flows[$i])){
+       $flow=$all_flows[$i];
     // Make a TC for this flow.        
         $testcase=new Testcase;
         
         $startflow=$flow['startstep_id'];
         $endflow=$flow['rejoinstep_id'];
 
-	$testcase->number=Testcase::model()->getNextNumber($uc->package->project->id);
+	$testcase->number=Testcase::model()->getNextNumber($project);
 	$testcase->usecase_id=$id;
-        $testcase->project_id=$uc->package->project->id;
+        $testcase->project_id=$project;
         $testcase->name=$uc->name.'('.$flow['name'].')';
         $testcase->preparation='None';
         $testcase->active=1;
         if($testcase->save()){
         $testcase_id=$testcase->getPrimaryKey();
-//GET the start of the Flow
         
 
-        $mainflowsteps=Step::model()->findAll('id <='.$startflow.' AND flow_id='.$mainflow[0]['id']);
-          // Start going through the main flow until you hit the start step of the ALT flow.
- 
-        $x=0;
-        foreach($mainflowsteps as $mainflowstep){  
-
+        //determine the number of the start step
+        
+        // start number = where the step_id=startstep
+     $startstepnumber=1;
+     $endstepnumber=1;
+        foreach($steps as $mainstep){
+          if($mainstep['step_id']==$startflow) $startstepnumber=$mainstep['number'];  
+          if($mainstep['step_id']==$endflow) $endstepnumber=$mainstep['number'];  
+        }
+        
+        
+        // main steps
             
-                  $x=$x+1;
-                  $teststep=new Teststep;
+       // Steps are ordered by Step Number
+            
+       // work out which is the start number (the relationship uses the step_id, which is not ordered)
+       // work out which is the end number 
+            
+       // Step through them up to the start number.
+    foreach($steps as $mainflowstep){
+    if ($mainflowstep['number']<=$startstepnumber){
+                         $teststep=new Teststep;
+                         $teststep->testcase_id=$testcase_id;
+                          $teststep->number=$x;
+                          $teststep->testcase_id=$testcase_id;
+                          $teststep->action=$mainflowstep['text'];
+                          $teststep->result=$mainflowstep['result'];
+                          $teststep->save();
+                        }
+                  }    
                   
-                  $teststep->number=$x;
-                  $teststep->testcase_id=$testcase_id;
-                  $teststep->action=$mainflowstep['text'];
-                  $teststep->result=$mainflowstep['result'];
-                  $teststep->save();
-                  
-
-             
-             
-             
-          }    
-                  
-            $altflowsteps=Step::model()->findAll('flow_id='.$flow['id']);
+            $altflowsteps=Step::model()->getFlowSteps($all_flows[$i]['flow_id']);
     // THEN GO THROUGH THE ALT FLOW STEPS 
         
         foreach($altflowsteps as $altflowstep){  
@@ -346,80 +320,32 @@ foreach($flows as $flow){
                                       // Get any intefaces, forms and rules.
                   
                   
-              // FORM AND FORM FIELDS
-                    $forms=Stepform::model()->findAll('step_id='.$altflowstep['id']);
-             if (count($forms)){
-             foreach($forms as $form){ 
-                      
-                         $formproperties=  Formproperty::model()->findAll('form_id='.$form->form_id);
-                        if (count($formproperties)){
-                        foreach($formproperties as $property){ 
-                       
-                       $x++;  
-                        $teststep=new Teststep;
-                        $teststep->number=$x;
-                        $teststep->testcase_id=$testcase_id;
-                        $teststep->action='Test Validation Rules';
-                        $teststep->result='UF-'.str_pad($property->form->number, 4, "0", STR_PAD_LEFT).' '.$property->form->name.' - field: '.$property->name;
-                        $teststep->save();
-                            }
-                            }
-                    }
-                  }
-                  
-                  
-            $rules=Steprule::model()->findAll('step_id='.$altflowstep['id']);
-             if (count($rules)){
-                   foreach($rules as $rule){ 
-                       $x++;  
-                       $teststep=new Teststep;
-                  
-                  $teststep->number=$x;
-                  $teststep->testcase_id=$testcase_id;
-                  $teststep->action='Verify rule';
-                  $teststep->result='BR-'.str_pad($rule->rule->number, 4, "0", STR_PAD_LEFT).' '.$rule->rule->title;
-                  $teststep->save();
-                   }
-             }
+            $this->stepForms($altflowstep['id'],$testcase_id);    
+            $this->stepRules($altflowstep['step_id'],$testcase_id);
+            $this->stepIfaces($altflowstep['step_id'],$testcase_id);    
+             
+              }
              
              
-                 $ifaces=Stepiface::model()->findAll('step_id='.$altflowstep['id']);
-             if (count($ifaces)){
-                   foreach($ifaces as $iface){ 
-                       $x++;  
-                       $teststep=new Teststep;
-                  
-                  $teststep->number=$x;
-                  $teststep->testcase_id=$testcase_id;
-                  $teststep->action='Verify interface';
-                  $teststep->result='UI-'.str_pad($iface->iface->number, 4, "0", STR_PAD_LEFT).' '.$iface->iface->name;
-                  $teststep->save();
-                   }
-             }
-             
-             
-           
-             
-             
-                  
-                  
-                         }                
+                                         
             
-                 $mainflowsteps=Step::model()->findAll('id >='.$endflow.' AND flow_id='.$mainflow[0]['id']);
-   // THEN START GOING THROUGH THE MAIN FLOW STEPS FROM THE FINISH OF THE ALT FLOW TO THE END.
- 
-        
-        foreach($mainflowsteps as $mainflowstep){  
-                  $x=$x+1;
-                  $teststep=new Teststep;
-                  $teststep->testcase_id=$testcase_id;
-                  $teststep->number=$x;
-                  $teststep->action=$mainflowstep['text'];
-                  $teststep->result=$mainflowstep['result'];
-                  $teststep->save();
-                         }   
+                         
+             foreach($steps as $mainflowstep){
+                if ($mainflowstep['number']>=$endstepnumber){
+                         $teststep=new Teststep;
+                          $teststep->testcase_id=$testcase_id;
+                          $teststep->number=$x;
+                          $teststep->testcase_id=$testcase_id;
+                          $teststep->action=$mainflowstep['text'];
+                          $teststep->result=$mainflowstep['result'];
+                          $teststep->save();
+                        }
+                  }                
+                         
+             
+          
                          // MAKE THE TEST RESULT ENTRY
-                            $result=new Testcaseresult;
+                $result=new Testcaseresult;
                 $result->testcase_id=$testcase_id;
                 $result->status=1;
                 $result->testrun_id=  Testrun::model()->getCurrentRun($testcase->project_id);
@@ -439,7 +365,7 @@ foreach($flows as $flow){
                 }
                   
       // Set other TC's for the UC to inactive.
-	$this->redirect(array('/usecase/view/','id'=>$id));
+	//$this->redirect(array('/usecase/view/id/'.$uc->usecase_id));
 		
 
  
@@ -452,7 +378,74 @@ foreach($flows as $flow){
 	 * If update is successful, the browser will be redirected to the 'view' page.
 	 * @param integer $id the ID of the model to be updated
 	 */
-	public function actionUpdate($id)
+	
+ 
+ private function stepForms($id,$testcase_id)
+ {
+     $x=0;
+      $forms=Form::model()->getStepForms($id);
+             if (count($forms)){
+             foreach($forms as $form){ 
+                      
+                        $formproperties=  Formproperty::model()->getFormProperty($form['form_id']);
+                        if (count($formproperties)){
+                        foreach($formproperties as $property){ 
+                       
+                       $x++;  
+                        $teststep=new Teststep;
+                        $teststep->number=$x;
+                        $teststep->testcase_id=$testcase_id;
+                        $teststep->action='Confirm Form Property';
+                        $teststep->result='UF-'.str_pad($form['number'], 4, "0", STR_PAD_LEFT).' '.$form['name'].' - field: '.$property['name'];
+                        $teststep->save();
+                            }
+                          }
+                    }
+                  }
+ }
+ 
+ private function stepRules($id,$testcase_id)
+ {
+     $x=0;
+      $rules=Rule::model()->getStepRules($id);
+             if (count($rules)){
+             foreach($rules as $rule){ 
+             
+              $x++;  
+              $teststep=new Teststep;
+              $teststep->number=$x;
+              $teststep->testcase_id=$testcase_id;
+              $teststep->action='Validate Business Rule';
+              $teststep->result='BR-'.str_pad($rule['number'], 4, "0", STR_PAD_LEFT).' '.$rule['title'];
+              $teststep->save();
+                          
+                    }
+                  }
+ }
+ 
+ private function stepIfaces($id,$testcase_id)
+ {
+     $x=0;
+      $ifaces=  Iface::model()->getStepIfaces($id);
+             if (count($ifaces)){
+             foreach($ifaces as $iface){ 
+             
+                       $x++;  
+                        $teststep=new Teststep;
+                        $teststep->number=$x;
+                        $teststep->testcase_id=$testcase_id;
+                        $teststep->action='Confirm User Interface';
+                        $teststep->result='IF-'.str_pad($iface['number'], 4, "0", STR_PAD_LEFT).' '
+                                . ''.$iface['name'];
+                        $teststep->save();
+                       
+                    }
+                  }
+ }
+ 
+ 
+ 
+ public function actionUpdate($id)
 	{
 		$model=$this->loadModel($id);
 

@@ -195,28 +195,65 @@ class StepController extends Controller
 	 */
 	public function actionDelete($id)
 	{
-		
+		$project=Yii::App()->session['project'];
                 $model=$this->loadModel($id);
+                $flow=Flow::model()->findbyPK(Version::model()->getVersion($model->flow_id,8));
+                $fid=$flow->id;
+                $flow_id=$flow->flow_id;
+                $usecase_id=$flow->usecase_id;
                 //$id=$model->flow->usecase_id;
-                $flow=$model->flow->id;
-                $flow_id=$model->flow->flow_id;
-                $flowmodel=Flow::model()->findbyPK($flow);
-                $version=Version::model()->getNextNumber($model->flow->usecase->package->project_id,9,3,$id,$model->step_id);  
+                $version=Version::model()->getNextNumber($project,9,3,$id,$model->step_id);  
 	   
             
                 //IF THIS IS THE LAST STEP, THEN DELETE THE FLOW, AND RENUMBER
-             $steps= Flow::model()->checkSteps($flow); // Update for versions
+             $steps= Flow::model()->checkSteps($flow->id); // Update for versions
              if ($steps==0){
                  
-                 $flowmodel->delete();// Needs to be a version delete
-                 
-                 FlowController::renumberFlows($id);
+             //$flow->delete();// Needs to be a version delete
+            
+            $version=Version::model()->getNextNumber($project,8,3,$fid,$flow_id); 
+            
+           // SOMETHING WRONG HERE - CAN't FIGURE IT OUT.
+            
+            
+            /*
+             * 
+             * 
+             * 
+             *   H H EEE L   PP
+             *   HHH EEE L   PP
+             *   H H EEE LLL P
+             * 
+             * 
+             * 
+             */
+            
+            
+            
+             $this->renumberFlows($usecase_id);
+             $this->redirect(array('/usecase/view/id/'.$usecase_id));
              }
-                  Step::model()->reNumber($flow);
-		$this->redirect(array('/step/update/flow/'.$flow_id.'/id/-1'));
+             Step::model()->reNumber($flow_id);
+            //echo 'renumbering flow '.$flow_id;
+            $this->redirect(array('/step/update/flow/'.$fid.'/id/-1'));
 		
 	}
 
+          	public function renumberFlows($usecase_id)
+       {
+               //echo 'Starting <br />';
+               $data = Flow::model()->getNextFlow($usecase_id);
+               $label=chr(ord('A')-1);
+               //print_r($data);
+               foreach($data as $line) {
+                   $label= chr(ord($label)+1);
+                   $flow=$this->loadModel($line['id']);
+                   $flow->name = $label;
+                   $flow->save(false);
+                   //echo 'name: '.$flow->name.'<br />';
+               }
+	}
+        
 	/**
 	 * Lists all models.
 	 */

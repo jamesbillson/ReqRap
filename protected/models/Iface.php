@@ -148,16 +148,16 @@ WHERE
             AND `x`.`release_id`=".$release."
             AND `t`.`release_id`=".$release."
             AND
-            `vr`.`object` =12 AND `vr`.`active`=1  AND `vr`.`project_id`=".$project."
+            `vr`.`object` =12 AND `vr`.`active`=1  
                  AND `vr`.`release`=".$release."
             AND
-            `vx`.`object` =15 AND `vx`.`active`=1   AND `vx`.`project_id`=".$project."  
+            `vx`.`object` =15 AND `vx`.`active`=1     
                  AND `vx`.`release`=".$release."
             AND
-            `vs`.`object` =9 AND `vs`.`active`=1 AND `vs`.`project_id`=".$project."
+            `vs`.`object` =9 AND `vs`.`active`=1 
                  AND `vs`.`release`=".$release."
             AND
-            `vf`.`object` =8 AND `vf`.`active`=1  AND `vf`.`project_id`=".$project."
+            `vf`.`object` =8 AND `vf`.`active`=1  
                  AND `vf`.`release`=".$release."
  
 
@@ -221,45 +221,55 @@ WHERE
 		
 		return $projects;
     }  
+    
+    
+         public function getStepIfaces($id)  //this is iface_id
+    {
+        $release=Yii::App()->session['release'];
+          
+             $sql="SELECT
+                 `r`.*,
+                 `x`.`id` as xid
+            From `iface` `r`
+            JOIN `stepiface` `x`
+            ON `x`.`iface_id`=`r`.`iface_id`
+            JOIN `step` `s`
+            ON `s`.`step_id`=`x`.`step_id`
+
+            JOIN `version` `vr`
+            ON `vr`.`foreign_key`=`r`.`id`
+            JOIN `version` `vx`
+            ON `vx`.`foreign_key`=`x`.`id`
+            JOIN `version` `vs`
+            ON `vs`.`foreign_key`=`s`.`id`
+          
+        WHERE
+            `s`.`step_id`=".$id."
+            AND
+            `vr`.`object` =12 AND `vr`.`active`=1 AND `vr`.`release`=".$release."
+            AND
+            `vx`.`object` =15 AND `vx`.`active`=1  AND `vx`.`release`=".$release."           
+            AND
+            `vs`.`object` =9 AND `vs`.`active`=1  AND `vs`.`release`=".$release."
+
+
+             GROUP BY `r`.`id`
+             ORDER BY `r`.`number` ASC";
+         
+          
+		$connection=Yii::app()->db;
+		$command = $connection->createCommand($sql);
+		$projects = $command->queryAll();
+		return $projects;
+    }  
+    
+    
        public function getCategoryIfaces($type_id)
     {
          
            
           $release=Yii::App()->session['release'];
-          /*
-        $sql="
-            SELECT 
-            `r`.`id` itemid,
-            `r`.*,
-            `p`.*,
-            `t`.`name` as type,
-            `t`.`interfacetype_id` as typenumber
-            FROM
-            `iface` `r`
-            JOIN `interfacetype` `t`
-            ON `t`.`interfacetype_id`=`r`.`type_id`            
-            LEFT OUTER JOIN `photo` `p`
-            ON `r`.`photo_id`=`p`.`photo_id`
-            JOIN `version` `v`
-            ON `v`.`foreign_key`=`r`.`id`
-            LEFT OUTER JOIN `version` `vp`
-            ON `vp`.`foreign_key`=`p`.`id`
-            JOIN `version` `vt`
-            ON `vt`.`foreign_key`=`t`.`id`
-            WHERE 
-            `v`.`object`=12 AND `v`.`active`=1 AND `v`.`release`=".$release."
-            AND 
-            `vt`.`object`=13 AND `vt`.`active`=1 AND `vt`.`release`=".$release." 
-            AND  
-             `vp`.`object`=11 AND `vp`.`active`=1 AND `vp`.`release`=".$release." 
-            AND           
-           
-            `r`.`release_id`=".$release."
-            AND
-            `t`.`interfacetype_id`=".$type_id."
-                GROUP BY `r`.`iface_id`";
-
-     */
+     
          $sql="
             SELECT 
             `r`.`id` itemid,

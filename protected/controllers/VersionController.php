@@ -145,6 +145,7 @@ class VersionController extends Controller
               public function actionMove($dir, $id, $object) //down 1, up 2
 	{
             $object_model= Version::$objects[$object];
+            $object_model=ucfirst($object_model);
             $model = $object_model::model()->findbyPK($id);
             $parent=Version::$display[$object]['parent'].'_id';
             $oldnum=$model->number;

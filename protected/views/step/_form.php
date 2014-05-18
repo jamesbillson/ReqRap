@@ -1,7 +1,7 @@
 <?php
 $project = Yii::App()->session['project'];
 $permission = (Yii::App()->session['permission'] == 1) ? true : false;
-$steps = Step::model()->getFlowSteps($model->id);
+$steps = Step::model()->getFlowSteps($model->flow_id);
 if (count($steps)):
     ?>  
     <table class="table"> 
