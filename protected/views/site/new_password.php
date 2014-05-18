@@ -12,7 +12,7 @@
 	<p class="note">Please enter the following details</p>
 
 	<?php echo $form->errorSummary($model); ?>
-
+<div id="reset_password_body">
 	<div class="row" style="position: relative;margin-bottom: 2px;height:50px;">
 		<?php //echo $form->labelEx($model,'New Password'); ?>
             <div class="w100">
@@ -36,7 +36,9 @@
                     'success' => "js:function(data) {
                 
                         if(data.success) {
+                            
                             $('.note').html(data.message);
+                            $('#reset_password_body').hide();
                         }
                         jQuery.each(data, function(key, value) {
                             jQuery('#'+key+'_em_').show().html(value.toString());
@@ -45,7 +47,7 @@
                     }"
                 ), array('class' => 'btn btn-primary')); ?>
 	</div>
-
+</div>
 <?php $this->endWidget(); ?>
 
 </div><!-- form -->

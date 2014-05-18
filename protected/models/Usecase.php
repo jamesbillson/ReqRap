@@ -253,14 +253,24 @@ class Usecase extends CActiveRecord
       public function getNextNumber($id)
     {
        // GEts the UC sequence number within the package
-              
-            $sql="SELECT max(`r`.`number`)as number
-                    From `usecase` `r`
-                    JOIN `package` `p`
-                    ON `p`.`package_id`=`r`.`package_id`
-                    WHERE `p`.`id`=".$id."
-                AND
-                `p`.`release_id`=".Yii::App()->session['release'];
+            $release=Yii::App()->session['release'];
+          
+            $sql="    
+            SELECT max(`u`.`number`)as number
+            FROM
+            `usecase` `u`
+            JOIN `package` `p`
+            ON `p`.`package_id`=`u`.`package_id`
+            JOIN `version` `vu`
+            ON `vu`.`foreign_key`=`u`.`id`
+            JOIN `version` `vp`
+            ON `vp`.`foreign_key`=`p`.`id`
+            WHERE 
+            `vu`.`active`=1 AND `vu`.`object`=10 AND `vu`.`release`=".$release."
+            AND
+            `vp`.`active`=1 AND `vp`.`object`=5 AND `vp`.`release`=".$release;
+        
+            
 		$connection=Yii::app()->db;
 		$command = $connection->createCommand($sql);
 		$projects = $command->queryAll();

@@ -59,10 +59,10 @@ class TestcaseController extends Controller
         public function actionRun($id)
 	{
             $testcase=$this->loadModel($id);
-            $project_id=$testcase->project_id;
+            $release_id=$testcase->release_id;
             $teststeps=  Teststep::model()->findAll('testcase_id='.$id);
             $laststep= Teststep::model()->getLastStep($id);
-            $testrun=Testrun::model()->getCurrentRun($project_id); 
+            $testrun=Testrun::model()->getCurrentRun($release_id); 
             $testcaseresult=Testcaseresult::model()->find('testrun_id='.$testrun.' AND testcase_id='.$id);
             
             
@@ -91,9 +91,9 @@ class TestcaseController extends Controller
             
 	// GET THE CURRENT TEST RUN.
         $testcase=$this->loadModel($id);
-        $project_id=$testcase->project_id;
+        $release_id=$testcase->project_id;
         $teststeps=  Teststep::model()->findAll('testcase_id='.$id);
-        $testrun=Testrun::model()->getCurrentRun($project_id);
+        $testrun=Testrun::model()->getCurrentRun($release_id);
        
         $rendered=0; // flag for which step is to have a form
         $complete=0; // flag to say the test case is finished.
@@ -152,19 +152,21 @@ class TestcaseController extends Controller
 	 * Creates a new model.
 	 * If creation is successful, the browser will be redirected to the 'view' page.
 	 */
-	public function actionCreate()
+	public function actionCreate($id)
 	{
-		
+		Yii::App()->session['release']=$id;
             
-            //Load a list of all the UC's
+            //echo 'Load a list of all the UCs';
             $data = Usecase::model()->getProjectUCs();
             
             //Call actionMake for each UC.
             if(count($data)){
                 
                 foreach($data as $usecase){
-                $this->actionMake($usecase['id']);
-                    
+             $this->actionMake($usecase['id']);
+              //echo "<pre>";
+              //print_r($usecase);
+              // echo "</pre>";
                 }
                 
             }
@@ -172,7 +174,7 @@ class TestcaseController extends Controller
             
             //Display the Test Case page at the end.
             
-            $this->redirect('project/view/tab/testcases');
+          $this->redirect(array('/project/view/tab/testcases'));
             
             
             
@@ -190,7 +192,7 @@ $release=Yii::App()->session['release'];
             
            // print_r($uc);
             $all_flows=Flow::model()->getUCFlow($uc->id);
-            //echo "<pre>";
+            echo "Loaded Flows";
             //print_r($all_flows);
             //echo "</pre>"; 
             $mainflow=$all_flows[0];
@@ -201,9 +203,9 @@ if (!empty($mainflow)){
     // Make a TC for this flow.        
         $testcase=new Testcase;
 
-	$testcase->number=Testcase::model()->getNextNumber($project);
+	$testcase->number=Testcase::model()->getNextNumber($release);
 	$testcase->usecase_id=$id;
-        $testcase->project_id=$project;
+        $testcase->release_id=$release;
         $testcase->name=$uc->name.'(main)';
         $testcase->preparation='None';
         $testcase->active=1;
@@ -233,15 +235,16 @@ if (!empty($mainflow)){
                     
                     
                 }  
-                
+                /*
                 $result=new Testcaseresult;
                 $result->testcase_id=$testcase_id;
                 $result->status=1;
-                $result->testrun_id=  Testrun::model()->getCurrentRun($testcase->project_id);
+                // ############ UPDATE GET CURRENT BUN to RELEASE
+                $result->testrun_id=  Testrun::model()->getCurrentRun($testcase->release_id);
                 $result->modified_date=date('Y-m-d H:i:s');
                 $result->user_id=Yii::app()->user->id;   
                       $result->save();  
-                        
+                  */      
                 
               } ELSE {
                         // The case hasn't saved 
@@ -264,9 +267,9 @@ if (!empty($all_flows[$i])){
         $startflow=$flow['startstep_id'];
         $endflow=$flow['rejoinstep_id'];
 
-	$testcase->number=Testcase::model()->getNextNumber($project);
+	$testcase->number=Testcase::model()->getNextNumber($release);
 	$testcase->usecase_id=$id;
-        $testcase->project_id=$project;
+        $testcase->release_id=$release;
         $testcase->name=$uc->name.'('.$flow['name'].')';
         $testcase->preparation='None';
         $testcase->active=1;
@@ -343,16 +346,16 @@ if (!empty($all_flows[$i])){
                   }                
                          
              
-          
+          /*
                          // MAKE THE TEST RESULT ENTRY
                 $result=new Testcaseresult;
                 $result->testcase_id=$testcase_id;
                 $result->status=1;
-                $result->testrun_id=  Testrun::model()->getCurrentRun($testcase->project_id);
+                $result->testrun_id=  Testrun::model()->getCurrentRun($testcase->release_id);
                 $result->modified_date=date('Y-m-d H:i:s');
                 $result->user_id=Yii::app()->user->id;   
                       $result->save();  
-                        
+               */         
                          
                          
                          
@@ -472,10 +475,10 @@ if (!empty($all_flows[$i])){
 	public function actionDelete($id,$ucid)
 	{
 		$model=$this->loadModel($id);
-         $proj_id=$model->project_id;
+         
                 $model->delete();
                 if ($ucid !=-1) $this->redirect(array('/usecase/view/id/'.$ucid));
-                $this->redirect(array('/project/view/id/'.$proj_id));
+                $this->redirect(array('/project/view/tab/details'));
 	}
 
 	/**

@@ -162,7 +162,7 @@ class ProjectController extends Controller
                $version=Version::model()->getNextNumber($project,13,1,$newid,$type->interfacetype_id);   
             }          
             
-            Testrun::model ()->createInitial($project); 
+          //  Testrun::model ()->createInitial($release); 
             Actor::model()->createInitial($project);
             Package::model()->createInitial($project);
                // Version::model ()->createInitial($project); 

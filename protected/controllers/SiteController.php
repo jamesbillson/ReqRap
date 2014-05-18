@@ -200,14 +200,31 @@ class SiteController extends Controller {
           //send the email
           $model->verification_code = substr(sha1($model->email . time()), 0, 10);
           $model->save(false);
-
+/*
           $message = $this->renderPartial('email_newpassword', array('code' => $model->verification_code), true);
           $headers = 'MIME-Version: 1.0' . "\r\n";
           $headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
           $headers .= 'From: '  .Yii::app()->params['adminEmail'] . "\r\n";
 
           mail($model->email, 'Forgot Password Email', $message, $headers);
+*/
+              $mail = new YiiMailer();
+              $mail->setFrom('info@reqrap.com', 'ReqRap Password Support');
+              $mail->setTo($model->email);
+              $mail->setSubject('ReqRap Password Reset');
+              $mail->setBody($model->firstname.',<br/>
+              We got a request to change your password. <br/>
+                Please 
+                <a href="'.Yii::app()->getBaseUrl(true).'/site/newpassword?code='.$model->verification_code.'">
+                Click here</a> to reset you password.<br/>
+                <br/>  
+                Alternatively you can copy this URL into your web browser:<br />
+                '.Yii::app()->getBaseUrl(true).'/site/newpassword?code='.$model->verification_code.'
 
+                ');
+              $mail->Send();
+          
+          
           $errors = CJSON::encode(array('success' => 'true', 'message' => 'Reset Password link sent to your email'));
         } else {
           $errors = CJSON::encode(array('success' => 'true', 'message' => 'Reset Password link sent to your email'));

@@ -27,7 +27,7 @@ class Testcase extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('number, name, project_id,preparation', 'required'),
+			array('number, name, release_id,preparation', 'required'),
 			array('number', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
@@ -43,7 +43,7 @@ class Testcase extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-               'project' => array(self::BELONGS_TO, 'Project', 'project_id'),
+               'release' => array(self::BELONGS_TO, 'Release', 'release_id'),
                 'testcaseresult'    =>array(self::HAS_ONE, 'Testcaseresult', 'testcase_id'),
 		);
 	}
@@ -59,8 +59,8 @@ class Testcase extends CActiveRecord
 			'name' => 'Name',
 			'preparation' => 'Preparation',
                     'active' => 'Is Active',
-                    'usecase_id' => 'usecase',
-                    'project_id' => 'project',
+                    'usecase_id' => 'Usecase',
+                    'release_id' => 'Release',
 		);
 	}
 
@@ -98,7 +98,7 @@ class Testcase extends CActiveRecord
               
         $sql="SELECT max(`r`.`number`)as number
            From `testcase` `r`
-            WHERE `r`.`project_id`=".$id;
+            WHERE `r`.`release_id`=".$id;
 		$connection=Yii::app()->db;
 		$command = $connection->createCommand($sql);
 		$projects = $command->queryAll();
@@ -119,7 +119,7 @@ class Testcase extends CActiveRecord
         JOIN usecase u
         ON t.usecase_id=u.id
         WHERE 
-        `t`.`project_id`=".$id;
+        `t`.`release_id`=".$id;
 
         $connection=Yii::app()->db;
 		$command = $connection->createCommand($sql);

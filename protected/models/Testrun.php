@@ -26,11 +26,11 @@ class Testrun extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('teststep_id, number, status', 'required'),
-			array('teststep_id, status', 'numerical', 'integerOnly'=>true),
+			array('release_id, number, status', 'required'),
+			array('release_id, status', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, teststep_id, status', 'safe', 'on'=>'search'),
+			array('id, release_id, status', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -52,7 +52,7 @@ class Testrun extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'teststep_id' => 'Teststep',
+			'release_id' => 'Release',
 			'status' => 'Status',
                     'number'=>'Number'
 		);
@@ -77,7 +77,7 @@ class Testrun extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id);
-		$criteria->compare('teststep_id',$this->teststep_id);
+		$criteria->compare('release_id',$this->release_id);
 		$criteria->compare('status',$this->status);
 
 		return new CActiveDataProvider($this, array(
@@ -91,7 +91,7 @@ class Testrun extends CActiveRecord
 		   $sql="SELECT `r`.`number`,`r`.`id`
                     From `testrun` `r`
                     WHERE `r`.`status`=1
-                    AND project_id=".$id;
+                    AND release_id=".$id;
 		$connection=Yii::app()->db;
 		$command = $connection->createCommand($sql);
 		$projects = $command->queryAll();
@@ -102,7 +102,7 @@ class Testrun extends CActiveRecord
         
           public function createInitial($id)
     {
-       $sql="INSERT INTO `testrun`(`number`, `status`, `project_id`) VALUES 
+       $sql="INSERT INTO `testrun`(`number`, `status`, `release_id`) VALUES 
            (1,1, ".$id.")";
                  $connection=Yii::app()->db;
         $command = $connection->createCommand($sql);
