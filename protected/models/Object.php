@@ -106,7 +106,7 @@ class Object extends CActiveRecord
             `v`.`active`=1
             AND
             `v`.`release`=".$release."         
-            ORDER BY `number`";         
+            ORDER BY `r`.`number`+1";         
      
 
      

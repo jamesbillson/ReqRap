@@ -206,14 +206,7 @@ class Flow extends CActiveRecord
               
               
               WHERE 
-              `u`.`project_id`=".$project."
-
-              AND 
-              `f`.`project_id`=".$project."
-              AND
-              `f`.`release_id`=".$release." 
              
-              AND 
               `vu`.`object`=10 AND `vu`.`active`=1 AND `vu`.`release`=".$release."
               AND
               `vf`.`object`=8 AND `vf`.`active`=1 AND `vf`.`release`=".$release." 

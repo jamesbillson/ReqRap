@@ -30,15 +30,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                     'url'=>'/usecase/history/id/'.$model->usecase_id,
                     
                       ),
-       array(
-                    'class' => 'bootstrap.widgets.TbButton',
-                    'type' => 'link', // '', 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
-                    'icon'=> 'check',
-                 'visible'=>$permission,
-
-                    'url'=>'/testcase/make/id/'.$model->id,
-                    
-                      ),
+     
                   
 )
           ));  

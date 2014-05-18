@@ -1,5 +1,5 @@
 
-<h3>Project: <a href="/project/view/tab/objects/id/<?php echo $model->project->id; ?>"><?php echo $model->project->name; ?></a></h3>
+<h3>Project: <a href="/project/view/tab/objects/id/<?php echo $model->release->project->id; ?>"><?php echo $model->release->project->name; ?></a></h3>
 <?php 
 
 if(!empty($model->usecase_id))
@@ -16,14 +16,17 @@ if(!empty($model->usecase_id))
 <br>
 <?php 
 $data=  Teststep::model()->findAll('testcase_id='.$model->id);
+/*
 $result=Testcaseresult::model()->findbyPK($model->testcaseresult->id);
 $new=false;
 $running=false;
 if($result->status == 1)$new=true;
 if($result->status == 2) $running=true;
-?>
 
-Test Status: <?php echo Testcaseresult::$status[$result->status]; ?>
+ * 
+ */
+?>
+Test Status: <?php //echo Testcaseresult::$status[$result->status]; ?>
 <?php
 
 $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
@@ -33,6 +36,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
     // the table will be 0-padding to the box
     'htmlOptions' => array('class'=>'bootstrap-widget-table'),
        'headerButtons' => array(
+           /*
                 array(
                     'class' => 'bootstrap.widgets.TbButton',
                     'type' => 'primary', // '', 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
@@ -41,14 +45,17 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                     'visible'=>$new,
                     
                       ),
- array(
+                array(
                     'class' => 'bootstrap.widgets.TbButton',
                     'type' => 'primary', // '', 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
                     'label'=> 'Continue Run',
                     'url'=>'/testcase/run/id/'.$model->id,
                     'visible'=>$running,
                       ),     
-)
+
+            * 
+            */
+           )
 ));?>
 <table><tr><td>Test Preparation: <?php echo $model->preparation;?></td></tr></table>
            

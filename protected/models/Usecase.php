@@ -266,6 +266,8 @@ class Usecase extends CActiveRecord
             JOIN `version` `vp`
             ON `vp`.`foreign_key`=`p`.`id`
             WHERE 
+            `p`.`id`=".$id."
+            AND
             `vu`.`active`=1 AND `vu`.`object`=10 AND `vu`.`release`=".$release."
             AND
             `vp`.`active`=1 AND `vp`.`object`=5 AND `vp`.`release`=".$release;
