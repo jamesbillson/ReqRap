@@ -87,7 +87,7 @@ class StepruleController extends Controller
                                 $rule->project_id=$project;
 
                                 $rule->save(false);
-                                $version=Version::model()->getNextNumber($project,1,1,$rule->primaryKey,$rule->rule_id);
+                                $version=Version::model()->getNextNumber($project,1,3,$rule->primaryKey,$rule->rule_id);
 
                                 $model->rule_id=$rule->rule_id;
                             }		
