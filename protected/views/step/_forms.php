@@ -3,12 +3,12 @@
                                     $links = Step::model()->getStepLinks($item['id'], 2, 14); // centralise all these.
                                     foreach ($links as $link) {
                                         ?>
-                                        UF-<?php echo str_pad($link['number'], 3, "0", STR_PAD_LEFT); ?>  <?php echo $link['name']; ?> <a href="/stepform/delete/id/<?php echo $link['xid']; ?>"><i class="icon-remove-sign"></i></a><br/>
+<a href="/form/view/id/<?php echo $link['form_id']; ?>">UF-<?php echo str_pad($link['number'], 3, "0", STR_PAD_LEFT); ?></a>  <?php echo $link['name']; ?> <a href="/stepform/delete/id/<?php echo $link['xid']; ?>"><i class="icon-remove-sign"></i></a><br/>
                                 <?php } ?>
                                     <br />
 
                                             <?php $forms =Step::model()->getStepLinks($item['id'], 2, 14); ?>  
-                                    
+                               
 <?php $this->beginWidget('bootstrap.widgets.TbModal', array('id'=>'formsModal')); ?>
  
 <div class="modal-header">
