@@ -84,7 +84,7 @@ class StepformController extends Controller
                      $form->name=$_POST['new_form'];
                      $form->project_id=$project;
                      $form->save(false);
-                     $version=Version::model()->getNextNumber($project,2,3,$form->primaryKey,$form->form_id);
+                     $version=Version::model()->getNextNumber($project,2,1,$form->primaryKey,$form->form_id);
                    
                      $model->form_id=$form->form_id;
                  }	

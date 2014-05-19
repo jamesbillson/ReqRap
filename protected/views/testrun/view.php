@@ -1,28 +1,48 @@
 <?php
-/* @var $this TestrunController */
-/* @var $model Testrun */
 
-$this->breadcrumbs=array(
-	'Testruns'=>array('index'),
-	$model->id,
-);
+$data=  Testrun::model()->getTestRun($id);?>
 
-$this->menu=array(
-	array('label'=>'List Testrun', 'url'=>array('index')),
-	array('label'=>'Create Testrun', 'url'=>array('create')),
-	array('label'=>'Update Testrun', 'url'=>array('update', 'id'=>$model->id)),
-	array('label'=>'Delete Testrun', 'url'=>'#', 'linkOptions'=>array('submit'=>array('delete','id'=>$model->id),'confirm'=>'Are you sure you want to delete this item?')),
-	array('label'=>'Manage Testrun', 'url'=>array('admin')),
-);
+<table> <thead>
+    <th>Test Action</th>
+    <th>
+     Expected Result   
+    </th>
+    <th>
+       Status 
+    </th>
+    <th>
+      Comment  
+    </th>
+   </thead>
+   
+   <tbody>
+       <tr>
+           <?php
+foreach($data as $teststep){
 ?>
+           <td>
+          <?php echo $teststep['action'] ; ?>     
+           </td>
+           <td>
+             <?php echo $teststep['result'] ; ?>  
+           </td>
+            <td>
+              <?php echo Testresult::$testresult[$teststep['testresult']] ; ?> 
+           </td>
+            <td>
+              <?php echo $teststep['comments'] ; ?> 
+           </td>
+       </tr>
+       <?php
+        }
+        ?>
+       
+   </tbody>
+       
+</table>
 
-<h1>View Testrun #<?php echo $model->id; ?></h1>
 
-<?php $this->widget('zii.widgets.CDetailView', array(
-	'data'=>$model,
-	'attributes'=>array(
-		'id',
-		'teststep_id',
-		'status',
-	),
-)); ?>
+
+
+
+

@@ -44,7 +44,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
 
               <td>  <b>Package</b> 
               </td>
-              <td>   <a href="/package/view/tab/usecases/id/<?php echo $package['id']; ?>"><?php echo $package['name'] ; ?></a>
+              <td>   <a href="/package/view/tab/usecases/id/<?php echo $package['package_id']; ?>"><?php echo $package['name'] ; ?></a>
               </td>
                   
           </tr>

@@ -7,6 +7,7 @@ echo $this->renderPartial('/project/head',array('tab'=>'usecases')); ?>
   
     //$type = Company::model()->findbyPK($mycompany)->type; 
     $permission=Yii::App()->session['permission'];
+    $phase=Yii::App()->session['phase'];
     $totalstages=0;
     $status = array('invited','confirmed');
     $owner=($permission==1)? True : False;
@@ -33,6 +34,7 @@ $active['usecases']=FALSE;
 $active['forms']=FALSE;
 $active['followers']=FALSE;
 $active['testcases']=FALSE;
+$active['testruns']=FALSE;
 
  $active[$tab]=TRUE;
 
@@ -97,10 +99,16 @@ $active['testcases']=FALSE;
  
        $tabs[] = array('id' => 'testcases',
             'label' => 'Test Cases',
+           'visible'=> ($phase==2),
             'content' => $this->renderPartial('_testcases',
                     compact('model','status'),true,false),'active'=>$active['testcases']); 
 
-    
+           $tabs[] = array('id' => 'testruns',
+            'label' => 'Test Runs',
+           'visible'=> ($phase==2),
+            'content' => $this->renderPartial('_testruns',
+                    compact('model','status'),true,false),'active'=>$active['testruns']); 
+
 ?>
 <?php  $this->widget('bootstrap.widgets.TbTabs', array(
     'id' => 'mytabs',

@@ -10,7 +10,11 @@
  */
 class Testrun extends CActiveRecord
 {
-	/**
+	
+        public static $status = array(0 => 'New',
+        2 => 'Running',
+        3 => 'Complete');
+    /**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
@@ -85,18 +89,26 @@ class Testrun extends CActiveRecord
 		));
 	}
 
-        	public function getCurrentRun($id)
+        	public function getTestRun($id)
 	{
 		
-		   $sql="SELECT `r`.`number`,`r`.`id`
+		   $sql="SELECT `r`.`number`,
+                       `s`.`action`,
+                       `s`.`result`,
+                       `t`.`id`,
+                       `t`.`comments`,
+                       `t`.`result` as testresult
                     From `testrun` `r`
-                    WHERE `r`.`status`=1
-                    AND release_id=".$id;
+                    JOIN `testresult` `t`
+                    ON `t`.`testrun_id`=`r`.`id`
+                    JOIN `teststep` `s`
+                    ON `s`.`id`=`t`.`teststep_id`
+                    WHERE `r`.`id`=".$id;
 		$connection=Yii::app()->db;
 		$command = $connection->createCommand($sql);
 		$projects = $command->queryAll();
 
-		return $projects[0]['id'];
+		return $projects;
 	}
 
         

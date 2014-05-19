@@ -58,7 +58,42 @@ class TestcaseController extends Controller
 
         public function actionRun($id)
 	{
-            $testcase=$this->loadModel($id);
+           
+            // Make a Test Run with the $id TEST CASE related to it.
+            
+           	$model=new Testrun;
+                $model->release_id=Yii::App()->session['release'];
+                $model->number=1;
+                $model->testcase_id=$id;
+                $model->status=1;
+		$model->save(false);
+                $testrun=$model->getPrimaryKey();
+		
+            // Make a Test Result for each Test Step related to the Test RUn
+            // Set them all to 'Not Tested'
+            
+                $teststeps=  Teststep::model()->findall('testcase_id='.$id);
+                foreach ($teststeps as $teststep){
+                
+                    $result=new Testresult;
+                    $result->testrun_id=$testrun;
+                    $result->teststep_id=$teststep->id;
+                    $result->user_id=Yii::App()->user->id;
+                    $result->result=4;
+                    $result->comments='None';
+                    $result->save(false);
+                    
+                }
+                
+            
+            // Show a spreadsheet style form with all the Steps, Results, and Comments.
+            
+            
+                $this->redirect(array('/testrun/view/id/'.$testrun));
+            
+            
+            
+            /* $testcase=$this->loadModel($id);
             $release_id=$testcase->release_id;
             $teststeps=  Teststep::model()->findAll('testcase_id='.$id);
             $laststep= Teststep::model()->getLastStep($id);
@@ -133,7 +168,7 @@ class TestcaseController extends Controller
 // IF WE get to the end, and they are all filled out, then the test case is done
                 if($teststep->id == $rendered) $complete=1;
                 //IF WE get a BLOCK then the test case is done.
-             */   
+              
                 
         // LOAD the form with a new Testresult model.
          $this->render('run',array(
@@ -146,12 +181,10 @@ class TestcaseController extends Controller
                         'pass'=>$pass,
                         'testrun'=>$testrun
 		));
+         */
         } 
         
-	/**
-	 * Creates a new model.
-	 * If creation is successful, the browser will be redirected to the 'view' page.
-	 */
+
 	public function actionCreate($id)
 	{
 		Yii::App()->session['release']=$id;
