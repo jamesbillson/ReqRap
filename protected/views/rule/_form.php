@@ -29,11 +29,11 @@
 
 	<?php echo $form->labelEx($model,'text'); ?>
 		<?php $this->widget(
-    'bootstrap.widgets.TbRedactorJs',
-    [
-        'name' => 'Rule[text]',
-        'value' => $model->text,
-    ]
+                'bootstrap.widgets.TbRedactorJs',
+                array(
+                    'name' => 'Rule[text]',
+                    'value' => $model->text,
+                )
                         );?>
                             <?php echo $form->error($model,'text'); ?>
 <br /><br />

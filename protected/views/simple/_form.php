@@ -39,10 +39,10 @@
 	<?php echo $form->labelEx($model,'description'); ?>
 		<?php $this->widget(
     'bootstrap.widgets.TbRedactorJs',
-    [
+    array(
         'name' => 'Simple[description]',
         'value' => $model->description,
-    ]
+    )
                         );?></div>
 <br /><br />
 

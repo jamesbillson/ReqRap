@@ -28,10 +28,10 @@
 	<?php echo $form->labelEx($model,'description'); ?>
 		<?php $this->widget(
     'bootstrap.widgets.TbRedactorJs',
-    [
+    array(
         'name' => 'Category[description]',
         'value' => $model->description,
-    ]
+    )
                         );?></div>
 <br /><br />
 	<div class="row buttons">
