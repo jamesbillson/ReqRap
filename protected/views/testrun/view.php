@@ -18,19 +18,50 @@ $data=  Testrun::model()->getTestRun($id);?>
    <tbody>
        <tr>
            <?php
-foreach($data as $teststep){
-?>
+            foreach($data as $teststep){
+                $testresult=Testresult::model()->findbyPK($teststep['id']);
+               
+                
+            ?>
            <td>
-          <?php echo $teststep['action'] ; ?>     
+           
+                    <?php echo $teststep['action'] ; ?>     
            </td>
            <td>
              <?php echo $teststep['result'] ; ?>  
            </td>
             <td>
-              <?php echo Testresult::$testresult[$teststep['testresult']] ; ?> 
+                   
+                <?php
+              
+    $this->widget('editable.EditableField', array(
+        'type'      => 'select',
+        'model'     => $testresult,
+        'attribute' => 'result',
+        'url'       => $this->createUrl('testresult/updateResult'), 
+        'source'    => Editable::source(Testresult::$testresult, 'status_id', 'status_text'),
+        //or you can use plain arrays:
+        //'source'    => Editable::source(array(1 => 'Status1', 2 => 'Status2')),
+        'placement' => 'right',
+    ));
+                 
+?>
+             
            </td>
             <td>
-              <?php echo $teststep['comments'] ; ?> 
+            
+                
+             <?php
+    $this->widget('editable.Editable', array(
+        'type'      => 'text',
+        'name'      => 'comments',
+        'pk'        => $teststep['id'],
+        'text'      => $teststep['comments'],
+        'url'       => $this->createUrl('testresult/updateResult'), 
+        'title'     => 'Test Comment',
+        'placement' => 'right'
+    ));
+?>
            </td>
        </tr>
        <?php

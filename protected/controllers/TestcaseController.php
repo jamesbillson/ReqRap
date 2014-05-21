@@ -32,7 +32,7 @@ class TestcaseController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update','make','delete','run'),
+				'actions'=>array('create','update','results', 'make','delete','run','viewrun'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -55,7 +55,23 @@ class TestcaseController extends Controller
 			'model'=>$this->loadModel($id),
 		));
 	}
-
+        
+        public function actionViewRun($id)
+	{
+		$model=Testrun::model()->findbyAttributes(array('testcase_id'=>$id));
+                
+                $this->render('/testrun/view',array(
+			'id'=>$model->id,
+		));
+	}
+        
+           public function actionResults($id)
+	{
+		$this->render('/testrun/results',array(
+			'id'=>$id,
+		));
+	}
+        
         public function actionRun($id)
 	{
            
@@ -65,7 +81,7 @@ class TestcaseController extends Controller
                 $model->release_id=Yii::App()->session['release'];
                 $model->number=1;
                 $model->testcase_id=$id;
-                $model->status=1;
+                $model->status=2;
 		$model->save(false);
                 $testrun=$model->getPrimaryKey();
 		

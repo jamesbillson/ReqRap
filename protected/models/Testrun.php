@@ -11,7 +11,7 @@
 class Testrun extends CActiveRecord
 {
 	
-        public static $status = array(0 => 'New',
+        public static $status = array(1 => 'New',
         2 => 'Running',
         3 => 'Complete');
     /**

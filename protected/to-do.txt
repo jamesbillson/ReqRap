@@ -2,7 +2,7 @@ PRE DEMO Changes
 ----------------------------------------
 
 Index page is messed up 
-   - remove Reqer from title.
+
    - change Requirements to Applications
 
 
@@ -27,7 +27,6 @@ Clean up all interfaces for each object
 18=>'simple',       #R Create   Update   History  #RB 
 
 
-Rich text entry into all description fields
 
 Order/re-order of:
      Simple Requirements within Category
@@ -37,14 +36,20 @@ Order/re-order of:
      Form properties
 ?? other?
 
+
+## RELEASES
 When deleting a release, there must be a draft release left at the end of the process - 
 make it so we can't delete the draft, you would have to finalise it first.
+
+The release should be swapped, so the Draft has all the history, and the Release has the new record.
+
+Project Status - if its 'finished' the draft release doesn't show.
+
 
 Photo import - not currently handled.  Needs to make a copy of the image files.
 
 Number displayed at the top of the add simple screen is incorrect, and probably un-necessary.
 
-Package name on use case view is wrong version ?? Not sure if still an issue
 
 
 

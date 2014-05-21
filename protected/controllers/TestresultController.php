@@ -32,7 +32,7 @@ class TestresultController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update'),
+				'actions'=>array('create','update','updateresult'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -103,6 +103,15 @@ class TestresultController extends Controller
 		));
 	}
 
+        
+        public function actionUpdateResult()
+	
+        {
+            $es = new EditableSaver('Testresult');  //'User' is name of model to be updated
+            $es->update();
+
+	}
+        
 	/**
 	 * Deletes a particular model.
 	 * If deletion is successful, the browser will be redirected to the 'admin' page.

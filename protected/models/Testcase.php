@@ -45,7 +45,7 @@ class Testcase extends CActiveRecord
 		return array(
                'release' => array(self::BELONGS_TO, 'Release', 'release_id'),
                 'testcaseresult'    =>array(self::HAS_ONE, 'Testcaseresult', 'testcase_id'),
-                    'testrun'    =>array(self::HAS_MANY, 'Testrun', 'testcase_id'),
+                'testrun' =>array(self::HAS_MANY, 'Testrun', 'testcase_id'),
 		);
 	}
 

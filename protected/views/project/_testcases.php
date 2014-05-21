@@ -49,12 +49,12 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
 
             <?php foreach($testcases as $testcase){
               $testruns=  Testrun::model()->findAll('testcase_id='.$testcase->id);  
-              $running=false;
-              $closed=false;
+              $running=$closed=false;
               $notrun=true;
               foreach($testruns as $testrun){
-              if ($testrun->status==2){ $closed=true; $notrun=false;}
-              if ($testrun->status==1){ $running=true ; $closed=$notrun=false ;}
+              if ($testrun->status==3){ $closed=true;$notrun=false ;}
+                  if ($testrun->status==2){ $running=true;$notrun=false ;}
+          
               
               }
               
@@ -78,10 +78,10 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                       Not Run
                        <?php }
                        if($running) { ?>
-                    <a href="/testrun/view/id/<?php echo $testcase['id'];?>">Running</a>
+                    <a href="/testcase/viewrun/id/<?php echo $testcase->id;?>">Running</a>
                     <?php } 
-                    if ($closed) { echo 'Completed'.count($testruns).' runs.';?>
-                    <a href="/testcase/results/">view runs</a> Last Run score.
+                    if ($closed) { echo 'Completed '.count($testruns).' runs.';?>
+                    <a href="/testcase/results/id/<?php echo $testcase->id;?>">view runs</a> Last Run score.
                     <?php } ?>
                         
                     </td> 
@@ -93,7 +93,12 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                         
                        <a href="/testcase/run/id/<?php echo $testcase['id'];?>"><i class="icon-check" rel="tooltip" title="Run the Test Case"></i></a> 
                     
-                       <?php } ?>  
+                       <?php } ?> 
+                        <?php if($closed) { ?>
+                        
+                       <a href="/testcase/run/id/<?php echo $testcase['id'];?>"><i class="icon-repeat" rel="tooltip" title="Re-Run the Test Case"></i></a> 
+                    
+                       <?php } ?> 
                        
                        <a href="/release/delete/id/<?php echo $testcase['id'];?>"><i class="icon-remove-sign text-error" rel="tooltip" title="Remove"></i></a> 
                     
