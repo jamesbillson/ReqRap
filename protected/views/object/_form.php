@@ -24,11 +24,16 @@
 		<?php echo $form->textField($model,'name',array('size'=>60,'maxlength'=>255)); ?>
 		<?php echo $form->error($model,'name'); ?>
 	</div>
-	<div class="row">
-		<?php echo $form->labelEx($model,'description'); ?>
-		<?php echo $form->textArea($model,'description',array('rows'=>6, 'class'=>'span8')); ?>
-		<?php echo $form->error($model,'description'); ?>
-	</div>
+	     <div class="row">
+	<?php echo $form->labelEx($model,'description'); ?>
+		<?php $this->widget(
+    'bootstrap.widgets.TbRedactorJs',
+    [
+        'name' => 'Object[description]',
+        'value' => $model->description,
+    ]
+                        );?></div>
+<br /><br />
 		<?php echo $form->hiddenField($model,'project_id',array('value'=>$project_id)); ?>
 	
 

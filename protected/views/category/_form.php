@@ -24,16 +24,16 @@
 		<?php echo $form->textField($model,'name',array('size'=>60,'maxlength'=>255)); ?>
 		<?php echo $form->error($model,'name'); ?>
 	</div>
-	<div class="row">
-		<?php echo $form->labelEx($model,'description'); ?>
-		<?php echo $form->textArea($model,'description',array('rows'=>6, 'class'=>'span8')); ?>
-		<?php echo $form->error($model,'description'); ?>
-                <?php //echo $form->html5EditorRow($model, 'description' ?>
-    
-            
-	</div>
-		
-
+        <div class="row">
+	<?php echo $form->labelEx($model,'description'); ?>
+		<?php $this->widget(
+    'bootstrap.widgets.TbRedactorJs',
+    [
+        'name' => 'Category[description]',
+        'value' => $model->description,
+    ]
+                        );?></div>
+<br /><br />
 	<div class="row buttons">
 		<?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>
 	</div>

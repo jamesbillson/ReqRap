@@ -60,7 +60,7 @@ if(isset(Yii::App()->session['project'])) {
 </td>
 <td>
      <?php
-    if($release != $currentrelease){
+    if(isset($currentrelease) && $release != $currentrelease){
       
       ?>
         <a href="/release/set/id/<?php echo $currentrelease;?>"><i class="icon-exclamation-sign text-error" rel="tooltip" title="Go to current release"></i></a> 
