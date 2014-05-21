@@ -162,14 +162,25 @@ class StepruleController extends Controller
  
             public function actionDelete($id)
 	{
-                $model=Steprule::model()->findByPK($id);
-                $flow=$model->step->flow_id;
-                $step_id=$model->step->id;
-                $project_id=$model->step->flow->usecase->package->project_id;
-                $version=Version::model()->getNextNumber($project_id,16,3,$model->id,$model->steprule_id);
-                  
+               $project_id=Yii::App()->session['project'];
+               $model=Steprule::model()->findByPK($id);
+               $step=Step::model()->findByPK(Version::model()->getVersion($model->step_id,9));
+               $flow=Step::model()->getStepParentFlow($step->id);
+               
+               $version=Version::model()->getNextNumber($project_id,16,3,$model->id,$model->steprule_id);
+             //  echo "<pre>";
+             //  print_r($step);
+             //  echo "</pre>";
 
-		$this->redirect(array('/step/update/flow/'.$flow.'/id/'.$step_id));
+              // echo "<pre>";
+              // print_r($flow);
+              // echo "</pre>";
+               
+$this->redirect(array('/step/update/flow/'.$flow['id'].'/id/'.$step['id']));
+                
+                
+                
+                
 	}
         
  

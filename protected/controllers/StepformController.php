@@ -160,14 +160,16 @@ class StepformController extends Controller
 	 
         public function actionDelete($id)
 	{
-		$model=Stepform::model()->findbyPK($id);
-                $step_id=$model->step->id;
-                $flow=$model->step->flow_id;
-                $project_id=$model->step->flow->usecase->package->project_id;
-                $version=Version::model()->getNextNumber($project_id,14,3,$model->id,$model->stepform_id);
-                  
-
-		$this->redirect(array('/step/update/flow/'.$flow.'/id/'.$step_id));
+		  $project_id=Yii::App()->session['project'];
+               $model=Stepform::model()->findByPK($id);
+               $step=Step::model()->findByPK(Version::model()->getVersion($model->step_id,9));
+               $flow=Step::model()->getStepParentFlow($step->id);
+               
+               $version=Version::model()->getNextNumber($project_id,14,3,$model->id,$model->stepform_id);
+     
+               
+$this->redirect(array('/step/update/flow/'.$flow['id'].'/id/'.$step['id']));
+                
 	}
         
         

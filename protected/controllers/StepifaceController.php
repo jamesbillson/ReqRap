@@ -169,16 +169,16 @@ class StepifaceController extends Controller
         public function actionDelete($id)
 	{
              	$project=Yii::App()->session['project'];   
-                //$model=Stepiface::model()->findbyPK($id);
-                $model = Stepiface::model()->with('step')->findByPk($id);
-                $step = Step::model()->with('flow')->findByPk($model->step->id);
-                $flow_id=$step->flow->id;
-                $step_id=$model->step->id;
+                $model=Stepiface::model()->findbyPK($id);
                
-                $version=Version::model()->getNextNumber($project,15,3,$model->id,$model->stepiface_id);
-                  
-
-		$this->redirect(array('/step/update/id/'.$step_id.'/flow/'.$flow_id));
+               $step=Step::model()->findByPK(Version::model()->getVersion($model->step_id,9));
+               $flow=Step::model()->getStepParentFlow($step->id);
+               
+               $version=Version::model()->getNextNumber($project,15,3,$model->id,$model->stepiface_id);
+    
+               
+$this->redirect(array('/step/update/flow/'.$flow['id'].'/id/'.$step['id']));
+                
 	}
         
         
