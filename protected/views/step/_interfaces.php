@@ -9,7 +9,14 @@
                             <br />
 
 <?php $interfaces = Iface::model()->getProjectIfaces($project); ?>   
-<?php $this->beginWidget('bootstrap.widgets.TbModal', array('id'=>'interfaceModal')); ?>
+<?php $this->beginWidget('bootstrap.widgets.TbModal', array(
+        'id'=>'interfaceModal',
+        'fade' => false,
+        'options' => array(
+            'backdrop' => false
+        )
+    ));
+?>
  
 <div class="modal-header">
     <a class="close" data-dismiss="modal">&times;</a>
@@ -39,13 +46,5 @@
  
 <?php $this->endWidget(); ?>
                             
-                            
-<?php $this->widget('bootstrap.widgets.TbButton', array(
-    'label'=>'+Add Interface',
-    'type'=>'primary',
-    'htmlOptions'=>array(
-        'data-toggle'=>'modal',
-        'data-target'=>'#interfaceModal',
-    ),
-)); ?>
+<a href="#" onclick="$('#interfaceModal').modal('toggle'); var pos = $(this).offset(); $('#interfaceModal').css({'left': 730, 'top': pos.top - $(window, document).scrollTop() - 100}); return false;"><i class="icon-plus-sign-alt" rel="tooltip" title="Add Interface"></i> Add Interface</a>
               

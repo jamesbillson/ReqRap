@@ -9,7 +9,14 @@
 
                                             <?php $forms =Step::model()->getStepLinks($item['id'], 2, 14); ?>  
                                
-<?php $this->beginWidget('bootstrap.widgets.TbModal', array('id'=>'formsModal')); ?>
+<?php $this->beginWidget('bootstrap.widgets.TbModal', array(
+        'id'=>'formsModal',
+        'fade' => false,
+        'options' => array(
+            'backdrop' => false
+        )
+    ));
+?>
  
 <div class="modal-header">
     <a class="close" data-dismiss="modal">&times;</a>
@@ -35,12 +42,4 @@
  
 <?php $this->endWidget(); ?>                       
                                     
-                                    
-<?php $this->widget('bootstrap.widgets.TbButton', array(
-    'label'=>'+Add Forms',
-    'type'=>'primary',
-    'htmlOptions'=>array(
-        'data-toggle'=>'modal',
-        'data-target'=>'#formsModal',
-    ),
-)); ?>
+<a href="#" onclick="$('#formsModal').modal('toggle'); var pos = $(this).offset(); $('#formsModal').css({'left': 730, 'top': pos.top - $(window, document).scrollTop() - 100}); return false;"><i class="icon-plus-sign-alt" rel="tooltip" title="Add Forms"></i> Add Forms</a>

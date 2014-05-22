@@ -59,6 +59,7 @@
                             <td>
                              
                             <strong>Step <?php echo $step['number'];?></strong> 
+                            <a href="/step/update/flow/1/id/<?php echo $step['id'];?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a>
                             </td>
                             <td>
                             <?php

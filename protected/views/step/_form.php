@@ -1,3 +1,9 @@
+<style type="text/css">
+    .modal {
+        width: 252px;
+        margin-left: -126px;
+    }
+</style>
 <?php
 $project = Yii::App()->session['project'];
 $permission = (Yii::App()->session['permission'] == 1) ? true : false;
@@ -49,7 +55,7 @@ if (count($steps)):
                                     <tr>
                                         <td>  
                                             <?php if ($permission) { ?>
-                                                <a href="/step/insert/id/<?php echo $steps[$key]['id'] ?>"><i class="" rel="tooltip" title="Insert a new step"></i>+ Add Step</a> 
+                                                <a href="/step/insert/id/<?php echo $steps[$key]['id'] ?>"><i class="icon-plus-sign-alt" rel="tooltip" title="Insert a new step"></i> Add Step</a>
                                             <?php } ?> 
                                         </td> 
                                     </tr>

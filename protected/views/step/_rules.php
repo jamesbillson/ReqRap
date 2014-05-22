@@ -11,9 +11,16 @@
                                 
                                 
                                 
-<?php $this->beginWidget('bootstrap.widgets.TbModal', array('id'=>'rulesModal')); ?>
+<?php $this->beginWidget('bootstrap.widgets.TbModal', array(
+        'id'=>'rulesModal',
+        'fade' => false,
+        'options' => array(
+            'backdrop' => false
+        )
+    ));
+?>
  
-<div class="modal-header">
+<div class="modal-header">,
     <a class="close" data-dismiss="modal">&times;</a>
     <h4>Add Rules</h4>
 </div>
@@ -37,15 +44,7 @@
  
 <?php $this->endWidget(); ?>
                                 
-                                
-                 <?php $this->widget('bootstrap.widgets.TbButton', array(
-    'label'=>'+Add Rule',
-    'type'=>'primary',
-    'htmlOptions'=>array(
-        'data-toggle'=>'modal',
-        'data-target'=>'#rulesModal',
-    ),
-)); ?>               
+<a href="#" onclick="$('#rulesModal').modal('toggle'); var pos = $(this).offset(); $('#rulesModal').css({'left': 730, 'top': pos.top - $(window, document).scrollTop() - 100}); return false;"><i class="icon-plus-sign-alt" rel="tooltip" title="Add Rule"></i> Add Rule</a>             
                                 
                                 
                                 
