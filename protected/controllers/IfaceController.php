@@ -130,9 +130,11 @@ class IfaceController extends Controller
                
                 $new->type_id=$model->type_id;
                 $new->number=$model->number;
-		if(isset($_POST['Iface']))
+		if(isset($_POST['Iface'])|| $ucid==0)
 		{
+      if($ucid==-1){
 		 $new->attributes=$_POST['Iface'];
+      }
                  $new->number=$model->number;
                  $new->project_id=$project;
                  $new->iface_id=$model->iface_id;
@@ -156,29 +158,37 @@ class IfaceController extends Controller
 			'model'=>$new,'id'=>$project
 		));
 	}
-
 	public function actionaddimage($iface, $id)
-	{
-        
-            $release=Yii::App()->session['release'];
-            $project=Yii::App()->session['project'];
-            $model=$this->loadVersion($iface);
-                 $new= new Iface;
-		 $new->name=$model->name;
-                 $new->type_id=$model->type_id;
-                 $new->number=$model->number;
-                 $new->photo_id=$id;
-		 $new->number=$model->number;
-                 $new->project_id=$project;
-                 $new->iface_id=$model->iface_id;
-                 $new->release_id=$release;	
-                 if($new->save()){
-                                 $version=Version::model()->getNextNumber($project,12,2,$new->primaryKey,$new->iface_id);   
+	{       
+                 $new = new Iface;
+                 $isAdd = $new->addImage($iface, $id);
+                 if($isAdd==true){
+                                 $version=Version::model()->getNextNumber($new->project_id,12,2,$new->primaryKey,$new->iface_id);   
                                  }
 		
-		$this->redirect('/iface/view/id/'.$new->iface_id);
+                $this->redirect('/iface/view/id/'.$new->iface_id);
         }
-        
+//  public function actionaddimage($iface, $id)
+// {
+//        
+//            $release=Yii::App()->session['release'];
+//            $project=Yii::App()->session['project'];
+//            $model=$this->loadVersion($iface);
+//                 $new= new Iface;
+//   $new->name=$model->name;
+//                 $new->type_id=$model->type_id;
+//                 $new->number=$model->number;
+//                 $new->photo_id=$id;
+//   $new->number=$model->number;
+//                 $new->project_id=$project;
+//                 $new->iface_id=$model->iface_id;
+//                 $new->release_id=$release; 
+//                 if($new->save()){
+//                                 $version=Version::model()->getNextNumber($project,12,2,$new->primaryKey,$new->iface_id);   
+//                                 }
+//  
+//  $this->redirect('/iface/view/id/'.$new->iface_id);
+//        }      
         
 	public function actionDelete($id,$ucid)
 	{

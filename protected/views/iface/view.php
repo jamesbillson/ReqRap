@@ -1,4 +1,6 @@
-
+        <link rel="stylesheet" type="text/css" href="<?php Yii::app()->baseUrl?>/css/carousel.css">
+        <script type="text/javascript" src="<?php Yii::app()->baseUrl?>/js/jquery.jcarousel.min.js"></script>
+        <script type="text/javascript" src="<?php Yii::app()->baseUrl?>/js/jcarousel.responsive.js"></script>
 <?php 
 echo $this->renderPartial('/project/head',array('tab'=>'usecases')); ?>
 
@@ -25,45 +27,44 @@ if ($model->photo_id==0)
     if(count($orphans)){
     ?>   
 Un-used images - associate image with this interface.<br />
- <?php foreach ($orphans as $pic){  ?>
- <?php $src = Yii::app()->easyImage->thumbSrcOf(
+            <div class="jcarousel-wrapper">
+                <div class="jcarousel">
+
+                    <ul>
+                                        <?php foreach ($orphans as $pic){  ?>
+                   <?php $src = Yii::app()->easyImage->thumbSrcOf(
  Yii::app()->params['photo_folder'].$pic['file'], 
  array('resize' => array('width' => 154))); ?>
-
-<a href="/iface/addimage/iface/<?php echo $model->iface_id; ?>/id/<?php echo $pic['photo_id']; ?>"  rel="tooltip" title="<?php echo $pic['description'] ?>" ><img src="<?php echo $src; ?>" border="0">
-            
-             
+                        <li><a href="/iface/addimage/iface/<?php echo $model->iface_id; ?>/id/<?php echo $pic['photo_id']; ?>"  rel="tooltip" title="<?php echo $pic['description'] ?>" ><img src="<?php echo $src; ?>" border="0"></a></li>        
 <?php 
  }
  }
 ?>
+                     </ul>
+                </div>
+
+                <a href="#" class="jcarousel-control-prev">&lsaquo;</a>
+                <a href="#" class="jcarousel-control-next">&rsaquo;</a>
+
+                <p class="jcarousel-pagination"></p>
+            </div>                         
 <br />                     
      Upload an image  
      
         <label><strong>Upload More Interfaces:</strong></label>
         <div class="span11">
             <?php $photo = new Photo;
-
             $this->widget('bootstrap.widgets.TbFileUpload', array(
-                'url' => Controller::createUrl("photo/upload",array('id'=>$model->id)),
+                'url' => Controller::createUrl("photo/upload",array('projectId'=>$model->project_id,'ifaceId'=>$model->iface_id)),
                 'formView'=>'bootstrap.views.fileupload._singleform',
                 'model' => $photo,
-                'attribute' => 'file', // see the attribute?
-                'multiple' => false,
+                'attribute' => 'file', // see the attribute?               
                 'options' => array(
                     'maxFileSize' => 2000000,
                     'acceptFileTypes' => 'js:/(\.|\/)(gif|jpe?g|png)$/i',
             ))); ?>
 
         </div>
-    </div>
-
-
-
-
-     
-     
-     
         <?php } ELSE {
        // $fuck=Version::model()->getVersion($model->photo_id,11);
       // print_r($fuck);
@@ -71,8 +72,19 @@ Un-used images - associate image with this interface.<br />
       $src = Yii::app()->easyImage->thumbSrcOf(
                                     Yii::app()->params['photo_folder'].$image->file, 
                                    array('resize' => array('width' => 154))); ?>
-
-                        <a href="/photo/view/id/<?php  echo $image->id; ?>"> <img src="<?php echo $src ?>"/></a>
+    <div style="float:left;width:100%;">
+      <div style="width:160px;float:left;">
+        <img src="<?php echo $src ?>"/>
+      </div>
+      <div style="float:left;margin-top: 50px;">
+       <?php $this->widget('bootstrap.widgets.TbButton', array(
+    'type'=>'primary',
+    'label'=>'Remove',
+    'url'=>Yii::app()->baseUrl."/iface/update/ucid/0/id/$model->id",
+)); ?> 
+      </div>
+      
+    </div>
 <br />
 <?php echo $image->description; ?>
                         

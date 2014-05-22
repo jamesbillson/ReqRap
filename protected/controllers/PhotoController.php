@@ -257,10 +257,9 @@ class PhotoController extends Controller
         return false;
     }
 
-    public function actionUpload($id)
+    public function actionUpload($projectId,$ifaceId=null)
     {
-        if(isset($id) && Project::model()->findByPk($id)){
-            
+        if(isset($projectId) && Project::model()->findByPk($projectId)){
             header('Vary: Accept');
             if (isset($_SERVER['HTTP_ACCEPT']) && 
                 (strpos($_SERVER['HTTP_ACCEPT'], 'application/json') !== false))
@@ -273,7 +272,7 @@ class PhotoController extends Controller
 
             $photo = new Photo;
             $upload = CUploadedFile::getInstance($photo, 'file');
-            
+
             if (isset($upload)){   
 
                 //set path and filename
@@ -285,7 +284,7 @@ class PhotoController extends Controller
                 }
 
                 $file_name = Utils::uniqueFile($upload->name);
-
+//            print_r($file_name);exit;
                 if($upload->saveAs($path.$file_name)){
 
                     $src = Yii::app()->easyImage->thumbSrcOf(
@@ -305,20 +304,21 @@ class PhotoController extends Controller
                     
                     if($model->save()){
                         // return data to the fileuploader
-                        Version::model()->getNextNumber($project,11,1,$model->primaryKey,$model->photo_id);   
-                   
+                        Version::model()->getNextNumber($project,11,1,$model->primaryKey,$model->photo_id); 
+//                        if(isset($ifaceId)&& $ifaceId!=''){
+//                   $iface = new Iface;
+//                   $res=$iface->addImage($ifaceId, $model->id);
+//                        }
                         $data[] = array(
                             'name' => $upload->name,
                             'type' => $upload->type,
                             'size' => $upload->size,
-                            'url' => Yii::app()->params['photo_folder'].$model->file,
+                            'url' => "/iface/addimage/iface/$ifaceId/id/$model->id",
                             'thumbnail_url' => $src,
                             'delete_url' => Controller::createUrl('photo/ajaxDelete',array('photo_id' => $model->id, 'method' => 'uploader')),
                             'delete_type' => 'POST'
                         );
-                  
-                    
-                 //     $this->redirect('/project/photo/id/'.$project);
+  //$this->redirect('/project/photo/id/'.$project);
                     }
                 } else {
                     $data[] = array('error' => 'Unable to save model after saving picture');

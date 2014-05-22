@@ -399,10 +399,27 @@ WHERE
            }
     
         
-    }   
-
+    }            
+    public function addImage($iface,$id){
+            $release=Yii::App()->session['release'];
+            $project=Yii::App()->session['project'];
+            $model=Iface::model()->findByPk(Version::model()->getVersion($iface,12));
             
-         
+            $this->name=$model->name;
+            $this->type_id=$model->type_id;
+            $this->number=$model->number;
+            $this->photo_id=$id;
+            $this->number=$model->number;
+            $this->project_id=$project;
+            $this->iface_id=$model->iface_id;
+            $this->release_id=$release;	
+            if($this->save()){
+              return true;
+            }
+            else{
+              return false;
+            }
+    }     
                     
 	public static function model($className=__CLASS__)
 	{
