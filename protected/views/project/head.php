@@ -29,10 +29,14 @@ if(isset(Yii::App()->session['project'])) {
     </h1>    </td>
         <td>
             <?php if(Yii::App()->session['permission']==1) {?>
-    <a href="/project/details/id/<?php echo $project->id; ?>">
-        <i class="icon-cog"></i>
+    <a href="/project/project/">
+        <i class="icon-cog" rel="tooltip" title="Project Settings"></i>
     </a>
             <?php }  ?>
+
+    <a href="/project/view/tab/usecases/">
+        <i class="icon-film" rel="tooltip" title="Requirements Model"></i>
+    </a>
 </td>
 <td> 
     <form action="/project/set/">

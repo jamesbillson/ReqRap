@@ -21,8 +21,7 @@ echo $this->renderPartial('/project/head',array('tab'=>'usecases')); ?>
 <!-- Setup condition -->
 <?php 
 $active = array();
-$active['details']=FALSE;
-$active['documents']=FALSE;
+
 $active['objects']=FALSE;
 $active['category']=FALSE;
 $active['packages']=FALSE;
@@ -32,30 +31,14 @@ $active['rules']=FALSE;
 $active['interfaces']=FALSE; 
 $active['usecases']=FALSE;
 $active['forms']=FALSE;
-$active['followers']=FALSE;
+$active['structure']=FALSE;
 $active['testcases']=FALSE;
 $active['testruns']=FALSE;
 
  $active[$tab]=TRUE;
 
    
-    $tabs[] = array('id' => 'details',
-            'label' => 'Details',
-            'visible' => $owner,
-            'content' => $this->renderPartial('_details',
-                    compact('model'),true,false),'active'=>$active['details']);
-   
-    $tabs[] = array('id' => 'documents', 
-        'label' => 'Documents',
-        'visible' => $owner,
-        'content' => $this->renderPartial('_documents',
-                compact('model'),true,false),'active'=>$active['documents']);
- 
-    $tabs[] = array('id' => 'followers', 
-        'label' => 'Collaborators', 
-        'visible' => $owner,
-        'content' => $this->renderPartial('_followers',
-                compact('model'),true,false),'active'=>$active['followers']);
+  
     $tabs[] = array('id' => 'category', 
         'label' => 'Sections', 
         'content' => $this->renderPartial('_category',
@@ -95,7 +78,12 @@ $active['testruns']=FALSE;
             'label' => 'Interfaces',
             'content' => $this->renderPartial('_interfaces',
                     compact('model','status'),true,false),'active'=>$active['interfaces']);
-
+    
+    $tabs[] = array('id' => 'structure',
+            'label' => 'Structure',
+           'visible'=> $owner,
+            'content' => $this->renderPartial('_structure',
+                    compact('model','status'),true,false),'active'=>$active['structure']); 
  
        $tabs[] = array('id' => 'testcases',
             'label' => 'Test Cases',
