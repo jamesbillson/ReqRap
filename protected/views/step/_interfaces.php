@@ -45,6 +45,10 @@
  
  
 <?php $this->endWidget(); ?>
-                            
-<a href="#" onclick="$('#interfaceModal').modal('toggle'); var pos = $(this).offset(); $('#interfaceModal').css({'left': 730, 'top': pos.top - $(window, document).scrollTop() - 100}); return false;"><i class="icon-plus-sign-alt" rel="tooltip" title="Add Interface"></i> Add Interface</a>
+<style type="text/css">
+    #interfaceModal{
+        margin-left: 0px !important;
+    }
+</style>                          
+<a href="#" onclick="$('#interfaceModal').modal('toggle'); var pos = $(this).offset(); $('#interfaceModal').css({'left': (pos.left - 260), 'top': pos.top - $(window, document).scrollTop() - 100}); return false;"><i class="icon-plus-sign-alt" rel="tooltip" title="Add Interface"></i> Add Interface</a>
               

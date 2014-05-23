@@ -41,5 +41,9 @@
 </div>
  
 <?php $this->endWidget(); ?>                       
-                                    
-<a href="#" onclick="$('#formsModal').modal('toggle'); var pos = $(this).offset(); $('#formsModal').css({'left': 730, 'top': pos.top - $(window, document).scrollTop() - 100}); return false;"><i class="icon-plus-sign-alt" rel="tooltip" title="Add Forms"></i> Add Forms</a>
+<style type="text/css">
+    #formsModal{
+        margin-left: 0px !important;
+    }
+</style>
+<a href="#" onclick="$('#formsModal').modal('toggle'); var pos = $(this).offset(); $('#formsModal').css({'left': (pos.left - 260), 'top': pos.top - $(window, document).scrollTop() - 100}); return false;"><i class="icon-plus-sign-alt" rel="tooltip" title="Add Forms"></i> Add Forms</a>

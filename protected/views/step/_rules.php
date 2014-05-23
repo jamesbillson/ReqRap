@@ -43,8 +43,12 @@
  
  
 <?php $this->endWidget(); ?>
-                                
-<a href="#" onclick="$('#rulesModal').modal('toggle'); var pos = $(this).offset(); $('#rulesModal').css({'left': 730, 'top': pos.top - $(window, document).scrollTop() - 100}); return false;"><i class="icon-plus-sign-alt" rel="tooltip" title="Add Rule"></i> Add Rule</a>             
+<style type="text/css">
+    #rulesModal{
+        margin-left: 0px !important;
+    }
+</style>                         
+<a href="#" onclick="$('#rulesModal').modal('toggle'); var pos = $(this).offset(); $('#rulesModal').css({'left': (pos.left - 260), 'top': pos.top - $(window, document).scrollTop() - 100}); return false;"><i class="icon-plus-sign-alt" rel="tooltip" title="Add Rule"></i> Add Rule</a>             
                                 
                                 
                                 
