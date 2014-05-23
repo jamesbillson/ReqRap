@@ -162,11 +162,7 @@ class IfaceController extends Controller
 	{       
                  $new = new Iface;
                  $isAdd = $new->addImage($iface, $id);
-                 if($isAdd==true){
-                                 $version=Version::model()->getNextNumber($new->project_id,12,2,$new->primaryKey,$new->iface_id);   
-                                 }
-		
-                $this->redirect('/iface/view/id/'.$new->iface_id);
+                 $this->redirect('/iface/view/id/'.$new->iface_id);
         }
 //  public function actionaddimage($iface, $id)
 // {

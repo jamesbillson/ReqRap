@@ -414,6 +414,7 @@ WHERE
             $this->iface_id=$model->iface_id;
             $this->release_id=$release;	
             if($this->save()){
+            $version=Version::model()->getNextNumber($this->project_id,12,2,$this->primaryKey,$this->iface_id); 
               return true;
             }
             else{

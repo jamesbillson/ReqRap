@@ -305,20 +305,20 @@ class PhotoController extends Controller
                     if($model->save()){
                         // return data to the fileuploader
                         Version::model()->getNextNumber($project,11,1,$model->primaryKey,$model->photo_id); 
-//                        if(isset($ifaceId)&& $ifaceId!=''){
-//                   $iface = new Iface;
-//                   $res=$iface->addImage($ifaceId, $model->id);
-//                        }
+
                         $data[] = array(
                             'name' => $upload->name,
                             'type' => $upload->type,
                             'size' => $upload->size,
-                            'url' => "/iface/addimage/iface/$ifaceId/id/$model->id",
+                            'url' => "/iface/addimage/iface/$ifaceId/id/$model->photo_id",
                             'thumbnail_url' => $src,
                             'delete_url' => Controller::createUrl('photo/ajaxDelete',array('photo_id' => $model->id, 'method' => 'uploader')),
                             'delete_type' => 'POST'
-                        );
-  //$this->redirect('/project/photo/id/'.$project);
+                        );                                            
+						if (isset($ifaceId) && $ifaceId != '') {
+							  $iface = new Iface;
+							  $iface->addImage($ifaceId, $model->photo_id);
+						}
                     }
                 } else {
                     $data[] = array('error' => 'Unable to save model after saving picture');

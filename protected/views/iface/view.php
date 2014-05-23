@@ -77,11 +77,7 @@ Un-used images - associate image with this interface.<br />
         <img src="<?php echo $src ?>"/>
       </div>
       <div style="float:left;margin-top: 50px;">
-       <?php $this->widget('bootstrap.widgets.TbButton', array(
-    'type'=>'primary',
-    'label'=>'Remove',
-    'url'=>Yii::app()->baseUrl."/iface/update/ucid/0/id/$model->id",
-)); ?> 
+        <a href="<?php echo Yii::app()->baseUrl?>/iface/update/ucid/0/id/<?php echo $model->id;?>"><i class="icon-remove-circle" rel="tooltip" title="Remove"></i>Remove</a> 
       </div>
       
     </div>
