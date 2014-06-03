@@ -257,9 +257,9 @@ class PhotoController extends Controller
         return false;
     }
 
-    public function actionUpload($projectId,$ifaceId=null)
+    public function actionUpload($id,$ifaceId=null)
     {
-        if(isset($projectId) && Project::model()->findByPk($projectId)){
+        if(isset($id) && Project::model()->findByPk($id)){
             header('Vary: Accept');
             if (isset($_SERVER['HTTP_ACCEPT']) && 
                 (strpos($_SERVER['HTTP_ACCEPT'], 'application/json') !== false))

@@ -55,7 +55,7 @@ Un-used images - associate image with this interface.<br />
         <div class="span11">
             <?php $photo = new Photo;
             $this->widget('bootstrap.widgets.TbFileUpload', array(
-                'url' => Controller::createUrl("photo/upload",array('projectId'=>$model->project_id,'ifaceId'=>$model->iface_id)),
+                'url' => Controller::createUrl("photo/upload",array('id'=>$model->project_id,'ifaceId'=>$model->iface_id)),
                 'formView'=>'bootstrap.views.fileupload._singleform',
                 'model' => $photo,
                 'attribute' => 'file', // see the attribute?               
