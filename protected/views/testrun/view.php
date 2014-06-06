@@ -67,7 +67,18 @@ $data=  Testrun::model()->getTestRun($id);?>
        <?php
         }
         ?>
-       
+               <tr><td colspan="3"></td><td>
+        <?php    
+                       
+            $this->widget('bootstrap.widgets.TbButton', array(
+            'label'=>'Finalise',
+            'type'=>'success', // null, 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
+            'size'=>'small', // null, 'large', 'small' or 'mini'
+            'url'=>array('testrun/finish/id/'.$id)
+));
+         ?>                 
+                       
+           </td></tr>
    </tbody>
        
 </table>

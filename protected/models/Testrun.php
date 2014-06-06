@@ -92,7 +92,8 @@ class Testrun extends CActiveRecord
         	public function getTestRun($id)
 	{
 		
-		   $sql="SELECT `r`.`number`,
+		   $sql="SELECT 
+                       `r`.`number`,
                        `s`.`action`,
                        `s`.`result`,
                        `t`.`id`,
@@ -103,7 +104,8 @@ class Testrun extends CActiveRecord
                     ON `t`.`testrun_id`=`r`.`id`
                     JOIN `teststep` `s`
                     ON `s`.`id`=`t`.`teststep_id`
-                    WHERE `r`.`id`=".$id;
+                    WHERE 
+                    `r`.`id`=".$id;
 		$connection=Yii::app()->db;
 		$command = $connection->createCommand($sql);
 		$projects = $command->queryAll();
@@ -111,6 +113,55 @@ class Testrun extends CActiveRecord
 		return $projects;
 	}
 
+        
+    public function getNextNumber($id) {
+        $sql = "SELECT `r`.`number`
+       From `testrun` `r`
+       where `r`.`testcase_id`=".$id . "
+       ORDER BY `number` DESC
+       LIMIT 0,1";
+        $connection = Yii::app()->db;
+        $command = $connection->createCommand($sql);
+        $projects = $command->queryAll();
+        if (!isset($projects[0]['number'])) {
+            $projects[0]['number'] = '1';
+        } ELSE {
+            $projects[0]['number'] = $projects[0]['number'] + 1;
+        }
+        return $projects[0]['number'];
+    }
+        
+        
+            	public function getScore($id)
+	{
+		
+		   $sql="
+                      SELECT 
+                      `t`.`id`,
+                      `r`.`result`
+                      From `testrun` `t`
+                      JOIN `testresult` `r`
+                      ON `r`.`testrun_id`=`t`.`id`
+                      WHERE
+                      `t`.`id`=".$id;
+                   
+		$connection=Yii::app()->db;
+		$command = $connection->createCommand($sql);
+		$results = $command->queryAll();
+                $return=array(1=>0,2=>0,3=>0,4=>0,'total'=>0);
+                
+foreach($results as $result)
+    {
+    if($result['result']==4) $return[4]=$return[4]+1; 
+    if($result['result']==3) $return[3]=$return[3]+1;     
+    if($result['result']==2) $return[2]=$return[2]+1;     
+    if($result['result']==1) $return[1]=$return[1]+1;     
+     $return['total']=$return['total']+1;     
+    }
+ 
+                
+		return $return;
+	}
         
           public function createInitial($id)
     {

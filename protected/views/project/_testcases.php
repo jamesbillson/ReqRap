@@ -33,7 +33,9 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                 <tr>
                     <th>Number</th>
                     <th>Name</th>
-                    <th>Results/status?</th>
+                    <th>Status</th>
+                    <th>Runs</th>
+                    <th>Results</th>
                    <th>Actions</th>
                 </tr>
             </thead>
@@ -51,11 +53,24 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
               $testruns=  Testrun::model()->findAll('testcase_id='.$testcase->id);  
               $running=$closed=false;
               $notrun=true;
+              $finished = 0;
               foreach($testruns as $testrun){
-              if ($testrun->status==3){ $closed=true;$notrun=false ;}
+              if ($testrun->status==3)
+                  { 
+                  $closed=true;
+                  $notrun=false ;
+                  $finished++;
+                  $scores=Testrun::model()->getScore($testrun->id);
+                 // (1=>'Fail', 2=>'Pass',3=>'Block', 4=>'Not Tested')
+                  $fail=$scores['1'];
+                  $pass=$scores['2'];
+                  $block=$scores['3'];
+                  $nottested=$scores['4'];
+                  $coverage=(($scores['total']-$scores['4'])/$scores['total'])*100;
+                  $passrate=($scores['2']/$scores['total'])*100;
+                  }
                   if ($testrun->status==2){ $running=true;$notrun=false ;}
           
-              
               }
               
                 ?>
@@ -73,36 +88,39 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                     </td>
                     
                     <td>
-                       <?php if($notrun) { ?>
-                        
-                      Not Run
-                       <?php }
-                       if($running) { ?>
+                    <?php if($notrun) { ?>
+                    Not Run
+                    <?php }
+                    if($running) { ?>
                     <a href="/testcase/viewrun/id/<?php echo $testcase->id;?>">Running</a>
-                    <?php } 
-                    if ($closed) { echo 'Completed '.count($testruns).' runs.';?>
-                    <a href="/testcase/results/id/<?php echo $testcase->id;?>">view runs</a> Last Run score.
-                    <?php } ?>
-                        
+                    <?php } ?> 
+                    <?php  if ($closed && !$running) { echo 'Complete';} ?>
                     </td> 
-                   
-
-                  
+                    
                     <td>
-                           <?php if($notrun) { ?>
-                        
-                       <a href="/testcase/run/id/<?php echo $testcase['id'];?>"><i class="icon-check" rel="tooltip" title="Run the Test Case"></i></a> 
+                    <?php  if ($closed) { echo $finished ;} ?>
+                    </td>
                     
-                       <?php } ?> 
-                        <?php if($closed) { ?>
-                        
-                       <a href="/testcase/run/id/<?php echo $testcase['id'];?>"><i class="icon-repeat" rel="tooltip" title="Re-Run the Test Case"></i></a> 
+                    <td>
+                    <?php if($closed) { ?>
+                    <?php echo $passrate;?>%
+                    <?php } ?>   
+                    </td>
                     
-                       <?php } ?> 
-                       
-                       <a href="/release/delete/id/<?php echo $testcase['id'];?>"><i class="icon-remove-sign text-error" rel="tooltip" title="Remove"></i></a> 
-                    
-                       </td>
+                    <td>
+  <a href="/release/delete/id/<?php echo $testcase['id'];?>"><i class="icon-remove-sign text-error" rel="tooltip" title="Remove"></i></a> 
+                                    
+  <?php if($notrun) { ?>
+                    <a href="/testcase/run/id/<?php echo $testcase['id'];?>"><i class="icon-check" rel="tooltip" title="Run the Test Case"></i></a> 
+                    <?php } ?> 
+                    <?php if($closed && !$running) { ?>
+                    <a href="/testcase/run/id/<?php echo $testcase['id'];?>"><i class="icon-repeat" rel="tooltip" title="Re-Run the Test Case"></i></a> 
+                    <?php
+                    }
+                    if($closed) { ?>
+                    <a href="/testcase/results/id/<?php echo $testcase->id;?>"><i class="icon-eye-open" rel="tooltip" title="View Runs"></i></a>
+                    <?php } ?>
+                    </td>
                 </tr>
             <?php }
        

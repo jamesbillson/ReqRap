@@ -35,7 +35,7 @@ class ProjectController extends Controller
                 'actions'=>array('addprojectaddress','set','photo','print',
                     'diary','resetlink','details','packagescontract',
                     'responses',
-                    'myrequirements','mytenders','delete','create','update','myprojects','projectpackagelist','TenderSummary'),
+                    'myrequirements','project','delete','create','update','myprojects','projectpackagelist','TenderSummary'),
                 'users'=>array('@'),
             ),
             array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -104,6 +104,17 @@ class ProjectController extends Controller
         if ($served != 1) $this->redirect(array('site/fail/condition/no_access'));
          * 
          */
+    }
+    
+       public function actionProject()
+    {
+     $project=Yii::app()->session['project'];
+     $tab=Yii::app()->session['setting_tab'];
+     if(!$tab) $tab='details';
+     $model = $this->loadModel($project);
+     $this->render('project',array(
+            'model'=>$model,'tab'=>$tab ));
+     
     }
     
  public function actionExtView($id)

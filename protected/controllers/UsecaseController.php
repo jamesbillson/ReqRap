@@ -187,7 +187,7 @@ class UsecaseController extends Controller
             if($dir==1){
                     for ($i = 0; $i <= count($ucs)-1; $i++) 
                     {
-                       echo 'going up'.$i.'<br />';
+                  //     echo 'going up'.$i.'<br />';
                     if ($ucs[$i]['number']==$oldnum) $nextid=$ucs[$i+1]['id'];
                     }
                 } 
@@ -195,12 +195,12 @@ class UsecaseController extends Controller
             if($dir==2){
                     for ($i = count($ucs)-1; $i > 0; $i--) 
                     {
-                       echo 'going down'.$i.'<br />';
+                 //      echo 'going down'.$i.'<br />';
                     if ($ucs[$i]['number']==$oldnum) $nextid=$ucs[$i-1]['id'];
                     }
                 } 
                 
-                   echo '$nextid up ='.$nextid.'<br />';     
+               //    echo '$nextid up ='.$nextid.'<br />';     
                 
       $model2 = $this->loadmodel($nextid);
             

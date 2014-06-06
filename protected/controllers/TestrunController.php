@@ -32,7 +32,7 @@ class TestrunController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update'),
+				'actions'=>array('create','update','finish'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -79,6 +79,19 @@ class TestrunController extends Controller
 		));
 	}
 
+        
+        
+        public function actionFinish($id)
+	{
+		$model=$this->loadModel($id);
+                $model->status=3;
+		$model->save();
+		$this->redirect(array('/project/view/tab/testcases'));
+		
+	}
+        
+        
+        
 	/**
 	 * Updates a particular model.
 	 * If update is successful, the browser will be redirected to the 'view' page.

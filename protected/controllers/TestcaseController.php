@@ -79,7 +79,7 @@ class TestcaseController extends Controller
             
            	$model=new Testrun;
                 $model->release_id=Yii::App()->session['release'];
-                $model->number=1;
+                $model->number=Testrun::model()->getNextNumber($id);
                 $model->testcase_id=$id;
                 $model->status=2;
 		$model->save(false);

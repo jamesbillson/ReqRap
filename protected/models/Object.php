@@ -73,12 +73,15 @@ class Object extends CActiveRecord
 		));
 	}
 
-            public function getNextNumber($id)
+            public function getNextNumber()
     {
-               
-        $sql="SELECT max(`r`.`number`)as number
-           From `object` `r`
-            WHERE `r`.`project_id`=".$id;
+       $id=Yii::App()->session['project'];        
+        $sql="
+            SELECT `r`.`number`
+            From `object` `r`
+            WHERE `r`.`project_id`=".$id."
+            ORDER BY `number` DESC
+            LIMIT 0,1";
 		$connection=Yii::app()->db;
 		$command = $connection->createCommand($sql);
 		$projects = $command->queryAll();
