@@ -34,11 +34,11 @@ Un-used images - associate image with this interface.<br />
                                         <?php foreach ($orphans as $pic){  ?>
                    <?php $src = Yii::app()->easyImage->thumbSrcOf(
  Yii::app()->params['photo_folder'].$pic['file'], 
- array('resize' => array('width' => 154))); ?>
-                        <li><a href="/iface/addimage/iface/<?php echo $model->iface_id; ?>/id/<?php echo $pic['photo_id']; ?>"  rel="tooltip" title="<?php echo $pic['description'] ?>" ><img src="<?php echo $src; ?>" border="0"></a></li>        
+ array('resize' => array('width' => 150,'height'=>150))); ?>
+                        <li><a href="/iface/addimage/iface/<?php echo $model->iface_id; ?>/id/<?php echo $pic['photo_id']; ?>"  rel="tooltip" title="<?php echo $pic['description'] ?>" ><img src="<?php echo $src; ?>" border="0" width="150" height="150"></a></li>        
 <?php 
  }
- }
+
 ?>
                      </ul>
                 </div>
@@ -47,7 +47,8 @@ Un-used images - associate image with this interface.<br />
                 <a href="#" class="jcarousel-control-next">&rsaquo;</a>
 
                 <p class="jcarousel-pagination"></p>
-            </div>                         
+            </div>  
+<?php }?>
 <br />                     
      Upload an image  
      
@@ -71,7 +72,7 @@ Un-used images - associate image with this interface.<br />
         $image=Photo::model()->findByPk(Version::model()->getVersion($model->photo_id,11));
       $src = Yii::app()->easyImage->thumbSrcOf(
                                     Yii::app()->params['photo_folder'].$image->file, 
-                                   array('resize' => array('width' => 154))); ?>
+                                   array('resize' => array('width' => 150,'height'=>150))); ?>
     <div style="float:left;width:100%;">
       <div style="width:160px;float:left;">
         <img src="<?php echo $src ?>"/>
@@ -93,7 +94,7 @@ Un-used images - associate image with this interface.<br />
  $data=Usecase::model()->getLinkUsecase($model->iface_id,12,15);
  if(count($data)==0){
  ?>
- This Interface is not used.<br />
+<div style="width:100%;float:left;"> This Interface is not used.<br />
  
  Associate with Use Case - 2 stage, choose usecase, then dynamically load list of steps.
  
@@ -148,6 +149,7 @@ $src = Yii::app()->easyImage->thumbSrcOf(
 ?>
 
 <?php echo $model->text;?>
+</div>
 <script type="text/javascript">
     $(document).ready(function(){
         $('.thumPro').hover(function(event){
