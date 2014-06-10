@@ -30,8 +30,8 @@ class Release extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('number, project_id, status, create_date, create_user', 'required'),
-			array('project_id, status', 'numerical', 'integerOnly'=>true),
+			array('number, project_id, status, create_user', 'required'),
+			array('project_id, status, offset', 'numerical', 'integerOnly'=>true),
 			array('number', 'length', 'max'=>20),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
@@ -60,6 +60,7 @@ class Release extends CActiveRecord
 			'number' => 'Number',
 			'project_id' => 'Project',
 			'status' => 'Status',
+                    'offset'=>'Offset',
                         'create_date'=>'create date',
                         'create_user'=>'create user',
 		);
@@ -101,9 +102,8 @@ class Release extends CActiveRecord
             FROM `release` `r`
             WHERE 
             `r`.`project_id`=".Yii::App()->session['project']."
-            ORDER BY
-            `r`.`id` DESC
-            Limit 0,1";
+            AND 
+            `r`.`status`=1";
                 $connection=Yii::app()->db;
 		$command = $connection->createCommand($sql);
 		$releases = $command->queryAll();

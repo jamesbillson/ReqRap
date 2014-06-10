@@ -281,8 +281,9 @@ class Version extends CActiveRecord {
                SET 
                `r`.`number`=FLOOR(`r`.`number`)+(
                 SELECT
-                ( MAX( `v`.`number`))*0.0001
+                ( MAX( `v`.`number`-`r`.`offset`))*0.0001
                 FROM `version` `v`
+                
                 where
                 `v`.`release`=" . $release . "
                 )
@@ -496,6 +497,22 @@ class Version extends CActiveRecord {
         return $projects;
     }
 
+     public function getMaxVersionNumber($release) {  // Object_id
+        $sql = "SELECT 
+                `v`.`number`
+                FROM  `version` `v`
+                WHERE 
+                `v`.`release`=" . $release."
+                ORDER BY `number` DESC
+                LIMIT 0,1";
+        $connection = Yii::app()->db;
+        $command = $connection->createCommand($sql);
+        $projects = $command->queryAll();
+
+        return $projects[0]['number'];
+    }
+    
+    
     public function rollback($object_id, $object, $id) 
                 {
         $release=Yii::App()->session['release'];
