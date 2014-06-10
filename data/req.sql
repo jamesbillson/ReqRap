@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: May 21, 2014 at 04:26 PM
+-- Generation Time: Jun 11, 2014 at 09:29 AM
 -- Server version: 5.6.17
 -- PHP Version: 5.4.27
 
@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS `actor` (
   `actor_id` int(11) NOT NULL,
   `project_id` int(11) NOT NULL,
   `release_id` int(11) NOT NULL,
-  `number` varchar(30) NOT NULL,
+  `number` int(6) NOT NULL,
   `name` varchar(255) NOT NULL,
   `description` text NOT NULL,
   `pretest` text,
@@ -41,40 +41,46 @@ CREATE TABLE IF NOT EXISTS `actor` (
   PRIMARY KEY (`id`),
   KEY `project_id` (`project_id`),
   KEY `release_id` (`release_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=251 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=303 ;
 
 --
 -- Dumping data for table `actor`
 --
 
 INSERT INTO `actor` (`id`, `type`, `actor_id`, `project_id`, `release_id`, `number`, `name`, `description`, `pretest`, `alias`, `inherits`) VALUES
-(186, 0, 1, 184, 165, '1', 'Member', 'A user who has an account and can access the system.', 'Must be logged in as a member', 'Placeholder', -1),
-(187, 0, 2, 184, 165, '2', 'User', 'A public user of the system', 'None', 'Public', -1),
-(209, 0, 1, 193, 177, '1', 'Actor', 'My First Actor', NULL, 'Placeholder', -1),
-(215, 0, 1, 193, 177, '1', 'Actor', 'My First Actor', NULL, 'Placeholder', -1),
-(216, 0, 1, 193, 177, '1', 'Actor', 'My First Actor', NULL, 'Placeholder', -1),
-(222, 0, 1, 199, 186, '1', 'Actor', 'My First Actor', NULL, 'Placeholder', -1),
-(223, 0, 1, 199, 186, '1', 'User', 'A public user of the system', 'None', 'Placeholder', -1),
-(224, 0, 2, 199, 186, '2', 'Member', 'A user with an account on the system', 'Log in as a member', 'Registered User, Account Holder', -1),
-(225, 0, 1, 199, 187, '1', 'User', 'A public user of the system', 'None', 'Placeholder', -1),
-(226, 0, 2, 199, 187, '2', 'Member', 'A user with an account on the system', 'Log in as a member', 'Registered User, Account Holder', -1),
-(227, 0, 1, 184, 165, '1', 'Member', 'A user who has an account and can access the system.', 'Must be logged in as a member', 'Placeholder', -1),
-(228, 0, 1, 184, 165, '1', 'Member', 'A user who has an account and can access the system.', 'Must be logged in as a member', 'Placeholder', -1),
-(229, 0, 1, 184, 165, '1', 'Member', 'A user who has an account and can access the system.', 'Must be logged in as a member', 'Placeholder', -1),
-(230, 0, 1, 184, 165, '1', 'Member', 'A user who has an account and can access the system.', 'Must be logged in as a member', 'Placeholder', -1),
-(231, 0, 1, 184, 165, '1', 'Member', 'A user who has an account and can access the system.', 'Must be logged in as a member', 'Placeholder', -1),
-(232, 0, 1, 184, 165, '1', 'Member', 'A user who has an account and can access the system.', 'Must be logged in as a member', 'Placeholder', -1),
-(233, 0, 1, 184, 165, '1', 'Member', 'A user who has an account and can access the system.', 'Must be logged in as a member', 'Placeholder', -1),
-(234, 0, 1, 184, 165, '1', 'Member', 'A user who has an account and can access the system.', 'Must be logged in as a member', 'Placeholder', -1),
-(235, 0, 1, 184, 165, '1', 'Member', 'A user who has an account and can access the system.', 'Must be logged in as a member', 'Placeholder', -1),
-(236, 0, 1, 184, 165, '1', 'Member', 'A user who has an account and can access the system.', 'Must be logged in as a member', 'Placeholder', 2),
-(241, 0, 1, 201, 189, '1', 'Actor', 'My First Actor', NULL, 'Placeholder', -1),
-(242, 0, 1, 202, 190, '1', 'Actor', 'My First Actor', NULL, 'Placeholder', -1),
-(243, 0, 4, 202, 190, '1', 'User', 'A public user of the system', 'None', 'Placeholder', -1),
-(244, 0, 5, 202, 190, '2', 'Member', 'A user with an account on the system', 'Log in as a member', 'Registered User, Account Holder', -1),
-(245, 0, 2, 193, 178, '2', 'User', 'user', 'user', 'user', -1),
-(249, 0, 1, 203, 192, '1', 'Actor', 'My First Actor', NULL, 'Placeholder', -1),
-(250, 0, 1, 203, 193, '1', 'Actor', 'My First Actor', NULL, 'Placeholder', -1);
+(186, 0, 1, 184, 165, 1, 'Member', 'A user who has an account and can access the system.', 'Must be logged in as a member', 'Placeholder', -1),
+(187, 0, 2, 184, 165, 2, 'User', 'A public user of the system', 'None', 'Public', -1),
+(209, 0, 1, 193, 177, 1, 'Actor', 'My First Actor', NULL, 'Placeholder', -1),
+(215, 0, 1, 193, 177, 1, 'Actor', 'My First Actor', NULL, 'Placeholder', -1),
+(216, 0, 1, 193, 177, 1, 'Actor', 'My First Actor', NULL, 'Placeholder', -1),
+(222, 0, 1, 199, 186, 1, 'Actor', 'My First Actor', NULL, 'Placeholder', -1),
+(223, 0, 1, 199, 186, 1, 'User', 'A public user of the system', 'None', 'Placeholder', -1),
+(224, 0, 2, 199, 186, 2, 'Member', 'A user with an account on the system', 'Log in as a member', 'Registered User, Account Holder', -1),
+(225, 0, 1, 199, 187, 1, 'User', 'A public user of the system', 'None', 'Placeholder', -1),
+(226, 0, 2, 199, 187, 2, 'Member', 'A user with an account on the system', 'Log in as a member', 'Registered User, Account Holder', -1),
+(227, 0, 1, 184, 165, 1, 'Member', 'A user who has an account and can access the system.', 'Must be logged in as a member', 'Placeholder', -1),
+(228, 0, 1, 184, 165, 1, 'Member', 'A user who has an account and can access the system.', 'Must be logged in as a member', 'Placeholder', -1),
+(229, 0, 1, 184, 165, 1, 'Member', 'A user who has an account and can access the system.', 'Must be logged in as a member', 'Placeholder', -1),
+(230, 0, 1, 184, 165, 1, 'Member', 'A user who has an account and can access the system.', 'Must be logged in as a member', 'Placeholder', -1),
+(231, 0, 1, 184, 165, 1, 'Member', 'A user who has an account and can access the system.', 'Must be logged in as a member', 'Placeholder', -1),
+(232, 0, 1, 184, 165, 1, 'Member', 'A user who has an account and can access the system.', 'Must be logged in as a member', 'Placeholder', -1),
+(233, 0, 1, 184, 165, 1, 'Member', 'A user who has an account and can access the system.', 'Must be logged in as a member', 'Placeholder', -1),
+(234, 0, 1, 184, 165, 1, 'Member', 'A user who has an account and can access the system.', 'Must be logged in as a member', 'Placeholder', -1),
+(235, 0, 1, 184, 165, 1, 'Member', 'A user who has an account and can access the system.', 'Must be logged in as a member', 'Placeholder', -1),
+(236, 0, 1, 184, 165, 1, 'Member', 'A user who has an account and can access the system.', 'Must be logged in as a member', 'Placeholder', 2),
+(241, 0, 1, 201, 189, 1, 'Actor', 'My First Actor', NULL, 'Placeholder', -1),
+(242, 0, 1, 202, 190, 1, 'Actor', 'My First Actor', NULL, 'Placeholder', -1),
+(243, 0, 4, 202, 190, 1, 'User', 'A public user of the system', 'None', 'Placeholder', -1),
+(244, 0, 5, 202, 190, 2, 'Member', 'A user with an account on the system', 'Log in as a member', 'Registered User, Account Holder', -1),
+(245, 0, 2, 193, 178, 2, 'User', 'user', 'user', 'user', -1),
+(249, 0, 1, 203, 192, 1, 'Actor', 'My First Actor', NULL, 'Placeholder', -1),
+(250, 0, 1, 203, 193, 1, 'Actor', 'My First Actor', NULL, 'Placeholder', -1),
+(251, 0, 2, 184, 194, 2, 'User', 'A public user of the system', 'None', 'Public', -1),
+(252, 0, 1, 184, 194, 1, 'Member', 'A user who has an account and can access the system.', 'Must be logged in as a member', 'Placeholder', 2),
+(299, 0, 1, 220, 234, 1, 'Actor', 'My First Actor', NULL, 'Placeholder', -1),
+(300, 0, 1, 220, 235, 1, 'Actor', 'My First Actor', NULL, 'Placeholder', -1),
+(301, 0, 1, 220, 236, 1, 'Actor', 'My First Actor', NULL, 'Placeholder', -1),
+(302, 0, 1, 220, 237, 1, 'Actor', 'My First Actor', NULL, 'Placeholder', -1);
 
 -- --------------------------------------------------------
 
@@ -170,7 +176,7 @@ CREATE TABLE IF NOT EXISTS `category` (
   KEY `category_id` (`category_id`),
   KEY `project_id_2` (`project_id`),
   KEY `release_id` (`release_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=57 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=64 ;
 
 --
 -- Dumping data for table `category`
@@ -181,7 +187,12 @@ INSERT INTO `category` (`id`, `category_id`, `number`, `name`, `description`, `o
 (49, 2, '2', 'Background', 'This is a test', '1.5', 202, 190),
 (50, 1, '1', 'Introduction', 'Introduction to the document', '0.5', 202, 190),
 (51, 1, '1', 'Introduction', 'Introduction to the document is now somewhat longer.', '0.5', 202, 190),
-(52, 1, '1', 'Introduction', 'Introduction to the document again', '0.5', 202, 190);
+(52, 1, '1', 'Introduction', 'Introduction to the document again', '0.5', 202, 190),
+(57, 1, '1', 'aoeu', '<p>aoeu</p>', '1.5', 184, 165),
+(58, 2, '2', 'Introduction', '<p>OK, testing this redactor thing.</p><p>I need a bullet list:</p><p><ul><li><span style="line-height: 1.45em;">One&nbsp;</span><br></li><li><span style="line-height: 1.45em;">Two</span><br></li><li><span style="line-height: 1.45em;">Three</span><br></li></ul></p>', '1.5', 184, 165),
+(59, 1, '1', 'aoeu', '<p>aoeu</p>', '1.5', 184, 194),
+(60, 2, '2', 'Introduction', '<p>OK, testing this redactor thing.</p><p>I need a bullet list:</p><p><ul><li><span style="line-height: 1.45em;">One&nbsp;</span><br></li><li><span style="line-height: 1.45em;">Two</span><br></li><li><span style="line-height: 1.45em;">Three</span><br></li></ul></p>', '1.5', 184, 194),
+(61, 2, '2', 'Introduction', '<p>OK, testing this redactor thing.</p><p>I need a bullet list:</p><p><ul><li><span style="line-height: 1.45em;">One&nbsp;</span><br></li><li><span style="line-height: 1.45em;">Two</span><br></li><li><span style="line-height: 1.45em;">Three</span><br></li></ul></p>', '0.5', 184, 194);
 
 -- --------------------------------------------------------
 
@@ -438,7 +449,7 @@ CREATE TABLE IF NOT EXISTS `flow` (
   KEY `flow_id` (`flow_id`),
   KEY `project_id` (`project_id`),
   KEY `release_id` (`release_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=449 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=499 ;
 
 --
 -- Dumping data for table `flow`
@@ -486,7 +497,19 @@ INSERT INTO `flow` (`id`, `flow_id`, `project_id`, `release_id`, `name`, `usecas
 (445, 2, 203, 193, 'Main', 2, 1, 0, 0),
 (446, 4, 203, 193, 'A', 2, 0, 4, 4),
 (447, 3, 203, 193, 'Main', 3, 1, 0, 0),
-(448, 5, 203, 193, 'Main', 4, 1, 0, 0);
+(448, 5, 203, 193, 'Main', 4, 1, 0, 0),
+(449, 1, 184, 194, 'Main', 1, 1, 0, 0),
+(450, 2, 184, 194, 'Main', 2, 1, 0, 0),
+(451, 3, 184, 194, 'Main', 3, 1, 0, 0),
+(452, 4, 184, 194, 'Main', 4, 1, 0, 0),
+(453, 5, 184, 194, 'Main', 5, 1, 0, 0),
+(454, 6, 184, 194, 'Main', 6, 1, 0, 0),
+(455, 7, 184, 194, 'Main', 7, 1, 0, 0),
+(456, 8, 184, 194, 'Main', 8, 1, 0, 0),
+(495, 1, 220, 234, 'Main', 1, 1, 0, 0),
+(496, 1, 220, 235, 'Main', 1, 1, 0, 0),
+(497, 1, 220, 236, 'Main', 1, 1, 0, 0),
+(498, 1, 220, 237, 'Main', 1, 1, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -532,7 +555,7 @@ CREATE TABLE IF NOT EXISTS `form` (
   KEY `project_id` (`project_id`),
   KEY `form_id` (`form_id`),
   KEY `release_id` (`release_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=127 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=131 ;
 
 --
 -- Dumping data for table `form`
@@ -558,7 +581,9 @@ INSERT INTO `form` (`id`, `form_id`, `number`, `name`, `project_id`, `release_id
 (123, 1, '1', 'My First Object Form', 203, 193),
 (124, 2, '2', 'New Form', 203, 193),
 (125, 3, '3', 'Form', 203, 193),
-(126, 3, '3', 'Form update', 203, 193);
+(126, 3, '3', 'Form update', 203, 193),
+(127, 2, '2', 'hnhnht', 184, 165),
+(128, 1, '1', 'Register Form', 184, 194);
 
 -- --------------------------------------------------------
 
@@ -631,7 +656,7 @@ CREATE TABLE IF NOT EXISTS `iface` (
   KEY `project_id` (`project_id`),
   KEY `iface_id` (`iface_id`),
   KEY `release_id` (`release_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=161 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=203 ;
 
 --
 -- Dumping data for table `iface`
@@ -663,7 +688,29 @@ INSERT INTO `iface` (`id`, `iface_id`, `number`, `name`, `text`, `photo_id`, `ty
 (157, 1, 1, 'Here', 'A thing here', 0, 2, 203, 192),
 (158, 1, 1, 'Here', 'A thing here', 0, 2, 203, 193),
 (159, 1, 1, 'Here edit one', '', 0, 2, 203, 193),
-(160, 1, 1, 'Here edit two', '', 0, 2, 203, 193);
+(160, 1, 1, 'Here edit two', '', 0, 2, 203, 193),
+(161, 2, 2, 'hthhh', NULL, 0, 1, 184, 165),
+(162, 1, 1, 'Project List', NULL, 0, 1, 184, 194),
+(163, 3, 3, 'Actor List', NULL, 0, 1, 184, 194),
+(164, 1, 1, 'Here edit two', NULL, 1, 2, 203, 193),
+(165, 2, 2, 'test', 'test', 0, 2, 203, 193),
+(186, 1, 1, 'Test interface', 'some text here', 0, 2, 220, 234),
+(187, 1, 1, 'Test interface', NULL, 1, 2, 220, 234),
+(188, 1, 1, 'Test interface', NULL, 0, 2, 220, 234),
+(189, 1, 1, 'Test interface', NULL, 2, 2, 220, 234),
+(190, 1, 1, 'Test interface', NULL, 0, 2, 220, 234),
+(191, 1, 1, 'Test interface', NULL, 2, 2, 220, 234),
+(192, 1, 1, 'Test interface', NULL, 0, 2, 220, 234),
+(193, 1, 1, 'Test interface', NULL, 3, 2, 220, 234),
+(194, 1, 1, 'Test interface', NULL, 0, 2, 220, 234),
+(195, 1, 1, 'Test interface', NULL, 5, 2, 220, 234),
+(196, 1, 1, 'Test interface', NULL, 0, 2, 220, 234),
+(197, 1, 1, 'Test interface', NULL, 2, 2, 220, 234),
+(198, 1, 1, 'Test interface', NULL, 0, 2, 220, 234),
+(199, 1, 1, 'Test interface', NULL, 6, 2, 220, 234),
+(200, 1, 1, 'Test interface', NULL, 3, 2, 220, 234),
+(201, 1, 1, 'Test interface', NULL, 0, 2, 220, 234),
+(202, 1, 1, 'Test interface', NULL, 6, 2, 220, 234);
 
 -- --------------------------------------------------------
 
@@ -682,7 +729,7 @@ CREATE TABLE IF NOT EXISTS `interfacetype` (
   KEY `project_id` (`project_id`),
   KEY `interfacetype_id` (`interfacetype_id`),
   KEY `release_id` (`release_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=474 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=622 ;
 
 --
 -- Dumping data for table `interfacetype`
@@ -715,7 +762,22 @@ INSERT INTO `interfacetype` (`id`, `interfacetype_id`, `number`, `name`, `projec
 (470, 3, '3', 'Email', 203, 192),
 (471, 1, '1', 'Not Classified', 203, 193),
 (472, 2, '2', 'Web interface', 203, 193),
-(473, 3, '3', 'Email', 203, 193);
+(473, 3, '3', 'Email', 203, 193),
+(474, 1, '1', 'Not Classified', 184, 194),
+(475, 2, '2', 'Web interface', 184, 194),
+(476, 3, '3', 'Email', 184, 194),
+(610, 1, '1', 'Not Classified', 220, 234),
+(611, 2, '2', 'Web interface', 220, 234),
+(612, 3, '3', 'Email', 220, 234),
+(613, 1, '1', 'Not Classified', 220, 235),
+(614, 2, '2', 'Web interface', 220, 235),
+(615, 3, '3', 'Email', 220, 235),
+(616, 1, '1', 'Not Classified', 220, 236),
+(617, 2, '2', 'Web interface', 220, 236),
+(618, 3, '3', 'Email', 220, 236),
+(619, 1, '1', 'Not Classified', 220, 237),
+(620, 2, '2', 'Web interface', 220, 237),
+(621, 3, '3', 'Email', 220, 237);
 
 -- --------------------------------------------------------
 
@@ -784,7 +846,7 @@ CREATE TABLE IF NOT EXISTS `log` (
 CREATE TABLE IF NOT EXISTS `object` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `object_id` int(11) NOT NULL,
-  `number` varchar(30) NOT NULL,
+  `number` int(6) NOT NULL,
   `name` varchar(255) NOT NULL,
   `description` text NOT NULL,
   `project_id` int(11) NOT NULL,
@@ -793,37 +855,48 @@ CREATE TABLE IF NOT EXISTS `object` (
   KEY `project_id` (`project_id`),
   KEY `object_id` (`object_id`),
   KEY `release_id` (`release_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=51 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=64 ;
 
 --
 -- Dumping data for table `object`
 --
 
 INSERT INTO `object` (`id`, `object_id`, `number`, `name`, `description`, `project_id`, `release_id`) VALUES
-(19, 1, '1', 'Import test', 'e', 193, 177),
-(21, 1, '1', 'Import test', 'e', 193, 177),
-(22, 1, '1', 'Import test', 'e', 193, 177),
-(26, 1, '1', 'Object', 'A model of a business object', 184, 165),
-(27, 2, '2', 'Object Property', 'A property of a Business Object.', 184, 165),
-(28, 3, '3', 'Rule', 'A business rule that can be applied to a usecase.', 184, 165),
-(29, 4, '4', 'Actor', 'An actor who acts within use cases. May be a person or an external system.', 184, 165),
-(30, 5, '5', 'Interface', 'An interface of the system defined with either text or an image.', 184, 165),
-(31, 6, '6', 'Form', 'An input form with a number of fields and their associated validations and definitions', 184, 165),
-(35, 1, '1', 'Member Account', 'A member account', 199, 187),
-(36, 1, '1', 'oaeu', 'aoeu', 202, 190),
-(37, 1, '1', 'Order', 'aoeu make a new version of this', 202, 190),
-(38, 1, '2', 'Order', 'aoeu make a new version of this and another', 202, 190),
-(39, 2, '3', 'Another', 'two of everything at least', 202, 190),
-(40, 3, '1', 'Three', 'Three', 202, 190),
-(41, 4, '4', 'Four', 'of', 202, 190),
-(42, 5, '6', 'four', 'ou', 202, 190),
-(43, 6, '5', 'ouath', 'oeuaoeu', 202, 190),
-(44, 2, '2', 'aoeu', 'aoeu', 193, 178),
-(45, 3, '3', 'iaeka', 'jeao', 193, 178),
-(46, 2, '2', 'aoeu', 'oeau', 199, 187),
-(47, 3, '3', 'Areallylongname', 'aoeu', 199, 187),
-(49, 1, '1', 'My First Object', 'An object', 203, 192),
-(50, 1, '1', 'My First Object', 'An object', 203, 193);
+(19, 1, 1, 'Import test', 'e', 193, 177),
+(21, 1, 1, 'Import test', 'e', 193, 177),
+(22, 1, 1, 'Import test', 'e', 193, 177),
+(26, 1, 1, 'Object', 'A model of a business object', 184, 165),
+(27, 2, 2, 'Object Property', 'A property of a Business Object.', 184, 165),
+(28, 3, 3, 'Rule', 'A business rule that can be applied to a usecase.', 184, 165),
+(29, 4, 4, 'Actor', 'An actor who acts within use cases. May be a person or an external system.', 184, 165),
+(30, 5, 5, 'Interface', 'An interface of the system defined with either text or an image.', 184, 165),
+(31, 6, 6, 'Form', 'An input form with a number of fields and their associated validations and definitions', 184, 165),
+(35, 1, 1, 'Member Account', 'A member account', 199, 187),
+(36, 1, 1, 'oaeu', 'aoeu', 202, 190),
+(37, 1, 1, 'Order', 'aoeu make a new version of this', 202, 190),
+(38, 1, 2, 'Order', 'aoeu make a new version of this and another', 202, 190),
+(39, 2, 3, 'Another', 'two of everything at least', 202, 190),
+(40, 3, 1, 'Three', 'Three', 202, 190),
+(41, 4, 4, 'Four', 'of', 202, 190),
+(42, 5, 6, 'four', 'ou', 202, 190),
+(43, 6, 5, 'ouath', 'oeuaoeu', 202, 190),
+(44, 2, 2, 'aoeu', 'aoeu', 193, 178),
+(45, 3, 3, 'iaeka', 'jeao', 193, 178),
+(46, 2, 2, 'aoeu', 'oeau', 199, 187),
+(47, 3, 3, 'Areallylongname', 'aoeu', 199, 187),
+(49, 1, 1, 'My First Object', 'An object', 203, 192),
+(50, 1, 1, 'My First Object', 'An object', 203, 193),
+(51, 1, 1, 'Object', 'A model of a business object', 184, 194),
+(52, 2, 2, 'Object Property', 'A property of a Business Object.', 184, 194),
+(53, 3, 3, 'Rule', 'A business rule that can be applied to a usecase.', 184, 194),
+(54, 4, 4, 'Actor', 'An actor who acts within use cases. May be a person or an external system.', 184, 194),
+(55, 5, 5, 'Interface', 'An interface of the system defined with either text or an image.', 184, 194),
+(56, 6, 6, 'Form', 'An input form with a number of fields and their associated validations and definitions', 184, 194),
+(57, 7, 7, 'oaeu', '<p>aoeu</p>', 184, 194),
+(58, 8, 8, 'ediu', '<p>idu</p>', 184, 194),
+(59, 9, 9, 'uidh', '<p>iudh</p>', 184, 194),
+(60, 10, 10, 'dbuibudib', '<p>duibdib</p>', 184, 194),
+(61, 11, 10, 'idchidht', '<p>idhm</p>', 184, 194);
 
 -- --------------------------------------------------------
 
@@ -836,7 +909,7 @@ CREATE TABLE IF NOT EXISTS `objectproperty` (
   `objectproperty_id` int(11) NOT NULL,
   `project_id` int(11) NOT NULL,
   `release_id` int(11) NOT NULL,
-  `number` varchar(30) NOT NULL,
+  `number` int(6) NOT NULL,
   `object_id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
   `description` text NOT NULL,
@@ -845,33 +918,38 @@ CREATE TABLE IF NOT EXISTS `objectproperty` (
   KEY `objectproperty_id` (`objectproperty_id`),
   KEY `release_id` (`release_id`),
   KEY `project_id` (`project_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=52 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=57 ;
 
 --
 -- Dumping data for table `objectproperty`
 --
 
 INSERT INTO `objectproperty` (`id`, `objectproperty_id`, `project_id`, `release_id`, `number`, `object_id`, `name`, `description`) VALUES
-(16, 1, 184, 165, '1', 1, 'Name', 'Name of the Object Property'),
-(17, 2, 184, 165, '2', 1, 'Description', 'Description of the Object Property'),
-(18, 3, 184, 165, '1', 3, 'Name', 'Name of the Business Rule'),
-(19, 4, 184, 165, '2', 3, 'Rule Text', 'The definition of the business rule in a text form.'),
-(34, 1, 199, 187, '1', 1, 'Username', 'A string used to identify a user, each username is unique.'),
-(35, 2, 199, 187, '2', 1, 'First Name', 'The user''s first name.'),
-(36, 3, 199, 187, '3', 1, 'Last Name', 'The user''s last name.'),
-(37, 4, 199, 187, '4', 1, 'email address', 'The user''s email address.'),
-(38, 1, 202, 190, '1', 1, 'Property one', 'the first'),
-(39, 2, 202, 190, '2', 1, 'Property two ', 'the second'),
-(40, 2, 202, 190, '2', 1, 'Property two ', 'the second updated'),
-(41, 1, 193, 178, '1', 2, 'aoeu', 'aoeu'),
-(42, 5, 199, 187, '1', 2, 'First', 'the first'),
-(43, 6, 199, 187, '2', 2, 'second', 'the second'),
-(44, 7, 199, 187, '3', 2, 'third', 'the third'),
-(45, 8, 199, 187, '4', 2, 'fourth', 'fourth thing'),
-(48, 1, 203, 192, '1', 1, 'Name', 'the object name'),
-(49, 2, 203, 192, '2', 1, 'Description', 'The object description'),
-(50, 1, 203, 193, '1', 1, 'Name', 'the object name'),
-(51, 2, 203, 193, '2', 1, 'Description', 'The object description');
+(16, 1, 184, 165, 1, 1, 'Name', 'Name of the Object Property'),
+(17, 2, 184, 165, 2, 1, 'Description', 'Description of the Object Property'),
+(18, 3, 184, 165, 1, 3, 'Name', 'Name of the Business Rule'),
+(19, 4, 184, 165, 2, 3, 'Rule Text', 'The definition of the business rule in a text form.'),
+(34, 1, 199, 187, 1, 1, 'Username', 'A string used to identify a user, each username is unique.'),
+(35, 2, 199, 187, 2, 1, 'First Name', 'The user''s first name.'),
+(36, 3, 199, 187, 3, 1, 'Last Name', 'The user''s last name.'),
+(37, 4, 199, 187, 4, 1, 'email address', 'The user''s email address.'),
+(38, 1, 202, 190, 1, 1, 'Property one', 'the first'),
+(39, 2, 202, 190, 2, 1, 'Property two ', 'the second'),
+(40, 2, 202, 190, 2, 1, 'Property two ', 'the second updated'),
+(41, 1, 193, 178, 1, 2, 'aoeu', 'aoeu'),
+(42, 5, 199, 187, 1, 2, 'First', 'the first'),
+(43, 6, 199, 187, 2, 2, 'second', 'the second'),
+(44, 7, 199, 187, 3, 2, 'third', 'the third'),
+(45, 8, 199, 187, 4, 2, 'fourth', 'fourth thing'),
+(48, 1, 203, 192, 1, 1, 'Name', 'the object name'),
+(49, 2, 203, 192, 2, 1, 'Description', 'The object description'),
+(50, 1, 203, 193, 1, 1, 'Name', 'the object name'),
+(51, 2, 203, 193, 2, 1, 'Description', 'The object description'),
+(52, 1, 184, 165, 1, 1, 'Name', 'Name of the Object Property'),
+(53, 2, 184, 194, 2, 1, 'Description', 'Description of the Object Property'),
+(54, 3, 184, 194, 1, 3, 'Name', 'Name of the Business Rule'),
+(55, 4, 184, 194, 2, 3, 'Rule Text', 'The definition of the business rule in a text form.'),
+(56, 1, 184, 194, 1, 1, 'Name', 'Name of the Object Property');
 
 -- --------------------------------------------------------
 
@@ -913,7 +991,7 @@ CREATE TABLE IF NOT EXISTS `package` (
   KEY `project_id` (`project_id`),
   KEY `package_id` (`package_id`),
   KEY `release_id` (`release_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=945 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=998 ;
 
 --
 -- Dumping data for table `package`
@@ -938,7 +1016,15 @@ INSERT INTO `package` (`id`, `package_id`, `name`, `stage`, `number`, `project_i
 (941, 1, 'System', 1, 1, 203, 192, '0.00', '0.00', NULL),
 (942, 1, 'System', 1, 1, 203, 193, '0.00', '0.00', NULL),
 (943, 2, 'Package Two', 1, 2, 203, 193, '0.00', '0.00', NULL),
-(944, 3, 'Three', 1, 3, 203, 193, '0.00', '0.00', NULL);
+(944, 3, 'Three', 1, 3, 203, 193, '0.00', '0.00', NULL),
+(945, 1, 'Membership', 1, 1, 184, 194, '0.00', '0.00', NULL),
+(946, 2, 'Requirements', 1, 2, 184, 194, '0.00', '0.00', NULL),
+(947, 3, 'Library', 1, 3, 184, 194, '0.00', '0.00', NULL),
+(948, 4, 'Testing', 1, 4, 184, 194, '0.00', '0.00', NULL),
+(994, 1, 'System', 1, 1, 220, 234, '0.00', '0.00', NULL),
+(995, 1, 'System', 1, 1, 220, 235, '0.00', '0.00', NULL),
+(996, 1, 'System', 1, 1, 220, 236, '0.00', '0.00', NULL),
+(997, 1, 'System', 1, 1, 220, 237, '0.00', '0.00', NULL);
 
 -- --------------------------------------------------------
 
@@ -966,7 +1052,14 @@ CREATE TABLE IF NOT EXISTS `photo` (
 --
 
 INSERT INTO `photo` (`id`, `photo_id`, `file`, `description`, `project_id`, `release_id`, `user_id`, `create_date`) VALUES
-(22, 1, '5366d29252d6e.png', 'Uploaded file with filename freeway_tunnel.png', 199, 187, 114, '2014-05-04 23:51:47');
+(22, 1, '5366d29252d6e.png', 'Uploaded file with filename freeway_tunnel.png', 199, 187, 114, '2014-05-04 23:51:47'),
+(23, 1, '5391101b7a582.jpg', 'Uploaded file with filename login_popup.jpg', 203, 193, 113, '2014-06-06 00:49:31'),
+(24, 1, '53978e3495573.jpg', 'Uploaded file with filename content_page.jpg', 220, 234, 113, '2014-06-10 23:01:08'),
+(25, 2, '53978f6dac581.jpg', 'Uploaded file with filename login_popup.jpg', 220, 234, 113, '2014-06-10 23:06:21'),
+(26, 3, '53978fb91cef0.jpg', 'Uploaded file with filename register_form.jpg', 220, 234, 113, '2014-06-10 23:07:37'),
+(27, 4, '53978fdd7e539.png', 'Uploaded file with filename pop-up-location.png', 220, 234, 113, '2014-06-10 23:08:14'),
+(28, 5, '53979140938a8.jpg', 'Uploaded file with filename image_upload.jpg', 220, 234, 113, '2014-06-10 23:14:08'),
+(30, 6, '539792ef09b98.jpg', 'Uploaded file with filename register_form.jpg', 220, 234, 113, '2014-06-10 23:21:19');
 
 -- --------------------------------------------------------
 
@@ -984,7 +1077,7 @@ CREATE TABLE IF NOT EXISTS `project` (
   `extlink` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `extlink` (`extlink`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=204 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=221 ;
 
 --
 -- Dumping data for table `project`
@@ -996,7 +1089,8 @@ INSERT INTO `project` (`id`, `name`, `description`, `company_id`, `budget`, `sta
 (199, 'Membership Module', 'A web member module for inclusion in other projects', 507, '0.00', 1, '5d5ae9f427f2315403eaffae87c22658'),
 (201, 'aoeu', 'aoeu', 512, '0.00', 1, '2ba2ac9a53d0960d3df3df188725f5f5'),
 (202, 'Test', 'Test', 513, '0.00', 1, '2d28de7f84b042ddeb3548ecc60b5544'),
-(203, 'Test Project', 'This is a test', 505, '0.00', 1, '64b6b2f13a28c0010bf5d725e1e24ce2');
+(203, 'Test Project', 'This is a test', 505, '0.00', 1, '64b6b2f13a28c0010bf5d725e1e24ce2'),
+(220, 'Test the release thingy', 'aoeu', 505, '0.00', 1, '9dde22ea7b680301b69bd20a2b94e354');
 
 -- --------------------------------------------------------
 
@@ -1033,30 +1127,36 @@ CREATE TABLE IF NOT EXISTS `projectstatustype` (
 
 CREATE TABLE IF NOT EXISTS `release` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `number` varchar(20) NOT NULL,
+  `number` decimal(8,4) NOT NULL,
   `status` tinyint(1) NOT NULL,
   `project_id` int(11) NOT NULL,
+  `offset` int(6) NOT NULL DEFAULT '0',
   `create_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `create_user` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `create_user` (`create_user`),
   KEY `project_id` (`project_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=194 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=238 ;
 
 --
 -- Dumping data for table `release`
 --
 
-INSERT INTO `release` (`id`, `number`, `status`, `project_id`, `create_date`, `create_user`) VALUES
-(165, '0.0047', 1, 184, '2014-04-29 20:46:50', 113),
-(177, '1', 2, 193, '2014-04-28 03:38:33', 114),
-(178, '1.0007', 1, 193, '2014-05-17 02:59:12', 114),
-(186, '1', 2, 199, '2014-04-28 07:35:54', 114),
-(187, '1.0099', 1, 199, '2014-05-16 12:19:08', 114),
-(189, '0.0004', 1, 201, '2014-05-05 05:31:22', 118),
-(190, '0.0059', 1, 202, '2014-05-07 05:06:32', 120),
-(192, '1', 2, 203, '2014-05-18 04:19:39', 113),
-(193, '1.002', 1, 203, '2014-05-19 09:07:20', 113);
+INSERT INTO `release` (`id`, `number`, `status`, `project_id`, `offset`, `create_date`, `create_user`) VALUES
+(165, '1.0000', 2, 184, 0, '2014-05-21 08:17:44', 113),
+(177, '1.0000', 2, 193, 0, '2014-04-28 03:38:33', 114),
+(178, '1.0007', 1, 193, 0, '2014-05-17 02:59:12', 114),
+(186, '1.0000', 2, 199, 0, '2014-04-28 07:35:54', 114),
+(187, '1.0099', 1, 199, 0, '2014-05-16 12:19:08', 114),
+(189, '0.0004', 1, 201, 0, '2014-05-05 05:31:22', 118),
+(190, '0.0059', 1, 202, 0, '2014-05-07 05:06:32', 120),
+(192, '1.0000', 2, 203, 0, '2014-05-18 04:19:39', 113),
+(193, '1.0023', 1, 203, 0, '2014-06-06 04:38:11', 113),
+(194, '1.0009', 1, 184, 0, '2014-05-23 11:22:12', 113),
+(234, '3.0024', 1, 220, 12, '2014-06-10 23:21:19', 113),
+(235, '1.0000', 2, 220, 0, '2014-06-10 14:00:34', 113),
+(236, '2.0000', 2, 220, 10, '2014-06-10 14:09:58', 113),
+(237, '3.0000', 2, 220, 12, '2014-06-10 14:11:16', 113);
 
 -- --------------------------------------------------------
 
@@ -1076,7 +1176,7 @@ CREATE TABLE IF NOT EXISTS `rule` (
   KEY `project_id` (`project_id`),
   KEY `rule_id` (`rule_id`),
   KEY `release_id` (`release_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=126 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=137 ;
 
 --
 -- Dumping data for table `rule`
@@ -1096,7 +1196,18 @@ INSERT INTO `rule` (`id`, `rule_id`, `number`, `title`, `text`, `project_id`, `r
 (122, 2, 2, 'New Rule', 'stub', 203, 193),
 (123, 3, 3, 'Test', 'stub', 203, 193),
 (124, 3, 3, 'Test', 'stub aeuaeo ueo uaoe u', 203, 193),
-(125, 3, 3, 'Test updated.', 'stub aeuaeo ueo uaoe u', 203, 193);
+(125, 3, 3, 'Test updated.', 'stub aeuaeo ueo uaoe u', 203, 193),
+(126, 4, 4, 'aoeu', 'stub', 184, 165),
+(127, 5, 5, ' eo uaoe uoea u', 'stub', 184, 165),
+(128, 6, 6, 'hdtnhtdn', 'stub', 184, 165),
+(129, 7, 7, 'aoeuaoeu', 'stub', 184, 165),
+(130, 8, 8, 'aoeuoeau', 'stub', 184, 165),
+(131, 9, 9, 'diuuid', 'stub', 184, 165),
+(132, 10, 10, 'hhhnn', 'stub', 184, 165),
+(133, 1, 1, 'Version control', 'All requirements are version controlled. When a requirement is updated, an updated copy of the requirement is saved and set to be ''active'', and the previous version is set to ''inactive''.', 184, 165),
+(134, 3, 3, 'Number of log on attempts', 'There can only be 3 log on attempts before the account is locked out.', 184, 165),
+(135, 1, 1, 'Version control', 'All requirements are version controlled. When a requirement is updated, an updated copy of the requirement is saved and set to be ''active'', and the previous version is set to ''inactive''.', 184, 194),
+(136, 3, 3, 'Number of log on attempts', 'There can only be 3 log on attempts before the account is locked out.', 184, 194);
 
 -- --------------------------------------------------------
 
@@ -1173,7 +1284,7 @@ CREATE TABLE IF NOT EXISTS `step` (
   KEY `actor_id` (`actor_id`),
   KEY `project_id` (`project_id`),
   KEY `release_id` (`release_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=714 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=791 ;
 
 --
 -- Dumping data for table `step`
@@ -1243,7 +1354,22 @@ INSERT INTO `step` (`id`, `step_id`, `project_id`, `release_id`, `flow_id`, `num
 (710, 3, 203, 193, 3, 1, 1, 'Actor action.', 'System result.'),
 (711, 6, 203, 193, 4, 1, 1, 'An alternative path is possible, forking here', 'and then moving on here'),
 (712, 7, 203, 193, 4, 2, 1, 'Finally this happens', 'and then we re-join'),
-(713, 8, 203, 193, 5, 1, 1, 'Actor action.', 'System result.');
+(713, 8, 203, 193, 5, 1, 1, 'Actor action.', 'System result.'),
+(714, 1, 184, 194, 1, 1, 2, 'Actor action.', 'System result.'),
+(715, 2, 184, 194, 2, 1, 1, 'Actor action.', 'System result.'),
+(716, 3, 184, 194, 3, 1, 1, 'Actor action.', 'System result.'),
+(717, 4, 184, 194, 4, 1, 1, 'Actor action.', 'System result.'),
+(718, 5, 184, 194, 5, 1, 1, 'Actor views project list.', 'System displays project list'),
+(719, 6, 184, 194, 6, 1, 1, 'Actor action.', 'System result.'),
+(720, 7, 184, 194, 7, 1, 1, 'Actor action.', 'System result.'),
+(721, 8, 184, 194, 8, 1, 1, 'Actor action.', 'System result.'),
+(722, 8, 184, 194, 8, 1, 1, 'Actor action.', 'System result.'),
+(785, 1, 220, 234, 1, 1, 1, 'Actor action.', 'System result.'),
+(786, 1, 220, 234, 1, 1, 1, 'Actor action.', 'System result.aoeu'),
+(787, 1, 220, 234, 1, 1, 1, 'Actor action.aoeuaoeu', 'System result.aoeu'),
+(788, 1, 220, 235, 1, 1, 1, 'Actor action.aoeuaoeu', 'System result.aoeu'),
+(789, 1, 220, 236, 1, 1, 1, 'Actor action.aoeuaoeu', 'System result.aoeu'),
+(790, 1, 220, 237, 1, 1, 1, 'Actor action.aoeuaoeu', 'System result.aoeu');
 
 -- --------------------------------------------------------
 
@@ -1263,7 +1389,7 @@ CREATE TABLE IF NOT EXISTS `stepform` (
   KEY `step_id` (`step_id`),
   KEY `project_id` (`project_id`),
   KEY `release_id` (`release_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=87 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=92 ;
 
 --
 -- Dumping data for table `stepform`
@@ -1280,7 +1406,8 @@ INSERT INTO `stepform` (`id`, `stepform_id`, `project_id`, `release_id`, `step_i
 (83, 1, 203, 192, 2, 1),
 (84, 1, 203, 193, 2, 1),
 (85, 2, 203, 193, 8, 2),
-(86, 3, 203, 193, 8, 3);
+(86, 3, 203, 193, 8, 3),
+(87, 1, 184, 165, 1, 2);
 
 -- --------------------------------------------------------
 
@@ -1300,7 +1427,7 @@ CREATE TABLE IF NOT EXISTS `stepiface` (
   KEY `step_id` (`step_id`),
   KEY `project_id` (`project_id`),
   KEY `release_id` (`release_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=107 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=122 ;
 
 --
 -- Dumping data for table `stepiface`
@@ -1318,7 +1445,10 @@ INSERT INTO `stepiface` (`id`, `stepiface_id`, `project_id`, `release_id`, `step
 (101, 6, 199, 187, 1, 2),
 (104, 1, 203, 192, 2, 1),
 (105, 1, 203, 193, 2, 1),
-(106, 2, 203, 193, 8, 1);
+(106, 2, 203, 193, 8, 1),
+(107, 2, 184, 165, 1, 2),
+(108, 1, 184, 194, 5, 1),
+(109, 3, 184, 194, 8, 3);
 
 -- --------------------------------------------------------
 
@@ -1338,7 +1468,7 @@ CREATE TABLE IF NOT EXISTS `steprule` (
   KEY `step_id` (`step_id`),
   KEY `project_id` (`project_id`),
   KEY `release_id` (`release_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=77 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=85 ;
 
 --
 -- Dumping data for table `steprule`
@@ -1350,7 +1480,15 @@ INSERT INTO `steprule` (`id`, `steprule_id`, `project_id`, `release_id`, `step_i
 (73, 1, 203, 192, 2, 1),
 (74, 1, 203, 193, 2, 1),
 (75, 2, 203, 193, 8, 2),
-(76, 3, 203, 193, 8, 3);
+(76, 3, 203, 193, 8, 3),
+(77, 2, 184, 165, 1, 4),
+(78, 3, 184, 165, 1, 5),
+(79, 4, 184, 165, 1, 6),
+(80, 5, 184, 165, 1, 7),
+(81, 6, 184, 165, 1, 8),
+(82, 7, 184, 165, 1, 9),
+(83, 8, 184, 165, 1, 10),
+(84, 1, 184, 194, 2, 3);
 
 -- --------------------------------------------------------
 
@@ -1369,7 +1507,7 @@ CREATE TABLE IF NOT EXISTS `testcase` (
   PRIMARY KEY (`id`),
   KEY `release_id` (`release_id`),
   KEY `usecase_id` (`usecase_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=83 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=93 ;
 
 --
 -- Dumping data for table `testcase`
@@ -1381,7 +1519,16 @@ INSERT INTO `testcase` (`id`, `usecase_id`, `release_id`, `number`, `name`, `pre
 (79, 318, 192, 3, 'My First Use Case(A)', 'None', 1),
 (80, 318, 192, 4, 'My First Use Case(main)', 'None', 1),
 (81, 318, 192, 5, 'My First Use Case(A)', 'None', 1),
-(82, 319, 192, 6, 'Usecase Number Two(main)', 'None', 1);
+(82, 319, 192, 6, 'Usecase Number Two(main)', 'None', 1),
+(83, 222, 165, 1, 'Become a member(main)', 'None', 1),
+(84, 259, 165, 2, 'Log in(main)', 'None', 1),
+(85, 224, 165, 3, 'Create simple requirement category(main)', 'None', 1),
+(86, 226, 165, 4, 'Create simple requirement(main)', 'None', 1),
+(87, 256, 165, 5, 'Create actor(main)', 'None', 1),
+(88, 258, 165, 6, 'Actor inheritance(main)', 'None', 1),
+(89, 227, 165, 7, 'Create a library item(main)', 'None', 1),
+(90, 228, 165, 8, 'Import a library project(main)', 'None', 1),
+(92, 384, 237, 1, 'aoeuueieu(main)', 'None', 1);
 
 -- --------------------------------------------------------
 
@@ -1400,7 +1547,7 @@ CREATE TABLE IF NOT EXISTS `testcaseresult` (
   KEY `testcase_id` (`testcase_id`),
   KEY `testrun_id` (`testrun_id`),
   KEY `user_id` (`user_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=67 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -1421,14 +1568,14 @@ CREATE TABLE IF NOT EXISTS `testresult` (
   KEY `testrun_id` (`testrun_id`),
   KEY `date` (`date`),
   KEY `user_id` (`user_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=15 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=30 ;
 
 --
 -- Dumping data for table `testresult`
 --
 
 INSERT INTO `testresult` (`id`, `testrun_id`, `teststep_id`, `user_id`, `date`, `result`, `comments`) VALUES
-(1, 74, 325, 113, '2014-05-19 12:57:00', 4, 'None'),
+(1, 74, 325, 113, '2014-05-19 12:57:00', 4, 'Is this number 2?'),
 (2, 74, 326, 113, '2014-05-19 12:57:00', 4, 'None'),
 (3, 74, 327, 113, '2014-05-19 12:57:00', 4, 'None'),
 (4, 74, 328, 113, '2014-05-19 12:57:00', 4, 'None'),
@@ -1441,7 +1588,22 @@ INSERT INTO `testresult` (`id`, `testrun_id`, `teststep_id`, `user_id`, `date`, 
 (11, 75, 335, 113, '2014-05-19 13:12:00', 4, 'None'),
 (12, 75, 336, 113, '2014-05-19 13:12:00', 4, 'None'),
 (13, 75, 337, 113, '2014-05-19 13:12:00', 4, 'None'),
-(14, 75, 338, 113, '2014-05-19 13:12:00', 4, 'None');
+(14, 75, 338, 113, '2014-05-19 13:12:00', 4, 'None'),
+(15, 76, 359, 113, '2014-05-21 11:13:52', 1, 'None'),
+(16, 77, 360, 113, '2014-05-21 11:14:19', 2, 'Try this puppy'),
+(17, 77, 361, 113, '2014-05-21 11:14:19', 2, 'None'),
+(18, 78, 362, 113, '2014-05-21 13:43:02', 4, 'None'),
+(19, 79, 362, 113, '2014-05-21 13:44:25', 4, 'None'),
+(20, 80, 359, 113, '2014-05-21 14:08:00', 4, 'None'),
+(21, 81, 359, 113, '2014-05-22 09:41:51', 4, 'None'),
+(22, 82, 359, 113, '2014-05-22 10:06:51', 4, 'None'),
+(23, 83, 363, 113, '2014-05-22 11:59:51', 2, 'None'),
+(24, 84, 363, 113, '2014-05-22 12:00:48', 4, 'None'),
+(25, 85, 364, 113, '2014-05-27 11:25:19', 2, 'None'),
+(26, 86, 364, 113, '2014-05-27 11:28:26', 2, 'None'),
+(27, 87, 365, 113, '2014-05-27 11:53:50', 1, 'None'),
+(28, 88, 365, 113, '2014-05-27 11:54:12', 2, 'None'),
+(29, 89, 372, 113, '2014-06-10 14:12:14', 2, 'None');
 
 -- --------------------------------------------------------
 
@@ -1458,7 +1620,7 @@ CREATE TABLE IF NOT EXISTS `testrun` (
   PRIMARY KEY (`id`),
   KEY `project_id` (`release_id`),
   KEY `testcase_id` (`testcase_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=76 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=90 ;
 
 --
 -- Dumping data for table `testrun`
@@ -1466,7 +1628,21 @@ CREATE TABLE IF NOT EXISTS `testrun` (
 
 INSERT INTO `testrun` (`id`, `release_id`, `number`, `testcase_id`, `status`) VALUES
 (74, 192, 1, 77, 1),
-(75, 192, 1, 78, 1);
+(75, 192, 1, 78, 1),
+(76, 165, 1, 83, 3),
+(77, 165, 1, 84, 3),
+(78, 165, 1, 85, 1),
+(79, 165, 1, 85, 2),
+(80, 165, 1, 83, 2),
+(81, 165, 1, 83, 2),
+(82, 165, 1, 83, 2),
+(83, 165, 1, 86, 3),
+(84, 165, 1, 86, 2),
+(85, 165, 1, 87, 3),
+(86, 165, 1, 87, 3),
+(87, 165, 1, 88, 3),
+(88, 165, 2, 88, 3),
+(89, 237, 1, 92, 3);
 
 -- --------------------------------------------------------
 
@@ -1482,7 +1658,7 @@ CREATE TABLE IF NOT EXISTS `teststep` (
   `result` text NOT NULL,
   PRIMARY KEY (`id`),
   KEY `testcase_id` (`testcase_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=359 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=373 ;
 
 --
 -- Dumping data for table `teststep`
@@ -1522,7 +1698,18 @@ INSERT INTO `teststep` (`id`, `testcase_id`, `number`, `action`, `result`) VALUE
 (355, 81, '5', 'Finally this happens', 'and then we re-join'),
 (356, 81, '5', 'Then a second thing is done.', 'And another result is produced.'),
 (357, 81, '5', 'Finally, we are getting sick of the whole thin.', 'But there is a result'),
-(358, 82, '1', 'Actor action.', 'System result.');
+(358, 82, '1', 'Actor action.', 'System result.'),
+(359, 83, '1', 'Actor action.', 'System result.'),
+(360, 84, '1', 'Actor action.', 'System result.'),
+(361, 84, '1', 'Validate Business Rule', 'BR-0003 Number of log on attempts'),
+(362, 85, '1', 'Actor action.', 'System result.'),
+(363, 86, '1', 'Actor action.', 'System result.'),
+(364, 87, '1', 'Actor action.', 'System result.'),
+(365, 88, '1', 'Actor action.', 'System result.'),
+(366, 89, '1', 'Actor views project list.', 'System displays project list'),
+(367, 89, '1', 'Confirm User Interface', 'IF-0001 Project List'),
+(368, 90, '1', 'Actor action.', 'System result.'),
+(372, 92, '1', 'Actor action.aoeuaoeu', 'System result.aoeu');
 
 -- --------------------------------------------------------
 
@@ -1546,7 +1733,7 @@ CREATE TABLE IF NOT EXISTS `usecase` (
   KEY `usecase_id` (`usecase_id`),
   KEY `release_id` (`release_id`),
   KEY `project_id` (`project_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=323 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=385 ;
 
 --
 -- Dumping data for table `usecase`
@@ -1595,7 +1782,22 @@ INSERT INTO `usecase` (`id`, `usecase_id`, `project_id`, `release_id`, `package_
 (319, 3, 203, 192, 1, '2', 1, 'Usecase Number Two', 'This usecase describes the process of sumthin', 'None'),
 (320, 2, 203, 193, 1, '1', 1, 'My First Use Case', 'This usecase describes the process of Nuthin', 'None'),
 (321, 3, 203, 193, 1, '2', 1, 'Usecase Number Two', 'This usecase describes the process of sumthin', 'None'),
-(322, 4, 203, 193, 2, '3', 1, 'Test the number', 'This usecase describes the process of ...', 'None');
+(322, 4, 203, 193, 2, '3', 1, 'Test the number', 'This usecase describes the process of ...', 'None'),
+(323, 1, 184, 194, 1, '1', 2, 'Become a member', 'This usecase describes the process of member of the public registering for the account.', 'None'),
+(324, 2, 184, 194, 1, '2', 1, 'Log in', 'This usecase describes the process of registered member logging into the system.', 'None'),
+(325, 3, 184, 194, 2, '1', 1, 'Create simple requirement category', 'This usecase describes the process of a user creating a category of simple requirements that will form a section in the requirements document.', 'A project must be created, user must have edit permission.'),
+(326, 4, 184, 194, 2, '2', 1, 'Create simple requirement', 'This usecase describes the process of creating a text or image requirement within a Simple Requirement Category.', 'None'),
+(327, 7, 184, 194, 2, '8', 1, 'Create actor', 'This usecase describes the process of a member defining an actor for a project.', 'None'),
+(328, 8, 184, 194, 2, '9', 1, 'Actor inheritance', 'This usecase describes the process of defining an inheritance relationship between two actors.', 'None'),
+(329, 5, 184, 194, 3, '1', 1, 'Create a library item', 'This usecase describes the process of ...', 'None'),
+(330, 6, 184, 194, 3, '2', 1, 'Import a library project', 'This usecase describes the process of a user copying a library project into another project.', 'None'),
+(378, 1, 220, 234, 1, '1', 1, 'aoeu', 'This usecase describes the process of ...', 'None'),
+(379, 1, 220, 234, 1, '1', 1, 'aoeu', 'This usecase desaoeucribes the process of ...', 'None'),
+(380, 1, 220, 235, 1, '1', 1, 'aoeu', 'This usecase desaoeucribes the process of ...', 'None'),
+(381, 1, 220, 236, 1, '1', 1, 'aoeu', 'This usecase desaoeucribes the process of ...', 'None'),
+(382, 1, 220, 234, 1, '1', 1, 'aoeuueieu', 'This usecase desaoeucribes the process of ...', 'None'),
+(383, 1, 220, 234, 1, '1', 1, 'aoeuueieu', 'This usecase desaoeucribes the process of ...uieuiue', 'None'),
+(384, 1, 220, 237, 1, '1', 1, 'aoeuueieu', 'This usecase desaoeucribes the process of ...uieuiue', 'None');
 
 -- --------------------------------------------------------
 
@@ -1677,7 +1879,7 @@ CREATE TABLE IF NOT EXISTS `version` (
   KEY `action` (`action`),
   KEY `foreign_key` (`foreign_key`),
   KEY `foreign_id` (`foreign_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3398 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3939 ;
 
 --
 -- Dumping data for table `version`
@@ -1800,15 +2002,15 @@ INSERT INTO `version` (`id`, `number`, `release`, `project_id`, `status`, `objec
 (2618, 28, '165', 184, 1, 4, 2, 234, 1, 0, '2014-04-29 07:04:11', 113),
 (2619, 29, '165', 184, 1, 4, 2, 235, 1, 0, '2014-04-29 07:05:03', 113),
 (2620, 30, '165', 184, 1, 4, 2, 236, 1, 1, '2014-04-29 07:05:03', 113),
-(2621, 31, '165', 184, 1, 1, 1, 101, 1, 1, '2014-04-29 07:25:47', 113),
+(2621, 31, '165', 184, 1, 1, 1, 101, 1, 0, '2014-05-21 08:16:48', 113),
 (2622, 32, '165', 184, 1, 1, 1, 102, 2, 0, '2014-04-29 07:26:36', 113),
 (2623, 33, '165', 184, 1, 1, 3, 102, 2, 0, '2014-04-29 07:26:36', 113),
-(2624, 34, '165', 184, 1, 1, 1, 103, 3, 1, '2014-04-29 19:15:58', 113),
+(2624, 34, '165', 184, 1, 1, 1, 103, 3, 0, '2014-05-21 08:17:44', 113),
 (2625, 35, '165', 184, 1, 16, 1, 66, 1, 1, '2014-04-29 19:15:58', 113),
 (2626, 36, '165', 184, 1, 10, 2, 259, 2, 1, '2014-04-29 19:16:41', 113),
 (2627, 37, '165', 184, 1, 6, 1, 26, 1, 1, '2014-04-29 19:34:37', 113),
 (2628, 38, '165', 184, 1, 6, 1, 27, 2, 1, '2014-04-29 19:37:14', 113),
-(2629, 39, '165', 184, 1, 7, 1, 16, 1, 1, '2014-04-29 20:21:33', 113),
+(2629, 39, '165', 184, 1, 7, 1, 16, 1, 0, '2014-05-21 08:02:28', 113),
 (2630, 40, '165', 184, 1, 7, 1, 17, 2, 1, '2014-04-29 20:22:14', 113),
 (2631, 41, '165', 184, 1, 6, 1, 28, 3, 1, '2014-04-29 20:23:28', 113),
 (2632, 42, '165', 184, 1, 6, 1, 29, 4, 1, '2014-04-29 20:24:22', 113),
@@ -2078,7 +2280,7 @@ INSERT INTO `version` (`id`, `number`, `release`, `project_id`, `status`, `objec
 (3382, 5, '193', 203, 1, 5, 1, 944, 3, 1, '2014-05-18 12:43:24', 113),
 (3383, 6, '193', 203, 1, 15, 1, 106, 2, 1, '2014-05-19 08:55:11', 113),
 (3384, 7, '193', 203, 1, 12, 2, 159, 1, 0, '2014-05-19 08:55:35', 113),
-(3385, 8, '193', 203, 1, 12, 2, 160, 1, 1, '2014-05-19 08:55:35', 113),
+(3385, 8, '193', 203, 1, 12, 2, 160, 1, 0, '2014-06-06 00:49:55', 113),
 (3386, 9, '193', 203, 1, 1, 3, 122, 2, 0, '2014-05-19 08:56:09', 113),
 (3387, 10, '193', 203, 1, 16, 1, 75, 2, 1, '2014-05-19 08:56:10', 113),
 (3388, 11, '193', 203, 1, 2, 3, 124, 2, 0, '2014-05-19 08:56:17', 113),
@@ -2090,7 +2292,172 @@ INSERT INTO `version` (`id`, `number`, `release`, `project_id`, `status`, `objec
 (3394, 17, '193', 203, 1, 1, 2, 124, 3, 0, '2014-05-19 09:06:48', 113),
 (3395, 18, '193', 203, 1, 1, 2, 125, 3, 1, '2014-05-19 09:06:48', 113),
 (3396, 19, '193', 203, 1, 3, 1, 75, 3, 1, '2014-05-19 09:07:06', 113),
-(3397, 20, '193', 203, 1, 2, 2, 126, 3, 1, '2014-05-19 09:07:20', 113);
+(3397, 20, '193', 203, 1, 2, 2, 126, 3, 1, '2014-05-19 09:07:20', 113),
+(3398, 48, '165', 184, 1, 1, 1, 126, 4, 0, '2014-05-21 06:51:11', 113),
+(3399, 49, '165', 184, 1, 16, 1, 77, 2, 0, '2014-05-21 06:35:32', 113),
+(3400, 50, '165', 184, 1, 16, 3, 77, 2, 0, '2014-05-21 06:35:32', 113),
+(3401, 51, '165', 184, 1, 1, 1, 127, 5, 0, '2014-05-21 06:51:14', 113),
+(3402, 52, '165', 184, 1, 16, 1, 78, 3, 0, '2014-05-21 06:37:58', 113),
+(3403, 53, '165', 184, 1, 16, 3, 78, 3, 0, '2014-05-21 06:37:58', 113),
+(3404, 54, '165', 184, 1, 1, 1, 128, 6, 0, '2014-05-21 06:51:17', 113),
+(3405, 55, '165', 184, 1, 16, 1, 79, 4, 0, '2014-05-21 06:38:54', 113),
+(3406, 56, '165', 184, 1, 16, 3, 79, 4, 0, '2014-05-21 06:38:54', 113),
+(3407, 57, '165', 184, 1, 1, 1, 129, 7, 0, '2014-05-21 06:51:21', 113),
+(3408, 58, '165', 184, 1, 16, 1, 80, 5, 0, '2014-05-21 06:39:43', 113),
+(3409, 59, '165', 184, 1, 16, 3, 80, 5, 0, '2014-05-21 06:39:43', 113),
+(3410, 60, '165', 184, 1, 1, 1, 130, 8, 0, '2014-05-21 06:51:24', 113),
+(3411, 61, '165', 184, 1, 16, 1, 81, 6, 0, '2014-05-21 06:41:23', 113),
+(3412, 62, '165', 184, 1, 16, 3, 81, 6, 0, '2014-05-21 06:41:23', 113),
+(3413, 63, '165', 184, 1, 1, 1, 131, 9, 0, '2014-05-21 06:51:08', 113),
+(3414, 64, '165', 184, 1, 16, 1, 82, 7, 0, '2014-05-21 06:43:09', 113),
+(3415, 65, '165', 184, 1, 16, 3, 82, 7, 0, '2014-05-21 06:43:09', 113),
+(3416, 66, '165', 184, 1, 12, 1, 161, 2, 0, '2014-05-21 06:51:36', 113),
+(3417, 67, '165', 184, 1, 15, 1, 107, 2, 0, '2014-05-21 06:46:16', 113),
+(3418, 68, '165', 184, 1, 1, 1, 132, 10, 0, '2014-05-21 06:51:05', 113),
+(3419, 69, '165', 184, 1, 16, 1, 83, 8, 0, '2014-05-21 06:46:19', 113),
+(3420, 70, '165', 184, 1, 2, 1, 127, 2, 0, '2014-05-21 06:51:31', 113),
+(3421, 71, '165', 184, 1, 14, 1, 87, 1, 0, '2014-05-21 06:46:21', 113),
+(3422, 72, '165', 184, 1, 15, 3, 107, 2, 0, '2014-05-21 06:46:16', 113),
+(3423, 73, '165', 184, 1, 16, 3, 83, 8, 0, '2014-05-21 06:46:19', 113),
+(3424, 74, '165', 184, 1, 14, 3, 87, 1, 0, '2014-05-21 06:46:21', 113),
+(3425, 75, '165', 184, 1, 1, 3, 132, 10, 0, '2014-05-21 06:51:06', 113),
+(3426, 76, '165', 184, 1, 1, 3, 131, 9, 0, '2014-05-21 06:51:08', 113),
+(3427, 77, '165', 184, 1, 1, 3, 126, 4, 0, '2014-05-21 06:51:11', 113),
+(3428, 78, '165', 184, 1, 1, 3, 127, 5, 0, '2014-05-21 06:51:14', 113),
+(3429, 79, '165', 184, 1, 1, 3, 128, 6, 0, '2014-05-21 06:51:17', 113),
+(3430, 80, '165', 184, 1, 1, 3, 129, 7, 0, '2014-05-21 06:51:21', 113),
+(3431, 81, '165', 184, 1, 1, 3, 130, 8, 0, '2014-05-21 06:51:24', 113),
+(3432, 82, '165', 184, 1, 2, 3, 127, 2, 0, '2014-05-21 06:51:31', 113),
+(3433, 83, '165', 184, 1, 12, 3, 161, 2, 0, '2014-05-21 06:51:36', 113),
+(3434, 84, '165', 184, 1, 17, 1, 57, 1, 1, '2014-05-21 07:48:22', 113),
+(3435, 85, '165', 184, 1, 17, 1, 58, 2, 1, '2014-05-21 07:49:42', 113),
+(3436, 86, '165', 184, 1, 7, 2, 52, 1, 1, '2014-05-21 08:02:28', 113),
+(3437, 87, '165', 184, 1, 1, 2, 133, 1, 1, '2014-05-21 08:16:48', 113),
+(3438, 88, '165', 184, 1, 1, 2, 134, 3, 1, '2014-05-21 08:17:44', 113),
+(3439, 0, '194', 184, 1, 1, 1, 135, 1, 1, '2014-05-21 11:13:12', 113),
+(3440, 0, '194', 184, 1, 1, 1, 136, 3, 1, '2014-05-21 11:13:12', 113),
+(3441, 0, '194', 184, 1, 2, 1, 128, 1, 1, '2014-05-21 11:13:13', 113),
+(3442, 0, '194', 184, 1, 4, 1, 251, 2, 1, '2014-05-21 11:13:13', 113),
+(3443, 0, '194', 184, 1, 4, 1, 252, 1, 1, '2014-05-21 11:13:14', 113),
+(3444, 0, '194', 184, 1, 5, 1, 945, 1, 1, '2014-05-21 11:13:14', 113),
+(3445, 0, '194', 184, 1, 5, 1, 946, 2, 1, '2014-05-21 11:13:15', 113),
+(3446, 0, '194', 184, 1, 5, 1, 947, 3, 1, '2014-05-21 11:13:15', 113),
+(3447, 0, '194', 184, 1, 5, 1, 948, 4, 1, '2014-05-21 11:13:16', 113),
+(3448, 0, '194', 184, 1, 6, 1, 51, 1, 1, '2014-05-21 11:13:16', 113),
+(3449, 0, '194', 184, 1, 6, 1, 52, 2, 1, '2014-05-21 11:13:17', 113),
+(3450, 0, '194', 184, 1, 6, 1, 53, 3, 1, '2014-05-21 11:13:17', 113),
+(3451, 0, '194', 184, 1, 6, 1, 54, 4, 1, '2014-05-21 11:13:17', 113),
+(3452, 0, '194', 184, 1, 6, 1, 55, 5, 1, '2014-05-21 11:13:18', 113),
+(3453, 0, '194', 184, 1, 6, 1, 56, 6, 1, '2014-05-21 11:13:18', 113),
+(3454, 0, '194', 184, 1, 7, 1, 53, 2, 1, '2014-05-21 11:13:18', 113),
+(3455, 0, '194', 184, 1, 7, 1, 54, 3, 1, '2014-05-21 11:13:19', 113),
+(3456, 0, '194', 184, 1, 7, 1, 55, 4, 1, '2014-05-21 11:13:19', 113),
+(3457, 0, '194', 184, 1, 7, 1, 56, 1, 1, '2014-05-21 11:13:19', 113),
+(3458, 0, '194', 184, 1, 8, 1, 449, 1, 1, '2014-05-21 11:13:20', 113),
+(3459, 0, '194', 184, 1, 8, 1, 450, 2, 1, '2014-05-21 11:13:21', 113),
+(3460, 0, '194', 184, 1, 8, 1, 451, 3, 1, '2014-05-21 11:13:21', 113),
+(3461, 0, '194', 184, 1, 8, 1, 452, 4, 1, '2014-05-21 11:13:21', 113),
+(3462, 0, '194', 184, 1, 8, 1, 453, 5, 1, '2014-05-21 11:13:22', 113),
+(3463, 0, '194', 184, 1, 8, 1, 454, 6, 1, '2014-05-21 11:13:23', 113),
+(3464, 0, '194', 184, 1, 8, 1, 455, 7, 1, '2014-05-21 11:13:23', 113),
+(3465, 0, '194', 184, 1, 8, 1, 456, 8, 1, '2014-05-21 11:13:23', 113),
+(3466, 0, '194', 184, 1, 9, 1, 714, 1, 1, '2014-05-21 11:13:23', 113),
+(3467, 0, '194', 184, 1, 9, 1, 715, 2, 1, '2014-05-21 11:13:24', 113),
+(3468, 0, '194', 184, 1, 9, 1, 716, 3, 1, '2014-05-21 11:13:24', 113),
+(3469, 0, '194', 184, 1, 9, 1, 717, 4, 1, '2014-05-21 11:13:24', 113),
+(3470, 0, '194', 184, 1, 9, 1, 718, 5, 1, '2014-05-21 11:13:25', 113),
+(3471, 0, '194', 184, 1, 9, 1, 719, 6, 1, '2014-05-21 11:13:25', 113),
+(3472, 0, '194', 184, 1, 9, 1, 720, 7, 1, '2014-05-21 11:13:25', 113),
+(3473, 0, '194', 184, 1, 9, 1, 721, 8, 0, '2014-05-22 12:40:27', 113),
+(3474, 0, '194', 184, 1, 10, 1, 323, 1, 1, '2014-05-21 11:13:26', 113),
+(3475, 0, '194', 184, 1, 10, 1, 324, 2, 1, '2014-05-21 11:13:26', 113),
+(3476, 0, '194', 184, 1, 10, 1, 325, 3, 1, '2014-05-21 11:13:27', 113),
+(3477, 0, '194', 184, 1, 10, 1, 326, 4, 1, '2014-05-21 11:13:27', 113),
+(3478, 0, '194', 184, 1, 10, 1, 327, 7, 1, '2014-05-21 11:13:28', 113),
+(3479, 0, '194', 184, 1, 10, 1, 328, 8, 1, '2014-05-21 11:13:28', 113),
+(3480, 0, '194', 184, 1, 10, 1, 329, 5, 1, '2014-05-21 11:13:28', 113),
+(3481, 0, '194', 184, 1, 10, 1, 330, 6, 1, '2014-05-21 11:13:28', 113),
+(3482, 0, '194', 184, 1, 12, 1, 162, 1, 1, '2014-05-21 11:13:29', 113),
+(3483, 0, '194', 184, 1, 13, 1, 474, 1, 1, '2014-05-21 11:13:29', 113),
+(3484, 0, '194', 184, 1, 13, 1, 475, 2, 1, '2014-05-21 11:13:29', 113),
+(3485, 0, '194', 184, 1, 13, 1, 476, 3, 1, '2014-05-21 11:13:30', 113),
+(3486, 0, '194', 184, 1, 15, 1, 108, 1, 1, '2014-05-21 11:13:30', 113),
+(3487, 0, '194', 184, 1, 16, 1, 84, 1, 1, '2014-05-21 11:13:31', 113),
+(3488, 0, '194', 184, 1, 17, 1, 59, 1, 1, '2014-05-21 11:13:31', 113),
+(3489, 0, '194', 184, 1, 17, 1, 60, 2, 0, '2014-05-23 11:22:12', 113),
+(3490, 1, '194', 184, 1, 6, 1, 57, 7, 1, '2014-05-22 06:23:50', 113),
+(3491, 2, '194', 184, 1, 6, 1, 58, 8, 1, '2014-05-22 06:23:58', 113),
+(3492, 3, '194', 184, 1, 6, 1, 59, 9, 1, '2014-05-22 06:24:04', 113),
+(3493, 4, '194', 184, 1, 6, 1, 60, 10, 1, '2014-05-22 06:24:11', 113),
+(3494, 5, '194', 184, 1, 6, 1, 61, 11, 1, '2014-05-22 06:24:20', 113),
+(3495, 6, '194', 184, 1, 12, 1, 163, 3, 1, '2014-05-22 12:40:23', 113),
+(3496, 7, '194', 184, 1, 15, 1, 109, 3, 1, '2014-05-22 12:40:23', 113),
+(3497, 8, '194', 184, 1, 9, 2, 722, 8, 1, '2014-05-22 12:40:27', 113),
+(3498, 9, '194', 184, 1, 17, 2, 61, 2, 1, '2014-05-23 11:22:12', 113),
+(3499, 21, '193', 203, 1, 11, 1, 23, 1, 1, '2014-06-06 00:49:32', 113),
+(3500, 22, '193', 203, 1, 12, 2, 164, 1, 1, '2014-06-06 00:49:55', 113),
+(3501, 23, '193', 203, 1, 12, 1, 165, 2, 1, '2014-06-06 04:38:11', 113),
+(3878, 0, '234', 220, 1, 13, 1, 610, 1, 1, '2014-06-10 13:59:55', 113),
+(3879, 1, '234', 220, 1, 13, 1, 611, 2, 1, '2014-06-10 13:59:55', 113),
+(3880, 2, '234', 220, 1, 13, 1, 612, 3, 1, '2014-06-10 13:59:55', 113),
+(3881, 3, '234', 220, 1, 4, 1, 299, 1, 1, '2014-06-10 13:59:55', 113),
+(3882, 4, '234', 220, 1, 5, 1, 994, 1, 1, '2014-06-10 13:59:55', 113),
+(3883, 5, '234', 220, 1, 10, 1, 378, 1, 0, '2014-06-10 14:00:13', 113),
+(3884, 6, '234', 220, 1, 8, 1, 495, 1, 1, '2014-06-10 14:00:07', 113),
+(3885, 7, '234', 220, 1, 9, 1, 785, 1, 0, '2014-06-10 14:00:19', 113),
+(3886, 8, '234', 220, 1, 10, 2, 379, 1, 0, '2014-06-10 14:10:20', 113),
+(3887, 9, '234', 220, 1, 9, 2, 786, 1, 0, '2014-06-10 14:00:25', 113),
+(3888, 10, '234', 220, 1, 9, 2, 787, 1, 1, '2014-06-10 14:00:25', 113),
+(3889, 0, '235', 220, 1, 4, 1, 300, 1, 1, '2014-06-10 14:00:34', 113),
+(3890, 0, '235', 220, 1, 5, 1, 995, 1, 1, '2014-06-10 14:00:34', 113),
+(3891, 0, '235', 220, 1, 8, 1, 496, 1, 1, '2014-06-10 14:00:34', 113),
+(3892, 0, '235', 220, 1, 9, 1, 788, 1, 1, '2014-06-10 14:00:34', 113),
+(3893, 0, '235', 220, 1, 10, 1, 380, 1, 1, '2014-06-10 14:00:35', 113),
+(3894, 0, '235', 220, 1, 13, 1, 613, 1, 1, '2014-06-10 14:00:35', 113),
+(3895, 0, '235', 220, 1, 13, 1, 614, 2, 1, '2014-06-10 14:00:35', 113),
+(3896, 0, '235', 220, 1, 13, 1, 615, 3, 1, '2014-06-10 14:00:35', 113),
+(3897, 0, '236', 220, 1, 4, 1, 301, 1, 1, '2014-06-10 14:09:56', 113),
+(3898, 0, '236', 220, 1, 5, 1, 996, 1, 1, '2014-06-10 14:09:56', 113),
+(3899, 0, '236', 220, 1, 8, 1, 497, 1, 1, '2014-06-10 14:09:56', 113),
+(3900, 0, '236', 220, 1, 9, 1, 789, 1, 1, '2014-06-10 14:09:57', 113),
+(3901, 0, '236', 220, 1, 10, 1, 381, 1, 1, '2014-06-10 14:09:57', 113),
+(3902, 0, '236', 220, 1, 13, 1, 616, 1, 1, '2014-06-10 14:09:57', 113),
+(3903, 0, '236', 220, 1, 13, 1, 617, 2, 1, '2014-06-10 14:09:57', 113),
+(3904, 0, '236', 220, 1, 13, 1, 618, 3, 1, '2014-06-10 14:09:58', 113),
+(3905, 11, '234', 220, 1, 10, 2, 382, 1, 0, '2014-06-10 14:11:01', 113),
+(3906, 12, '234', 220, 1, 10, 2, 383, 1, 1, '2014-06-10 14:11:01', 113),
+(3907, 0, '237', 220, 1, 4, 1, 302, 1, 1, '2014-06-10 14:11:15', 113),
+(3908, 0, '237', 220, 1, 5, 1, 997, 1, 1, '2014-06-10 14:11:15', 113),
+(3909, 0, '237', 220, 1, 8, 1, 498, 1, 1, '2014-06-10 14:11:15', 113),
+(3910, 0, '237', 220, 1, 9, 1, 790, 1, 1, '2014-06-10 14:11:15', 113),
+(3911, 0, '237', 220, 1, 10, 1, 384, 1, 1, '2014-06-10 14:11:16', 113),
+(3912, 0, '237', 220, 1, 13, 1, 619, 1, 1, '2014-06-10 14:11:16', 113),
+(3913, 0, '237', 220, 1, 13, 1, 620, 2, 1, '2014-06-10 14:11:16', 113),
+(3914, 0, '237', 220, 1, 13, 1, 621, 3, 1, '2014-06-10 14:11:16', 113),
+(3915, 13, '234', 220, 1, 11, 1, 24, 1, 1, '2014-06-10 23:01:09', 113),
+(3916, 14, '234', 220, 1, 12, 1, 186, 1, 0, '2014-06-10 23:05:36', 113),
+(3917, 15, '234', 220, 1, 12, 2, 187, 1, 0, '2014-06-10 23:06:10', 113),
+(3918, 16, '234', 220, 1, 12, 2, 188, 1, 0, '2014-06-10 23:06:21', 113),
+(3919, 17, '234', 220, 1, 11, 1, 25, 2, 1, '2014-06-10 23:06:21', 113),
+(3920, 18, '234', 220, 1, 12, 2, 189, 1, 0, '2014-06-10 23:06:46', 113),
+(3921, 19, '234', 220, 1, 12, 2, 190, 1, 0, '2014-06-10 23:06:48', 113),
+(3922, 20, '234', 220, 1, 12, 2, 191, 1, 0, '2014-06-10 23:07:11', 113),
+(3923, 21, '234', 220, 1, 12, 2, 192, 1, 0, '2014-06-10 23:07:37', 113),
+(3924, 22, '234', 220, 1, 11, 1, 26, 3, 1, '2014-06-10 23:07:37', 113),
+(3925, 23, '234', 220, 1, 12, 2, 193, 1, 0, '2014-06-10 23:13:58', 113),
+(3926, 24, '234', 220, 1, 11, 1, 27, 4, 1, '2014-06-10 23:08:14', 113),
+(3927, 25, '234', 220, 1, 12, 2, 194, 1, 0, '2014-06-10 23:14:09', 113),
+(3928, 26, '234', 220, 1, 11, 1, 28, 5, 1, '2014-06-10 23:14:09', 113),
+(3929, 27, '234', 220, 1, 12, 2, 195, 1, 0, '2014-06-10 23:14:41', 113),
+(3930, 28, '234', 220, 1, 12, 2, 196, 1, 0, '2014-06-10 23:14:44', 113),
+(3931, 29, '234', 220, 1, 12, 2, 197, 1, 0, '2014-06-10 23:15:28', 113),
+(3932, 30, '234', 220, 1, 12, 2, 198, 1, 0, '2014-06-10 23:19:22', 113),
+(3933, 31, '234', 220, 1, 11, 1, 29, 6, 0, '2014-06-10 23:21:19', 113),
+(3934, 32, '234', 220, 1, 12, 2, 199, 1, 0, '2014-06-10 23:19:46', 113),
+(3935, 33, '234', 220, 1, 12, 2, 200, 1, 0, '2014-06-10 23:19:50', 113),
+(3936, 34, '234', 220, 1, 12, 2, 201, 1, 0, '2014-06-10 23:21:19', 113),
+(3937, 35, '234', 220, 1, 11, 1, 30, 6, 1, '2014-06-10 23:21:19', 113),
+(3938, 36, '234', 220, 1, 12, 2, 202, 1, 1, '2014-06-10 23:21:19', 113);
 
 --
 -- Constraints for dumped tables
@@ -2234,16 +2601,16 @@ ALTER TABLE `steprule`
 -- Constraints for table `testcase`
 --
 ALTER TABLE `testcase`
-  ADD CONSTRAINT `testcase_ibfk_2` FOREIGN KEY (`release_id`) REFERENCES `release` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `testcase_ibfk_1` FOREIGN KEY (`usecase_id`) REFERENCES `usecase` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `testcase_ibfk_1` FOREIGN KEY (`usecase_id`) REFERENCES `usecase` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `testcase_ibfk_2` FOREIGN KEY (`release_id`) REFERENCES `release` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `testcaseresult`
 --
 ALTER TABLE `testcaseresult`
-  ADD CONSTRAINT `testcaseresult_ibfk_4` FOREIGN KEY (`testrun_id`) REFERENCES `testrun` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `testcaseresult_ibfk_1` FOREIGN KEY (`testcase_id`) REFERENCES `testcase` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `testcaseresult_ibfk_3` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
+  ADD CONSTRAINT `testcaseresult_ibfk_3` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`),
+  ADD CONSTRAINT `testcaseresult_ibfk_4` FOREIGN KEY (`testrun_id`) REFERENCES `testrun` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `testresult`
@@ -2257,8 +2624,8 @@ ALTER TABLE `testresult`
 -- Constraints for table `testrun`
 --
 ALTER TABLE `testrun`
-  ADD CONSTRAINT `testrun_ibfk_2` FOREIGN KEY (`testcase_id`) REFERENCES `testcase` (`id`),
-  ADD CONSTRAINT `testrun_ibfk_1` FOREIGN KEY (`release_id`) REFERENCES `release` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `testrun_ibfk_1` FOREIGN KEY (`release_id`) REFERENCES `release` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `testrun_ibfk_2` FOREIGN KEY (`testcase_id`) REFERENCES `testcase` (`id`);
 
 --
 -- Constraints for table `teststep`
