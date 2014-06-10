@@ -106,98 +106,6 @@ class TestcaseController extends Controller
             
             
                 $this->redirect(array('/testrun/view/id/'.$testrun));
-            
-            
-            
-            /* $testcase=$this->loadModel($id);
-            $release_id=$testcase->release_id;
-            $teststeps=  Teststep::model()->findAll('testcase_id='.$id);
-            $laststep= Teststep::model()->getLastStep($id);
-            $testrun=Testrun::model()->getCurrentRun($release_id); 
-            $testcaseresult=Testcaseresult::model()->find('testrun_id='.$testrun.' AND testcase_id='.$id);
-            
-            
-            $newresult=new Testresult;
-            if(isset($_POST['Testresult']))
-		{
-			$newresult->attributes=$_POST['Testresult'];
-                        $newresult->user_id = Yii::app()->user->id;
-                       
-                        //TEST RESULT 1=>'Fail', 2=>'Pass',3=>'Block', 4=>'Not Tested'
-                        // TEST CASE RESULT 1=>'new', 2=>'running', 3=>'blocked', 4=>'fail',5=>'pass'
-                        if($newresult->save()){
-                           // if the testcase result is 'new' set it to 'running'
-                            if($testcaseresult->status == 1)$testcaseresult->status =2;
-                                                      
-                            //if its a fail, fail the testcaseresult
-                            if($newresult->result==1)$testcaseresult->status =4;
-                            
-                            //if its a block, block the test case result
-                            if($newresult->result==3)$testcaseresult->status =3;
-                            
-                            $testcaseresult->save();
-                        }
-                        
-		}
-            
-	// GET THE CURRENT TEST RUN.
-        $testcase=$this->loadModel($id);
-        $release_id=$testcase->project_id;
-        $teststeps=  Teststep::model()->findAll('testcase_id='.$id);
-        $testrun=Testrun::model()->getCurrentRun($release_id);
-       
-        $rendered=0; // flag for which step is to have a form
-        $complete=0; // flag to say the test case is finished.
-        $pass=0; // flag to say the test case is PASSing
-        $block=0; // flag to say the test case is BLOCKED.
-        $laststep=0;
-
-        // go through the test steps and see which have answers from the current test run.
-        /*
-        foreach ($teststeps as $teststep) {
-            $testresult=  Testresult::model()->find(array('order'=>'date ASC',
-                                        'condition'=>'testrun_id=:x AND teststep_id=:y',
-                                        'params'=>array(':x'=>$testrun->id,':y'=>$teststep->id)));
-           
-            if ($testresult['result']==3) {
-                $complete=1;// THe test case is BLOCKED
-            $block=1;
-                
-            }
-             if ($testresult['result']!=1) {
-                // THe test step is FAILED
-                $pass=0;
-            } ELSE {
-                $pass=1;
-            }
-             if (!empty($testresult['id']) ){
-            $laststep=$teststep->id;
-                       
-            
-	     } 
-            if (empty($testresult['id']) && $rendered==0){
-            $rendered=$teststep->id;
-                       
-            
-	     } } 
-
-// IF WE get to the end, and they are all filled out, then the test case is done
-                if($teststep->id == $rendered) $complete=1;
-                //IF WE get a BLOCK then the test case is done.
-              
-                
-        // LOAD the form with a new Testresult model.
-         $this->render('run',array(
-			'model'=>$testcase,
-                        'teststep_id'=>$rendered,
-                        'laststep'=>$laststep,
-                        'newresult'=>$newresult,
-                        'complete'=>$complete,
-                        'block'=>$block,
-                        'pass'=>$pass,
-                        'testrun'=>$testrun
-		));
-         */
         } 
         
 
@@ -205,17 +113,14 @@ class TestcaseController extends Controller
 	{
 		Yii::App()->session['release']=$id;
             
-            //echo 'Load a list of all the UCs';
+
             $data = Usecase::model()->getProjectUCs();
-            
-            //Call actionMake for each UC.
+
             if(count($data)){
                 
                 foreach($data as $usecase){
              $this->actionMake($usecase['id']);
-              //echo "<pre>";
-              //print_r($usecase);
-              // echo "</pre>";
+
                 }
                 
             }
@@ -241,7 +146,7 @@ $release=Yii::App()->session['release'];
             
            // print_r($uc);
             $all_flows=Flow::model()->getUCFlow($uc->id);
-            echo "Loaded Flows";
+            //echo "Loaded Flows";
             //print_r($all_flows);
             //echo "</pre>"; 
             $mainflow=$all_flows[0];
