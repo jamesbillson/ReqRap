@@ -128,28 +128,6 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
             </tbody>
         </table>
 
-    <?php $this->endWidget(); 
-
-
-
-/*
-$teststeps=  Teststep::model()->findAll('testcase_id='.$testcase['id']);
-foreach($teststeps as $teststep){
-
-?>
-<blockquote>
-Step Action: <?php echo $teststep['action'] ?><br />
-Step Result: <?php echo $teststep['result'] ?><br />
-</blockquote>
-</p>
-<?php
-}
-
- * 
- * 
- */
-
-
-?>
+    <?php $this->endWidget(); ?>
 
 

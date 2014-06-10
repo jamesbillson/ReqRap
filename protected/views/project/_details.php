@@ -1,7 +1,8 @@
 <h3>Release History</h3>
 <?php
-$data = Release::model()->findAll('project_id='.Yii::app()->session['project']);
-
+//$data = Release::model()->findAll('project_id='.Yii::app()->session['project']);
+$data = Release::model()->findAll(array('order'=>'number ASC', 'condition'=>'project_id=:x', 'params'=>array(':x'=>Yii::app()->session['project'])));
+$release = Yii::App()->session['release'];
 ?>
 
 <table class="table">
@@ -24,7 +25,7 @@ $data = Release::model()->findAll('project_id='.Yii::app()->session['project']);
         </td>
    
 <td>   
-       <?php echo Release::$status[$item['status']];?>
+       <?php echo Release::$status[$item['status']];?> <?php if ($item['id']!=$release) echo ' @ change '.$item['offset'] ;?>
         </td>
     
     <td>   
@@ -34,7 +35,7 @@ $data = Release::model()->findAll('project_id='.Yii::app()->session['project']);
 
 
       <td>
-           <?php if ($item['id']==Yii::App()->session['release']){;?>
+           <?php if ($item['id']==$release){;?>
           <a href="/release/finalise/id/<?php echo $item['id'];?>"><i class="icon-certificate" rel="tooltip" title="Finalise Release"></i></a> 
            
               <?php } ELSE {?>
@@ -51,7 +52,11 @@ $data = Release::model()->findAll('project_id='.Yii::app()->session['project']);
           <a href="/release/update/id/<?php echo $item['id'];?>"><i class="icon-edit" rel="tooltip" title="Edit Details"></i></a> 
       
         <a href="/release/set/id/<?php echo $item['id'];?>"><i class="icon-eye-open " rel="tooltip" title="Browse this release"></i></a> 
-       <a href="/version/index/id/<?php echo $item['id'];?>"><i class="icon-calendar " rel="tooltip" title="View change log"></i></a> 
+       
+         <?php if ($item['id']==$release){;?>
+           <a href="/version/index/id/<?php echo $item['id'];?>"><i class="icon-calendar " rel="tooltip" title="View change log"></i></a> 
+        
+              <?php } ?>
               
         </td>
         </tr>
