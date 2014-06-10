@@ -1,7 +1,7 @@
 
 
 <h1>Change Log</h1>
-        <h2><a href="/project/view/tab/details/id/<?php echo $model->id; ?>"><?php echo $model->name; ?></a></h2>
+        <h2><a href="/project/project/<?php echo $model->id; ?>"><?php echo $model->name; ?></a></h2>
 <table>
     
 
