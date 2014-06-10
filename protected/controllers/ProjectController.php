@@ -56,7 +56,7 @@ class ProjectController extends Controller
     {
     Yii::app()->session['project']=$id;
     Yii::app()->session['release']=  Release::model()->currentRelease();
-    $this->redirect(array('/project/view/tab/'.$tab));
+    $this->redirect(array('/project/project/'));
         
     }
     public function actionView($tab)

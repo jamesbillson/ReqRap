@@ -318,6 +318,7 @@ class PhotoController extends Controller
 						if (isset($ifaceId) && $ifaceId != '') {
 							  $iface = new Iface;
 							  $iface->addImage($ifaceId, $model->photo_id);
+                                                               
 						}
                     }
                 } else {

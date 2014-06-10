@@ -67,43 +67,46 @@ public function actionSet($id)
 public function actionFinalise($id)
 	{
 	// ID is the release we are finalising.
-    
-         $model= $this->loadModel($id);
-         $project=$model->project_id;
-         $release=new Release;
-         $release->attributes = $model->attributes;
+         
+         $project=Yii::App()->session['project'];
+         $model= $this->loadModel($id); // This is the current release.
          $oldrelease=$model->id;
-         $model->number = FLOOR($model->number) +1;
-         $release->number = $model->number+0.0001;
-         $release->status = 1; 
-         $model->status=2;
+         $oldnumber=FLOOR($model->number);
+         $model->number=$model->number+1.0001;
+         $model->status=1;
          $model->save();
+         
+         $release=new Release;
+         $release->create_user=Yii::app()->user->id;
+         $release->project_id=$project;
+         $release->number = $oldnumber+1;
+         $release->status = 2; 
          $release->save();
          $newrelease=$release->getPrimaryKey();
+ 
          for ($object = 1; $object <= 18; $object++) 
          {
-       // echo 'We are copying '.Version::$objects[$object].'<br />';
-        $objects = Version::model()->objectList($object,$oldrelease);
-       
-        foreach ($objects as $instance)
+          // echo 'We are copying '.Version::$objects[$object].'<br />';
+          $objects = Version::model()->objectList($object,$oldrelease);
+
+            foreach ($objects as $instance)
             {
             Version::model()->importObject($object,$instance['id'],$project,$newrelease,0,0);
-         //   echo 'We are copying id '.$instance['id'].'<br />';
+            //   echo 'We are copying id '.$instance['id'].'<br />';
             }
-            
          }
+         $model->number=$oldnumber+1.0001;
+         $model->offset=Version::model()->getMaxVersionNumber($model->id);
+         $model->save();
+$release->offset=$model->offset; 
+         $release->save();
+         // A new release has been created.
 
-         
-             
-	// A new release has been created.
-        
-        // set project to the new  release.
-         
-         
-             $this->redirect(array('/project/set/id/'.$project.'/tab/details'));
-             
-
-		
+         // set project to the new  release.
+         Yii::App()->session['release']=$model->id;
+         Yii::App()->session['project']=$model->project_id;
+         $this->redirect(array('/project/project/'));
+        	
 	}
         
                  public function actionCopy($id) // id is the db id of the release
