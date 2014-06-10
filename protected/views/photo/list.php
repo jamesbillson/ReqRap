@@ -4,6 +4,8 @@ echo $this->renderPartial('/project/head',array('tab'=>'usecases'));
 $images=Photo::model()->getProjectImages();
 $permission=Yii::App()->session['permission'];
     ?>
+
+<a href="/project/view/tab/interfaces">Back to Interfaces</a>
 <?php      
 $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
     'title' => 'Images',
