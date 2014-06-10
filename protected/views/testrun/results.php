@@ -1,8 +1,24 @@
 <?php
+
+echo $this->renderPartial('/project/head',array('tab'=>'testcases'));
+
+
+
 $testruns=Testrun::model()->findAll('testcase_id='.$id);
 ?>
 
+<?php 
 
+
+        
+$box = $this->beginWidget('bootstrap.widgets.TbBox', array(
+    'title' => 'Test Results',
+    'headerIcon' => 'icon-check',
+    // when displaying a table, if we include bootstra-widget-table class
+    // the table will be 0-padding to the box
+    'htmlOptions' => array('class'=>'bootstrap-widget-table'),
+      )); 
+?>
 <table> <thead>
         <th>
     Run   
@@ -71,7 +87,7 @@ $testruns=Testrun::model()->findAll('testcase_id='.$id);
        
 </table>
 
-
+    <?php $this->endWidget(); ?>
 
 
 
