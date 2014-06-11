@@ -54,16 +54,17 @@ Un-used images - associate image with this interface.<br />
      
         <label><strong>Upload More Interfaces:</strong></label>
         <div class="span11">
-            <?php $photo = new Photo;
-            $this->widget('bootstrap.widgets.TbFileUpload', array(
-                'url' => Controller::createUrl("photo/upload",array('id'=>$model->project_id,'ifaceId'=>$model->iface_id)),
-                'formView'=>'bootstrap.views.fileupload._singleform',
-                'model' => $photo,
-                'attribute' => 'file', // see the attribute?               
-                'options' => array(
-                    'maxFileSize' => 2000000,
-                    'acceptFileTypes' => 'js:/(\.|\/)(gif|jpe?g|png)$/i',
-            ))); ?>
+            <?php //$photo = new Photo;
+$this->widget('ext.EAjaxUpload.EAjaxUpload',
+array(
+        'id'=>'uploadFile',
+        'config'=>array(
+               'action'=>Yii::app()->createUrl("photo/singleupload",array('id'=>$model->project_id,'ifaceId'=>$model->iface_id)),
+               'allowedExtensions'=>array("jpg", "jpeg", "gif", "png", "PNG", "JPG", "GIF", "JPEG"),//array("jpg","jpeg","gif","exe","mov" and etc...
+               'sizeLimit'=>2*1024*1024,// maximum file size in bytes
+               'onComplete'=>"js:function(){window.location.href='/iface/view/id/$model->iface_id' }",
+            )));
+?>
 
         </div>
         <?php } ELSE {
