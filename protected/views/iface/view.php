@@ -10,7 +10,7 @@ echo $this->renderPartial('/project/head',array('tab'=>'usecases')); ?>
 </h2>
 <a href="/project/view/tab/interfaces">Back to Interfaces</a>
 <h3>   <?php echo $model->name;?> </h3>
-Interface type: 
+<strong>Interface type: </strong>
 <?php foreach($types as $type):
  if($type['interfacetype_id']==$model->type_id)  echo $type['name']; 
 endforeach;
@@ -26,7 +26,7 @@ if ($model->photo_id==0)
     $orphans=Photo::model()->orphanPics();
     if(count($orphans)){
     ?>   
-Un-used images - associate image with this interface.<br />
+Pick an image for this interface or upload a new one.<br />
             <div class="jcarousel-wrapper">
                 <div class="jcarousel">
 
@@ -50,9 +50,8 @@ Un-used images - associate image with this interface.<br />
             </div>  
 <?php }?>
 <br />                     
-     Upload an image  
-     
-        <label><strong>Upload More Interfaces:</strong></label>
+    
+<div class="row">
         <div class="span11">
             <?php //$photo = new Photo;
 $this->widget('ext.EAjaxUpload.EAjaxUpload',
@@ -68,9 +67,8 @@ array(
 
         </div>
         <?php } ELSE {
-       // $fuck=Version::model()->getVersion($model->photo_id,11);
-      // print_r($fuck);
-        $image=Photo::model()->findByPk(Version::model()->getVersion($model->photo_id,11));
+
+      $image=Photo::model()->findByPk(Version::model()->getVersion($model->photo_id,11));
       $src = Yii::app()->easyImage->thumbSrcOf(
                                     Yii::app()->params['photo_folder'].$image->file, 
                                    array('resize' => array('width' => 150,'height'=>150))); ?>
@@ -79,7 +77,10 @@ array(
         <img src="<?php echo $src ?>"/>
       </div>
       <div style="float:left;margin-top: 50px;">
-        <a href="<?php echo Yii::app()->baseUrl?>/iface/update/ucid/0/id/<?php echo $model->id;?>"><i class="icon-remove-circle" rel="tooltip" title="Remove"></i>Remove</a> 
+        <a href="<?php echo Yii::app()->baseUrl?>/iface/update/ucid/0/id/<?php echo $model->id;?>"><i class="icon-remove-sign" rel="tooltip" title="Remove"></i>Remove</a> <br />
+    <a href="<?php echo Yii::app()->baseUrl?>/photo/update/id/<?php echo $image->id;?>"><i class="icon-edit" rel="tooltip" title="Remove"></i>Edit</a> 
+    
+    
       </div>
       
     </div>
@@ -90,15 +91,21 @@ array(
         <?php } ?> 
 
 <br />
-<br />
+<br /> </div>
+<div class="row">
  <?php 
  $data=Usecase::model()->getLinkUsecase($model->iface_id,12,15);
  if(count($data)==0){
  ?>
-<div style="width:100%;float:left;"> This Interface is not used.<br />
- 
- Associate with Use Case - 2 stage, choose usecase, then dynamically load list of steps.
- 
+    
+    <h3><i class="icon-exclamation-sign text-warning" style="position: relative; 
+             top: 8px;padding-right:10px;" rel="tooltip" "></i> This Interface is not used.<br />
+ </h3>
+        
+        <?php 
+echo $this->renderPartial('_associate',array('id'=>$model->iface_id)); ?>
+
+</div>
      
      <?php } ELSE { ?>
     <h4>Traceability</h4>

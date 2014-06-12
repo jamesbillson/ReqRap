@@ -38,7 +38,7 @@
 
             <div class="row">
 		<?php echo $form->labelEx($model,'text'); ?>
-		<?php echo $form->textArea($model,'text',array('rows'=>10, 'class'=>'span8')); ?>
+		<?php echo $form->textArea($model,'text',array('rows'=>5, 'class'=>'span8')); ?>
 		<?php echo $form->error($model,'text'); ?>
 	</div>
 

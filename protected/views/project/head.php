@@ -23,18 +23,30 @@ if(isset(Yii::App()->session['project'])) {
 
 <table><tr><td>
     <h1> 
-    <a href="/project/view/tab/<?php echo $tab; ?>">
-       <?php if ($no_project) echo $project->name  ; ?> 
-    </a> 
-    </h1>    </td>
-        <td>
+    <a href="/project/view/tab/<?php echo $tab; ?>"> 
+    
+       <?php if ($no_project) echo $project->name  ; ?></a>  </h1> 
+       
+      </td>
+        <td>  <?php  if(isset($currentrelease) && $release != $currentrelease)   {
+             $releaseNumber = Release::model()->findbyPK($release);
+       echo '( R-'.FLOOR($releaseNumber->number).' )';
+         }
+        ?>
             <?php if(Yii::App()->session['permission']==1) {?>
     <a href="/project/project/">
         <i class="icon-cog" rel="tooltip" title="Project Settings"></i>
     </a>
             <?php }  ?>
-
-    <a href="/project/view/tab/usecases/">
+             <?php
+    if(isset($currentrelease) && $release != $currentrelease){
+      
+      ?>
+        <a href="/release/setcurrent/"><i class="icon-cog text-warning" rel="tooltip" title="Project Settings"></i></a> 
+       
+ 
+    <?php } ?>
+           <a href="/project/view/tab/usecases/">
         <i class="icon-film" rel="tooltip" title="Requirements Model"></i>
     </a>
 </td>
@@ -63,14 +75,9 @@ if(isset(Yii::App()->session['project'])) {
     </form>
 </td>
 <td>
-     <?php
-    if(isset($currentrelease) && $release != $currentrelease){
-      
-      ?>
-        <a href="/release/set/id/<?php echo $currentrelease;?>"><i class="icon-exclamation-sign text-error" rel="tooltip" title="Go to current release"></i></a> 
-      
+
          <?php
-  }
+  
     if($no_project){  ?>
           <a target="_new" href="/project/print" ><i class="icon-print " rel="tooltip" title="View Print Version"></i></a> 
        <?php  } ?>

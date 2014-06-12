@@ -119,7 +119,7 @@ class IfaceController extends Controller
         	));
 	} 
 
-	public function actionUpdate($ucid,$id)
+public function actionUpdate($ucid,$id)
 	{
 	    $release=Yii::App()->session['release'];
             $project=Yii::App()->session['project'];	
@@ -158,7 +158,12 @@ class IfaceController extends Controller
 			'model'=>$new,'id'=>$project
 		));
 	}
-	public function actionaddimage($iface, $id)
+        
+
+
+        
+        
+public function actionaddimage($iface, $id)
 	{       
                  $new = new Iface;
                  $isAdd = $new->addImage($iface, $id);
@@ -190,7 +195,7 @@ class IfaceController extends Controller
 	{
               $project=Yii::app()->session['project'];   
             $model=$this->loadModel($id);
-            $version=Version::model()->getNextNumber($project,12,3,$id,$model->iface_id);  
+          Version::model()->getNextNumber($project,12,3,$id,$model->iface_id);  
 	       if($ucid!=-1) 
                {
                $this->redirect(array('/usecase/view/id/'.$ucid));

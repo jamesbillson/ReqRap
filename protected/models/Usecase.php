@@ -139,7 +139,8 @@ class Usecase extends CActiveRecord
         }    
            
         
-           public function getUsecaseActors($id)
+
+                public function getUsecaseActors($id)
     {
             $project=Yii::app()->session['project'];
             $release=Yii::App()->session['release'];
@@ -181,8 +182,41 @@ class Usecase extends CActiveRecord
 		$projects = $command->queryAll();
 		return $projects;
     }
+    
+               public function getAllSteps($id)
+    {
+            $project=Yii::app()->session['project'];
+            $release=Yii::App()->session['release'];
+          $sql="
+            SELECT `s`.*,
+            `f`.`name` as flow
+            FROM  `step` `s`
+            JOIN `flow` `f`
+            ON `f`.`flow_id`=`s`.`flow_id`
+            JOIN `usecase` `u`
+            ON `u`.`usecase_id`=`f`.`usecase_id`
+            JOIN `version` `vs`
+            ON `vs`.`foreign_key`=`s`.`id`
+            JOIN `version` `vf`
+            ON `vf`.`foreign_key`=`f`.`id`
+            JOIN `version` `vu`
+            ON `vu`.`foreign_key`=`u`.`id`            
+            WHERE 
+            `vs`.`object`=9 AND `vs`.`active`=1 AND `vs`.`release`=".$release."  AND                  
+            `vf`.`object`=8 AND `vf`.`active`=1 AND `vf`.`release`=".$release."  AND  
+            `vu`.`object`=10 AND `vu`.`active`=1 AND `vu`.`release`=".$release."  AND  
+            `u`.`usecase_id`=".$id."
+            GROUP BY `s`.`step_id`
+
+                ";
         
+		$connection=Yii::app()->db;
+		$command = $connection->createCommand($sql);
+		$projects = $command->queryAll();
+		return $projects;
+    }
         
+    
         
            public function getPackageUsecases($id)// THIS IS package_id as used in 'Move' 
     {

@@ -25,11 +25,11 @@ class Stepiface extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('id, stepiface_id, step_id, iface_id, project_id, release_id', 'required'),
-			array('id, stepiface_id, step_id, iface_id, project_id, release_id', 'numerical', 'integerOnly'=>true),
+			array(' stepiface_id, step_id, iface_id, project_id, release_id', 'required'),
+			array(' stepiface_id, step_id, iface_id, project_id, release_id', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, step_id, iface_id, project_id, release_id', 'safe', 'on'=>'search'),
+			array(' step_id, iface_id, project_id, release_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -61,12 +61,12 @@ class Stepiface extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'id' => 'ID',
+		    'id' => 'ID',
                     'stepiface_id'=>'stepiface_id',
-                     'project_id' => 'Project',
+                    'project_id' => 'Project',
                     'release_id' => 'Release',
                     'step_id' => 'Step',
-			'iface_id' => 'Iface',
+		    'iface_id' => 'Iface',
 		);
 	}
 
@@ -121,7 +121,11 @@ class Stepiface extends CActiveRecord
 		$projects = $command->queryAll();
 		return $projects[0]['id'];
     }   
-        
+       
+    
+    
+
+    
     
           public function getActiveStepifaces($id)
     {

@@ -85,17 +85,14 @@ class Photo extends CActiveRecord
     {
        $release=Yii::App()->session['release'];
         $sql="
-            SELECT `r`.*,`v`.`active`
+            SELECT `r`.*
             FROM `photo` `r`
-            LEFT JOIN `version` `v`
-            ON `v`.`foreign_key`=`r`.`id`
+            
+            JOIN `version` `vr`
+            ON `vr`.`foreign_key`=`r`.`id`
+           
             WHERE 
-            `v`.`object`=11
-            AND
-            `v`.`active`=1
-        and            
-            `r`.`release_id`=".$release;         
-     
+            `vr`.`object`=11 AND `vr`.`active`=1 AND `vr`.`release`=".$release;
 
      
         
@@ -114,7 +111,9 @@ class Photo extends CActiveRecord
         $sql="SELECT
             `p`.*
             FROM `photo` `p`
-            where `p`.`release_id`=".$release."
+            JOIN `version` `vp`
+            ON `vp`.`foreign_key`=`p`.`id`
+            where `vp`.`active`=1 AND `vp`.`object`=11 AND `vp`.`release`=".$release."
                 
             and `p`.`photo_id` 
             NOT IN (
@@ -133,6 +132,30 @@ class Photo extends CActiveRecord
           
     }
      
+       public function checkIface($id)
+    {
+       $release=Yii::App()->session['release'];
+              
+        $sql="SELECT
+              `i`.*
+              FROM `iface` `i`
+              JOIN `version` `v`
+              ON `v`.`foreign_key`=`i`.`id`
+              WHERE 
+               `v`.`active`=1 AND `v`.`object`=12 AND `v`.`release`=".$release." 
+
+              AND 
+              `i`.`photo_id` =".$id;
+            
+		$connection=Yii::app()->db;
+		$command = $connection->createCommand($sql);
+		$projects = $command->queryAll();
+		if (empty($projects)) $flag=-1;
+                if (!empty($projects)) $flag=$projects[0];
+                return $flag;
+          
+          
+    }
     
     public function thumbSearch($proj_id,$limit=6)
     {
@@ -151,6 +174,32 @@ class Photo extends CActiveRecord
         }
         
     }
+    
+     public function makePhotoCopy($file, $id,$release)
+    {
+       
+      //rename the file with the release appended.
+       $path = Yii::getPathOfAlias("webroot").Yii::app()->params['photo_folder'];
+                if(file_exists($path.$file)){
+                $newfile=substr($file,8);
+                $newfile=str_pad($release, 8, "0", STR_PAD_LEFT).$newfile;
+                copy($path.$file, $path.$newfile);
+                }
+   $sql = "
+        UPDATE `photo` `p`
+        SET `p`.`file`='".$newfile."'
+        WHERE `p`.`release_id`=".$release."
+        AND `p`.`file`='".$file."'";
+        $connection = Yii::app()->db;
+        $command = $connection->createCommand($sql);
+        $command->execute();
+         
+      //update the photo record with the new file name
+         
+         
+         
+    }
+    
     protected function beforeValidate(){
         if($this->isNewRecord){
             $this->setAttributes(array('user_id'=>Yii::app()->user->id));

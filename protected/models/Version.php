@@ -571,7 +571,7 @@ class Version extends CActiveRecord {
      public function objectList($object, $release) {
 
         $sql = "
-                  SELECT `x`.`id` from
+                  SELECT `x`.* from
                   `" . Version::$objects[$object] . "` `x`
                   JOIN `version` `v`
                   ON `x`.`id`=`v`.`foreign_key`

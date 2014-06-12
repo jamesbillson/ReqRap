@@ -8,21 +8,13 @@ class PhotoController extends Controller {
    */
   public $layout = '//layouts/column2';
 
-  /**
-   * @return array action filters
-   */
-  public function filters() {
-    return array(
-        'accessControl', // perform access control for CRUD operations
-            /* 'postOnly + delete', // we only allow deletion via POST request */
-    );
-  }
-
-  /**
-   * Specifies the access control rules.
-   * This method is used by the 'accessControl' filter.
-   * @return array access control rules
-   */
+    /**
+     * Specifies the access control rules.
+     * This method is used by the 'accessControl' filter.
+     * @return array access control rules
+     */
+   
+  
   public function accessRules() {
     return array(
         array('allow', // allow all users to perform 'index' and 'view' actions
@@ -64,14 +56,21 @@ class PhotoController extends Controller {
    * Creates a new model.
    * If creation is successful, the browser will be redirected to the 'view' page.
    */
-  public function actionProjectCreate($project_id) {
+  public function actionProjectCreate($project_id) 
+          {
 
     // Need to change this so the $iface_id is stored with the photo.
     // idea is you can upload a bunch of photos and then associate them.
 
 
-    $versions = Version::model()->getVersions($iface_id, 12, 'iface_id');
-    $iface = Iface::model()->loadModel($versions[0]['id']);
+   // $versions = Version::model()->getVersions($iface_id, 12, 'iface_id');
+   // $iface = Iface::model()->loadModel($versions[0]['id']);
+        if(isset($_POST['Photo']))
+        {
+            $model->attributes=$_POST['Photo'];
+            if($model->save())
+                $this->redirect(array('list'));
+        }
 
     $model = new Photo;
 
@@ -94,8 +93,8 @@ class PhotoController extends Controller {
     // idea is you can upload a bunch of photos and then associate them.
 
 
-    $versions = Version::model()->getVersions($iface_id, 12, 'iface_id');
-    $iface = Iface::model()->loadModel($versions[0]['id']);
+   // $versions = Version::model()->getVersions($iface_id, 12, 'iface_id');
+   // $iface = Iface::model()->loadModel($versions[0]['id']);
 
     $model = new Photo;
 
@@ -126,7 +125,7 @@ class PhotoController extends Controller {
     if (isset($_POST['Photo'])) {
       $model->attributes = $_POST['Photo'];
       if ($model->save())
-        $this->redirect(array('view', 'id' => $model->id));
+        $this->redirect(array('list'));
     }
 
     $this->render('update', array(
@@ -141,17 +140,19 @@ class PhotoController extends Controller {
    */
   public function actionDelete($id) {
     if (isset($id) && $model = $this->loadModel($id)) {
+    $project=Yii::App()->session['project'];
+    Version::model()->getNextNumber($project,11,3,$id,$model->photo_id);
+    
+    
+     // $_img = $model->file;
 
-      $_img = $model->file;
+    //  if ($model->delete()) {
+     //   Utils::deleteFile(Yii::getPathOfAlias("webroot") . Yii::app()->params['differenceImg_folder'], $_img);
+     //   Utils::deleteFile(Yii::getPathOfAlias("webroot") . Yii::app()->params['differenceImg_folder'] . 'thumbs/', $_img);
+     // }
 
-      if ($model->delete()) {
-        Utils::deleteFile(Yii::getPathOfAlias("webroot") . Yii::app()->params['differenceImg_folder'], $_img);
-        Utils::deleteFile(Yii::getPathOfAlias("webroot") . Yii::app()->params['differenceImg_folder'] . 'thumbs/', $_img);
-      }
-
-      // if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
-      if (!isset($_GET['ajax']))
-        $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
+  
+        $this->redirect('/photo/list');
     }
   }
 
@@ -264,7 +265,7 @@ class PhotoController extends Controller {
                 }
 
                 $file_name = Utils::uniqueFile($upload->name);
-
+                $file_name = 'xxxxxxxx'.$file_name;
                 if($upload->saveAs($path.$file_name)){
 
                     $src = Yii::app()->easyImage->thumbSrcOf(

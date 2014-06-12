@@ -32,7 +32,7 @@ class ReleaseController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update','finalise','copy','set','import'),
+				'actions'=>array('setcurrent','create','update','finalise','copy','set','import'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -63,6 +63,16 @@ public function actionSet($id)
         Yii::App()->session['project']=$release->project->id;
          $this->redirect(array('/project/view/tab/usecases/'));
 	}
+
+ public function actionSetCurrent()
+	{
+     $id=Release::model()->currentRelease();
+        Yii::App()->session['release']=$id;
+        $release=Release::model()->findbyPK($id);
+        Yii::App()->session['project']=$release->project->id;
+         $this->redirect(array('/project/project/'));
+	}
+        
         
 public function actionFinalise($id)
 	{
@@ -91,10 +101,20 @@ public function actionFinalise($id)
 
             foreach ($objects as $instance)
             {
+      
             Version::model()->importObject($object,$instance['id'],$project,$newrelease,0,0);
-            //   echo 'We are copying id '.$instance['id'].'<br />';
+
             }
          }
+// UPDATE ALL THE PHOTO's TO POINT TO NEW IMAGES
+         $objects = Version::model()->objectList(11,$newrelease);
+
+            foreach ($objects as $instance)
+            {
+                Photo::model()->makePhotoCopy($instance['file'],$instance['id'],$newrelease);
+            }
+         
+         
          $model->number=$oldnumber+1.0001;
          $model->offset=Version::model()->getMaxVersionNumber($model->id);
          $model->save();

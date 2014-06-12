@@ -32,7 +32,7 @@ class UsecaseController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update','delete','move','history'),
+				'actions'=>array('dynamicsteps','create','update','delete','move','history'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -239,6 +239,24 @@ class UsecaseController extends Controller
       	$this->redirect(array('/project/view/tab/usecases/id/'.$project));
 	}
 
+        public function actionDynamicSteps()
+	{
+	$id=$_POST['usecase_id'];
+        $project=Yii::app()->session['project'];
+        $steps=Usecase::model()->getAllSteps($id);
+        foreach($steps as $step)
+        {
+         //echo CHtml::tag('option',
+         //            array('value'=>$step['step_id']),
+         //        CHtml::encode($step['flow'].' Flow - '.$step['number'].' '.$step['text'].),true);
+        echo '<option value='.$step['step_id'].'>';
+         echo $step['flow'].' Flow - '.$step['number'].' '.$step['text'];
+        echo '</option>';
+        }   
+        
+        
+        }
+        
 	/**
 	 * Lists all models.
 	 */

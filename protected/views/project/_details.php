@@ -20,8 +20,12 @@ $release = Yii::App()->session['release'];
 
         <?php foreach($data as $item) {?>
         <tr class="odd">  
-        <td>   
+        <td> <?php if ($item['id']==$release){;?>  
         <?php echo $item['number']; ?> 
+        
+              <?php } ELSE {?>
+        R-<?php echo FLOOR($item['number']); ?>
+          <?php } ?>
         </td>
    
 <td>   
@@ -49,8 +53,7 @@ $release = Yii::App()->session['release'];
           
         
           
-          <a href="/release/update/id/<?php echo $item['id'];?>"><i class="icon-edit" rel="tooltip" title="Edit Details"></i></a> 
-      
+          
         <a href="/release/set/id/<?php echo $item['id'];?>"><i class="icon-eye-open " rel="tooltip" title="Browse this release"></i></a> 
        
          <?php if ($item['id']==$release){;?>

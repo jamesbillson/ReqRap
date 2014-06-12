@@ -18,24 +18,30 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
     
     <table> 
          <?php if(count($images)): ?>
-         <?php foreach($images as $image): ?>
+         <?php foreach($images as $image): 
+             // check if its in use.
+             $iface=Photo::model()->checkIface($image['photo_id']);
+             ?>
         <tr>
             <td>
                         <?php $src = Yii::app()->easyImage->thumbSrcOf(
                                     Yii::app()->params['photo_folder'].$image['file'], 
                                     array('resize' => array('width' => 154))); ?>
 
-                        <a href="/photo/view/id/<?php echo $image['id']; ?>"> <img src="<?php echo $src ?>"/></a>
+                  <a href="/photo/view/id/<?php echo $image['id']; ?>"> <img src="<?php echo $src ?>"/></a>
                       
-                   </td>
-                   <td>
+                  </td>
+                  <td>
                        <?php echo $image['description'] ?>
-                   </td>
+                  </td>
                      <td>
                       <?php if($permission){ ?>
                         <a href="/photo/update/id/<?php echo $image['id'];?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
-                        <a href="/photo/delete/id/<?php echo $image['id'];?>"><i class="icon-remove-sign text-error" rel="tooltip" title="Delete"></i></a> 
-                          <?php } ?>
+                            <?php if($iface==-1){ ?>
+                            <a href="/photo/delete/id/<?php echo $image['id'];?>"><i class="icon-remove-sign text-error" rel="tooltip" title="Delete"></i></a> 
+                            <?php } ELSE {?> Interface: 
+                            <a href="/iface/view/id/<?php echo $iface['iface_id'];?>"><?php echo $iface['name'];?></a>
+                      <?php } } ?>
                    </td>
                 <?php endforeach ?>
          
@@ -44,5 +50,5 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
  
  
 
-    <?php $this->endWidget(); ?>
- <?php endif ?>
+   
+ <?php endif ?> <?php $this->endWidget(); ?>

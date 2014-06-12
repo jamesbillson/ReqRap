@@ -32,7 +32,7 @@ class StepifaceController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update','createinline','delete'),
+				'actions'=>array('associate','create','update','createinline','delete'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -84,7 +84,29 @@ class StepifaceController extends Controller
         
         
         
-     
+         public function actionAssociate()
+	{
+	        $project=Yii::App()->session['project'];	
+                $model=new Stepiface;
+
+		if(isset($_POST['step_id']))
+		{
+                $model->stepiface_id=Version::model()->getNextID(15);
+		$model->project_id= $project;
+                $model->release_id=Release::model()->currentRelease($project);
+                $model->step_id=$_POST['step_id'];
+                $model->iface_id=$_POST['iface'];
+                
+                if($model->save()){
+                    Version::model()->getNextNumber($project,15,1,$model->primaryKey,$model->stepiface_id);
+                $this->redirect(array('/iface/view/id/'.$model->iface_id));
+                 }
+                 
+                }
+           
+        
+           
+        }
         
         
            public function actionCreateInline()
