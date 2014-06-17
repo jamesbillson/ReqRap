@@ -155,7 +155,7 @@ public function actionUpdate($ucid,$id)
 		}
 
 		$this->render('update',array(
-			'model'=>$new,'id'=>$project
+			'model'=>$model,'id'=>$project
 		));
 	}
         

@@ -51,6 +51,16 @@ Number displayed at the top of the add simple screen is incorrect, and probably 
 change the photo filename to contain the project id.
 When the project is deleted, delete the files that have that ID in their filename.
 
+## ANALYST AND REVIEWER comments
+
+
+
+## CONTENT LINKS
+
+need to put links to interfaces mentioned in rules and steps.  Use http link using a routing table that has
+object type, object id, release, UNIQUE string.
+
+
 
 
 FEATURES

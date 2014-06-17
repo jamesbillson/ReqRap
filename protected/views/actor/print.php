@@ -1,4 +1,22 @@
+Actors
+<pre>
+ <?php 
+ print_r($actors);
+  ?>
+</pre>
+ 
+<?php
+ $singles=array();
+    foreach($actors as $actor):
+    $single=$single+$actor['id'];
+        
+         
 
+    endforeach; 
+    
+    print_r($singles);
+    ?>
+ 
 
 
 <h2><?php echo $heading; ?>. Actors</h2>
@@ -18,14 +36,14 @@
             <?php foreach($actors as $actor):?>
                 <tr class="odd">  
                     <td>   
-                       
-                            <?php echo $actor['name'];?>
-                       
+                       <?php echo $actor['name'];?>
                     </td>
+                    
                     <td>   
                         <?php echo $actor['description'];?>
                     </td>   
-                       <td>   
+                    
+                    <td>   
                         <?php echo $actor['alias'];?>
                     </td>                  
                     

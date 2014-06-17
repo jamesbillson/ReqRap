@@ -311,34 +311,32 @@ WHERE
     
          public function getCurrentImage($iface_id)
     {
-         
-           
-          $release=Yii::App()->session['release'];
+        $release=Yii::App()->session['release'];
           
         $sql="
             SELECT 
-            
             `p`.*
-            
             FROM
             `photo` `p`
-                      
             JOIN `iface` `r`
             ON `r`.`photo_id`=`p`.`photo_id`
-            
             LEFT OUTER JOIN `version` `vp`
             ON `vp`.`foreign_key`=`p`.`id`
+            JOIN `version` `vi`
+            ON `vi`.`foreign_key`=`r`.`id`
             WHERE 
             `r`.`iface_id`=".$iface_id." AND
-            `vp`.`object`=11 AND `vp`.`active`=1 AND `vp`.`release`=".$release;
+            `vp`.`object`=11 AND `vp`.`active`=1 AND `vp`.`release`=".$release."
+             AND 
+             `vi`.`object`=12 AND `vi`.`active`=1 AND `vi`.`release`=".$release."
+             ORDER BY `vp`.`create_date` DESC
+             LIMIT 0,1";
 
-   
-        
-        $connection=Yii::app()->db;
-		$command = $connection->createCommand($sql);
-		$projects = $command->queryAll();
-		
-		return $projects;
+            $connection=Yii::app()->db;
+            $command = $connection->createCommand($sql);
+            $projects = $command->queryAll();
+            if (!empty($projects)) $projects=$projects[0];
+            return $projects;
     }  
     
     

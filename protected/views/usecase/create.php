@@ -6,5 +6,5 @@
          <?php $this->renderPartial('_form', array('model'=>$model,  
                             'package'=>$package,
                             'number'=>$number,
-                            'description'=>$description,
+                            
                             )); ?>

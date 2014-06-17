@@ -334,6 +334,15 @@ class PhotoController extends Controller {
       if ($result) {
         $project = Yii::App()->session['project'];
         $release = Yii::App()->session['release'];
+        
+        
+        $file_name = Utils::uniqueFile($result['filename']);
+        $file_name = 'xxxxxxxx'.$file_name;
+        $path = Yii::getPathOfAlias("webroot").Yii::app()->params['photo_folder'];
+        rename($path.$result['filename'], $path.$file_name);
+         
+        
+        
         //persist into database
         $model = new Photo;
         $model->photo_id = Version::model()->getNextID(11);
@@ -342,7 +351,7 @@ class PhotoController extends Controller {
         $model->release_id = $release;
         $model->user_id = Yii::App()->user->id;
 
-        $model->file = $result['filename'];
+        $model->file = $file_name;
 
         if ($model->save()) {
           // Add image to interface

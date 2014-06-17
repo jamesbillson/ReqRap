@@ -7,7 +7,7 @@
                                 <?php } ?>
                                     <br />
 
-                                            <?php $forms =Step::model()->getStepLinks($item['id'], 2, 14); ?>  
+<?php $forms =Form::model()->getProjectForms($project); ?>  
                                
 <?php $this->beginWidget('bootstrap.widgets.TbModal', array(
         'id'=>'formsModal',

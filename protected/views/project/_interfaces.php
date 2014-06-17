@@ -33,7 +33,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                 <tr>
                     <th>Number</th>
                     <th>Name</th>
-                    <th>Notes</th>
+                 
                    <th>Actions</th>
                 </tr>
             </thead>
@@ -83,10 +83,7 @@ if (count($data)):?>
                          <?php  } ?>
                     <?php echo $item['name'];?>
                         
-                    <td>
-                        <?php echo $item['text'];?>
-                        
-                    </td> 
+
                    
 
                   
@@ -98,6 +95,16 @@ if (count($data)):?>
                           <?php } ?>
                     </td>
                 </tr>
+                    <?php if(!empty($item['text'])){ ?>
+                <tr>
+                    <td><strong>Notes</strong></td>
+                        <td colspan="3">
+                        <?php echo $item['text'];?>
+                        
+                    </td> 
+                    
+                </tr>
+                <?php  } ?>
             <?php }
             endif;
                     }?>

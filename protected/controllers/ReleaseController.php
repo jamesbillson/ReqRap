@@ -155,7 +155,7 @@ $library=  Release::model()->findbyPK($id);
         $objects = Version::model()->objectList($object,$id);    
         foreach ($objects as $instance)
             {
-            Version::model()->importObject($object,$instance['id'],$project,$newrelease);
+            Version::model()->importObject($object,$instance['id'],$project,$newrelease,0,0);
            // echo 'We are copying object '.Version::$objects[$object].'
                 //     with id '.$instance['id'].' to project '.$project.'<br />';
            }
@@ -163,6 +163,17 @@ $library=  Release::model()->findbyPK($id);
             } // end object loop
          } // end model save
      
+         
+         // UPDATE ALL THE PHOTO's TO POINT TO NEW IMAGES
+         $objects = Version::model()->objectList(11,$newrelease);
+
+            foreach ($objects as $instance)
+            {
+                Photo::model()->makePhotoCopy($instance['file'],$instance['id'],$newrelease);
+            }
+         
+         
+         
             // echo '<a href="/project/myrequirements">projects</a>';
 	
         		$this->redirect(array('/project/myrequirements'));
@@ -189,6 +200,16 @@ $library=  Release::model()->findbyPK($id);
             Version::model()->importObject($object,$instance['id'],$project,$release,$offset,$numberoffset);
             }
          } 
+         
+         // UPDATE ALL THE PHOTO's TO POINT TO NEW IMAGES
+         $objects = Version::model()->objectList(11,$newrelease);
+
+            foreach ($objects as $instance)
+            {
+                Photo::model()->makePhotoCopy($instance['file'],$instance['id'],$release);
+            }
+         
+         
         Package::model()->Renumber();
         Usecase::model()->Renumber();
         $this->redirect(array('/project/view/tab/usecases'));

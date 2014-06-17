@@ -37,16 +37,20 @@
 
 
             <div class="row">
-		<?php echo $form->labelEx($model,'text'); ?>
-		<?php echo $form->textArea($model,'text',array('rows'=>5, 'class'=>'span8')); ?>
-		<?php echo $form->error($model,'text'); ?>
-	</div>
 
-        
+            <?php echo $form->labelEx($model,'text'); ?>
+            <?php $this->widget(
+            'bootstrap.widgets.TbRedactorJs',
+            array(
+                'name' => 'Iface[text]',
+                'value' => $model->text,
+            ));
+            ?>
+            </div>
+        <br />
+        <br />
         <div class="row">
 
-      
-    
              <?php $interfacetypes = Interfacetype::model()->getInterfacetypes();?>   
              <select name="Iface[type_id]">
              <?php foreach($interfacetypes as $iface){?>

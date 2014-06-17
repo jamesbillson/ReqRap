@@ -41,7 +41,7 @@
 	
         <div class="row">  
           <?php echo $form->labelEx($model,'description'); ?>
-          <?php echo $form->textArea($model,'description',array('value'=>$description,'rows'=>4, 'class'=>'span8')); ?>
+          <?php echo $form->textArea($model,'description',array('rows'=>4, 'class'=>'span8')); ?>
           <?php echo $form->error($model,'description'); ?>
       </div>
              <div class="row">  

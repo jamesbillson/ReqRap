@@ -77,14 +77,15 @@ class UsecaseController extends Controller
 	public function actionCreate($id)
 	{
 		$model=new Usecase;
-  $project=Yii::app()->session['project'];
+                $model->description=Usecase::$default_description;
+                $project=Yii::app()->session['project'];
 		
                 $number=Usecase::model()->getNextNumber($id);
                 $package=Package::model()->findbyPK($id);
-               $description=Usecase::$default_description;
+               
 		if(isset($_POST['Usecase']))
 		{
-			$description=$model->description;
+			
                     $model->attributes=$_POST['Usecase'];
                     $model->package_id=$package->package_id;
                     $model->project_id= $project;
@@ -121,7 +122,7 @@ class UsecaseController extends Controller
                 }}
 
 		$this->render('create',array(
-			'model'=>$model,'package'=>$package,'number'=>$number,'description'=>$description
+			'model'=>$model,'package'=>$package,'number'=>$number
 		));
 	}
 

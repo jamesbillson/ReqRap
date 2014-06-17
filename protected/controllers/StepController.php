@@ -75,8 +75,8 @@ class StepController extends Controller
                 $model->flow_id= $flow->flow_id;
                 $model->project_id= $project;
                 $model->release_id=Release::model()->currentRelease($project);
-                $model->text = 'New step';
-                $model->result = 'Result';
+                $model->text = 'Actor ...';
+                $model->result = 'System ...';
                 $model->actor_id=$flow->usecase->actor_id;
                 $model->step_id=Version::model()->getNextID(9);
                 $model->save();

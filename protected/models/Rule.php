@@ -124,7 +124,8 @@ class Rule extends CActiveRecord
             and            
             `r`.`release_id`=".$release."         
             and            
-            `r`.`project_id`=".$project;
+            `r`.`project_id`=".$project."
+             ORDER BY `r`.`number`";
 
      
         

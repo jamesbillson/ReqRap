@@ -236,7 +236,7 @@ class ProjectController extends Controller
     public function actionDelete($id)
     {
         $this->loadModel($id)->delete();
-
+unset(Yii::app()->session['project']);
         // if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
         if(!isset($_GET['ajax']))
             $this->redirect('myrequirements');

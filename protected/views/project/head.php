@@ -9,6 +9,7 @@ if(isset(Yii::App()->session['project'])) {
     $thisrelease=Release::model()->findbyPK($release);
     $phase = Yii::App()->session['phase']=$thisrelease->status;
     Project::model()->setPermissions($mycompany, $project,$release, $currentrelease);
+    
 } ELSE {
     $no_project=false;
     

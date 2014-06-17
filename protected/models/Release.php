@@ -107,7 +107,11 @@ class Release extends CActiveRecord
                 $connection=Yii::app()->db;
 		$command = $connection->createCommand($sql);
 		$releases = $command->queryAll();
-		$release=$releases[0]['id'];
+		if (!empty($releases)){
+                    $release=$releases[0]['id'];
+                } ELSE {
+                    $release=-1;
+                }
         return $release;
     }
     
