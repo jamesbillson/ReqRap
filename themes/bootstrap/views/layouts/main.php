@@ -17,7 +17,7 @@
 </head>
 
 <body>
-
+    
 <?php
 $cname='';
 if (!empty(Yii::app()->user->id) || !empty(Yii::app()->user->company_id)){
@@ -125,8 +125,22 @@ if (!empty(Yii::app()->user->id) || !empty(Yii::app()->user->company_id)){
     ?>
 
 <div class="container" id="page">
-
-	<br /><br />
+        
+        <?php 
+            Messages::getMessage();
+            $this->widget('bootstrap.widgets.TbAlert', array(
+                    'block'=>false, // display a larger alert block?
+                    'fade'=>true, // use transitions?
+                    'closeText'=>'&times;', // close link text - if set to false, no close link is displayed  
+                    'events' => array('click' => 'js:function(e) {
+                            $.get("'. $this->createUrl("messages/process?ids=") .'"+alert_message_ids);
+                        }'
+                    )
+                )
+            );
+        ?>
+        
+        <br/>
 	<?php echo $content; ?>
 
 	<div class="clear"></div>

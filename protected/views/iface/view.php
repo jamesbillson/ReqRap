@@ -168,6 +168,10 @@ $src = Yii::app()->easyImage->thumbSrcOf(
 
         $('.thumPro').not(':eq(0)').css('margin-left','0px');
         $('.thumPro').css('margin-right','10px');
+        
+        $('body').bind('progress', function(data) {
+            alert('falied upload');
+        });
     })
 
 
