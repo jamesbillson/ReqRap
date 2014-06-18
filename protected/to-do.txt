@@ -51,15 +51,14 @@ Number displayed at the top of the add simple screen is incorrect, and probably 
 change the photo filename to contain the project id.
 When the project is deleted, delete the files that have that ID in their filename.
 
+
 ## ANALYST AND REVIEWER comments
-
-
+Use a Meta approach - maybe with the content links below. the string could be release_type_objectid
+then a link router can bust that apart and get the related object view.
 
 ## CONTENT LINKS
-
 need to put links to interfaces mentioned in rules and steps.  Use http link using a routing table that has
 object type, object id, release, UNIQUE string.
-
 
 
 

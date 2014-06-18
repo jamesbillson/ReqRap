@@ -107,21 +107,24 @@ class Actor extends CActiveRecord
                $sql="
            
             SELECT `r`.*,
-            `i`.`name` as iname,
-            `i`.`actor_id` as iactor_id
-            FROM `actor` `r`
-            JOIN `actor` `i`
-            ON `r`.`actor_id`=`i`.`actor_id`            
+            (SELECT `i`.`name` from `actor` `i`
             JOIN `version` `vi`
             ON `vi`.`foreign_key`=`i`.`id`
+            WHERE
+            `vi`.`object`=4 AND `vi`.`active`=1 AND `vi`.`release`=".$release."
+            AND
+            `i`.`actor_id`=`r`.`inherits`
+            ) as iname  
+            FROM `actor` `r`
+                    
+           
             JOIN `version` `vr`
             ON `vr`.`foreign_key`=`r`.`id`            
 
             WHERE 
             `vr`.`object`=4 AND `vr`.`active`=1 AND `vr`.`release`=".$release."
             AND   
-            `vi`.`object`=4 AND `vi`.`active`=1 AND `vi`.`release`=".$release."
-            AND
+            
            
            `r`.`project_id`=".$project;
 

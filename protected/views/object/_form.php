@@ -33,8 +33,9 @@
                         );?>
         </div>
 <br /><br />
-		<?php echo $form->hiddenField($model,'project_id',array('value'=>$project_id)); ?>
-	
+
+
+
 
 	<div class="row buttons">
 		<?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>

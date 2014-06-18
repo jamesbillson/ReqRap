@@ -473,6 +473,8 @@ class Usecase extends CActiveRecord
                 ON `vu`.`foreign_key`=`u`.`id`
                 JOIN `version` `vp`
                 ON `vp`.`foreign_key`=`p`.`id`
+                JOIN `version` `vf`
+                ON `vf`.`foreign_key`=`f`.`id`
                 WHERE 
                 `o`.`".Version::$objects[$object]."_id`=".$id."
                 AND
@@ -484,7 +486,9 @@ class Usecase extends CActiveRecord
                 AND
                 `vu`.`object`=10  AND `vu`.`active`=1  AND `vu`.`release`=".$release."
                 AND
-                `vp`.`object`=5 AND `vp`.`active`=1  AND `vp`.`release`=".$release."              
+                `vp`.`object`=5 AND `vp`.`active`=1  AND `vp`.`release`=".$release." 
+                 AND
+                `vf`.`object`=8 AND `vf`.`active`=1  AND `vf`.`release`=".$release." 
                 GROUP BY `usecase_id`";
          
         $connection=Yii::app()->db;

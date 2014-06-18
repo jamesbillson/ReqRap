@@ -1,6 +1,7 @@
 
 <?php 
-echo $this->renderPartial('/project/head',array('tab'=>'usecases')); ?>
+$link=Yii::App()->session['release'].'_0_0';
+echo $this->renderPartial('/project/head',array('tab'=>'usecases','link'=>$link)); ?>
 
  
 <?php // if this company project owner is current viewer

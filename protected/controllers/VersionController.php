@@ -32,7 +32,7 @@ class VersionController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update','rollback', 'move'),
+				'actions'=>array('create','update','rollback', 'move','link'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -103,6 +103,16 @@ class VersionController extends Controller
 		));
 	}
 
+        
+        	public function actionLink($id)
+	{
+	        $link =  explode("_", $id);     
+               
+		$this->redirect(array('/'.Version::$objects[$link[0]].'/view/id/'.$link[1]));
+		
+	}
+
+        
 	/**
 	 * Deletes a particular model.
 	 * If deletion is successful, the browser will be redirected to the 'admin' page.

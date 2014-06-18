@@ -25,7 +25,7 @@ $active['details']=FALSE;
 $active['documents']=FALSE;
 $active['followers']=FALSE;
 $active['settings']=FALSE;
-
+$active['notes']=FALSE;
 
  $active[$tab]=TRUE;
 
@@ -52,6 +52,11 @@ $active['settings']=FALSE;
             'visible' => $owner,
             'content' => $this->renderPartial('_settings',
                     compact('model'),true,false),'active'=>$active['settings']);
+        $tabs[] = array('id' => 'notes',
+            'label' => 'Notes',
+            'visible' => $owner,
+            'content' => $this->renderPartial('_notes',
+                    compact('model'),true,false),'active'=>$active['notes']);
 
 ?>
 <?php  $this->widget('bootstrap.widgets.TbTabs', array(

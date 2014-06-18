@@ -80,8 +80,24 @@ if(isset(Yii::App()->session['project'])) {
          <?php
   
     if($no_project){  ?>
-          <a target="_new" href="/project/print" ><i class="icon-print " rel="tooltip" title="View Print Version"></i></a> 
-       <?php  } ?>
+          <a target="_new" href="/project/print" ><i class="icon-print " rel="tooltip" title="View Print Version"></i></a>
+       
+    <?php  } ?>
+</td>
+<td>
+    
+       <?php
+  
+    if(isset($link)){ 
+        //echo $link;
+        ?>
+          <a href="/note/create/id/<?php echo $link; ?>" ><i class="icon-comment" rel="tooltip" title="Make a Note"></i></a> 
+    <?php if(count(note::model()->getNotes($link))) {?>      
+            <a href="/note/view/id/<?php echo $link; ?>" ><i class="icon-comments" rel="tooltip" title="View Notes"></i></a> 
+      
+
+    <?php  }} ?> 
+    
 </td>
     </tr>
 </table> 
