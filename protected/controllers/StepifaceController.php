@@ -133,7 +133,7 @@ class StepifaceController extends Controller
                                  $iface->project_id= $project;
                                  $iface->release_id=Release::model()->currentRelease($project);
                                  $iface->name=$_POST['new_interface'];
-                                 $iface->type_id=Interfacetype::model()->getUnclassified($project);
+                                 $iface->interfacetype_id=Interfacetype::model()->getUnclassified($project);
                                  $iface->project_id=$project;
                                  $iface->save(false);
                                  $version=Version::model()->getNextNumber($project,12,1,$iface->primaryKey,$iface->iface_id);

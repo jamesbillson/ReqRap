@@ -92,7 +92,7 @@ if(isset(Yii::App()->session['project'])) {
         //echo $link;
         ?>
           <a href="/note/create/id/<?php echo $link; ?>" ><i class="icon-comment" rel="tooltip" title="Make a Note"></i></a> 
-    <?php if(count(note::model()->getNotes($link))) {?>      
+    <?php if(count(Note::model()->getNotes($link))) {?>      
             <a href="/note/view/id/<?php echo $link; ?>" ><i class="icon-comments" rel="tooltip" title="View Notes"></i></a> 
       
 

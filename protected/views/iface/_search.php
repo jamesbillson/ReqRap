@@ -27,8 +27,8 @@
 	</div>
 
 	<div class="row">
-		<?php echo $form->label($model,'type_id'); ?>
-		<?php echo $form->textField($model,'type_id'); ?>
+		<?php echo $form->label($model,'interfacetype_id'); ?>
+		<?php echo $form->textField($model,'interfacetype_id'); ?>
 	</div>
 
 	<div class="row buttons">

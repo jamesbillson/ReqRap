@@ -55,7 +55,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                          <?php } ?>
             
             
-            <?php echo $item['title']; ?>
+            <?php echo $item['name']; ?>
     </td>
     
     <td>   
@@ -109,7 +109,7 @@ if (count($deleted)):?>
                 </td>
    
                 <td> 
-                <?php echo $item['title']; ?>
+                <?php echo $item['name']; ?>
                 </td>
     
            </tr>

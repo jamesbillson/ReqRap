@@ -123,12 +123,11 @@ class ProjectController extends Controller
       
         if(!($model===null))
             {
-         
-            $this->render('extview',array(
-                'model'=>$model,'tab'=>'documents'
-            ));
-        } ELSE {    
-           $this->redirect(array('site/fail/condition/no_access'));
+                $this->render('print',array(
+                    'model'=>$model,'tab'=>'documents'
+                ));
+            } ELSE {    
+            $this->redirect(array('site/fail/condition/no_access'));
             }
     }
  public function actionprint()

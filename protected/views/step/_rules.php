@@ -3,7 +3,7 @@
                             $links = Step::model()->getStepLinks($item['id'], 1, 16);
                             foreach ($links as $link) {
                             ?>
-                                    <a href="/rule/view/id/<?php echo $link['rule_id']; ?>"> BR-<?php echo str_pad($link['number'], 3, "0", STR_PAD_LEFT); ?></a>  <?php echo $link['title']; ?> <a href="/steprule/delete/id/<?php echo $link['xid']; ?>"><i class="icon-remove-sign"></i></a><br/>
+                                    <a href="/rule/view/id/<?php echo $link['rule_id']; ?>"> BR-<?php echo str_pad($link['number'], 3, "0", STR_PAD_LEFT); ?></a>  <?php echo $link['name']; ?> <a href="/steprule/delete/id/<?php echo $link['xid']; ?>"><i class="icon-remove-sign"></i></a><br/>
                             <?php } ?>
                                 <br />
 <?php $rules = Rule::model()->getProjectRules($project); ?>   
@@ -29,7 +29,7 @@
         <input type="hidden" name="step_db_id" value="<?php echo $item['id']; ?>">
         <select name="rule">
         <?php foreach ($rules as $rule) { ?>
-            <option value="<?php echo $rule['rule_id']; ?>"><?php echo $rule['title']; ?></option>
+            <option value="<?php echo $rule['rule_id']; ?>"><?php echo $rule['name']; ?></option>
         <?php } ?>
         </select>
         <br />Add a new one<br>

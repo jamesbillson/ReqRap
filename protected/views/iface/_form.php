@@ -52,11 +52,11 @@
         <div class="row">
 
              <?php $interfacetypes = Interfacetype::model()->getInterfacetypes();?>   
-             <select name="Iface[type_id]">
+             <select name="Iface[interfacetype_id]">
              <?php foreach($interfacetypes as $iface){?>
                  
              <option class="span4" value="<?php echo $iface['interfacetype_id'];?>" 
-                 <?php if($iface['interfacetype_id'] == $model->type_id)echo 'selected';?> >
+                 <?php if($iface['interfacetype_id'] == $model->interfacetype_id)echo 'selected';?> >
                      <?php echo $iface['name'];?></option>
              <?php } ?>
              </select>

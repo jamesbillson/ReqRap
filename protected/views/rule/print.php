@@ -23,7 +23,7 @@
    
     <td>   
        
-            <?php echo $rule['title']; ?>
+            <?php echo $rule['name']; ?>
     </td>
     
     <td>   

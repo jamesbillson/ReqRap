@@ -71,6 +71,7 @@ class ObjectController extends Controller
 		{
                    $model->attributes=$_POST['Object'];
                    $model->object_id=Version::model()->getNextID(6);
+                   $model->project_id=$project;
                    $model->release_id=Release::model()->currentRelease($project);
                    $model->number=Object::model()->getNextNumber($project);
                 

@@ -27,19 +27,31 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
             <tbody>
             <?php foreach($data as $item):
                 
+              if($item->object>0)  {
+                  $object=Version::model()->instanceName($item->object, $item->instance);
+                   
+              }
                 ?>
                 <tr class="odd">  
                    
              
                     <td>    
-                        <b><?php echo $counter.'. '.$item['subject'];?></b>
-                    <br />
-                    
+                        <b>
+                    <?php 
+                    echo $counter.'. '.$item['subject'];
+                    if($item->object>0)
+                        {
+                        ?> 
+                            <a href="/<?php echo Version::$objects[$item->object]; ?>/view/id/<?php echo $item->instance; ?>">
+                                            <?php echo $object['number'].' '.$object['name'];?>
+                            </a>    
+                       <?php } ELSE {
+                         echo ' - General';   
+                        }
+?>
+                        </b>
                         <?php echo $item['text'];?>
-                    <br />
-                    <a href="/<?php echo Version::$objects[$item->object]; ?>/view/id/<?php echo $item->instance; ?>">
- View <?php echo Version::$objects[$item->object]; ?>
- </a>
+                   
                     </td>            
                     <td>
                          <?php if($permission){ ?>

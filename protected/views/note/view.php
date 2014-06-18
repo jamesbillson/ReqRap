@@ -2,11 +2,13 @@
 <?php 
 // NOTES VIEW
 echo $this->renderPartial('/project/head',array('tab'=>'usecases')); 
-?>
+if($link[1]>0) { ?>
 <a href="/<?php echo Version::$objects[$link[1]]; ?>/view/id/<?php echo $link[2]; ?>">
  Back to <?php echo Version::$objects[$link[1]]; ?>
  </a>
-<?php    
+<?php
+
+}
 $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
     'title' => 'Notes',
     'headerIcon' => 'icon-comments',

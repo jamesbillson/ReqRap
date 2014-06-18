@@ -17,8 +17,8 @@
 	<?php echo CHtml::encode($data->name); ?>
 	<br />
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('type_id')); ?>:</b>
-	<?php echo CHtml::encode($data->type_id); ?>
+	<b><?php echo CHtml::encode($data->getAttributeLabel('interfacetype_id')); ?>:</b>
+	<?php echo CHtml::encode($data->interfacetype_id); ?>
 	<br />
 
 

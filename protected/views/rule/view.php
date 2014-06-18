@@ -12,7 +12,7 @@ $permission=(Yii::App()->session['permission']==1)?true : false;
         
             <?php 
     $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
-    'title' => $model->title,
+    'title' => $model->name,
     'headerIcon' => 'icon-cogs',
     'htmlOptions' => array('class'=>'bootstrap-widget-table'),
               'headerButtons' => array(
@@ -86,9 +86,9 @@ $permission=(Yii::App()->session['permission']==1)?true : false;
                 <tr>
                     <td>
                 <?php if ($item['active'] != 1 && $item['action']!=3){    ?> 
-                <a href="/version/rollback/id/<?php echo $item['versionid'];?>"><i class="icon-repeat" rel="tooltip" data-placement="right" title="Roll Back to this Version"></i></a> 
+                <a href="/version/rollback/id/<?php echo $item['versionid'];?>"><i class="icon-repeat" rel="tooltip" data-placement="right" name="Roll Back to this Version"></i></a> 
                 <?php  } ELSE { ?> 
-                <i class="icon-circle-arrow-right" rel="tooltip" data-placement="right" title="Current Version"></i> 
+                <i class="icon-circle-arrow-right" rel="tooltip" data-placement="right" name="Current Version"></i> 
                 <?php   } ?>  
                </td>
                <td>
@@ -109,7 +109,7 @@ $permission=(Yii::App()->session['permission']==1)?true : false;
         </div>
         <div id="collapse<?php echo $item['ver_numb']; ?>" class="accordion-body collapse">
             <div class="accordion-inner">
-                <strong><?php echo $item['title']; ?></strong><br />
+                <strong><?php echo $item['name']; ?></strong><br />
                    <?php echo $item['text']; ?>
             </div>
         </div>

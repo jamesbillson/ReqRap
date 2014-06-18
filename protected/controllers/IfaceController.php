@@ -91,7 +91,7 @@ class IfaceController extends Controller
                         $interfacetype->release_id=Release::model()->currentRelease($project);
                         if($interfacetype->save()){
                         $version=Version::model()->getNextNumber($project,13,1,$interface->primaryKey,$interface->interfacetype_id);   
-                        $model->type_id=$interface->interfacetype_id; 
+                        $model->interfacetype_id=$interface->interfacetype_id; 
                                                     }
                     }
                      
@@ -128,7 +128,7 @@ public function actionUpdate($ucid,$id)
 		
                 $new->name=$model->name;
                
-                $new->type_id=$model->type_id;
+                $new->interfacetype_id=$model->interfacetype_id;
                 $new->number=$model->number;
 		if(isset($_POST['Iface'])|| $ucid==0)
 		{
@@ -177,7 +177,7 @@ public function actionaddimage($iface, $id)
 //            $model=$this->loadVersion($iface);
 //                 $new= new Iface;
 //   $new->name=$model->name;
-//                 $new->type_id=$model->type_id;
+//                 $new->interfacetype_id=$model->interfacetype_id;
 //                 $new->number=$model->number;
 //                 $new->photo_id=$id;
 //   $new->number=$model->number;

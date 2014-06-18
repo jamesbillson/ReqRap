@@ -62,6 +62,28 @@ class Version extends CActiveRecord {
         18 => 'none',
     );
     
+      
+         public static $numberformat = array( // used for Import
+        1 => array('prepend'=>'BR','padding'=>3), // whether a object needs its number offset on import
+        2 => array('prepend'=>'UF','padding'=>3),// need to handle the Type number
+        3 => array('prepend'=>'NONE','padding'=>0),
+        4 => array('prepend'=>'NONE','padding'=>0),
+        5 => array('prepend'=>'PA','padding'=>0),
+        6 => array('prepend'=>'OB','padding'=>3),
+        7 => array('prepend'=>'NONE','padding'=>3),
+        8 => array('prepend'=>'NONE','padding'=>0),
+        9 => array('prepend'=>'NONE','padding'=>0),
+        10 => array('prepend'=>'UC','padding'=>3),// need to handle the Package number
+        11 => array('prepend'=>'NONE','padding'=>0),
+        12 => array('prepend'=>'IF','padding'=>3),
+        13 => array('prepend'=>'NONE','padding'=>3),
+        14 => array('prepend'=>'NONE','padding'=>0),
+        15 => array('prepend'=>'NONE','padding'=>0),
+        16 => array('prepend'=>'NONE','padding'=>0),
+        17 => array('prepend'=>'NONE','padding'=>3),
+        18 => array('prepend'=>'NONE','padding'=>3),
+    );
+      
        public static $display = array(
         1 => array('parent'=>'project','url'=>'/project/view/tab/rules'), //rule
         2 => array('parent'=>'project','url'=>'/project/view/tab/forms'), //form
@@ -297,7 +319,60 @@ class Version extends CActiveRecord {
         return $newversion;
     }
 
-    public function getNextID($object) {
+    public function instanceName($object,$instance) {
+        $release = Yii::App()->session['release'];
+        
+        if($object!=12 && $object!=10){ // NOT A USECASE OR AN INTERFACE
+        
+        $sql = "
+        SELECT `r`.*
+        from `" . Version::$objects[$object] . "` `r`
+        JOIN `version` `v`
+        ON `v`.`foreign_key`=`r`.`id`
+        WHERE 
+        `r`.`" . Version::$objects[$object] . "_id`= " . $instance . "
+        AND `v`.`active`=1 
+        AND `v`.`object`=" . $object . "
+        AND `v`.`release`=" . $release ;    
+        } ELSE {
+         if($object==12) $parent=13;
+         if ($object==10) $parent=5;// NOT A USECASE OR AN INTERFACE
+        
+        $sql = "
+        SELECT `r`.*,
+        `p`.`number` as parentnum 
+        from `" . Version::$objects[$object] . "` `r`
+        JOIN `" . Version::$objects[$parent] . "` `p`
+        ON `r`.`" . Version::$objects[$parent] . "_id`= `p`.`" . Version::$objects[$parent] . "_id`
+        JOIN `version` `v`
+        ON `v`.`foreign_key`=`r`.`id`
+        JOIN `version` `vp`
+        ON `vp`.`foreign_key`=`p`.`id`
+        WHERE 
+        `r`.`" . Version::$objects[$object] . "_id`= " . $instance . "
+        AND `v`.`active`=1 
+        AND `v`.`object`=" . $object . "
+        AND `v`.`release`=" . $release. " 
+        AND `vp`.`active`=1 
+        AND `vp`.`object`=" . $parent . "
+        AND `vp`.`release`=" . $release ;    
+        }
+        
+        $connection = Yii::app()->db;
+        $command = $connection->createCommand($sql);
+        $projects = $command->queryAll();
+       
+        $name=$projects[0]['name'];
+        $number=$projects[0]['number'];
+        $catnum=(isset($projects[0]['parentnum']))?str_pad($projects[0]['parentnum'], 2, "0", STR_PAD_LEFT):''; 
+
+        $prepend=Version::$numberformat[$object]['prepend'];
+        $padded=$prepend.'-'.$catnum.str_pad($number, Version::$numberformat[$object]['padding'], "0", STR_PAD_LEFT);
+        $result=array('name'=>$name,'number'=>$padded);
+        return $result;
+    }
+
+     public function getNextID($object) {
         $sql = "SELECT `r`.`" . Version::$objects[$object] . "_id` as `number`
        From `" . Version::$objects[$object] . "` `r`
        where `r`.`project_id`=" . Yii::App()->session['project'] . "
@@ -313,7 +388,8 @@ class Version extends CActiveRecord {
         }
         return $projects[0]['number'];
     }
-
+    
+    
     public function getProjectDeletedVersions($id, $object) {
         $sql = "
         SELECT *

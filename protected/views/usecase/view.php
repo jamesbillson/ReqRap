@@ -145,7 +145,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
 
               <td>  <a href="/rule/view/id/<?php echo $item['rule_id'];?>"> BR-<?php echo str_pad($item['number'], 4, "0", STR_PAD_LEFT); ?> </a>
                  <?php if ($item['text']=='stub')echo '<i class="icon-exclamation-sign text-warning" rel="tooltip" title="Incomplete Rule"></i>';?>
-             <b><?php echo $item['title'];?></b>
+             <b><?php echo $item['name'];?></b>
                   </td>
               <td>
                 <?php if($permission){ ?>

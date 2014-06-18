@@ -1,6 +1,7 @@
 <?php 
-echo $this->renderPartial('/project/head',array('tab'=>'rules'));
 
+$link=Yii::App()->session['release'].'_4_'.$model->actor_id;
+echo $this->renderPartial('/project/head',array('tab'=>'actors','link'=>$link));
 $permission=(Yii::App()->session['permission']==1)?true : false; 
 ?>
 <h2>Actor <?php echo $model->name; ?>     

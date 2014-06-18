@@ -2,7 +2,8 @@
         <script type="text/javascript" src="<?php Yii::app()->baseUrl?>/js/jquery.jcarousel.min.js"></script>
         <script type="text/javascript" src="<?php Yii::app()->baseUrl?>/js/jcarousel.responsive.js"></script>
 <?php 
-echo $this->renderPartial('/project/head',array('tab'=>'usecases')); ?>
+$link=Yii::App()->session['release'].'_12_'.$model->iface_id;
+echo $this->renderPartial('/project/head',array('tab'=>'usecases','link'=>$link)); ?>
 
 <h2>Interface UI-<?php echo str_pad($model->number, 3, "0", STR_PAD_LEFT); ?> 
      <a href="/iface/update/ucid/-1/id/<?php echo $model->id;?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
@@ -12,7 +13,7 @@ echo $this->renderPartial('/project/head',array('tab'=>'usecases')); ?>
 <h3>   <?php echo $model->name;?> </h3>
 <strong>Interface type: </strong>
 <?php foreach($types as $type):
- if($type['interfacetype_id']==$model->type_id)  echo $type['name']; 
+ if($type['interfacetype_id']==$model->interfacetype_id)  echo $type['name']; 
 endforeach;
 ?>
 <br /><br />

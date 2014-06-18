@@ -284,7 +284,7 @@ class Follower extends CActiveRecord
             but you can change the settings whenever you like by going to your account page.
              <a href="http://www.ReqRap.com/user/myaccount/">http://www.ReqRap.com/user/myaccount/</a>
             <br />
-            Don\'t forget you can access the project documents without logging in directly here:
+            Don\'t forget you can access the draft requirements without logging in directly here:
             <a href="http://'.Yii::app()->params['server'].'/project/extview/id/'.$extlink.'">'.Yii::app()->params['server'].'/project/extview/id/'.$extlink.'</a>          
                <br />
                   <br />
@@ -357,7 +357,7 @@ class Follower extends CActiveRecord
             New documents have been uploaded to the document repository 
             for '.$projectName.' managed by '.$companyName.'. 
             <br />
-            Don\'t forget you can access the project documents without logging in directly here:
+            Don\'t forget you can access the draft requirements without logging in directly here:
             <a href="http://'.Yii::app()->params['server'].'/project/extview/id/'.$extlink.'">
             http://'.Yii::app()->params['server'].'/project/extview/id/'.$extlink.'</a>          
             <br />

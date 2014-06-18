@@ -1,18 +1,6 @@
 <?php
 
-/**
- * This is the model class for table "iface".
- *
- * The followings are the available columns in table 'iface':
- * @property integer $id
- * @property integer $number
- * @property string $name
- * @property integer $type_id
- *
- * The followings are the available model relations:
- * @property Interfacetype $type
- * @property Interfaceusecase $interfaceusecase
- */
+
 class Iface extends CActiveRecord
 {
 	/**
@@ -31,14 +19,14 @@ class Iface extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('number, iface_id, name, type_id, project_id, release_id', 'required'),
-			array('iface_id, number, type_id, photo_id, project_id, release_id', 'numerical', 'integerOnly'=>true),
+			array('number, iface_id, name, interfacetype_id, project_id, release_id', 'required'),
+			array('iface_id, number, interfacetype_id, photo_id, project_id, release_id', 'numerical', 'integerOnly'=>true),
 			array('name', 'length', 'max'=>255),
                         array('text', 'safe'),
 		
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, iface_id, photo_id,number, name, type_id, project_id, release_id', 'safe', 'on'=>'search'),
+			array('id, iface_id, photo_id,number, name, interfacetype_id, project_id, release_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -50,7 +38,7 @@ class Iface extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'type' => array(self::BELONGS_TO, 'Interfacetype', 'type_id'),
+			'type' => array(self::BELONGS_TO, 'Interfacetype', 'interfacetype_id'),
                         'project' => array(self::BELONGS_TO, 'Project', 'project_id'),
                         'photo' => array(self::BELONGS_TO, 'Photo', 'project_id'),	
                     );
@@ -67,7 +55,7 @@ class Iface extends CActiveRecord
                         'number' => 'Number',
 			'name' => 'Name',
                     'text' => 'Text',
-			'type_id' => 'Type',
+			'interfacetype_id' => 'Type',
                      'project_id' => 'Project',
                     'release_id' => 'Release',
                     'photo_id'=>'Image'
@@ -95,7 +83,7 @@ class Iface extends CActiveRecord
 		$criteria->compare('id',$this->id);
 		$criteria->compare('number',$this->number);
 		$criteria->compare('name',$this->name,true);
-		$criteria->compare('type_id',$this->type_id);
+		$criteria->compare('interfacetype_id',$this->interfacetype_id);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -111,13 +99,13 @@ class Iface extends CActiveRecord
             `i`.`number`,
             `i`.`iface_id`,
             `i`.`name`, 
-            `i`.`type_id`,
+            `i`.`interfacetype_id`,
             `i`.`id`,
             `t`.`name` as type, 
             `t`.`interfacetype_id` as typenum
             FROM `iface` `i`
             JOIN `interfacetype` `t` 
-            on `i`.`type_id`=`t`.`interfacetype_id`
+            on `i`.`interfacetype_id`=`t`.`interfacetype_id`
             JOIN `stepiface` `x`
             ON `x`.`iface_id`=`i`.`iface_id`            
             JOIN `step` `s`
@@ -190,7 +178,7 @@ WHERE
             FROM
             `iface` `r`
             JOIN `interfacetype` `t`
-            ON `t`.`interfacetype_id`=`r`.`type_id`            
+            ON `t`.`interfacetype_id`=`r`.`interfacetype_id`            
             LEFT JOIN `photo` `p`
             ON `r`.`photo_id`=`p`.`id`
             JOIN `version` `v`
@@ -264,7 +252,7 @@ WHERE
     }  
     
     
-       public function getCategoryIfaces($type_id)
+       public function getCategoryIfaces($interfacetype_id)
     {
          
            
@@ -280,7 +268,7 @@ WHERE
             FROM
             `iface` `r`
             JOIN `interfacetype` `t`
-            ON `t`.`interfacetype_id`=`r`.`type_id`            
+            ON `t`.`interfacetype_id`=`r`.`interfacetype_id`            
         
             JOIN `version` `v`
             ON `v`.`foreign_key`=`r`.`id`
@@ -296,7 +284,7 @@ WHERE
            
             `r`.`release_id`=".$release."
             AND
-            `t`.`interfacetype_id`=".$type_id."
+            `t`.`interfacetype_id`=".$interfacetype_id."
                 GROUP BY `r`.`iface_id`";
 
         
@@ -366,7 +354,7 @@ WHERE
          for ($case = 0; $case <= 2; $case++) 
          {       
       
-       $type_id=Version::model()->getNextID(13);
+       $interfacetype_id=Version::model()->getNextID(13);
        $sql="INSERT INTO `interfacetype`(
            `number`, 
            `interfacetype_id`,
@@ -375,7 +363,7 @@ WHERE
            `project_id`) 
            VALUES 
            (0,
-           ".$type_id.",
+           ".$interfacetype_id.",
            ".Release::model()->currentRelease(Yii::app()->session['project']).",
            '".$initial[$case]."',
            ".$id.")";
@@ -386,14 +374,14 @@ WHERE
         $sql="select `a`.`id` 
             from `interfacetype` `a` 
             where
-            `a`.`interfacetype_id` = ".$type_id."
+            `a`.`interfacetype_id` = ".$interfacetype_id."
             AND                
             `a`.`project_id`=".$id;
       
         $connection=Yii::app()->db;
         $command = $connection->createCommand($sql);
         $result = $command->queryAll();
-        Version::model()->getNextNumber($id,13,1,$result[0]['id'],$type_id); 
+        Version::model()->getNextNumber($id,13,1,$result[0]['id'],$interfacetype_id); 
            }
     
         
@@ -404,7 +392,7 @@ WHERE
             $model=Iface::model()->findByPk(Version::model()->getVersion($iface,12));
             
             $this->name=$model->name;
-            $this->type_id=$model->type_id;
+            $this->interfacetype_id=$model->interfacetype_id;
             $this->number=$model->number;
             $this->photo_id=$id;
             $this->number=$model->number;

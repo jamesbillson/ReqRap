@@ -29,12 +29,12 @@ class Rule extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('rule_id,  number, title,text, project_id, release_id ', 'required'),
+			array('rule_id,  number, name,text, project_id, release_id ', 'required'),
 			array('number', 'length', 'max'=>4),
                     array('rule_id, project_id, release_id', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, number, title, text, project_id, release_id', 'safe', 'on'=>'search'),
+			array('id, number, name, text, project_id, release_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -59,7 +59,7 @@ class Rule extends CActiveRecord
 			'id' => 'ID',
                     'rule_id'=>'Rule ID',
 			'number' => 'Number',
-                    'title' => 'Title',
+                    'name' => 'Name',
 			'text' => 'Rule Text',
                      'project_id' => 'Project',
                     'release_id' => 'Release',
@@ -113,7 +113,7 @@ class Rule extends CActiveRecord
        $project=Yii::App()->session['project'];
           
         $sql="
-            SELECT `r`.`id`,`r`.`rule_id`,`r`.`number`,`r`.`title`,`r`.`text`,`v`.`active`
+            SELECT `r`.`id`,`r`.`rule_id`,`r`.`number`,`r`.`name`,`r`.`text`,`v`.`active`
             FROM `rule` `r`
             JOIN `version` `v`
             ON `v`.`foreign_key`=`r`.`id`
