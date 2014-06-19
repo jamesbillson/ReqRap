@@ -70,7 +70,7 @@ $rules = Usecase::model()->getLinkedObjects($uc['usecase_id'],1,16);
               <td>
         <?php foreach($rules as $rule) : // Go through each un answered question??>
                   BR-<?php echo str_pad($rule['number'], 4, "0", STR_PAD_LEFT); ?>
-        <?php echo $rule['title'];?>
+        <?php echo $rule['name'];?>
          <br />
         <?php endforeach ?>       
               </td>

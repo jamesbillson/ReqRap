@@ -1,24 +1,3 @@
-Actors
-<pre>
- <?php 
- print_r($actors);
-  ?>
-</pre>
- 
-<?php
- $singles=array();
-    foreach($actors as $actor):
-    $single=$single+$actor['id'];
-        
-         
-
-    endforeach; 
-    
-    print_r($singles);
-    ?>
- 
-
-
 <h2><?php echo $heading; ?>. Actors</h2>
 
         <table class="table">
