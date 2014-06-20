@@ -36,7 +36,7 @@ array('allow', // allow authenticated user to perform 'create' and 'update' acti
 ),
 array('allow', // allow admin user to perform 'admin' and 'delete' actions
 'actions'=>array('admin','delete'),
-'users'=>array('admin'),
+'users'=>array('*'),
 ),
 array('deny',  // deny all users
 'users'=>array('*'),
@@ -93,6 +93,7 @@ $model=$this->loadModel($id);
 if(isset($_POST['Messages']))
 {
 $model->attributes=$_POST['Messages'];
+$model->condition = $_POST['Messages']['condition']; 
 if($model->save())
 $this->redirect(array('view','id'=>$model->id));
 }

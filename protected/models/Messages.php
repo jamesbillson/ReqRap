@@ -140,13 +140,10 @@ class Messages extends CActiveRecord
                 );*/
                 
                 //set up the message in session
-                if(self::checkVisibility($message->scope)) {
+                if(self::checkVisibility($message)) {
                     $alert_messages[] = $message->message;
                     $ids[] = $message->id;
                 }
-                
-                Yii::app()->user->setFlash('info', '<i class="icon-info-sign"></i>'.implode('<br/><i class="icon-info-sign"></i>', $alert_messages));
-                Yii::app()->clientScript->registerScript('alert_message_ids', 'var alert_message_ids = "'. implode(',', $ids) .'";');
                 
                 if($count >= $alerts_limit)
                     break;
@@ -154,18 +151,38 @@ class Messages extends CActiveRecord
                 $count++;
             }
             
+            if($alert_messages) {
+                Yii::app()->user->setFlash('info', '<i class="icon-info-sign"></i>'.implode('<br/><i class="icon-info-sign"></i>', $alert_messages));
+                Yii::app()->clientScript->registerScript('alert_message_ids', 'var alert_message_ids = "'. implode(',', $ids) .'";');
+            }
             //return $alert_messages;
         }
         
         //checks the visiblity of message for a particular page/scope
-        public static function checkVisibility($path) {
+        public static function checkVisibility(&$message) {
             
-            $str = preg_replace('/\*\//', Yii::app()->controller->id.'/', $path);
+            $str = preg_replace('/\*\//', Yii::app()->controller->id.'/', $message->scope);
             $str = preg_replace('/\*/', Yii::app()->controller->action->id, $str);
             
-            if(strpos($str, Yii::app()->controller->id.'/'.Yii::app()->controller->action->id) !== FALSE)
+            if(strpos($str, Yii::app()->controller->id.'/'.Yii::app()->controller->action->id) !== FALSE
+               && ($message->show_once < 1 || ($message->show_once && $message->userMetas[0]->has_viewed < 1))
+               && ($message->type != 2 || ($message->type == 2 && self::runCode($message->condition)))
+            ) {
+                
+                if(!$message->userMetas[0]->has_viewed) //prevent write to database if the flag is already set
+                    UserMeta::model()->updateByPk($message->userMetas[0]->id, array('has_viewed' => 1));
+                
                 return true;
-            else
+            }else
                 return false;
+        }
+        
+        private static function runCode($code) {
+            
+            if(!$code)
+                return false;
+            
+            //var_dump(eval($code)); exit;
+            return eval($code);
         }
 }
