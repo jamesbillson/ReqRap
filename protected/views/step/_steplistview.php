@@ -42,7 +42,7 @@
                                 <strong>Rules</strong>
                                 <br />
                 <?php foreach ($links as $link) { ?>
-                                    <a href="/rule/view/id/<?php echo $link['rule_id']; ?>">BR-<?php echo str_pad($link['number'], 4, "0", STR_PAD_LEFT); ?></a>  <?php echo $link['title']; ?> 
+                                    <a href="/rule/view/id/<?php echo $link['rule_id']; ?>">BR-<?php echo str_pad($link['number'], 4, "0", STR_PAD_LEFT); ?></a>  <?php echo $link['name']; ?> 
                                     <a href="/steprule/delete/id/<?php echo $link['xid']; ?>"><i class="icon-remove-sign"></i></a>
                                     <br />
                                 <?php } ?>
