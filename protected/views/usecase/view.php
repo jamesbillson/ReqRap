@@ -1,6 +1,15 @@
  <?php echo $this->renderPartial('/project/head',array('tab'=>'usecases')); 
 
 $permission=(Yii::App()->session['permission']==1)?true : false; 
+//$data = Package::model()->getPackages($model->id);
+
+/*$packagelist=array();
+foreach($data as $item):
+$packagelist=$packagelist+array($item['package_id']=>$item['name']);    
+endforeach;
+//print_r($packagelist);
+ * 
+ */
  ?>
 
 <?php if($permission){ ?>
@@ -44,7 +53,25 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
 
               <td>  <b>Package</b> 
               </td>
-              <td>   <a href="/package/view/tab/usecases/id/<?php echo $package['package_id']; ?>"><?php echo $package['name'] ; ?></a>
+              <td>   
+                  <a href="/usecase/packchange/id/<?php echo $model->id; ?>"> <?php echo $package['name']; ?></a>
+                  <?php
+                  /*
+                $package_model=Package::model()->findbyPK($package['id']);  
+             
+                $this->widget('editable.EditableField', array(
+                    'type'      => 'select',
+                    'model'     => $package_model,
+                    'attribute' => 'package_id',
+                    'url'       => $this->createUrl('usecase/editablechange/'), 
+                    //'source'    => Editable::source(array(1 => 'Status1', 2 => 'Status2')),
+                    'source'    => Editable::source($packagelist, 'package_id', 'name'),
+                    'placement' => 'right',
+                    ));
+               * 
+               */
+                ?>
+              
               </td>
                   
           </tr>

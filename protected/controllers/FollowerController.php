@@ -213,9 +213,9 @@ class FollowerController extends Controller
                 //go back to the original follow object screen
                 //pick the object from an array by the index.
                 $object = Follower::$foreigntype;
-                if ($model->type==1) $this->redirect(array($object[$model->type].'/view','id'=>$id,'tab'=>'follower'));
-                 if ($model->type==2) $this->redirect(array($object[$model->type].'/view','id'=>$id,'tab'=>'subbies'));
-            }
+                $this->redirect(array('/project/project','tab'=>'followers'));
+         
+                }
         }
         //check user
         $user = User::model()->findByPk(Yii::app()->user->id);
@@ -253,9 +253,8 @@ class FollowerController extends Controller
             //go back to the original follow object screen
             //pick the object from an array by the index.
             
-          if ($model->type==1) $this->redirect(array('/project/view','id'=>$fk,'tab'=>'follower'));
-          if ($model->type==2) $this->redirect(array('/package/view','id'=>$fk,'tab'=>'follower'));
-           
+        $this->redirect(array('/project/project','tab'=>'followers'));
+                
     }
     
     public function actionAccept($id)

@@ -28,11 +28,11 @@ class UsecaseController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view'),
+				'actions'=>array('editablechange','index','view'),
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('dynamicsteps','create','update','delete','move','history'),
+				'actions'=>array('packchange','dynamicsteps','create','update','delete','move','history'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -166,6 +166,72 @@ class UsecaseController extends Controller
 		));
 	}
 
+        public function actionEditableChange()
+	{
+           // THIS IS NOT USED...
+            $release=Yii::App()->session['release'];
+                $project=Yii::App()->session['project'];
+                $model=$this->loadModel($_POST['pk']);
+                $new= new Usecase;
+			
+                if($_POST['scenario']=='update')
+		{
+                 $new->usecase_id=$model->usecase_id;
+                 $new->project_id=$project;
+                 $new->release_id=$release;
+                 $new->package_id=$_POST['value'];
+                 $new->description=$model->description;  
+		 $new->number=$model->number;
+                 $new->actor_id=$model->actor_id;
+                 $new->name=$model->name;
+                 $new->preconditions=$model->preconditions;
+                 
+                 
+                 //$new->$_POST['name']=$_POST['value'];
+                 
+                 $new->save(false);
+                 Version::model()->getNextNumber($project,10,2,$new->primaryKey,$new->usecase_id);   
+                }
+            
+             
+                echo 'ok';
+                header('HTTP/1.1 200 OK');
+		die;
+	}
+        
+         public function actionPackChange($id)
+	{
+           
+            $release=Yii::App()->session['release'];
+                $project=Yii::App()->session['project'];
+                $model=$this->loadModel($id);
+                $new= new Usecase;
+			
+                  if(isset($_POST['Usecase']))
+		{
+                   if($_POST['Usecase']['package_id'] != $model->package_id){
+                 $new->usecase_id=$model->usecase_id;
+                 $new->project_id=$project;
+                 $new->release_id=$release;
+                 $new->package_id=$_POST['Usecase']['package_id'];
+                 $new->description=$model->description;  
+		 $new->number=$model->number;
+                 $new->actor_id=$model->actor_id;
+                 $new->name=$model->name;
+                 $new->preconditions=$model->preconditions;
+                 
+                 
+                if($new->save()){
+                      $version=Version::model()->getNextNumber($project,10,2,$new->primaryKey,$new->usecase_id);   
+                      $this->redirect(array('/usecase/view/id/'.$new->usecase_id));
+                 }
+                }}
+             $this->render('packchange',array(
+			'model'=>$model,'id'=>$id         
+         ));
+	}
+        
+        
         public function actionMove($dir, $id)
 	{
 		

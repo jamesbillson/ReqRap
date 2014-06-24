@@ -33,6 +33,7 @@ $data=  Testrun::model()->getTestRun($id);?>
             <td>
                    
                 <?php
+               
               
     $this->widget('editable.EditableField', array(
         'type'      => 'select',

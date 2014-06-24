@@ -16,10 +16,10 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
         <table class="table">
             <thead>
                 <tr>
-                    <th>Sequence</th>
+                    <th>Package</th>
        
-                    <th>Name</th>
-                 
+                    <th>Number</th>
+                 <th>Name</th>
  
                     <th>Actions</th>
                 </tr>
@@ -75,13 +75,21 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                    <a href="/usecase/view/id/<?php echo $uc['usecase_id'];?>"> UC-<?php echo str_pad($uc['packnumber'], 2, "0", STR_PAD_LEFT).''.str_pad($uc['number'], 3, "0", STR_PAD_LEFT); ?></a>
                </td> 
               <td>
-                  <b><?php echo $uc['name'];?></a></b>
+                  <b><?php echo $uc['name'];?></b>
+                  
                 
               </td> 
               <td>
+ 
+                
+                  
               <?php if($permission){ ?>
-                  <a href="/usecase/delete/id/<?php echo $uc['id'];?>"><i class="icon-remove-sign text-error" rel="tooltip" title="Edit"></i> </a>
+                  <a href="/usecase/delete/id/<?php echo $uc['id'];?>"><i class="icon-remove-sign text-error" rel="tooltip" title="Delete"></i> </a>
                <a href="/usecase/update/id/<?php echo $uc['id'];?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
+
+               
+               
+              
                <a href="/usecase/history/id/<?php echo $uc['usecase_id'];?>"><i class="icon-calendar" rel="tooltip" title="Version history"></i></a> 
                
                <?php if($counter!=0) { ?>

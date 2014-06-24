@@ -124,9 +124,13 @@ class Messages extends CActiveRecord
             $ids = $alert_messages = array();
             
             //Messages that belong to the user and have not been acknowledged
-            $messages = Messages::model()->with(array('userMetas' => array('joinType' => 'JOIN')))->findAll(array(
-                'condition' => 'userMetas.user_id = :user_id AND userMetas.has_acknowledged = 0',
-                'params' => array(':user_id' => Yii::app()->user->id)
+            $messages = Messages::model()->with(
+                    array('userMetas' => 
+                        array('joinType' => 'JOIN')))->findAll(
+                                array(
+                                    'condition' => 'userMetas.user_id = :user_id AND userMetas.has_acknowledged = 0',
+                                    'params' => array(
+                                        ':user_id' => Yii::app()->user->id)
             ));
             
             $alerts_limit = min(2, count($messages)); //number of alters to display on a page

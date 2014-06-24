@@ -177,6 +177,8 @@ class PackageController extends Controller
 	}
         
 
+      
+        
 	
 public function actionDelete($id)
 	{

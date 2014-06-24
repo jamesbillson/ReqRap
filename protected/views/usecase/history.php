@@ -4,7 +4,11 @@ echo $this->renderPartial('/project/head',array('tab'=>'details'));
 <h3>Version History</h3>    
    <?php $collapse = $this->beginWidget('bootstrap.widgets.TbCollapse'); ?>
    <?php if (count($versions)){?>
-   <?php foreach($versions as $item) {?>   
+   <?php foreach($versions as $item) {
+       
+    $package=Package::model()->findbyPK(Version::model()->getVersion($item['package_id'],5));   
+       
+       ?>   
 <div class="accordion-group">
         <div class="accordion-heading">
             <table>
@@ -35,7 +39,8 @@ echo $this->renderPartial('/project/head',array('tab'=>'details'));
         <div id="collapse<?php echo $item['ver_numb']; ?>" class="accordion-body collapse">
             <div class="accordion-inner">
                 <strong><?php echo $item['name']; ?></strong><br />
-                   
+                <strong>Description: </strong><?php echo $item['description']; ?><br />
+                <strong>Package: </strong><?php echo $package['name']; ?><br />    
             </div>
         </div>
     </div>

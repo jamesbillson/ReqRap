@@ -28,7 +28,7 @@ class UserController extends Controller
     {
         return array(
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
-                'actions'=>array('promote','demote','sack','index','invite','view','create','update','admin','delete'),
+                'actions'=>array('promote','demote','sack','reinvite','index','invite','view','create','update','admin','delete'),
                 'roles'=>array('admin'),
                 /*'users'=>array('@'),*/
             ),
@@ -167,7 +167,7 @@ class UserController extends Controller
                 $user->active = 0;
                 $user->email=$contact->email;
                 $user->username = $user->email;
-
+                $user->verification_code = substr(sha1($user->email . time()), 0, 10);
                 if($user->save()){
 
                   $link = urlencode($user->salt);
@@ -224,6 +224,21 @@ class UserController extends Controller
       $this->redirect(array('site/fail'));
     }
 
+      public function actionReInvite($id)
+    {
+       
+            $model=$this->loadModel($id);
+
+          
+            User::model()->sendInvite($model->primaryKey);
+            
+            //go back to the original follow object screen
+            //pick the object from an array by the index.
+            Yii::app()->user->setFlash('success', "Invite Sent.");
+        $this->redirect(array('/company/mycompany'));
+                
+    }
+    
     public function actionInvite()
     {
         $model=new User;
@@ -237,6 +252,8 @@ class UserController extends Controller
             $model->password ='temp';
             $model->username = $model->email ;
             $model->company_id = User::model()->myCompany();
+            $model->verification_code = substr(sha1($model->email . time()), 0, 10);
+          
             $sender=User::model()->findbyPK(Yii::app()->user->id);
            // print_r($sender);
            
@@ -266,7 +283,7 @@ class UserController extends Controller
                 
                 
                 
-                $this->redirect(array('view','id'=>$model->id));
+                $this->redirect(array('company/mycompany'));
             }
            
         }
@@ -285,58 +302,32 @@ class UserController extends Controller
         //check the uuencoded password string.
         $salt = urldecode($id); 
         $newaccount = User::model()->find("salt = '".$salt."'");
-        if (!isset($newaccount->id))  $this->redirect(array('site/fail'));
-        
+        if (!isset($newaccount->id))  $this->redirect(array('site/fail/nomatch'));
+        // there is a matching user.
+        // model loads the existing user
         $model=$this->loadModel($newaccount->id);
 
-        // Uncomment the following line if AJAX validation is needed
-        // $this->performAjaxValidation($model);
         if(isset($_POST['User']))
+            // if the form has been submitted
         {   
+        if ($_POST['User']['password']==$_POST['User']['password2'])
             $model->scenario = 'update';
-            if(empty($_POST['User']['password'])){
-                $data = array(  'firstname'=>$_POST['User']['firstname'],
-                                'lastname'=>$_POST['User']['lastname'],
-                                'email'=>$_POST['User']['email'],
-                                'username'=>'',
-                                
-                                'password'=>$model->password,
-                                'salt'      =>  $model->generateSalt()
-                    );
-                if($model->saveAttributes($data))
-                    $this->redirect(array('view','id'=>$model->id));
-            }else{
-                $model->attributes=$_POST['User'];
-                $model->password = $_POST['User']['password'];
-                $model->type = 1; // set the type to member so contact links can be made
-                if($model->save())
-                    {
-                    //find anywhere where a contact with this email address
-                    //is also a follower
-                    // and update those contacts with this user.
-                    
-                 Contact::model()->connectUser($model->id);
-                 /*
-                    $identity = new UserIdentity($model->username, $model->password);
-                    $identity->authenticate();
-                    //$identity->setStateMember($model);
-                    Yii::app()->user->login($identity);
-                   */
-                    
-                    $identity=new UserIdentity($model->email,'');
-                    $identity->setUpUser($model->id); // id of user
-                    Yii::app()->user->login($identity);
-
-                      $this->redirect(array('site/index'));
-                    }
-                    
-                    $this->redirect(array('view','id'=>$model->id));
-                }
-                    
-                
-        }
-      
+            $model->firstname=$_POST['User']['firstname'];
+            $model->lastname=$_POST['User']['lastname'];
+            $model->password=$_POST['User']['password'];
+            $model->salt = $model->generateSalt();
+                        
+                if($model->save()){
+                $identity = new UserIdentity($model->email, $model->password);
+                $identity->setId($model->id);
+                $identity->errorCode = UserIdentity::ERROR_NONE;
+                Yii::app()->user->login($identity, (Yii::app()->params['loggedInDays'] * 60 * 60 * 24 ));
+                $this->redirect(array('/company/mycompany'));      
+                  }
         
+               
+        } 
+         
               $this->render('accept',array(
             'model'=>$model,
         ));
@@ -352,8 +343,6 @@ class UserController extends Controller
        $id=yii::app()->user->id;
         $model=$this->loadModel($id);
 
-        // Uncomment the following line if AJAX validation is needed
-        // $this->performAjaxValidation($model);
         if(isset($_POST['User']))
         {   
             $model->scenario = 'update';
@@ -390,7 +379,7 @@ class UserController extends Controller
        $model=$this->loadModel($id);
        $model->admin=1;
 	if($model->save())
-	$this->redirect(array('user/view','id'=>$model->id));
+	$this->redirect(array('/company/mycompany'));
 		
        }
 		
@@ -402,7 +391,7 @@ class UserController extends Controller
        $model=$this->loadModel($id);
        $model->admin=0;
 	if($model->save())
-	$this->redirect(array('user/view','id'=>$model->id));
+		$this->redirect(array('/company/mycompany'));
 		
        }
 
@@ -416,7 +405,7 @@ class UserController extends Controller
        $model=$this->loadModel($id);
        $model->company_id=0;
 	if($model->save())
-	$this->redirect(array('user/view','id'=>$model->id));
+		$this->redirect(array('/company/mycompany'));
 		
        }
 

@@ -95,7 +95,7 @@ class User extends CActiveRecord
 			'address_id' => 'Address',
 			'salt' => 'Salt',
 			'username' => 'Username',
-      'cpassword'=>'Confirm Password'
+                        'cpassword'=>'Confirm Password'
 		);
 	}
 
@@ -198,7 +198,7 @@ class User extends CActiveRecord
     {
             $company= User::model()->myCompany();   
               
-        $sql="SELECT `u`.`firstname`, `u`.`id`, `u`.`lastname`, `u`.`admin`, `u`.`email`
+        $sql="SELECT `u`.*
             FROM `user` `u`
             Join `company` `c` 
             on `u`.`company_id`=`c`.`id`
@@ -207,6 +207,34 @@ class User extends CActiveRecord
       $command = $connection->createCommand($sql);
       $users = $command->queryAll();
       return $users;
+    }
+    
+    
+     public function sendInvite($id)
+    {
+
+       $user = $this->findByPk($id);   
+       $creator = User::model()->findbyPk(Yii::app()->user->id);
+       $mail = new YiiMailer();
+       $mail->setFrom($creator->username,$creator->firstname.' '.$creator->lastname);
+       $mail->setTo($user->email);
+               
+        
+            //if the user has an account send an email saying they've been invite to follow
+
+            $mail->setSubject('You have been invited to join '.$creator->company->name);
+            $mail->setBody($user->firstname.',
+            <br /><br />
+            You\'ve been invited to create a ReqRap account for '.$creator->company->name.'. 
+            <br />
+            Click here to accept <a href="http://'.Yii::app()->params['server'].'/user/accept/id/'.$user->salt.'">'.Yii::app()->params['server'].'/user/accept/id/'.$user->salt.'</a>                   
+            <br />
+          
+            
+            ');
+
+       
+        $mail->Send();          
     }
     
             public function activate($id)

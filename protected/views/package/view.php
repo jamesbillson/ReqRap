@@ -7,15 +7,16 @@ $permission=(Yii::App()->session['permission']==1)?true : false;
 
 <?php 
 $usecases = Usecase::model()->getPackageUsecases($model->package_id); // get the requirements with answers
-
-$this->renderPartial('/package/printdiagram',array('package'=>$model)); ?>
+if (count($usecases)){
+$this->renderPartial('/package/printdiagram',array('package'=>$model)); 
+}?>
 
 <br /><br />
 <?php
 
 $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
 	'title' => 'Use Cases',
-	'headerIcon' => 'icon-user',
+	'headerIcon' => 'icon-film',
 	'htmlOptions' => array('class'=>'bootstrap-widget-table'),
            'headerButtons' => array(
                 array(

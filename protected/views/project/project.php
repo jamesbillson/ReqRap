@@ -1,6 +1,7 @@
 
 <?php 
-echo $this->renderPartial('/project/head',array('tab'=>'usecases')); ?>
+if (!isset($tab)) $tab='details';
+echo $this->renderPartial('/project/head',array('tab'=>$tab)); ?>
 
  
 <?php // if this company project owner is current viewer

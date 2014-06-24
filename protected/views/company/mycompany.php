@@ -10,9 +10,12 @@ $me = User::model()->findbyPK(Yii::app()->user->id);
 ?>
 
 <div class="well">
-    <h1><?php echo $model->name; ?></h1><a href="/company/update?id=<?php echo $model->id; ?>">
+    <h1><?php echo $model->name; ?></h1>
+     <?php    if($me->admin==1) {?>
+    <a href="/company/update?id=<?php echo $model->id; ?>">
         <i class="icon-cog"></i></a>
  <?php 
+     }
 echo $model->description;
 ?>
     <br />
@@ -66,6 +69,7 @@ echo Company::$companytypestatus[$model->type];
             <td>
                  <?php if($item['admin']==1) { ?> 
                 <i class="icon-user" rel="tooltip" title="Administrator"></i>
+                
                  <?php } ?>
             </td>
          <td>   
@@ -75,10 +79,17 @@ echo Company::$companytypestatus[$model->type];
             <?php echo $item['email'];?>
       </td>
             <td>
-                   <a href="/user/view/id/<?php echo $item['id'];?>"><i class="icon-eye-open" rel="tooltip" title="View"></i></a> 
- 
+               
+                 <?php    if($me->id==$item['id'] && $me->admin!=1) {?>
+                 <a href="/user/view/id/<?php echo $item['id'];?>"><i class="icon-eye-open" rel="tooltip" title="View"></i></a> 
+    
+                    <?php }?>
                 <?php    if($me->admin==1) {?>
-                   
+                  <?php    if($item['type']==0) {?>
+                <a href="/user/reinvite/id/<?php echo $item['id'];?>"><i class="icon-envelope" rel="tooltip" title="Resend Invitation Email"></i></a> 
+                <?php }?>
+  <a href="/user/view/id/<?php echo $item['id'];?>"><i class="icon-eye-open" rel="tooltip" title="View"></i></a> 
+    
                             <?php if($item['admin']==1 && count($admin)>1) {?>
                              <a href="/user/demote/id/<?php echo $item['id'];?>"><i class="icon-circle-arrow-down" rel="tooltip" title="Remove Administrator Rights"></i> </a>
                             <?php }?>
