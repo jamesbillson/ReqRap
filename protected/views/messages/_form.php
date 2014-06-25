@@ -19,7 +19,7 @@
 	<?php echo $form->textAreaRow($model,'condition',array('rows'=>6, 'cols'=>50, 'class'=>'span8', 'hint' => 'Use php code and always return a boolean value')); ?>
         </div>
 
-	<?php echo $form->dropDownListRow($model,'show_once',array('' => '--', 0 => 'Yes', 1 => 'No'), array('class'=>'span5', 'hint' => 'Is this message to showed once')); ?>
+	<?php echo $form->dropDownListRow($model,'show_once',array('' => '--', 1 => 'Yes', 0 => 'No'), array('class'=>'span5', 'hint' => 'Is this message to showed once')); ?>
 
 <div class="form-actions">
 	<?php $this->widget('bootstrap.widgets.TbButton', array(

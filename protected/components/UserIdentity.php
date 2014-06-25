@@ -54,6 +54,8 @@ class UserIdentity extends CUserIdentity
                 $this->errorCode = self::ERROR_NONE;
                 $this->_id = $users->id;
             }
+            
+            Messages::createUserMeta($users->id);
             return !$this->errorCode;
         }
         

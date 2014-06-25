@@ -163,25 +163,30 @@ class Messages extends CActiveRecord
         }
         
         //checks the visiblity of message for a particular page/scope
-        public static function checkVisibility(&$message) {
-            
-            $str = preg_replace('/\*\//', Yii::app()->controller->id.'/', $message->scope);
-            $str = preg_replace('/\*/', Yii::app()->controller->action->id, $str);
-            
-            if(strpos($str, Yii::app()->controller->id.'/'.Yii::app()->controller->action->id) !== FALSE
-               && ($message->show_once < 1 || ($message->show_once && $message->userMetas[0]->has_viewed < 1))
-               && ($message->type != 2 || ($message->type == 2 && self::runCode($message->condition)))
-            ) {
-                
-                if(!$message->userMetas[0]->has_viewed) //prevent write to database if the flag is already set
-                    UserMeta::model()->updateByPk($message->userMetas[0]->id, array('has_viewed' => 1));
-                
-                return true;
-            }else
-                return false;
-        }
-        
-        private static function runCode($code) {
+  public static function checkVisibility(&$message) {
+    $strExclude = preg_replace('/\*\//', Yii::app()->controller->id . '/', $message->exclude);
+    $strExclude = preg_replace('/\*/', Yii::app()->controller->action->id, $strExclude);
+    if (strpos($strExclude, Yii::app()->controller->id . '/' . Yii::app()->controller->action->id) !== FALSE) {
+      return false;
+    }
+
+    $str = preg_replace('/\*\//', Yii::app()->controller->id . '/', $message->scope);
+    $str = preg_replace('/\*/', Yii::app()->controller->action->id, $str);
+
+    if (strpos($str, Yii::app()->controller->id . '/' . Yii::app()->controller->action->id) !== FALSE
+            && ($message->show_once < 1 || ($message->show_once && $message->userMetas[0]->has_viewed < 1))
+            && ($message->type != 2 || ($message->type == 2 && self::runCode($message->condition)))
+    ) {
+
+      if (!$message->userMetas[0]->has_viewed) //prevent write to database if the flag is already set
+        UserMeta::model()->updateByPk($message->userMetas[0]->id, array('has_viewed' => 1));
+
+      return true;
+    }else
+      return false;
+  }
+
+  private static function runCode($code) {
             
             if(!$code)
                 return false;
@@ -189,4 +194,21 @@ class Messages extends CActiveRecord
             //var_dump(eval($code)); exit;
             return eval($code);
         }
+        
+ public static function createUserMeta($user_id) {
+
+    $criteria = new CDbCriteria;
+    $criteria->join = "LEFT JOIN user_meta a ON t.id = a.alert_messages_id and a.user_id =$user_id";
+    $criteria->condition = "a.id is null";
+    $msgIds = Messages::model()->findAll($criteria);
+
+    foreach ($msgIds as $msgId) {
+      $userMeta = new UserMeta;
+      $userMeta->alert_messages_id = $msgId['id'];
+      $userMeta->user_id = $user_id;
+      $userMeta->has_viewed = 0;
+      $userMeta->has_acknowledged = 0;
+      $userMeta->save();
+    }
+  }
 }
