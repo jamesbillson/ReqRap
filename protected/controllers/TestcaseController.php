@@ -373,7 +373,7 @@ if (!empty($all_flows[$i])){
               $teststep->number=$x;
               $teststep->testcase_id=$testcase_id;
               $teststep->action='Validate Business Rule';
-              $teststep->result='BR-'.str_pad($rule['number'], 4, "0", STR_PAD_LEFT).' '.$rule['title'];
+              $teststep->result='BR-'.str_pad($rule['number'], 4, "0", STR_PAD_LEFT).' '.$rule['name'];
               $teststep->save();
                           
                     }

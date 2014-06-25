@@ -32,7 +32,7 @@ class RuleController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update','delete','history','rollback'),
+				'actions'=>array('unlink','create','update','delete','history','rollback'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -144,6 +144,7 @@ class RuleController extends Controller
          //Version::model()->rollback($id,object)
          $this->redirect(array('/project/view/tab/rules/id/'.$project));
         }
+        
         
         
 	/**

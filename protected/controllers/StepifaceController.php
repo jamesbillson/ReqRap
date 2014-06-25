@@ -32,7 +32,7 @@ class StepifaceController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('associate','create','update','createinline','delete'),
+				'actions'=>array('unlink','associate','create','update','createinline','delete'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -185,7 +185,15 @@ class StepifaceController extends Controller
 	}
         
 	
-        
+         public function actionUnlink($id,$ucid)
+	
+        {
+            $project=Yii::App()->session['project'];
+            $model=Stepiface::model()->findByPK($id);
+            $version=Version::model()->getNextNumber($project,15,3,$model->id,$model->stepiface_id);
+            $this->redirect(array('/usecase/view/id/'.$ucid));
+                
+	} 
 
 	
         public function actionDelete($id)

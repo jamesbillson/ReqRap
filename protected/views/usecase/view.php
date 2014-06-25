@@ -176,9 +176,10 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                   </td>
               <td>
                 <?php if($permission){ ?>
-                <a href="/rule/delete/id/<?php echo $item['id'];?>/ucid/<?php echo $model->id;?>"><i class="icon-remove-sign text-error" rel="tooltip" title="Delete"></i></a> 
+                <a href="/steprule/unlink/id/<?php echo $item['xid'];?>/ucid/<?php echo $model->usecase_id;?>"><i class="icon-link text-error" rel="tooltip" title="Unlink this rule"></i></a> 
                 <a href="/rule/update/id/<?php echo $item['id'];?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
-             <?php } ?> 
+                
+                    <?php } ?> 
               </td>
          
         <?php endforeach ?>       
@@ -195,7 +196,6 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
    
        <?php 
 $interfaces = Iface::model()->getIfaces($model->usecase_id); // get the requirements with answers
-//$interfaces = Usecase::model()->getLinkedObjects($model->usecase_id,12,15,$model->);
 
 
 $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
@@ -237,7 +237,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
               <td>
                   <?php if($permission){ ?>
 
-                  <a href="/iface/delete/id/<?php echo $item['id'];?>/ucid/<?php echo $model->id;?>"><i class="icon-remove-sign text-error" rel="tooltip" title="Delete"></i></a> 
+                  <a href="/stepiface/unlink/id/<?php echo $item['xid'];?>/ucid/<?php echo $model->usecase_id;?>"><i class="icon-link text-error" rel="tooltip" title="Unlink from Usecase"></i></a> 
                   <a href="/iface/update/id/<?php echo $item['id'];?>/ucid/<?php echo $model->id;?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
              <?php } ?> 
               </td>
@@ -283,7 +283,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
               <td>
                   <?php if($permission){ ?>
 
-                  <a href="/form/delete/id/<?php echo $item['id'];?>/ucid/<?php echo $model->id;?>"><i class="icon-remove-sign text-error" rel="tooltip" title="Delete"></i></a> 
+                  <a href="/stepform/unlink/id/<?php echo $item['xid'];?>/ucid/<?php echo $model->usecase_id;?>"><i class="icon-link text-error" rel="tooltip" title="Unlink from Usecase"></i></a> 
                   <a href="/form/update/id/<?php echo $item['id'];?>/ucid/<?php echo $model->id;?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
              <?php } ?> 
               </td>

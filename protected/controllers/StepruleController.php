@@ -32,7 +32,7 @@ class StepruleController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update','createinline','delete','associate'),
+				'actions'=>array('unlink','create','update','createinline','delete','associate'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -183,7 +183,16 @@ class StepruleController extends Controller
 		));
 	}
 
- 
+ public function actionUnlink($id,$ucid)
+	
+        {
+            $project=Yii::App()->session['project'];
+            $model=Steprule::model()->findByPK($id);
+            $version=Version::model()->getNextNumber($project,16,3,$model->id,$model->steprule_id);
+            $this->redirect(array('/usecase/view/id/'.$ucid));
+                
+	} 
+         
             public function actionDelete($id)
 	{
                $project_id=Yii::App()->session['project'];

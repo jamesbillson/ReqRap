@@ -32,7 +32,7 @@ class StepformController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update','createinline','delete'),
+				'actions'=>array('unlink','create','update','createinline','delete'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -172,7 +172,15 @@ $this->redirect(array('/step/update/flow/'.$flow['id'].'/id/'.$step['id']));
                 
 	}
         
-        
+      public function actionUnlink($id,$ucid)
+	
+        {
+            $project=Yii::App()->session['project'];
+            $model=Stepform::model()->findByPK($id);
+            $version=Version::model()->getNextNumber($project,14,3,$model->id,$model->stepform_id);
+            $this->redirect(array('/usecase/view/id/'.$ucid));
+                
+	}    
 	public function actionIndex()
 	{
 		$dataProvider=new CActiveDataProvider('Stepform');

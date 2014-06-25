@@ -506,7 +506,8 @@ class Usecase extends CActiveRecord
             
             $sql="
             SELECT 
-            `r`.*
+            `r`.*,
+            `x`.id as xid
             FROM `".Version::$objects[$object]."` `r`
             JOIN `step".Version::$objects[$object]."` `x`
             ON `x`.`".Version::$objects[$object]."_id`=`r`.`".Version::$objects[$object]."_id`
@@ -514,7 +515,6 @@ class Usecase extends CActiveRecord
             ON `s`.`step_id`=`x`.`step_id`
             JOIN `flow` `f`
             ON `f`.`flow_id`=`s`.`flow_id`
-
             JOIN `version` `vr`
             ON `vr`.`foreign_key`=`r`.`id`
             JOIN `version` `vx`
@@ -523,8 +523,7 @@ class Usecase extends CActiveRecord
             ON `vs`.`foreign_key`=`s`.`id`
             JOIN `version` `vf`
             ON `vf`.`foreign_key`=`f`.`id` 
-
-WHERE
+            WHERE
             `f`.`usecase_id`=".$id."
         
             AND

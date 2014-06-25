@@ -102,7 +102,8 @@ class Iface extends CActiveRecord
             `i`.`interfacetype_id`,
             `i`.`id`,
             `t`.`name` as type, 
-            `t`.`interfacetype_id` as typenum
+            `t`.`interfacetype_id` as typenum,
+            `x`.`id` as xid
             FROM `iface` `i`
             JOIN `interfacetype` `t` 
             on `i`.`interfacetype_id`=`t`.`interfacetype_id`
