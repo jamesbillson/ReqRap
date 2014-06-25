@@ -11,11 +11,8 @@
 
 	<?php echo $form->textFieldRow($model,'scope',array('class'=>'span5','maxlength'=>100, 'hint' => 'Example: *.*, controller/view, controller/*')); ?>
 
-	<?php echo $form->textFieldRow($model,'exclude',array('class'=>'span5','maxlength'=>100, 'hint' => 'Example: *.*, controller/view, controller/*')); ?>
-
-        <?php echo $form->dropDownListRow($model,'type', Messages::getTypes(), array('class'=>'span5', 'hint' => 'Select validation type')); ?>
-        
-        <div style="display: none;">
+	<?php echo $form->textFieldRow($model,'exclude',array('class'=>'span5','maxlength'=>100, 'hint' => 'Example: *.*, controller/view, controller/*')); ?>       
+        <div>
 	<?php echo $form->textAreaRow($model,'condition',array('rows'=>6, 'cols'=>50, 'class'=>'span8', 'hint' => 'Use php code and always return a boolean value')); ?>
         </div>
 
@@ -30,16 +27,3 @@
 </div>
 
 <?php $this->endWidget(); ?>
-
-<script type="text/javascript">
-    $(function() {
-        
-        $('#Messages_type').change(function(e) {
-            
-            if($(this).val() == 2)
-               $('#Messages_condition').parent('div').slideDown('slow');
-            else
-               $('#Messages_condition').parent('div').slideUp('slow');
-        }).trigger('change'); //trigger change
-    });
-</script>

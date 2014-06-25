@@ -32,11 +32,10 @@ class Messages extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('message, scope, show_once, type', 'required'),
+			array('message, scope, show_once', 'required'),
 			array('show_once', 'numerical', 'integerOnly'=>true),
 			array('message', 'length', 'max'=>255),
 			array('scope, exclude', 'length', 'max'=>100),
-                        array('type', 'in', 'range'=>array_keys(self::getTypes()),'allowEmpty'=>false),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('id, message, scope, exclude, condition, show_once', 'safe', 'on'=>'search'),
@@ -135,7 +134,6 @@ class Messages extends CActiveRecord
             
             $alerts_limit = min(2, count($messages)); //number of alters to display on a page
             
-            $count = 1;
             foreach($messages as $message) {
                 
                 /*$alert_messages[] = array(
@@ -149,10 +147,8 @@ class Messages extends CActiveRecord
                     $ids[] = $message->id;
                 }
                 
-                if($count >= $alerts_limit)
+                if(count($alert_messages) >= $alerts_limit)
                     break;
-                
-                $count++;
             }
             
             if($alert_messages) {
@@ -172,10 +168,10 @@ class Messages extends CActiveRecord
 
     $str = preg_replace('/\*\//', Yii::app()->controller->id . '/', $message->scope);
     $str = preg_replace('/\*/', Yii::app()->controller->action->id, $str);
-
+    
     if (strpos($str, Yii::app()->controller->id . '/' . Yii::app()->controller->action->id) !== FALSE
             && ($message->show_once < 1 || ($message->show_once && $message->userMetas[0]->has_viewed < 1))
-            && ($message->type != 2 || ($message->type == 2 && self::runCode($message->condition)))
+            && (($message->condition=='') || (!isset($message->condition)) || (self::runCode($message->condition)))
     ) {
 
       if (!$message->userMetas[0]->has_viewed) //prevent write to database if the flag is already set
