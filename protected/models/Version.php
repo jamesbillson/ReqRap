@@ -67,7 +67,7 @@ class Version extends CActiveRecord {
         1 => array('prepend'=>'BR','padding'=>3), // whether a object needs its number offset on import
         2 => array('prepend'=>'UF','padding'=>3),// need to handle the Type number
         3 => array('prepend'=>'NONE','padding'=>0),
-        4 => array('prepend'=>'NONE','padding'=>0),
+        4 => array('prepend'=>'Actor','padding'=>0),
         5 => array('prepend'=>'PA','padding'=>0),
         6 => array('prepend'=>'OB','padding'=>3),
         7 => array('prepend'=>'NONE','padding'=>3),
@@ -80,7 +80,7 @@ class Version extends CActiveRecord {
         14 => array('prepend'=>'NONE','padding'=>0),
         15 => array('prepend'=>'NONE','padding'=>0),
         16 => array('prepend'=>'NONE','padding'=>0),
-        17 => array('prepend'=>'NONE','padding'=>3),
+        17 => array('prepend'=>'Section ','padding'=>0),
         18 => array('prepend'=>'NONE','padding'=>3),
     );
       
@@ -334,9 +334,9 @@ class Version extends CActiveRecord {
         AND `v`.`active`=1 
         AND `v`.`object`=" . $object . "
         AND `v`.`release`=" . $release ;    
-        } ELSE {
+        } ELSE {// this is an interface or a usecase, so needs a two stage query.
          if($object==12) $parent=13;
-         if ($object==10) $parent=5;// NOT A USECASE OR AN INTERFACE
+         if ($object==10) $parent=5;
         
         $sql = "
         SELECT `r`.*,

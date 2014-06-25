@@ -27,7 +27,8 @@
 
    		
 
-	
+	<?php echo $form->hiddenField($model,'photo_id'); ?>
+		
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'name'); ?>

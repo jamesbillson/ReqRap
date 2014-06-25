@@ -1,4 +1,9 @@
+<?php
+$link=Yii::App()->session['release'].'_3_'.$model->rule_id;
+ echo $this->renderPartial('/project/head',array('tab'=>'forms'));
 
+$permission=(Yii::App()->session['permission']==1)?true : false; 
+?>
 
 <h1>View Form Field <?php echo $model->name; ?></h1>
 <h1><a href="/project/view/tab/rules/id/<?php echo $model->form->project->id;?>"><?php echo $model->form->project->name;?></a></h1>

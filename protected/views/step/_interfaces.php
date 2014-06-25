@@ -4,7 +4,7 @@
                             foreach ($links as $link) {
                                 ?>
                                 <a href="/iface/view/id/<?php echo $link['iface_id']; ?>"> UI-<?php echo str_pad($link['number'], 4, "0", STR_PAD_LEFT); ?>  </a>
-                                <?php echo $link['name']; ?> <a href="/stepiface/delete/id/<?php echo $link['xid']; ?>"><i class="icon-remove-sign"></i></a><br />
+                                <?php echo $link['name']; ?> <a href="/stepiface/delete/id/<?php echo $link['xid']; ?>"><i class="icon-link text-error" rel="tooltip" title="Unlink this interface"></i></a><br />
                             <?php } ?>
                             <br />
 

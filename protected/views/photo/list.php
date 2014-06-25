@@ -1,6 +1,6 @@
-
 <?php 
-echo $this->renderPartial('/project/head',array('tab'=>'usecases')); 
+$link=Yii::App()->session['release'].'_11_0';
+echo $this->renderPartial('/project/head',array('tab'=>'interfaces', 'link'=>$link)); 
 $images=Photo::model()->getProjectImages();
 $permission=Yii::App()->session['permission'];
     ?>

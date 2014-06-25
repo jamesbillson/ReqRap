@@ -214,7 +214,7 @@ if(!empty($bids)) {
      $this->widget('bootstrap.widgets.TbMenu', array(
     'type'=>'list',
     'items'=>array(
-        array('label'=>'Requirements', 'icon'=>'star-empty', 'url'=>array('project/myrequirements')),
+        array('label'=>'Applications', 'icon'=>'star-empty', 'url'=>array('project/myrequirements')),
       
        ),
     

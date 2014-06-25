@@ -1,3 +1,10 @@
+<?php 
+$link=Yii::App()->session['release'].'_7_'.$model->object_id;
+echo $this->renderPartial('/project/head',array('tab'=>'objects','link'=>$link));
+
+
+$permission=(Yii::App()->session['permission']==1)?true : false; 
+?>
 
 <h1>View Object Property <?php echo $model->name; ?></h1>
 <h1><a href="/project/view/tab/rules/id/<?php echo $model->object->project->id;?>"><?php echo $model->object->project->name;?></a></h1>

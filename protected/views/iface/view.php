@@ -16,7 +16,9 @@ echo $this->renderPartial('/project/head',array('tab'=>'usecases','link'=>$link)
  if($type['interfacetype_id']==$model->interfacetype_id)  echo $type['name']; 
 endforeach;
 ?>
-<br /><br />
+<br /><strong>Interface description: </strong>
+<?php echo $model->text;?>
+<br />
 <?php
 //IF there is no photo
 //Form to add photos
@@ -78,7 +80,7 @@ array(
         <img src="<?php echo $src ?>"/>
       </div>
       <div style="float:left;margin-top: 50px;">
-        <a href="<?php echo Yii::app()->baseUrl?>/iface/update/ucid/0/id/<?php echo $model->id;?>"><i class="icon-remove-sign" rel="tooltip" title="Remove"></i>Remove</a> <br />
+        <a href="<?php echo Yii::app()->baseUrl?>/iface/update/ucid/0/id/<?php echo $model->id;?>"><i class="icon-link text-error" rel="tooltip" title="Unlink this image"></i>Unlink</a> <br />
     <a href="<?php echo Yii::app()->baseUrl?>/photo/update/id/<?php echo $image->id;?>"><i class="icon-edit" rel="tooltip" title="Remove"></i>Edit</a> 
     
     
@@ -157,7 +159,7 @@ $src = Yii::app()->easyImage->thumbSrcOf(
 } 
 ?>
 
-<?php echo $model->text;?>
+
 </div>
 <script type="text/javascript">
     $(document).ready(function(){

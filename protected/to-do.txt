@@ -41,9 +41,6 @@ Order/re-order of:
 
 Project Status - if its 'finished' the draft release doesn't show.
 
-
-Photo import - not currently handled.  Needs to make a copy of the image files.
-
 Number displayed at the top of the add simple screen is incorrect, and probably un-necessary.
 
 ## PHOTOS AND PROJECT DELETE

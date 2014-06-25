@@ -63,11 +63,11 @@ if (!empty(Yii::app()->user->id) || !empty(Yii::app()->user->company_id)){
                                                         array('label'=>'Companies', 'url'=>'/company/mycompanies'),
                                                         
 				)),
-                             // Builder Menu
+                             // Analyst Menu
                             array('label'=>'Projects',
                                         'visible'=>!Yii::app()->user->isGuest && User::model()->myCompanyType()==1,
                                         'items'=>array(
-                                                         array('label'=>'Projects', 'url'=>'/project/myprojects'),
+                                                         array('label'=>'Projects', 'url'=>'/project/myrequirements'),
                                                         array('label'=>'Library', 'url'=>'/library/view'),
 				)),
          
@@ -80,14 +80,14 @@ if (!empty(Yii::app()->user->id) || !empty(Yii::app()->user->company_id)){
                                                         array('label'=>'Library', 'url'=>'/library/view'),
                                                         
 				)),
-                            
+                            /*
                               array('label'=>'Costs',
                                            'visible'=>!Yii::app()->user->isGuest && User::model()->myCompanyType()==1,
                                              'items'=>array(
                                                         array('label'=>'Upload Costs', 'url'=>'/cost/upload'),
                                                         array('label'=>'Allocate Costs', 'url'=>'/cost/mycosts'),
 				)),
-                            
+                            */
                             
 			),
 		),

@@ -1,5 +1,6 @@
 <?php 
-echo $this->renderPartial('/project/head',array('tab'=>'details'));
+$link=Yii::App()->session['release'].'_17_'.$model->category_id;
+echo $this->renderPartial('/project/head',array('tab'=>'category','link'=>$link));
 $permission=(Yii::App()->session['permission']==1)?true : false; 
 ?>
    

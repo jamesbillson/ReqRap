@@ -17,7 +17,7 @@ $permission=(Yii::App()->session['permission']==1)?true : false;
 
 
 $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
-    'title' => 'Object:'.$model->name,
+    'title' => 'Object: '.$model->name,
     'headerIcon' => 'icon-user',
     // when displaying a table, if we include bootstra-widget-table class
     // the table will be 0-padding to the box

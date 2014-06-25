@@ -2,8 +2,9 @@
 <?php 
 $link=Yii::App()->session['release'].'_0_0';
 if (!isset($tab)) $tab='usecase';
-echo $this->renderPartial('/project/head',array('tab'=>$tab,'link'=>$link)); ?>
-
+echo $this->renderPartial('/project/head',array('tab'=>$tab,'link'=>$link)); 
+if ($tab=='photos') $tab='interfaces';
+?>
  
 <?php // if this company project owner is current viewer
   
