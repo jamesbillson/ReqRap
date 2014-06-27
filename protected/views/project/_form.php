@@ -54,11 +54,7 @@ If (User::model()->myCompanyType()==3){
 		<?php echo $form->textArea($model,'description',array('size'=>60,'maxlength'=>255)); ?>
 		<?php echo $form->error($model,'description'); ?>
 	</div>
-	<div class="row">
-		<?php echo $form->labelEx($model,'budget'); ?>
-		<?php echo $form->textField($model,'budget',array('size'=>10,'maxlength'=>12)); ?>
-		<?php echo $form->error($model,'budget'); ?>
-	</div>	
+	
 
         
         

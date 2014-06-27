@@ -301,29 +301,34 @@ class UserController extends Controller
      Yii::app()->user->logout();
         //check the uuencoded password string.
         $salt = urldecode($id); 
-        $newaccount = User::model()->find("salt = '".$salt."'");
-        if (!isset($newaccount->id))  $this->redirect(array('site/fail/nomatch'));
+        $model = User::model()->find("salt = '".$salt."'");
+        if (!isset($model->id))  $this->redirect(array('site/fail/nomatch'));
         // there is a matching user.
         // model loads the existing user
-        $model=$this->loadModel($newaccount->id);
+        //$model=$this->loadModel($newaccount->id);
 
         if(isset($_POST['User']))
             // if the form has been submitted
         {   
-        if ($_POST['User']['password']==$_POST['User']['password2'])
+        if ($_POST['User']['password']==$_POST['User']['password2']){
             $model->scenario = 'update';
+            $model->type=1;
             $model->firstname=$_POST['User']['firstname'];
             $model->lastname=$_POST['User']['lastname'];
             $model->password=$_POST['User']['password'];
             $model->salt = $model->generateSalt();
                         
-                if($model->save()){
-                $identity = new UserIdentity($model->email, $model->password);
-                $identity->setId($model->id);
-                $identity->errorCode = UserIdentity::ERROR_NONE;
-                Yii::app()->user->login($identity, (Yii::app()->params['loggedInDays'] * 60 * 60 * 24 ));
-                $this->redirect(array('/company/mycompany'));      
-                  }
+            if($model->save()){
+         
+            $identity = new UserIdentity($model->email, $model->password);
+            $identity->setId($model->id);
+            $identity->errorCode = UserIdentity::ERROR_NONE;
+            Yii::app()->user->login($identity, (Yii::app()->params['loggedInDays'] * 60 * 60 * 24 ));
+            
+            $this->redirect(array('/company/mycompany'));      
+        }
+        
+            }
         
                
         } 

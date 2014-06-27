@@ -1,4 +1,4 @@
-<?php $canToggleTender = isset($canToggleTender)?$canToggleTender:0 ?>
+
 
 <div class="form">
 	<div class="row">
@@ -14,28 +14,23 @@
 
 	    <p>Choose an existing contact:<p>
 	 	
-	 	<?php 
+                    <?php 
 			$followers = Contact::model()->getNonFollowers($fk,$type);
 			//print_r($models);
 			$data = array();
 			foreach ($followers as $follower)
-				$data[$follower['id']] = $follower['firstname'] . ' '. $follower['lastname'];     
-			
+			$data[$follower['id']] = $follower['firstname'] . ' '. $follower['lastname'];     
 			echo $form->dropDownListRow($model, 'contact_id', $data ,array('prompt' => 'Select'));?>
    
                     
-                    <?php if($canToggleTender==1){ // user can pick between tenderer and follower
-	    		$type = array('0'=>'Consultant','1'=>'Tenderer');
+                    <?php  // user can pick between tenderer and follower
+	    		$type = array('0'=>'Approver','1'=>'Contributor','2'=>'Tester');
 	    		echo $form->dropDownListRow($model, 'tenderer', $type);
-                          $upload = array('0'=>'View Only','1'=>'Upload');
-                echo $form->dropDownListRow($model, 'upload', $upload);
-                        
-		} ?>
+                        $upload = array('0'=>'View Only','1'=>'Document Upload');
+                        echo $form->dropDownListRow($model, 'upload', $upload);
+                       ?>
 
-            <?php if($canToggleTender==2){
-	    		echo $form->hiddenField($model,'tenderer',array('value'=>1));
-                        echo $form->hiddenField($model,'upload',array('value'=>0));
-		} ?>
+
                 
 	    <div class="form-actions">
 	        <?php $submit = $model->isNewRecord ? 'Create' : 'Save' ?>
@@ -47,7 +42,7 @@
 </div>
 <!-- form -->
 <div class="row">
-    <a href="contact/createfollow?id=<?php echo $fk; ?>&type=<?php echo $type; ?>">Create contact and invite</a>
+    <a href="contact/createfollow?id=<?php echo $fk; ?>">Create contact and invite</a>
 </div>
 
 

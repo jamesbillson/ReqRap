@@ -1,4 +1,4 @@
-
+<?php echo $this->renderPartial('/project/head'); ?>
 
 <h3><?php echo CHtml::encode($model->name); ?></h3>
 <div class="view">
@@ -80,62 +80,3 @@ $this->endWidget();
 endif;
 ?>
 
-<h3>Bids</h3>
-<?php 
-
-$data = Package::model()->getSubbieBids($model->id);
-
-if (count($data)):
-
-
-    $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
-        'title' => 'Bids',
-        'headerIcon' => 'icon-briefcase',
-        // when displaying a table, if we include bootstra-widget-table class
-        // the table will be 0-padding to the box
-        'htmlOptions' => array('class'=>'bootstrap-widget-table')
-    ));
-
-?>
-
-<table class="table">
-    <thead>
-        <tr>
-            <th>Project</th>   
-            <th>Date</th>
-            <th>Status</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    
-    <tbody>
-
-        <?php foreach($data as $item):?>
-        <tr class="odd"> 
-            <td>
-               <a href="/package/view/id/<?php echo $item['packid'];?>/tab/subbies"> <?php echo $item['projname']." - ".$item['packname'] ;?></a>
-            </td>    
-            <td>   
-                <?php echo $item['modified_date'];?>
-            </td>
-            <td>   
-               <?php //echo $item[''];?>
-            </td>          
-            <td>
-             </td>
-        </tr>
-       <?php endforeach; ?>
-    </tbody>
-</table>
-
-<?php
-$this->endWidget();
-else:
-echo 'No bids';
-endif;
-
-
-
-
-
-?>

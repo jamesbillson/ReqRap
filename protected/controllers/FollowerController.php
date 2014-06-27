@@ -300,8 +300,7 @@ class FollowerController extends Controller
             Follower::model()->sendAcceptConfirm($follower->id);
             
             
-           if ($follower->type==1) $this->redirect(array('/project/view','id'=>$follower->foreign_key,'tab'=>'documents'));
-           if ($follower->type==2) $this->redirect(array('/package/view','id'=>$follower->foreign_key,'tab'=>'documents'));
+   $this->redirect(array('/project/project','id'=>$follower->foreign_key));
         }
            //send a welcome email
             //send an email to the inviter to say they have joined.

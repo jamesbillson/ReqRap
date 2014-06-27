@@ -1,6 +1,6 @@
 
 <?php 
-if (!isset($tab)) $tab='details';
+if (!isset($tab)) $tab='usecases';
 echo $this->renderPartial('/project/head',array('tab'=>$tab)); ?>
 
  
@@ -27,6 +27,8 @@ $active['documents']=FALSE;
 $active['followers']=FALSE;
 $active['settings']=FALSE;
 $active['notes']=FALSE;
+$active['todo']=FALSE;
+$active['walkthru']=FALSE;
 
  $active[$tab]=TRUE;
 
@@ -58,7 +60,16 @@ $active['notes']=FALSE;
             'visible' => $owner,
             'content' => $this->renderPartial('_notes',
                     compact('model'),true,false),'active'=>$active['notes']);
-
+        $tabs[] = array('id' => 'todo',
+            'label' => 'To Do',
+            'visible' => $owner,
+            'content' => $this->renderPartial('_todo',
+                    compact('model'),true,false),'active'=>$active['todo']);
+                $tabs[] = array('id' => 'walkthru',
+            'label' => 'Walkthru',
+            'visible' => $owner,
+            'content' => $this->renderPartial('_walkthru',
+                    compact('model'),true,false),'active'=>$active['walkthru']);
 ?>
 <?php  $this->widget('bootstrap.widgets.TbTabs', array(
     'id' => 'mytabs',

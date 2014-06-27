@@ -20,23 +20,23 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
             </thead>
             
             <tbody>
-            <?php foreach($data as $item):
-              if($item->object>0)  {
-                  $object=Version::model()->instanceName($item->object, $item->instance);
-                                } ?>
+            <?php foreach($data as $item):?>
+             
                 <tr class="odd">  
                     <td>    
                         <b>
                         <?php 
                         echo $counter.'. '.$item['subject'];
-                        if($item->object>0)
-                        {
+                         if($item->object>0 && $item->instance>0)  {
+                  $object=Version::model()->instanceName($item->object, $item->instance);
+                               
                         ?> 
                             <a href="/<?php echo Version::$objects[$item->object]; ?>/view/id/<?php echo $item->instance; ?>">
                             <?php echo $object['number'].' '.$object['name'];?>
                             </a>    
                        <?php } ELSE {
-                         echo ' - General';   
+                         echo ' - General';
+                         if($item->object>0) echo ' ('.Version::$objects[$item->object].')';
                         }
                         ?>
                         </b>

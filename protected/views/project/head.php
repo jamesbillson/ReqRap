@@ -23,10 +23,7 @@ if(isset(Yii::App()->session['project'])) {
 ?>
 
 <table><tr><td>
-    <h1> 
-    <a href="/project/view/tab/<?php echo $tab; ?>"> 
-    
-       <?php if ($no_project) echo $project->name  ; ?></a>  </h1> 
+    <h1> <?php if ($no_project) echo $project->name  ; ?></h1> 
        
       </td>
         <td>  <?php  if(isset($currentrelease) && $release != $currentrelease)   {

@@ -69,7 +69,7 @@ public function actionCreate($id)
                    $model->release_id=$release;
                     if($model->save())
                     {
-                    if($model->object == 0) $this->redirect(array('/project/view'));    
+                    if($model->object == 0) $this->redirect(array('/project/view/tab/usecases'));    
                         if($model->object >0) {
                             if($model->instance == 0) 
                             {    
@@ -116,7 +116,7 @@ public function actionCreate($id)
     $instance=$model->instance;
     $model->delete();
     
-        $this->redirect('/note/view/id/'.$release.'_'.$object.'_'.$instance);
+        $this->redirect('/project/project/',array('tab'=>'notes'));
     
   }
 

@@ -1,12 +1,3 @@
-PRE DEMO Changes
-----------------------------------------
-
-Index page is messed up 
-
-   - change Requirements to Applications
-
-
-----------------------------------------
 
 Clean up all interfaces for each object
 
@@ -53,31 +44,24 @@ When the project is deleted, delete the files that have that ID in their filenam
 Use a Meta approach - maybe with the content links below. the string could be release_type_objectid
 then a link router can bust that apart and get the related object view.
 
-## CONTENT LINKS
-need to put links to interfaces mentioned in rules and steps.  Use http link using a routing table that has
-object type, object id, release, UNIQUE string.
+
 
 
 
 FEATURES
 
 ### PROJECT
-Need a flag for auto-re-numbering.  If the project has been released, then the numbering should stop re-numbering.
+Need a flag for auto-re-numbering.  
+If the project has been released, then the numbering should stop re-numbering.
 But add an explicit setting.
 
 ### ACTOR
-Delete an actor either from a use case, or from a project requires you to move their steps to another actor.
+Delete an actor either from a use case, or from a project requires 
+you to move their steps to another actor.
 Need to create the form to re-assign them.
 
-### USECASE
-Put 'This use case describes the process of:' in the system, 
-then we can take the same thing and say 'this test case verifies the process of:'
-Make this configurable for the project, e.g. have a 'use case description template', 
-and a 'test case description template' - use a meta table.
-Option to copy a use case to the same, or other package.  E.g. a 'Create/Edit' stub could be replicated for different objects. 
+### TO DO
 
-
-Notes field, 
 To do which causes a flag.
 Maturity field, or this could be stored in the version? there is a status field there.
 Create is immediately 'initial', then a little button in the header to make
@@ -87,9 +71,6 @@ Create is immediately 'initial', then a little button in the header to make
 Tags on library items
 Search
 Classifications
-
-### OBJECT
-Potentially objects could be selected to create Create, Edit and Delete usecases from templates?
 
 ### TRACEABILITY
 
@@ -105,20 +86,14 @@ Company logo
 have an approver switch and a circulation switch so they print out in a table on the document.
 also an edit switch, we already have upload.
 
-### TEST RUNS
-create the first test run when the project gets switched to testing.
+Roles
 
-### NON FUNCTIONAL REQ's.
+Analyst – can edit requirements
+Tester – can run test cases.
+Client/approver – can sign off.
+Collaborator – Can view only.
 
-Rules - Text needs to accept some formatting - bullets, line breaks.
-Rules - health check
-    - number of rules not used.
-Rules - show deleted rules ?
-
-
-
-
-
+If you are the analyst (or any analyst employee) you can invite the other types.
 
 
 ## VERSION CONTROL ###
