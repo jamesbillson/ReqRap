@@ -176,10 +176,12 @@ Yii::app()->end();
 }
 
 public function actionProcess() {
-    
-    if(!isset($_GET['ids']))
-        exit;
-    
-    UserMeta::model()->updateAll(array('has_viewed' => 1, 'has_acknowledged' => 1), 'user_id = '.Yii::app()->user->id .' AND alert_messages_id IN ('. $_GET['ids'] .')');
-}
+
+    if (!isset($_GET['ids']))
+      exit;
+    $msgIds = explode(',', $_GET['ids']);
+    foreach ($msgIds as $msgId) {
+      UserMeta::createUserMeta($msgId, 1);
+    }
+  }
 }

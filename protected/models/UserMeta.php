@@ -101,4 +101,16 @@ class UserMeta extends CActiveRecord
 	{
 		return parent::model($className);
 	}
+  
+   public static function createUserMeta($msgId, $hasAcknowledge) {
+    $userMeta = new UserMeta;
+    $userMeta->alert_messages_id = $msgId;
+    $userMeta->user_id = Yii::app()->user->id;
+    $userMeta->has_viewed = 1;
+    $userMeta->has_acknowledged = $hasAcknowledge;
+    if ($hasAcknowledge == 1) {
+      UserMeta::model()->deleteAll("user_id = ".Yii::app()->user->id." and alert_messages_id=$msgId");
+    }
+    $userMeta->save();
+  }
 }

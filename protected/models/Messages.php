@@ -118,45 +118,34 @@ class Messages extends CActiveRecord
             );
         }
         
-        public static function getMessage() {
-            
-            $ids = $alert_messages = array();
-            
-            //Messages that belong to the user and have not been acknowledged
-            $messages = Messages::model()->with(
-                    array('userMetas' => 
-                        array('joinType' => 'JOIN')))->findAll(
-                                array(
-                                    'condition' => 'userMetas.user_id = :user_id AND userMetas.has_acknowledged = 0',
-                                    'params' => array(
-                                        ':user_id' => Yii::app()->user->id)
-            ));
-            
-            $alerts_limit = min(2, count($messages)); //number of alters to display on a page
-            
-            foreach($messages as $message) {
-                
-                /*$alert_messages[] = array(
-                    'message' => $message->message,
-                    'show' => self::checkVisibility($message->scope)
-                );*/
-                
-                //set up the message in session
-                if(self::checkVisibility($message)) {
-                    $alert_messages[] = $message->message;
-                    $ids[] = $message->id;
-                }
-                
-                if(count($alert_messages) >= $alerts_limit)
-                    break;
-            }
-            
-            if($alert_messages) {
-                Yii::app()->user->setFlash('info', '<i class="icon-info-sign"></i>'.implode('<br/><i class="icon-info-sign"></i>', $alert_messages));
-                Yii::app()->clientScript->registerScript('alert_message_ids', 'var alert_message_ids = "'. implode(',', $ids) .'";');
-            }
-            //return $alert_messages;
+ public static function getMessage() {
+
+    $ids = $alert_messages = array();
+
+    if (isset(Yii::app()->user->id)) {
+      $criteria = new CDbCriteria;
+      $criteria->join = "LEFT JOIN user_meta a ON t.id = a.alert_messages_id and a.user_id =:user_id";
+      $criteria->condition = "a.id is null";
+      $criteria->params = array(':user_id' => Yii::app()->user->id);
+      $messages = Messages::model()->findAll($criteria);
+      $alerts_limit = min(5, count($messages)); //number of alters to display on a page
+
+      foreach ($messages as $message) {
+        // set up the message in session
+        if (self::checkVisibility($message)) {
+          $alert_messages[] = $message->message;
+          $ids[] = $message->id;
         }
+
+        if (count($alert_messages) >= $alerts_limit)
+          break;
+      }
+      if ($alert_messages) {
+        Yii::app()->user->setFlash('info', '<i class="icon-info-sign"></i>' . implode('<br/><i class="icon-info-sign"></i>', $alert_messages));
+        Yii::app()->clientScript->registerScript('alert_message_ids', 'var alert_message_ids = "' . implode(',', $ids) . '";');
+      }
+    }
+  }
         
         //checks the visiblity of message for a particular page/scope
   public static function checkVisibility(&$message) {
@@ -170,12 +159,11 @@ class Messages extends CActiveRecord
     $str = preg_replace('/\*/', Yii::app()->controller->action->id, $str);
     
     if (strpos($str, Yii::app()->controller->id . '/' . Yii::app()->controller->action->id) !== FALSE
-            && ($message->show_once < 1 || ($message->show_once && $message->userMetas[0]->has_viewed < 1))
             && (($message->condition=='') || (!isset($message->condition)) || (self::runCode($message->condition)))
     ) {
 
-      if (!$message->userMetas[0]->has_viewed) //prevent write to database if the flag is already set
-        UserMeta::model()->updateByPk($message->userMetas[0]->id, array('has_viewed' => 1));
+      if ($message->show_once==1) //prevent write to database if the flag is already set
+        UserMeta::model()->createUserMeta($message->id,0);
 
       return true;
     }else
@@ -190,21 +178,4 @@ class Messages extends CActiveRecord
             //var_dump(eval($code)); exit;
             return eval($code);
         }
-        
- public static function createUserMeta($user_id) {
-
-    $criteria = new CDbCriteria;
-    $criteria->join = "LEFT JOIN user_meta a ON t.id = a.alert_messages_id and a.user_id =$user_id";
-    $criteria->condition = "a.id is null";
-    $msgIds = Messages::model()->findAll($criteria);
-
-    foreach ($msgIds as $msgId) {
-      $userMeta = new UserMeta;
-      $userMeta->alert_messages_id = $msgId['id'];
-      $userMeta->user_id = $user_id;
-      $userMeta->has_viewed = 0;
-      $userMeta->has_acknowledged = 0;
-      $userMeta->save();
-    }
-  }
 }
