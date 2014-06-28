@@ -1,4 +1,6 @@
-<?php echo $this->renderPartial('/project/head'); ?>
+<?php 
+Yii::App()->session['setting_tab']='walkthru';
+echo $this->renderPartial('/project/head'); ?>
 <h3>Walkthrough</h3>
     
 <?php 
@@ -7,13 +9,17 @@ if(!empty($model->usecase_id))
     $usecase=Usecase::model()->findbyPK($model->usecase_id);
     $title=Version::model()->instanceName(10, $usecase->usecase_id);
 ?>
-	
+	Print a form to accept or not accept this walk through, and provide a comment.
+        
         
 <br>
 <?php 
 $data= Walkthrustep::model()->findAll('walkthrupath_id='.$model->id);
 
 ?>
+<a href="/project/project">Walk through list</a><br />
+
+
 Test Status: <?php //echo Testcaseresult::$status[$result->status]; ?>
 <?php
 
@@ -25,6 +31,17 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
           
            )
 ));?>
+
+<?php
+      $config = array(
+      );
+ 
+      $this->widget('application.extensions.fancybox.EFancyBox', array(
+        'target'=>'a#popup',
+        'config'=>$config,));
+ 
+      
+         ?>
 <table><tr><td>Required Preparation: <?php echo $model->preparation;?></td></tr></table>
            
             
@@ -35,7 +52,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                <thead>
                 <tr>
                     
-                    <th>Name</th>
+                    <th>Number</th>
                     <th>Action</th>
                     <th>Result</th>
                 </tr>
@@ -45,22 +62,39 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
          
             <?php foreach($data as $item):?>
                 <tr class="odd">  
-                    <td>   
+      <td>   
                         <?php echo $item['number'];?>
-                    </td>
+                    </td>      
 
                     <td>   
                         <?php echo $item['action'];?>
                     </td>                  
-                                 <td>   
-                        <?php echo $item['result'];?>
+                     <td>   
+                        <?php 
+                        $link=explode('_',$item['result']);
+                        if($link[0]=='#image#')
+                            {
+                            // its an image
+                          
+                            
+                            echo CHtml::link('view interface',array('/iface/preview/id/'.$link[3].'/release/'.$link[1]),array('id'=>'popup'));
+                           // echo '<a id="popup" href="'.$src.'">view image</a>';
+                            }
+                            if($link[0]=='#form#')
+                            {
+                          echo CHtml::link('view form',array('/form/preview/id/'.$link[3]),array('id'=>'popup'));
+                                   
+             
+                            }   
+                            if($link[0]!='#form#' && $link[0]!='#image#') 
+                            {
+                            echo $item['result'];
+                            }
+                        ?>
                     </td>  
 
                   
-                    <td>
-                        <a href="/teststep/update/id/<?php echo $item['id'];?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
-                        <a href="/teststep/delete?id=<?php echo $item['id'];?>"><i class="icon-remove-sign" rel="tooltip" title="Delete"></i></a> 
-                    </td>
+
                 </tr>
             <?php endforeach ?>
             </tbody>

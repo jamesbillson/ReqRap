@@ -32,10 +32,10 @@ class Follower extends CActiveRecord
         // will receive user inputs.
         return array(
             array('contact_id, type, foreign_key, modified, modified_date', 'required'),
-            array(' contact_id, type, foreign_key, tenderer, confirmed, modified', 'numerical', 'integerOnly'=>true),
+            array(' contact_id, type, foreign_key, role, confirmed, modified', 'numerical', 'integerOnly'=>true),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
-            array('id, contact_id, type, foreign_key, tenderer, confirmed, modified, modified_date', 'safe', 'on'=>'search'),
+            array('id, contact_id, type, foreign_key, role, confirmed, modified, modified_date', 'safe', 'on'=>'search'),
         );
     }
 
@@ -63,7 +63,7 @@ class Follower extends CActiveRecord
             'id' => 'ID',
             'contact_id'=> 'Contact',
             'type' => 'Type',
-            'tenderer' => 'Tenderer',
+            'role' => 'Role',
             'foreign_key' => 'Foreign Key',
             'confirmed' => 'Confirmed',
             'modified' => 'Modified',
@@ -88,7 +88,7 @@ class Follower extends CActiveRecord
         $criteria->compare('foreign_key',$this->foreign_key);
         $criteria->compare('confirmed',$this->confirmed);
         $criteria->compare('modified',$this->modified);
-        $criteria->compare('tenderer',$this->tenderer);
+        $criteria->compare('role',$this->role);
         $criteria->compare('modified_date',$this->modified_date,true);
 
         return new CActiveDataProvider($this, array(
@@ -109,7 +109,7 @@ class Follower extends CActiveRecord
               `f`.`type`=".$type." AND  
                  `f`.`confirmed`=1
              AND
-                 `f`.`tenderer`=0
+                 `f`.`role`=0
             AND
                 `f`.`foreign_key`=".$fk;
         
@@ -122,28 +122,7 @@ class Follower extends CActiveRecord
         return $contacts;
     }
 
-        public function getTenderers($fk,$type)
-    {
-      
-        $sql="SELECT  `c`.`firstname` ,  `c`.`lastname` ,  `c`.`id` ,
-                `c`.`email` ,  `f`.`confirmed` ,  `f`.`id` AS `follower_id`,
-                `u`.`id` AS `user_id`, `k`.`id` as `company_id`, `k`.`name` as `companyname`
-            FROM  `contact`  `c` 
-                JOIN  `follower`  `f` ON  `f`.`contact_id` =  `c`.`id` 
-                JOIN `company` `k` ON `c`.`company_id`=`k`.`id`
-                JOIN  `user`  `u` ON  `u`.`id` =  `c`.`user_id` 
-            WHERE
-                
-                `f`.`tenderer`=1            
-            AND
-                `f`.`foreign_key`=".$fk;
-        //`f`.`type`=".$type."  AND
-        $connection=Yii::app()->db;
-        $command = $connection->createCommand($sql);
-        $contacts = $command->queryAll();
-        
-        return $contacts;
-    }
+
     
     public function getFollowerPendingInvites($fk,$type)
     {
@@ -158,8 +137,7 @@ class Follower extends CActiveRecord
                 `f`.`type`=".$type." 
             AND
                 `f`.`confirmed`=0 
-                        AND
-                `f`.`tenderer`=0 
+                        
             AND            
                 `f`.`foreign_key`=".$fk;
         $connection=Yii::app()->db;
@@ -169,29 +147,7 @@ class Follower extends CActiveRecord
         return $contacts;
     }
    
-        public function getTendererPendingInvites($fk,$type)
-    {
-      
-        $sql="SELECT  `c`.`firstname` ,  `c`.`lastname` ,  `c`.`id` ,
-                `c`.`email` ,  `f`.`confirmed` ,  `f`.`id` AS follower_id
-          
-            FROM  `contact`  `c` 
-                JOIN  `follower`  `f` ON  `f`.`contact_id` =  `c`.`id` 
-            
-            WHERE
-                `f`.`type`=".$type." 
-            AND
-                `f`.`confirmed`=0 
-                 AND
-                `f`.`tenderer`=1 
-            AND            
-                `f`.`foreign_key`=".$fk;
-        $connection=Yii::app()->db;
-        $command = $connection->createCommand($sql);
-        $contacts = $command->queryAll();
-        
-        return $contacts;
-    }
+  
     
     public function sendInvite($id)
     {
@@ -422,7 +378,7 @@ class Follower extends CActiveRecord
     public function getProjectFollowerDetails($project_id)
     {
          //$id is the accepted state where 0=invite, 1=follow   
-        $sql="SELECT  `f`.`upload`,`f`.`id`,`f`.`type` ,`f`.`tenderer`
+        $sql="SELECT  `f`.`upload`,`f`.`id`,`f`.`type` ,`f`.`role`
             FROM  `follower`  `f` 
                 JOIN  `contact`  `c` ON  `f`.`contact_id` =  `c`.`id` 
                 JOIN  `user`  `u` ON  `u`.`username` =  `c`.`email` 
@@ -437,21 +393,4 @@ class Follower extends CActiveRecord
         return $details[0];
     }       
     
-    public function createManualSubcontractor($followid,$packid) // subcontractor_id,package
-    {
-
-      $sql="INSERT INTO follower 
-          (name, description, type, subcontract_id, amount, unit, price)
-          SELECT t.name, t.description,t.type, ".$id." ,0,t.unit ,0
-            FROM `tenderqs` t
-            WHERE 
-            _id=".$packid;
-            $connection=Yii::app()->db;
-            $command = $connection->createCommand($sql);
-            $data = $command->queryAll();
-            
-        
-            } 
-    
-    
-}
+ 

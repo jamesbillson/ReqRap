@@ -6,8 +6,8 @@ if(isset(Yii::App()->session['project'])) {
     $project=Project::model()->findbyPK(Yii::App()->session['project']); 
     $currentrelease=Release::model()->currentRelease();
     $release=Yii::App()->session['release'];
-    $thisrelease=Release::model()->findbyPK($release);
-    $phase = Yii::App()->session['phase']=$thisrelease->status;
+    //$thisrelease=Release::model()->findbyPK($release);
+    //$phase = Yii::App()->session['phase']=$thisrelease->status;
     Project::model()->setPermissions($mycompany, $project,$release, $currentrelease);
     
 } ELSE {

@@ -65,52 +65,14 @@ class ProjectController extends Controller
         $model = $this->loadModel($id);
         $this->render('view',array(
                 'model'=>$model,'tab'=>$tab ));
-        /*$served=0; //variable to stop redirect to fail if a page is served
-        // if the user belongs to the owner company, show one view
-        if(User::model()->myCompany()== $model->company_id)
-        {
-            $served=1;
-            $this->render('view',array(
-                'model'=>$model,'tab'=>$tab
-           
-        } 
-        // see if the current user is a follower.
-        $follower = Follower::model()->getFollowers($id,1);
 
-        foreach($follower as $item)
-        {
-            if ($item['user_id']==Yii::app()->user->id)
-            {
-                $served=1;
-                $this->render('followview',array(
-                    'model'=>$model,'tab'=>$tab
-                ));
-            }     
-        }
-
-        $tenderer = Follower::model()->getTenderers($id,1);
-
-        foreach($tenderer as $item)
-        {
-            if ($item['user_id']==Yii::app()->user->id)
-            {
-                $served=1;
-                $this->render('followview',array(
-                    'model'=>$model,'tab'=>$tab
-                ));
-            }     
-        }
-        
-        if ($served != 1) $this->redirect(array('site/fail/condition/no_access'));
-         * 
-         */
     }
     
        public function actionProject()
     {
      $project=Yii::app()->session['project'];
      $tab=Yii::app()->session['setting_tab'];
-     if(!$tab) $tab='details';
+    
      $model = $this->loadModel($project);
      $this->render('project',array(
             'model'=>$model,'tab'=>$tab ));
@@ -320,64 +282,8 @@ unset(Yii::app()->session['project']);
         $this->render('myrequirements');
     }
         
-    public function actionprojectPackageList()
-    {
-        $id=$_POST['project_id'];
-        $data=Project::model()->projectPackageList($id);
-        $data=CHtml::listData($data,'id','name');
-        foreach($data as $value=>$name)
-        {
-            echo CHtml::tag('option',
-            array('value'=>$value),CHtml::encode($name),true);
-        }
-    }
-                
-    public function actiontendersubmit($id)
-    {
-        //Set the tender answers related to this project 
-        // from this company as status 5 - ie submitted
-        Tenderans::model()->tendersubmit($id);
-        $this->redirect(array('/project/view','id'=>$id,'tab'=>'tenderers'));
-    }
-        
-    public function  actiontemplatepackage($template, $project)
-    {
-        //Copy the template package items to this project
-        Package::model()->addfromtemplate($project, $template);
-        $this->redirect(array('/project/view','id'=>$project,'tab'=>'package'));
-    }
+
     
-     public function  actionpackagescontract($vid,$pid)
-    {
-        //Create contract items from packages
-        Contractitem::model()->addfrompackages($vid,$pid);
-        $this->redirect(array('/variation/view','id'=>$vid));
-    }
-    
-        public function  actionstagescontract()
-    {
-        //Create contract items from packages
-          if(isset($_POST['contractsum']))
-        {
-           $_POST['pid'];
-                     
-             Contractitem::model()->addfromstages($_POST['vid'],$_POST['pid'],$_POST['contractsum']);
-        
-        }
-        
-        $this->redirect(array('/variation/view','id'=>$_POST['vid']));
-    }
-    
-    public function actionResponses($id,$resp)
-    {
-        $model = $this->loadModel($id);
-        $this->render('responses',array(
-            'model'=>$model,'resp'=>$resp));
-    }
-        
-    /**
-     * Manages all models.
-     */
     public function actionAdmin()
     {
         $model=new Project('search');

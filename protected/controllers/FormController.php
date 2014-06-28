@@ -32,7 +32,7 @@ class FormController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update','delete','history','rollback'),
+				'actions'=>array('preview','create','update','delete','history','rollback'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -58,6 +58,16 @@ class FormController extends Controller
         	));
 	}
 	
+        public function actionPreview($id) // Note that this is form_id
+	{
+             	$versions=Version::model()->getVersions($id,2,'form_id');
+                $model=$this->loadModel($versions[0]['id']);
+                $this->layout = 'popup';
+                $this->render('preview',array('model'=>$model,
+			'versions'=>$versions
+        	));
+	}
+        
         public function actionHistory($id) // Note that this is form_id
 	{
              	$versions=Version::model()->getVersions($id,2,'form_id');

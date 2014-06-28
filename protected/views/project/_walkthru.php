@@ -27,16 +27,8 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
     // when displaying a table, if we include bootstra-widget-table class
     // the table will be 0-padding to the box
     'htmlOptions' => array('class'=>'bootstrap-widget-table'),
-       'headerButtons' => array(
-    array(
-        'class' => 'bootstrap.widgets.TbButton',
-        'type' => 'primary', // '', 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
-        'label'=> 'Add Test Case',
-        //'visible'=> $permission,
-        'url'=>'/walkthrupath/create/',
-    ),
-   
-))); 
+  
+        )); 
 ?>
 
 <table class="table">
@@ -83,7 +75,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
       
                     
                     <td>
-                    <a href="/release/delete/id/<?php echo $walkthrupath['id'];?>"><i class="icon-remove-sign text-error" rel="tooltip" title="Remove"></i></a> 
+                    <a href="/walkthrupath/delete/id/<?php echo $walkthrupath['id'];?>"><i class="icon-remove-sign text-error" rel="tooltip" title="Remove"></i></a> 
                                     
                      <a href="/walkthrupath/run/id/<?php echo $walkthrupath['id'];?>"><i class="icon-check" rel="tooltip" title="Run the Test Case"></i></a> 
                   

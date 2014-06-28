@@ -219,18 +219,8 @@ class FollowerController extends Controller
         }
         //check user
         $user = User::model()->findByPk(Yii::app()->user->id);
-        $canToggleTender = false;
-        //if the current user belongs to a PM user and this is a project follower they can invite tenderers.
-        //if this is a package and the user is a builder they can invite a tenderer
-        if(isset($user) && ($user->company->type == 3 && $type==1))
-        {
-            $canToggleTender = 1; // tender is an option
-        }
         
-       if (isset($user) && $type==2 && $user->company->type == 1)// its a package, and this is a builder
-       {
-              $canToggleTender = 2; // tender is the only option
-       }
+       
 
    
        

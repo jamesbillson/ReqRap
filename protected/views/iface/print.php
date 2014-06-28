@@ -16,7 +16,7 @@ if (count($ifacedetails)):
 ?>
 
 <?php foreach($ifacedetails as $ifacedetail):
-    $image=Iface::model()->getCurrentImage($ifacedetail['iface_id']);
+    $image=Iface::model()->getCurrentImage($ifacedetail['iface_id'],Yii::App()->session['release']);
     
     ?>
 <h3> IF-<?php echo str_pad($ifacedetail['number'], 3, "0", STR_PAD_LEFT); ?> <?php echo $ifacedetail['name'];?></h3>

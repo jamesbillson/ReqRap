@@ -2,7 +2,7 @@
 $link=Yii::App()->session['release'].'_11_0';
 echo $this->renderPartial('/project/head',array('tab'=>'interfaces', 'link'=>$link)); 
 $images=Photo::model()->getProjectImages();
-$permission=Yii::App()->session['permission'];
+$permission=(Yii::App()->session['permission']==1)?true : false;
     ?>
 
 <a href="/project/view/tab/interfaces">Back to Interfaces</a>

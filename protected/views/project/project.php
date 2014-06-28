@@ -28,7 +28,7 @@ $active['followers']=FALSE;
 $active['settings']=FALSE;
 $active['notes']=FALSE;
 $active['todo']=FALSE;
-$active['walkthru']=FALSE;
+
 
  $active[$tab]=TRUE;
 
@@ -65,11 +65,7 @@ $active['walkthru']=FALSE;
             'visible' => $owner,
             'content' => $this->renderPartial('_todo',
                     compact('model'),true,false),'active'=>$active['todo']);
-                $tabs[] = array('id' => 'walkthru',
-            'label' => 'Walkthru',
-            'visible' => $owner,
-            'content' => $this->renderPartial('_walkthru',
-                    compact('model'),true,false),'active'=>$active['walkthru']);
+
 ?>
 <?php  $this->widget('bootstrap.widgets.TbTabs', array(
     'id' => 'mytabs',

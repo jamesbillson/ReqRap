@@ -131,10 +131,25 @@ class Project extends CActiveRecord
    
   public function setPermissions($mycompany, $project, $release, $currentrelease)
     {
+    // This is my companies requirements, and the release is current.
+      
+     Yii::App()->session['permission']=($project->company_id==$mycompany && $release==$currentrelease)?1 : 2;
+     // I am a follower of this project my role is view only.
+     // if I'm not in this company, then am I a follower.
+     if($project->company_id!=$mycompany){
+         
+         
+     }
+     // if I'm a follower then what is my role.
+     
      Yii::App()->session['permission']=($project->company_id==$mycompany && $release==$currentrelease)?1 : 2;
      
+     // I am a follower - tester of this project and I can update test runs.
+     
+     // I am an approver and I can update - comments on a walkthrough.
+     
     }
-        
+     
     
     public function projectPackageBudget($id)
     {

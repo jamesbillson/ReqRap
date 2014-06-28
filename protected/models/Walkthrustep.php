@@ -13,7 +13,7 @@ class Walkthrustep extends CActiveRecord
 	{
 
 		return array(
-			array('action, result', 'required'),
+			array('action, result', 'safe'),
 			array('id, action, result', 'safe', 'on'=>'search'),
 		);
 	}

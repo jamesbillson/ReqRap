@@ -98,7 +98,7 @@ class WalkthrupathController extends Controller
 
 	public function actionCreate($id)
 	{
-	Yii::App()->session['release']=$id;
+	$release=Yii::App()->session['release']=$id;
            
             $data = Usecase::model()->getProjectUCs();
 
@@ -110,7 +110,7 @@ class WalkthrupathController extends Controller
                 }
             }
             
-          $this->redirect(array('/project/view/tab/walkthrupaths'));
+          $this->redirect(array('/project/project/'));
             
 	}
 
@@ -127,7 +127,7 @@ class WalkthrupathController extends Controller
             
 if (!empty($mainflow)){
         
-    // Make a TC for this flow.        
+    // Make a Walkthrough for this flow.        
         $walkthrupath=new Walkthrupath;
         $walkthrupath->number=Walkthrupath::model()->getNextNumber($release);
 	$walkthrupath->usecase_id=$id;
@@ -152,21 +152,18 @@ if (!empty($mainflow)){
                   $walkthrustep->save();
                   
                   
-                                    // Get any intefaces, forms and rules.
-            $this->stepForms($step['id'],$walkthrupath_id);    
-            $this->stepRules($step['step_id'],$walkthrupath_id);
-            $this->stepIfaces($step['step_id'],$walkthrupath_id);    
+                // Get any intefaces, forms and rules.
+           $x= $this->stepForms($step['id'],$walkthrupath_id,$x,$release);    
+           $x= $this->stepRules($step['step_id'],$walkthrupath_id,$x,$release);
+           $x= $this->stepIfaces($step['step_id'],$walkthrupath_id,$x,$release);    
              
-              }
-                   
+               }
               }  
-             
-                
-              } ELSE {
+             } ELSE 
+                 {
                         // The case hasn't saved 
                     $this->redirect(array('/site/fail'));
-                 
-              }
+                }
             
  }             
    //Then get each alternate flow.
@@ -212,6 +209,7 @@ if (!empty($all_flows[$i])){
        // Step through them up to the start number.
     foreach($steps as $mainflowstep){
     if ($mainflowstep['number']<=$startstepnumber){
+        $x++;
                          $walkthrustep=new Walkthrustep;
                          $walkthrustep->walkthrupath_id=$walkthrupath_id;
                           $walkthrustep->number=$x;
@@ -226,7 +224,7 @@ if (!empty($all_flows[$i])){
     // THEN GO THROUGH THE ALT FLOW STEPS 
         
         foreach($altflowsteps as $altflowstep){  
-                  $x=$x+1;
+                  $x++;
                   $walkthrustep=new Walkthrustep;
                   $walkthrustep->walkthrupath_id=$walkthrupath_id;
                   $walkthrustep->number=$x;
@@ -237,9 +235,9 @@ if (!empty($all_flows[$i])){
                                       // Get any intefaces, forms and rules.
                   
                   
-            $this->stepForms($altflowstep['id'],$walkthrupath_id);    
-            $this->stepRules($altflowstep['step_id'],$walkthrupath_id);
-            $this->stepIfaces($altflowstep['step_id'],$walkthrupath_id);    
+           $x= $this->stepForms($altflowstep['id'],$walkthrupath_id,$x,$release);    
+            $x= $this->stepRules($altflowstep['step_id'],$walkthrupath_id,$x,$release);
+            $x= $this->stepIfaces($altflowstep['step_id'],$walkthrupath_id,$x,$release);    
              
               }
              
@@ -249,6 +247,7 @@ if (!empty($all_flows[$i])){
                          
              foreach($steps as $mainflowstep){
                 if ($mainflowstep['number']>=$endstepnumber){
+                    $x++;
                          $walkthrustep=new Walkthrustep;
                           $walkthrustep->walkthrupath_id=$walkthrupath_id;
                           $walkthrustep->number=$x;
@@ -279,43 +278,31 @@ if (!empty($all_flows[$i])){
  
  }                       
             
-         
-        
-	/**
-	 * Updates a particular model.
-	 * If update is successful, the browser will be redirected to the 'view' page.
-	 * @param integer $id the ID of the model to be updated
-	 */
+   
 	
  
- private function stepForms($id,$walkthrupath_id)
+ private function stepForms($id,$walkthrupath_id,$x,$release)
  {
-     $x=0;
+     
       $forms=Form::model()->getStepForms($id);
              if (count($forms)){
              foreach($forms as $form){ 
-                      
-                        $formproperties=  Formproperty::model()->getFormProperty($form['form_id']);
-                        if (count($formproperties)){
-                        foreach($formproperties as $property){ 
-                       
-                       $x++;  
-                        $walkthrustep=new Walkthrustep;
-                        $walkthrustep->number=$x;
-                        $walkthrustep->walkthrupath_id=$walkthrupath_id;
-                        $walkthrustep->action='Confirm Form Property';
-                        $walkthrustep->result='UF-'.str_pad($form['number'], 4, "0", STR_PAD_LEFT).' '.$form['name'].' - field: '.$property['name'];
-                        $walkthrustep->save();
-                            }
-                          }
-                    }
-                  }
+             
+             $x++;  
+             $walkthrustep=new Walkthrustep;
+             $walkthrustep->number=$x;
+             $walkthrustep->walkthrupath_id=$walkthrupath_id;
+             $walkthrustep->result='#form#_'.$release.'_2_'.$form['form_id'];
+             $walkthrustep->action='UF-'.str_pad($form['number'], 4, "0", STR_PAD_LEFT).' '.$form['name'];
+             $walkthrustep->save();
+                   }
+                }
+                return $x;
  }
  
- private function stepRules($id,$walkthrupath_id)
+ private function stepRules($id,$walkthrupath_id,$x,$release)
  {
-     $x=0;
-      $rules=Rule::model()->getStepRules($id);
+     $rules=Rule::model()->getStepRules($id);
              if (count($rules)){
              foreach($rules as $rule){ 
              
@@ -323,17 +310,18 @@ if (!empty($all_flows[$i])){
               $walkthrustep=new Walkthrustep;
               $walkthrustep->number=$x;
               $walkthrustep->walkthrupath_id=$walkthrupath_id;
-              $walkthrustep->action='Validate Business Rule';
-              $walkthrustep->result='BR-'.str_pad($rule['number'], 4, "0", STR_PAD_LEFT).' '.$rule['name'];
+              $walkthrustep->result=$rule['text'];
+              $walkthrustep->action='BR-'.str_pad($rule['number'], 4, "0", STR_PAD_LEFT).' '.$rule['name'];
               $walkthrustep->save();
                           
                     }
                   }
+                  return $x;
  }
  
- private function stepIfaces($id,$walkthrupath_id)
+ private function stepIfaces($id,$walkthrupath_id,$x,$release)
  {
-     $x=0;
+    
       $ifaces=  Iface::model()->getStepIfaces($id);
              if (count($ifaces)){
              foreach($ifaces as $iface){ 
@@ -342,13 +330,14 @@ if (!empty($all_flows[$i])){
                         $walkthrustep=new Walkthrustep;
                         $walkthrustep->number=$x;
                         $walkthrustep->walkthrupath_id=$walkthrupath_id;
-                        $walkthrustep->action='Confirm User Interface';
-                        $walkthrustep->result='IF-'.str_pad($iface['number'], 4, "0", STR_PAD_LEFT).' '
+                        $walkthrustep->result='#image#_'.$release.'_12_'.$iface['iface_id'];
+                        $walkthrustep->action='IF-'.str_pad($iface['number'], 4, "0", STR_PAD_LEFT).' '
                                 . ''.$iface['name'];
                         $walkthrustep->save();
                        
                     }
                   }
+              return $x;
  }
  
  
@@ -377,13 +366,13 @@ if (!empty($all_flows[$i])){
 	 * If deletion is successful, the browser will be redirected to the 'admin' page.
 	 * @param integer $id the ID of the model to be deleted
 	 */
-	public function actionDelete($id,$ucid)
+	public function actionDelete($id)
 	{
 		$model=$this->loadModel($id);
          
                 $model->delete();
-                if ($ucid !=-1) $this->redirect(array('/usecase/view/id/'.$ucid));
-                $this->redirect(array('/project/view/tab/details'));
+               
+                $this->redirect(array('/project/project/'));
 	}
 
 	/**

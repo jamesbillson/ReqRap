@@ -37,6 +37,7 @@ $active['forms']=FALSE;
 $active['structure']=FALSE;
 $active['testcases']=FALSE;
 $active['testruns']=FALSE;
+$active['walkthru']=FALSE;
 
  $active[$tab]=TRUE;
 
@@ -88,17 +89,22 @@ $active['testruns']=FALSE;
             'content' => $this->renderPartial('_structure',
                     compact('model','status'),true,false),'active'=>$active['structure']); 
  
-       $tabs[] = array('id' => 'testcases',
+    $tabs[] = array('id' => 'testcases',
             'label' => 'Test Cases',
            'visible'=> ($phase==2),
             'content' => $this->renderPartial('_testcases',
                     compact('model','status'),true,false),'active'=>$active['testcases']); 
 
-           $tabs[] = array('id' => 'testruns',
+    $tabs[] = array('id' => 'testruns',
             'label' => 'Test Runs',
            'visible'=> ($phase==2),
             'content' => $this->renderPartial('_testruns',
                     compact('model','status'),true,false),'active'=>$active['testruns']); 
+    $tabs[] = array('id' => 'walkthru',
+            'label' => 'Walkthru',
+            'visible' => ($phase==2),
+            'content' => $this->renderPartial('_walkthru',
+                    compact('model'),true,false),'active'=>$active['walkthru']);
 
 ?>
 <?php  $this->widget('bootstrap.widgets.TbTabs', array(

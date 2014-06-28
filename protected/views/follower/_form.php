@@ -23,9 +23,9 @@
 			echo $form->dropDownListRow($model, 'contact_id', $data ,array('prompt' => 'Select'));?>
    
                     
-                    <?php  // user can pick between tenderer and follower
+                    <?php  // user can pick between approver, contributor and tester
 	    		$type = array('0'=>'Approver','1'=>'Contributor','2'=>'Tester');
-	    		echo $form->dropDownListRow($model, 'tenderer', $type);
+	    		echo $form->dropDownListRow($model, 'role', $type);
                         $upload = array('0'=>'View Only','1'=>'Document Upload');
                         echo $form->dropDownListRow($model, 'upload', $upload);
                        ?>

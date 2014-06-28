@@ -298,9 +298,9 @@ WHERE
 		return $projects;
     }  
     
-         public function getCurrentImage($iface_id)
+         public function getCurrentImage($iface_id,$release)
     {
-        $release=Yii::App()->session['release'];
+        //$release=Yii::App()->session['release'];
           
         $sql="
             SELECT 

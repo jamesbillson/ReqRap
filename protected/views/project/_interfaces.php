@@ -72,7 +72,7 @@ if (count($data)):?>
                     <td>   
                           <?php 
                           
-                          if(!count(Iface::model()->getCurrentImage($item['iface_id']))){ ?>
+                          if(!count(Iface::model()->getCurrentImage($item['iface_id'],Yii::App()->session['release']))){ ?>
                          <i class="icon-picture text-warning" rel="tooltip" title="No Image"></i>
                         <?php
                           }

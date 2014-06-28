@@ -83,7 +83,7 @@ class StepruleController extends Controller
                                 $rule->project_id= Yii::app()->session['project'];
                                 $rule->release_id=Release::model()->currentRelease($rule->project_id);
                                 $rule->text='stub';
-                                $rule->title=$_POST['new_rule'];
+                                $rule->name=$_POST['new_rule'];
                                 $rule->project_id=$project;
 
                                 $rule->save(false);
