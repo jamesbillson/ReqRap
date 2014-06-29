@@ -133,7 +133,7 @@ class Project extends CActiveRecord
     {
     // This is my companies requirements, and the release is current.
       
-     Yii::App()->session['permission']=($project->company_id==$mycompany && $release==$currentrelease)?1 : 0;
+     Yii::App()->session['permission']=($project->company_id==$mycompany)?1 : 0;
      // I am a follower of this project my role is view only.
      // if I'm not in this company, then am I a follower.
      if($project->company_id!=$mycompany){

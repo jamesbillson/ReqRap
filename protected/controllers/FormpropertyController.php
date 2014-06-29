@@ -32,7 +32,7 @@ class FormpropertyController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update','history','delete','rollback','move'),
+				'actions'=>array('preview','create','update','history','delete','rollback','move'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -53,6 +53,16 @@ class FormpropertyController extends Controller
              	$versions = Version::model()->getVersions($id,3);
                 $model=$this->loadModel($versions[0]['id']);
                 $this->render('view',array('model'=>$model,
+			'versions'=>$versions
+        	));
+	}
+
+                public function actionpreView($id) // Note that this is formproperty_id
+	{
+             	$versions = Version::model()->getVersions($id,3);
+                $model=$this->loadModel($versions[0]['id']);
+                $this->layout = 'popup';
+                $this->render('preview',array('model'=>$model,
 			'versions'=>$versions
         	));
 	}

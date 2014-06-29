@@ -5,8 +5,9 @@ echo $this->renderPartial('/project/head',array('tab'=>'testcases'));
 
 
 $testruns=Testrun::model()->findAll('testcase_id='.$id);
+Yii::App()->session['setting_tab']='testcases';
 ?>
-
+<a href="/project/view">Back to testcases</a>
 <?php 
 
 
@@ -23,8 +24,8 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
         <th>
     Run   
     </th>
-    <th>Coverage</th>
-    <th>Result</th>
+    <th>Results</th>
+   
 
     <th>
         
@@ -42,7 +43,8 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
              <td>
          
                     Run <?php   echo $testrun['number']; ?>     
-                   </td> 
+             </td> </tr>
+      
                <?php    
             $testresults=Testrun::model()->getTestRun($testrun['id']);  
             $coverage=0;
@@ -54,29 +56,25 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
             if ($testresult['testresult']==2) $passing++;
             if ($testresult['testresult']!=4) $coverage++;
             if ($testresult['testresult']==3) break;
-                
+            echo '<tr><td></td><td>'.$testresult['action'].'<br>';
+            echo $testresult['result'].'</td><td>';
+               echo Testcaseresult::$status[$testresult['testresult']].'</td></tr>'; 
             }
             $passing = ($passing/count($testresults))*100;
             $coverage = ($coverage/count($testresults))*100;
             //print_r($testresult);
             ?>
-           <td>
+      
+       <tr>
+                   <td>
+            Coverage: <?php   echo $coverage; ?>%     
+           </td>
            
-                    <?php   echo $coverage; ?>%     
-           </td>
            <td>
-             <?php   echo $passing; ?>  %  
+            Pass result: <?php   echo $passing; ?>  %  
            </td>
-            <td>
-                   
-               
-             
-           </td>
-            <td>
-            
-                
-        
-           </td>
+
+
        </tr>
        <?php
         }
@@ -90,5 +88,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
     <?php $this->endWidget(); ?>
 
 
+        
+              
 
 

@@ -5,7 +5,7 @@ class Testcaseresult extends CActiveRecord
 {
 
     
-    public static $status = array(1=>'new', 2=>'running', 3=>'blocked', 4=>'fail',5=>'pass');	
+    public static $status = array(1=>'fail', 2=>'pass', 3=>'blocked', 4=>'not tested');	
       
     
     

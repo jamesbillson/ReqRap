@@ -32,7 +32,7 @@ class RuleController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('unlink','create','update','delete','history','rollback'),
+				'actions'=>array('preview','unlink','create','update','delete','history','rollback'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -55,7 +55,15 @@ class RuleController extends Controller
 			'versions'=>$versions
         	));
 	}
-
+public function actionpreView($id) // Note that this is rule_id
+	{
+             	$versions=Version::model()->getVersions($id,1);
+                $model=$this->loadModel($versions[0]['id']);
+                $this->layout = 'popup';
+                $this->render('preview',array('model'=>$model,
+			'versions'=>$versions
+        	));
+	}
        public function actionHistory($id) // Note that this is rule_id
 	{
              	$versions=Version::model()->getVersions($id,1);

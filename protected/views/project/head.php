@@ -19,8 +19,8 @@ if(isset(Yii::App()->session['project'])) {
 
 
 
-//echo 'permissions '.Follower::$type[Yii::App()->session['permission']].' ('.Yii::App()->session['permission'].')';
-if (Yii::App()->session['permission'] ==0)  $this->redirect(array('site/fail/condition/no_access'));
+//echo 'project is '.Yii::App()->session['project'].' release is '.Yii::App()->session['release'].' permissions '.Follower::$type[Yii::App()->session['permission']].' ('.Yii::App()->session['permission'].')';
+if (Yii::App()->session['permission'] ==0)  $this->redirect(array('site/fail/condition/no_access_head'));
 ?>
 
 <table><tr><td>

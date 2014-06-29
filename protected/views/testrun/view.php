@@ -1,11 +1,25 @@
 <?php
+Yii::App()->session['setting_tab']='testcases';
+echo $this->renderPartial('/project/head');
 
-$data=  Testrun::model()->getTestRun($id);?>
+  $config = array(
+      );
+ 
+      $this->widget('application.extensions.fancybox.EFancyBox', array(
+        'target'=>'a#popup',
+        'config'=>$config,));
+ 
+$data=  Testrun::model()->getTestRun($id);
 
+?>
+<a href="/project/view">Back to Test Cases</a>
 <table> <thead>
     <th>Test Action</th>
     <th>
      Expected Result   
+    </th>
+    <th>
+       Link 
     </th>
     <th>
        Status 
@@ -20,16 +34,45 @@ $data=  Testrun::model()->getTestRun($id);?>
            <?php
             foreach($data as $teststep){
                 $testresult=Testresult::model()->findbyPK($teststep['id']);
-               
-                
             ?>
            <td>
-           
-                    <?php echo $teststep['action'] ; ?>     
+             <?php echo $teststep['action'] ; ?>     
            </td>
            <td>
              <?php echo $teststep['result'] ; ?>  
            </td>
+           
+           
+             <td>   
+                        <?php 
+                        if($teststep['link']!=''){
+                        $link=explode('_',$teststep['link']);
+                        if($link[1]==12)
+                            {
+                            // its an image
+                          
+                            
+                            echo CHtml::link('view interface',array('/iface/preview/id/'.$link[2].'/release/'.$link[1]),array('id'=>'popup'));
+                           // echo '<a id="popup" href="'.$src.'">view image</a>';
+                            }
+                            if($link[1]==3)
+                                //its a form
+                            {
+                          echo CHtml::link('view formproperty',array('/formproperty/preview/id/'.$link[2]),array('id'=>'popup'));
+                             //echo $teststep['link'];      
+             
+                            }   
+                            if($link[1]==1) 
+                            {
+                           echo CHtml::link('view rule',array('/rule/preview/id/'.$link[2]),array('id'=>'popup'));
+                         
+                            }
+                        }
+                        ?>
+                    </td>  
+           
+           
+           
             <td>
                    
                 <?php

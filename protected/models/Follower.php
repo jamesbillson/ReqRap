@@ -106,7 +106,7 @@ class Follower extends CActiveRecord
     {
       
         $sql="SELECT  `c`.`firstname` ,  `c`.`lastname` ,  `c`.`id` ,
-                `c`.`email` ,  `f`.`confirmed` ,  `f`.`id` AS follower_id,
+                `c`.`email` ,  `f`.`confirmed` ,`f`.`role`,  `f`.`id` AS follower_id,
                 `u`.`id` AS user_id
             FROM  `contact`  `c` 
                 JOIN  `follower`  `f` ON  `f`.`contact_id` =  `c`.`id` 
@@ -133,7 +133,7 @@ class Follower extends CActiveRecord
     {
       
         $sql="SELECT  `c`.`firstname` ,  `c`.`lastname` ,  `c`.`id` ,
-                `c`.`email` ,  `f`.`confirmed` ,  `f`.`id` AS follower_id
+                `c`.`email` ,  `f`.`confirmed` , `f`.`role`, `f`.`id` AS follower_id
           
             FROM  `contact`  `c` 
                 JOIN  `follower`  `f` ON  `f`.`contact_id` =  `c`.`id` 

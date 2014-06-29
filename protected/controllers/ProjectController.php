@@ -93,8 +93,9 @@ class ProjectController extends Controller
         
     }
     
-    public function actionView($tab)
+    public function actionView()
     {
+        $tab=Yii::App()->session['setting_tab'];
      $id=Yii::app()->session['project'];
         $model = $this->loadModel($id);
         $this->render('view',array(

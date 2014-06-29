@@ -26,6 +26,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
         <tr>
             <th>Name</th>
             <th>Email</th>
+            <th>Role</th>
             <th>Status</th>
                 <?php if(Yii::App()->session['permission']==1){ ?>  
             <th>Actions</th>
@@ -40,6 +41,9 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                     </td>
                     <td>
                         <?php echo $item['email'];?>
+                    </td>
+                                    <td>
+                        <?php echo Follower::$type[$item['role']];?>
                     </td>
                     <td>   
                         <?php echo $status[$item['confirmed']];?>
@@ -64,6 +68,9 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                     </td>
                     <td>
                         <?php echo $item['email'];?>
+                    </td>
+                    <td>
+                        <?php echo Follower::$type[$item['role']];?>
                     </td>
                     <td>   
                         <?php echo Follower::$followerstatus[$item['confirmed']];?>

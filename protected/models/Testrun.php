@@ -96,6 +96,7 @@ class Testrun extends CActiveRecord
                        `r`.`number`,
                        `s`.`action`,
                        `s`.`result`,
+                       `s`.`link`,
                        `t`.`id`,
                        `t`.`comments`,
                        `t`.`result` as testresult

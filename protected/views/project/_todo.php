@@ -23,7 +23,7 @@ if (count($data)){
 
 
 echo '<br>'.$stub.' of '.count($data).' stub Rules, completeness: '.(100-($stub/count($data))*100).'%';
-echo '<br>Orphans: '.$orphan.', completeness: '.(100-($orphan/count($data))*100).'%';
+echo '<br>Orphans: '.$orphan.', completeness: '.FLOOR(100-($orphan/count($data))*100).'%';
 } else {
     echo 'No Rules';
 }
@@ -52,7 +52,7 @@ endforeach;
 
 
 echo '<br>'.$stub.' of '.count($data).' stub Forms, completeness: '.(100-($stub/count($data))*100).'%';
-echo '<br>Orphans: '.$orphan.', completeness: '.(100-($orphan/count($data))*100).'%';
+echo '<br>Orphans: '.$orphan.', completeness: '.FLOOR(100-($orphan/count($data))*100).'%';
 } else {
     echo 'No Forms';
 }
@@ -79,7 +79,7 @@ endif;
 }
 if($count>0){
 echo '<br>'.$stub.' of '.$count.' Interfaces with no images, completeness: '.(100-($stub/$count)*100).'%';
-echo '<br>Orphans: '.$orphan.', completeness: '.(100-($orphan/$count)*100).'%';
+echo '<br>Orphans: '.$orphan.', completeness: '.FLOOR(100-($orphan/$count)*100).'%';
 } ELSE {
     echo 'No Interfaces';
 }
@@ -90,15 +90,26 @@ echo '<br>Orphans: '.$orphan.', completeness: '.(100-($orphan/$count)*100).'%';
 
 <?php
 $stub=0;
-$data = Object::model()->getProjectObjects();
+$data = Usecase::model()->getProjectUCs();
 if (count($data)){
+       echo 'Stub usecases: <br />';    
 foreach($data as $item):
-$fields=  Objectproperty::model()->getObjectProperty($item['object_id']);
-if(count($fields)==0) $stub++;
+
+    $steps= Usecase::model()->getAllSteps($item['usecase_id']);
+//print_r($steps);
+//echo"--------------<br />";
+if(count($steps)<=1) {
+    $stub++;
+echo '<a href="/usecase/view/id/';
+echo  $item['usecase_id'];
+echo '">';
+echo $item['name']."<br />";
+echo '</a>';
+}
 endforeach;
 
 
-echo '<br>'.$stub.' of '.count($data).' stub Objects, completeness: '.(100-($stub/count($data))*100).'%';
+echo '<br>'.$stub.' of '.count($data).' stub Usecases, completeness: '.FLOOR(100-($stub/count($data))*100).'%';
 } else {
     echo 'No Objects';
 }
@@ -118,7 +129,7 @@ if (count($data)){
 
        if(count($uses)==0)$orphan++;
         }
-echo '<br>Orphans: '.$orphan.', completeness: '.(100-($orphan/count($data))*100).'%';
+echo '<br>Orphans: '.$orphan.', completeness: '.FLOOR(100-($orphan/count($data))*100).'%';
 } else {
     echo 'No Rules';
 }

@@ -111,15 +111,15 @@ class TestcaseController extends Controller
 
 	public function actionCreate($id)
 	{
-		Yii::App()->session['release']=$id;
-            
+		
+            Yii::App()->session['release']=$id;
 
             $data = Usecase::model()->getProjectUCs();
 
             if(count($data)){
                 
                 foreach($data as $usecase){
-             $this->actionMake($usecase['id']);
+             $this->actionMake($usecase['id'],$id);
 
                 }
                 
@@ -127,18 +127,19 @@ class TestcaseController extends Controller
             
             
             //Display the Test Case page at the end.
-            
-          $this->redirect(array('/project/view/tab/testcases'));
+           Yii::App()->session['setting_tab']='testcases'; 
+          $this->redirect(array('/project/view/'));
             
             
             
 	}
 
         
-        public function actionMake($id) // this is the db id
+        public function actionMake($id,$release) // this is the db id
 	{
-$project=Yii::App()->session['project'];
-$release=Yii::App()->session['release'];
+            
+        
+
         // Get the UC details
             
             $uc=Usecase::model()->findbyPK($id);
@@ -181,9 +182,9 @@ if (!empty($mainflow)){
                   
                   
                                     // Get any intefaces, forms and rules.
-            $this->stepForms($step['id'],$testcase_id);    
-            $this->stepRules($step['step_id'],$testcase_id);
-            $this->stepIfaces($step['step_id'],$testcase_id);    
+            $this->stepForms($step['id'],$testcase_id,$release);    
+            $this->stepRules($step['step_id'],$testcase_id,$release);
+            $this->stepIfaces($step['step_id'],$testcase_id,$release);    
              
               }
                     
@@ -277,9 +278,9 @@ if (!empty($all_flows[$i])){
                                       // Get any intefaces, forms and rules.
                   
                   
-            $this->stepForms($altflowstep['id'],$testcase_id);    
-            $this->stepRules($altflowstep['step_id'],$testcase_id);
-            $this->stepIfaces($altflowstep['step_id'],$testcase_id);    
+            $this->stepForms($altflowstep['id'],$testcase_id,$release);    
+            $this->stepRules($altflowstep['step_id'],$testcase_id,$release);
+            $this->stepIfaces($altflowstep['step_id'],$testcase_id,$release);    
              
               }
              
@@ -337,7 +338,7 @@ if (!empty($all_flows[$i])){
 	 */
 	
  
- private function stepForms($id,$testcase_id)
+ private function stepForms($id,$testcase_id,$release)
  {
      $x=0;
       $forms=Form::model()->getStepForms($id);
@@ -354,6 +355,7 @@ if (!empty($all_flows[$i])){
                         $teststep->testcase_id=$testcase_id;
                         $teststep->action='Confirm Form Property';
                         $teststep->result='UF-'.str_pad($form['number'], 4, "0", STR_PAD_LEFT).' '.$form['name'].' - field: '.$property['name'];
+                        $teststep->link=$release.'_3_'.$property['formproperty_id'];
                         $teststep->save();
                             }
                           }
@@ -361,7 +363,7 @@ if (!empty($all_flows[$i])){
                   }
  }
  
- private function stepRules($id,$testcase_id)
+ private function stepRules($id,$testcase_id,$release)
  {
      $x=0;
       $rules=Rule::model()->getStepRules($id);
@@ -374,13 +376,14 @@ if (!empty($all_flows[$i])){
               $teststep->testcase_id=$testcase_id;
               $teststep->action='Validate Business Rule';
               $teststep->result='BR-'.str_pad($rule['number'], 4, "0", STR_PAD_LEFT).' '.$rule['name'];
+              $teststep->link=$release.'_1_'.$rule['rule_id'];
               $teststep->save();
                           
                     }
                   }
  }
  
- private function stepIfaces($id,$testcase_id)
+ private function stepIfaces($id,$testcase_id,$release)
  {
      $x=0;
       $ifaces=  Iface::model()->getStepIfaces($id);
@@ -394,6 +397,7 @@ if (!empty($all_flows[$i])){
                         $teststep->action='Confirm User Interface';
                         $teststep->result='IF-'.str_pad($iface['number'], 4, "0", STR_PAD_LEFT).' '
                                 . ''.$iface['name'];
+                        $teststep->link=$release.'_12_'.$iface['iface_id'];
                         $teststep->save();
                        
                     }

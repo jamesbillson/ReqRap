@@ -27,7 +27,7 @@ class Teststep extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('action, result', 'required'),
-			// The following rule is used by search().
+			array('link', 'safe'),// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('id, action, result', 'safe', 'on'=>'search'),
 		);
@@ -55,6 +55,7 @@ class Teststep extends CActiveRecord
                         'number'=>'Number',
 			'action' => 'Action',
 			'result' => 'Result',
+                    'link' => 'Link',
 		);
 	}
 
@@ -79,7 +80,7 @@ class Teststep extends CActiveRecord
 		$criteria->compare('id',$this->id);
 		$criteria->compare('action',$this->action,true);
 		$criteria->compare('result',$this->result,true);
-
+                $criteria->compare('link',$this->link,true);
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));

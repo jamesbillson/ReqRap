@@ -5,7 +5,7 @@
 if(!empty($model->usecase_id))
     {
     $usecase=Usecase::model()->findbyPK($model->usecase_id);?>
-<h4><a href="/usecase/view/id/<?php echo $usecase->id; ?>"><?php echo $usecase->name; ?></a></h4>
+<h4><a href="/usecase/view/id/<?php echo $usecase->usecase_id; ?>"><?php echo $usecase->name; ?></a></h4>
 
    <?php  }
 
