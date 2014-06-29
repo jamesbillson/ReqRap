@@ -12,6 +12,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
         'class' => 'bootstrap.widgets.TbButton',
         'type' => 'primary', // '', 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
         'label'=> 'Add Collaborator',
+        'visible'=>Yii::App()->session['permission']==1,
         'url'=>array('follower/addFollower', 'id'=>$model->id, 'type'=>1)
     )),
 ));
@@ -26,8 +27,9 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
             <th>Name</th>
             <th>Email</th>
             <th>Status</th>
+                <?php if(Yii::App()->session['permission']==1){ ?>  
             <th>Actions</th>
-        </tr>
+        </tr> <?php } ?>
         </thead>
         <tbody>
         <?php if (count($data)):
@@ -43,8 +45,10 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                         <?php echo $status[$item['confirmed']];?>
                     </td>
                     <td>
+                    <?php if(Yii::App()->session['permission']==1){ ?>    
                        <a href="/contact/view/id/<?php echo $item['id'];?>"><i class="icon-eye-open" rel="tooltip" title="View"></i></a> 
                        <a href="/follower/remove?id=<?php echo $item['follower_id'];?>"><i class="icon-remove-sign" rel="tooltip" title="Remove/Uninvite"></i></a> 
+                    <?php } ?>
                     </td>
                 </tr>
             <?php endforeach ?>

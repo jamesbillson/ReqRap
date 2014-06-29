@@ -1,17 +1,18 @@
 
 <?php 
-if (!isset($tab)) $tab='usecases';
+$tab=Yii::App()->session['setting_tab'];
+if (!isset($tab)) $tab='details';
 echo $this->renderPartial('/project/head',array('tab'=>$tab)); ?>
 
  
 <?php // if this company project owner is current viewer
   
-    //$type = Company::model()->findbyPK($mycompany)->type; 
+    
     $permission=Yii::App()->session['permission'];
     $phase=Yii::App()->session['phase'];
     $totalstages=0;
     $status = array('invited','confirmed');
-    $owner=($permission==1)? True : False;
+
 ?>
 
 
@@ -35,34 +36,34 @@ $active['todo']=FALSE;
    
     $tabs[] = array('id' => 'details',
             'label' => 'Details',
-            'visible' => $owner,
+            'visible' => in_array($permission,array(1,2,3,4,5)),
             'content' => $this->renderPartial('_details',
                     compact('model'),true,false),'active'=>$active['details']);
    
     $tabs[] = array('id' => 'documents', 
         'label' => 'Documents',
-        'visible' => $owner,
+        'visible' => in_array($permission,array(1,2,3,4,5)),
         'content' => $this->renderPartial('_documents',
                 compact('model'),true,false),'active'=>$active['documents']);
  
     $tabs[] = array('id' => 'followers', 
         'label' => 'Collaborators', 
-        'visible' => $owner,
+        'visible' => in_array($permission,array(1,2,3,4,5)),
         'content' => $this->renderPartial('_followers',
                 compact('model'),true,false),'active'=>$active['followers']);
     $tabs[] = array('id' => 'settings',
             'label' => 'Settings',
-            'visible' => $owner,
+            'visible' => in_array($permission,array(1)),
             'content' => $this->renderPartial('_settings',
                     compact('model'),true,false),'active'=>$active['settings']);
         $tabs[] = array('id' => 'notes',
             'label' => 'Notes',
-            'visible' => $owner,
+            'visible' => in_array($permission,array(1,2,3,4,5)),
             'content' => $this->renderPartial('_notes',
                     compact('model'),true,false),'active'=>$active['notes']);
         $tabs[] = array('id' => 'todo',
             'label' => 'To Do',
-            'visible' => $owner,
+            'visible' => in_array($permission,array(1,5)),
             'content' => $this->renderPartial('_todo',
                     compact('model'),true,false),'active'=>$active['todo']);
 

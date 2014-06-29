@@ -1,8 +1,12 @@
 <h3>Release History</h3>
 <?php
 //$data = Release::model()->findAll('project_id='.Yii::app()->session['project']);
-$data = Release::model()->findAll(array('order'=>'number ASC', 'condition'=>'project_id=:x', 'params'=>array(':x'=>Yii::app()->session['project'])));
+$data = Release::model()->findAll(array('order'=>'number ASC',
+    
+    'condition'=>'project_id=:x',
+    'params'=>array(':x'=>Yii::app()->session['project'])));
 $release = Yii::App()->session['release'];
+$currentrelease=Release::model()->currentRelease();
 ?>
 
 <table class="table">
@@ -18,18 +22,24 @@ $release = Yii::App()->session['release'];
             <?php if (count($data)):?>
         <tbody>
 
-        <?php foreach($data as $item) {?>
+        <?php foreach($data as $item) {
+            
+        if(($item['id']!=$currentrelease)||($item['id']==$currentrelease && in_array(Yii::App()->session['permission'],array(1)))) {   
+            
+        
+        ?>
         <tr class="odd">  
         <td> <?php if ($item['id']==$release){;?>  
         <?php echo $item['number']; ?> 
         
-              <?php } ELSE {?>
+        <?php } ELSE {?>
         R-<?php echo FLOOR($item['number']); ?>
-          <?php } ?>
+        <?php } ?>
         </td>
    
-<td>   
-       <?php echo Release::$status[$item['status']];?> <?php if ($item['id']!=$release) echo ' @ change '.$item['offset'] ;?>
+        <td>   
+       <?php echo Release::$status[$item['status']];?> 
+           <?php if ($item['id']!=$currentrelease) echo ' @ change '.$item['offset'] ;?>
         </td>
     
     <td>   
@@ -39,24 +49,27 @@ $release = Yii::App()->session['release'];
 
 
       <td>
-           <?php if ($item['id']==$release){;?>
+    
+      <?php if ($item['id']==$currentrelease ){;?>
           <a href="/release/finalise/id/<?php echo $item['id'];?>"><i class="icon-certificate" rel="tooltip" title="Finalise Release"></i></a> 
            
-              <?php } ELSE {?>
+      <?php 
+      }
+      if (in_array(Yii::App()->session['permission'],array(1)) && $item['id']!=$currentrelease) {?>
           
-            <a href="/library/create/id/<?php echo $item['id'];?>"><i class="icon-book text-success" rel="tooltip" title="Add to library"></i></a> 
+      <a href="/library/create/id/<?php echo $item['id'];?>"><i class="icon-book text-success" rel="tooltip" title="Add to library"></i></a> 
       <a href="/release/copy/id/<?php echo $item['id'];?>"><i class="icon-copy" rel="tooltip" title="Copy Release to new project"></i></a>
-         <a href="/release/delete/id/<?php echo $item['id'];?>"><i class="icon-remove-sign text-error" rel="tooltip" title="Remove"></i></a> 
-     <a href="/testcase/create/id/<?php echo $item['id'];?>"><i class="icon-check" rel="tooltip" title="Create Test Cases"></i></a> 
-     <a href="/walkthrupath/create/id/<?php echo $item['id'];?>"><i class="icon-road" rel="tooltip" title="Create Walk Throughs"></i></a> 
+      <a href="/release/delete/id/<?php echo $item['id'];?>"><i class="icon-remove-sign text-error" rel="tooltip" title="Remove"></i></a> 
+      <a href="/testcase/create/id/<?php echo $item['id'];?>"><i class="icon-check" rel="tooltip" title="Create Test Cases"></i></a> 
+      <a href="/walkthrupath/create/id/<?php echo $item['id'];?>"><i class="icon-road" rel="tooltip" title="Create Walk Throughs"></i></a> 
     
-             <?php } ?>
+             <?php } 
           
-        
-          
+       if (in_array(Yii::App()->session['permission'],array(1,2,3))) {?>  
+       
           
         <a href="/release/set/id/<?php echo $item['id'];?>"><i class="icon-eye-open " rel="tooltip" title="Browse this release"></i></a> 
-       
+        <?php } ?>
          <?php if ($item['id']==$release){;?>
            <a href="/version/index/id/<?php echo $item['id'];?>"><i class="icon-calendar " rel="tooltip" title="View change log"></i></a> 
         
@@ -66,7 +79,8 @@ $release = Yii::App()->session['release'];
         </tr>
           	</tbody>
 <?php
-        } ?>
+ }      
+ } ?>
 <?php endif; ?>        
  
 </table>

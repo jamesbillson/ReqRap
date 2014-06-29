@@ -1,6 +1,7 @@
 
 <?php 
-$link=Yii::App()->session['release'].'_0_0';
+$release=Yii::App()->session['release'];
+$link=$release.'_0_0';
 if (!isset($tab)) $tab='usecase';
 echo $this->renderPartial('/project/head',array('tab'=>$tab,'link'=>$link)); 
 if ($tab=='photos') $tab='interfaces';
@@ -10,7 +11,7 @@ if ($tab=='photos') $tab='interfaces';
   
     //$type = Company::model()->findbyPK($mycompany)->type; 
     $permission=Yii::App()->session['permission'];
-    $phase=Yii::App()->session['phase'];
+    $phase=Release::model()->findbyPK($release)->status;
     $totalstages=0;
     $status = array('invited','confirmed');
     $owner=($permission==1)? True : False;
@@ -45,64 +46,67 @@ $active['walkthru']=FALSE;
   
     $tabs[] = array('id' => 'category', 
         'label' => 'Sections', 
+        'visible' => in_array($permission,array(1,2,3,4,5)),
         'content' => $this->renderPartial('_category',
                 compact('model'),true,false),'active'=>$active['category']);
     
     $tabs[] = array('id' => 'objects', 
         'label' => 'Objects', 
+        'visible' => in_array($permission,array(1,2,3,4,5)),
         'content' => $this->renderPartial('_objects',
                 compact('model'),true,false),'active'=>$active['objects']);
     
     $tabs[] = array('id' => 'actors',
             'label' => 'Actors',
+        'visible' => in_array($permission,array(1,2,3,4,5)),
             'content' => $this->renderPartial('_actors',
                     compact('model','status'),true,false),'active'=>$active['actors']);
-/*
-    $tabs[] = array('id' => 'package',
-            'label' => 'Packages', 
-            'content' => $this->renderPartial('_packages',
-                    compact('model'),true,true),'active'=>$active['packages']);
- */
+
     $tabs[] = array('id' => 'usecases',
-            'label' => 'Use Cases',
+            'label' => 'Use Cases','visible' => in_array($permission,array(1,2,3,4,5)),
             'content' => $this->renderPartial('_usecases',
                     compact('model','status'),true,false),'active'=>$active['usecases']);
     
     $tabs[] = array('id' => 'rules',
             'label' => 'Rules',
+        'visible' => in_array($permission,array(1,2,3,4,5)),
             'content' => $this->renderPartial('_rules',
                     compact('model','status'),true,false),'active'=>$active['rules']);
 
     $tabs[] = array('id' => 'forms',
             'label' => 'Forms',
+        'visible' => in_array($permission,array(1,2,3,4,5)),
             'content' => $this->renderPartial('_forms',
                     compact('model','status'),true,false),'active'=>$active['forms']);
     
     $tabs[] = array('id' => 'interfaces',
             'label' => 'Interfaces',
+        'visible' => in_array($permission,array(1,2,3,4,5)),
             'content' => $this->renderPartial('_interfaces',
                     compact('model','status'),true,false),'active'=>$active['interfaces']);
     
     $tabs[] = array('id' => 'structure',
             'label' => 'Structure',
-           'visible'=> $owner,
+        'visible' => in_array($permission,array(1)),
+      
             'content' => $this->renderPartial('_structure',
                     compact('model','status'),true,false),'active'=>$active['structure']); 
  
     $tabs[] = array('id' => 'testcases',
             'label' => 'Test Cases',
-           'visible'=> ($phase==2),
+        'visible' => ($phase==2),
+            'visible' => ($phase==2 && in_array($permission,array(1,2,4,5))),
             'content' => $this->renderPartial('_testcases',
                     compact('model','status'),true,false),'active'=>$active['testcases']); 
 
     $tabs[] = array('id' => 'testruns',
             'label' => 'Test Runs',
-           'visible'=> ($phase==2),
+           'visible' => ($phase==2),
             'content' => $this->renderPartial('_testruns',
                     compact('model','status'),true,false),'active'=>$active['testruns']); 
     $tabs[] = array('id' => 'walkthru',
             'label' => 'Walkthru',
-            'visible' => ($phase==2),
+            'visible' => ($phase==2 && in_array($permission,array(1,2,3))),
             'content' => $this->renderPartial('_walkthru',
                     compact('model'),true,false),'active'=>$active['walkthru']);
 

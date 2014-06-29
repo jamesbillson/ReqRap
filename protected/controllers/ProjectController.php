@@ -48,17 +48,51 @@ class ProjectController extends Controller
         );
     }
 
-    /**
-     * Displays a particular model.
-     * @param integer $id the ID of the model to be displayed
-     */
-     public function actionSet($id,$tab)
+
+    
+     public function actionSet($id)
     {
+    //echo 'starting set to id='.$id;
     Yii::app()->session['project']=$id;
-    Yii::app()->session['release']=  Release::model()->currentRelease();
+    
+    $myproject=array();
+    $myfollows=array();
+    $mycompany=User::model()->myCompany();
+    $projectlist=Company::model()->getProjects($mycompany);
+    //echo '<br />loaded project list';
+    foreach($projectlist as $proj){
+    array_push($myproject,$proj['id']);
+    }
+   // echo '<br />loaded follow list';   
+    $followlist = Follower::model()->getMyProjectFollows(1);
+    foreach($followlist as $follow){
+     //   echo '<br />add a follow project'.$follow['id'];
+    array_push($myfollows,$follow['id']);
+    }
+    //echo 'follows:<pre>';
+    //print_r($follow);
+    //echo '</pre>';
+
+    //echo 'myproject:<pre>';
+    //print_r($myproject);
+    //echo '</pre>';
+
+// If I am a follower then set the release to the last release.
+    if(in_array($id, $myfollows)) {
+    //echo '<br />I am  a follower';    
+        Yii::app()->session['release']=  Release::model()->lastRelease();
+    }
+// if I own the project set the viewing release to current release
+    if(in_array($id, $myproject)) {
+    //echo '<br />my project ';    
+        Yii::app()->session['release']=  Release::model()->currentRelease();
+    }
+    Yii::app()->session['setting_tab']='details';
+    //echo '<br />redirecting...';
     $this->redirect(array('/project/project/'));
         
     }
+    
     public function actionView($tab)
     {
      $id=Yii::app()->session['project'];

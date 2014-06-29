@@ -114,7 +114,27 @@ class Release extends CActiveRecord
                 }
         return $release;
     }
-    
+        public function lastRelease()
+    {
+          
+               $sql="SELECT `r`.*
+            FROM `release` `r`
+            WHERE 
+            `r`.`project_id`=".Yii::App()->session['project']."
+            AND 
+            `r`.`status`=2
+            order by `r`.`number`
+            limit 0,1";
+                $connection=Yii::app()->db;
+		$command = $connection->createCommand($sql);
+		$releases = $command->queryAll();
+		if (!empty($releases)){
+                    $release=$releases[0]['id'];
+                } ELSE {
+                    $release=-1;
+                }
+        return $release;
+    }
     
     
          public function createInitial($id)

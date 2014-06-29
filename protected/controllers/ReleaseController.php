@@ -66,11 +66,33 @@ public function actionSet($id)
 
  public function actionSetCurrent()
 	{
-     $id=Release::model()->currentRelease();
-        Yii::App()->session['release']=$id;
-        $release=Release::model()->findbyPK($id);
-        Yii::App()->session['project']=$release->project->id;
-         $this->redirect(array('/project/project/'));
+     $id=Yii::App()->session['project'];
+    $myproject=array();
+    $myfollows=array();
+    $mycompany=User::model()->myCompany();
+    $projectlist=Company::model()->getProjects($mycompany);
+    foreach($projectlist as $proj){
+    array_push($myproject,$proj['id']);
+    }
+    $followlist = Follower::model()->getMyProjectFollows(1);
+    foreach($followlist as $follow){
+    array_push($myfollows,$follow['id']);
+    }
+     
+  
+// If I am a follower then set the release to the last release.
+    if(in_array($id, $myfollows)) $release_id=  Release::model()->lastRelease();
+    
+// if I own the project set the viewing release to current release
+    if(in_array($id, $myproject)) $release_id=  Release::model()->currentRelease();
+  
+   
+        $id=Release::model()->currentRelease();
+        Yii::App()->session['release']=$release_id;
+        Yii::app()->session['setting_tab']='details';
+        $this->redirect(array('/project/project/'));
+        
+         
 	}
         
         

@@ -2,7 +2,13 @@
 
 class Follower extends CActiveRecord
 {
-    public static $foreigntype= array(1=>'project', 2=>'package');  
+    
+    public static $type = array(0=>'None', 
+        1=>'Contributor',
+        2=>'Viewer',
+        3=>'Approver',
+        4=>'Tester',
+        5=>'Developer');
     public static $followerupload= array(0=>'view only', 2=>'can upload');
     public static $followerstatus= array(0=>'invited', 2=>'accepted');
     /**
@@ -108,8 +114,7 @@ class Follower extends CActiveRecord
             WHERE
               `f`.`type`=".$type." AND  
                  `f`.`confirmed`=1
-             AND
-                 `f`.`role`=0
+            
             AND
                 `f`.`foreign_key`=".$fk;
         
@@ -153,14 +158,9 @@ class Follower extends CActiveRecord
     {
 
        $follower = $this->findByPk($id);   
-       if($follower->type == 1) {
-           $project=Project::model ()->findbyPK($follower->foreign_key);
-           $extlink=$project->extlink;
-            }
-       if($follower->type == 2) {
-           $package=Package::model()->findbyPK($follower->foreign_key);
-           $extlink=$package->project->extlink;
-                             }
+       $project=Project::model ()->findbyPK($follower->foreign_key);
+       $extlink=$project->extlink;
+              
        $creator = User::model()->findbyPk(Yii::app()->user->id);
        $contact = Contact::model()->findbyPk($follower->contact_id);
        $matchuser = User::model()->find("username = '".$contact->email."'");
@@ -378,7 +378,7 @@ class Follower extends CActiveRecord
     public function getProjectFollowerDetails($project_id)
     {
          //$id is the accepted state where 0=invite, 1=follow   
-        $sql="SELECT  `f`.`upload`,`f`.`id`,`f`.`type` ,`f`.`role`
+        $sql="SELECT  `f`.*
             FROM  `follower`  `f` 
                 JOIN  `contact`  `c` ON  `f`.`contact_id` =  `c`.`id` 
                 JOIN  `user`  `u` ON  `u`.`username` =  `c`.`email` 
@@ -389,8 +389,8 @@ class Follower extends CActiveRecord
         $connection=Yii::app()->db;
         $command = $connection->createCommand($sql);
         $details = $command->queryAll();
-        
-        return $details[0];
+        if(isset ($details[0]))        return $details[0];
+      
     }       
     
- 
+}

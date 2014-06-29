@@ -24,10 +24,11 @@
    
                     
                     <?php  // user can pick between approver, contributor and tester
-	    		$type = array('0'=>'Approver','1'=>'Contributor','2'=>'Tester');
-	    		echo $form->dropDownListRow($model, 'role', $type);
-                        $upload = array('0'=>'View Only','1'=>'Document Upload');
-                        echo $form->dropDownListRow($model, 'upload', $upload);
+	    		//$type = array('3'=>'Contributor','3'=>'Viewer','2'=>'Approver','4'=>'Tester');
+	    		
+                        echo $form->dropDownListRow($model, 'role', Follower::$type);
+                        //$upload = array('0'=>'View Only','1'=>'Document Upload');
+                        //echo $form->dropDownListRow($model, 'upload', $upload);
                        ?>
 
 

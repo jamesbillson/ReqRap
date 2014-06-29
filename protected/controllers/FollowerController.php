@@ -128,8 +128,8 @@ class FollowerController extends Controller
         // if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
         if(!isset($_GET['ajax']))
         {
-                
-                $this->redirect(array('/project/view/tab/followers/'));
+                Yii::App()->session['setting_tab']='followers';
+                $this->redirect(array('/project/project'));
                 }
                 
         }
@@ -204,31 +204,28 @@ class FollowerController extends Controller
             $model->modified=Yii::app()->user->id;
             $model->modified_date=date("Y-m-d H:i:s", time());
             $model->link=uniqid('',true);
-         
+         echo 'created now follower about to save';
             if($model->save())
             {
                 // use sendInvite function to send invite using function.
                 //debug $this->redirect(array('/site/admin?id='.$model->primaryKey));
-                Follower::model()->sendInvite($model->primaryKey);
-                //go back to the original follow object screen
-                //pick the object from an array by the index.
-                $object = Follower::$foreigntype;
-                $this->redirect(array('/project/project','tab'=>'followers'));
+               echo 'saved follower about to email';
+               Follower::model()->sendInvite($model->primaryKey);
+
+               //set the tab to followers
+                Yii::App()->session['setting_tab']='followers';
+                $this->redirect(array('/project/project'));
          
                 }
         }
         //check user
-        $user = User::model()->findByPk(Yii::app()->user->id);
+       // $user = User::model()->findByPk(Yii::app()->user->id);
         
-       
-
-   
-       
         $this->render('_form',array(
             'model'=>$model,
             'fk'=>$id,
             'type'=>$type,
-            'canToggleTender'=>$canToggleTender
+            
         ));
     }
     
@@ -290,7 +287,7 @@ class FollowerController extends Controller
             Follower::model()->sendAcceptConfirm($follower->id);
             
             
-   $this->redirect(array('/project/project','id'=>$follower->foreign_key));
+   $this->redirect(array('/project/set','id'=>$follower->foreign_key));
         }
            //send a welcome email
             //send an email to the inviter to say they have joined.

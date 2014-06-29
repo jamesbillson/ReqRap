@@ -1,17 +1,17 @@
 <?php 
 $mycompany=User::model()->myCompany();
 $projectlist=Company::model()->getProjects($mycompany);
-$no_project=true;
+$followlist = Follower::model()->getMyProjectFollows(1);
+
+$my_project=true;
 if(isset(Yii::App()->session['project'])) {
     $project=Project::model()->findbyPK(Yii::App()->session['project']); 
     $currentrelease=Release::model()->currentRelease();
     $release=Yii::App()->session['release'];
-    //$thisrelease=Release::model()->findbyPK($release);
-    //$phase = Yii::App()->session['phase']=$thisrelease->status;
     Project::model()->setPermissions($mycompany, $project,$release, $currentrelease);
     
 } ELSE {
-    $no_project=false;
+    $my_project=false;
     
     Yii::App()->session['permission']=0;
 }
@@ -19,19 +19,21 @@ if(isset(Yii::App()->session['project'])) {
 
 
 
-//echo 'release status'.$phase;
+//echo 'permissions '.Follower::$type[Yii::App()->session['permission']].' ('.Yii::App()->session['permission'].')';
+if (Yii::App()->session['permission'] ==0)  $this->redirect(array('site/fail/condition/no_access'));
 ?>
 
 <table><tr><td>
-    <h1> <?php if ($no_project) echo $project->name  ; ?></h1> 
+    <h1> <?php if ($my_project) echo $project->name  ; ?></h1> 
        
       </td>
         <td>  <?php  if(isset($currentrelease) && $release != $currentrelease)   {
              $releaseNumber = Release::model()->findbyPK($release);
        echo '( R-'.FLOOR($releaseNumber->number).' )';
+       
          }
         ?>
-            <?php if(Yii::App()->session['permission']==1) {?>
+            <?php if(isset($currentrelease) && $release == $currentrelease) {?>
     <a href="/project/project/">
         <i class="icon-cog" rel="tooltip" title="Project Settings"></i>
     </a>
@@ -40,7 +42,7 @@ if(isset(Yii::App()->session['project'])) {
     if(isset($currentrelease) && $release != $currentrelease){
       
       ?>
-        <a href="/release/setcurrent/"><i class="icon-cog text-warning" rel="tooltip" title="Project Settings"></i></a> 
+        <a href="/release/setcurrent/"><i class="icon-cog" rel="tooltip" title="Project Settings"></i></a> 
        
  
     <?php } ?>
@@ -61,8 +63,13 @@ if(isset(Yii::App()->session['project'])) {
   
    <?php
    }
-    
+
+     foreach($followlist as $follow)
+   {?>
+            <option value="<?php echo $follow['id']; ?>"> <?php echo $follow['pname'];?></option>
   
+   <?php
+   }
   
    
    ?>
@@ -76,7 +83,7 @@ if(isset(Yii::App()->session['project'])) {
 
          <?php
   
-    if($no_project){  ?>
+    if($my_project){  ?>
           <a target="_new" href="/project/print" ><i class="icon-print " rel="tooltip" title="View Print Version"></i></a>
        
     <?php  } ?>
