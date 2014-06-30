@@ -17,6 +17,15 @@ if(isset(Yii::App()->session['project'])) {
 }
 
 
+      $config = array(
+      );
+ 
+      $this->widget('application.extensions.fancybox.EFancyBox', array(
+        'target'=>'a#popup',
+        'config'=>$config,));
+ 
+      
+     
 
 
 //echo 'project is '.Yii::App()->session['project'].' release is '.Yii::App()->session['release'].' permissions '.Follower::$type[Yii::App()->session['permission']].' ('.Yii::App()->session['permission'].')';

@@ -171,7 +171,7 @@ if (!empty(Yii::app()->user->id) || !empty(Yii::app()->user->company_id)){
   m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
   })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-  ga('create', 'UA-9104836-15', 'naild.com.au');
+  ga('create', 'UA-9104836-16', 'auto');
   ga('send', 'pageview');
 
 </script>
