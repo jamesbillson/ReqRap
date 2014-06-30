@@ -133,7 +133,7 @@ if (!empty(Yii::app()->user->id) || !empty(Yii::app()->user->company_id)){
                     'fade'=>true, // use transitions?
                     'closeText'=>'&times;', // close link text - if set to false, no close link is displayed  
                     'events' => array('click' => 'js:function(e) {
-                            $.get("'. $this->createUrl("messages/process?ids=") .'"+alert_message_ids);
+                            $.get("'. $this->createUrl("messages/process?ids=") .'"+$(e.target).next("i").attr("data-id"));
                         }'
                     )
                 )

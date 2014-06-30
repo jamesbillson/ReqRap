@@ -133,17 +133,19 @@ class Messages extends CActiveRecord
       foreach ($messages as $message) {
         // set up the message in session
         if (self::checkVisibility($message)) {
-          $alert_messages[] = $message->message;
-          $ids[] = $message->id;
+          //$alert_messages[] = $message->message;
+          //$ids[] = $message->id;
+          //class="icon-'. $message->message_type .'-sign" 
+          Yii::app()->user->setFlash($message->message_type, '<i data-id="'. $message->id .'"></i>' . $message->message);
         }
 
         if (count($alert_messages) >= $alerts_limit)
           break;
       }
-      if ($alert_messages) {
+      /*if ($alert_messages) {
         Yii::app()->user->setFlash('info', '<i class="icon-info-sign"></i>' . implode('<br/><i class="icon-info-sign"></i>', $alert_messages));
         Yii::app()->clientScript->registerScript('alert_message_ids', 'var alert_message_ids = "' . implode(',', $ids) . '";');
-      }
+      }*/
     }
   }
         

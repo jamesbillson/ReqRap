@@ -45,3 +45,9 @@ font-size: .8em;
     vertical-align: middle;
     max-height:154px;
 }
+
+/** alerts style **/
+.alert {
+    
+    margin-bottom: 4px !important;
+}

@@ -17,6 +17,8 @@
         </div>
 
 	<?php echo $form->dropDownListRow($model,'show_once',array('' => '--', 1 => 'Yes', 0 => 'No'), array('class'=>'span5', 'hint' => 'Is this message to showed once')); ?>
+        
+        <?php echo $form->dropDownListRow($model,'message_type',array('' => '--', 'success' => 'success', 'info' => 'info', 'warning' => 'warning', 'error' => 'error'), array('class'=>'span5', 'hint' => 'Select type of message')); ?>
 
 <div class="form-actions">
 	<?php $this->widget('bootstrap.widgets.TbButton', array(
