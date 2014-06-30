@@ -32,7 +32,7 @@ class Messages extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('message, scope, show_once', 'required'),
+			array('message, scope, show_once, message_type', 'required'),
 			array('show_once', 'numerical', 'integerOnly'=>true),
 			array('message', 'length', 'max'=>255),
 			array('scope, exclude', 'length', 'max'=>100),
@@ -129,7 +129,7 @@ class Messages extends CActiveRecord
       $criteria->params = array(':user_id' => Yii::app()->user->id);
       $messages = Messages::model()->findAll($criteria);
       $alerts_limit = min(5, count($messages)); //number of alters to display on a page
-
+      
       foreach ($messages as $message) {
         // set up the message in session
         if (self::checkVisibility($message)) {
