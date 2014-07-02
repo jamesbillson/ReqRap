@@ -20,7 +20,13 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
          'visible'=> $permission,
         'url'=>'/object/create/id/'.$model->id,
     ),
-    
+     array(
+        'class' => 'bootstrap.widgets.TbButton',
+        'type'=>'link',
+        'icon'=> 'question-sign',
+         'url'=>'/help/popview/scope/objects',
+        'htmlOptions' => array('id' => 'popup',),
+    ),
 ))); 
     if (count($data)):?>
 

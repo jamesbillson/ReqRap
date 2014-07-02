@@ -18,7 +18,13 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
              'visible'=> $permission,
             'url'=>'/rule/create/type/0/id/'.$model->id,
 	),
-	
+	 array(
+        'class' => 'bootstrap.widgets.TbButton',
+        'type'=>'link',
+        'icon'=> 'question-sign',
+         'url'=>'/help/popview/scope/rules',
+        'htmlOptions' => array('id' => 'popup',),
+    ),
            
 )
 ));

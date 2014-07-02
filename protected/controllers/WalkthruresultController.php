@@ -60,24 +60,7 @@ class WalkthruresultController extends Controller
 	 * Creates a new model.
 	 * If creation is successful, the browser will be redirected to the 'view' page.
 	 */
-	public function actionCreate()
-	{
-		$model=new Walkthruresult;
 
-		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
-
-		if(isset($_POST['Walkthruresult']))
-		{
-			$model->attributes=$_POST['Walkthruresult'];
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->id));
-		}
-
-		$this->render('create',array(
-			'model'=>$model,
-		));
-	}
 
 	/**
 	 * Updates a particular model.
@@ -86,31 +69,28 @@ class WalkthruresultController extends Controller
 	 */
 	public function actionUpdate($id)
 	{
-		$model=$this->loadModel($id);
+		$newresult=$this->loadModel($id);
 
 		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
+		// $this->performAjaxValidation($newresult);
 
 		if(isset($_POST['Walkthruresult']))
 		{
-			$model->attributes=$_POST['Walkthruresult'];
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->id));
+			$newresult->attributes=$_POST['Walkthruresult'];
+                        $newresult->user_id=Yii::App()->user->id;
+                                              
+                        
+			if($newresult->save())
+				$this->redirect(array('/walkthrupath/run/','id'=>$newresult->id));
 		}
 
-		$this->render('update',array(
-			'model'=>$model,
+		$this->render('/walkthrupath/run/',array(
+			'id'=>$newresult->id,
 		));
 	}
 
         
-        public function actionUpdateResult()
-	
-        {
-            $es = new EditableSaver('Walkthruresult');  //'User' is name of model to be updated
-            $es->update();
 
-	}
         
 	/**
 	 * Deletes a particular model.

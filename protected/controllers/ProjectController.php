@@ -32,9 +32,8 @@ class ProjectController extends Controller
                 'users'=>array('*'),
             ),
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
-                'actions'=>array('addprojectaddress','set','photo','print',
-                    'diary','resetlink','details','packagescontract',
-                    'responses',
+                'actions'=>array('walkthru','testing','addprojectaddress','set','photo','print',
+                    'diary','resetlink','details',
                     'myrequirements','project','delete','create','update','myprojects','projectpackagelist','TenderSummary'),
                 'users'=>array('@'),
             ),
@@ -99,6 +98,26 @@ class ProjectController extends Controller
      $id=Yii::app()->session['project'];
         $model = $this->loadModel($id);
         $this->render('view',array(
+                'model'=>$model,'tab'=>$tab ));
+
+    }
+    
+     public function actionTesting()
+    {
+        $tab=Yii::App()->session['setting_tab'];
+     $id=Yii::app()->session['project'];
+        $model = $this->loadModel($id);
+        $this->render('testing',array(
+                'model'=>$model,'tab'=>$tab ));
+
+    }
+
+         public function actionWalkthru()
+    {
+        $tab=Yii::App()->session['setting_tab'];
+     $id=Yii::app()->session['project'];
+        $model = $this->loadModel($id);
+        $this->render('_walkthru',array(
                 'model'=>$model,'tab'=>$tab ));
 
     }

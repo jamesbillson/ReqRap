@@ -9,8 +9,7 @@ if(!empty($model->usecase_id))
     $usecase=Usecase::model()->findbyPK($model->usecase_id);
     $title=Version::model()->instanceName(10, $usecase->usecase_id);
 ?>
-	Print a form to accept or not accept this walk through, and provide a comment.
-        
+   
         
 <br>
 <?php 
@@ -20,7 +19,6 @@ $data= Walkthrustep::model()->findAll('walkthrupath_id='.$model->id);
 <a href="/project/project">Walk through list</a><br />
 
 
-Test Status: <?php //echo Testcaseresult::$status[$result->status]; ?>
 <?php
 
 $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
@@ -42,7 +40,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
  
       
          ?>
-<table><tr><td>Required Preparation: <?php echo $model->preparation;?></td></tr></table>
+
            
             
 <?php  if (count($data)):?>
@@ -104,3 +102,5 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
 $this->endWidget();
     }?>
 
+
+<?php echo $this->renderPartial('run', array('id'=>$model->id)); ?>

@@ -32,7 +32,7 @@ class InterfacetypeController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update'),
+				'actions'=>array('create','update','remove'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -67,6 +67,7 @@ class InterfacetypeController extends Controller
 		$model=new Interfacetype;
             $release=Yii::App()->session['release'];
             $project=Yii::App()->session['project'];
+                Yii::App()->session['setting_tab']='settings';
 		if(isset($_POST['Interfacetype']))
 		{
                         $model->attributes=$_POST['Interfacetype'];
@@ -75,8 +76,10 @@ class InterfacetypeController extends Controller
                         $model->release_id=$release;
 			if($model->save())
                                 {
-				$this->redirect(array('/project/view/tab/interfaces/'));
+				
                                 $version=Version::model()->getNextNumber($project,13,1,$model->primaryKey,$model->interfacetype_id);   
+                                $this->redirect(array('/project/project'));
+                                
                                 }
                  }
 
@@ -88,23 +91,26 @@ class InterfacetypeController extends Controller
  
 	public function actionUpdate($id)
 	{
-		
-             $release=Yii::App()->session['release'];
+	    $release=Yii::App()->session['release'];
             $project=Yii::App()->session['project'];
+            Yii::App()->session['setting_tab']='settings';
+            
             $model=$this->loadModel($id);
+            
                 $new= new Interfacetype;
 		
-                $id=$model->project_id;
-		if(isset($_POST['Iface']))
+		if(isset($_POST['Interfacetype']))
 		{
 		 $new->attributes=$_POST['Interfacetype'];
                  $new->number=$model->number;
                  $new->project_id=$project;
                  $new->release_id=$release;
-                 $new->interfacetype_id=$model->interfacetype_id;	
+                 $new->interfacetype_id=$model->interfacetype_id;
+            
+                 
                  if($new->save()){
                       $version=Version::model()->getNextNumber($project,13,2,$new->primaryKey,$new->interfacetype_id);   
-                      $this->redirect(array('/usecase/view/id/'.$ucid));
+                      $this->redirect(array('/project/project'));
                  }
 				
 		}
@@ -114,12 +120,12 @@ class InterfacetypeController extends Controller
 	}
 
 	 
-	public function actionDelete($id)
+	public function actionRemove($id)
 	{
-		
+	  Yii::App()->session['setting_tab']='settings';	
             $model=$this->loadModel($id);
             $version=Version::model()->getNextNumber($model->project_id,13,3,$id,$model->interfacetype_id);  
-	     $this->redirect(array('/project/view/tab/interfaces/id/'.$model->project_id));
+	     $this->redirect(array('/project/project/'.$model->project_id));
         }
 
 	/**

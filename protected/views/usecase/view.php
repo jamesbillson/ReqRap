@@ -39,7 +39,13 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                     'url'=>'/usecase/history/id/'.$model->usecase_id,
                     
                       ),
-     
+      array(
+        'class' => 'bootstrap.widgets.TbButton',
+        'type'=>'link',
+        'icon'=> 'question-sign',
+         'url'=>'/help/popview/scope/usecase',
+        'htmlOptions' => array('id' => 'popup',),
+    ),
                   
 )
           ));  

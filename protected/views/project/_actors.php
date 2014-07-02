@@ -21,7 +21,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
         'class' => 'bootstrap.widgets.TbButton',
         'type'=>'link',
         'icon'=> 'question-sign',
-         'url'=>'/help/view/scope/actors',
+         'url'=>'/help/popview/scope/actors',
         'htmlOptions' => array('id' => 'popup',),
     ),
 ))); 

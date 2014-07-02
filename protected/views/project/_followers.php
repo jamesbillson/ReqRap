@@ -2,7 +2,7 @@
 
 <?php 
 $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
-    'title' => 'Colaborators',
+    'title' => 'Collaborators',
     'headerIcon' => 'icon-user',
     // when displaying a table, if we include bootstra-widget-table class
     // the table will be 0-padding to the box
@@ -14,7 +14,15 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
         'label'=> 'Add Collaborator',
         'visible'=>Yii::App()->session['permission']==1,
         'url'=>array('follower/addFollower', 'id'=>$model->id, 'type'=>1)
-    )),
+    ),
+           array(
+        'class' => 'bootstrap.widgets.TbButton',
+        'type'=>'link',
+        'icon'=> 'question-sign',
+         'url'=>'/help/popview/scope/followers',
+        'htmlOptions' => array('id' => 'popup',),
+    ),
+          )
 ));
     $data = Follower::model()->getFollowers(Yii::app()->session['project'], 1); 
 	$status=array('pending','confirmed');

@@ -99,17 +99,17 @@ class Object extends CActiveRecord
     {
        $release=Yii::App()->session['release'];
         $sql="
-            SELECT `r`.*
-            FROM `object` `r`
+            SELECT `o`.*
+            FROM `object` `o`
             LEFT JOIN `version` `v`
-            ON `v`.`foreign_key`=`r`.`id`
+            ON `v`.`foreign_key`=`o`.`id`
             WHERE 
             `v`.`object`=6
             AND
             `v`.`active`=1
             AND
             `v`.`release`=".$release."         
-            ORDER BY `r`.`number`+1";         
+            ORDER BY `o`.`number`+1";         
      
 
      

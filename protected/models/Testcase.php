@@ -129,6 +129,19 @@ class Testcase extends CActiveRecord
 		return $projects;
     }  
     
+         public function deleteOld()
+    {
+             
+        $sql="
+        DELETE
+        FROM `testcase` 
+        WHERE 
+        `release_id`=".Yii::App()->session['release'];
+
+ $connection=Yii::app()->db;
+      $command = $connection->createCommand($sql);
+      $command->execute();
+    }  
 	/**
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!

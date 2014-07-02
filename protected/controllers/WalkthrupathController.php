@@ -65,6 +65,9 @@ class WalkthrupathController extends Controller
 		));
 	}
         
+   
+
+        
            public function actionResults($id)
 	{
 		$this->render('/testrun/results',array(
@@ -72,32 +75,25 @@ class WalkthrupathController extends Controller
 		));
 	}
         
-        public function actionRun($id)
+        public function actionRun()
+	
 	{
-           
-            // Make a Test Run with the $id TEST CASE related to it.
-            
-           	$model=new Walkthruresult;
-
-                    $result->testrun_id=$testrun;
-                    $result->walkthrustep_id=$walkthrustep->id;
-                    $result->user_id=Yii::App()->user->id;
-                    $result->result=4;
-                    $result->comments='None';
-                    $result->save(false);
-                    
-                
-                
-            
-            // Show a spreadsheet style form with all the Steps, Results, and Comments.
-            
-            
-                $this->redirect(array('/walkthrupath/view/id/'.$id));
-        } 
-        
+	$newresult=new Walkthruresult;
+	if(isset($_POST['result']))
+		{
+			$newresult->result=$_POST['result'];
+                        $newresult->comments=$_POST['comments'] ;
+                        $newresult->user_id=Yii::App()->user->id;
+                        $newresult->walkthrupath_id=$_POST['id'] ;
+			if($newresult->save())
+			$this->redirect(array('/walkthrupath/view','id'=>$_POST['id']));
+		}
+	$this->redirect(array('/project/walkthru/'));
+	}
 
 	public function actionCreate($id)
 	{
+        Walkthrupath::model()->deleteOld();
 	$release=Yii::App()->session['release']=$id;
            
             $data = Usecase::model()->getProjectUCs();
@@ -110,7 +106,7 @@ class WalkthrupathController extends Controller
                 }
             }
             
-          $this->redirect(array('/project/project/'));
+          $this->redirect(array('/project/walkthru/'));
             
 	}
 

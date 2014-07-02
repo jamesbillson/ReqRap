@@ -113,9 +113,9 @@ class TestcaseController extends Controller
 	{
 		
             Yii::App()->session['release']=$id;
-
+            Testcase::model()->deleteOld();
             $data = Usecase::model()->getProjectUCs();
-
+            
             if(count($data)){
                 
                 foreach($data as $usecase){

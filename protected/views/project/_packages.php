@@ -16,7 +16,13 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
         'label'=> 'Add Package',
             'url'=>'/package/create',
     ),
-    
+     array(
+        'class' => 'bootstrap.widgets.TbButton',
+        'type'=>'link',
+        'icon'=> 'question-sign',
+         'url'=>'/help/popview/scope/packages',
+        'htmlOptions' => array('id' => 'popup',),
+    ),
 )));
     if (count($data)): ?>
         <table class="table">

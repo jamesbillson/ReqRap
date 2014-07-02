@@ -28,13 +28,13 @@ class Interfacetype extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('name, ifacetype_id, project_id, release_id, number', 'required'),
+			array('name, interfacetype_id, project_id, release_id, number', 'required'),
 			array('name', 'length', 'max'=>255),
-                    array('ifacetype_id, project_id, release_id', 'numerical', 'integerOnly'=>true),
+                    array('interfacetype_id, project_id, release_id', 'numerical', 'integerOnly'=>true),
                     array('number', 'length', 'max'=>30),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('ifacetype_id, id, name, project_id, release_id', 'safe', 'on'=>'search'),
+			array('interfacetype_id, id, name, project_id, release_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -57,7 +57,7 @@ class Interfacetype extends CActiveRecord
 	{
 		return array(
 		'id' => 'ID',
-		'ifacetype_id' => 'typeID',
+		'interfacetype_id' => 'typeID',
                 'name' => 'Name',
                 'number'=>'Number',
                 'project_id' => 'Project',

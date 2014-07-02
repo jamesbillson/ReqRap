@@ -1,4 +1,5 @@
 <?php 
+if (!isset($tab)) $tab='usecases';
 $mycompany=User::model()->myCompany();
 $projectlist=Company::model()->getProjects($mycompany);
 $followlist = Follower::model()->getMyProjectFollows(1);
@@ -8,6 +9,8 @@ if(isset(Yii::App()->session['project'])) {
     $project=Project::model()->findbyPK(Yii::App()->session['project']); 
     $currentrelease=Release::model()->currentRelease();
     $release=Yii::App()->session['release'];
+    $thisrelease=Release::model()->findbyPK($release);
+    $phase=$thisrelease->status;
     Project::model()->setPermissions($mycompany, $project,$release, $currentrelease);
     
 } ELSE {
@@ -28,7 +31,8 @@ if(isset(Yii::App()->session['project'])) {
      
 
 
-//echo 'project is '.Yii::App()->session['project'].' release is '.Yii::App()->session['release'].' permissions '.Follower::$type[Yii::App()->session['permission']].' ('.Yii::App()->session['permission'].')';
+echo 'project is '.Yii::App()->session['project'].' release is '.Yii::App()->session['release'].' permissions '.Follower::$type[Yii::App()->session['permission']].' ('.Yii::App()->session['permission'].')';
+echo '<br /> tab: '.$tab;
 if (Yii::App()->session['permission'] ==0)  $this->redirect(array('site/fail/condition/no_access_head'));
 ?>
 
@@ -47,17 +51,24 @@ if (Yii::App()->session['permission'] ==0)  $this->redirect(array('site/fail/con
         <i class="icon-cog" rel="tooltip" title="Project Settings"></i>
     </a>
             <?php }  ?>
-             <?php
-    if(isset($currentrelease) && $release != $currentrelease){
-      
-      ?>
-        <a href="/release/setcurrent/"><i class="icon-cog" rel="tooltip" title="Project Settings"></i></a> 
-       
- 
+             <?php if(isset($currentrelease) && $release != $currentrelease){ ?>
+    <a href="/release/setcurrent/"><i class="icon-cog" rel="tooltip" title="Project Settings"></i></a> 
     <?php } ?>
-           <a href="/project/view/tab/usecases/">
+    <a href="/project/view/">
         <i class="icon-film" rel="tooltip" title="Requirements Model"></i>
     </a>
+                 <?php
+    if(($phase==2)){
+      
+      ?>
+    <a href="/project/testing/">
+        <i class="icon-check" rel="tooltip" title="Testing"></i>
+    </a>
+     
+    <a href="/project/walkthru/">
+        <i class="icon-road" rel="tooltip" title="Walk Through"></i>
+    </a>
+        <?php }  ?>
 </td>
 <td> 
     <form action="/project/set/">

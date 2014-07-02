@@ -1,14 +1,5 @@
 <?php
 
-/**
- * This is the model class for table "walkthrupath".
- *
- * The followings are the available columns in table 'walkthrupath':
- * @property integer $id
- * @property integer $number
- * @property integer $name
- * @property integer $preparation
- */
 class Walkthrupath extends CActiveRecord
 {
 	/**
@@ -44,7 +35,7 @@ class Walkthrupath extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
                'release' => array(self::BELONGS_TO, 'Release', 'release_id'),
-                'walkthrupathresult'    =>array(self::HAS_ONE, 'Walkthrupathresult', 'walkthrupath_id'),
+               'result' => array(self::HAS_MANY, 'Walkthruresult', 'walkthrupath_id'),
                
 		);
 	}
@@ -127,6 +118,41 @@ class Walkthrupath extends CActiveRecord
 		$projects = $command->queryAll();
 		
 		return $projects;
+    }  
+    
+    
+      public function getResult($id)
+    {
+        $sql="
+        SELECT 
+        `r`.`result` 
+        FROM `walkthruresult` `r`
+        WHERE 
+        `r`.`walkthrupath_id`=".$id."
+        ORDER BY `r`.`date` DESC
+        LIMIT 0,1";
+
+        $connection=Yii::app()->db;
+	$command = $connection->createCommand($sql);
+	$projects = $command->queryAll();
+		
+	return $projects;
+    }  
+    
+    
+        
+       public function deleteOld()
+    {
+             
+        $sql="
+        DELETE
+        FROM `walkthrupath` 
+        WHERE 
+        `release_id`=".Yii::App()->session['release'];
+
+ $connection=Yii::app()->db;
+      $command = $connection->createCommand($sql);
+      $command->execute();
     }  
     
 	/**

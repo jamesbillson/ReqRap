@@ -17,13 +17,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
     // the table will be 0-padding to the box
     'htmlOptions' => array('class'=>'bootstrap-widget-table'),
        'headerButtons' => array(
-    array(
-        'class' => 'bootstrap.widgets.TbButton',
-        'type' => 'primary', // '', 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
-        'label'=> 'Add Test Case',
-        //'visible'=> $permission,
-        'url'=>'/testcase/create/',
-    ),
+   
    
 ))); 
 ?>

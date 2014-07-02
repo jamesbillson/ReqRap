@@ -8,8 +8,9 @@ $testcases=  Testcase::model()->findAll('release_id='.$release);
 ?>
 <?php 
 
+ $url='/testcase/create/id/'.$release;
 
-        
+
 $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
     'title' => 'Test Cases',
     'headerIcon' => 'icon-check',
@@ -20,11 +21,25 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
     array(
         'class' => 'bootstrap.widgets.TbButton',
         'type' => 'primary', // '', 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
-        'label'=> 'Add Test Case',
+        'label'=> 'Add Manual Case',
+        'visible'=>in_array($permission,array(1,4)),
         //'visible'=> $permission,
         'url'=>'/testcase/create/',
     ),
-   
+           
+    array(
+        'class' => 'bootstrap.widgets.TbButton',
+        'type' => 'primary', // '', 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
+        'label'=> 'Auto Test Case',
+        'visible'=>in_array($permission,array(1,4)),
+        //'visible'=> $permission,
+        'url'=>$url,
+       'htmlOptions' => array(
+		'name'=>'ActionButton',
+		'confirm' => 'This will delete any existing test cases. Are you sure you\'d like to do this?',
+	),
+    ),
+           
 ))); 
 ?>
 

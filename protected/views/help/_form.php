@@ -36,7 +36,7 @@
 		<?php $this->widget(
                 'bootstrap.widgets.TbRedactorJs',
                 array(
-                    'name' => 'Rule[text]',
+                    'name' => 'Help[text]',
                     'value' => $model->text,
                 )
                         );?>

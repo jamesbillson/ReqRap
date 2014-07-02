@@ -24,6 +24,13 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
         'visible'=> $permission,
         'url'=>'/project/photo/id/'.$model->id,
     ),
+     array(
+        'class' => 'bootstrap.widgets.TbButton',
+        'type'=>'link',
+        'icon'=> 'question-sign',
+         'url'=>'/help/popview/scope/interfaces',
+        'htmlOptions' => array('id' => 'popup',),
+    ),
 ))); 
 ?>
 
