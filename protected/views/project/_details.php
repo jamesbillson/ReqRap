@@ -60,8 +60,6 @@ $currentrelease=Release::model()->currentRelease();
       <a href="/library/create/id/<?php echo $item['id'];?>"><i class="icon-book text-success" rel="tooltip" title="Add to library"></i></a> 
       <a href="/release/copy/id/<?php echo $item['id'];?>"><i class="icon-copy" rel="tooltip" title="Copy Release to new project"></i></a>
       <a href="/release/delete/id/<?php echo $item['id'];?>"><i class="icon-remove-sign text-error" rel="tooltip" title="Remove"></i></a> 
-      <a href="/testcase/create/id/<?php echo $item['id'];?>"><i class="icon-check" rel="tooltip" title="Create Test Cases"></i></a> 
-      <a href="/walkthrupath/create/id/<?php echo $item['id'];?>"><i class="icon-road" rel="tooltip" title="Create Walk Throughs"></i></a> 
     
              <?php } 
           

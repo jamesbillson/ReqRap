@@ -2,20 +2,18 @@
 <?php 
 $release=Yii::App()->session['release'];
 $link=$release.'_0_0';
-if (!isset($tab)) $tab='usecases';
+    $permission=Yii::App()->session['permission'];
+    $phase=Release::model()->findbyPK($release)->status;
+if (!isset($tab) && $permission==1) $tab='usecases';
+if (!isset($tab) && $permission==3) $tab='structure';
 if ($tab=='details' || $tab=='walkthru') $tab='usecases';
 echo $this->renderPartial('/project/head',array('tab'=>$tab,'link'=>$link)); 
 if ($tab=='photos') $tab='interfaces';
 ?>
  
-<?php // if this company project owner is current viewer
-  
-    //$type = Company::model()->findbyPK($mycompany)->type; 
-    $permission=Yii::App()->session['permission'];
-    $phase=Release::model()->findbyPK($release)->status;
-    //$totalstages=0;
-   // $status = array('invited','confirmed');
-    //$owner=($permission==1)? True : False;
+<?php 
+
+
 if ($permission==1 ) $this->renderPartial('_contributor',compact('model','permission','tab','phase'));
 if ($permission==3 ) $this->renderPartial('_approver',compact('model','permission','tab','phase'));
 if ($permission==2 ) $this->renderPartial('_tester',compact('model','permission','tab','phase'));
