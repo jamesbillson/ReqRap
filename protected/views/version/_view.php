@@ -14,7 +14,7 @@
 <td>
    <?php 
    if ($data->object == 1) {
-       echo CHtml::encode($data->rule->title) ;
+       echo CHtml::encode($data->rule->name) ;
    }
    ?> 
 </td>
