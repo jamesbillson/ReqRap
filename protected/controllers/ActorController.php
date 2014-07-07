@@ -32,7 +32,7 @@ class ActorController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update','delete','rollback','history'),
+				'actions'=>array('tree','create','update','delete','rollback','history'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -59,6 +59,13 @@ class ActorController extends Controller
 			'versions'=>$versions
         	));
 	}
+
+                public function actionTree() // Note that this is actor_id not id
+	{
+             	$this->renderPartial('tree');
+                
+	}
+        
         
        	        public function actionHistory($id) // Note that this is form_id
 	{

@@ -203,28 +203,32 @@ $library=  Release::model()->findbyPK($id);
 	}
         
         
-                public function actionImport($id)
+                public function actionImport($id) // $id is the release ID of the library item
 	{
         $project=Yii::App()->session['project'];
         $release=Yii::App()->session['release']; 
         
         $offset=  Version::model()->getMaxId($project);//get the max X_id from the existing job, and add this number to all the objects being imported
-       
+       //go through the object types from 1 to 18
         for ($object = 1; $object <= 18; $object++) 
          {
+         // make a list of the object instances for each type
         $objects = Version::model()->objectList($object,$id);
+        // check if this is a numbered object
         if(Version::$number[$object]!='none')
          {
+          // get the last 'number' of the object type  
           $numberoffset=Version::model ()->getMaxNumber($object, $release);
          }
-        foreach ($objects as $instance)
+        foreach ($objects as $instance) // go through the instances of this object type
             {
+            // Import them into the new release
             Version::model()->importObject($object,$instance['id'],$project,$release,$offset,$numberoffset);
             }
          } 
          
          // UPDATE ALL THE PHOTO's TO POINT TO NEW IMAGES
-         $objects = Version::model()->objectList(11,$newrelease);
+         $objects = Version::model()->objectList(11,$release);
 
             foreach ($objects as $instance)
             {
