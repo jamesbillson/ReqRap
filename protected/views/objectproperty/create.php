@@ -1,6 +1,9 @@
-<?php echo $this->renderPartial('/project/head',array('tab'=>'details')); ?>
+<?php echo $this->renderPartial('/project/head'); 
 
-<h3>Create An Object Property for <a href="/object/view/id/<?php echo $parentobject->object_id; ?>"><?php echo $parentobject->name; ?></a></h3>
+$typename= ($type==1)? 'Property':'Relationship';
+?>
+
+<h3>Create An Object <?php echo $typename; ?> for <a href="/object/view/id/<?php echo $parentobject->object_id; ?>"><?php echo $parentobject->name; ?></a></h3>
 
 
-<?php $this->renderPartial('_form', array('model'=>$model,'parentobject'=>$parentobject,)); ?>
+<?php $this->renderPartial('_form', array('model'=>$model,'parentobject'=>$parentobject,'type'=>$type)); ?>

@@ -3,9 +3,10 @@ $link=Yii::App()->session['release'].'_2_'.$model->form_id;
  echo $this->renderPartial('/project/head',array('tab'=>'forms'));
 
 $permission=(Yii::App()->session['permission']==1)?true : false; 
+
 ?>
 
-<a href="/project/view/tab/forms">Back to Forms</a>
+<a href="/project/view/">Back to Forms</a>
 <?php 
 //$data=Formproperty::model()->findAll('form_id='.$model->form_id);
 $data = Formproperty::model()->getFormProperty($model->form_id);

@@ -51,7 +51,8 @@ class FormController extends Controller
 	 */
 	public function actionView($id) // Note that this is form_id
 	{
-             	$versions=Version::model()->getVersions($id,2,'form_id');
+            Yii::app()->session['setting_tab']='forms'; 	
+            $versions=Version::model()->getVersions($id,2,'form_id');
                 $model=$this->loadModel($versions[0]['id']);
                 $this->render('view',array('model'=>$model,
 			'versions'=>$versions
@@ -80,7 +81,7 @@ class FormController extends Controller
         
         public function actionCreate($id)
 	{
-	
+	Yii::app()->session['setting_tab']='forms';
                 $model=new Form;
 
 		if(isset($_POST['Form']))
@@ -118,7 +119,8 @@ class FormController extends Controller
 	 */
 	public function actionUpdate($id)
 	{
-	$model=$this->loadModel($id);
+	Yii::app()->session['setting_tab']='forms';
+            $model=$this->loadModel($id);
             $new= new Form;
             $release=Yii::App()->session['release'];
             $project=Yii::App()->session['project'];
@@ -151,7 +153,7 @@ class FormController extends Controller
 	 */
 public function actionDelete($id)
 	{
-		
+	Yii::app()->session['setting_tab']='forms';	
             $model=$this->loadModel($id);
             $version=Version::model()->getNextNumber($model->project_id,2,3,$id,$model->form_id);  
 	    $model->save();

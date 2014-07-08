@@ -57,10 +57,10 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
 
           <tr class="odd">
 
-              <td>  <b>Package</b> 
+              <td>  <a href="/package/view/id/<?php echo $package['package_id']; ?>"><b>Package</b></a>
               </td>
               <td>   
-                  <a href="/usecase/packchange/id/<?php echo $model->id; ?>"> <?php echo $package['name']; ?></a>
+                  <?php echo $package['name']; ?><a href="/usecase/packchange/id/<?php echo $model->id; ?>"> <i class="icon-gift" rel="tooltip" title="Move to another package"></i></a>
                   <?php
                   /*
                 $package_model=Package::model()->findbyPK($package['id']);  

@@ -28,8 +28,16 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
         'type' => 'primary', // '', 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
         'label'=> 'Add Property',
         'visible'=>$permission,
-        'url'=>array('objectproperty/create', 'id'=>$model->id)
-    )),
+        'url'=>array('objectproperty/create', 'id'=>$model->id,'type'=>1)
+    ),
+             array(
+        'class' => 'bootstrap.widgets.TbButton',
+        'type' => 'primary', // '', 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
+        'label'=> 'Add Relationship',
+        'visible'=>$permission,
+        'url'=>array('objectproperty/create', 'id'=>$model->id,'type'=>2)
+    )
+          ),
 ));
 
 $data=  Objectproperty::model()->getObjectProperty($model->object_id);
@@ -39,7 +47,8 @@ $counter=0;
         <table class="table">
             <thead>
                 <tr>
-                    
+                    <th>Ref.</th>
+                    <th>Type</th>
                     <th>Name</th>
                     <th>Description</th>
                     <th>Actions</th>
@@ -52,8 +61,19 @@ $counter=0;
                     <td>   
                         <?php echo $item['number'];?>
                     </td>
-                    <td>   
-                        <?php echo $item['name'];?>
+ 
+                        <?php 
+                        if($item['type']==1){
+                        echo '<td>Property</td><td>'.$item['name'];
+                        }
+                         else {
+                             echo '<td>Relationship</td><td>';
+                            //echo 'relation to this object with object_id='.$item['name'];
+                            $object=Object::model()->findbyPK(Version::model()->getVersion($item['name'],6));
+                            echo 'OB-'.str_pad($object->number, 3, "0", STR_PAD_LEFT).' '.$object->name;
+                            }
+                        
+                        ?>
                     </td>
                     <td>   
                         <?php echo $item['description'];?>
@@ -63,7 +83,7 @@ $counter=0;
                   
                     <td>
                         <?php if($permission){ ?>
-                        <a href="/objectproperty/update/id/<?php echo $item['id'];?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
+                        <a href="/objectproperty/update/id/<?php echo $item['id'];?>/type/<?php echo $item['type'];?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
                         <a href="/objectproperty/delete?id=<?php echo $item['id'];?>"><i class="icon-remove-sign text-error" rel="tooltip" title="Delete"></i></a> 
                         <a href="/objectproperty/history/id/<?php echo $item['objectproperty_id'];?>"><i class="icon-calendar" rel="tooltip" title="History"></i></a> 
                         

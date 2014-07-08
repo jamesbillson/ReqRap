@@ -53,7 +53,8 @@ class ActorController extends Controller
 	
         public function actionView($id) // Note that this is actor_id not id
 	{
-             	$versions=Version::model()->getVersions($id,4);
+            Yii::App()->session['setting_tab']='actors';  	
+            $versions=Version::model()->getVersions($id,4);
                 $model=$this->loadModel($versions[0]['id']);
                 $this->render('view',array('model'=>$model,
 			'versions'=>$versions
@@ -78,7 +79,7 @@ class ActorController extends Controller
         
 	  public function actionCreate($id)
 	{
-	
+	Yii::App()->session['setting_tab']='actors'; 
                 $model=new Actor;
 
 		if(isset($_POST['Actor']))
@@ -110,6 +111,7 @@ class ActorController extends Controller
         
         	public function actionUpdate($id)
 	{
+                   Yii::App()->session['setting_tab']='actors'; 
                 $model=$this->loadModel($id);
                 $new= new Actor;
              $release=Yii::App()->session['release'];
@@ -147,7 +149,7 @@ class ActorController extends Controller
       
 public function actionDelete($id)
 	{
-		
+		Yii::App()->session['setting_tab']='actors'; 
             $model=$this->loadModel($id);
             
             // Need to test if it is used.  If so cannot delete. 

@@ -23,9 +23,9 @@
 	<?php echo $form->hiddenField($model,'category_id',array('value'=>$category_id)); ?>
 		<div class="row">
 		<?php
-                $number=  Objectproperty::model()->getNextNumber($category_id);
-		 echo $form->hiddenField($model,'number',array('value'=>$number)); ?>
-           Number: <?php echo $number; ?>. 
+               // $number=  Objectproperty::model()->getNextNumber($category_id);
+		// echo $form->hiddenField($model,'number',array('value'=>$number)); ?>
+          <?php // echo $number; ?>. 
 		
 	</div>
 

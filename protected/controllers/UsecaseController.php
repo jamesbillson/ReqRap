@@ -51,6 +51,7 @@ class UsecaseController extends Controller
 	 */
 	public function actionView($id)
 	{
+            Yii::app()->session['setting_tab']='usecases';
 		$versions=Version::model()->getVersions($id,10);
                 $model=$this->loadModel($versions[0]['id']);
                 $package=Package::model()->findbyPK(Version::model()->getVersion($model->package_id,5));
@@ -64,6 +65,7 @@ class UsecaseController extends Controller
 	}
        public function actionHistory($id) // Note that this is form_id
 	{
+           Yii::app()->session['setting_tab']='usecases';
              	$versions=Version::model()->getVersions($id,10,'usecase_id');
                 $model=$this->loadModel($versions[0]['id']);
                 $this->render('history',array('model'=>$model,
@@ -76,6 +78,7 @@ class UsecaseController extends Controller
 	 */
 	public function actionCreate($id)
 	{
+            Yii::app()->session['setting_tab']='usecases';
 		$model=new Usecase;
                 $model->description=Usecase::$default_description;
                 $project=Yii::app()->session['project'];
@@ -134,7 +137,7 @@ class UsecaseController extends Controller
 	public function actionUpdate($id)
 	{
 		                
-                
+                Yii::app()->session['setting_tab']='usecases';
             $release=Yii::App()->session['release'];
             $project=Yii::App()->session['project'];
                 $model=$this->loadModel($id);
@@ -201,7 +204,7 @@ class UsecaseController extends Controller
         
          public function actionPackChange($id)
 	{
-           
+           Yii::app()->session['setting_tab']='usecases';
             $release=Yii::App()->session['release'];
                 $project=Yii::App()->session['project'];
                 $model=$this->loadModel($id);
@@ -234,7 +237,7 @@ class UsecaseController extends Controller
         
         public function actionMove($dir, $id)
 	{
-		
+		Yii::app()->session['setting_tab']='usecases';
             // UP
             // load this one, and the next one.
             // 
@@ -287,7 +290,7 @@ class UsecaseController extends Controller
             // save them both
             
           
-		$this->redirect(array('/project/view/tab/usecases'));
+		$this->redirect(array('/project/view/'));
 	
 	}
         
@@ -298,12 +301,12 @@ class UsecaseController extends Controller
 	 */
 	public function actionDelete($id)
 	{
-	
+	Yii::app()->session['setting_tab']='usecases';
         $project=Yii::app()->session['project'];
         $model = $this->loadModel($id);
         $version=Version::model()->getNextNumber($project,10,3,$model->id,$model->usecase_id);  
 	Usecase::model()->Renumber();
-      	$this->redirect(array('/project/view/tab/usecases/id/'.$project));
+      	$this->redirect(array('/project/view/'));
 	}
 
         public function actionDynamicSteps()

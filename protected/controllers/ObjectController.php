@@ -46,7 +46,8 @@ class ObjectController extends Controller
 	}
      public function actionView($id) // Note that this is actor_id not id
 	{
-             	$versions=Version::model()->getVersions($id,6);
+         Yii::app()->session['setting_tab']='objects';    
+         $versions=Version::model()->getVersions($id,6);
                 $model=$this->loadModel($versions[0]['id']);
                 $this->render('view',array('model'=>$model,
 			'versions'=>$versions
@@ -55,7 +56,8 @@ class ObjectController extends Controller
         
              public function actionHistory($id) // Note that this is form_id
 	{
-             	$versions=Version::model()->getVersions($id,6);
+             Yii::app()->session['setting_tab']='objects';
+                 $versions=Version::model()->getVersions($id,6);
                 $model=$this->loadModel($versions[0]['id']);
                 $this->render('history',array('model'=>$model,
 			'versions'=>$versions
@@ -65,6 +67,7 @@ class ObjectController extends Controller
 	  public function actionCreate()
 	{
             $project=Yii::app()->session['project'];
+            Yii::app()->session['setting_tab']='objects';
                 $model=new Object;
 
 		if(isset($_POST['Object']))
@@ -79,20 +82,50 @@ class ObjectController extends Controller
                     if($model->save())
                     {
                      $version=Version::model()->getNextNumber($project,6,1,$model->primaryKey,$model->object_id);   
-                     $this->redirect(array('/project/view/tab/objects/id/'.$project));
+                     $this->redirect(array('/project/view/'));
 		    }
                         
                 }
                
                 $this->render('create',array(
-			'model'=>$model,'project_id'=>$project,
+			'model'=>$model
 		));
 	}
 
         
+           	public function actionUpdate($id) //type is 1 property, 2 relationship
+	{
+                       Yii::app()->session['setting_tab']='objects';
+                    $model=$this->loadModel($id);
+                $new= new Object;
+            $release=Yii::App()->session['release'];
+            $project=Yii::App()->session['project'];
+            
+		if(isset($_POST['Object']))
+		{
+                        
+			 $new->attributes=$_POST['Object'];
+                         $new->project_id=$project;
+                         $new->release_id=$release;
+                         $new->object_id=$model->object_id;
+                         $new->number=$model->number;
+                      
+			if($new->save())
+                        {
+			$version=Version::model()->getNextNumber($project, 6, 2,$new->primaryKey,$model->object_id);
+                        $this->redirect(array('/project/view/'));
+                        }        
+		}
+
+		$this->render('update',array(
+			'model'=>$model
+		));
+	}
+        
         	  public function actionConvert($id)
 	{
-            $project=Yii::app()->session['project'];
+           Yii::app()->session['setting_tab']='forms';
+                      $project=Yii::app()->session['project'];
             $release=Yii::app()->session['release'];
             $form=new Form;
             
@@ -151,41 +184,15 @@ class ObjectController extends Controller
 
         
         
-        	public function actionUpdate($id)
-	{
-                $model=$this->loadModel($id);
-                $new= new Object;
-            $release=Yii::App()->session['release'];
-            $project=Yii::App()->session['project'];
-            
-		if(isset($_POST['Object']))
-		{
-                        
-			 $new->attributes=$_POST['Object'];
-                         $new->project_id=$project;
-                         $new->release_id=$release;
-                         $new->object_id=$model->object_id;
-                         $new->number=$model->number;
-                      
-			if($new->save())
-                        {
-			$version=Version::model()->getNextNumber($project, 6, 2,$new->primaryKey,$model->object_id);
-                        $this->redirect(array('/project/view/tab/objects/id/'.$model->project_id));
-                        }        
-		}
-
-		$this->render('update',array(
-			'model'=>$model,'project_id'=>$project
-		));
-	}
+     
         
-        
+         
 	
 
       
 public function actionDelete($id)
 	{
-		
+		Yii::app()->session['setting_tab']='objects';
             $model=$this->loadModel($id);
             
             $version=Version::model()->getNextNumber($model->project_id,6,3,$id,$model->object_id); 

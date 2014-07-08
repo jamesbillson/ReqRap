@@ -51,6 +51,7 @@ class PackageController extends Controller
 	 */
   public function actionView($id) // Note that this is package_id not id
 	{
+      Yii::app()->session['setting_tab']='usecases';
              	$versions=Version::model()->getVersions($id,5);
                 $model=$this->loadModel($versions[0]['id']);
                 $this->render('view',array('model'=>$model,
@@ -78,7 +79,7 @@ class PackageController extends Controller
         
            public function actionMove($dir, $id)
 	{
-		
+		Yii::app()->session['setting_tab']='usecases';
             $model = Package::model()->findByPk($id);
             $oldnum=$model->number;
             $packages=Package::model()->getPackages();
@@ -115,6 +116,7 @@ class PackageController extends Controller
         
 	  public function actionCreate()
 	{
+              Yii::app()->session['setting_tab']='usecases';
 	    $release=Yii::App()->session['release'];
             $project=Yii::App()->session['project'];
                 $model=new Package;
@@ -148,6 +150,7 @@ class PackageController extends Controller
         
       	public function actionUpdate($id)
 	{
+            Yii::app()->session['setting_tab']='usecases';
                 $model=$this->loadModel($id);
                 $new= new Package;
                 $release=Yii::App()->session['release'];
@@ -182,6 +185,7 @@ class PackageController extends Controller
 	
 public function actionDelete($id)
 	{
+    Yii::app()->session['setting_tab']='usecases';
 	$project=Yii::app()->session['project'];
             $model=$this->loadModel($id);
             $version=Version::model()->getNextNumber($project,5,3,$id,$model->package_id);  

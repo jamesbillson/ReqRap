@@ -32,7 +32,7 @@ class Objectproperty extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('objectproperty_id, object_id, number, name, description, project_id, release_id', 'required'),
-			array('objectproperty_id, object_id, project_id, release_id', 'numerical', 'integerOnly'=>true),
+			array('objectproperty_id, object_id, project_id, release_id, type', 'numerical', 'integerOnly'=>true),
 			array('name', 'length', 'max'=>255),
                     array('number', 'length', 'max'=>30),
 			// The following rule is used by search().
@@ -47,14 +47,10 @@ class Objectproperty extends CActiveRecord
 	public function relations()
 	{
 		
-		return array(
+	return array(
+		 	);
 			     
-                            'object'=>array(self::BELONGS_TO,
-                                    'object','object_id',
-                                    'joinType'=>'JOIN',
-                                    'foreignKey'=>'object_id',
-                                'on'=>'object.project_id=objectproperty.project_id')
-                    );
+                           
 	}
 
 
@@ -68,6 +64,7 @@ class Objectproperty extends CActiveRecord
                     'release_id' => 'Release',
                     'object_id' => 'Object',
                     'name' => 'Name',
+                    'type'=> 'Type',
                     'number'=>'Number',
                     'description' => 'Description',
 		);
@@ -159,12 +156,8 @@ class Objectproperty extends CActiveRecord
           $release=Yii::App()->session['release'];
         $sql="
             SELECT 
-            `r`.`id`,
-            `r`.`objectproperty_id`,
-            `r`.`number`,
-            `r`.`description`,
-            `r`.`name`,
-            `v`.`active`
+            `r`.*,
+           `v`.`active`
             FROM `objectproperty` `r`
             JOIN `version` `v`
             ON `v`.`foreign_key`=`r`.`id`

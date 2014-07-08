@@ -46,7 +46,8 @@ class CategoryController extends Controller
 	}
      public function actionView($id) // Note that this is category_id not id
 	{
-             	$versions=Version::model()->getVersions($id,17);
+         Yii::app()->session['setting_tab']='category';    	
+         $versions=Version::model()->getVersions($id,17);
                 $model=$this->loadModel($versions[0]['id']);
                 $this->render('view',array('model'=>$model,
 			'versions'=>$versions
@@ -64,7 +65,8 @@ class CategoryController extends Controller
         
 	  public function actionCreate()
 	{
-            $project=Yii::app()->session['project'];
+            Yii::app()->session['setting_tab']='category'; 
+              $project=Yii::app()->session['project'];
                 $model=new Category;
 
 		if(isset($_POST['Category']))
@@ -95,7 +97,8 @@ class CategoryController extends Controller
         
         	public function actionUpdate($id)
 	{
-                $model=$this->loadModel($id);
+                Yii::app()->session['setting_tab']='category'; 
+                    $model=$this->loadModel($id);
                 $new= new Category;
             $release=Yii::App()->session['release'];
             $project=Yii::App()->session['project'];
@@ -127,7 +130,8 @@ class CategoryController extends Controller
           
         	public function actionUp($id)
 	{
-                $model=$this->loadModel($id);
+               Yii::app()->session['setting_tab']='structure'; 
+                    $model=$this->loadModel($id);
                 $release=Yii::App()->session['release'];
             $project=Yii::App()->session['project'];
                 $new= new Category;
@@ -150,12 +154,11 @@ class CategoryController extends Controller
           
         	public function actionDown($id)
 	{
-                $model=$this->loadModel($id);
-                           $release=Yii::App()->session['release'];
-            $project=Yii::App()->session['project'];
-                $new= new Category;
+               Yii::app()->session['setting_tab']='structure'; 
+                    $model=$this->loadModel($id);
             $release=Yii::App()->session['release'];
             $project=Yii::App()->session['project'];
+                $new= new Category;
             
 		
                         
@@ -179,7 +182,7 @@ class CategoryController extends Controller
       
 public function actionDelete($id)
 	{
-		
+	Yii::app()->session['setting_tab']='category'; 	
             $model=$this->loadModel($id);
             
             $version=Version::model()->getNextNumber($model->project_id,17,3,$id,$model->category_id); 

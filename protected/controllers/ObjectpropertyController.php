@@ -67,7 +67,7 @@ class ObjectpropertyController extends Controller
         	));
 	}
 	
-                 public function actionCreate($id)
+                 public function actionCreate($id,$type)
 	{
 	    $release=Yii::App()->session['release'];
             $project=Yii::App()->session['project'];
@@ -97,12 +97,12 @@ class ObjectpropertyController extends Controller
                 }
                
                 $this->render('create',array(
-			'model'=>$model,'parentobject'=>$object,
+			'model'=>$model,'parentobject'=>$object,'type'=>$type
 		));
 	}
         
         
-   public function actionUpdate($id)
+   public function actionUpdate($id,$type)
 	{
             
            $release=Yii::App()->session['release'];
@@ -129,7 +129,7 @@ class ObjectpropertyController extends Controller
 		}
 
 		$this->render('update',array(
-			'model'=>$model,'object'=>$parentobject,
+			'model'=>$model,'object'=>$parentobject,'type'=>$type
 		));
 	}
 
