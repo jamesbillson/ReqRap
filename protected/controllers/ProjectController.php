@@ -66,7 +66,7 @@ class ProjectController extends Controller
     $followlist = Follower::model()->getMyProjectFollows(1);
     foreach($followlist as $follow){
      //   echo '<br />add a follow project'.$follow['id'];
-    array_push($myfollows,$follow['id']);
+    $myfollows=$myfollows+array($follow['id']=>$follow['role']);
     }
     //echo 'follows:<pre>';
     //print_r($follow);
@@ -77,12 +77,12 @@ class ProjectController extends Controller
     //echo '</pre>';
 
 // If I am a follower then set the release to the last release.
-    if(in_array($id, $myfollows)) {
+    if(isset($myfollows[$id]) && $myfollows[$id]>1) {
     //echo '<br />I am  a follower';    
         Yii::app()->session['release']=  Release::model()->lastRelease();
     }
 // if I own the project set the viewing release to current release
-    if(in_array($id, $myproject)) {
+    if(in_array($id, $myproject) || (isset($myfollows[$id]) && $myfollows[$id]==1)) {
     //echo '<br />my project ';    
         Yii::app()->session['release']=  Release::model()->currentRelease();
     }

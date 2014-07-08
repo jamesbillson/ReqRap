@@ -204,12 +204,12 @@ class FollowerController extends Controller
             $model->modified=Yii::app()->user->id;
             $model->modified_date=date("Y-m-d H:i:s", time());
             $model->link=uniqid('',true);
-         echo 'created now follower about to save';
+         //echo 'created now follower about to save';
             if($model->save())
             {
                 // use sendInvite function to send invite using function.
                 //debug $this->redirect(array('/site/admin?id='.$model->primaryKey));
-               echo 'saved follower about to email';
+              // echo 'saved follower about to email';
                Follower::model()->sendInvite($model->primaryKey);
 
                //set the tab to followers

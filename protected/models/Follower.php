@@ -335,7 +335,7 @@ class Follower extends CActiveRecord
         //$id is the accepted state where 0=invite, 1=follow
         $sql="SELECT  `p`.`name` as pname, `p`.`id`, `p`.`stage`,
                 `f`.`modified_date` ,  `f`.`id` as fid ,  `f`.`link` ,
-                `k`.`name` AS cname,  `k`.`id` cid, `f`.`type`
+                `k`.`name` AS cname,  `k`.`id` cid, `f`.`type`,`f`.`role`
             FROM  `follower`  `f` 
                 JOIN  `contact`  `c` ON  `f`.`contact_id` =  `c`.`id` 
                 JOIN  `user`  `u` ON  `u`.`username` =  `c`.`email` 
