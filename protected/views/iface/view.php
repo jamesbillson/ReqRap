@@ -3,26 +3,35 @@
         <script type="text/javascript" src="<?php Yii::app()->baseUrl?>/js/jcarousel.responsive.js"></script>
 <?php 
 $link=Yii::App()->session['release'].'_12_'.$model->iface_id;
-echo $this->renderPartial('/project/head',array('tab'=>'usecases','link'=>$link)); ?>
+echo $this->renderPartial('/project/head',array('tab'=>'usecases','link'=>$link)); 
 
-<h2>Interface UI-<?php echo str_pad($model->number, 3, "0", STR_PAD_LEFT); ?> 
+foreach($types as $type):
+ if($type['interfacetype_id']==$model->interfacetype_id){
+     $type_name=$type['name'];
+     $type_number=$type['number'];
+     
+ }
+ 
+endforeach;
+?>
+
+<h2>Interface UI-<?php echo str_pad($type_number, 2, "0", STR_PAD_LEFT).str_pad($model->number, 3, "0", STR_PAD_LEFT); ?> 
      <a href="/iface/update/ucid/-1/id/<?php echo $model->id;?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
 
 </h2>
 <a href="/project/view/tab/interfaces">Back to Interfaces</a>
 <h3>   <?php echo $model->name;?> </h3>
-<strong>Interface type: </strong>
-<?php foreach($types as $type):
- if($type['interfacetype_id']==$model->interfacetype_id)  echo $type['name']; 
-endforeach;
-?>
+<strong>Interface type: </strong><?php echo $type_name;?>
+
 <br /><strong>Interface description: </strong>
 <?php echo $model->text;?>
 <br />
 <?php
 //IF there is no photo
+
+$image_id=Version::model()->getVersion($model->photo_id,11);
 //Form to add photos
-if ($model->photo_id==0)
+if ($model->photo_id==0 || $image_id==0)
     {
     //Show a form to pick one of the untaken images.
 
@@ -70,14 +79,22 @@ array(
 
         </div>
         <?php } ELSE {
-
-      $image=Photo::model()->findByPk(Version::model()->getVersion($model->photo_id,11));
+  $config = array(
+      );
+ 
+      $this->widget('application.extensions.fancybox.EFancyBox', array(
+        'target'=>'a#popup',
+        'config'=>$config,));
+ 
+      
+         
+      $image=Photo::model()->findByPk($image_id);
       $src = Yii::app()->easyImage->thumbSrcOf(
                                     Yii::app()->params['photo_folder'].$image->file, 
                                    array('resize' => array('width' => 150,'height'=>150))); ?>
     <div style="float:left;width:100%;">
       <div style="width:160px;float:left;">
-        <img src="<?php echo $src ?>"/>
+          <a id="popup" href="<?php echo '/iface/preview/id/'.$model->iface_id.'/release/'.Yii::app()->session['release']; ?>"><img src="<?php echo $src ?>"/></a>
       </div>
       <div style="float:left;margin-top: 50px;">
         <a href="<?php echo Yii::app()->baseUrl?>/iface/update/ucid/0/id/<?php echo $model->id;?>"><i class="icon-link text-error" rel="tooltip" title="Unlink this image"></i>Unlink</a> <br />

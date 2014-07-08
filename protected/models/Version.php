@@ -361,7 +361,7 @@ class Version extends CActiveRecord {
         $connection = Yii::app()->db;
         $command = $connection->createCommand($sql);
         $projects = $command->queryAll();
-       
+       if (!empty($projects)){
         $name=$projects[0]['name'];
         $number=$projects[0]['number'];
         $catnum=(isset($projects[0]['parentnum']))?str_pad($projects[0]['parentnum'], 2, "0", STR_PAD_LEFT):''; 
@@ -369,6 +369,9 @@ class Version extends CActiveRecord {
         $prepend=Version::$numberformat[$object]['prepend'];
         $padded=$prepend.'-'.$catnum.str_pad($number, Version::$numberformat[$object]['padding'], "0", STR_PAD_LEFT);
         $result=array('name'=>$name,'number'=>$padded);
+       } ELSE {
+        $result=array('name'=>'deleted','number'=>'000');   
+       }
         return $result;
     }
 
@@ -468,8 +471,12 @@ class Version extends CActiveRecord {
         $connection = Yii::app()->db;
         $command = $connection->createCommand($sql);
         $projects = $command->queryAll();
-
-        return $projects[0]['id'];
+        if (isset($projects[0]['id'])) {
+            return $projects[0]['id'];
+        } ELSE {
+            return 0;
+        }
+        
     }
 
       public function getObject($id, $object) {

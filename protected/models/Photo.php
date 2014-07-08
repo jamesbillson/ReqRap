@@ -184,7 +184,7 @@ class Photo extends CActiveRecord
                 $newfile=substr($file,8);
                 $newfile=str_pad($release, 8, "0", STR_PAD_LEFT).$newfile;
                 copy($path.$file, $path.$newfile);
-                }
+               
    $sql = "
         UPDATE `photo` `p`
         SET `p`.`file`='".$newfile."'
@@ -193,7 +193,7 @@ class Photo extends CActiveRecord
         $connection = Yii::app()->db;
         $command = $connection->createCommand($sql);
         $command->execute();
-         
+          }
       //update the photo record with the new file name
          
          

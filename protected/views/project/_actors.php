@@ -74,6 +74,8 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
     <?php endif;
 $this->endWidget(); ?>
 
+<img src="/images/tree/stgraph.png.php">
+
 
   <?php if($permission){ ?>
 

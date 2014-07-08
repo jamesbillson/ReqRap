@@ -1,7 +1,7 @@
  
 <?php 
 $permission=(Yii::App()->session['permission']==1)?true : false; 
-
+Yii::App()->session['setting_tab']='interfaces';
         
 $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
     'title' => 'Interfaces',
@@ -60,7 +60,7 @@ if (count($data)):?>
 
                 <tr class="odd">  
                     <td colspan="4">   
-                    <?php echo $type['name'];?>
+                    <?php echo str_pad($type['number'], 2, "0", STR_PAD_LEFT).'-'.$type['name'];?>
                     </td>
                 </tr>
       
@@ -73,7 +73,7 @@ if (count($data)):?>
                         
                      <a href="/iface/view/id/<?php echo $item['iface_id'];?>">
                           
-                        IF-<?php echo str_pad($item['typenumber'], 2, "0", STR_PAD_LEFT); ?><?php echo str_pad($item['number'], 3, "0", STR_PAD_LEFT); ?>
+                        IF-<?php echo str_pad($type['number'], 2, "0", STR_PAD_LEFT); ?><?php echo str_pad($item['number'], 3, "0", STR_PAD_LEFT); ?>
                    </a>
                     </td>
                     <td>   

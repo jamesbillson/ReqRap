@@ -16,6 +16,15 @@
  */
 class Messages extends CActiveRecord
 {
+    
+    
+       public static $formats = array(
+            0 => 'notice',
+            1 => 'success',
+            2 => 'warning',
+            3 => 'error'
+           );
+    
 	/**
 	 * @return string the associated database table name
 	 */
@@ -32,13 +41,10 @@ class Messages extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('message, scope, show_once, message_type', 'required'),
-			array('show_once', 'numerical', 'integerOnly'=>true),
-			array('message', 'length', 'max'=>255),
+			array('message, scope, show_once, type', 'required'),
+			array('show_once, type, message_type', 'numerical', 'integerOnly'=>true),
 			array('scope, exclude', 'length', 'max'=>100),
-			// The following rule is used by search().
-			// @todo Please remove those attributes that should not be searched.
-			array('id, message, scope, exclude, condition, show_once', 'safe', 'on'=>'search'),
+			array('id, message, type, message_type, scope, exclude, condition, show_once', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -62,8 +68,10 @@ class Messages extends CActiveRecord
 		return array(
 			'id' => 'ID',
 			'message' => 'Message',
+                    'message_type' => 'Message Type',
 			'scope' => 'Scope',
 			'exclude' => 'Exclude',
+                        'type' => 'Type',
 			'condition' => 'Condition',
 			'show_once' => 'Show Once',
 		);
@@ -136,7 +144,7 @@ class Messages extends CActiveRecord
           //$alert_messages[] = $message->message;
           //$ids[] = $message->id;
           //class="icon-'. $message->message_type .'-sign" 
-          Yii::app()->user->setFlash($message->message_type, '<i data-id="'. $message->id .'"></i>' . $message->message);
+          Yii::app()->user->setFlash(Messages::$formats[$message->message_type], '<i data-id="'. $message->id .'"></i>' . $message->message);
         }
 
         if (count($alert_messages) >= $alerts_limit)

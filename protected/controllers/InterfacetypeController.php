@@ -32,7 +32,7 @@ class InterfacetypeController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update','remove'),
+				'actions'=>array('create','update','remove','swap'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -72,6 +72,7 @@ class InterfacetypeController extends Controller
 		{
                         $model->attributes=$_POST['Interfacetype'];
                         $model->interfacetype_id=Version::model()->getNextID(13);
+                        $model->number=Version::model()->getMaxNumber(13,$release)+1;
                         $model->project_id=$project;
                         $model->release_id=$release;
 			if($model->save())
@@ -120,12 +121,53 @@ class InterfacetypeController extends Controller
 	}
 
 	 
+        public function actionSwap($id) // id is database id
+	{
+	    $release=Yii::App()->session['release'];
+            $project=Yii::App()->session['project'];
+            Yii::App()->session['setting_tab']='settings';
+            
+            $model=$this->loadModel($id);
+            
+                
+		
+		if(isset($_POST['Iface']['interfacetype_id']))
+		{
+		$new_id = $_POST['Iface']['interfacetype_id'];
+                 //update all interfaces in this release with interface type interfacetype_id
+                    // and set them to //$new_id
+                $children=Iface::model()->getCategoryIfaces($model->interfacetype_id);
+                foreach ($children as $child){
+                $iface=Iface::model()->findbyPK($child['id']);
+                $new= new Iface;
+                $new->attributes=$iface->attributes;
+                $new->interfacetype_id=$new_id;
+                $new->save();
+                Version::model()->getNextNumber($project,12,2,$new->primaryKey,$new->iface_id);   
+                Version::model()->getNextNumber($project,13,3,$model->id,$model->interfacetype_id);   
+                   
+                }
+                    
+                $this->redirect(array('/project/project'));
+		}
+                    $this->render('swap',array(
+			'model'=>$model,
+		));
+	}
+        
+        
 	public function actionRemove($id)
 	{
 	  Yii::App()->session['setting_tab']='settings';	
             $model=$this->loadModel($id);
+            $children=Iface::model()->getCategoryIfaces($model->interfacetype_id);
+            if (empty($children)) {
             $version=Version::model()->getNextNumber($model->project_id,13,3,$id,$model->interfacetype_id);  
-	     $this->redirect(array('/project/project/'.$model->project_id));
+	    $this->redirect(array('/project/project/'));
+            } ELSE {
+                Yii::app()->user->setFlash('error', "This interface type is in use, please pick a new type to transfer the images to.");
+            $this->redirect(array('/interfacetype/swap/id/'.$model->id));    
+            }
         }
 
 	/**
