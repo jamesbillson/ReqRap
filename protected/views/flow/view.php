@@ -64,8 +64,8 @@
                             </td>
                             <td>
                             <?php
-                                echo $step['text']."
-                                <br />".$step['result']."</td> ";
+                                echo  Version::model()->wikiOutput($step['text'])."
+                                <br />". Version::model()->wikiOutput($step['result'])."</td> ";
                         
                                 if ($line['main']==1) { // THIS IS THE MAIN FLOW so show the Fork link
                               ?>
