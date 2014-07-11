@@ -1,5 +1,5 @@
 <?php 
-
+ $edit=(Yii::App()->session['edit']==1)?TRUE:FALSE;
 $release=Yii::App()->session['release'];
 $project=Yii::App()->session['project'];
 $testcases=  Testcase::model()->findAll('release_id='.$release);
@@ -23,7 +23,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
         'type' => 'primary', // '', 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
         'label'=> 'Add Manual Case',
         'visible'=>in_array($permission,array(1,4)),
-        //'visible'=> $permission,
+        //'visible'=> $edit,
         'url'=>'/testcase/create/',
     ),
            
@@ -32,7 +32,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
         'type' => 'primary', // '', 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
         'label'=> 'Auto Test Case',
         'visible'=>in_array($permission,array(1,4)),
-        //'visible'=> $permission,
+        //'visible'=> $edit,
         'url'=>$url,
        'htmlOptions' => array(
 		'name'=>'ActionButton',

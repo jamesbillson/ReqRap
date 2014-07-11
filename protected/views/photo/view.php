@@ -1,8 +1,8 @@
 
 <?php 
-echo $this->renderPartial('/project/head',array('tab'=>'usecases')); ?>
-
-<?php if(isset($model->id)): ?>
+echo $this->renderPartial('/project/head',array('tab'=>'usecases'));
+ $edit=(Yii::App()->session['edit']==1)?TRUE:FALSE;
+ if(isset($model->id)): ?>
 
     
 <?php      
@@ -31,7 +31,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                        <?php echo $item->description ?>
                    </td>
                      <td>
-                      <?php if($permission){ ?>
+                      <?php if($edit){ ?>
                         <a href="/photo/update/id/<?php echo $item->id;?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
                         <a href="/photo/delete/id/<?php echo $item->id;?>"><i class="icon-remove-sign text-error" rel="tooltip" title="Delete"></i></a> 
                           <?php } ?>

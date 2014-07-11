@@ -1,7 +1,8 @@
 <?php 
 $link=Yii::App()->session['release'].'_17_'.$model->category_id;
 echo $this->renderPartial('/project/head',array('tab'=>'category','link'=>$link));
-$permission=(Yii::App()->session['permission']==1)?true : false; 
+$permission=Yii::App()->session['permission']; 
+ $edit=(Yii::App()->session['edit']==1)?TRUE:FALSE;
 ?>
    
 <br>
@@ -19,7 +20,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
         'class' => 'bootstrap.widgets.TbButton',
         'type' => 'primary', // '', 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
         'label'=> 'Add Simple Requirement',
-        'visible'=>$permission,
+        'visible'=>$edit,
         'url'=>array('simple/create', 'id'=>$model->id)
     )),
 ));
@@ -56,7 +57,7 @@ $counter=0; ?>
 
                   
                     <td>
-                        <?php if($permission){ ?>
+                        <?php if($edit){ ?>
                         <a href="/simple/update/id/<?php echo $item['id'];?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
                         <a href="/simple/delete?id=<?php echo $item['id'];?>"><i class="icon-remove-sign text-error" rel="tooltip" title="Delete"></i></a> 
                      <a href="/simple/history/id/<?php echo $item['simple_id'];?>"><i class="icon-calendar" rel="tooltip" title="History"></i></a> 

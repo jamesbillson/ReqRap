@@ -1,9 +1,10 @@
 <?php 
 echo $this->renderPartial('/project/head',array('tab'=>'interfaces')); 
-$permission=(Yii::App()->session['permission']==1)?true : false;
+
+ $edit=(Yii::App()->session['edit']==1)?TRUE:FALSE;
     ?>
 <h3>Create Interface</h3>
 
 <?php 
-if($permission) $this->renderPartial('_form', array('model'=>$model)); 
+if($edit) $this->renderPartial('_form', array('model'=>$model)); 
 ?>

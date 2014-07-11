@@ -1,6 +1,6 @@
 
 <?php 
-$permission=(Yii::App()->session['permission']==1)?true : false; 
+ $edit=(Yii::App()->session['edit']==1)?TRUE:FALSE;
 $data = Actor::model()->getProjectActors(Yii::app()->session['project']);
 
 $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
@@ -14,7 +14,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
         'class' => 'bootstrap.widgets.TbButton',
         'type' => 'primary', // '', 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
         'label'=> 'Add Actor',
-         'visible'=> $permission,
+         'visible'=> $edit,
         'url'=>'/actor/create/id/'.$model->id,
     ),
     array(
@@ -60,7 +60,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
 
                   
                     <td>
-                      <?php if($permission){ ?>
+                      <?php if($edit){ ?>
                      <a href="/actor/update/id/<?php echo $item['id'];?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
                      <a href="/actor/delete/id/<?php echo $item['id'];?>"><i class="icon-remove-sign text-error" rel="tooltip" title="Delete"></i></a> 
                      <a href="/actor/history/id/<?php echo $item['actor_id'];?>"><i class="icon-calendar" rel="tooltip" title="Version History"></i></a> 
@@ -72,12 +72,19 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
         </table>
 
     <?php endif;
-$this->endWidget(); ?>
-
-<img src="/images/tree/stgraph.png.php">
+$this->endWidget();
 
 
-  <?php if($permission){ ?>
+//$this->renderPartial('/actor/diagram');
+
+
+
+//$tree='[what_new_here][about][Actor%20[Child][Daughter%20[grand%20admin][cousin]]]';
+?>
+
+<!--img src="http://reqrap/images/tree/tree.php?data=<?php // echo $tree;?>"-->
+
+  <?php if($edit){ ?>
 
 <?php $deleted = Version::model()->getProjectDeletedVersions($model->id,4);
 if (count($deleted)):?>

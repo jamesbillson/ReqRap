@@ -1,6 +1,6 @@
 <?php echo $this->renderPartial('/project/head',array('tab'=>'forms'));
 
-$permission=(Yii::App()->session['permission']==1)?true : false; 
+$permission=Yii::App()->session['permission']; 
 ?>
 
 
@@ -21,7 +21,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
         'class' => 'bootstrap.widgets.TbButton',
         'type' => 'primary', // '', 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
         'label'=> 'Add Form Property',
-        'visible'=>$permission,
+        'visible'=>$edit,
         'url'=>array('formproperty/create', 'id'=>$model->form_id)
     )),
 ));
@@ -64,7 +64,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                         <?php echo ($item['required']==1)?'Yes':'No';?>
                     </td>                   
                     <td>
-                   <?php if($permission){ ?>
+                   <?php if($edit){ ?>
                         <a href="/formproperty/update/id/<?php echo $item['id'];?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
                         <a href="/formproperty/delete?id=<?php echo $item['id'];?>"><i class="icon-remove-sign" rel="tooltip" title="Delete"></i></a> 
                      <a href="/formproperty/history/id/<?php echo $item['formproperty_id'];?>"><i class="icon-calendar" rel="tooltip" title="History"></i></a> 
@@ -80,7 +80,7 @@ $this->endWidget(); ?>
 
 
 
- <?php if($permission){ ?>
+ <?php if($edit){ ?>
 
 <?php $deleted = Version::model()->getObjectDeletedVersions($model->form_id,2,3);
 if (count($deleted)):?>

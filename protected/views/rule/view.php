@@ -2,7 +2,7 @@
 $link=Yii::App()->session['release'].'_1_'.$model->rule_id;
 echo $this->renderPartial('/project/head',array('tab'=>'rules','link'=>$link));
 
-$permission=(Yii::App()->session['permission']==1)?true : false; 
+ $edit=(Yii::App()->session['edit']==1)?TRUE:FALSE;
 ?>
 
  
@@ -20,7 +20,7 @@ $permission=(Yii::App()->session['permission']==1)?true : false;
                     'class' => 'bootstrap.widgets.TbButton',
                     'type' => 'link', // '', 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
                     'icon'=> 'edit',
-                    'visible'=>$permission,
+                    'visible'=>$edit,
                     'url'=>'/rule/update/id/'.$model->id,
                     
                       ),

@@ -1,6 +1,6 @@
  <?php echo $this->renderPartial('/project/head',array('tab'=>'usecases')); 
 
-$permission=(Yii::App()->session['permission']==1)?true : false; 
+ $edit=(Yii::App()->session['edit']==1)?TRUE:FALSE; 
 $packages = Package::model()->getPackages($model->id);
 $model_package=Package::model()->findbyPK(Version::model()->getVersion($model->package_id,5));   
    
@@ -10,7 +10,7 @@ $model_package=Package::model()->findbyPK(Version::model()->getVersion($model->p
         .str_pad($model->number, 3, "0", STR_PAD_LEFT).
         '-'.$model->name; ?>
 </h3>
-<?php if($permission){ ?>
+<?php if($edit){ ?>
 
 <div class="form">
 

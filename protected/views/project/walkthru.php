@@ -12,6 +12,7 @@ if ($tab=='photos') $tab='interfaces';
   
     //$type = Company::model()->findbyPK($mycompany)->type; 
     $permission=Yii::App()->session['permission'];
+     $edit=(Yii::App()->session['edit']==1)?TRUE:FALSE;
     $phase=Release::model()->findbyPK($release)->status;
  
 
@@ -65,9 +66,9 @@ $walkthrupaths= Walkthrupath::model()->findAll('release_id='.$release);
       
                     
                     <td>
-                                    
+                             
                      <a href="/walkthrupath/run/id/<?php echo $walkthrupath->id;?>"><i class="icon-check" rel="tooltip" title="Run the Test Case"></i></a> 
-                  
+                             
                     </td>
                 </tr>
             <?php }

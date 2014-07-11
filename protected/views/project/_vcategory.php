@@ -1,7 +1,7 @@
 
 <?php 
 
-$permission=(Yii::App()->session['permission']==1)?true : false; 
+ $edit=(Yii::App()->session['edit']==1)?TRUE:FALSE;
 
 $data = Category::model()->getProjectCategory(Yii::app()->session['project']);
 
@@ -16,7 +16,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
         'class' => 'bootstrap.widgets.TbButton',
         'type' => 'primary', // '', 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
         'label'=> 'Add Category',
-         'visible'=> $permission,
+         'visible'=> $edit,
         'url'=>'/category/create/id/'.$model->id,
     ),
     
@@ -45,7 +45,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                         <?php echo $item['description'];?>
                     </td>            
                     <td>
-                         <?php if($permission){ ?>
+                         <?php if($edit){ ?>
                         <a href="/category/update/id/<?php echo $item['id'];?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
                         <a href="/category/delete?id=<?php echo $item['id'];?>"><i class="icon-remove-sign text-error" rel="tooltip" title="Delete"></i></a> 
                         <a href="/category/history/id/<?php echo $item['category_id'];?>"><i class="icon-calendar" rel="tooltip" title="Version history"></i></a> 
@@ -58,7 +58,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
 
     <?php endif;
 $this->endWidget(); ?>
-   <?php if($permission){ ?>
+   <?php if($edit){ ?>
 <?php $deleted = Version::model()->getProjectDeletedVersions($model->id,6);
 if (count($deleted)):?>
     

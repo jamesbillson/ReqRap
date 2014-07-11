@@ -1,7 +1,7 @@
 <?php 
 
 
-$permission=(Yii::App()->session['permission']==1)?true : false; 
+ $edit=(Yii::App()->session['edit']==1)?TRUE:FALSE;
 $data = Library::model()->findAll('public =1');
 
  
@@ -54,7 +54,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
 
                        
                         <a href="/release/copy/id/<?php echo $item['release_id'];?>"><i class="icon-flag text-success" rel="tooltip" title="Copy this project"></i></a> 
-             <?php if($permission){ ?>
+             <?php if($edit){ ?>
                         <a href="/release/import/id/<?php echo $item['release_id'];?>"><i class="icon-download text-success" rel="tooltip" title="Import this project"></i></a> 
                    <?php } ?>  
                  <?php if((User::model()->myCompany())==(Library::model()->libraryOwner($item['id']))){ ?>    
@@ -119,7 +119,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
 
                        
                         <a href="/release/copy/id/<?php echo $item['release_id'];?>"><i class="icon-flag text-success" rel="tooltip" title="Copy this project"></i></a> 
-               <?php if($permission){ ?>
+               <?php if($edit){ ?>
                         <a href="/release/import/id/<?php echo $item['release_id'];?>"><i class="icon-download text-success" rel="tooltip" title="Import this project"></i></a> 
               <?php } ?>
                          <?php if((User::model()->myCompany())==(Library::model()->libraryOwner($item['id']))){ ?>    

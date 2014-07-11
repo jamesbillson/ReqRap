@@ -1,7 +1,6 @@
 
 <?php 
-
-$permission=(Yii::App()->session['permission']==1)?true : false; 
+ $edit=(Yii::App()->session['edit']==1)?TRUE:FALSE;
 
 $data = Object::model()->getProjectObjects(Yii::app()->session['project']);
 $counter=0;
@@ -17,7 +16,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
         'class' => 'bootstrap.widgets.TbButton',
         'type' => 'primary', // '', 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
         'label'=> 'Add Object',
-         'visible'=> $permission,
+         'visible'=> $edit,
         'url'=>'/object/create/id/'.$model->id,
     ),
      array(
@@ -61,7 +60,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                         <?php echo $item['description'];?>
                     </td>            
                     <td>
-                         <?php if($permission){ ?>
+                         <?php if($edit){ ?>
                         <a href="/object/update/id/<?php echo $item['id'];?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
                         <a href="/object/delete?id=<?php echo $item['id'];?>"><i class="icon-remove-sign text-error" rel="tooltip" title="Delete"></i></a> 
                         <a href="/object/convert/id/<?php echo $item['object_id'];?>"><i class="icon-list-alt" rel="tooltip" title="Make a Form for this Object"></i></a> 
@@ -91,7 +90,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
 
     <?php endif;
 $this->endWidget(); ?>
-   <?php if($permission){ ?>
+   <?php if($edit){ ?>
 <?php $deleted = Version::model()->getProjectDeletedVersions($model->id,6);
 if (count($deleted)):?>
     

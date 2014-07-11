@@ -1,6 +1,6 @@
  
 <?php 
-$permission=(Yii::App()->session['permission']==1)?true : false; 
+ $edit=(Yii::App()->session['edit']==1)?TRUE:FALSE;
 Yii::App()->session['setting_tab']='interfaces';
         
 $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
@@ -14,14 +14,14 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
         'class' => 'bootstrap.widgets.TbButton',
         'type' => 'primary', // '', 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
         'label'=> 'Add Interface',
-        'visible'=> $permission,
+        'visible'=> $edit,
         'url'=>'/iface/create/',
     ),
     array(
         'class' => 'bootstrap.widgets.TbButton',
         'type' => 'primary', // '', 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
         'label'=> 'Upload images',
-        'visible'=> $permission,
+        'visible'=> $edit,
         'url'=>'/project/photo/id/'.$model->id,
     ),
      array(
@@ -95,7 +95,7 @@ if (count($data)):?>
 
                   
                     <td>
-                          <?php if($permission){ ?>
+                          <?php if($edit){ ?>
                         <a href="/iface/update/ucid/-1/id/<?php echo $item['id'];?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
                         <a href="/iface/delete/ucid/-1/id/<?php echo $item['id'];?>"><i class="icon-remove-sign text-error" rel="tooltip" title="Delete"></i></a> 
                         <a href="/iface/history/id/<?php echo $item['iface_id'];?>"><i class="icon-calendar" rel="tooltip" title="Version History"></i></a> 
@@ -120,7 +120,7 @@ if (count($data)):?>
 
     <?php $this->endWidget(); ?>
 
-  <?php if($permission){ ?>
+  <?php if($edit){ ?>
 <?php $deleted = Version::model()->getProjectDeletedVersions($model->id,12);
 if (count($deleted)):?>
     

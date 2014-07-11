@@ -1,7 +1,7 @@
 <?php 
 Yii::App()->session['setting_tab']='walkthru';
 echo $this->renderPartial('/project/head'); ?>
-<h3>Walkthrough</h3>
+<h3>Walkthrough: WT-<?php echo str_pad($model->number, 4, "0", STR_PAD_LEFT) ?></h3>
     
 <?php 
 if(!empty($model->usecase_id))
@@ -16,7 +16,7 @@ if(!empty($model->usecase_id))
 $data= Walkthrustep::model()->findAll('walkthrupath_id='.$model->id);
 
 ?>
-<a href="/project/project">Walk through list</a><br />
+<a href="/project/walkthru">Walk through list</a><br />
 
 
 <?php
@@ -103,4 +103,74 @@ $this->endWidget();
     }?>
 
 
-<?php echo $this->renderPartial('run', array('id'=>$model->id)); ?>
+<?php if(in_array(Yii::App()->session['permission'],array(1,3)))echo $this->renderPartial('run', array('id'=>$model->id)); ?>
+
+
+
+
+<?php 
+
+// Display all the existin comments.
+
+$data= Walkthruresult::model()->findAll('walkthrupath_id='.$model->id);
+ if (count($data)):
+
+$box = $this->beginWidget('bootstrap.widgets.TbBox', array(
+    'title' => 'Results',
+    'headerIcon' => 'icon-user',
+    // when displaying a table, if we include bootstra-widget-table class
+    // the table will be 0-padding to the box
+    'htmlOptions' => array('class'=>'bootstrap-widget-table'),
+  
+));?>
+
+        
+            
+
+
+        <table class="table">
+
+               <thead>
+                <tr>
+                     <th>Result</th>                   
+                    <th>Comments</th>
+                    <th>Approver</th>
+
+                </tr>
+            </thead>
+            
+            <tbody>
+         
+            <?php foreach($data as $item):?>
+                <tr class="odd">  
+                   
+
+                    <td>   
+                        <?php echo Walkthruresult::$result[$item->result];?>
+                    </td>                  
+                                 <td>   
+                        <?php echo $item->comments;?>
+                    </td>  
+                    <td>
+                    <?php echo $item->user->firstname;?> 
+                    <?php echo $item->user->lastname;?>
+                    <?php echo $item->date;?>
+                    </td>  
+                  
+              
+
+
+
+</div>      
+                           
+            
+                    </td>
+                </tr>
+            <?php endforeach ?>
+            </tbody>
+        </table>
+
+     <?php
+$this->endWidget(); 
+endif;?>
+

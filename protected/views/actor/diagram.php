@@ -4,11 +4,11 @@ $actors = Actor::model()->getProjectActors(Yii::app()->session['project']);
 $arbre=new Tree;
 //Loop through all the actors and add them as nodes.
 
- foreach($actors as $actor):
-     if ($actor['iname']=='') $actor['iname']="#top#";
-echo  $actor['name'].','.$actor['iname'].'<BR>';
-$arbre->AddNode($actor['name'],$actor['iname']);
- endforeach; 
+foreach($actors as $actor):
+    if ($actor['iname']=='') $actor['iname']="#top#";
+    echo  $actor['name'].','.$actor['iname'].'<BR>';
+    $arbre->AddNode($actor['name'],$actor['iname']);
+endforeach; 
 
 
 /* Draw tree */
@@ -16,9 +16,6 @@ $arbre->AddNode($actor['name'],$actor['iname']);
 $arbre->drawTree();
 
 
-
-?>
-<?php 
 
 class Tree
 {
@@ -298,6 +295,10 @@ $maxlen=$maxlen+3;
 
 $d=reset($this->fathers1);
 asort($this->fathers1,SORT_STRING );
+
+
+
+
 
 
 $counter=0;

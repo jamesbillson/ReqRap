@@ -8,7 +8,8 @@ echo $this->renderPartial('/project/head',array('tab'=>'','link'=>$link));
  
 <?php // if this company project owner is current viewer
   
-    //$type = Company::model()->findbyPK($mycompany)->type; 
+    //$type = Company::model()->findbyPK($mycompany)->type;
+ $edit=(Yii::App()->session['edit']==1)?TRUE:FALSE;
     $permission=Yii::App()->session['permission'];
     $phase=Release::model()->findbyPK($release)->status;
  
@@ -22,7 +23,7 @@ echo $this->renderPartial('/project/head',array('tab'=>'','link'=>$link));
 
 $project=Yii::App()->session['project'];
 $walkthrupaths= Walkthrupath::model()->findAll('release_id='.$release);
-$permission=Yii::App()->session['permission'];
+
 $url='/walkthrupath/create/id/'.$release;
 ?>
 <?php 
@@ -39,7 +40,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
         'class' => 'bootstrap.widgets.TbButton',
         'type' => 'primary', // '', 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
         'label'=> 'Auto Walk Throughs',
-        'visible'=>in_array($permission,array(1)),
+        'visible'=>$permission==1,
         //'visible'=> $permission,
         'url'=>$url,
        'htmlOptions' => array(
@@ -98,9 +99,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                     <td>
                         <?php if($permission==1){ ?>
                     <a href="/walkthrupath/delete/id/<?php echo $walkthrupath['id'];?>"><i class="icon-remove-sign text-error" rel="tooltip" title="Remove"></i></a> 
-                        <?php } ?>          
-                     <a href="/walkthrupath/run/id/<?php echo $walkthrupath['id'];?>"><i class="icon-check" rel="tooltip" title="Run the Test Case"></i></a> 
-                  
+                      <?php } ?> 
                     </td>
                 </tr>
             <?php }

@@ -32,7 +32,7 @@ class VersionController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update','rollback', 'move','link'),
+				'actions'=>array('wiki','create','update','rollback', 'move','link'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -56,6 +56,11 @@ class VersionController extends Controller
 		));
 	}
 
+        public function actionWiki()
+	{
+		$this->render('wiki');
+	}
+        
 	/**
 	 * Creates a new model.
 	 * If creation is successful, the browser will be redirected to the 'view' page.

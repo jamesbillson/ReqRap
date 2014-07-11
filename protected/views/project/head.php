@@ -12,13 +12,17 @@ if(isset(Yii::App()->session['project'])) {
     $thisrelease=Release::model()->findbyPK($release);
     $phase=$thisrelease->status;
     Project::model()->setPermissions($mycompany, $project,$release, $currentrelease);
-    
+     if ($currentrelease==$thisrelease->id) {
+      Yii::App()->session['edit']=1;   
+     } ELSE {
+      Yii::App()->session['edit']=0;   
+     }
 } ELSE {
     $my_project=false;
-    
+    Yii::App()->session['edit']=0;
     Yii::App()->session['permission']=0;
 }
-
+$edit=(Yii::App()->session['edit']==1)?TRUE:FALSE;
 
       $config = array(
       );
@@ -28,11 +32,12 @@ if(isset(Yii::App()->session['project'])) {
         'config'=>$config,));
  
       
+echo '<!--project is '.Yii::App()->session['project'].' release is '.Yii::App()->session['release'].' permissions '.Follower::$type[Yii::App()->session['permission']].' ('.Yii::App()->session['permission'].')-->';
      
 
 if (Yii::App()->user->id==140){
-echo 'project is '.Yii::App()->session['project'].' release is '.Yii::App()->session['release'].' permissions '.Follower::$type[Yii::App()->session['permission']].' ('.Yii::App()->session['permission'].')';
-echo '<br /> tab: '.$tab;}
+echo 'project is '.Yii::App()->session['project'].' current release is '.$currentrelease.' release is '.Yii::App()->session['release'].' permissions '.Follower::$type[Yii::App()->session['permission']].' ('.Yii::App()->session['permission'].')';
+echo '<br /> tab: '.$tab. ' edit permissions are '.$edit;}
 if (Yii::App()->session['permission'] ==0)  $this->redirect(array('site/fail/condition/no_access_head'));
 ?>
 

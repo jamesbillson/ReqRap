@@ -11,7 +11,8 @@ if ($tab=='photos') $tab='interfaces';
 <?php // if this company project owner is current viewer
   
     //$type = Company::model()->findbyPK($mycompany)->type; 
-    $permission=Yii::App()->session['permission'];
+   
+     $edit=(Yii::App()->session['edit']==1)?TRUE:FALSE;
     $phase=Release::model()->findbyPK($release)->status;
  
 ?>
@@ -34,7 +35,7 @@ $active['testruns']=FALSE;
     $tabs[] = array('id' => 'testcases',
             'label' => 'Test Cases',
         'visible' => ($phase==2),
-            'visible' => ($phase==2 && in_array($permission,array(1,2,4,5))),
+            'visible' => ($phase==2 && in_array($edit,array(1,2,4,5))),
             'content' => $this->renderPartial('_testcases',
                     compact('model','status','permission'),true,false),'active'=>$active['testcases']); 
 

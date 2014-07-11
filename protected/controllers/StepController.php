@@ -137,8 +137,8 @@ class StepController extends Controller
 	
         
         
-	public function actionUpdate($flow,$id)
-	{
+public function actionUpdate($flow,$id)
+{
             $project=Yii::App()->session['project'];
 	if($id!=-1){
            
@@ -159,13 +159,17 @@ class StepController extends Controller
               $step=array();
               }
         $new= new Step;
-		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
+
                
 		if(isset($_POST['Step']))
 		{
 			
                          $new->attributes=$_POST['Step'];
+                         // check the step text for wiki entries.
+                         
+                         
+                         
+                         
                          $new->number=$step->number;
                          $new->flow_id=$step->flow_id;
                          $new->step_id=$step->step_id;
@@ -174,7 +178,13 @@ class StepController extends Controller
                          
 			if($new->save())
                         {
-			$version=Version::model()->getNextNumber($project, 9, 2,$new->getPrimaryKey(),$step->step_id);
+                        $newid= $new->getPrimaryKey();
+			$version=Version::model()->getNextNumber($project, 9, 2,$newid,$step->step_id);
+                       
+                        $new->text = Version::model()->wikiInput($new->text,9,$newid);
+                        $new->result = Version::model()->wikiInput($new->result,9,$newid);
+                        $new->save();
+
                         $this->redirect(array('/step/update/flow/'.$model->id.'/id/-1'));
                         
                         }        
@@ -186,13 +196,9 @@ class StepController extends Controller
 		$this->render('/step/update',array(
 			'model'=>$model,'step'=>$step,'id'=>$id,'usecase'=>$usecase, 'package'=>$package
 		));
-	}
+}
 
-	/**
-	 * Deletes a particular model.
-	 * If deletion is successful, the browser will be redirected to the 'admin' page.
-	 * @param integer $id the ID of the model to be deleted
-	 */
+
 	public function actionDelete($id)
 	{
 		$project=Yii::App()->session['project'];

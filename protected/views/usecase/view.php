@@ -1,6 +1,5 @@
  <?php echo $this->renderPartial('/project/head',array('tab'=>'usecases')); 
-
-$permission=(Yii::App()->session['permission']==1)?true : false; 
+ $edit=(Yii::App()->session['edit']==1)?TRUE:FALSE;
 //$data = Package::model()->getPackages($model->id);
 
 /*$packagelist=array();
@@ -12,7 +11,7 @@ endforeach;
  */
  ?>
 
-<?php if($permission){ ?>
+<?php if($edit){ ?>
 <?php } ?> 
 
 
@@ -27,7 +26,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                     'class' => 'bootstrap.widgets.TbButton',
                     'type' => 'link', // '', 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
                     'icon'=> 'edit',
-                    'visible'=>$permission,
+                    'visible'=>$edit,
                     'url'=>'/usecase/update/id/'.$model->id,
                     
                       ),
@@ -35,7 +34,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                     'class' => 'bootstrap.widgets.TbButton',
                     'type' => 'link', // '', 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
                     'icon'=> 'calendar',
-                 'visible'=>$permission,
+                 'visible'=>$edit,
                     'url'=>'/usecase/history/id/'.$model->usecase_id,
                     
                       ),
@@ -181,7 +180,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
              <b><?php echo $item['name'];?></b>
                   </td>
               <td>
-                <?php if($permission){ ?>
+                <?php if($edit){ ?>
                 <a href="/steprule/unlink/id/<?php echo $item['xid'];?>/ucid/<?php echo $model->usecase_id;?>"><i class="icon-link text-error" rel="tooltip" title="Unlink this rule"></i></a> 
                 <a href="/rule/update/id/<?php echo $item['id'];?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
                 
@@ -241,7 +240,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                 
               </td> 
               <td>
-                  <?php if($permission){ ?>
+                  <?php if($edit){ ?>
 
                   <a href="/stepiface/unlink/id/<?php echo $item['xid'];?>/ucid/<?php echo $model->usecase_id;?>"><i class="icon-link text-error" rel="tooltip" title="Unlink from Usecase"></i></a> 
                   <a href="/iface/update/id/<?php echo $item['id'];?>/ucid/<?php echo $model->id;?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
@@ -287,7 +286,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                 
               </td> 
               <td>
-                  <?php if($permission){ ?>
+                  <?php if($edit){ ?>
 
                   <a href="/stepform/unlink/id/<?php echo $item['xid'];?>/ucid/<?php echo $model->usecase_id;?>"><i class="icon-link text-error" rel="tooltip" title="Unlink from Usecase"></i></a> 
                   <a href="/form/update/id/<?php echo $item['id'];?>/ucid/<?php echo $model->id;?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 

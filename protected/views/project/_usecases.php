@@ -1,7 +1,7 @@
 <?php 
 
-$permission=(Yii::App()->session['permission']==1)?true : false; 
-
+$permission=Yii::App()->session['permission']; 
+ $edit=(Yii::App()->session['edit']==1)?TRUE:FALSE;
 $data = Package::model()->getPackages($model->id);
 
 
@@ -38,7 +38,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                 
                    
                     <td>
-                  <?php if($permission){ ?>
+                  <?php if($edit){ ?>
                    <a href="/package/update/id/<?php echo $item['id'];?>"><i class="icon-pencil" rel="tooltip" title="Edit Details"></i></a>
                    <a href="/package/delete/id/<?php echo $item['id'];?>"><i class="icon-remove-sign text-error" rel="tooltip" title="Delete"></i></a>
                    <a href="/usecase/create/id/<?php echo $item['id'];?>"><i class="icon-plus-sign-alt" rel="tooltip" title="Add another usecase"></i></a> 
@@ -83,7 +83,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
  
                 
                   
-              <?php if($permission){ ?>
+              <?php if($edit){ ?>
                   <a href="/usecase/delete/id/<?php echo $uc['id'];?>"><i class="icon-remove-sign text-error" rel="tooltip" title="Delete"></i> </a>
                <a href="/usecase/update/id/<?php echo $uc['id'];?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
 
@@ -113,7 +113,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
             <?php $pack_counter++; endforeach; 
             endif;?>
             
-            <?php if($permission){ ?> 
+            <?php if($edit){ ?> 
                <tr>
                    <td colspan="4"> 
                      

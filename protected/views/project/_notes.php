@@ -1,5 +1,5 @@
 <?php 
-$permission=(Yii::App()->session['permission']==1)?true : false; 
+ $edit=(Yii::App()->session['edit']==1)?TRUE:FALSE;
 $data = Note::model()->findAll('release_id='.Yii::app()->session['release']);
 $counter=1;
 $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
@@ -43,7 +43,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                         <?php echo $item['text'];?>
                     </td>            
                     <td>
-                         <?php if($permission){ ?>
+                         <?php if($edit){ ?>
                         <a href="/note/update/id/<?php echo $item['id'];?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
                         <a href="/note/delete?id=<?php echo $item['id'];?>"><i class="icon-remove-sign text-error" rel="tooltip" title="Delete"></i></a> 
                         <?php } ?>

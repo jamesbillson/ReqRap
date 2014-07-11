@@ -94,8 +94,8 @@ class WalkthrupathController extends Controller
 	public function actionCreate($id)
 	{
         Walkthrupath::model()->deleteOld();
-	$release=Yii::App()->session['release']=$id;
-           
+	Yii::App()->session['release']=$id;
+        $release=$id;   
             $data = Usecase::model()->getProjectUCs();
 
             if(count($data))

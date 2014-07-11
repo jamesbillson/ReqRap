@@ -3,4 +3,4 @@
 
 <h3>Create Business Object</h3>
 
-<?php $this->renderPartial('_form', array('model'=>$model,'project_id'=>$project_id)); ?>
+<?php $this->renderPartial('_form', array('model'=>$model)); ?>

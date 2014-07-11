@@ -3,7 +3,7 @@ $link=Yii::App()->session['release'].'_7_'.$model->object_id;
 echo $this->renderPartial('/project/head',array('tab'=>'objects','link'=>$link));
 
 
-$permission=(Yii::App()->session['permission']==1)?true : false; 
+ $edit=(Yii::App()->session['edit']==1)?TRUE:FALSE;
 ?>
 
 <h1>View Object Property <?php echo $model->name; ?></h1>

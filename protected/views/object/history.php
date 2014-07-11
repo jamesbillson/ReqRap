@@ -34,7 +34,8 @@ echo $this->renderPartial('/project/head',array('tab'=>'details'));
         </div>
         <div id="collapse<?php echo $item['ver_numb']; ?>" class="accordion-body collapse">
             <div class="accordion-inner">
-                <strong><?php echo $item['name']; ?></strong><br />
+                <strong>Object Name</strong><br /> <?php echo $item['name']; ?><br />
+                <strong>Object Description</strong><br /> <?php echo $item['description']; ?>
                    
             </div>
         </div>

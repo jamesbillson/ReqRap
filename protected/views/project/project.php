@@ -7,7 +7,7 @@ echo $this->renderPartial('/project/head',array('tab'=>$tab)); ?>
  
 <?php // if this company project owner is current viewer
   
-    
+     $edit=(Yii::App()->session['edit']==1)?TRUE:FALSE;
     $permission=Yii::App()->session['permission'];
     $phase=Yii::App()->session['phase'];
     $totalstages=0;
@@ -35,7 +35,7 @@ $active['todo']=FALSE;
 
    
     $tabs[] = array('id' => 'details',
-            'label' => 'Details',
+            'label' => 'Release History',
             'visible' => in_array($permission,array(1,2,3,4,5)),
             'content' => $this->renderPartial('_details',
                     compact('model'),true,false),'active'=>$active['details']);

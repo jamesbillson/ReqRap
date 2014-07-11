@@ -2,7 +2,8 @@
 
 $link=Yii::App()->session['release'].'_4_'.$model->actor_id;
 echo $this->renderPartial('/project/head',array('tab'=>'actors','link'=>$link));
-$permission=(Yii::App()->session['permission']==1)?true : false; 
+$permission=Yii::App()->session['permission']; 
+ $edit=(Yii::App()->session['edit']==1)?TRUE:FALSE;
 ?>
 <h2>Actor <?php echo $model->name; ?>     
 
@@ -25,7 +26,7 @@ $permission=(Yii::App()->session['permission']==1)?true : false;
 
         <h4>Traceability</h4>
 <?php 
-$permission=(Yii::App()->session['permission']==1)?true : false; 
+
 $data = Actor::model()->getActorParentSteps($model->id);
 if (count($data)){
 $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
@@ -107,7 +108,7 @@ $this->endWidget();
 <?php  }?>
 
 
-  <?php if($permission){ ?>
+  <?php if($edit){ ?>
 
   
 <h3>Version History</h3>    

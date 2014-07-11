@@ -1,6 +1,6 @@
 
 <?php 
-$permission=(Yii::App()->session['permission']==1)?true : false; 
+ $edit=(Yii::App()->session['edit']==1)?TRUE:FALSE;
 $data = Actor::model()->getProjectActors(Yii::app()->session['project']);
 
 
@@ -37,7 +37,7 @@ $data = Actor::model()->getProjectActors(Yii::app()->session['project']);
 
                   
                     <td>
-                      <?php if($permission){ ?>
+                      <?php if($edit){ ?>
                      <a href="/actor/update/id/<?php echo $item['id'];?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
                      <a href="/actor/delete/id/<?php echo $item['id'];?>"><i class="icon-remove-sign text-error" rel="tooltip" title="Delete"></i></a> 
                      <a href="/actor/history/id/<?php echo $item['actor_id'];?>"><i class="icon-calendar" rel="tooltip" title="Version History"></i></a> 

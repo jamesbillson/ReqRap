@@ -1,7 +1,7 @@
 
 
                         <td colspan="3">  
-            <?php if ($permission) { ?>
+            <?php if ($edit) { ?>
                                 <a href="/step/insert/id/<?php echo $item['id']; ?>"><i class="icon-chevron-right" rel="tooltip" title="Insert a new step before this step"></i></a> 
                                 <a href="/step/delete/id/<?php echo $item['id']; ?>"><i class="icon-remove-sign" rel="tooltip" title="Delete this step"></i></a> 
                                 <a href="/step/update/flow/1/id/<?php echo $item['id']; ?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
@@ -12,9 +12,16 @@
 
                     <tr>
                         <td> <b>Action:</b><br />
-            <?php echo $item['text']; ?>
+            <?php 
+            
+               echo  Version::model()->wikiOutput($item['text']);
+             ?>
                             <br />
-                            <b>Result:</b><br /><?php echo $item['result']; ?>
+                            <b>Result:</b><br />
+                             <?php 
+            
+               echo  Version::model()->wikiOutput($item['result']);
+             ?>
                         </td>
                         <td>
 

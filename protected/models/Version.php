@@ -21,6 +21,15 @@ class Version extends CActiveRecord {
         17 => 'category',
         18 => 'simple',
     );
+     public static $code = array(
+        1 => 'BR',
+        2 => 'UF',
+        4 => 'AC',
+        5 => 'PA',
+        6 => 'OB',
+        10 => 'UC',
+        12 => 'IF',
+        );
     public static $parents = array(1 => 'none', //rule
         2 => 'none', //form
         3 => 'form', //formproperty
@@ -186,6 +195,334 @@ class Version extends CActiveRecord {
         ));
     }
 
+    
+    	public function wikiInput($input,$parent,$parent_id)
+	{
+	$release=Yii::App()->session['release'];
+        $project=Yii::App()->session['project'];
+        // get the text.
+        $numberstart =  substr_count($input,"[[");
+        $numberend =  substr_count($input,"]]");
+        if ($numberstart != $numberend) $error=TRUE;
+        
+        $end=array();
+        // parse it for wiki syntax.
+        $x=0;
+        $start=explode("[[", $input);
+      
+        $end[$x]=$start[0];
+        
+        for($i=1;$i<=$numberstart;$i++)
+        {
+        $split =explode("]]",$start[$i]);
+        $end[$x+1]=$split[0];
+        $end[$x+2]=$split[1];
+        $x=$x+2;
+        }
+       
+        $number=count($end);
+        $objects=array('IF'=>12,'UF'=>2,'OB'=>6,'BR'=>1);
+        
+        for($i=1;$i<=$number-1;$i=$i+2)
+        {
+            // test the content of the wiki brackets
+            if (substr_count($end[$i],":")==1)// its an existing wiki link
+            {
+                $content=  explode(":", $end[$i]); // split into two bits
+             
+                if(in_array($content[0],array('IF','UF','OB','BR')))
+                { // the link is partly valid
+
+                 $instance=($content[1]+1)-1;
+                 $object=$objects[$content[0]];
+                 //$link=$release."_".$object."_".$instance;  
+                 $name=Version::model()->instanceName($object,$instance);
+
+                }
+
+
+                $end[$i]='[['.Version::$code[$object].':'.$instance.']]';
+
+
+              
+            
+            }
+
+              if (substr_count($end[$i],"+")==1) // its a create request
+            {
+                //separate the object code from the new name
+                $content=  explode("+", $end[$i]);
+                 
+                if(in_array($content[0],array('IF','UF','OB','BR')))
+                { // the link is partly valid
+
+                 $newName=$content[1];
+                 $object=$objects[$content[0]];
+                 //  Need a generic create object that returns the instance.
+                 
+                 $instance=Version::model()->addObject($object,$newName);
+                   
+                 $name=Version::model()->instanceName($object,$instance);
+
+                }
+                
+                $end[$i]='[['.Version::$code[$object].':'.$instance.']]';
+  
+                
+                
+                
+            }
+             
+              // if the text area belongs to a step, we should hook up the object
+                // to that step with a step-thing relationship.
+                // we will need to have the parent type passed through at the top.
+                if ($parent==9 && $name['name']!='deleted')
+                {// this is a valid object
+                   $step=Step::model()->findbyPK($parent_id);
+                   // This is a step
+                    if ($object==1)
+                    { //its a rule
+                    // see if this rule is already associated with this step.
+                    // object=1 so its a steprule, step=parent_id and rule_id=$instance
+                    //get all the rules, leaf through them to find this rule
+                    $links = Step::model()->getStepLinks($step->step_id, 1, 16);
+                    $exist=0;    
+                    foreach ($links as $link) 
+                         {
+                        if ($instance==$link['rule_id']) $exist=1;
+                         } 
+                    //if its not there add it
+                        if($exist==0) 
+                        {
+                        $model=new Steprule;
+                        $model->steprule_id=Version::model()->getNextID(16);
+                        $model->project_id= $project;
+                        $model->release_id=$release;
+                        
+                        $model->step_id=$step->step_id;
+                        $model->rule_id=$instance;
+                        $model->save(false);
+                        $version=Version::model()->getNextNumber($project,16,1,$model->primaryKey,$model->steprule_id);
+
+                
+                        }
+                        
+                    
+                    }
+                    if ($object==2)
+                    { //its a form
+                   
+                    $links = Step::model()->getStepLinks($step->step_id, 2, 14);
+                    $exist=0;    
+                    foreach ($links as $link) 
+                         {
+                        if ($instance==$link['form_id']) $exist=1;
+                         } 
+                    //if its not there add it
+                        if($exist==0) 
+                        {
+                        $model=new Stepform;
+                        $model->stepform_id=Version::model()->getNextID(14);
+                        $model->project_id= $project;
+                        $model->release_id=$release;
+                        
+                        $model->step_id=$step->step_id;
+                        $model->form_id=$instance;
+                        $model->save(false);
+                        $version=Version::model()->getNextNumber($project,14,1,$model->primaryKey,$model->stepform_id);
+
+                
+                        }
+                    }
+                    if ($object==12)
+                    { //its an interface
+                        // make a stepiface
+                    $links = Step::model()->getStepLinks($step->step_id, 12, 15);
+                    $exist=0;    
+                    foreach ($links as $link) 
+                         {
+                        if ($instance==$link['iface_id']) $exist=1;
+                         } 
+                    //if its not there add it
+                        if($exist==0) 
+                        {
+                        $model=new Stepiface;
+                        $model->stepiface_id=Version::model()->getNextID(15);
+                        $model->project_id= $project;
+                        $model->release_id=$release;
+                        
+                        $model->step_id=$step->step_id;
+                        $model->iface_id=$instance;
+                        $model->save(false);
+                        $version=Version::model()->getNextNumber($project,15,1,$model->primaryKey,$model->stepiface_id);
+
+                
+                        }
+                    }
+
+                }
+            
+            
+            
+        } // end of loop through string
+        
+        $result=implode(" ",$end);
+        
+        return $result  ;  
+            
+    }
+
+       	public function wikiOutput($input)
+	{
+	$release=Yii::App()->session['release'];
+        $project=Yii::App()->session['project'];
+        // get the text.
+        $numberstart =  substr_count($input,"[[");
+        $numberend =  substr_count($input,"]]");
+        if ($numberstart != $numberend) $error=TRUE;
+        
+        $end=array();
+        // parse it for wiki syntax.
+        $x=0;
+        $start=explode("[[", $input);
+      
+        $end[$x]=$start[0];
+        
+        for($i=1;$i<=$numberstart;$i++)
+        {
+        $split =explode("]]",$start[$i]);
+        $end[$x+1]=$split[0];
+        $end[$x+2]=$split[1];
+        $x=$x+2;
+        }
+       
+        $number=count($end);
+        $objects=array('IF'=>12,'UF'=>2,'OB'=>6,'BR'=>1);
+        
+        for($i=1;$i<=$number-1;$i=$i+2)
+        {
+            // test the content of the wiki brackets
+            if (substr_count($end[$i],":")==1)
+            {
+                $content=  explode(":", $end[$i]);
+             
+                if(in_array($content[0],array('IF','UF','OB','BR')))
+                { // the link is partly valid
+
+                 $instance=($content[1]+1)-1;
+                 $object=$objects[$content[0]];
+                 //$link=$release."_".$object."_".$instance;  
+                 $name=Version::model()->instanceName($object,$instance);
+                $end[$i]='<a href="/'.Version::$objects[$object].'/view/id/'.$instance.'">'.$name['number'].'-'.$name['name'].'</a>';
+           
+                }
+// THis is the human readable one that shows in the view screen
+               
+            }
+            
+        } // end of loop through string
+        
+        $result=implode(" ",$end);
+        
+        return $result  ;  
+            
+    }
+
+       
+        
+    	public function wikiEdit($input)
+	{
+	// get the text.
+        // parse it for wiki links.
+        $release=Yii::App()->session['release'];
+        $project=Yii::App()->session['project'];
+        // get the text.
+        $numberstart =  substr_count($input,"[[");
+        $numberend =  substr_count($input,"]]");
+        if ($numberstart != $numberend) $error=TRUE;
+        
+        $end=array();
+        // parse it for wiki syntax.
+        $x=0;
+        $start=explode('[["', $input);
+      
+        $end[$x]=$start[0];
+        
+        for($i=1;$i<=$numberstart;$i++)
+        {
+        $split =explode("]]",$start[$i]);
+        $linksplit=explode(':',$split[0]);//split the link into link and name
+        $objectsplit=explode('_',$linksplit[0]);//split the link into its parts
+        
+        $end[$x+1]='[['.Version::$code[$objectsplit[1]].':';//object code
+        $end[$x+2]=$objectsplit[2].']]';//instance
+        $end[$x+3]=$split[1];//text
+        
+        $x=$x+3;
+        }
+        
+        
+        
+        
+            //get the name and number of the object
+            
+            
+            // substitute the link in to the text.
+                $result=implode(" ",$end);
+        
+        return $result  ;     
+            
+            
+            
+	}   
+        
+        
+
+        
+        	public function addObject($object,$name)
+	{
+                    
+            $object_name=Version::$objects[$object];
+            $project=Yii::App()->session['project'];
+            $release=Release::model()->currentRelease($project);
+            
+            if($object==12){ // its an interface, so we need the type
+                $ifacetypes=  Interfacetype::model()->getInterfacetypes();
+                    foreach ($ifacetypes as $ift)
+                    {       
+                    if ($ift['name']=='Not Classified')$interfacetype_id=$ift['interfacetype_id'];
+                    }
+            }            
+            $model_name=ucfirst($object_name);
+                   $model=new $model_name;
+                   $model->project_id= Yii::app()->session['project'];
+                   $model->release_id=$release;
+                   $model->name=$name;
+                   $model->number=Version::model()->getMaxNumber($object,$release)+1;
+                   $model[$object_name.'_id']=Version::model()->getNextID($object);
+                   if ($object==1) $model->text='stub';
+                   if ($object==6) $model->description='stub';
+                   if ($object==12) $model->interfacetype_id=$interfacetype_id;
+                    
+                    if($model->save())
+                    {
+                    $version=Version::model()->getNextNumber($project,$object,1,$model->primaryKey,$model[$object_name.'_id']);   
+                    
+                    
+                    return $model[$object_name.'_id'];
+                    }
+                        
+                    
+                    
+                echo 'it did not save<br><pre>';    
+                print_r($model);
+                echo '</pre>';
+                exit;
+            
+         
+            
+	}   
+        
     public function createInitial($id) {
 
 

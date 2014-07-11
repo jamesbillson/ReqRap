@@ -2,7 +2,7 @@
 <?php 
 echo $this->renderPartial('/project/head',array('tab'=>'usecases')); 
 $images=Photo::model()->getProjectImages();
-$permission=Yii::App()->session['permission'];
+ $edit=(Yii::App()->session['edit']==1)?TRUE:FALSE;
     ?>
 
 <a href="/project/view/tab/interfaces">Back to Interfaces</a>
@@ -35,7 +35,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                        <?php echo $image['description'] ?>
                   </td>
                      <td>
-                      <?php if($permission){ ?>
+                      <?php if($edit){ ?>
                         <a href="/photo/update/id/<?php echo $image['id'];?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
                             <?php if($iface==-1){ ?>
                             <a href="/photo/delete/id/<?php echo $image['id'];?>"><i class="icon-remove-sign text-error" rel="tooltip" title="Delete"></i></a> 

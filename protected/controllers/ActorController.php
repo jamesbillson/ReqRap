@@ -32,7 +32,7 @@ class ActorController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('tree','create','update','delete','rollback','history'),
+				'actions'=>array('diagram','tree','create','update','delete','rollback','history'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -50,6 +50,10 @@ class ActorController extends Controller
 	 * @param integer $id the ID of the model to be displayed
 	 */
 	
+       public function actionDiagram()
+	{
+        $this->render('diagram');
+	}
 	
         public function actionView($id) // Note that this is actor_id not id
 	{
@@ -61,11 +65,7 @@ class ActorController extends Controller
         	));
 	}
 
-                public function actionTree() // Note that this is actor_id not id
-	{
-             	$this->renderPartial('tree');
-                
-	}
+      
         
         
        	        public function actionHistory($id) // Note that this is form_id

@@ -1,9 +1,7 @@
 <?php 
 $link=Yii::App()->session['release'].'_6_'.$model->object_id;
 echo $this->renderPartial('/project/head',array('tab'=>'objects','link'=>$link));
-
-
-$permission=(Yii::App()->session['permission']==1)?true : false; 
+ $edit=(Yii::App()->session['edit']==1)?TRUE:FALSE;
 ?>
 
  
@@ -12,8 +10,6 @@ $permission=(Yii::App()->session['permission']==1)?true : false;
 <br>
 <a href="/project/view/tab/objects">Back to Objects</a>
 <?php 
-
-$permission=(Yii::App()->session['permission']==1)?true : false; 
 
 
 $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
@@ -27,14 +23,14 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
         'class' => 'bootstrap.widgets.TbButton',
         'type' => 'primary', // '', 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
         'label'=> 'Add Property',
-        'visible'=>$permission,
+        'visible'=>$edit,
         'url'=>array('objectproperty/create', 'id'=>$model->id,'type'=>1)
     ),
              array(
         'class' => 'bootstrap.widgets.TbButton',
         'type' => 'primary', // '', 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
         'label'=> 'Add Relationship',
-        'visible'=>$permission,
+        'visible'=>$edit,
         'url'=>array('objectproperty/create', 'id'=>$model->id,'type'=>2)
     )
           ),
@@ -82,7 +78,7 @@ $counter=0;
 
                   
                     <td>
-                        <?php if($permission){ ?>
+                        <?php if($edit){ ?>
                         <a href="/objectproperty/update/id/<?php echo $item['id'];?>/type/<?php echo $item['type'];?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
                         <a href="/objectproperty/delete?id=<?php echo $item['id'];?>"><i class="icon-remove-sign text-error" rel="tooltip" title="Delete"></i></a> 
                         <a href="/objectproperty/history/id/<?php echo $item['objectproperty_id'];?>"><i class="icon-calendar" rel="tooltip" title="History"></i></a> 

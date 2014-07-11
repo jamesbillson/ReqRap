@@ -1,8 +1,7 @@
 <?php 
 $link=Yii::App()->session['release'].'_5_'.$model->package_id;
 echo $this->renderPartial('/project/head',array('tab'=>'details','link'=>$link));
-
-$permission=(Yii::App()->session['permission']==1)?true : false; 
+ $edit=(Yii::App()->session['edit']==1)?TRUE:FALSE;
 ?>
 
 
@@ -48,7 +47,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                 
               </td> 
               <td>
-                  <?php if($permission){ ?>
+                  <?php if($edit){ ?>
                <a href="/usecase/delete/id/<?php echo $item['id'];?>"><i class="icon-remove-sign text-error" rel="tooltip" title="Edit"></i> 
                <a href="/usecase/update/id/<?php echo $item['id'];?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
                <a href="/usecase/history/id/<?php echo $item['usecase_id'];?>"><i class="icon-calendar" rel="tooltip" title="History"></i></a> 

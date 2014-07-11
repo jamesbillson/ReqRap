@@ -17,6 +17,7 @@ if ($tab=='photos') $tab='interfaces';
 if ($permission==1 ) $this->renderPartial('_contributor',compact('model','permission','tab','phase'));
 if ($permission==3 ) $this->renderPartial('_approver',compact('model','permission','tab','phase'));
 if ($permission==2 ) $this->renderPartial('_tester',compact('model','permission','tab','phase'));
+if ($permission==5 ) $this->renderPartial('_developer',compact('model','permission','tab','phase'));
 
 ?>
 

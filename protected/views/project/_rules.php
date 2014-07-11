@@ -1,6 +1,5 @@
 <?php 
-
-$permission=(Yii::App()->session['permission']==1)?true : false; 
+ $edit=(Yii::App()->session['edit']==1)?TRUE:FALSE;
 
 $data = Rule::model()->getProjectRules($model->id);
 
@@ -15,7 +14,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
 		'class' => 'bootstrap.widgets.TbButton',
 		'type' => 'primary', // '', 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
 		'label'=> 'Add Rule',
-             'visible'=> $permission,
+             'visible'=> $edit,
             'url'=>'/rule/create/type/0/id/'.$model->id,
 	),
 	 array(
@@ -71,7 +70,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
 
 
       <td>
-           <?php if($permission){ ?>
+           <?php if($edit){ ?>
         <a href="/rule/update/id/<?php echo $item['id'];?>"><i class="icon-edit" rel="tooltip" title="Edit Details"></i></a> 
         <a href="/rule/delete/id/<?php echo $item['id'];?>"><i class="icon-remove-sign text-error" rel="tooltip" title="Remove/Uninvite"></i></a> 
        <a href="/rule/history/id/<?php echo $item['rule_id'];?>"><i class="icon-calendar" rel="tooltip" title="Version history"></i></a> 
@@ -89,7 +88,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
 <?php 
 $this->endWidget(); ?>
 
- <?php if($permission){ ?>
+ <?php if($edit){ ?>
 <?php $deleted = version::model()->getProjectDeletedVersions($model->id,1);
 if (count($deleted)):?>
     

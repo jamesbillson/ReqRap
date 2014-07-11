@@ -6,7 +6,7 @@
 </style>
 <?php
 $project = Yii::App()->session['project'];
-$permission = (Yii::App()->session['permission'] == 1) ? true : false;
+ $edit=(Yii::App()->session['edit']==1)?TRUE:FALSE;
 $steps = Step::model()->getFlowSteps($model->flow_id);
 if (count($steps)):
     ?>  
@@ -14,7 +14,7 @@ if (count($steps)):
         <tbody>
             <?php foreach ($steps as $key => $item) : // Go through each un answered question? ?>
                 <tr class="odd">
-                    <?php if ($item['id'] == $id && $permission) { // THIS IS THE STEP WE ARE EDITING ?>
+                    <?php if ($item['id'] == $id && $edit) { // THIS IS THE STEP WE ARE EDITING ?>
                         <td style="border-right: 1px solid #DDDDDD"> 
                             <?php
                             $form = $this->beginWidget('CActiveForm', array(
@@ -28,11 +28,15 @@ if (count($steps)):
                             <?php echo $form->textArea($step, 'text', array('rows' => 3, 'cols' => 180, "style" => "width:500px")); ?>
                             <?php echo $form->error($step, 'text'); ?>
                             <br />
+                            Use wiki markup [[UF/IF/BR/OB+Name]] to create new objects<br />
+                             [[UF/IF/BR/OB:Number]] to link existing objects<br />
                             <b>Result</b>
                             <br>
                             <?php echo $form->textArea($step, 'result', array('rows' => 3, 'cols' => 180, "style" => "width:500px")); ?>
                             <?php echo $form->error($step, 'result'); ?>
                             <?php $actors = Actor::model()->getProjectActors($project); ?><br>
+                            Use wiki markup [[UF/IF/BR/OB+Name]] to create new objects<br />
+                            [[UF/IF/BR/OB:Number]] to link existing objects<br />
                             <select name="Step[actor_id]">
                                 <?php
                                 foreach ($actors as $actor) {
@@ -54,7 +58,7 @@ if (count($steps)):
                                 <table style="width: 100%;">
                                     <tr>
                                         <td>  
-                                            <?php if ($permission) { ?>
+                                            <?php if ($edit) { ?>
                                                 <a href="/step/insert/id/<?php echo $steps[$key]['id'] ?>"><i class="icon-plus-sign-alt" rel="tooltip" title="Insert a new step"></i> Add Step</a>
                                             <?php } ?> 
                                         </td> 
@@ -87,12 +91,12 @@ if (count($steps)):
                         <?php
                     } ELSE { // THIS IS NOT THE EDIT ROW, SHOW THE RELATED IFACE AND RULES 
                         ?>
-                        <?php $this->renderPartial("_steplistview", array('item' => $item, 'project' => $project, 'permission' => $permission)) ?>     
+                        <?php $this->renderPartial("_steplistview", array('item' => $item, 'project' => $project, 'edit'=>$edit)) ?>     
                     <?php } ?>
                 <?php endforeach ?>   
         </tbody>
     </table>
-    <?php if ($permission) { ?>
+    <?php if ($edit) { ?>
         <a href="/step/create/id/<?php echo $model->id; ?>"><i class="icon-plus-sign-alt" rel="tooltip" title="Add another step"></i> Add Step</a> 
     <?php } ?>    
 <?php endif; // end count of results   ?>
