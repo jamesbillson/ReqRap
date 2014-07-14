@@ -32,8 +32,14 @@
 
                                 <strong>Interfaces</strong>
                                 <br />
-                                <?php foreach ($links as $link) { ?>
-                                    <a href="/iface/view/id/<?php echo $link['iface_id']; ?>">UI-<?php echo str_pad($link['number'], 4, "0", STR_PAD_LEFT); ?></a>  <?php echo $link['name']; ?> 
+                                <?php foreach ($links as $link) { 
+                                    
+                                    $category=Iface::model()->getIfaceType($link['iface_id']);
+                                    ?>
+                                    <a href="/iface/view/id/<?php echo $link['iface_id']; ?>">
+                                    <?php echo Version::$numberformat[12]['prepend']?>-
+                                    <?php echo str_pad($category['typenumber'], 2, "0", STR_PAD_LEFT ).str_pad($link['number'], Version::$numberformat[12]['padding'], "0", STR_PAD_LEFT); ?>
+                                    </a>  <?php echo $link['name']; ?> 
                                     <a href="/stepiface/delete/id/<?php echo $link['xid']; ?>"><i class="icon-remove-sign"></i></a><br/>
                                 <?php } ?>
                                 <br />

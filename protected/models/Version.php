@@ -28,7 +28,7 @@ class Version extends CActiveRecord {
         5 => 'PA',
         6 => 'OB',
         10 => 'UC',
-        12 => 'IF',
+        12 => 'UI',
         );
     public static $parents = array(1 => 'none', //rule
         2 => 'none', //form
@@ -84,7 +84,7 @@ class Version extends CActiveRecord {
         9 => array('prepend'=>'NONE','padding'=>0),
         10 => array('prepend'=>'UC','padding'=>3),// need to handle the Package number
         11 => array('prepend'=>'NONE','padding'=>0),
-        12 => array('prepend'=>'IF','padding'=>3),
+        12 => array('prepend'=>'UI','padding'=>3),
         13 => array('prepend'=>'NONE','padding'=>3),
         14 => array('prepend'=>'NONE','padding'=>0),
         15 => array('prepend'=>'NONE','padding'=>0),
@@ -221,7 +221,7 @@ class Version extends CActiveRecord {
         }
        
         $number=count($end);
-        $objects=array('IF'=>12,'UF'=>2,'OB'=>6,'BR'=>1);
+        $objects=array('IF'=>12,'UI'=>12,'UF'=>2,'OB'=>6,'BR'=>1);
         
         for($i=1;$i<=$number-1;$i=$i+2)
         {
@@ -230,7 +230,7 @@ class Version extends CActiveRecord {
             {
                 $content=  explode(":", $end[$i]); // split into two bits
              
-                if(in_array($content[0],array('IF','UF','OB','BR')))
+                if(in_array($content[0],array('IF','UF','OB','BR','UI')))
                 { // the link is partly valid
 
                  $instance=($content[1]+1)-1;
@@ -253,7 +253,7 @@ class Version extends CActiveRecord {
                 //separate the object code from the new name
                 $content=  explode("+", $end[$i]);
                  
-                if(in_array($content[0],array('IF','UF','OB','BR')))
+                if(in_array($content[0],array('IF','UF','OB','BR','UI')))
                 { // the link is partly valid
 
                  $newName=$content[1];
@@ -397,7 +397,7 @@ class Version extends CActiveRecord {
         }
        
         $number=count($end);
-        $objects=array('IF'=>12,'UF'=>2,'OB'=>6,'BR'=>1);
+        $objects=array('IF'=>12,'UF'=>2,'OB'=>6,'BR'=>1,'UI'=>12);
         
         for($i=1;$i<=$number-1;$i=$i+2)
         {
@@ -406,7 +406,7 @@ class Version extends CActiveRecord {
             {
                 $content=  explode(":", $end[$i]);
              
-                if(in_array($content[0],array('IF','UF','OB','BR')))
+                if(in_array($content[0],array('IF','UF','OB','BR','UI')))
                 { // the link is partly valid
 
                  $instance=($content[1]+1)-1;

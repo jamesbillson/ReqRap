@@ -28,14 +28,14 @@ if (count($steps)):
                             <?php echo $form->textArea($step, 'text', array('rows' => 3, 'cols' => 180, "style" => "width:500px")); ?>
                             <?php echo $form->error($step, 'text'); ?>
                             <br />
-                            Use wiki markup [[UF/IF/BR/OB+Name]] to create new objects<br />
+                            Use wiki markup [[UF/UI/BR/OB+Name]] to create new objects<br />
                              [[UF/IF/BR/OB:Number]] to link existing objects<br />
                             <b>Result</b>
                             <br>
                             <?php echo $form->textArea($step, 'result', array('rows' => 3, 'cols' => 180, "style" => "width:500px")); ?>
                             <?php echo $form->error($step, 'result'); ?>
                             <?php $actors = Actor::model()->getProjectActors($project); ?><br>
-                            Use wiki markup [[UF/IF/BR/OB+Name]] to create new objects<br />
+                            Use wiki markup [[UF/UI/BR/OB+Name]] to create new objects<br />
                             [[UF/IF/BR/OB:Number]] to link existing objects<br />
                             <select name="Step[actor_id]">
                                 <?php

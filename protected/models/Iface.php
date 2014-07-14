@@ -298,6 +298,47 @@ WHERE
 		return $projects;
     }  
     
+    
+        public function getIfaceType($iface)
+    {
+         
+           
+          $release=Yii::App()->session['release'];
+     
+         $sql="
+            SELECT 
+            `r`.*,
+            `t`.`name` as type,
+            `t`.`interfacetype_id` as typenumber
+            FROM
+            `iface` `r`
+            JOIN `interfacetype` `t`
+            ON `t`.`interfacetype_id`=`r`.`interfacetype_id`            
+        
+            JOIN `version` `v`
+            ON `v`.`foreign_key`=`r`.`id`
+           
+            JOIN `version` `vt`
+            ON `vt`.`foreign_key`=`t`.`id`
+            WHERE 
+            `v`.`object`=12 AND `v`.`active`=1 AND `v`.`release`=".$release."
+            AND 
+            `vt`.`object`=13 AND `vt`.`active`=1 AND `vt`.`release`=".$release." 
+            AND  
+            `r`.`iface_id`=".$iface;
+            
+
+        
+        
+        
+        $connection=Yii::app()->db;
+		$command = $connection->createCommand($sql);
+		$projects = $command->queryAll();
+		
+		return $projects[0];
+    }  
+    
+    
          public function getCurrentImage($iface_id,$release)
     {
         //$release=Yii::App()->session['release'];

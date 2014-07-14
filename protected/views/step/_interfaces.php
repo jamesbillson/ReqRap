@@ -2,8 +2,13 @@
                             //$links = Iface::model()->getStepIfaces($item['id']);
                             $links = Step::model()->getStepLinks($item['id'], 12, 15);
                             foreach ($links as $link) {
+                               $category=Iface::model()->getIfaceType($link['iface_id']);
+                                
                                 ?>
-                                <a href="/iface/view/id/<?php echo $link['iface_id']; ?>"> UI-<?php echo str_pad($link['number'], 4, "0", STR_PAD_LEFT); ?>  </a>
+
+                                <a href="/iface/view/id/<?php echo $link['iface_id']; ?>"> 
+                                    <?php echo Version::$numberformat[12]['prepend']?>-
+                                    <?php echo str_pad($category['typenumber'], 2, "0", STR_PAD_LEFT ).str_pad($link['number'], Version::$numberformat[12]['padding'], "0", STR_PAD_LEFT); ?>  </a>
                                 <?php echo $link['name']; ?> <a href="/stepiface/delete/id/<?php echo $link['xid']; ?>"><i class="icon-link text-error" rel="tooltip" title="Unlink this interface"></i></a><br />
                             <?php } ?>
                             <br />
