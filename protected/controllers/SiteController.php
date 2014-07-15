@@ -79,6 +79,18 @@ class SiteController extends Controller {
     $this->render('benefits');
   }
 
+    public function actionFeatures() {
+    //if (Yii::app()->user->isGuest) $this->layout = 'public';
+
+    $this->render('features');
+  }
+  
+    public function actionPrinciples() {
+    //if (Yii::app()->user->isGuest) $this->layout = 'public';
+
+    $this->render('principles');
+  }
+  
   public function actionManage_drawings_and_tenders_online() {
     //if (Yii::app()->user->isGuest) $this->layout = 'public';
 

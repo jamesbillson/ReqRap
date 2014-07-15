@@ -125,7 +125,7 @@ class ProjectController extends Controller
        public function actionProject()
     {
      
-     Yii::app()->session['setting_tab']='details';
+    
     
      $model = $this->loadModel(Yii::app()->session['project']);
      $this->render('project',array('model'=>$model));

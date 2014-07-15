@@ -2,9 +2,9 @@
 
 <h3>ReqRap is FREE !</h3>
 <p>
-ReqRap is not yet available to the public, but when it launches it will be free of charge for the foreseeable future.
+ReqRap is in Beta and it is totally free.  It will remain free for the foreseeable future.
 
 </p>
-<p>ReqRap will be in a Beta phase in 2014 where we will offer a full service, 
-albeit with some glitches.
+<p>This Beta phase is scheduled to last until the end of 2014.  During this period we 
+    are offering a full service, although there may be some some glitches.
 </p>

@@ -42,6 +42,8 @@ $action=$action->id;
          !($controller == 'site' && $action == 'terms') &&
          !($controller == 'site' && $action == 'benefits') &&
          !($controller == 'site' && $action == 'contact') &&
+         !($controller == 'site' && $action == 'features') &&
+         !($controller == 'site' && $action == 'principles') &&
          !($controller == 'site' && $action == 'plans') &&
          !($controller == 'site' && $action == 'fail') &&
          !($controller == 'site' && $action == 'privacy') &&

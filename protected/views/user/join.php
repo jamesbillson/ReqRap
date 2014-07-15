@@ -1,4 +1,16 @@
-<h3 style="text-align:center;margin-bottom:10px"> Rapid Web Requirements  </h3>
+
+
+
+<h3 style="text-align:center;margin-bottom:20px"> Rapid Requirements for Web Developers  </h3>
+<div class="row">
+    <div class="span1"><h2><i class="icon-large icon-pencil" style="margin-top:10px"></i></h2></div>
+    <div class="span3"><h4>Produce better development estimates.</h4></div>
+    <div class="span1"><h2><i class="icon-large icon-screenshot" style="margin-top:10px"></i></h2></div>
+    <div class="span3"><h4>Get client validation and avoid scope creep.</h4></div>
+    <div class="span1"><h2><i class="icon-large icon-check" style="margin-top:15px"></i></h2></div>
+    <div class="span3"><h4>Automatically generate test plans</h4></div>
+</div>
+
 <h3 style="text-align:center;margin-bottom:30px"> <a href="/site/benefits">Find out how -></a> </h3>
 
 <div class="row">
@@ -6,6 +18,7 @@
     <img src="<?php echo Yii::app()->themeManager->baseUrl ?>/bootstrap/img/signup_Image.png" width="570px" alt="Signup Image" />
     </div>
      <div class="form" id="signupForm" style="max-width: 320px">  
+         <h4>Get going right now.</h4>
          <?php
   $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
                 'id'=>'contact-form',
