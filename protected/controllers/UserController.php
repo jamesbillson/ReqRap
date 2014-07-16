@@ -216,7 +216,7 @@ class UserController extends Controller
             $identity->errorCode = UserIdentity::ERROR_NONE;
             Yii::app()->user->login($identity, (Yii::app()->params['loggedInDays'] * 60 * 60 * 24 ));
 
-            $this->redirect(array('/user/welcome'));
+            $this->redirect(array('/company/mycreate'));
             //return;
           //}
         }

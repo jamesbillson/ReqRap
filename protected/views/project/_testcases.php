@@ -3,7 +3,7 @@
 $release=Yii::App()->session['release'];
 $project=Yii::App()->session['project'];
 $testcases=  Testcase::model()->findAll('release_id='.$release);
-
+$permission=Yii::App()->session['permission'];
 
 ?>
 <?php 

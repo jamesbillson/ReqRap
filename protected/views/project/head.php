@@ -53,16 +53,38 @@ if (Yii::App()->session['permission'] ==0)  $this->redirect(array('site/fail/con
         ?>
             <?php if(isset($currentrelease) && $release == $currentrelease) {?>
     <a href="/project/project/">
-        <i class="icon-cog" rel="tooltip" title="Project Settings"></i>
+           <?php
+    $this->widget('bootstrap.widgets.TbLabel', array(
+    'type'=>'info', // 'success', 'warning', 'important', 'info' or 'inverse'
+    'label'=>'Settings',
+    )); ?>
     </a>
             <?php }  ?>
              <?php if(isset($currentrelease) && $release != $currentrelease){ ?>
-    <a href="/release/setcurrent/"><i class="icon-cog" rel="tooltip" title="Project Settings"></i></a> 
+    <a href="/release/setcurrent/">
+        
+     <?php
+    $this->widget('bootstrap.widgets.TbLabel', array(
+    'type'=>'info', // 'success', 'warning', 'important', 'info' or 'inverse'
+    'label'=>'Settings',
+    )); ?>
+        
+    </a> 
     <?php } ?>
     <a href="/project/view/">
-        <i class="icon-film" rel="tooltip" title="Requirements Model"></i>
-    </a>
-                 <?php
+         <?php
+                 
+                 $this->widget('bootstrap.widgets.TbLabel', array(
+    'type'=>'info',
+    // 'success', 'warning', 'important', 'info' or 'inverse'
+    'label'=>'Model',
+                  
+)); ?>
+        
+        
+    </a>  
+                
+       <?php        
     if(($phase==2)){
       
       ?>

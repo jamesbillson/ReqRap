@@ -15,7 +15,7 @@
  */
 class Company extends CActiveRecord
 {
-    public static $companytype = array(1=>'Analyst', 3=>'Client or Project Manager', 4=>'Tester');  
+    public static $companytype = array(1=>'Developer or Analyst', 3=>'Client or Project Manager', 4=>'Tester');  
     public static $companytypestatus = array(1=>'This company is an analyst', 2=>'you are a contact?',3=>'This company is client or project manager', 4=>'This is a tester');  
       
   /**

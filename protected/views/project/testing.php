@@ -14,7 +14,7 @@ if ($tab=='photos') $tab='interfaces';
    
      $edit=(Yii::App()->session['edit']==1)?TRUE:FALSE;
     $phase=Release::model()->findbyPK($release)->status;
- 
+ $permission=Yii::App()->session['permission'];
 ?>
 
 
@@ -35,7 +35,7 @@ $active['testruns']=FALSE;
     $tabs[] = array('id' => 'testcases',
             'label' => 'Test Cases',
         'visible' => ($phase==2),
-            'visible' => ($phase==2 && in_array($edit,array(1,2,4,5))),
+            'visible' => ($phase==2 && in_array($permission,array(1,2,4,5))),
             'content' => $this->renderPartial('_testcases',
                     compact('model','status','permission'),true,false),'active'=>$active['testcases']); 
 

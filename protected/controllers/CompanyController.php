@@ -101,6 +101,7 @@ class CompanyController extends Controller
 		{
 			$model->attributes=$_POST['Company'];
                         $model->owner_id=Yii::app()->user->id;
+                        $model->type=1; // hard code all to be type 1
                         
 			if($model->save())
                             $cid=$model->primaryKey;

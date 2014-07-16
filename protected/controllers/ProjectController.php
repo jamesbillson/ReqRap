@@ -94,27 +94,43 @@ class ProjectController extends Controller
     
     public function actionView()
     {
-        $tab=Yii::App()->session['setting_tab'];
+      
+         $tab=Yii::App()->session['setting_tab'];
+     if (!in_array($tab,array('sections',
+         'objects',
+         'actors',
+         'usecases',
+         'rules',
+         'forms',
+         'interfaces',
+         'structure',
+        ))){
+         Yii::App()->session['setting_tab']='usecases';
+     }
      $id=Yii::app()->session['project'];
         $model = $this->loadModel($id);
         $this->render('view',array(
-                'model'=>$model,'tab'=>$tab ));
+                'model'=>$model ));
 
     }
     
      public function actionTesting()
     {
-        $tab=Yii::App()->session['setting_tab'];
+     $tab=Yii::App()->session['setting_tab'];
+     if (!in_array($tab,array('testcases',
+         'testruns'))){
+         Yii::App()->session['setting_tab']='testruns';
+     }
      $id=Yii::app()->session['project'];
         $model = $this->loadModel($id);
         $this->render('testing',array(
-                'model'=>$model,'tab'=>$tab ));
+                'model'=>$model ));
 
     }
 
          public function actionWalkthru()
     {
-        $tab=Yii::App()->session['setting_tab'];
+        Yii::App()->session['setting_tab'];
      $id=Yii::app()->session['project'];
         $model = $this->loadModel($id);
         $this->render('_walkthru',array(
@@ -124,9 +140,10 @@ class ProjectController extends Controller
     
        public function actionProject()
     {
-     
-    
-    
+     $tab=Yii::App()->session['setting_tab'];
+     if (!in_array($tab,array('details','documents','settings','followers','todo','notes'))){
+         Yii::App()->session['setting_tab']='details';
+     }
      $model = $this->loadModel(Yii::app()->session['project']);
      $this->render('project',array('model'=>$model));
      
