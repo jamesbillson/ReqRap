@@ -3,7 +3,10 @@
 <?php 
 $item=explode('_',$id);
 
+if($item[1]>0 && $item[2]>0)  {
+$object=Version::model()->instanceName($item[1], $item[2]);
 
+} ELSE {$object='General Note';}
 $form=$this->beginWidget('CActiveForm', array(
 	'id'=>'actor-form',
 	// Please note: When you enable ajax validation, make sure the corresponding
@@ -12,7 +15,7 @@ $form=$this->beginWidget('CActiveForm', array(
 	// See class documentation of CActiveForm for details on this.
 	'enableAjaxValidation'=>false,
 )); ?>
-
+    <h4><?php echo $object['number'].'-'.$object['name']; ?></h4>
 	<p class="note">Fields with <span class="required">*</span> are required.</p>
 
 	<?php echo $form->errorSummary($model); ?>

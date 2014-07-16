@@ -22,24 +22,14 @@
 
 If (User::model()->myCompanyType()==1){
 // The user is a BUILDER so we let them choose bid or construction.
-?>
-         <div class="row">
-		What type of project is this?<br />
-		<?php echo $form->dropdownlist($model,'stage',Project::$projectstage); ?>
-		<?php echo $form->error($model,'stage'); ?>
-	</div>	
-<?php
+
 
 } 
 
 If (User::model()->myCompanyType()==3){
 // The user is a PM so we specify its a tender.
     ?>
-    <div class="row">
-		What type of project is this?<br />
-		<?php echo $form->dropdownlist($model,'stage',Project::$buildstagecreatepm); ?>
-		<?php echo $form->error($model,'stage'); ?>
-	</div>	
+
 		
 <?php
 }

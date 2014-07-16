@@ -115,6 +115,14 @@ if (Yii::App()->session['permission'] ==0)  $this->redirect(array('site/fail/con
     'label'=>'Walk Through',
     )); ?>        
         <?php } ?>
+            
+            
+                <?php
+  
+    if($my_project){  ?>
+          <a target="_new" href="/project/print" ><i class="icon-print " rel="tooltip" title="View Print Version"></i></a>
+       
+    <?php  } ?>
 </td>
 <td> 
     <form action="/project/set/">
@@ -139,29 +147,34 @@ if (Yii::App()->session['permission'] ==0)  $this->redirect(array('site/fail/con
   
    
    ?>
-            
-            
-            
+          
    </select>
     </form>
 </td>
-<td>
 
-         <?php
-  
-    if($my_project){  ?>
-          <a target="_new" href="/project/print" ><i class="icon-print " rel="tooltip" title="View Print Version"></i></a>
-       
-    <?php  } ?>
-</td>
+
+
+
 <td>
     
        <?php
   
+       
+      $config = array(
+      );
+ 
+      $this->widget('application.extensions.fancybox.EFancyBox', array(
+        'target'=>'a#popup',
+        'config'=>$config,));
+ 
+      
+         
+       
+       
     if(isset($link)){ 
         //echo $link;
         ?>
-          <a href="/note/create/id/<?php echo $link; ?>" ><i class="icon-comment" rel="tooltip" title="Make a Note"></i></a> 
+          <a id="popup" href="/note/create/id/<?php echo $link; ?>" ><i class="icon-comment" rel="tooltip" title="Make a Note"></i></a> 
     <?php if(count(Note::model()->getNotes($link))) {?>      
             <a href="/note/view/id/<?php echo $link; ?>" ><i class="icon-comments" rel="tooltip" title="View Notes"></i></a> 
       
@@ -172,4 +185,3 @@ if (Yii::App()->session['permission'] ==0)  $this->redirect(array('site/fail/con
     </tr>
 </table> 
 
-  

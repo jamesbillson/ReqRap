@@ -183,6 +183,7 @@ class ProjectController extends Controller
             $model->attributes=$_POST['Project'];
             $model->company_id = User::model()->myCompany();
             $model->extlink = md5(uniqid(rand(), true));
+            $model->stage=1;
             if($model->save())
             $project=$model->getPrimaryKey();
             Yii::app()->session['project'] = $project;
