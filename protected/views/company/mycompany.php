@@ -18,11 +18,8 @@ $me = User::model()->findbyPK(Yii::app()->user->id);
      }
 echo $model->description;
 ?>
-    <br />
-     <br />
- <?php 
-echo Company::$companytypestatus[$model->type];
-?>    
+ 
+   
 </div>
 
  

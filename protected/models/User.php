@@ -225,10 +225,14 @@ class User extends CActiveRecord
             $mail->setSubject('You have been invited to join '.$creator->company->name);
             $mail->setBody($user->firstname.',
             <br /><br />
-            You\'ve been invited to create a ReqRap account for '.$creator->company->name.'. 
+            You\'ve been invited to create on ReqRap, the rapid web requirements tool.
+            The account invitation is to join '.$creator->company->name.' as an employee. 
             <br />
             Click here to accept <a href="http://'.Yii::app()->params['server'].'/user/accept/id/'.$user->salt.'">'.Yii::app()->params['server'].'/user/accept/id/'.$user->salt.'</a>                   
             <br />
+            If you were not expecting this message, simply ignore it and it will expire.<br />
+            If you have any questions, please do not hesitate to contact
+            .'.$creator->firstname.' '.$creator->lastname.' or support@reqrap.com.
           
             
             ');

@@ -32,7 +32,7 @@ class CompanyController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('mycreate','mycompanies','create','update','mycompany'),
+				'actions'=>array('Logoupload','mycreate','mycompanies','create','update','mycompany'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -57,9 +57,7 @@ class CompanyController extends Controller
             $this->render('mycompany',array(
 			'model'=>$model,
 		));
-	}
-         
-         if ($model->companyowner_id ==$mycompany ){
+	} ELSEif ($model->companyowner_id ==$mycompany ){
         $this->render('view',array(
 			'model'=>$model,
 		));
@@ -67,10 +65,9 @@ class CompanyController extends Controller
         $this -> redirect('/site/fail');
         }
         } 
-	/**
-	 * Creates a new model.
-	 * If creation is successful, the browser will be redirected to the 'view' page.
-	 */
+
+        
+        
 	public function actionCreate()
 	{
 		$model=new Company;
@@ -138,6 +135,8 @@ class CompanyController extends Controller
 		if(isset($_POST['Company']))
 		{
 			$model->attributes=$_POST['Company'];
+                        
+                        $model->type=1; // hard coded for now
 			if($model->save())
 				$this->redirect(array('view','id'=>$model->id));
 		}
@@ -233,4 +232,44 @@ class CompanyController extends Controller
 			'model'=>$this->loadModel($id),
 		));
 	}
+        
+        public function actionLogoupload($id) {
+    if (isset($id) && Company::model()->findByPk($id)) {
+      Yii::import("ext.EAjaxUpload.qqFileUploader");
+      $folder = Yii::getPathOfAlias("webroot") . Yii::app()->params['photo_folder'];
+      if (!file_exists($folder)) {
+        if (mkdir($folder, 0755, true)) {
+          return false;
+        }
+      }
+      $allowedExtensions = array("jpg", "jpeg", "gif", "png", "PNG", "JPG", "GIF", "JPEG"); //array("jpg","jpeg","gif","exe","mov" and etc...
+      $sizeLimit = 2 * 1024 * 1024; // maximum file size in bytes
+      $uploader = new qqFileUploader($allowedExtensions, $sizeLimit);
+
+      $result = $uploader->handleUpload($folder);
+      if ($result) {
+        $project = Yii::App()->session['project'];
+        $release = Yii::App()->session['release'];
+        $mycompany = User::model()->myCompany();
+        
+        $file_name = Utils::uniqueFile($result['filename']);
+        $file_name = 'logo'.$mycompany.'-'.$file_name;
+        $path = Yii::getPathOfAlias("webroot").Yii::app()->params['photo_folder'];
+        rename($path.$result['filename'], $path.$file_name);
+         
+        
+        
+        //persist into database
+       $model=$this->loadModel($id);
+       $model->logo_id = $file_name;
+        
+       if ($model->save()) {
+          // Add image to interface
+        }
+      }
+      $return = htmlspecialchars(json_encode($result), ENT_NOQUOTES);
+      echo $return;
+    }
+  }
+        
 }

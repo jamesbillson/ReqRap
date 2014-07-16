@@ -253,7 +253,7 @@ class Follower extends CActiveRecord
         
        $mail = new YiiMailer();
        $mail->setFrom('info@reqrap.com','ReqRap System - '.$companyName);
-       $mail->setTo($contact->email);
+       $mail->setTo($creator->email);
      
           
 

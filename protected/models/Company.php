@@ -47,6 +47,8 @@ class Company extends CActiveRecord
       array('name, description, owner_id, type', 'required'),
       array('owner_id, type, organisationtype, trade_id', 'numerical', 'integerOnly'=>true),
       array('foreignid, name', 'length', 'max'=>255),
+      array('logo_id', 'file', 'types'=>'jpg,jpeg,gif,icon,png','maxSize'=>10*1024*1024,'allowEmpty'=>true),
+          
       // The following rule is used by search().
       // Please remove those attributes that should not be searched.
       array('id, foreignid, name, description, owner_id, type, organisationtype, trade_id', 'safe', 'on'=>'search'),
@@ -78,6 +80,7 @@ class Company extends CActiveRecord
       'foreignid' => 'External Reference',
       'name' => 'Name',
       'description' => 'Description',
+        'logo_id'=>'Logo',
       'owner_id' => 'Owner',
       'type' => 'Type',
       'organisationtype' => 'Company Type',
