@@ -134,7 +134,7 @@ class ProjectController extends Controller
      $id=Yii::app()->session['project'];
         $model = $this->loadModel($id);
         $this->render('_walkthru',array(
-                'model'=>$model,'tab'=>$tab ));
+                'model'=>$model));
 
     }
     

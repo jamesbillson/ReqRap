@@ -56,7 +56,7 @@ if (Yii::App()->session['permission'] ==0)  $this->redirect(array('site/fail/con
            <?php
     $this->widget('bootstrap.widgets.TbLabel', array(
     'type'=>'info', // 'success', 'warning', 'important', 'info' or 'inverse'
-    'label'=>'Settings',
+    'label'=>'Project',
     )); ?>
     </a>
             <?php }  ?>
@@ -89,13 +89,32 @@ if (Yii::App()->session['permission'] ==0)  $this->redirect(array('site/fail/con
       
       ?>
     <a href="/project/testing/">
-        <i class="icon-check" rel="tooltip" title="Testing"></i>
+         <?php
+    $this->widget('bootstrap.widgets.TbLabel', array(
+    'type'=>'info', // 'success', 'warning', 'important', 'info' or 'inverse'
+    'label'=>'Testing',
+    )); ?>
     </a>
      
     <a href="/project/walkthru/">
-        <i class="icon-road" rel="tooltip" title="Walk Through"></i>
+        <?php
+    $this->widget('bootstrap.widgets.TbLabel', array(
+    'type'=>'info', // 'success', 'warning', 'important', 'info' or 'inverse'
+    'label'=>'Walk Through',
+    )); ?>
     </a>
-        <?php }  ?>
+        <?php } ELSE { ?>
+          <?php
+    $this->widget('bootstrap.widgets.TbLabel', array(
+    'type'=>'', // 'success', 'warning', 'important', 'info' or 'inverse'
+    'label'=>'Testing',
+    )); ?>    
+            <?php
+    $this->widget('bootstrap.widgets.TbLabel', array(
+    'type'=>'', // 'success', 'warning', 'important', 'info' or 'inverse'
+    'label'=>'Walk Through',
+    )); ?>        
+        <?php } ?>
 </td>
 <td> 
     <form action="/project/set/">

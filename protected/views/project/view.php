@@ -1,6 +1,7 @@
 
 <?php 
 $release=Yii::App()->session['release'];
+$tab=Yii::App()->session['setting_tab'];
 $link=$release.'_0_0';
     $permission=Yii::App()->session['permission'];
     $phase=Release::model()->findbyPK($release)->status;
