@@ -14,7 +14,7 @@ class SiteController extends Controller {
             'actions' => array('forgotpassword', 'newpassword'),
             'users' => array('*')),
         array('allow', // allow authenticated user to perform 'create' and 'update' actions
-            'actions' => array('view', 'create', 'quickaddvintage', 'update', 'inlineupdate', 'addvintage', 'addvariety', 'addregion'),
+            'actions' => array('verify','view', 'create', 'quickaddvintage', 'update', 'inlineupdate', 'addvintage', 'addvariety', 'addregion'),
             //'roles'=>array('@'),
             'users' => array('@'),
         ),
@@ -55,6 +55,12 @@ class SiteController extends Controller {
     $this->render('index');
   }
 
+    public function actionVerify() {
+    // renders the view file 'protected/views/site/index.php'
+    // using the default layout 'protected/views/layouts/main.php'
+    $this->render('verify');
+  }
+  
   public function actionAdmin() {
     // renders the view file 'protected/views/site/index.php'
     // using the default layout 'protected/views/layouts/main.php'

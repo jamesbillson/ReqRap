@@ -19,6 +19,8 @@
 <body>
     
 <?php
+
+
 $cname='';
 if (!empty(Yii::app()->user->id) || !empty(Yii::app()->user->company_id)){
    $company=User::model()->myCompany(Yii::app()->user->id);
@@ -56,7 +58,7 @@ if (!empty(Yii::app()->user->id) || !empty(Yii::app()->user->company_id)){
                                         'url'=>array('/site/plans'),
                                         'visible'=>Yii::app()->user->isGuest),
                                 array('label'=>'Contacts',
-                                        'visible'=>!Yii::app()->user->isGuest,
+                                        'visible'=>!Yii::app()->user->isGuest && !empty(Yii::app()->user->company_id),
                                         'items'=>array(
                                                       
                                                         array('label'=>'Contacts', 'url'=>'/contact/mycontacts'),
@@ -65,7 +67,7 @@ if (!empty(Yii::app()->user->id) || !empty(Yii::app()->user->company_id)){
 				)),
                              // Analyst Menu
                             array('label'=>'Projects',
-                                        'visible'=>!Yii::app()->user->isGuest && User::model()->myCompanyType()==1,
+                                        'visible'=>!Yii::app()->user->isGuest && !empty(Yii::app()->user->company_id),
                                         'items'=>array(
                                                          array('label'=>'Projects', 'url'=>'/project/myrequirements'),
                                                         array('label'=>'Library', 'url'=>'/library/view'),
@@ -73,7 +75,7 @@ if (!empty(Yii::app()->user->id) || !empty(Yii::app()->user->company_id)){
          
                              // PM Menu
                             array('label'=>'Projects',
-                                        'visible'=>!Yii::app()->user->isGuest && User::model()->myCompanyType()==3,
+                                        'visible'=>!Yii::app()->user->isGuest && !empty(Yii::app()->user->company_id),
                                         'items'=>array(
                                                        
                                                         array('label'=>'Projects', 'url'=>'/project/myprojects'),
@@ -99,7 +101,7 @@ if (!empty(Yii::app()->user->id) || !empty(Yii::app()->user->company_id)){
 			'items'=>array(
                           
                           array('label'=>Yii::app()->user->name,
-                                        'visible'=>!Yii::app()->user->isGuest,
+                                        'visible'=>!Yii::app()->user->isGuest && !empty(Yii::app()->user->company_id),
                                         'items'=>array(
                                                         array('label'=>'Logout ('.Yii::app()->user->name.')',
                                                                 'url'=>array('/site/logout'), 

@@ -92,7 +92,8 @@ class CompanyController extends Controller
 	public function actionmyCreate()
 	{
 		$model=new Company;
-
+$user=User::model()->findbyPK(Yii::App()->user->id);
+if ($user->active==0)$this->redirect(array('site/verify'));
 		
 		if(isset($_POST['Company']))
 		{

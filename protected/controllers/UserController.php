@@ -28,7 +28,7 @@ class UserController extends Controller
     {
         return array(
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
-                'actions'=>array('promote','demote','sack','reinvite','index','invite','view','create','update','admin','delete'),
+                'actions'=>array('reverify','promote','demote','sack','reinvite','index','invite','view','create','update','admin','delete'),
                 'roles'=>array('admin'),
                 /*'users'=>array('@'),*/
             ),
@@ -147,6 +147,39 @@ class UserController extends Controller
         ));
     }
 
+    
+      
+    public function actionReverify()
+    {
+       
+          $user=User::model()->findbyPK(Yii::App()->user->id);
+
+                  $link = urlencode($user->salt);
+                  $mail = new YiiMailer();
+
+                    $mail->setFrom(Yii::app()->params['adminEmail']);
+                    $mail->setTo($user->email);
+                    $mail->setSubject('You have registered an account on ReqRap');
+                    $mail->setBody('Dear '.$user->firstname.',
+                    <br />
+                    Hi, it looks like you\'ve created a ReqRap account, the 
+                    rapid web requirements system.<br />
+                    To confirm your email address and activate your account follow 
+                    the link below and complete the join form.
+                    <br />
+                    Click here to accept <a href="http://'.Yii::app()->params['server'].'/user/active/verifycode/'.$link.'">'.Yii::app()->params['server'].'/user/active/verifycode/'.$link.'</a>                   
+                    <br />   <br />.
+                    Thanks, 
+                    from the ReqRap Team.
+                    ');
+
+                    $mail->Send();
+                    Yii::app()->user->logout();
+                    $this->redirect(array('joinsuccess','id'=>$user->id));
+                    /**/
+                
+
+    }
     
      public function actionJoinfollower($id)
     {
