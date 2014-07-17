@@ -13,13 +13,24 @@ $this->redirect(array('company/mycreate'));
     
 }
 
-$this->pageTitle=Yii::app()->name;
-$this->beginWidget('bootstrap.widgets.TbHeroUnit',array(
-    'heading'=>CHtml::encode(Yii::app()->name),
-)); ?>
-<h3><?php echo $model->name; ?></h3>
-<?php $this->endWidget(); ?>
+$this->pageTitle=Yii::app()->name; ?>
+
+<div class="row well">
+    <div class="span6">
+    <h1><?php echo $model->name; ?></h1>
+    <?php echo $model->description; ?>
+</div>
+  <div class="span5 pull-right">
+        <?php $src = Yii::app()->easyImage->thumbSrcOf(
+ Yii::app()->params['photo_folder'].$model->logo_id, 
+ array('resize' => array('width' => 150)));
+       
+        ?>
+ 
+      <img src="<?php echo $src;?>" align="right">
+  </div>    
 <br />
+</div>
 <?php 
 
 
@@ -214,7 +225,7 @@ if(!empty($bids)) {
      $this->widget('bootstrap.widgets.TbMenu', array(
     'type'=>'list',
     'items'=>array(
-        array('label'=>'Applications', 'icon'=>'star-empty', 'url'=>array('project/myrequirements')),
+        array('label'=>'Projects', 'icon'=>'star-empty', 'url'=>array('project/myrequirements')),
       
        ),
     

@@ -40,12 +40,33 @@ echo 'project is '.Yii::App()->session['project'].' current release is '.$curren
 echo '<br /> tab: '.$tab. ' edit permissions are '.$edit;}
 if (Yii::App()->session['permission'] ==0)  $this->redirect(array('site/fail/condition/no_access_head'));
 ?>
+<div class="row">
+    <div class="span6">
+     <h1> <?php if ($my_project) echo $project->name  ; ?></h1> 
+    </div> 
+    
+    <div class="span6">  
+             <div class="row">
+            <form action="/project/set/">
+            <input type="hidden" name="tab" value="details">
+            <select name="id" onchange="this.form.submit()">
 
-<table><tr><td>
-    <h1> <?php if ($my_project) echo $project->name  ; ?></h1> 
-       
-      </td>
-        <td>  <?php  if(isset($currentrelease) && $release != $currentrelease)   {
+            <option>Change Project</option>
+            <?php 
+            foreach($projectlist as $proj)
+            {?>
+            <option value="<?php echo $proj['id']; ?>"> <?php echo $proj['name'];?></option>
+            <?php
+            }
+            foreach($followlist as $follow){?>
+                    <option value="<?php echo $follow['id']; ?>"> <?php echo $follow['pname'];?></option>
+            <?php } ?>
+            </select>
+            </form>
+            </div>
+          <div class="row">
+        
+        <?php  if(isset($currentrelease) && $release != $currentrelease)   {
              $releaseNumber = Release::model()->findbyPK($release);
        echo '( R-'.FLOOR($releaseNumber->number).' )';
        
@@ -115,7 +136,7 @@ if (Yii::App()->session['permission'] ==0)  $this->redirect(array('site/fail/con
     'label'=>'Walk Through',
     )); ?>        
         <?php } ?>
-            
+           
             
                 <?php
   
@@ -123,39 +144,10 @@ if (Yii::App()->session['permission'] ==0)  $this->redirect(array('site/fail/con
           <a target="_new" href="/project/print" ><i class="icon-print " rel="tooltip" title="View Print Version"></i></a>
        
     <?php  } ?>
-</td>
-<td> 
-    <form action="/project/set/">
-        <input type="hidden" name="tab" value="details">
-        <select name="id" onchange="this.form.submit()">
-            
-            <option>Change Project</option>
-    <?php 
-   foreach($projectlist as $proj)
-   {?>
-            <option value="<?php echo $proj['id']; ?>"> <?php echo $proj['name'];?></option>
-  
-   <?php
-   }
 
-     foreach($followlist as $follow)
-   {?>
-            <option value="<?php echo $follow['id']; ?>"> <?php echo $follow['pname'];?></option>
-  
-   <?php
-   }
-  
-   
-   ?>
+
+
           
-   </select>
-    </form>
-</td>
-
-
-
-
-<td>
     
        <?php
   
@@ -174,14 +166,16 @@ if (Yii::App()->session['permission'] ==0)  $this->redirect(array('site/fail/con
     if(isset($link)){ 
         //echo $link;
         ?>
-          <a id="popup" href="/note/create/id/<?php echo $link; ?>" ><i class="icon-comment" rel="tooltip" title="Make a Note"></i></a> 
+          <a id="popup" href="/note/create/id/<?php echo $link; ?>" >
+              <i class="icon-comment" rel="tooltip" title="Make a Note"></i></a> 
     <?php if(count(Note::model()->getNotes($link))) {?>      
             <a href="/note/view/id/<?php echo $link; ?>" ><i class="icon-comments" rel="tooltip" title="View Notes"></i></a> 
       
 
     <?php  }} ?> 
     
-</td>
-    </tr>
-</table> 
 
+            </div>       
+</div>
+
+</div>

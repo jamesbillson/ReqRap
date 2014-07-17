@@ -10,7 +10,7 @@ $data = Project::model()->myProjects(1);
 $invites = Follower::model()->getMyProjectFollows(1);
 
 $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
-    'title' => 'Applications',
+    'title' => 'Projects',
     'headerIcon' => 'icon-briefcase',
     // when displaying a table, if we include bootstra-widget-table class
     // the table will be 0-padding to the box
