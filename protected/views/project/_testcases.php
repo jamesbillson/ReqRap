@@ -24,7 +24,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
         'label'=> 'Add Manual Case',
         'visible'=>in_array($permission,array(1,4)),
         //'visible'=> $edit,
-        'url'=>'/testcase/create/',
+        'url'=>'/testcase/createmanual/',
     ),
            
     array(

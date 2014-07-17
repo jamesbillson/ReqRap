@@ -15,7 +15,7 @@ class TeststepController extends Controller
 	{
 		return array(
 			'accessControl', // perform access control for CRUD operations
-			'postOnly + delete', // we only allow deletion via POST request
+			//'postOnly + delete', // we only allow deletion via POST request
 		);
 	}
 
@@ -32,11 +32,11 @@ class TeststepController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update'),
+				'actions'=>array('create','update','delete'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete'),
+				'actions'=>array('admin'),
 				'users'=>array('admin'),
 			),
 			array('deny',  // deny all users
@@ -60,23 +60,20 @@ class TeststepController extends Controller
 	 * Creates a new model.
 	 * If creation is successful, the browser will be redirected to the 'view' page.
 	 */
-	public function actionCreate()
+	public function actionCreate($id, $step)
 	{
-		$model=new Teststep;
+		$model=$this->loadModel($step);
+                
 
-		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
-
-		if(isset($_POST['Teststep']))
-		{
-			$model->attributes=$_POST['Teststep'];
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->id));
-		}
-
-		$this->render('create',array(
-			'model'=>$model,
-		));
+		    $teststep=new Teststep;
+                            $teststep->number=$model->number+0.01;
+                            $teststep->testcase_id=$id;
+                            $teststep->action='Action.';
+                            $teststep->result='Result.';
+                            $teststep->save();
+                  
+                            $this->redirect(array('/testcase/view/id/'.$id));
+                        
 	}
 
 	/**
@@ -95,7 +92,7 @@ class TeststepController extends Controller
 		{
 			$model->attributes=$_POST['Teststep'];
 			if($model->save())
-				$this->redirect(array('view','id'=>$model->id));
+				$this->redirect(array('/testcase/view','id'=>$model->testcase_id));
 		}
 
 		$this->render('update',array(
@@ -110,12 +107,12 @@ class TeststepController extends Controller
 	 */
 	public function actionDelete($id)
 	{
-		$this->loadModel($id)->delete();
+	$model=$this->loadModel($id);
+        $testcase_id=$model->testcase_id;
+        $model->delete();
 
-		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
-		if(!isset($_GET['ajax']))
-			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
-	}
+		    $this->redirect(array('/testcase/view/id/'.$testcase_id));
+                }
 
 	/**
 	 * Lists all models.

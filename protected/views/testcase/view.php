@@ -1,5 +1,9 @@
 
-<h3>Project: <a href="/project/view/tab/objects/id/<?php echo $model->release->project->id; ?>"><?php echo $model->release->project->name; ?></a></h3>
+<?php 
+echo $this->renderPartial('/project/head'); 
+
+?>
+
 <?php 
 
 if(!empty($model->usecase_id))
@@ -36,6 +40,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
     // the table will be 0-padding to the box
     'htmlOptions' => array('class'=>'bootstrap-widget-table'),
        'headerButtons' => array(
+            
            /*
                 array(
                     'class' => 'bootstrap.widgets.TbButton',
@@ -67,9 +72,10 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                <thead>
                 <tr>
                     
-                    <th>Name</th>
+                    <th>Number</th>
                     <th>Action</th>
                     <th>Result</th>
+                    <th></th>
                 </tr>
             </thead>
             
@@ -82,16 +88,18 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                     </td>
 
                     <td>   
-                        <?php echo $item['action'];?>
+                        <?php echo Version::model()->wikiOutput($item['action']);?>
                     </td>                  
                                  <td>   
-                        <?php echo $item['result'];?>
+                        <?php echo Version::model()->wikiOutput($item['result']);?>
                     </td>  
 
                   
                     <td>
                         <a href="/teststep/update/id/<?php echo $item['id'];?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
-                        <a href="/teststep/delete?id=<?php echo $item['id'];?>"><i class="icon-remove-sign" rel="tooltip" title="Delete"></i></a> 
+                       <?php if(count($data)>1){;?> <a href="/teststep/delete/id/<?php echo $item['id'];?>"><i class="icon-remove-sign" rel="tooltip" title="Delete"></i></a> <?php } ?>
+                      <a href="/teststep/create/id/<?php echo $item['testcase_id'];?>/step/<?php echo $item['id'];?>"><i class="icon-plus-sign-alt" rel="tooltip" title="Add new step after"></i></a> 
+                   
                     </td>
                 </tr>
             <?php endforeach ?>

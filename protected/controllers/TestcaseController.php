@@ -32,7 +32,7 @@ class TestcaseController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update','results', 'make','delete','run','viewrun'),
+				'actions'=>array('createmanual','create','update','results', 'make','delete','run','viewrun'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -109,10 +109,10 @@ class TestcaseController extends Controller
         } 
         
 
-	public function actionCreate($id)
+	public function actionCreate()
 	{
 		
-            Yii::App()->session['release']=$id;
+            $id=Yii::App()->session['release'];
             Testcase::model()->deleteOld();
             $data = Usecase::model()->getProjectUCs();
             
@@ -134,6 +134,37 @@ class TestcaseController extends Controller
             
 	}
 
+    public function actionCreateManual()
+	{
+            $release=Yii::App()->session['release'];
+		$model=new Testcase;
+
+		if(isset($_POST['Testcase']))
+		{
+			$model->attributes=$_POST['Testcase'];
+                        $model->release_id=$release;
+                        $model->active=1;
+                        $model->number=Testcase::model()->getNextNumber($release);
+			if($model->save()){
+                            $teststep=new Teststep;
+                            $teststep->number=1;
+                            $teststep->testcase_id=$model->id;
+                            $teststep->action='First step.';
+                            $teststep->result='First result.';
+                            $teststep->save();
+                  
+                            $this->redirect(array('/project/testing'));
+                        
+                        }
+		}
+
+		$this->render('create',array(
+			'model'=>$model,
+		));
+	}
+            
+
+        
         
         public function actionMake($id,$release) // this is the db id
 	{

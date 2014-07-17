@@ -21,13 +21,13 @@
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'action'); ?>
-		<?php echo $form->textArea($model,'action',array('rows'=>6, 'cols'=>50)); ?>
+		<?php echo $form->textArea($model,'action',array('rows'=>6, 'class'=>'span6')); ?>
 		<?php echo $form->error($model,'action'); ?>
 	</div>
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'result'); ?>
-		<?php echo $form->textArea($model,'result',array('rows'=>6, 'cols'=>50)); ?>
+		<?php echo $form->textArea($model,'result',array('rows'=>6, 'class'=>'span6')); ?>
 		<?php echo $form->error($model,'result'); ?>
 	</div>
 

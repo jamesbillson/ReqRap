@@ -1,18 +1,7 @@
-<?php
-/* @var $this TestcaseController */
-/* @var $model Testcase */
+<?php 
+echo $this->renderPartial('/project/head'); 
 
-$this->breadcrumbs=array(
-	'Testcases'=>array('index'),
-	'Create',
-);
-
-$this->menu=array(
-	array('label'=>'List Testcase', 'url'=>array('index')),
-	array('label'=>'Manage Testcase', 'url'=>array('admin')),
-);
 ?>
-
-<h1>Create Testcase</h1>
+<h3>Create Manual Testcase</h3>
 
 <?php $this->renderPartial('_form', array('model'=>$model)); ?>
