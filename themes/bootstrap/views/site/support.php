@@ -1,5 +1,5 @@
 
-<h1>Contact</h1>
+<h1>Support</h1>
 
 If you need to get in contact with ReqRap,<br />
 we are at: <br />
@@ -24,9 +24,9 @@ Fax: its not 1985 any more<br />
 
 <p>
 If you have business inquiries or other questions, please fill out the
-following form to contact us. <br>Thank you.
+following form to contact us. Thank you.
 </p>
-<br>
+
 <div class="form">
 
 <?php $form=$this->beginWidget('bootstrap.widgets.TbActiveForm', array(

@@ -21,10 +21,12 @@ $this->pageTitle=Yii::app()->name; ?>
     <?php echo $model->description; ?>
 </div>
   <div class="span5 pull-right">
-        <?php $src = Yii::app()->easyImage->thumbSrcOf(
+        <?php 
+        if($model->logo_id !='') {
+        $src = Yii::app()->easyImage->thumbSrcOf(
  Yii::app()->params['photo_folder'].$model->logo_id, 
  array('resize' => array('width' => 150)));
-       
+        } ELSE { $src="/images/furniture/logo.png";}
         ?>
  
       <img src="<?php echo $src;?>" align="right">

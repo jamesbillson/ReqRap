@@ -44,7 +44,9 @@ $action=$action->id;
          !($controller == 'site' && $action == 'contact') &&
          !($controller == 'site' && $action == 'features') &&
          !($controller == 'site' && $action == 'principles') &&
+         !($controller == 'site' && $action == 'gettingstarted') &&
          !($controller == 'site' && $action == 'plans') &&
+         !($controller == 'site' && $action == 'support') &&
          !($controller == 'site' && $action == 'fail') &&
          !($controller == 'site' && $action == 'privacy') &&
          !($controller == 'site' && $action == 'manage_drawings_and_tenders_online') &&

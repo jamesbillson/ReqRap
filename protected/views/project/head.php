@@ -125,16 +125,17 @@ if (Yii::App()->session['permission'] ==0)  $this->redirect(array('site/fail/con
     )); ?>
     </a>
         <?php } ELSE { ?>
-          <?php
-    $this->widget('bootstrap.widgets.TbLabel', array(
-    'type'=>'', // 'success', 'warning', 'important', 'info' or 'inverse'
-    'label'=>'Testing',
-    )); ?>    
+  
             <?php
     $this->widget('bootstrap.widgets.TbLabel', array(
     'type'=>'', // 'success', 'warning', 'important', 'info' or 'inverse'
     'label'=>'Walk Through',
-    )); ?>        
+    )); ?>         
+     <?php
+    $this->widget('bootstrap.widgets.TbLabel', array(
+    'type'=>'', // 'success', 'warning', 'important', 'info' or 'inverse'
+    'label'=>'Testing',
+    )); ?>      
         <?php } ?>
            
             

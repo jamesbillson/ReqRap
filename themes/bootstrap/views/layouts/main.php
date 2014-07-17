@@ -20,12 +20,15 @@
     
 <?php
 
-
+$font=1;
 $cname='';
 if (!empty(Yii::app()->user->id) || !empty(Yii::app()->user->company_id)){
    $company=User::model()->myCompany(Yii::app()->user->id);
    if($company>0){
     $cname=Company::model()->findbypk($company)->name;
+    $namelength=  strlen($cname);
+    $font=1.6*(15/$namelength);
+    if ($font > 2.2)$font=2.2;
    }
    $img='<img src="/images/furniture/logo.png">';
 }ELSE{
@@ -47,7 +50,7 @@ if (!empty(Yii::app()->user->id) || !empty(Yii::app()->user->company_id)){
                                        'label'=>'<img src="/images/furniture/logo.png">',
                                         'visible'=>Yii::app()->user->isGuest),
                                     array('label'=>$cname,
-                                        'itemOptions'=>array('style'=>'font-size:1.6em;'),
+                                        'itemOptions'=>array('style'=>'font-size:'.$font.'em;'),
                                        'url'=>'',
                                        'visible'=>!Yii::app()->user->isGuest),
 				 array('label'=>'Home', 'url'=>array('/site/index')),

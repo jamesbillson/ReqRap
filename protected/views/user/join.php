@@ -10,15 +10,20 @@
     <div class="span1"><h2><i class="icon-large icon-check" style="margin-top:15px"></i></h2></div>
     <div class="span3"><h4>Automatically generate test plans</h4></div>
 </div>
-
-<h3 style="text-align:center;margin-bottom:30px"> <a href="/site/benefits">Find out how -></a> </h3>
-
+<br />
+<br />
 <div class="row">
     <div class="span8">
     <img src="<?php echo Yii::app()->themeManager->baseUrl ?>/bootstrap/img/signup_Image.png" width="570px" alt="Signup Image" />
+    <br />
+    <br />
+    <br />
+<h3 style="text-align:center;margin-bottom:30px"> <a href="/site/benefits">Find out how -></a> </h3>
+
+    
     </div>
      <div class="form" id="signupForm" style="max-width: 320px">  
-         <h4>Get going right now.</h4>
+         
          <?php
   $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
                 'id'=>'contact-form',

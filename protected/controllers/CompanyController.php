@@ -101,7 +101,7 @@ if ($user->active==0)$this->redirect(array('site/verify'));
                         $model->owner_id=Yii::app()->user->id;
                         $model->type=1; // hard code all to be type 1
                         
-			if($model->save())
+			if($model->save()){
                             $cid=$model->primaryKey;
                             //need to update the user so they own this company
                         User::model()->setcompanyowner($cid);
@@ -115,7 +115,7 @@ if ($user->active==0)$this->redirect(array('site/verify'));
                             
                             
 			$this->redirect(array('site/index'));
-		}
+                }}
 
 		$this->render('mycreate',array(
 			'model'=>$model,

@@ -62,10 +62,10 @@ class UserController extends Controller
             'model'=>$this->loadModel(Yii::App()->user->id),
         ));
     }
-   public function actionJoinSuccess()
+   public function actionJoinSuccess($id)
     {
        
-        $this->render('joinsuccess');
+        $this->render('joinsuccess',array('email'=>$id));
     }
    public function actionWelcome()
     {
@@ -129,14 +129,15 @@ class UserController extends Controller
                     the link below and complete the join form.
                     <br />
                     Click here to accept <a href="http://'.Yii::app()->params['server'].'/user/active/verifycode/'.$link.'">'.Yii::app()->params['server'].'/user/active/verifycode/'.$link.'</a>                   
-                    <br />   <br />.
+                    <br />
+                    <br />
                     Thanks, 
                     from the ReqRap Team.
                     ');
 
                     $mail->Send();
-                    Yii::app()->user->logout();
-                    $this->redirect(array('joinsuccess','id'=>$user->id));
+                    Yii::app()->user->logout(); 
+                    $this->redirect(array('joinsuccess','id'=>$user->username));
                     /**/
                 } 
             }
