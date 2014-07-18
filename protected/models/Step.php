@@ -231,7 +231,7 @@ class Step extends CActiveRecord
     
       public function getMainSteps($id) // GET MAIN FOR A UC
     {
-                $project=Yii::App()->session['project'];
+           $project=Yii::App()->session['project'];
            $release=Yii::App()->session['release'];    
               
         $sql="SELECT `s`.*,
@@ -244,6 +244,8 @@ class Step extends CActiveRecord
             on `u`.`usecase_id`=`f`.`usecase_id`
              JOIN `version` `vs`
             ON `vs`.`foreign_key`=`s`.`id`
+              JOIN `version` `vf`
+            ON `vf`.`foreign_key`=`f`.`id`
             JOIN `version` `vu`
             ON `vu`.`foreign_key`=`u`.`id`
           
@@ -253,7 +255,10 @@ class Step extends CActiveRecord
             `vs`.`object` =9 AND `vs`.`active`=1 AND `vs`.`release`=".$release."  
               AND
             `vu`.`object` =10 AND `vu`.`active`=1 AND `vu`.`release`=".$release."  
-            GROUP BY `s`.`number`
+            
+             AND
+            `vf`.`object` =8 AND `vf`.`active`=1 AND `vf`.`release`=".$release." 
+                GROUP BY `s`.`number`
             ORDER BY `s`.`number` ASC";
 		$connection=Yii::app()->db;
 		$command = $connection->createCommand($sql);

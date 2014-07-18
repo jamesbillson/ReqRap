@@ -168,7 +168,7 @@ class FormpropertyController extends Controller
               public function actionMove($dir, $id) //down 1, up 2
 	{
           
-            $model = FormProperty::model()->findByPk($id);
+            $model = Formproperty::model()->findByPk($id);
             $oldnum=$model->number;
             $objects=FormProperty::model()->getFormProperty($model->form_id);
             $nextid=0;

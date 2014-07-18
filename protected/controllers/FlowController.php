@@ -180,7 +180,7 @@ class FlowController extends Controller
         public function actionDelete($id)
 	{
 	    $project=Yii::App()->session['project'];	
-            //$model=$this->loadModel($id);
+            $model=$this->loadModel($id);
             $version=Version::model()->getNextNumber($project,8,3,$id,$model->flow_id); 
             //$model->save();
             $this->renumberFlows($model->usecase_id);

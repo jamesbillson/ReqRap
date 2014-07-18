@@ -40,7 +40,7 @@ echo 'project is '.Yii::App()->session['project'].' current release is '.$curren
 echo '<br /> tab: '.$tab. ' edit permissions are '.$edit;}
 if (Yii::App()->session['permission'] ==0)  $this->redirect(array('site/fail/condition/no_access_head'));
 ?>
-<div class="row">
+<div class="row projecthead">
     <div class="span6">
      <h1> <?php if ($my_project) echo $project->name  ; ?></h1> 
     </div> 

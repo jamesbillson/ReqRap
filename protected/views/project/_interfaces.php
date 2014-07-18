@@ -59,8 +59,9 @@ $data = Iface::model()->getCategoryIfaces($type['interfacetype_id']);
 if (count($data)):?>
 
                 <tr class="odd">  
-                    <td colspan="4">   
+                    <td colspan="4"> <strong>
                     <?php echo str_pad($type['number'], 2, "0", STR_PAD_LEFT).'-'.$type['name'];?>
+                    </strong>  
                     </td>
                 </tr>
       
@@ -73,7 +74,7 @@ if (count($data)):?>
                         
                      <a href="/iface/view/id/<?php echo $item['iface_id'];?>">
                           
-                        IF-<?php echo str_pad($type['number'], 2, "0", STR_PAD_LEFT); ?><?php echo str_pad($item['number'], 3, "0", STR_PAD_LEFT); ?>
+                        UI-<?php echo str_pad($type['number'], 2, "0", STR_PAD_LEFT); ?><?php echo str_pad($item['number'], 3, "0", STR_PAD_LEFT); ?>
                    </a>
                     </td>
                     <td>   
@@ -104,7 +105,7 @@ if (count($data)):?>
                 </tr>
                     <?php if(!empty($item['text'])){ ?>
                 <tr>
-                    <td><strong>Notes</strong></td>
+                    <td>Notes</td>
                         <td colspan="3">
                         <?php echo $item['text'];?>
                         

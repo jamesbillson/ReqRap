@@ -40,7 +40,7 @@
                                     <?php echo Version::$numberformat[12]['prepend']?>-
                                     <?php echo str_pad($category['typenumber'], 2, "0", STR_PAD_LEFT ).str_pad($link['number'], Version::$numberformat[12]['padding'], "0", STR_PAD_LEFT); ?>
                                     </a>  <?php echo $link['name']; ?> 
-                                    <a href="/stepiface/delete/id/<?php echo $link['xid']; ?>"><i class="icon-remove-sign"></i></a><br/>
+                                    <a href="/stepiface/delete/id/<?php echo $link['xid']; ?>"><i class="icon-link text-error" rel="tooltip" title="Unlink this interface"></i></a><br/>
                                 <?php } ?>
                                 <br />
             <?php } ?>
@@ -56,7 +56,7 @@
                                 <br />
                 <?php foreach ($links as $link) { ?>
                                     <a href="/rule/view/id/<?php echo $link['rule_id']; ?>">BR-<?php echo str_pad($link['number'], 4, "0", STR_PAD_LEFT); ?></a>  <?php echo $link['name']; ?> 
-                                    <a href="/steprule/delete/id/<?php echo $link['xid']; ?>"><i class="icon-remove-sign"></i></a>
+                                    <a href="/steprule/delete/id/<?php echo $link['xid']; ?>"><i class="icon-link text-error" rel="tooltip" title="Unlink this interface"></i></a>
                                     <br />
                                 <?php } ?>
                                 <br />
@@ -74,7 +74,7 @@
                                 <br />
                                 <?php foreach ($links as $link) { ?>
                                     <a href="/form/view/id/<?php echo $link['form_id']; ?>">UF-<?php echo str_pad($link['number'], 4, "0", STR_PAD_LEFT); ?> </a> <?php echo $link['name']; ?> 
-                                    <a href="/stepform/delete/id/<?php echo $link['xid']; ?>"><i class="icon-remove-sign"></i></a>
+                                    <a href="/stepform/delete/id/<?php echo $link['xid']; ?>"><i class="icon-link text-error" rel="tooltip" title="Unlink this interface"></i></a>
                                     <br />
                                 <?php } ?>
                             </td></tr>

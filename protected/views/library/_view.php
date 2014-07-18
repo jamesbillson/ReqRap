@@ -17,7 +17,7 @@
 	<?php echo CHtml::encode($data->description); ?>
 	<br />
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('project_id')); ?>:</b>
+	<b><?php echo CHtml::encode($data->getAttributeLabel('release_id')); ?>:</b>
 	<?php echo CHtml::encode($data->project_id); ?>
 	<br />
 

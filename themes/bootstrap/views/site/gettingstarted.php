@@ -26,6 +26,14 @@ The "Model" button takes you to your requirements model.  Here the seven major m
 created, edited, and deleted where necessary.<br />
 
 </div>
+    
+    <div class="row well"> 
+    <h4>Import a Library Item</h4> 
+ReqRap supports sharing of requirements models in a library.  You can have your own private 
+library, and you can access models shared by others.  Importing a library item is a good way to see 
+some well developed requirements.<br />
+
+</div>
 
     <div class="row well-green">
 <h4>Get it wrong - its part of the process</h4>

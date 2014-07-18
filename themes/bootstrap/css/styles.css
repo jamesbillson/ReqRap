@@ -85,3 +85,8 @@ font-size: .8em;
 
 }
 
+.row.projecthead {
+    
+     padding-bottom:12px;
+     font-family: Verdana, sans-serif;
+}

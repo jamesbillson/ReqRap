@@ -64,7 +64,7 @@ class Library extends CActiveRecord
 			'name' => 'Name',
                         'public'=>'Public',
 			'description' => 'Description',
-			'release_id' => 'Project',
+			'release_id' => 'Release',
 			'owner_id' => 'Owner',
 		);
 	}

@@ -1,16 +1,6 @@
 <?php
-/* @var $this LibraryController */
-/* @var $model Library */
 
-$this->breadcrumbs=array(
-	'Libraries'=>array('index'),
-	'Manage',
-);
 
-$this->menu=array(
-	array('label'=>'List Library', 'url'=>array('index')),
-	array('label'=>'Create Library', 'url'=>array('create')),
-);
 
 Yii::app()->clientScript->registerScript('search', "
 $('.search-button').click(function(){
@@ -48,8 +38,14 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 		'id',
 		'name',
 		'description',
-		'project_id',
-		'owner_id',
+		'release_id',
+            'public',
+		 array(
+                'name'=>'owner_id',
+                'type'=>'raw',
+                'value'=>'$data->owner->name',
+                'header'=>'User'
+            ),
 		array(
 			'class'=>'CButtonColumn',
 		),
