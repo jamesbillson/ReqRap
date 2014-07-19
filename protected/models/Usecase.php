@@ -137,6 +137,92 @@ class Usecase extends CActiveRecord
             }
         
         }    
+        
+        public function toDo()
+        {
+            
+            $ucstublist='<br />Stub usecases: <br />';
+
+        $ucstub=0;
+
+        $uccount=0;
+
+        $data = Usecase::model()->getProjectUCs();
+
+        if (count($data)){
+          $uccount=count($data);       
+                foreach($data as $item):
+                $ucscore=0;
+                $steps= Usecase::model()->getAllSteps($item['usecase_id']);
+                        foreach ($steps as $step){
+                            // go through steps and find if there are any rules, forms or interfaces.
+                                     $ifaces = Step::model()->getStepLinks($step['id'], 12, 15);
+                                     $rules = Step::model()->getStepLinks($step['id'], 1, 16);
+                                     $forms = Step::model()->getStepLinks($step['id'], 2, 14);
+                                    $ucscore=$ucscore+count($ifaces)+count($rules)+count($forms);
+                        }
+
+
+                if((count($steps)+$ucscore)<=1) {
+                    $ucstub++;
+                $ucstublist.= '<a href="/usecase/view/id/'.$item['usecase_id'].'">'.$item['name'].'<br /></a>';
+                }
+                endforeach;
+        }
+        if ($uccount>0){
+          $ucstubscore=100-(($ucstub/$uccount)*100);
+  
+        $uctotalscore=($ucstubscore);
+        if($uctotalscore==100 )$ucstate=3;
+        if($uctotalscore>79 && $uctotalscore<100 )$ucstate=2;
+        if($uctotalscore<=79 )$ucstate=1;
+        
+        
+        $result=array('state'=>$ucstate,
+            'total'=>$uccount,
+            'stub'=>$ucstub,
+            'stublist'=>$ucstublist);
+                return $result;
+  
+            }
+        }
+        
+        
+    public function weight()
+        {
+        $UC_rate=2;
+        $UC_UI_rate=4;        
+        $UC_step_rate=1;
+        $UC_rule_rate=3;
+        $UC_form_rate=4;
+        
+        $data = Usecase::model()->getProjectUCs();
+        if (count($data)){
+               
+                foreach($data as $item):
+                $steps= Usecase::model()->getAllSteps($item['usecase_id']);
+                        foreach ($steps as $step){
+                        $ifaces = Step::model()->getStepLinks($step['id'], 12, 15);
+                        $rules = Step::model()->getStepLinks($step['id'], 1, 16);
+                        $forms = Step::model()->getStepLinks($step['id'], 2, 14);
+                        
+                       
+                        $score[$item['usecase_id']]=($UC_UI_rate*count($ifaces))+
+                                $UC_step_rate+
+                                ($UC_rule_rate*count($rules))+
+                                ($UC_form_rate*count($forms));
+                                
+                        }
+                         $score[$item['usecase_id']]= $score[$item['usecase_id']]+$UC_rate;
+                endforeach;
+                
+                
+        }
+       
+            return $score;
+  
+            
+        }
            
         
 

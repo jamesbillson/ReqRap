@@ -1,4 +1,36 @@
+<h3>Statistics</h3>
+<h4>Size Scores</h4>
+<?php
+$total=0;
+$scores=  Usecase::model()->weight();
+echo '<table>';
+foreach ($scores as $id=>$score){
 
+    $object=Version::model()->instanceName(10, $id);
+    ?>
+<tr>
+    <td>
+   <?php   echo $object['number'].'-'.$object['name']; ?>
+    </td>
+    <td>
+   <?php  echo $score;?>
+</td>
+</tr>
+    <?php
+    $total=$total+$score;
+}
+?>
+<tr>
+<td>
+    <strong>Total</strong>
+  </td>
+<td>   
+<?php echo $total;?>
+    
+    
+</td>
+</tr>
+</table>
 <?php
 
 $label=array(
@@ -8,49 +40,20 @@ $label=array(
 
 
 // #####################  USE CASES
-$ucstublist='<br />Stub usecases: <br />';
 
-$ucstub=0;
-
-$uccount=0;
-
-$data = Usecase::model()->getProjectUCs();
-
-if (count($data)){
-  $uccount=count($data);       
-foreach($data as $item):
-$ucscore=0;
-    $steps= Usecase::model()->getAllSteps($item['usecase_id']);
-foreach ($steps as $step){
-    // go through steps and find if there are any rules, forms or interfaces.
-             $ifaces = Step::model()->getStepLinks($step['id'], 12, 15);
-             $rules = Step::model()->getStepLinks($step['id'], 1, 16);
-             $forms = Step::model()->getStepLinks($step['id'], 2, 14);
-            $ucscore=$ucscore+count($ifaces)+count($rules)+count($forms);
-}
-
-
-if((count($steps)+$ucscore)<=1) {
-    $ucstub++;
-$ucstublist.= '<a href="/usecase/view/id/'.$item['usecase_id'].'">'.$item['name'].'<br /></a>';
-}
-endforeach;
-}
-if ($uccount>0){
-  $ucstubscore=100-(($ucstub/$uccount)*100);
-  
-        $uctotalscore=($ucstubscore);
-        if($uctotalscore==100 )$ucstate=3;
-        if($uctotalscore>79 && $uctotalscore<100 )$ucstate=2;
-        if($uctotalscore<=79 )$ucstate=1;
-  
-}
-
+        $uc=Usecase::model()->toDo();
+        $uccount=$uc['total'];
+        $ucstub=$uc['stub'];
+        $ucstate=$uc['state'];
+        $ucstublist=$uc['stublist'];
+        
 
 
 // ########################## RULES
 $stub=0;
+$state=1;
 $orphan=0;
+$rulecount=0;
 $stublist='<br />Stub rules: <br />';
 $orphanlist='<br />Orphan rules: <br />';
 $data = Rule::model()->getProjectRules($model->id);
@@ -85,6 +88,8 @@ $stublist.='<a href="/rule/view/id/'.$item['rule_id'].'"> BR-'.str_pad($item['nu
 $ifstublist='<br />Stub interfaces: <br />';
 $iforphanlist='<br />Orphan interfaces: <br />';
 $ifstub=0;
+$ifstate=1;
+$ifcount=0;
 $iforphan=0;
 $ifcount=0;
 //$ifstate=1;
@@ -94,7 +99,7 @@ $data = Iface::model()->getCategoryIfaces($type['interfacetype_id']);
 if (count($data)):
 $ifcount=$ifcount+count($data);
     foreach($data as $item){
-    if(!count(Iface::model()->getCurrentImage($item['iface_id'],Yii::App()->session['release']))) 
+    if(!count(Iface::model()->getCurrentImage($item['iface_id'],Yii::App()->session['release'])) && $item['text']=='') 
         {
         $ifstub++;
         $ifstublist.='<a href="/iface/view/id/'.$item['iface_id'].'"> UI-'.str_pad($type['number'], 2, "0", STR_PAD_LEFT).str_pad($item['number'], 3, "0", STR_PAD_LEFT).' '.$item['name'].'</a><br />';
@@ -111,6 +116,7 @@ $uses=Usecase::model()->getLinkUsecase($item['iface_id'],12,15);
   
 
 endif;
+if($ifcount>0){
       $ifstubscore=100-(($ifstub/$ifcount)*100);
         $iforphanscore=100-(($iforphan/$ifcount)*100);
         $iftotalscore=($ifstubscore+$iforphanscore)/2;
@@ -118,12 +124,14 @@ endif;
         if($iftotalscore>79 && $iftotalscore<100 )$ifstate=2;
         if($iftotalscore<=79 )$ifstate=1;
 }
+}
 
 
 // #################### ----------------------  FORMS
 $formstublist='<br />Stub forms: <br />';
 $formorphanlist='<br />Orphan forms: <br />';
-
+$formstate=1;
+$formcount=0;
 $formstub=0;
 $formorphan=0;
 $data = Form::model()->getProjectForms(Yii::app()->session['project']);
@@ -158,8 +166,8 @@ if (count($data)){
 
 //##############################                OBJECTS @@
 $obstublist='<br />Stub objects: <br />';
-
-
+$obstate=1;
+$objectcount=0;
 $obstub=0;
 
 $data = Object::model()->getProjectObjects(Yii::app()->session['project']);
@@ -182,13 +190,14 @@ if (count($data)){
         if($obtotalscore>79 && $obtotalscore<100 )$obstate=2;
         if($obtotalscore<=79 )$obstate=1;
         
-
+//echo ' object score is '.$obtotalscore.'  state is '.$obstate;
 }
 
 
 //#######################  ACTORS
 $actorphanlist='<br />Orphan Actors: <br />';
 $actcount=0;
+$actstate=1;
 $actorphan=0;
 $data = Actor::model()->getProjectActors($model->id);
 
@@ -204,11 +213,11 @@ if (count($data)){
        }
         }
         $actorphanscore=100-(($actorphan/$actcount)*100);
-        $acttotalscore=$actorphanscore;
-        if($acttotalscore==100 )$actstate=3;
-        if($acttotalscore>79 && $acttotalscore<100 )$actstate=2;
-        if($acttotalscore<=79 )$actstate=1;
-          
+        
+        if($actorphanscore==100 )$actstate=3;
+        if($actorphanscore>79 && $actorphanscore<100 )$actstate=2;
+        if($actorphanscore<=79 )$actstate=1;
+         // echo ' actor score is '.$actorphanscore.'  state is '.$actstate;
 
 }
 $coef=array('UC'=>10,
@@ -227,14 +236,14 @@ $projectscore=FLOOR((
         ($actstate*$coef['ACT'])
         )/32);
 
-echo '<h3>To Do List. (completeness:';
+echo '<br /><h4>Project Completeness ';
   $this->widget('bootstrap.widgets.TbBadge', array(
     'type'=>$label[$projectscore]['style'], // 'success', 'warning', 'important', 'info' or 'inverse'
     'label'=>$label[$projectscore]['label'],
     )); 
-?>
-)</h3>
-
+  ?></h4>
+<br />
+<h4>By Object</h4>
 
 <?php
  //PRINT OUT SECTION
@@ -250,7 +259,7 @@ if ($uccount>0){
 
   echo ' Use Cases</h4>';
     
-echo '<br>'.$ucstub.' of '.$uccount.' stub Usecases, completeness: '.number_format((float)FLOOR(100-($ucstub/$uccount)*100), 0, '.', '').'%';
+echo '<br>'.$ucstub.' of '.$uccount.' Use Cases are stubs, completeness: '.number_format((float)FLOOR(100-($ucstub/$uccount)*100), 0, '.', '').'%';
 if ($ucstub>0) echo $ucstublist;
 
 } else {
@@ -278,9 +287,9 @@ if ($rulecount>0){
 
   echo ' Rules</h4>';
 
-echo $stub.' of '.count($data).' stub Rules, completeness: '.number_format((float)($stubscore), 0, '.', '').'%';
+echo $stub.' of '.count($data).'  Rules are stubs, completeness: '.number_format((float)($stubscore), 0, '.', '').'%';
 if($stub>0) echo $stublist;
-echo '<br>Orphans: '.$orphan.', completeness: '.number_format((float)FLOOR($orphanscore), 0, '.', '').'%';
+echo '<br> '.$orphan.' orphan rules, completeness: '.number_format((float)FLOOR($orphanscore), 0, '.', '').'%';
 if($orphan>0) echo $orphanlist;
 
         } else {
@@ -310,7 +319,7 @@ if($ifcount>0){
     
 echo '<br>'.$ifstub.' of '.$ifcount.' Interfaces with no images, completeness: '.number_format((float)(100-($ifstub/$ifcount)*100), 0, '.', '').'%';
 echo $ifstublist;
-echo '<br>Orphans: '.$iforphan.', completeness: '.number_format((float)FLOOR(100-($iforphan/$ifcount)*100), 0, '.', '').'%';
+echo '<br>'.$iforphan.' orphan Interfaces, completeness: '.number_format((float)FLOOR(100-($iforphan/$ifcount)*100), 0, '.', '').'%';
 echo $iforphanlist;
 
 } ELSE {
@@ -332,9 +341,9 @@ if ($formcount>0)
     )); 
 
   echo ' Forms</h4>';
-echo '<br>'.$formstub.' of '.count($data).' stub Forms, completeness: '.number_format((float)(100-($formstub/count($data))*100), 0, '.', '').'%';
+echo '<br>'.$formstub.' of '.count($data).' Forms are stubs, completeness: '.number_format((float)(100-($formstub/count($data))*100), 0, '.', '').'%';
 if($formstub>0) echo $formstublist;
-echo '<br>Orphans: '.$formorphan.', completeness: '.number_format((float)FLOOR(100-($formorphan/count($data))*100), 0, '.', '').'%';
+echo '<br>'.$formorphan.' orphan Forms, completeness: '.number_format((float)FLOOR(100-($formorphan/count($data))*100), 0, '.', '').'%';
 if($formorphan>0) echo $formorphanlist;
 } else {
     
@@ -360,7 +369,7 @@ if ($objectcount>0){
     )); 
 
   echo ' Objects</h4>';
-echo '<br>'.$obstub.' of '.count($data).' stub Objects, completeness: '.number_format((float)(100-($obstub/count($data))*100), 0, '.', '').'%';
+echo '<br>'.$obstub.' of '.$objectcount.' Objects are stubs, completeness: '.number_format((float)(100-($obstub/$objectcount)*100), 0, '.', '').'%';
 if($obstub>0) echo $obstublist;
         
 
@@ -389,7 +398,7 @@ if($obstub>0) echo $obstublist;
     ));       
         
         
-echo ' Actors</h4> Orphans: '.$actorphan.', completeness: '.number_format((float)FLOOR(100-($actorphan/$actcount)*100), 0, '.', '').'%';
+echo ' Actors</h4> '.$actorphan.' Orphan actors, completeness: '.number_format((float)FLOOR(100-($actorphan/$actcount)*100), 0, '.', '').'%';
 if($actorphan>0) echo $actorphanlist;
 
        } else {
