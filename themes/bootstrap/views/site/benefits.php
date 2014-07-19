@@ -8,29 +8,37 @@
 Well written requirements that are both understood by your client and accurate enough for 
 you developers will provide:</p>
 <br />
+<div class="row">
+    <div class="span4">    
+        <div class="row">
+            <div class="span1"><h2><i class="icon-large icon-time" style="margin-top:5px"></i></h2></div>
+            <div class="span3"><h4>Save time and cost.</h4></div>
+        </div>
+        <div class="row">
+            <div class="span1"><h2><i class="icon-large icon-thumbs-up" style="margin-top:10px"></i></h2></div>
+            <div class="span3"><h4>Commitment from your client.</h4></div>
+        </div>
+        <div class="row">
+            <div class="span1"><h2><i class="icon-large icon-pencil" style="margin-top:10px"></i></h2></div>
+            <div class="span3"><h4>Accurate price estimation.</h4></div>
+        </div>
+        <div class="row">
+            <div class="span1"><h2><i class="icon-large icon-screenshot" style="margin-top:5px"></i></h2></div>
+            <div class="span3"  ><h4>A tight scope.</h4></div>
+        </div>
 
-<div class="row">
-    <div class="span1"><h2><i class="icon-large icon-time" style="margin-top:5px"></i></h2></div>
-    <div class="span3"><h4>Save time and cost.</h4></div>
+        <div class="row">
+            <div class="span1"><h2><i class="icon-large icon-check" style="margin-top:10px"></i></h2></div>
+            <div class="span3"><h4>Complete test coverage.</h4></div>
+        </div>
+    </div>
+        <div class="span1">
+      
+    </div>
+    <div class="span4">
+        <img src="<?php echo Yii::app()->themeManager->baseUrl ?>/bootstrap/img/package_screenshot.png" width="300">
+    </div>
 </div>
-<div class="row">
-    <div class="span1"><h2><i class="icon-large icon-thumbs-up" style="margin-top:10px"></i></h2></div>
-    <div class="span3"><h4>Commitment from your client.</h4></div>
-</div>
-<div class="row">
-    <div class="span1"><h2><i class="icon-large icon-pencil" style="margin-top:10px"></i></h2></div>
-    <div class="span3"><h4>Accurate price estimation.</h4></div>
-</div>
-<div class="row">
-    <div class="span1"><h2><i class="icon-large icon-screenshot" style="margin-top:5px"></i></h2></div>
-    <div class="span3"  ><h4>A tight scope.</h4></div>
-</div>
-
-<div class="row">
-    <div class="span1"><h2><i class="icon-large icon-check" style="margin-top:10px"></i></h2></div>
-    <div class="span3"><h4>Complete test coverage.</h4></div>
-</div>
-
 
 
 </p>
