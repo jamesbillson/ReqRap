@@ -138,6 +138,10 @@ class Usecase extends CActiveRecord
         
         }    
         
+        
+   
+        
+        
         public function toDo()
         {
             
@@ -179,7 +183,7 @@ class Usecase extends CActiveRecord
         
         
         $result=array('state'=>$ucstate,
-            'total'=>$uccount,
+            'count'=>$uccount,
             'stub'=>$ucstub,
             'stublist'=>$ucstublist);
                 return $result;
@@ -292,6 +296,38 @@ class Usecase extends CActiveRecord
             `vf`.`object`=8 AND `vf`.`active`=1 AND `vf`.`release`=".$release."  AND  
             `vu`.`object`=10 AND `vu`.`active`=1 AND `vu`.`release`=".$release."  AND  
             `u`.`usecase_id`=".$id."
+            GROUP BY `s`.`step_id`
+
+                ";
+        
+		$connection=Yii::app()->db;
+		$command = $connection->createCommand($sql);
+		$projects = $command->queryAll();
+		return $projects;
+    }
+        
+     public function getAllReleaseSteps($id,$release)
+    {
+      
+          $sql="
+            SELECT `s`.*,
+            `f`.`name` as flow
+            FROM  `step` `s`
+            JOIN `flow` `f`
+            ON `f`.`flow_id`=`s`.`flow_id`
+            JOIN `usecase` `u`
+            ON `u`.`usecase_id`=`f`.`usecase_id`
+            JOIN `version` `vs`
+            ON `vs`.`foreign_key`=`s`.`id`
+            JOIN `version` `vf`
+            ON `vf`.`foreign_key`=`f`.`id`
+            JOIN `version` `vu`
+            ON `vu`.`foreign_key`=`u`.`id`            
+            WHERE 
+            `vs`.`object`=9 AND `vs`.`active`=1 AND `vs`.`release`=".$release."  AND                  
+            `vf`.`object`=8 AND `vf`.`active`=1 AND `vf`.`release`=".$release."  AND  
+            `vu`.`object`=10 AND `vu`.`active`=1 AND `vu`.`release`=".$release."  AND  
+            `f`.`id`=".$id."
             GROUP BY `s`.`step_id`
 
                 ";
@@ -498,6 +534,72 @@ class Usecase extends CActiveRecord
 		$projects = $command->queryAll();
 		return $projects;
     }   
+    
+    
+                public function getReleaseUCs($release)
+    {
+        
+      
+   
+
+         $sql="SELECT 
+            `u`.*,
+            `p`.`name` as packname,
+            `p`.`id` as packid,
+            `p`.`number` as packnumber,
+            `s`.`id` as steps,
+            `vu`.`create_date` as create_date
+           
+            FROM `package` `p`
+
+            JOIN  `usecase` `u`
+            on `p`.`package_id`=`u`.`package_id`
+            
+            JOIN `project` `r`
+            ON `r`.`id` =`p`.`project_id`
+            
+            Join `flow` `f`
+            ON `u`.`usecase_id`=`f`.`usecase_id`
+            
+            Join `step` `s`
+            ON `f`.`flow_id`=`s`.`flow_id`
+
+            JOIN `version` `vu`
+            ON `vu`.`foreign_key`=`u`.`id`
+            
+            JOIN `version` `v2`
+            ON `v2`.`foreign_key`=`p`.`id`
+            
+            JOIN `version` `v3`
+            ON `v3`.`foreign_key`=`s`.`id`
+            
+            JOIN `version` `v4`
+            ON `v4`.`foreign_key`=`f`.`id`
+            WHERE 
+            
+            `vu`.`active`=1 AND `vu`.`object`=10 
+               AND `vu`.`release`=".$release." 
+            AND
+            `v2`.`active`=1 AND `v2`.`object`=5  
+               AND `v2`.`release`=".$release." 
+            AND
+            `v3`.`active`=1 AND `v3`.`object`=9  
+                AND `v3`.`release`=".$release." 
+            AND
+            `v4`.`active`=1 AND `v4`.`object`=8  
+              AND `v4`.`release`=".$release." 
+            
+                GROUP BY `u`.`id`
+                ORDER BY 
+             `p`.`number` ASC,              
+             `u`.`number` ASC";
+  
+		$connection=Yii::app()->db;
+		$command = $connection->createCommand($sql);
+		$projects = $command->queryAll();
+		return $projects;
+    }   
+    
              public function getProjectIfaces()
     {
             $project=Yii::App()->session['project']; 
@@ -523,7 +625,64 @@ class Usecase extends CActiveRecord
 		return $projects;
     }  
     
-  
+       public function linkedObjectComparison($params)
+    {
+       
+           $relationship=array(1=>16,2=>14);
+           
+           $paramsold['id']=$params['id'];
+           $paramsold['object']=$params['object'];
+           $paramsold['relationship']=$relationship[$params['object']];
+           $paramsold['release']=$params['old'];
+           
+           $paramsnew['id']=$params['id'];
+           $paramsnew['object']=$params['object'];
+           $paramsnew['relationship']=$relationship[$params['object']];
+           $paramsnew['release']=$params['new'];
+           
+        $old = Usecase::model()->getlinkedObjects($paramsold);
+        $new = Usecase::model()->getlinkedObjects($paramsnew);
+        $deletedObject = array();
+        $addedObject=array();
+  //find deleted UC's
+     $instance_id=Version::$objects[$params['object']] .'_id';
+        if (count($old))
+            {
+                foreach($old as $itemold){
+                    
+                   $matchingNew=-1;
+                    for($i=0;$i<count($new);$i++)
+                    {
+                    if($new[$i][$instance_id]==$itemold[$instance_id])
+                        {
+                        $matchingNew=$new[$i][$instance_id];
+                        }
+                        
+                    }
+                    if ($matchingNew == -1) array_push($deletedObject,$itemold[$instance_id]);
+                }
+           
+    }
+     
+      if (count($new))
+            {
+                foreach($new as $itemnew){
+                    
+                   $matchingOld=-1;
+                    for($i=0;$i<count($old);$i++)
+                    {
+                    if($old[$i][$instance_id]==$itemnew[$instance_id]) {
+                        $matchingOld=$old[$i][$instance_id];
+                    }
+                        
+                    }
+                    if ($matchingOld == -1) array_push($addedObject,$itemnew[$instance_id]);
+                }
+           
+    }
+    $return=array('add'=>$addedObject,'delete'=>$deletedObject);
+    return $return;
+    }  
            public function getLinkUsecase($id,$object,$relationship) // id is object_id
     {
            //This is used to show back links from rules, forms and ifaces to UC's
@@ -585,11 +744,18 @@ class Usecase extends CActiveRecord
     
     
     
-             public function getLinkedObjects($id,$object,$relationship)
+             public function getLinkedObjects($params)
     {
-            $project=Yii::App()->session['project']; 
-            $release=Yii::App()->session['release'];
+            $id=$params['id'];
+            $object=$params['object'];
+            $relationship=$params['relationship'];
             
+            if(isset($params['release'])){
+                $release=$params['release'];
+            } ELSE {
+                             
+                    $release=Yii::App()->session['release'];
+                    }
             $sql="
             SELECT 
             `r`.*,
@@ -611,21 +777,12 @@ class Usecase extends CActiveRecord
             ON `vf`.`foreign_key`=`f`.`id` 
             WHERE
             `f`.`usecase_id`=".$id."
-        
+         AND
+            `vr`.`object` =".$object." AND `vr`.`active`=1  AND `vr`.`release`=".$release."
             AND
-            `vr`.`object` =".$object." AND `vr`.`active`=1  AND `vr`.`project_id`=".$project." 
-               AND `vr`.`release`=".$release."
-            AND
-            `vx`.`object` =".$relationship." AND `vx`.`active`=1
-            AND `vx`.`project_id`=".$project."          
-            AND `vx`.`release`=".$release."   
-            AND
-            `vs`.`object` =9 AND `vs`.`active`=1 
-            AND `vs`.`project_id`=".$project."
-            AND `vs`.`release`=".$release."
-            AND
-            `vf`.`object` =8 AND `vf`.`active`=1  AND `vf`.`project_id`=".$project."
-           AND `vf`.`release`=".$release."
+            `vx`.`object` =".$relationship." AND `vx`.`active`=1 AND `vx`.`release`=".$release."   
+            AND `vs`.`object` =9 AND `vs`.`active`=1  AND `vs`.`release`=".$release."
+            AND `vf`.`object` =8 AND `vf`.`active`=1  AND `vf`.`release`=".$release."
              GROUP BY `r`.`id`
              ORDER BY `r`.`number` ASC";
         

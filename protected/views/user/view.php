@@ -1,20 +1,73 @@
 <?php
-/* @var $this UserController */
-/* @var $model User */
+$limit=20;
 
-$this->breadcrumbs=array(
-	'Users'=>array('index'),
-	$model->id,
-);
+$data = User::model()->findAll(array('order'=>'id DESC','limit' => $limit));
 
-$this->menu=array(
-	array('label'=>'Update User', 'url'=>array('update', 'id'=>$model->id)),
+        if (count($data)):
 
-);
+$box = $this->beginWidget('bootstrap.widgets.TbBox', array(
+	'title' => 'Users',
+	'headerIcon' => 'icon-person',
+	// when displaying a table, if we include bootstra-widget-table class
+	// the table will be 0-padding to the box
+	'htmlOptions' => array('class'=>'bootstrap-widget-table')
+));?>
+
+
+<table class="table">
+	<thead>
+	<tr>
+        <th>User</th>
+        <th>Active</th>
+	<th>Company(Projects)</th>
+	<th>Actions</th>
+	</tr>
+	</thead>
+        <tbody>
+
+        <?php foreach($data as $item) {?>
+        <tr class="odd"> 
+   
+        <td>   
+        <a href="/user/detail?id=<?php echo $item['id'];?>">
+        <?php echo $item->firstname.' '.$item->lastname;?>
+        </a>
+        </td>
+        
+        <td>
+            <?php echo $item->email;?>
+        </td> 
+ 
+    
+        
+        <td>
+        <a href="/company/view?id=<?php echo $item->company_id;?>">
+            <?php if($item->company_id != NULL){
+                echo $item->company->name;?>
+               </a>
+             (
+           <?php  echo count(Project::model()->findAll('company_id='.$item->company->id)); ?>
+                    ) 
+            <?php  } ?>
+
+        </td>  
+        
+        <td>
+         <a href="/follower/delete?id=<?php echo $item['id'];?>"><i class="icon-remove-sign" rel="tooltip" title="Ignore"></i></a> 
+       
+            
+            </td>
+        </tr>
+       <?php }?>
+                <tr><td>
+          
+            </td></tr>
+        
+   	</tbody>
+</table>
+
+<?php
+$this->endWidget();
+endif;
 ?>
 
-<h2><?php echo $model->firstname." ".$model->lastname; ?></h2>
-If status is invited, show that an email has been sent.<br />
-<?php echo $model->email; ?>
-<br />
-If status is active and this is the current users page show what?

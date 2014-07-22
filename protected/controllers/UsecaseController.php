@@ -32,7 +32,7 @@ class UsecaseController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('packchange','dynamicsteps','create','update','delete','move','history'),
+				'actions'=>array('diff','packchange','dynamicsteps','create','update','delete','move','history'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -325,6 +325,176 @@ class UsecaseController extends Controller
         }   
         
         
+        }
+        
+        
+                 public function actionDiff($old, $new)
+        {
+            
+        $dataold = Usecase::model()->getReleaseUCs($old);
+        $datanew = Usecase::model()->getReleaseUCs($new);
+        $deletedUC = array();
+        $addedUC=array();
+  //find deleted UC's
+          if (count($dataold))
+            {
+                foreach($dataold as $itemold){
+                    
+                   $matchingNew=-1;
+                    for($i=0;$i<count($datanew);$i++)
+                    {
+                    if($datanew[$i]['usecase_id']==$itemold['usecase_id']) $matchingNew=$datanew[$i]['usecase_id'];
+                        
+                    }
+                    if ($matchingNew == -1) array_push($deletedUC,$itemold['usecase_id']);
+                }
+            }
+            
+
+            
+     // find added UC's     
+           if (count($datanew))
+            {
+                foreach($datanew as $itemnew){
+                    
+                    $matchingOld=-1;
+                    for($i=0;$i<count($dataold);$i++){
+                    if($dataold[$i]['usecase_id']==$itemnew['usecase_id']) $matchingOld=$itemnew['usecase_id'];
+                    }
+                    if ($matchingOld == -1) array_push($addedUC,$itemnew['usecase_id']);
+      
+                }
+            }
+            echo'Deleted Use Case ID<br>';
+            foreach ($deletedUC as $UC) echo 'UC ID: '.$UC.'<br>';
+
+       
+            echo'Added Use Case ID<br>';
+            foreach ($addedUC as $UC) echo 'UC ID: '.$UC.'<br>';  
+            
+             // find changed UC's    
+            
+            
+            // find changed stepiface, steprule, stepform 
+            
+     if (count($datanew))
+            {
+                foreach($datanew as $itemnew){
+                    echo '<br>checking UCs for deleted rules UC #'.$itemnew['usecase_id'] ;
+           $params['new']=$new;
+           $params['old']=$old;
+           $params['id']=$itemnew['usecase_id'];
+           $params['object']=1;
+           $rules=Usecase::model()->linkedObjectComparison($params);
+           print_r($rules);
+           echo '<br />';
+           
+                       echo '<br>checking UCs for deleted forms UC #'.$itemnew['usecase_id'] ;
+           $params['new']=$new;
+           $params['old']=$old;
+           $params['id']=$itemnew['usecase_id'];
+           $params['object']=2;
+           $forms=Usecase::model()->linkedObjectComparison($params);
+             print_r($forms);
+           echo '<br />';
+           
+                }
+            }            
+            // find UC's with added/changed steps.
+        echo '<br>Deleted Rules '.count($rules);
+        echo '<br>Deleted Forms '.count ($forms);
+            
+
+            
+            
+            
+            
+        }
+        
+
+          
+        
+        
+                public function actionDiffBackup($old, $new)
+        {
+            
+        $dataold = Usecase::model()->getReleaseUCs($old);
+        $datanew = Usecase::model()->getReleaseUCs($new);
+          echo 'old ucs: '.count($dataold).'<br> new UCs: '.count($datanew).'<br>';
+                     
+            if (count($dataold))
+            {
+         
+                foreach($dataold as $itemold){
+                    //find the matching entry in $datanew (if there is one)
+                      echo '<br><br>Testing UC '.$itemold['usecase_id'].'<br>  ('.$itemold['create_date'].')';
+                              
+                $matchingNew=-1;
+                    for($i=0;$i<count($datanew);$i++){
+                    if($datanew[$i]['usecase_id']==$itemold['usecase_id']) $matchingNew=$i;
+                        
+                    }
+                    if($matchingNew!=-1) // there is a matching new UC.
+                    {
+                       $itemnew=$datanew[$matchingNew];
+                       echo '<br> there is a matching new UC dated ('.$itemnew['create_date'].')';
+                       
+                       // load the flows and see if they have changed.
+                      $flowsold= Flow::model()->getUCReleaseFlow($itemold['usecase_id'],$old);
+                      $flowsnew= Flow::model()->getUCReleaseFlow($itemold['usecase_id'],$new);
+                       if(count($flowsold)!=count($flowsnew))
+                            { 
+                            echo '<br>number of Flows changed by '.(count($flowsnew)-count($flowsold));
+                            } ELSE {
+                            echo '<br>same number of flows';    
+                            }
+                        // load the steps per flow and see if they have changed.
+                           
+                            foreach($flowsold as $flowold){
+                                    echo '<br>Testing Flow '.$flowold['name'].'<br>';
+
+                   // Load the version history for this flow_id
+                                  
+                            $stepsold= Usecase::model()->getAllReleaseSteps($flowold['id'],$old);
+                            $stepsnew= Usecase::model()->getAllReleaseSteps($flownew['id'],$new);
+                           
+                            if(count($stepsold)!=count($stepsnew))
+                            { 
+                            echo '<br>number of steps changed by '.(count($stepsnew)-count($stepsold));
+                            }
+                        
+                        foreach ($stepsold as $stepold){
+                            // go through steps and find if there are any rules, forms or interfaces.
+                                     $ifacesold = Step::model()->getStepLinks($stepold['id'], 12, 15);
+                                   
+                                     
+                                     $rulesold = Step::model()->getStepLinks($stepold['id'], 1, 16);
+                                     
+                                     
+                                     $formsold = Step::model()->getStepLinks($stepold['id'], 2, 14);
+                               
+                                     
+                                    }    
+                            
+                            
+                            
+                       
+         
+                        }
+                        
+                        
+                    } // End there is a matching new USeCase  
+                    if($matchingNew==-1) // this UC has been added since.
+                    {
+                    echo  '<br> This is a deleted UC '.$itemold['name'];
+                    }
+                    
+            }
+               
+        }
+       
+  
+         
         }
         
 	/**

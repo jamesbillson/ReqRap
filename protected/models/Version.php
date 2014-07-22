@@ -788,6 +788,33 @@ class Version extends CActiveRecord {
         return $projects;
     }
 
+    
+      
+    public function getReleaseObjectChangelog($release, $object) {
+ 
+
+        $sql = "SELECT `r`.id
+            FROM `" . Version::$objects[$object] . "` `r`
+            LEFT JOIN `version` `v`
+            ON `v`.`foreign_key`=`r`.`id` 
+            WHERE 
+            `v`.`object`=" . $object . "
+            AND            
+            `v`.`release`=" . $release . "         
+            AND            
+            `v`.`active`=" . $id;
+
+        $connection = Yii::app()->db;
+        $command = $connection->createCommand($sql);
+        $projects = $command->queryAll();
+        if (isset($projects[0]['id'])) {
+            return $projects[0]['id'];
+        } ELSE {
+            return 0;
+        }
+        
+    }
+    
     public function getVersion($id, $object) {
         $project = Yii::app()->session['project'];
         $release = Yii::app()->session['release'];

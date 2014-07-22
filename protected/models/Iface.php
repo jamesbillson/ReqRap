@@ -43,7 +43,60 @@ class Iface extends CActiveRecord
                         'photo' => array(self::BELONGS_TO, 'Photo', 'project_id'),	
                     );
 	}
+	public function toDo()
+	{
+		$ifstublist='<br />Stub interfaces: <br />';
+                $iforphanlist='<br />Orphan interfaces: <br />';
+                $ifstub=0;
+                $ifstate=1;
+                $ifcount=0;
+                $iforphan=0;
+                $ifcount=0;
+                //$ifstate=1;
+                $types = Interfacetype::model()->getInterfacetypes();
+                foreach($types as $type){
+                $data = Iface::model()->getCategoryIfaces($type['interfacetype_id']);
+                if (count($data)):
+                $ifcount=$ifcount+count($data);
+                    foreach($data as $item){
+                    if(!count(Iface::model()->getCurrentImage($item['iface_id'],Yii::App()->session['release'])) && $item['text']=='') 
+                        {
+                        $ifstub++;
+                        $ifstublist.='<a href="/iface/view/id/'.$item['iface_id'].'"> UI-'.str_pad($type['number'], 2, "0", STR_PAD_LEFT).str_pad($item['number'], 3, "0", STR_PAD_LEFT).' '.$item['name'].'</a><br />';
 
+                        } 
+                $uses=Usecase::model()->getLinkUsecase($item['iface_id'],12,15);
+                    if(count($uses)==0)
+                           { 
+                           $iforphan++;
+                        $iforphanlist.='<a href="/iface/view/id/'.$item['iface_id'].'"> UI-'.str_pad($type['number'], 2, "0", STR_PAD_LEFT).str_pad($item['number'], 3, "0", STR_PAD_LEFT).' '.$item['name'].'</a><br />';
+
+                           }
+                }
+  
+
+                endif;
+                if($ifcount>0){
+                      $ifstubscore=100-(($ifstub/$ifcount)*100);
+                        $iforphanscore=100-(($iforphan/$ifcount)*100);
+                        $iftotalscore=($ifstubscore+$iforphanscore)/2;
+                        if($iftotalscore==100 )$ifstate=3;
+                        if($iftotalscore>79 && $iftotalscore<100 )$ifstate=2;
+                        if($iftotalscore<=79 )$ifstate=1;
+                }
+                }
+
+                $result=array(
+                    'state'=>$ifstate,
+                    'count'=>$ifcount,
+                    'stub'=>$ifstub,
+                    'stublist'=>$ifstublist,
+                    'orphan'=>$iforphan,
+                    'orphanlist'=>$iforphanlist
+                          );
+                        return $result;
+
+	}
 	/**
 	 * @return array customized attribute labels (name=>label)
 	 */

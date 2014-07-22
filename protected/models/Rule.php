@@ -67,8 +67,51 @@ class Rule extends CActiveRecord
                     
 		);
 	}
+public function toDo()
+{
+        $stub=0;
+        $state=1;
+        $orphan=0;
+        $rulecount=0;
+        $stublist='<br />Stub rules: <br />';
+        $orphanlist='<br />Orphan rules: <br />';
+        $data = Rule::model()->getProjectRules();
+        if (count($data)){
+                 $rulecount=count($data);
+            foreach($data as $item) {
 
+                    if ($item['text']=='stub') {
+                        $stub++; 
+                    $stublist.='<a href="/rule/view/id/'.$item['rule_id'].'"> BR-'.str_pad($item['number'], 3, "0", STR_PAD_LEFT).' '.$item['name'].'</a><br />';
 
+                    }
+                $uses=Usecase::model()->getLinkUsecase($item['rule_id'],1,16);
+
+                    if(count($uses)==0){$orphan++;
+                    $orphanlist.='<a href="/rule/view/id/'.$item['rule_id'].'"> BR-'.str_pad($item['number'], 3, "0", STR_PAD_LEFT).' '.$item['name'].'</a><br />';
+
+                    }
+                }
+        $stubscore=100-(($stub/$rulecount)*100);
+        $orphanscore=100-(($orphan/$rulecount)*100);
+        $totalscore=($stubscore+$orphanscore)/2;
+        if($totalscore==100 )$state=3;
+        if($totalscore>79 && $totalscore<100 )$state=2;
+        if($totalscore<=79 )$state=1;
+  
+          $result=array(
+            'state'=>$state,
+            'count'=>$rulecount,
+            'stub'=>$stub,
+            'stublist'=>$stublist,
+            'orphan'=>$orphan,
+            'orphanlist'=>$orphanlist
+                  );
+                return $result;
+  
+        
+}
+}
         
 	public function search()
 	{
@@ -107,7 +150,7 @@ class Rule extends CActiveRecord
     
  
     
-      public function getProjectRules($id)
+      public function getProjectRules()
     {
        $release=Yii::App()->session['release'];
        $project=Yii::App()->session['project'];

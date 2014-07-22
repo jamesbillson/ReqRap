@@ -96,9 +96,41 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
     <?php endif;
 $this->endWidget(); ?>
 
+       <h4>Traceability</h4>
+        
+        <?php 
 
+ $stepform=Usecase::model()->getLinkUsecase($model->form_id,2,14);
+ if(!count($stepform)){
+  
+ ?>
+       <div class="row offset1">
+ This Form is an orphan, it is not used by any Use Case.
+       </div>
+ <div class="row">
+
+     <?php  echo $this->renderPartial('_associate',array('id'=>$model->form_id)); ?>
+ </div>
+ <br />
+ <?php } ELSE { ?>
+ Interface is used in the following UC's:<br />
+   <?php foreach($stepform as $item){?>
+ <a href="/usecase/view/id/<?php echo $item['usecase_id'];?>">
+       <?php  echo 'UC-'.str_pad($item['package_number'], 2, "0", STR_PAD_LEFT).
+         str_pad($item['usecase_number'], 3, "0", STR_PAD_LEFT);?>
+ </a>
+         <?php echo $item['usecase_name'];?> 
+         (<a href="/step/update/id/-1/flow/<?php echo $item['flow_id'];?>"><?php echo $item['flow_name'];?> Flow</a>)
+           
+         <br />
+ <?php } ?>
+ <?php } ?>
 
  <?php if($edit){ ?>
+
+
+
+
 
 <?php $deleted = Version::model()->getObjectDeletedVersions($model->form_id,2,3);
 if (count($deleted)):?>

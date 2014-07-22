@@ -52,7 +52,45 @@ class Actor extends CActiveRecord
 			
 		);
 	}
+	public function toDo()
+	{
+		$actorphanlist='<br />Orphan Actors: <br />';
+$actcount=0;
+$actstate=1;
+$actorphan=0;
+$data = Actor::model()->getProjectActors();
 
+if (count($data)){
+    $actcount=count($data);
+    foreach($data as $item) 
+        {
+       $uses=Actor::model()->getActorParentSteps($item['id']);
+
+            if(count($uses)==0)
+                {
+                $actorphan++;
+                $actorphanlist.='<a href="/actor/view/id/'.$item['actor_id'].'">'.$item['name'].'</a><br />';
+                }
+        }
+        $actorphanscore=100-(($actorphan/$actcount)*100);
+        
+        if($actorphanscore==100 )$actstate=3;
+        if($actorphanscore>79 && $actorphanscore<100 )$actstate=2;
+        if($actorphanscore<=79 )$actstate=1;
+
+
+}
+
+                $result=array(
+                    'state'=>$actstate,
+                    'count'=>$actcount,
+
+                    'orphan'=>$actorphan,
+                    'orphanlist'=>$actorphanlist
+                          );
+                        return $result;
+
+	}
 	/**
 	 * @return array customized attribute labels (name=>label)
 	 */

@@ -247,17 +247,8 @@ if(!empty($construction))  {
 };
     
     
-$tenders = Project::model()->MyProjects(3);
-if(!empty($tenders)) {
-    
-     $this->widget('bootstrap.widgets.TbMenu', array(
-    'type'=>'list',
-    'items'=>array(
-         array('label'=>'Tenders', 'icon'=>'star-empty', 'url'=>array('project/mytenders')),
-     
-       ),
-));  
-};
+
+
 
 if(empty($tenders) && empty($construction)  && empty($bids) && $type !=4){
     // THE COMPANY HAS NO PROJECTS, AND IS NOT A CONSULTANT.
@@ -287,7 +278,16 @@ if(empty($tenders) && empty($construction)  && empty($bids) && $type !=4){
         array('label'=>'My Company Settings', 'icon'=>'cog', 'url'=>array('company/mycompany')),
        ),
     )); 
-
+if(Yii::App()->user->id==121 || Yii::App()->user->id==140)   {
+    
+     $this->widget('bootstrap.widgets.TbMenu', array(
+    'type'=>'list',
+    'items'=>array(
+         array('label'=>'User Report', 'icon'=>'user', 'url'=>array('user/view')),
+     
+       ),
+));  
+};
   
  ?>    
 </div>

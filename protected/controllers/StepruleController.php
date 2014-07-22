@@ -117,9 +117,9 @@ class StepruleController extends Controller
                 $model->release_id=Release::model()->currentRelease($project);
                 $model->step_id=$_POST['step_id'];
                 $model->rule_id=$_POST['rule'];
-                echo "<pre>";
-                print_r($model);
-                echo "</pre>";
+               // echo "<pre>";
+               // print_r($model);
+               // echo "</pre>";
                 if($model->save()){
                     Version::model()->getNextNumber($project,16,1,$model->primaryKey,$model->steprule_id);
                 $this->redirect(array('/rule/view/id/'.$model->rule_id));
@@ -127,7 +127,7 @@ class StepruleController extends Controller
                  
                 }
            
-        echo 'didnt save';
+       // echo 'didnt save';
            
         }
         

@@ -53,7 +53,7 @@ echo $this->renderPartial('/project/head',array('tab'=>'rules','link'=>$link));
   
  ?>
        <div class="row offset1">
- This Rule is not used.
+ This Rule is an orphan, it is not used by any Use Case.
        </div>
  <div class="row">
 

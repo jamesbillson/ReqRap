@@ -32,7 +32,7 @@ class StepformController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('unlink','create','update','createinline','delete'),
+				'actions'=>array('associate','unlink','create','update','createinline','delete'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -57,7 +57,38 @@ class StepformController extends Controller
 	}
 
 	        
-        
+            
+           public function actionAssociate()
+	{
+	        $project=Yii::App()->session['project'];	
+                $model=new Stepform;
+
+		if(isset($_POST['step_id']))
+		{
+                $model->stepform_id=Version::model()->getNextID(14);
+		$model->project_id= $project;
+                $model->release_id=Release::model()->currentRelease($project);
+                $model->step_id=$_POST['step_id'];
+                $model->form_id=$_POST['form_id'];
+                //echo "<pre>";
+                //print_r($model);
+               // echo "</pre>";
+                if($model->save()){
+                    Version::model()->getNextNumber($project,14,1,$model->primaryKey,$model->stepform_id);
+                $this->redirect(array('/form/view/id/'.$model->form_id));
+                 }
+                 $error_string='';
+                 foreach ($model->getErrors() as $message) 
+                     
+                     $error_string.=$message[0];
+                }
+          Yii::app()->user->setFlash('error', ' Something went wrong, all we can report is:<br/> '.$error_string);
+
+
+          $this->redirect(array('/site/fail/reason/form_no_save'));
+       
+           
+        }
         
         public function actionCreateInline()
 	{

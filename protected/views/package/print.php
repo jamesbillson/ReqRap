@@ -60,8 +60,10 @@ $actors = Actor::model()->getActors($uc['usecase_id']); // get the requirements 
   
   
 
-
-$rules = Usecase::model()->getLinkedObjects($uc['usecase_id'],1,16);
+$params['id']=$uc['usecase_id'];
+$params['object']=1;
+$params['relationship']=16;
+$rules = Usecase::model()->getLinkedObjects($params);
 
   if (count($rules)):?>
 
@@ -106,7 +108,11 @@ if (count($interfaces)){
 
      
        <?php 
-$forms = Usecase::model()->getLinkedObjects($uc['usecase_id'],2,14) ;
+$params['id']=$uc['usecase_id'];
+$params['object']=2;
+$params['relationship']=14;
+       
+$forms = Usecase::model()->getLinkedObjects($params) ;
 if (count($forms)):?>
           <tr><td><b>Forms</b></td><td>
             <?php foreach($forms as $form) : 

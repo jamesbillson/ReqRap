@@ -57,7 +57,47 @@ class Object extends CActiveRecord
 		);
 	}
 
+public function toDo()
+	{
+	$obstublist='<br />Stub objects: <br />';
+$obstate=1;
+$objectcount=0;
+$obstub=0;
 
+$data = Object::model()->getProjectObjects(Yii::app()->session['project']);
+if (count($data)){
+    $objectcount=count($data);
+  // echo 'Stub forms: <br />';    
+        foreach($data as $item):
+
+        $fields=  Objectproperty::model()->getObjectProperty($item['object_id']);
+        if(count($fields)==0) 
+            {
+            $obstub++;
+            $obstublist.='<a href="/object/view/id/'.$item['object_id'].'"> OB-'.str_pad($item['number'], 3, "0", STR_PAD_LEFT).' '.$item['name'].'</a><br />';
+            }
+
+        endforeach;
+        $obstubscore=100-(($obstub/$objectcount)*100);
+        $obtotalscore=$obstubscore;
+        if($obtotalscore==100 )$obstate=3;
+        if($obtotalscore>79 && $obtotalscore<100 )$obstate=2;
+        if($obtotalscore<=79 )$obstate=1;
+        
+//echo ' object score is '.$obtotalscore.'  state is '.$obstate;
+        
+        
+                        $result=array(
+                    'state'=>$obstate,
+                    'count'=>$objectcount,
+                    'stub'=>$obstub,
+                    'stublist'=>$obstublist,
+                   
+                          );
+                        return $result;
+
+}
+	}
 	public function search()
 	{
 		// @todo Please modify the following code to remove attributes that should not be searched.

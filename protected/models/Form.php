@@ -49,11 +49,7 @@ class Form extends CActiveRecord
 		return array(
 			'project' => array(self::BELONGS_TO, 'Project', 'project_id'),
 			//'formproperties' => array(self::HAS_MANY, 'Formproperty', 'form_id'),
-                    'formpropeties'=>array(self::BELONGS_TO,
-                                    'Formproperty','form_id',
-                                    'joinType'=>'JOIN',
-                                    'foreignKey'=>'form_id',
-                          'on'=>'form.project_id=formproperty.project_id')
+
 		);
 	}
 
@@ -100,8 +96,59 @@ class Form extends CActiveRecord
 			'criteria'=>$criteria,
 		));
 	}
-        
-        
+        public function toDo(){
+         
+            $formstublist='<br />Stub forms: <br />';
+$formorphanlist='<br />Orphan forms: <br />';
+$formstate=1;
+$formcount=0;
+$formstub=0;
+$formorphan=0;
+$formorphanscore=0;
+$formstubscore=0;
+$data = Form::model()->getProjectForms(Yii::app()->session['project']);
+if (count($data)){
+    $formcount=count($data);
+  // echo 'Stub forms: <br />';    
+        foreach($data as $item):
+
+        $fields=  Formproperty::model()->getFormProperty($item['form_id']);
+        if(count($fields)==0) 
+            {
+            $formstub++;
+            $formstublist.='<a href="/form/view/id/'.$item['form_id'].'"> UF-'.str_pad($item['number'], 3, "0", STR_PAD_LEFT).' '.$item['name'].'</a><br />';
+            }
+                $uses=Usecase::model()->getLinkUsecase($item['form_id'],2,14);
+                if(count($uses)==0) 
+                    {
+                    $formorphan++;
+                    $formorphanlist.='<a href="/form/view/id/'.$item['form_id'].'"> UF-'.str_pad($item['number'], 3, "0", STR_PAD_LEFT).' '.$item['name'].'</a><br />';
+                    }
+        endforeach;
+        $formstubscore=100-(($formstub/$formcount)*100);
+        $formorphanscore=100-(($formorphan/$formcount)*100);
+        $formtotalscore=($formstubscore+$formorphanscore)/2;
+        if($formtotalscore==100 )$formstate=3;
+        if($formtotalscore>79 && $formtotalscore<100 )$formstate=2;
+        if($formtotalscore<=79 )$formstate=1;
+
+}
+                            $result=array(
+                    'state'=>$formstate,
+                    'count'=>$formcount,
+                    'stub'=>$formstub,
+                    'stublist'=>$formstublist,
+                    'orphan'=>$formorphan,
+                    'orphanlist'=>$formorphanlist,
+                    'stubscore'=>$formstubscore,
+                    'orphanscore'=>$formorphanscore            
+                          );
+                        return $result;
+
+            
+        }
+
+
         public function getNextNumber()
     {
                $project=Yii::App()->session['project'];    

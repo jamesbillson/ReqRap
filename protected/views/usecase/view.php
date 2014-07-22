@@ -156,7 +156,11 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
      
  
 //$rules = Rule::model()->getRules($model->usecase_id); 
-$rules = Usecase::model()->getLinkedObjects($model->usecase_id,1,16);
+  $params['id']=$model->usecase_id;
+$params['object']=1;
+$params['relationship']=16;
+$rules = Usecase::model()->getLinkedObjects($params);
+
 
 
 $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
@@ -257,8 +261,12 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
   ?>
      
        <?php 
-$forms = Usecase::model()->getLinkedObjects($model->usecase_id,2,14) ;
-     //   Form::model()->getForms($model->usecase_id); // get the requirements with answers
+       
+       $params['id']=$model->usecase_id;
+$params['object']=2;
+$params['relationship']=14;
+       
+$forms = Usecase::model()->getLinkedObjects($params) ;
 
 
 

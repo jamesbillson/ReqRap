@@ -25,7 +25,7 @@ class Stepform extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('id, stepform_id, step_id, form_id, project_id, release_id', 'required'),
+			array('stepform_id, step_id, form_id, project_id, release_id', 'required'),
 			array('id, step_id, form_id, project_id, release_id', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
@@ -40,17 +40,9 @@ class Stepform extends CActiveRecord
 	{
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
-		return array(
+		return array();
                     
-     //  'step' => array(self::BELONGS_TO, 'Step', 'step_id'),
-     'step' => array(self::BELONGS_TO, 'Step', 
-                        array('step_id' => 'step_id'),
-                        'on' => 't.project_id = step.project_id',),
-                    
-   'form' => array(self::BELONGS_TO, 'Iface', 
-                        array('form_id' => 'form_id'),
-                        'on' => 't.project_id = form.project_id',)	
-                    );
+    
 	}
 
 	/**

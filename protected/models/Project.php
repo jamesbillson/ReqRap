@@ -128,7 +128,7 @@ class Project extends CActiveRecord
 		$projects = $command->queryAll();
 		return $projects;
     }
-   
+
   public function setPermissions($mycompany, $project, $release, $currentrelease)
     {
     // This is my companies requirements, and the release is current.
