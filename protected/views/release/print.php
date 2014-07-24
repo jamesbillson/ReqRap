@@ -1,9 +1,15 @@
 
-<?php $releases = Release::model()->findAll('project_id='.Yii::app()->session['project']);
+<?php 
+$releases = Release::model()->findAll(array('order'=>'number ASC',
+    
+    'condition'=>'project_id=:x',
+    'params'=>array(':x'=>Yii::app()->session['project'])));
+
+
 
 ?>
          <?php if (count($releases)){?>
-<h3>Release History</h3>
+<h4>Release History</h4>
 <table class="table">
 	<thead>
 	<tr>
@@ -18,7 +24,7 @@
 
         <?php foreach($releases as $release) {
             
-            if($release['id']<= Yii::App()->session['release']){ ?>
+            if($release['number']<= $thisrelease['number']){ ?>
         <tr class="odd">  
         <td>   
         <?php echo $release['number']; ?> 

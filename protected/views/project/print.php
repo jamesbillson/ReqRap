@@ -4,17 +4,28 @@ $project=Yii::App()->session['project'];
 $packages = Package::model()->getPackages($project);
 $heading=1;
 $cats = Category::model()->getProjectCategory();
-
+$thisrelease=Release::model()->findbyPK(Yii::App()->session['release']);
 $model=Project::model()->findbyPK($project);
 
-
+if($model->company->logo_id!=''){
+    $src = Yii::app()->easyImage->thumbSrcOf(
+    Yii::app()->params['photo_folder'].$model->company->logo_id, 
+    array('resize' => array('width' => 150))); 
+}
 ?>
 <h1>Requirements Model</h1>
 
 <h2> <?php echo $model->name;?></h2>
 
 <h3> <?php echo $model->company->name;?></h3>
-<?php $this->renderPartial('/release/print',array('heading'=>$heading));
+<h4>Release R-<?php echo $thisrelease['number'];?> </h4>
+<div style="height:200px;"></div>
+
+<img src="<?php echo $src;?>">
+<br />
+<br />
+<br />
+<?php $this->renderPartial('/release/print',array('heading'=>$heading,'thisrelease'=>$thisrelease));
 
  ?>
 
