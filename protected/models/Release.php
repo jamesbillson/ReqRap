@@ -13,6 +13,7 @@
 class Release extends CActiveRecord
 {
     public static $status= array(1=>'draft',2=>'release');
+    public static $title_status= array(1=>'Draft',2=>'Release');
     
    	
   
