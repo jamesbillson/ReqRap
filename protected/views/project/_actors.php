@@ -71,18 +71,15 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
             </tbody>
         </table>
 
+
     <?php endif;
 $this->endWidget();
 
 
-//$this->renderPartial('/actor/diagram');
 
-
-
-//$tree='[what_new_here][about][Actor%20[Child][Daughter%20[grand%20admin][cousin]]]';
 ?>
 
-<!--img src="http://reqrap/images/tree/tree.php?data=<?php // echo $tree;?>"-->
+<img src="http://reqrap/images/tree/tree.php?data=<?php echo $actorstring;?>">
 
   <?php if($edit){ ?>
 

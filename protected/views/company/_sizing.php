@@ -1,36 +1,18 @@
 
 
-<b>Project Description</b> <a href="/project/update?id=<?php echo $model->id; ?>"><i class="icon-edit"></i></a>
-<br /><?php echo $model->description; ?><br />
 
- <br /> 
-  External Link: <input type="text" class="span8" value ="http://www.reqrap.com/project/extview/id/<?php echo $model->extlink; ?>" onclick="this.select()">
- <a href="/project/resetlink/id/<?php echo $model->id; ?>">Reset the link</a>
-  <br /> 
- <br /> 
+
 <?php 
 $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
     'title' => 'Interface Types',
     'headerIcon' => 'icon-picture',
      'htmlOptions' => array('class'=>'bootstrap-widget-table'),
       'headerButtons' => array(
-    array(
-        'class' => 'bootstrap.widgets.TbButton',
-        'type' => 'primary', // '', 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
-        'label'=> 'Add Interface Type',
-        'visible'=>Yii::App()->session['permission']==1,
-        'url'=>array('interfacetype/create')
-    ),
-           array(
-        'class' => 'bootstrap.widgets.TbButton',
-        'type'=>'link',
-        'icon'=> 'question-sign',
-         'url'=>'/help/popview/scope/ifacetypes',
-        'htmlOptions' => array('id' => 'popup',),
-    ),
+  
+          
           )
 ));
-    $data = Interfacetype::model()->getInterfacetypes(); 
+    $data=array();
 ?>
     <table class="table">
 	

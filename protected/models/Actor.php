@@ -141,7 +141,7 @@ if (count($data)){
            public function getProjectActors()
     {
        $release=Yii::App()->session['release'];
-       $project=Yii::App()->session['project'];
+    
                $sql="
            
             SELECT `r`.*,
@@ -160,11 +160,7 @@ if (count($data)){
             ON `vr`.`foreign_key`=`r`.`id`            
 
             WHERE 
-            `vr`.`object`=4 AND `vr`.`active`=1 AND `vr`.`release`=".$release."
-            AND   
-            
-           
-           `r`.`project_id`=".$project;
+            `vr`.`object`=4 AND `vr`.`active`=1 AND `vr`.`release`=".$release;
 
      
         

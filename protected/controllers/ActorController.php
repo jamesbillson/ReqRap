@@ -65,8 +65,7 @@ class ActorController extends Controller
         	));
 	}
 
-      
-        
+
         
        	        public function actionHistory($id) // Note that this is form_id
 	{

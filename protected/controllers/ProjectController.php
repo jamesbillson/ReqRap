@@ -109,10 +109,31 @@ class ProjectController extends Controller
      }
      $id=Yii::app()->session['project'];
         $model = $this->loadModel($id);
+         $arr=Actor::model()->getProjectActors();
+              $this->generateTree($str, $arr, -1);
+              
         $this->render('view',array(
-                'model'=>$model ));
+                'model'=>$model,'actorstring'=>$str ));
 
     }
+    
+    public function generateTree(&$str ,$array, $parent = 0, $level = 0)
+    {
+          
+        foreach($array as $key => $value)
+        {
+            if (!isset($str)) $str='';
+        if ($value['inherits'] == $parent) 
+            {    
+            $str .= '[';
+            $level++;           
+            $str .= $value['name'].'' ;
+            $str .= $this->generateTree($str ,$array, $value['actor_id'], $level);
+            $str .= ']';
+            }
+        }   
+          
+      }
     
      public function actionTesting()
     {
@@ -162,9 +183,10 @@ class ProjectController extends Controller
             $this->redirect(array('site/fail/condition/no_access'));
             }
     }
- public function actionprint()
+ public function actionPrint()
     {
-                  $this->render('print');
+                
+     $this->render('print');
     }
     
     /**

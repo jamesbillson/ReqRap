@@ -8,7 +8,11 @@
 foreach($packages as $package){
 $packusecases = Usecase::model()->getPackageUsecases($package['package_id']);
 
- //if (count($packusecases)>0){ ?>
+ if (count($packusecases)>0){
+
+
+
+?>
 
               
 <h3>Package PA-<?php echo $package['number'];?> <?php echo $package['name'];?> Usecase Diagram</h3>
@@ -125,13 +129,11 @@ if (count($forms)):?>
          
                   </tbody>
         
-  </table>         
+  </table> 
+<?php } // End if there are any UC's in this package ?>
 <?php } // END LOOP THROUGH USE CASES ?>   
           
  
-<?php }  
-
-             // }
-// END LOOP THROUGH PACKAGES?>
+<?php } // END LOOP THROUGH PACKAGES?>
             
  

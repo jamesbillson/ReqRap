@@ -50,8 +50,13 @@ $section=1;
 
           
 $actors = Actor::model()->getProjectActors(Yii::app()->session['project']);
+ 
+              $this->generateTree($str, $actors, -1);
+              
 if (count($actors)):
-$this->renderPartial('/actor/print',array('heading'=>$heading,'actors'=>$actors)); 
+$this->renderPartial('/actor/print',array('heading'=>$heading,
+                                        'actors'=>$actors,
+                                        'actorstring'=>$str)); 
 $heading++; 
 endif;
  

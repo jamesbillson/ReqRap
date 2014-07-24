@@ -32,6 +32,7 @@
             </tbody>
         </table>
 
+<img src="http://reqrap/images/tree/tree.php?data=<?php echo $actorstring;?>">
   
 
 

@@ -36,7 +36,7 @@ $active['walkthru']=FALSE;
             'label' => 'Actors',
         'visible' => in_array($permission,array(1)),
             'content' => $this->renderPartial('_actors',
-                    compact('model','status'),true,false),'active'=>$active['actors']);
+                    compact('model','status','actorstring'),true,false),'active'=>$active['actors']);
 
     $tabs[] = array('id' => 'usecases',
             'label' => 'Use Cases','visible' => in_array($permission,array(1)),
