@@ -5,12 +5,12 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta name="language" content="en" />
 <?php // Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/css/tabs.js'); ?>
-
+    <!--
     <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->theme->baseUrl; ?>/css/styles.css" />
-    <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->theme->baseUrl; ?>/css/font-awesome.min.css">
-
-    
-      <?php Yii::app()->clientScript->registerCssFile(Yii::app()->theme->baseUrl.'/css/bootstrap.min.css'); ?>
+    <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->theme->baseUrl; ?>/css/font-awesome.min.css"> -->
+    <?php Yii::app()->clientScript->registerCssFile(Yii::app()->theme->baseUrl.'/css/bootstrap.min.css'); ?>
+    <?php Yii::app()->clientScript->registerCssFile(Yii::app()->theme->baseUrl.'/css/font-awesome.min.css'); ?>
+    <?php Yii::app()->clientScript->registerCssFile(Yii::app()->theme->baseUrl.'/css/styles.css'); ?>
 	<title><?php echo CHtml::encode($this->pageTitle); ?></title>
 
 	<?php Yii::app()->bootstrap->register(); ?>

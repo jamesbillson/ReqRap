@@ -18,7 +18,7 @@ return array(
     'defaultController' => 'site/login',
     
     // preloading 'log' component
-    'preload'=>array('bootstrap','log','fontawesome'),
+    'preload'=>array('bootstrap','log'),
     
 
     // autoloading model and component classes
@@ -45,7 +45,6 @@ return array(
 
     'theme'=>'bootstrap', // requires you to copy the theme under your themes directory
         'modules'=>array(
-       
             'gii'=>array(
             'generatorPaths'=>array(
             'bootstrap.gii',
@@ -82,6 +81,7 @@ return array(
             'bootstrap' => array(
                        'class' => 'ext.bootstrap.components.Bootstrap',
                        'responsiveCss' => true,
+                       'fontAwesomeCss' => false,
                         ),
 		    'editable' => array(
 						'class'     => 'editable.EditableConfig',
@@ -91,10 +91,11 @@ return array(
 						'emptytext' => 'Click to edit'
 										)
 						),
+            /*
             'fontawesome'=>array (
                             'class'=>'ext.fontawesome.components.FontAwesome',
                             'publishAwesome'=>FALSE
-                        ),
+                        ),*/
                             
             'authManager'=>array(
                         'class' => 'CDbAuthManager',
@@ -137,7 +138,7 @@ return array(
                 'autoStart' => true,
                 ),
         'db'=>array(
-            'connectionString' => 'mysql:host=localhost;dbname=req',
+            'connectionString' => 'mysql:host=localhost;dbname=reqer',
             'emulatePrepare' => true,
             'username' => 'root',
             'password' => 'root',
