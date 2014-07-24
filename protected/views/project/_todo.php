@@ -174,9 +174,9 @@ if ($form['count']>0)
     )); 
 
   echo ' Forms</h4>';
-echo '<br>'.$form['stub'].' of '.count($data).' Forms are stubs, completeness: '.number_format((float)(100-($form['stub']/count($data))*100), 0, '.', '').'%';
+echo '<br>'.$form['stub'].' of '.count($data).' Forms are stubs, completeness: '.number_format((float)(100-($form['stub']/$form['count'])*100), 0, '.', '').'%';
 if($form['stub']>0) echo $form['stublist'];
-echo '<br>'.$form['orphan'].' orphan Forms, completeness: '.number_format((float)FLOOR(100-($form['orphan']/count($data))*100), 0, '.', '').'%';
+echo '<br>'.$form['orphan'].' orphan Forms, completeness: '.number_format((float)FLOOR(100-($form['orphan']/$form['count'])*100), 0, '.', '').'%';
 if($form['orphan']>0) echo $form['orphanlist'];
 } else {
     

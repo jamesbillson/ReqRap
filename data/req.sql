@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Jul 22, 2014 at 03:35 PM
+-- Generation Time: Jul 24, 2014 at 08:23 PM
 -- Server version: 5.6.17
 -- PHP Version: 5.4.27
 
@@ -41,7 +41,7 @@ CREATE TABLE IF NOT EXISTS `actor` (
   PRIMARY KEY (`id`),
   KEY `project_id` (`project_id`),
   KEY `release_id` (`release_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=360 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=366 ;
 
 --
 -- Dumping data for table `actor`
@@ -126,7 +126,13 @@ INSERT INTO `actor` (`id`, `type`, `actor_id`, `project_id`, `release_id`, `numb
 (356, 0, 7, 228, 264, 1, 'User', 'A public user of the system', 'None', 'Placeholder', -1),
 (357, 0, 8, 228, 264, 2, 'Member', 'A user with an account on the system', 'Log in as a member', 'Registered User, Account Holder', -1),
 (358, 0, 1, 234, 265, 1, 'Actor', 'My First Actor', NULL, 'Placeholder', -1),
-(359, 0, 1, 234, 266, 1, 'Actor', 'My First Actor', NULL, 'Placeholder', -1);
+(359, 0, 1, 234, 266, 1, 'Actor', 'My First Actor', NULL, 'Placeholder', -1),
+(360, 0, 9, 227, 251, 3, 'Admin', 'admin actor', 'none', 'none', 8),
+(361, 0, 10, 227, 251, 4, 'VIP Member', 'A special member', 'None', 'None', 8),
+(362, 0, 10, 227, 251, 4, 'VIP-Member', 'A special member', 'None', 'None', 8),
+(363, 0, 11, 227, 251, 5, 'sub-actor', 'Sub of actor', 'none', 'none', 1),
+(364, 0, 8, 228, 254, 2, 'Member-with-long-long-name', 'A user with an account on the system', 'Log in as a member', 'Registered User, Account Holder', -1),
+(365, 0, 8, 228, 254, 2, 'Member-with-long-long-name', 'A user with an account on the system', 'Log in as a member', 'Registered User, Account Holder', 2);
 
 -- --------------------------------------------------------
 
@@ -315,6 +321,20 @@ INSERT INTO `company` (`id`, `foreignid`, `name`, `description`, `logo_id`, `own
 (530, '0', 'aoue', 'A developer of great web applications...', 'logo530-53c65bf77ea4e.png', 163, -1, 1, 0, 0, '2014-07-16 00:23:33'),
 (531, NULL, 'oei', 'A developer of great web applications.', NULL, 165, -1, 1, 0, 0, '2014-07-16 22:36:03'),
 (532, NULL, 'ou', 'A developer of great web applications.', NULL, 167, -1, 1, 0, 0, '2014-07-17 06:58:02');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `company_meta`
+--
+
+CREATE TABLE IF NOT EXISTS `company_meta` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `company_id` int(11) NOT NULL,
+  `name` varchar(60) DEFAULT NULL,
+  `value` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -1497,7 +1517,7 @@ CREATE TABLE IF NOT EXISTS `package` (
   KEY `project_id` (`project_id`),
   KEY `package_id` (`package_id`),
   KEY `release_id` (`release_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1032 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1033 ;
 
 --
 -- Dumping data for table `package`
@@ -1553,7 +1573,8 @@ INSERT INTO `package` (`id`, `package_id`, `name`, `stage`, `number`, `project_i
 (1028, 2, 'Membership', 1, 1, 228, 264, '0.00', '0.00', NULL),
 (1029, 8, 'Membership', 1, 2, 228, 264, '0.00', '0.00', NULL),
 (1030, 1, 'System', 1, 1, 234, 265, '0.00', '0.00', NULL),
-(1031, 1, 'System', 1, 1, 234, 266, '0.00', '0.00', NULL);
+(1031, 1, 'System', 1, 1, 234, 266, '0.00', '0.00', NULL),
+(1032, 2, 'test empty', 1, 2, 234, 265, '0.00', '0.00', NULL);
 
 -- --------------------------------------------------------
 
@@ -1709,10 +1730,10 @@ INSERT INTO `release` (`id`, `number`, `status`, `project_id`, `offset`, `create
 (245, '2.0000', 2, 222, 11, '2014-06-12 11:25:44', 113),
 (246, '3.0000', 2, 222, 17, '2014-06-12 12:03:36', 113),
 (250, '0.0061', 1, 226, 0, '2014-06-25 13:28:09', 113),
-(251, '3.0137', 1, 227, 36, '2014-07-22 05:30:28', 140),
+(251, '3.0141', 1, 227, 36, '2014-07-23 07:29:25', 140),
 (252, '1.0000', 2, 227, 22, '2014-06-27 13:37:04', 140),
 (253, '2.0000', 2, 227, 31, '2014-06-29 13:25:54', 140),
-(254, '2.0001', 1, 228, 41, '2014-07-20 08:18:47', 140),
+(254, '2.0003', 1, 228, 41, '2014-07-24 01:47:56', 140),
 (255, '3.0000', 2, 227, 36, '2014-07-01 11:40:18', 140),
 (256, '0.0025', 1, 229, 0, '2014-07-18 01:02:02', 140),
 (257, '1.0001', 1, 230, 6, '2014-07-15 23:11:53', 162),
@@ -1723,7 +1744,7 @@ INSERT INTO `release` (`id`, `number`, `status`, `project_id`, `offset`, `create
 (262, '0.0004', 1, 233, 0, '2014-07-16 22:38:48', 165),
 (263, '1.0000', 2, 228, 29, '2014-07-17 02:10:13', 140),
 (264, '2.0000', 2, 228, 41, '2014-07-20 09:33:11', 140),
-(265, '1.0015', 1, 234, 27, '2014-07-21 13:16:42', 140),
+(265, '1.0016', 1, 234, 27, '2014-07-22 10:02:30', 140),
 (266, '1.0000', 2, 234, 27, '2014-07-21 13:15:14', 140);
 
 -- --------------------------------------------------------
@@ -2849,7 +2870,7 @@ INSERT INTO `user` (`id`, `firstname`, `lastname`, `email`, `password`, `address
 (119, 'Mark', 'Birglaw', 'employee@test.com', '3d801aa532c1cec3ee82d87a99fdf63f', NULL, '536749af9d0c11.22948007', 'employee@test.com', 0, 1, 512, 0, 0, ''),
 (120, 'Admin', 'Check', 'adcheck@test.com', '35f504164d5a963d6a820e71614a4009', NULL, '53674b114862d1.87916714', 'adcheck@test.com', 1, 1, 513, 1, 0, ''),
 (140, 'James', 'Billson', 'james@billson.com', '1a1dc91c907325c69271ddf0c944bc72', NULL, '53ab4e2b361b23.76203420', 'james@billson.com', 1, 1, 515, 1, 0, NULL),
-(156, 'aoaoeu', 'oaeuaoeu', 'aoeu@aeou.com.au', '05f60ba25a20f67f442f4127e4d6c4dd', NULL, '53ac0da68a31e2.27930034', 'aoeu@aeou.com.au', 1, 1, 515, 0, 0, '4da2fad103'),
+(156, 'aoaoeu', 'oaeuaoeu', 'aoeu@aeou.com.au', 'a4c65d204a97dca9b3b09562df328132', NULL, '53ce17f84fa019.10783219', 'aoeu@aeou.com.au', 1, 1, 0, 0, 0, '4da2fad103'),
 (157, 'Peter', 'Markham', 'pmarkham@thes.cocm', '05f60ba25a20f67f442f4127e4d6c4dd', NULL, '53af572ac72f73.44449584', 'pmarkham@thes.cocm', 0, 0, 519, 1, 0, 'ab9890595a'),
 (158, 'John', 'Citizen', 'john@bigpond.com', '05f60ba25a20f67f442f4127e4d6c4dd', NULL, '53af5dd4254852.57538768', 'john@bigpond.com', 1, 1, 524, 1, 0, 'a4b92de4a3'),
 (159, 'Harry', 'Approver', 'approve@test.com', '05f60ba25a20f67f442f4127e4d6c4dd', NULL, '53af5ebdbb2053.21658858', 'approve@test.com', 1, 1, 525, 1, 0, '767896ea8c'),
@@ -2857,7 +2878,7 @@ INSERT INTO `user` (`id`, `firstname`, `lastname`, `email`, `password`, `address
 (161, 'Test', 'colab', 'contrib@billson.com', '05f60ba25a20f67f442f4127e4d6c4dd', NULL, '53bb4d96b79933.38994874', 'contrib@billson.com', 1, 1, 528, 1, 0, '14864ab529'),
 (162, 'freetard', 'McNurk', 'free@reqrap.com', '1a1dc91c907325c69271ddf0c944bc72', NULL, '53c5394f8e3616.22437039', 'free@reqrap.com', 1, 1, 529, 1, 0, NULL),
 (163, 'atest', 'user', 'atest@billson.com', '1a1dc91c907325c69271ddf0c944bc72', NULL, '53c5b86b0b2d18.21861580', 'atest@billson.com', 1, 1, 530, 1, 0, NULL),
-(164, 'aouau.a', 'auaou', 'aeueoujeeje@uea.a22.au', '1a1dc91c907325c69271ddf0c944bc72', NULL, '53c5be0aea71b1.26072959', 'aeueoujeeje@uea.a22.au', 1, 1, 515, 0, 0, '51702774ba'),
+(164, 'aouau.a', 'auaou', 'aeueoujeeje@uea.a22.au', '35f504164d5a963d6a820e71614a4009', NULL, '53ce17f5bc39a9.25033025', 'aeueoujeeje@uea.a22.au', 1, 1, 0, 0, 0, '51702774ba'),
 (165, 'Testnoverify', 'Verifyme', 'testnoverify@billson.com', '1a1dc91c907325c69271ddf0c944bc72', NULL, '53c6fbf1bcd238.86348487', 'testnoverify@billson.com', 0, 0, 531, 1, 0, NULL),
 (166, 'No', 'Verify', 'noverify@billson.com', '1a1dc91c907325c69271ddf0c944bc72', NULL, '53c6ff75ce3812.29973827', 'noverify@billson.com', 0, 0, NULL, 0, 0, NULL),
 (167, 'aoeu', 'aoeu', 'aseuh@aeua.au', '05f60ba25a20f67f442f4127e4d6c4dd', NULL, '53c7732c190de8.45109557', 'aseuh@aeua.au', 1, 1, 532, 1, 0, NULL),
@@ -2865,6 +2886,20 @@ INSERT INTO `user` (`id`, `firstname`, `lastname`, `email`, `password`, `address
 (169, 'teste', 'eteth', 'aseuh@aeua.uau', '05f60ba25a20f67f442f4127e4d6c4dd', NULL, '53c776be766064.95470625', 'aseuh@aeua.uau', 0, 0, NULL, 0, 0, NULL),
 (170, 'aoeu', 'aoeika', 'jeao@xuuei.ua', '05f60ba25a20f67f442f4127e4d6c4dd', NULL, '53c777ba081960.39323855', 'jeao@xuuei.ua', 0, 0, NULL, 0, 0, NULL),
 (171, 'oeu', 'jeca', 'asoeuht@ceja.com.au', '05f60ba25a20f67f442f4127e4d6c4dd', NULL, '53c7abf8eb9a64.25717621', 'asoeuht@ceja.com.au', 0, 0, NULL, 0, 0, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users_meta`
+--
+
+CREATE TABLE IF NOT EXISTS `users_meta` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `name` varchar(60) DEFAULT NULL,
+  `value` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=10 ;
 
 -- --------------------------------------------------------
 
@@ -2950,7 +2985,7 @@ CREATE TABLE IF NOT EXISTS `version` (
   KEY `action` (`action`),
   KEY `foreign_key` (`foreign_key`),
   KEY `foreign_id` (`foreign_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4828 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4835 ;
 
 --
 -- Dumping data for table `version`
@@ -3970,7 +4005,7 @@ INSERT INTO `version` (`id`, `number`, `release`, `project_id`, `status`, `objec
 (4518, 25, '254', 228, 1, 15, 1, 148, 5, 1, '2014-07-14 07:15:16', 140),
 (4519, 0, '254', 228, 1, 2, 1, 147, 7, 1, '2014-07-14 22:47:39', 140),
 (4520, 0, '254', 228, 1, 4, 1, 335, 7, 1, '2014-07-14 22:47:39', 140),
-(4521, 0, '254', 228, 1, 4, 1, 336, 8, 1, '2014-07-14 22:47:39', 140),
+(4521, 0, '254', 228, 1, 4, 1, 336, 8, 0, '2014-07-24 01:47:38', 140),
 (4522, 0, '254', 228, 1, 5, 1, 1018, 8, 1, '2014-07-14 22:47:39', 140),
 (4523, 0, '254', 228, 1, 8, 1, 539, 7, 1, '2014-07-14 22:47:40', 140),
 (4524, 0, '254', 228, 1, 8, 1, 540, 8, 1, '2014-07-14 22:47:40', 140),
@@ -4276,7 +4311,14 @@ INSERT INTO `version` (`id`, `number`, `release`, `project_id`, `status`, `objec
 (4824, 40, '265', 234, 1, 16, 1, 118, 3, 1, '2014-07-21 13:16:27', 140),
 (4825, 41, '265', 234, 1, 9, 2, 959, 3, 1, '2014-07-21 13:16:42', 140),
 (4826, 42, '265', 234, 1, 15, 1, 162, 5, 1, '2014-07-21 13:16:42', 140),
-(4827, 173, '251', 227, 1, 14, 1, 123, 15, 1, '2014-07-22 05:30:28', 140);
+(4827, 173, '251', 227, 1, 14, 1, 123, 15, 1, '2014-07-22 05:30:28', 140),
+(4828, 43, '265', 234, 1, 5, 1, 1032, 2, 1, '2014-07-22 10:02:30', 140),
+(4829, 174, '251', 227, 1, 4, 1, 360, 9, 1, '2014-07-23 07:21:52', 140),
+(4830, 175, '251', 227, 1, 4, 1, 361, 10, 0, '2014-07-23 07:25:00', 140),
+(4831, 176, '251', 227, 1, 4, 2, 362, 10, 1, '2014-07-23 07:25:00', 140),
+(4832, 177, '251', 227, 1, 4, 1, 363, 11, 1, '2014-07-23 07:29:25', 140),
+(4833, 43, '254', 228, 1, 4, 2, 364, 8, 0, '2014-07-24 01:47:56', 140),
+(4834, 44, '254', 228, 1, 4, 2, 365, 8, 1, '2014-07-24 01:47:56', 140);
 
 -- --------------------------------------------------------
 

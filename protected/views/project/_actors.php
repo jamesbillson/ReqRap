@@ -78,9 +78,9 @@ $this->endWidget();
 
 
 ?>
-
-<img src="http://reqrap/images/tree/tree.php?data=<?php echo $actorstring;?>">
-
+<br />
+<img src="/images/tree/tree.php?data=<?php echo $actorstring;?>">
+<br />
   <?php if($edit){ ?>
 
 <?php $deleted = Version::model()->getProjectDeletedVersions($model->id,4);

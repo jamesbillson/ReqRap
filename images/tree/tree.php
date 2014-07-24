@@ -398,8 +398,8 @@ define( 'E_PADD',    50 );   // Element height padding
 define( 'V_SPACE',  40 );
 define( 'H_SPACE',  200 );
 define( 'B_SIDE',    150 );
-define( 'B_TOPBOT',  50 );
-define( 'L_VOFFSET',  40 );
+define( 'B_TOPBOT',  70 );
+define( 'L_VOFFSET',  20 );
 
 class CTreeGraph
 {
@@ -435,7 +435,7 @@ class CTreeGraph
         // $this->CalcElementWidth( $e );
 
         $w_px = $w + B_SIDE * 2;
-        $h_px = $h * $this->e_height + ($h-1) * (V_SPACE + $fontsize) + B_TOPBOT * 2;;
+        $h_px = $h * $this->e_height + ($h-1) * (V_SPACE + $fontsize) + B_TOPBOT ;
 
         $this->height    = $h_px;
         $this->width     = $w_px;
@@ -539,7 +539,7 @@ class CTreeGraph
 
         // Draw stick man
 		
-		imagecopyresized($this->im, $actorimage, $txt_pos+($txt_width/4)-20, $top+$this->e_height-E_PADD-80, 0, 0, 30, 70,230,460);
+		imagecopyresized($this->im, $actorimage, $txt_pos+($txt_width/2)-40, $top+$this->e_height-E_PADD-80, 0, 0, 30, 70,230,460);
         
 	        // Draw main text	
 		imagettftext( $this->im, $this->font_size, 0, $txt_pos
