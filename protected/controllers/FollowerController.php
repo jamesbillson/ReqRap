@@ -281,9 +281,11 @@ class FollowerController extends Controller
         if(isset($user)) {
             $identity = new UserIdentity($user->email, $user->password);
             $identity->setId($user->id);
+
+            //just add code to auto authentication
+            $identity->authenticate();
             $identity->errorCode = UserIdentity::ERROR_NONE;
             Yii::app()->user->login($identity, (Yii::app()->params['loggedInDays'] * 60 * 60 * 24 ));
-        
             Follower::model()->sendAcceptConfirm($follower->id);
             
             
