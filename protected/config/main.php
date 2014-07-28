@@ -111,6 +111,9 @@ return array(
 			'easyImage' => array(
 						'class' => 'ext.easyimage.EasyImage',
 			),
+            'dompdf'=>array(
+                'class'=>'ext.yiidompdf.yiidompdf'
+            ),
         // uncomment the following to enable URLs in path-format
 
         'urlManager'=>array(

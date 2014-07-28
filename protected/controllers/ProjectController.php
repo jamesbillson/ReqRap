@@ -184,10 +184,11 @@ class ProjectController extends Controller
             $this->redirect(array('site/fail/condition/no_access'));
             }
     }
- public function actionPrint()
-    {
-                
-     $this->render('print');
+    public function actionPrint() {
+        $pdf=Yii::app()->dompdf;    
+        $pdf->dompdf->set_paper('a4');     
+        $html = $this->renderPartial('print', array(), true);
+        $pdf->generate($html,'test.pdf',false);
     }
     
     /**
