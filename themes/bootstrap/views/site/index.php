@@ -217,7 +217,10 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
 $this->endWidget();
 endif;
 // END FOLLOWS
+
+$user_id=Yii::App()->user->id;
 ?>
+
 <div class="row">
 <div class="span6">
 <?php
@@ -278,7 +281,7 @@ if(empty($tenders) && empty($construction)  && empty($bids) && $type !=4){
         array('label'=>'My Company Settings', 'icon'=>'cog', 'url'=>array('company/mycompany')),
        ),
     )); 
-if(Yii::App()->user->id==121 || Yii::App()->user->id==140)   {
+if($user_id==121 || $user_id==140)   {
     
      $this->widget('bootstrap.widgets.TbMenu', array(
     'type'=>'list',
@@ -287,8 +290,8 @@ if(Yii::App()->user->id==121 || Yii::App()->user->id==140)   {
      
        ),
 ));  
-};
-  
+}
+  echo '<!-- USER_ID:'.$user_id.' -->';
  ?>    
 </div>
 

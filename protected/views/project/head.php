@@ -22,6 +22,12 @@ if(isset(Yii::App()->session['project'])) {
     Yii::App()->session['edit']=0;
     Yii::App()->session['permission']=0;
 }
+
+// 3 types of permission: 
+// 1 - $edit - can you edit the release you are looking at.
+// 2 - $permission is 1-5 with different roles
+// 3 - $owner
+
 $edit=(Yii::App()->session['edit']==1)?TRUE:FALSE;
 
       $config = array(

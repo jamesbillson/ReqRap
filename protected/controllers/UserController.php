@@ -28,14 +28,14 @@ class UserController extends Controller
     {
         return array(
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
-                'actions'=>array('reverify','promote','demote','sack','reinvite','index','invite','view','create','update','admin','delete'),
+                'actions'=>array('reverify','promote','demote','sack','reinvite','index','invite','create','update','admin','delete'),
                 'roles'=>array('admin'),
                 /*'users'=>array('@'),*/
             ),
-            /*array('allow', 
-                'actions'=>array(),
-                'users'=>array('admin'),
-            ),*/
+            array('allow', 
+                'actions'=>array('view'),
+                'users'=>array('james@billson.com'),
+            ),
             array('allow',  
                   'actions'=>array('join','accept','active','success'),
                   'users'=>array('*'),
@@ -65,8 +65,10 @@ class UserController extends Controller
     }
    public function actionJoinSuccess($id)
     {
-       
-        $this->render('joinsuccess',array('email'=>$id));
+       $model=$this->loadModel($id);
+        $this->render('joinsuccess',array('email'=>$model->email));
+        
+        
     }
    public function actionWelcome()
     {

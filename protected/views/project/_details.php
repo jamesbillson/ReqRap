@@ -7,6 +7,7 @@ $data = Release::model()->findAll(array('order'=>'number ASC',
     'params'=>array(':x'=>Yii::app()->session['project'])));
 $release = Yii::App()->session['release'];
 $currentrelease=Release::model()->currentRelease();
+$owner=(Yii::App()->session['owner']==1)?TRUE:FALSE;
 ?>
 
 <table class="table">
@@ -50,12 +51,12 @@ $currentrelease=Release::model()->currentRelease();
 
       <td>
     
-      <?php if ($item['id']==$currentrelease ){;?>
+      <?php if ($item['id']==$currentrelease && $owner){;?>
           <a href="/release/finalise/id/<?php echo $item['id'];?>"><i class="icon-certificate" rel="tooltip" title="Finalise Release"></i></a> 
            
       <?php 
       }
-      if (in_array(Yii::App()->session['permission'],array(1)) && $item['id']!=$currentrelease) {?>
+      if ($owner && $item['id']!=$currentrelease) {?>
           
       <a href="/library/create/id/<?php echo $item['id'];?>"><i class="icon-book text-success" rel="tooltip" title="Add to library"></i></a> 
       <a href="/release/copy/id/<?php echo $item['id'];?>"><i class="icon-copy" rel="tooltip" title="Copy Release to new project"></i></a>
