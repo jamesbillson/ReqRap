@@ -788,7 +788,20 @@ class Version extends CActiveRecord {
         return $projects;
     }
 
-    
+    public function userDestroy($id) {
+ 
+
+        $sql = "DELETE 
+                FROM
+                `Version`
+                WHERE
+                `create_user`=".$id;
+
+  $connection=Yii::app()->db;
+                $command = $connection->createCommand($sql);
+                $command->execute();  
+        
+    }
       
     public function getReleaseObjectChangelog($release, $object) {
  

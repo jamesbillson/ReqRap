@@ -168,6 +168,21 @@ class Company extends CActiveRecord
   }
       
   
+    public function userDestroy($id) {
+ 
+
+        $sql = "DELETE 
+                FROM
+                `Company`
+                WHERE
+                `id`=".$id;
+
+  $connection=Yii::app()->db;
+                $command = $connection->createCommand($sql);
+                $command->execute();  
+        
+    }
+  
   public function getProjects($id)
   {
     

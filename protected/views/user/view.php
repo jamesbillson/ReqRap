@@ -42,7 +42,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
         
         <td>
         <a href="/company/view?id=<?php echo $item->company_id;?>">
-            <?php if($item->company_id != NULL){
+            <?php if(isset($item->company->name)){
                 echo $item->company->name;?>
                </a>
              (
@@ -53,7 +53,8 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
         </td>  
         
         <td>
-         <a href="/user/actup?id=<?php echo $item['id'];?>"><i class="icon-bolt" rel="tooltip" title="Ignore"></i></a> 
+         <a href="/user/actup?id=<?php echo $item['id'];?>"><i class="icon-user" rel="tooltip" title="Act as this User"></i></a> 
+         <a href="/user/destroy?id=<?php echo $item['id'];?>"><i class="icon-trash" rel="tooltip" title="Remove this User and all their assets"></i></a> 
        
             
             </td>

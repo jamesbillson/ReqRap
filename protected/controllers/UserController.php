@@ -33,7 +33,7 @@ class UserController extends Controller
                 /*'users'=>array('@'),*/
             ),
             array('allow', 
-                'actions'=>array('view','actup'),
+                'actions'=>array('view','actup','destroy'),
                 'users'=>array('james@billson.com'),
             ),
             array('allow',  
@@ -75,6 +75,24 @@ class UserController extends Controller
        
         $this->render('welcome');
     }
+    
+    
+       public function actionDestroy($id)
+    {
+           $model=$this->loadModel($id); 
+        //Remove Versions
+        Version::model()->userDestroy($id);
+        
+        // Remove the company    
+        Company::model()->userDestroy($model->company_id);      
+   
+       // Remove User    
+       $model->delete();
+      
+           
+        $this->render('/user/view');
+    }
+    
     
     /**
      * Creates a new model.
