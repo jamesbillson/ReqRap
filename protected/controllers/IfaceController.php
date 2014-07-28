@@ -54,7 +54,8 @@ class IfaceController extends Controller
 
         public function actionView($id) // Note that this is form_id
 	{
-             	$versions=Version::model()->getVersions($id,12,'iface_id');
+             Yii::app()->session['setting_tab']='interfaces';  	
+            $versions=Version::model()->getVersions($id,12,'iface_id');
                 $model=$this->loadModel($versions[0]['id']);
                 //need to load other models here and pass them
                 $types=  Interfacetype::model()->getInterfaceTypes();
@@ -78,6 +79,7 @@ class IfaceController extends Controller
 	{
               $release=Yii::app()->session['release'];
               $project=Yii::app()->session['project'];
+                Yii::app()->session['setting_tab']='interfaces';  	
                 $model= new Iface;
 		
 
@@ -111,7 +113,7 @@ class IfaceController extends Controller
                      $version=Version::model()->getNextNumber($project,12,1,$model->primaryKey,$model->iface_id);   
                    
                 
-                    	$this->redirect(array('/project/view/tab/interfaces'));
+                    	$this->redirect(array('/project/view/'));
 		   } }
 
 		$this->render('create',array(
@@ -132,7 +134,8 @@ class IfaceController extends Controller
 public function actionUpdate($ucid,$id)
 	{
 	    $release=Yii::App()->session['release'];
-            $project=Yii::App()->session['project'];	
+            $project=Yii::App()->session['project'];
+              Yii::app()->session['setting_tab']='interfaces';  	
             $model=$this->loadModel($id);
                 $new= new Iface;
 		
@@ -210,7 +213,7 @@ public function actionaddimage($iface, $id)
                {
                $this->redirect(array('/usecase/view/id/'.$ucid));
                } ELSE {
-               $this->redirect(array('/project/view/tab/interfaces/'));
+               $this->redirect(array('/project/view/'));
                }
                
          }

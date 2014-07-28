@@ -7,7 +7,7 @@
     <div class="span9">
     <h3>Thanks for joining.</h3>
     <h4>Just follow the link in the email and you'll be Reqrap-ing shortly.</h4>
-    We sent you an email to confirm to <strong><?php echo $email; ?></strong> <br />
+    We sent you an email to confirm to <strong><?php echo $model->email; ?></strong> <br />
       <br />
     </div>
 </div>

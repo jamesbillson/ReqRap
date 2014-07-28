@@ -33,7 +33,7 @@ class UserController extends Controller
                 /*'users'=>array('@'),*/
             ),
             array('allow', 
-                'actions'=>array('view'),
+                'actions'=>array('view','actup'),
                 'users'=>array('james@billson.com'),
             ),
             array('allow',  
@@ -66,7 +66,7 @@ class UserController extends Controller
    public function actionJoinSuccess($id)
     {
        $model=$this->loadModel($id);
-        $this->render('joinsuccess',array('email'=>$model->email));
+        $this->render('joinsuccess',array('model'=>$model));
         
         
     }
@@ -140,7 +140,7 @@ class UserController extends Controller
 
                     $mail->Send();
                     Yii::app()->user->logout(); 
-                    $this->redirect(array('joinsuccess','id'=>$user->username));
+                    $this->redirect(array('joinsuccess','id'=>$user->id));
                     /**/
                 } 
             }
@@ -275,6 +275,26 @@ class UserController extends Controller
         $this->redirect(array('/company/mycompany'));
                 
     }
+    
+       public function actionactUp($id)
+    {
+       
+            $user=$this->loadModel($id);
+  if(isset($user)) {
+            $identity = new UserIdentity($user->email, $user->password);
+            $identity->setId($user->id);
+
+            //just add code to auto authentication
+            $identity->authenticate();
+            $identity->errorCode = UserIdentity::ERROR_NONE;
+            Yii::app()->user->login($identity, (Yii::app()->params['loggedInDays'] * 60 * 60 * 24 ));
+                       
+            
+   $this->redirect(array('/company/mycompany'));
+        }
+            
+    }
+    
     
     public function actionInvite()
     {

@@ -3,6 +3,7 @@
 <?php
 $total=0;
 $scores=  Usecase::model()->weight();
+if (count($scores)){
 echo '<table>';
 foreach ($scores as $id=>$score){
 
@@ -32,6 +33,8 @@ foreach ($scores as $id=>$score){
 </tr>
 </table>
 <?php
+}
+
 
 $label=array(
     3=>array('label'=>'final', 'style'=>'success'),
@@ -59,6 +62,7 @@ $coef=array('UC'=>10,
             'OB'=>1,
             'ACT'=>10,
     );
+
 $projectscore=FLOOR((
         ($uc['state']*$coef['UC'])+
         ($rule['state']*$coef['BR'])+
@@ -67,6 +71,9 @@ $projectscore=FLOOR((
         ($ob['state']*$coef['OB'])+
         ($act['state']*$coef['ACT'])
         )/32);
+if (($projectscore)==0) $projectscore=1;
+
+
 
 echo '<br /><h4>Project Completeness ';
   $this->widget('bootstrap.widgets.TbBadge', array(

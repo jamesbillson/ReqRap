@@ -135,6 +135,31 @@ class Interfacetype extends CActiveRecord
     }
     
     
+          public function getInterfacesForType($id)
+    {
+       $project=Yii::App()->session['project'];
+       $release=Yii::App()->session['release'];
+       
+        $sql="SELECT 
+            `i`.*
+            FROM `iface` `i`
+            JOIN `interfacetype` `t`
+            ON `t`.`interfacetype_id`=`i`.`interfacetype_id`
+            JOIN `version` `vi`
+            ON `vi`.`foreign_key`=`i`.`id`
+            JOIN `version` `vt`
+            ON `vt`.`foreign_key`=`t`.`id`
+            WHERE
+            `vi`.`active`=1 AND `vi`.`release`=".$release." AND `vi`.`object`=12
+            AND
+            `vt`.`active`=1 AND `vt`.`release`=".$release." AND `vt`.`object`=13
+            ";
+		$connection=Yii::app()->db;
+		$command = $connection->createCommand($sql);
+		$projects = $command->queryAll();
+               
+		return $projects;
+    }
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);

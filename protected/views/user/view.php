@@ -53,7 +53,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
         </td>  
         
         <td>
-         <a href="/follower/delete?id=<?php echo $item['id'];?>"><i class="icon-remove-sign" rel="tooltip" title="Ignore"></i></a> 
+         <a href="/user/actup?id=<?php echo $item['id'];?>"><i class="icon-bolt" rel="tooltip" title="Ignore"></i></a> 
        
             
             </td>

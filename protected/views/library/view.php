@@ -5,7 +5,7 @@
 $data = Library::model()->findAll('public =1');
 
  
-echo $this->renderPartial('/project/head',array('tab'=>'usecases')); 
+//echo $this->renderPartial('/project/head',array('tab'=>'usecases')); 
 
  
 

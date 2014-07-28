@@ -80,12 +80,12 @@ class Version extends CActiveRecord {
         5 => array('prepend'=>'PA','padding'=>0),
         6 => array('prepend'=>'OB','padding'=>3),
         7 => array('prepend'=>'NONE','padding'=>3),
-        8 => array('prepend'=>'NONE','padding'=>0),
+        8 => array('prepend'=>'Flow','padding'=>0),
         9 => array('prepend'=>'NONE','padding'=>0),
         10 => array('prepend'=>'UC','padding'=>3),// need to handle the Package number
         11 => array('prepend'=>'NONE','padding'=>0),
         12 => array('prepend'=>'UI','padding'=>3),
-        13 => array('prepend'=>'NONE','padding'=>3),
+        13 => array('prepend'=>'Type','padding'=>3),
         14 => array('prepend'=>'NONE','padding'=>0),
         15 => array('prepend'=>'NONE','padding'=>0),
         16 => array('prepend'=>'NONE','padding'=>0),
@@ -844,7 +844,7 @@ class Version extends CActiveRecord {
     }
 
       public function getObject($id, $object) {
-       $sql = "SELECT `r`.id
+       $sql = "SELECT `r`.*
             FROM `" . Version::$objects[$object] . "` `r`
             WHERE 
             `r`.`id`=" . $id;

@@ -75,7 +75,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                 <tr class="odd"> 
              
                     <td>
-                       <a href="/project/view/id/<?php echo $item['id'];?>/tab/documents"><?php echo $item['pname'];?></a> 
+                       <a href="/project/set/id/<?php echo $item['id'];?>"><?php echo $item['pname'];?></a> 
                        
                     </td>
                     <td>

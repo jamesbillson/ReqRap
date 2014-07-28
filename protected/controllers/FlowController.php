@@ -51,11 +51,18 @@ class FlowController extends Controller
 	 */
 	public function actionView($id) // Note that this is form_id
 	{
-             	$versions=Version::model()->getVersions($id,8,'form_id');
-                $model=$this->loadModel($versions[0]['id']);
-                $this->render('view',array('model'=>$model,
-			'versions'=>$versions
+             	$versions=Version::model()->getVersions($id,8);
+                $id=$versions[0]['usecase_id'];
+                
+                Yii::app()->session['setting_tab']='usecases';
+		$versions=Version::model()->getVersions($id,10);
+                $model=Usecase::model()->findbyPK($versions[0]['id']);
+                $package=Package::model()->findbyPK(Version::model()->getVersion($model->package_id,5));
+                
+                $this->render('/usecase/view',array('model'=>$model,
+			'versions'=>$versions,'package'=>$package
         	));
+                
 	}
 	/**
 	 * Creates a new model.

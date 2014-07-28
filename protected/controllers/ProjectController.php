@@ -212,6 +212,8 @@ class ProjectController extends Controller
             Release::model ()->createInitial($project); 
             $release=Release::model()->currentRelease();
            Yii::App()->session['release']=$release;
+           
+          
             
             $initial=array(1=>'Not Classified',2=>'Web interface',3=>'Email');
             for ($case = 1; $case <= 3; $case++) 
@@ -231,7 +233,8 @@ class ProjectController extends Controller
             Actor::model()->createInitial($project);
             Package::model()->createInitial($project);
                // Version::model ()->createInitial($project); 
-            $this->redirect(array('view','id'=>$model->id,'tab'=>'documents'));
+            Yii::App()->session['setting_tab']='usecases';
+            $this->redirect(array('view'));
         }
 
         $this->render('create',array(

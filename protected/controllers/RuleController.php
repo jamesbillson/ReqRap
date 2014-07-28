@@ -49,7 +49,8 @@ class RuleController extends Controller
         
 	public function actionView($id) // Note that this is rule_id
 	{
-             	$versions=Version::model()->getVersions($id,1);
+              Yii::app()->session['setting_tab']='rules';  	 	
+            $versions=Version::model()->getVersions($id,1);
                 $model=$this->loadModel($versions[0]['id']);
                 $this->render('view',array('model'=>$model,
 			'versions'=>$versions
@@ -75,6 +76,7 @@ public function actionpreView($id) // Note that this is rule_id
         
 	public function actionCreate($type, $id)
 	{
+            Yii::app()->session['setting_tab']='rules'; 
 		if ($type==1) {
                     $usecase=Usecase::model()->find('id='.$id);
                     $project=$usecase->package->project->id;
@@ -121,7 +123,7 @@ public function actionpreView($id) // Note that this is rule_id
                 $new= new Rule;
             $release=Yii::App()->session['release'];
             $project=Yii::App()->session['project'];
-            
+        Yii::app()->session['setting_tab']='rules';     
 		if(isset($_POST['Rule']))
 		{
                         

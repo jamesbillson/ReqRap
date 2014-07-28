@@ -199,7 +199,7 @@ class Usecase extends CActiveRecord
         $UC_step_rate=1;
         $UC_rule_rate=3;
         $UC_form_rate=4;
-        
+     $score=array();
         $data = Usecase::model()->getProjectUCs();
         if (count($data)){
                
@@ -223,7 +223,7 @@ class Usecase extends CActiveRecord
                 
         }
        
-            return $score;
+           if(count($score)) return $score;
   
             
         }

@@ -27,18 +27,12 @@ class StepController extends Controller
 	public function accessRules()
 	{
 		return array(
-			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view'),
-				'users'=>array('*'),
-			),
+			
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update','delete','insert'),
+				'actions'=>array('create','update','delete','insert','view'),
 				'users'=>array('@'),
 			),
-			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete'),
-				'users'=>array('admin'),
-			),
+			
 			array('deny',  // deny all users
 				'users'=>array('*'),
 			),
@@ -51,11 +45,24 @@ class StepController extends Controller
 	 */
 	public function actionView($id) // Note that this is form_id
 	{
-             	$versions=Version::model()->getVersions($id,9,'form_id');
-                $model=$this->loadModel($versions[0]['id']);
-                $this->render('view',array('model'=>$model,
-			'versions'=>$versions
+             	$versions=Version::model()->getVersions($id,9);
+                $id=$versions[0]['flow_id'];;
+                
+                $versions=Version::model()->getVersions($id,8);
+                $id=$versions[0]['usecase_id'];
+               
+                  Yii::app()->session['setting_tab']='usecases';
+		$versions=Version::model()->getVersions($id,10);
+                $model=Usecase::model()->findbyPK($versions[0]['id']);
+                $package=Package::model()->findbyPK(Version::model()->getVersion($model->package_id,5));
+                
+                $this->render('/usecase/view',array('model'=>$model,
+			'versions'=>$versions,'package'=>$package
         	));
+                
+                
+                
+                
 	}
 
 	/**
