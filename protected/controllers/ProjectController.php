@@ -96,7 +96,8 @@ class ProjectController extends Controller
     {
       
          $tab=Yii::App()->session['setting_tab'];
-     if (!in_array($tab,array('sections',
+     if (!in_array($tab,array(
+         'sections',
          'objects',
          'actors',
          'usecases',
@@ -108,11 +109,11 @@ class ProjectController extends Controller
          Yii::App()->session['setting_tab']='usecases';
      }
      $id=Yii::app()->session['project'];
-        $model = $this->loadModel($id);
-         $arr=Actor::model()->getProjectActors();
-              $this->generateTree($str, $arr, -1);
+     $model = $this->loadModel($id);
+     $arr=Actor::model()->getProjectActors();
+     $this->generateTree($str, $arr, -1);
               
-        $this->render('view',array(
+     $this->render('view',array(
                 'model'=>$model,'actorstring'=>$str ));
 
     }

@@ -72,7 +72,7 @@
                               ?>
                         <td colspan="2">
                         <?php if($edit){ ?>
-                        <a href="/flow/create/start/<?php echo $step['step_id'];?>/id/<?php echo $model->usecase_id;?>"><i class="icon-random" rel="tooltip" title="Start Alternate Flow Here"></i></a>
+                        <a href="/flow/create/start/<?php echo $step['step_id'];?>/id/<?php echo $model->usecase_id;?>"><i class="icon-code-fork icon-2x" rel="tooltip" title="Start Alternate Flow Here"></i></a>
                         <?php } ?> 
                         </td>    
                         </tr>

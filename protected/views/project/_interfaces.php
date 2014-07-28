@@ -1,7 +1,7 @@
  
 <?php 
  $edit=(Yii::App()->session['edit']==1)?TRUE:FALSE;
-Yii::App()->session['setting_tab']='interfaces';
+
         
 $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
     'title' => 'Interfaces',
