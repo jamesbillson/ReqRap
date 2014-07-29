@@ -101,7 +101,8 @@ endif;
 
 
 <br />
-<img src="/images/<?php echo $package['id'] ?>test.png">
+
+<img src="<?php echo  Yii::app()->basePath.'/../images/'.$package['id'] ?>test.png">
 
  <?php  // endforeach;
   //  endif; ?>  
