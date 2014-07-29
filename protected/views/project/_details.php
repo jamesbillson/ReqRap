@@ -60,7 +60,15 @@ $owner=(Yii::App()->session['owner']==1)?TRUE:FALSE;
           
       <a href="/library/create/id/<?php echo $item['id'];?>"><i class="icon-book text-success" rel="tooltip" title="Add to library"></i></a> 
       <a href="/release/copy/id/<?php echo $item['id'];?>"><i class="icon-copy" rel="tooltip" title="Copy Release to new project"></i></a>
-      <a href="/release/delete/id/<?php echo $item['id'];?>"><i class="icon-remove-sign text-error" rel="tooltip" title="Remove"></i></a> 
+     
+        <?php
+       echo CHtml::link(
+    '<i class="icon-remove-sign text-error" rel="tooltip" title="Delete Release"></i>',
+     array('/release/delete','id'=>$item['id']),
+     array('confirm' => 'This will permanently delete this release, there is NO undo.  Are you sure?')
+);
+    ?>
+
     
              <?php } 
           

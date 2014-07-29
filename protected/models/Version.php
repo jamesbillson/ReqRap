@@ -21,6 +21,27 @@ class Version extends CActiveRecord {
         17 => 'category',
         18 => 'simple',
     );
+    
+      public static $object_labels = array(1 => 'Business Rule',
+        2 => 'Form',
+        3 => 'Form Property',
+        4 => 'Actor',
+        5 => 'Package',
+        6 => 'Business Object',
+        7 => 'Object Property',
+        8 => 'Flow',
+        9 => 'Step',
+        10 => 'Use Case',
+        11 => 'Photo',
+        12 => 'Interface',
+        13 => 'Interface Type',
+        14 => 'Related Form',
+        15 => 'Related Interface',
+        16 => 'Related Rule',
+        17 => 'Category',
+        18 => 'Simple Requirement',
+    );
+    
      public static $code = array(
         1 => 'BR',
         2 => 'UF',
@@ -793,7 +814,7 @@ class Version extends CActiveRecord {
 
         $sql = "DELETE 
                 FROM
-                `Version`
+                `version`
                 WHERE
                 `create_user`=".$id;
 
@@ -976,7 +997,7 @@ class Version extends CActiveRecord {
     public function rollback($object_id, $object, $id) 
                 {
         $release=Yii::App()->session['release'];
-        
+       
         //SET ALL Existing TO INACTIVE
         $sql = "UPDATE `version`
                   Set `active`=0
@@ -986,6 +1007,7 @@ class Version extends CActiveRecord {
                   `foreign_id`=" . $object_id . "
                   AND
                   `release`=" . $release;
+        
         $connection = Yii::app()->db;
         $command = $connection->createCommand($sql);
         $command->execute();
@@ -998,14 +1020,32 @@ class Version extends CActiveRecord {
                   create_user=" . Yii::app()->user->id . "
                   WHERE
                   `id`=" . $id;
-        
-              
-        
+               
         $connection = Yii::app()->db;
         $command = $connection->createCommand($sql);
         $command->execute();
     }
 
+      public function rollbackInactivate($object_id, $object) 
+                {
+        $release=Yii::App()->session['release'];
+       
+        //SET ALL Existing TO INACTIVE
+        $sql = "UPDATE `version`
+                  Set `active`=0
+                  WHERE
+                  `object`=" . $object . "
+                  AND
+                  `foreign_id`=" . $object_id . "
+                  AND
+                  `release`=" . $release;
+        
+        $connection = Yii::app()->db;
+        $command = $connection->createCommand($sql);
+        $command->execute();
+
+     
+    }
     
   
     

@@ -337,9 +337,429 @@ class Usecase extends CActiveRecord
 		$projects = $command->queryAll();
 		return $projects;
     }
-        
     
+    
+            public function getHistory($id)
+    {
+         
+$history=array();
+$data=Usecase::model()->getUsecaseVersions($id);
+foreach($data as $uc){
+
+
+$history[$uc['versionid']]=array(
+    'usecase_id'=>$uc['usecase_id'],
+    'object_id'=>$uc['usecase_id'],
+     'name'=>$uc['name'],
+    'detail'=>'',
+    'object'=>10,
+    'number'=>$uc['number'],
+     'action'=>$uc['action'],
+     'date'=>$uc['create_date'],
+        'firstname'=>$uc['firstname'],
+    'lastname'=>$uc['lastname'],
+    'active'=>$uc['active'],
+     );
+
+    $flows=Usecase::model()->getFlowVersions($uc['usecase_id']);
+    foreach($flows as $flow){
+
+
+$history[$flow['versionid']]=array(
+    'object_id'=>$flow['flow_id'],
+    'usecase_id'=>$uc['usecase_id'],
+     'name'=>$flow['name'],
+    'detail'=>'',
+    'object'=>8,
+    'number'=>$flow['number'],
+     'action'=>$flow['action'],
+     'date'=>$flow['create_date'],
+        'firstname'=>$flow['firstname'],
+    'lastname'=>$flow['lastname'],
+     'active'=>$flow['active'],
+     );
+
+     $steps=Usecase::model()->getStepVersions($flow['flow_id']);
+    foreach($steps as $step){
+
+    
+$history[$step['versionid']]=array(
+    'object_id'=>$step['step_id'],
+    'usecase_id'=>$uc['usecase_id'],
+    'name'=>$step['name'],
+    'detail'=>$step['detail'],
+    'object'=>9,
+    'number'=>$step['number'],
+    'action'=>$step['action'],
+    'date'=>$step['create_date'],
+    'firstname'=>$step['firstname'],
+    'lastname'=>$step['lastname'],
+     'active'=>$step['active'],
+     );
+
+ 
+    
+    
+        $stepifaces=Usecase::model()->getStepifaceVersions($flow['flow_id']);
+        foreach($stepifaces as $stepiface){
+        $history[$stepiface['versionid']]=array(
+            'object_id'=>$stepiface['stepiface_id'],
+            'usecase_id'=>$uc['usecase_id'],
+            'name'=>$stepiface['name'],
+            'detail'=>$stepiface['detail'],
+            'object'=>15,
+            'number'=>$stepiface['number'],
+            'action'=>$stepiface['action'],
+            'date'=>$stepiface['create_date'],
+            'firstname'=>$stepiface['firstname'],
+            'lastname'=>$stepiface['lastname'],
+             'active'=>$stepiface['active'],
+             );
+
+            }
+
+
+        $steprules=Usecase::model()->getStepruleVersions($flow['flow_id']);
+        foreach($steprules as $steprule){
+        $history[$steprule['versionid']]=array(
+            'object_id'=>$steprule['steprule_id'],
+            'usecase_id'=>$uc['usecase_id'],
+            'name'=>$steprule['name'],
+            'detail'=>$steprule['detail'],
+            'object'=>16,
+            'number'=>$steprule['number'],
+            'action'=>$steprule['action'],
+            'date'=>$steprule['create_date'],
+            'firstname'=>$steprule['firstname'],
+            'lastname'=>$steprule['lastname'],
+             'active'=>$steprule['active'],
+             );
+
+            }
+
+
+
+        $stepforms=Usecase::model()->getStepformVersions($flow['flow_id']);
+        foreach($stepforms as $stepform){
+       $history[$stepform['versionid']]=array(
+            'object_id'=>$stepform['stepform_id'],
+            'usecase_id'=>$uc['usecase_id'],
+            'name'=>$stepform['name'],
+            'detail'=>'',
+            'object'=>14,
+            'number'=>$stepform['number'],
+            'action'=>$stepform['action'],
+            'date'=>$stepform['create_date'],
+            'firstname'=>$stepform['firstname'],
+            'lastname'=>$stepform['lastname'],
+             'active'=>$stepform['active'],
+             );
+
+            }
+    
+    
+    }
+    
+    
+    
+    
+    
+    }
+}
+            
+            
+		return $history;
+    }
         
+      public function getUseCaseVersions($id)
+    {
+          $release=Yii::App()->session['release'];
+          $sql="
+            SELECT `u`.`name`,
+           `u`.`usecase_id`,
+           `vu`.`id` as versionid,
+           `vu`.`number` as number,
+            `vu`.`action`,
+            `vu`.`active`,
+            `vu`.`create_date`,
+            `c`.`firstname` as `firstname`,
+            `c`.`lastname` as `lastname`
+
+            FROM  `step` `s`
+            JOIN `flow` `f`
+            ON `f`.`flow_id`=`s`.`flow_id`
+            JOIN `usecase` `u`
+            ON `u`.`usecase_id`=`f`.`usecase_id`
+            JOIN `version` `vs`
+            ON `vs`.`foreign_key`=`s`.`id`
+            JOIN `version` `vf`
+            ON `vf`.`foreign_key`=`f`.`id`
+            JOIN `version` `vu`
+            ON `vu`.`foreign_key`=`u`.`id`      
+            JOIN `user` `c`
+            ON `vu`.`create_user`=`c`.`id`
+            WHERE 
+            `vs`.`object`=9 AND `vs`.`release`=".$release." AND                  
+            `vf`.`object`=8 AND  `vf`.`release`=".$release."  AND  
+            `vu`.`object`=10 AND `vu`.`release`=".$release."  AND  
+            `u`.`usecase_id`=".$id."
+             group by `versionid`";
+        
+		$connection=Yii::app()->db;
+		$command = $connection->createCommand($sql);
+		$projects = $command->queryAll();
+		return $projects;
+    }
+    
+
+    
+      public function getFlowVersions($id)
+    {
+          $release=Yii::App()->session['release'];
+          $sql="
+             SELECT `f`.`name` as name,
+            `f`.`flow_id`,
+            `vf`.`action`,
+            `vf`.`active`,
+            `vf`.`number` as number,
+            `vf`.`create_date`,
+            `vs`.`create_user`,
+            `vf`.`id` as versionid,
+            `c`.`firstname` as `firstname`,
+            `c`.`lastname` as `lastname`
+          
+            FROM  `step` `s`
+            JOIN `flow` `f`
+            ON `f`.`flow_id`=`s`.`flow_id`
+            JOIN `usecase` `u`
+            ON `u`.`usecase_id`=`f`.`usecase_id`
+            JOIN `version` `vs`
+            ON `vs`.`foreign_key`=`s`.`id`
+            JOIN `version` `vf`
+            ON `vf`.`foreign_key`=`f`.`id`
+            JOIN `version` `vu`
+            ON `vu`.`foreign_key`=`u`.`id` 
+            JOIN `user` `c`
+            ON `vf`.`create_user`=`c`.`id`
+            WHERE 
+            `vs`.`object`=9 AND `vs`.`release`=".$release." AND                  
+            `vf`.`object`=8 AND  `vf`.`release`=".$release."  AND  
+            `vu`.`object`=10 AND `vu`.`release`=".$release."  AND  
+            `f`.`usecase_id`=".$id."
+             group by `versionid`";
+        
+		$connection=Yii::app()->db;
+		$command = $connection->createCommand($sql);
+		$projects = $command->queryAll();
+		return $projects;
+    }
+    
+    
+    
+        public function getStepVersions($id)
+    {
+          $release=Yii::App()->session['release'];
+          $sql="
+             SELECT `s`.`text` as name,
+             `s`.`result` as detail,
+             `s`.`step_id`,
+            `vs`.`action`,
+            `vs`.`active`,
+            `vs`.`number` as number,
+            `vs`.`create_date`,
+            `vs`.`create_user`,
+            `vs`.`id` as versionid,
+            `c`.`firstname` as `firstname`,
+            `c`.`lastname` as `lastname`
+
+            FROM  `step` `s`
+            JOIN `flow` `f`
+            ON `f`.`flow_id`=`s`.`flow_id`
+            JOIN `usecase` `u`
+            ON `u`.`usecase_id`=`f`.`usecase_id`
+            JOIN `version` `vs`
+            ON `vs`.`foreign_key`=`s`.`id`
+            JOIN `version` `vf`
+            ON `vf`.`foreign_key`=`f`.`id`
+            JOIN `version` `vu`
+            ON `vu`.`foreign_key`=`u`.`id`
+            JOIN `user` `c`
+            ON `vs`.`create_user`=`c`.`id`
+            WHERE 
+            `vs`.`object`=9 AND `vs`.`release`=".$release." AND                  
+            `vf`.`object`=8 AND  `vf`.`release`=".$release."  AND  
+            `vu`.`object`=10 AND `vu`.`release`=".$release."  AND  
+            `s`.`flow_id`=".$id."
+             group by `versionid`";
+        
+		$connection=Yii::app()->db;
+		$command = $connection->createCommand($sql);
+		$projects = $command->queryAll();
+		return $projects;
+    }
+    
+    
+        public function getStepifaceVersions($id)
+    {
+          $release=Yii::App()->session['release'];
+          $sql="
+             SELECT `if`.`name` as name,
+             `if`.`text` as detail,
+             `si`.`stepiface_id`,
+            `vsi`.`action`,
+            `vsi`.`active`,
+            `vsi`.`number` as number,
+            `vsi`.`create_date`,
+            `vsi`.`create_user`,
+            `vsi`.`id` as versionid,
+            `c`.`firstname` as `firstname`,
+            `c`.`lastname` as `lastname`
+
+            FROM  `stepiface` `si`
+            JOIN `step` `s`
+            ON `s`.`step_id`=`si`.`step_id`
+            JOIN `iface` `if`
+            ON `if`.`iface_id`=`si`.`iface_id`
+            JOIN `flow` `f`
+            ON `f`.`flow_id`=`s`.`flow_id`
+            JOIN `usecase` `u`
+            ON `u`.`usecase_id`=`f`.`usecase_id`
+            JOIN `version` `vs`
+            ON `vs`.`foreign_key`=`s`.`id`
+            JOIN `version` `vf`
+            ON `vf`.`foreign_key`=`f`.`id`
+            JOIN `version` `vu`
+            ON `vu`.`foreign_key`=`u`.`id`
+            JOIN `version` `vsi`
+            ON `vsi`.`foreign_key`=`si`.`id`
+            JOIN `version` `vif`
+            ON `vif`.`foreign_key`=`if`.`id`      
+            JOIN `user` `c`
+            ON `vsi`.`create_user`=`c`.`id`
+            WHERE 
+            `vs`.`object`=9 AND `vs`.`release`=".$release." AND                  
+            `vf`.`object`=8 AND  `vf`.`release`=".$release."  AND  
+            `vu`.`object`=10 AND `vu`.`release`=".$release."  AND
+            `vsi`.`object`=15 AND `vsi`.`release`=".$release."  AND 
+            `vif`.`object`=12 AND `vif`.`release`=".$release."  AND    
+            `si`.`step_id`=".$id."
+             group by `versionid`";
+        
+		$connection=Yii::app()->db;
+		$command = $connection->createCommand($sql);
+		$projects = $command->queryAll();
+		return $projects;
+    }
+    
+
+        public function getStepruleVersions($id)
+    {
+          $release=Yii::App()->session['release'];
+          $sql="
+              SELECT `r`.`name` as name,
+             `r`.`text` as detail,
+             `sr`.`steprule_id`,
+            `vsr`.`action`,
+            `vsr`.`active`,
+            `vsr`.`number` as number,
+            `vsr`.`create_date`,
+            `vsr`.`create_user`,
+            `vsr`.`id` as versionid,
+            `c`.`firstname` as `firstname`,
+            `c`.`lastname` as `lastname`
+
+            FROM  `steprule` `sr`
+            JOIN `step` `s`
+            ON `s`.`step_id`=`sr`.`step_id`
+            JOIN `rule` `r`
+            ON `r`.`rule_id`=`sr`.`rule_id`
+            JOIN `flow` `f`
+            ON `f`.`flow_id`=`s`.`flow_id`
+            JOIN `usecase` `u`
+            ON `u`.`usecase_id`=`f`.`usecase_id`
+            JOIN `version` `vs`
+            ON `vs`.`foreign_key`=`s`.`id`
+            JOIN `version` `vf`
+            ON `vf`.`foreign_key`=`f`.`id`
+            JOIN `version` `vu`
+            ON `vu`.`foreign_key`=`u`.`id`
+            JOIN `version` `vsr`
+            ON `vsr`.`foreign_key`=`sr`.`id`
+            JOIN `version` `vr`
+            ON `vr`.`foreign_key`=`r`.`id`      
+            JOIN `user` `c`
+            ON `vsr`.`create_user`=`c`.`id`
+            WHERE 
+            `vs`.`object`=9 AND `vs`.`release`=".$release." AND                  
+            `vf`.`object`=8 AND  `vf`.`release`=".$release."  AND  
+            `vu`.`object`=10 AND `vu`.`release`=".$release."  AND
+            `vsr`.`object`=16 AND `vsr`.`release`=".$release."  AND 
+            `vr`.`object`=1 AND `vr`.`release`=".$release."  AND    
+            `sr`.`step_id`=".$id."
+             group by `versionid`";
+        
+		$connection=Yii::app()->db;
+		$command = $connection->createCommand($sql);
+		$projects = $command->queryAll();
+		return $projects;
+    }
+    
+    
+        public function getStepformVersions($id)
+    {
+          $release=Yii::App()->session['release'];
+          $sql="
+             SELECT 
+            `fm`.`name` as name,
+            
+            `sf`.`stepform_id`,
+            `vsf`.`action`,
+            `vsf`.`active`,
+            `vsf`.`number` as number,
+            `vsf`.`create_date`,
+            `vsf`.`create_user`,
+            `vsf`.`id` as versionid,
+            `c`.`firstname` as `firstname`,
+            `c`.`lastname` as `lastname`
+
+            FROM  `stepform` `sf`
+            JOIN `step` `s`
+            ON `s`.`step_id`=`sf`.`step_id`
+            JOIN `form` `fm`
+            ON `fm`.`form_id`=`sf`.`form_id`
+            JOIN `flow` `f`
+            ON `f`.`flow_id`=`s`.`flow_id`
+            JOIN `usecase` `u`
+            ON `u`.`usecase_id`=`f`.`usecase_id`
+            JOIN `version` `vs`
+            ON `vs`.`foreign_key`=`s`.`id`
+            JOIN `version` `vf`
+            ON `vf`.`foreign_key`=`f`.`id`
+            JOIN `version` `vu`
+            ON `vu`.`foreign_key`=`u`.`id`
+            JOIN `version` `vsf`
+            ON `vsf`.`foreign_key`=`sf`.`id`
+            JOIN `version` `vfm`
+            ON `vfm`.`foreign_key`=`fm`.`id`      
+            JOIN `user` `c`
+            ON `vsf`.`create_user`=`c`.`id`
+            WHERE 
+            `vs`.`object`=9 AND `vs`.`release`=".$release." AND                  
+            `vf`.`object`=8 AND  `vf`.`release`=".$release."  AND  
+            `vu`.`object`=10 AND `vu`.`release`=".$release."  AND
+            `vsf`.`object`=14 AND `vsf`.`release`=".$release."  AND 
+            `vfm`.`object`=2 AND `vfm`.`release`=".$release."  AND    
+            `sf`.`step_id`=".$id."
+             group by `versionid`";
+        
+		$connection=Yii::app()->db;
+		$command = $connection->createCommand($sql);
+		$projects = $command->queryAll();
+		return $projects;
+    }    
+    
+    
+    
            public function getPackageUsecases($id)// THIS IS package_id as used in 'Move' 
     {
             $project=Yii::app()->session['project'];

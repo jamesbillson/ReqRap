@@ -40,7 +40,15 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                     <td>
                   <?php if($edit){ ?>
                    <a href="/package/update/id/<?php echo $item['id'];?>"><i class="icon-pencil" rel="tooltip" title="Edit Details"></i></a>
-                   <a href="/package/delete/id/<?php echo $item['id'];?>"><i class="icon-remove-sign text-error" rel="tooltip" title="Delete"></i></a>
+                   
+ 
+                      <?php
+       echo CHtml::link(
+    '<i class="icon-remove-sign text-error" rel="tooltip" title="Delete Package"></i>',
+     array('/package/delete','id'=>$item['id']),
+     array('confirm' => 'This will delete this package and all its usecases.  Are you sure?')
+);
+    ?>
                    <a href="/usecase/create/id/<?php echo $item['id'];?>"><i class="icon-plus-sign-alt" rel="tooltip" title="Add another usecase"></i></a> 
                    <a href="/package/history/id/<?php echo $item['package_id'];?>"><i class="icon-calendar" rel="tooltip" title="Version history"></i></a> 
                   

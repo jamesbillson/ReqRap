@@ -173,7 +173,7 @@ class Company extends CActiveRecord
 
         $sql = "DELETE 
                 FROM
-                `Company`
+                `company`
                 WHERE
                 `id`=".$id;
 

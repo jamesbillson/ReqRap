@@ -19,7 +19,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
     array(
         'class' => 'bootstrap.widgets.TbButton',
         'type' => 'primary', // '', 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
-        'label'=> 'Add Application',
+        'label'=> 'Add Project',
         'url'=>array('project/create')
     )),
 ));
@@ -53,8 +53,18 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                     </td>
                     
                     <td>
-                        <a href="/project/delete?id=<?php echo $item['id'];?>"><i class="icon-remove-sign text-error" rel="tooltip" title="Delete Application"></i></a> 
-                  <a href="/project/update?id=<?php echo $item['id'];?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
+                        <?php
+       echo CHtml::link(
+    '<i class="icon-remove-sign text-error" rel="tooltip" title="Delete Application"></i>',
+     array('/project/delete','id'=>$item['id']),
+     array('confirm' => 'This will permanently delete this project, there is NO undo.  Are you sure?')
+);
+    ?>
+                        
+                        
+                        
+                        
+                       <a href="/project/update?id=<?php echo $item['id'];?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
                 
                     </td>
                 </tr>
@@ -78,9 +88,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                        <a href="/project/set/id/<?php echo $item['id'];?>"><?php echo $item['pname'];?></a> 
                        
                     </td>
-                    <td>
-                        <a href="/project/delete?id=<?php echo $item['id'];?>"><i class="icon-remove-sign text-error" rel="tooltip" title="Remove/Uninvite"></i></a>
-                    </td>
+                   
                 </tr>
                <?php endforeach?>
 

@@ -11,7 +11,7 @@ if($model->company->logo_id!=''){
     $src = Yii::app()->easyImage->thumbSrcOf(
     Yii::app()->params['photo_folder'].$model->company->logo_id, 
     array('resize' => array('width' => 150))); 
-}
+} ELSE {$src='';}
 
 ?>
 <h1>Requirements Model</h1>

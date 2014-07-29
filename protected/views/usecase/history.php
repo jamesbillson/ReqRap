@@ -3,46 +3,60 @@ echo $this->renderPartial('/project/head',array('tab'=>'details'));
 ?>    
 <h3>Version History</h3>    
    <?php $collapse = $this->beginWidget('bootstrap.widgets.TbCollapse'); ?>
-   <?php if (count($versions)){?>
-   <?php foreach($versions as $item) {
-       
-    $package=Package::model()->findbyPK(Version::model()->getVersion($item['package_id'],5));   
-       
-       ?>   
-<div class="accordion-group">
+ <?php 
+
+ 
+
+$history=Usecase::model()->getHistory($model->usecase_id);
+krsort($history);
+?>
+   
+
+<?php
+foreach($history as $version=>$item){
+?>
+ <div class="accordion-group">
         <div class="accordion-heading">
             <table>
-                <tr>
-                    <td>
-                <?php if ($item['active'] != 1 && $item['action']!=3){    ?> 
-                <a href="/version/rollback/id/<?php echo $item['versionid'];?>"><i class="icon-repeat" rel="tooltip" data-placement="right" title="Roll Back to this Version"></i></a> 
+                <tr><td>
+                <?php if($item['active']==0){  ?>
+                <a href="/usecase/rollback/uc/<?php echo $item['usecase_id'];?>/id/<?php echo $version;?>">
+                <i class="icon-repeat" rel="tooltip" data-placement="right" title="Roll Back to this Version"></i></a> 
                 <?php  } ELSE { ?> 
                 <i class="icon-circle-arrow-right" rel="tooltip" data-placement="right" title="Current Version"></i> 
                 <?php   } ?>  
-               </td>
-               <td>
+                </td>
+                <td width="120px">
+                 <?php if(in_array($item['object'],array(9,10,15,16))){  ?>        
                 <a class="accordion-toggle" data-toggle="collapse"
-               data-parent="#accordion<?php echo $item['ver_numb']; ?>" href="#collapse<?php echo $item['ver_numb']; ?>">
-                Change #<?php echo $item['ver_numb']; ?> </a>
-                </td>
-                <td>
-            
-                <?php echo $item['create_date']; ?> 
-                <?php echo $item['firstname'].' '.$item['lastname']; ?> 
-                </td>
-                <td> 
-                Action:  <?php echo Version::$actions[$item['action']]; ?>   
-                </td>
-                </tr>
-            </table>   
-        </div>
-        <div id="collapse<?php echo $item['ver_numb']; ?>" class="accordion-body collapse">
+                data-parent="#accordion<?php echo $version; ?>" href="#collapse<?php echo $version; ?>">Change #<?php echo $item['number']; ?></a></td>
+                <?php  } ELSE { ?> <span class="accordion-toggle">
+                 Change #<?php echo $item['number']; ?></span>
+                 </td>
+                <?php   } ?>
+                <td><?php echo Version::$object_labels[$item['object']]; ?></td> 
+                <td><?php echo Version::$actions[$item['action']] ?></td>
+                <td><?php echo $item['date']; ?></td>
+                <td><?php echo $item['firstname'].' '.$item['lastname']; ?></td>
+           
+    
+
+
+    </tr>
+ </table>
+ </div>
+        <div id="collapse<?php echo $version; ?>" class="accordion-body collapse">
             <div class="accordion-inner">
-                <strong><?php echo $item['name']; ?></strong><br />
-                <strong>Description: </strong><?php echo $item['description']; ?><br />
-                <strong>Package: </strong><?php echo $package['name']; ?><br />    
+                <strong>Details</strong><br />
+                <?php echo $item['name']; ?><br />
+                
+                <?php echo $item['detail']; ?><br />    
             </div>
         </div>
     </div>
-  <?php } } ?>
-<?php $this->endWidget(); ?>
+              
+<?php
+}
+$this->endWidget();
+   
+?>

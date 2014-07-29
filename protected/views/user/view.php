@@ -54,7 +54,15 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
         
         <td>
          <a href="/user/actup?id=<?php echo $item['id'];?>"><i class="icon-user" rel="tooltip" title="Act as this User"></i></a> 
-         <a href="/user/destroy?id=<?php echo $item['id'];?>"><i class="icon-trash" rel="tooltip" title="Remove this User and all their assets"></i></a> 
+       
+            <?php
+       echo CHtml::link(
+    '<i class="icon-trash" rel="tooltip" title="Remove this User and all their assets"></i>',
+     array('/user/destroy','id'=>$item['id']),
+     array('confirm' => 'This will permanently delete this user, there is NO undo.  Are you sure?')
+);
+    ?>
+         </i></a> 
        
             
             </td>

@@ -83,7 +83,8 @@ class UserController extends Controller
         //Remove Versions
         Version::model()->userDestroy($id);
         
-        // Remove the company    
+        // Remove the company   
+        if($model->company_id>0)
         Company::model()->userDestroy($model->company_id);      
    
        // Remove User    

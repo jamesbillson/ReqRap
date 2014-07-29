@@ -32,7 +32,7 @@ class UsecaseController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('diff','packchange','dynamicsteps','create','update','delete','move','history'),
+				'actions'=>array('rollback','diff','packchange','dynamicsteps','create','update','delete','move','history'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -309,6 +309,123 @@ class UsecaseController extends Controller
       	$this->redirect(array('/project/view/'));
 	}
 
+        public function actionRollback($uc,$id)
+	{
+	
+        $release=Yii::app()->session['release'];
+        $steps=array();
+        $flows=array();
+        $steprules=array();
+        $stepifaces=array();
+        $stepforms=array();
+        $usecases=array();
+        $history=Usecase::model()->getHistory($uc);
+        krsort($history);
+        
+      //  echo '<pre>';
+      //  print_r($history);
+       // echo '</pre>';
+        
+      
+        foreach ($history as $version=>$line){
+            
+             Version::model()->rollbackInactivate($line['object_id'], $line['object']);
+            
+         //  echo 'now testing this id '.$id.' is greater than Version: '.$version.' object is '.$line['object'].' <br><br>'; 
+       // echo '<br>Flows: ';
+       // print_r($flows);
+        //echo '<br>';
+       // echo '<br>Steps: ';
+       // print_r($steps);
+       // echo '<br>';
+       // echo '<br>Use Cases: ';
+       // print_r($usecases);
+       // echo '<br><br>';
+        //  if ($version<=$id && $line['object']=='Flow' ){
+        //echo 'matching <br>';
+            
+            
+            if ($version<=$id && $line['object']==8 && !isset($flows[$line['object_id']])){
+                   $flows[$line['object_id']]=$version;
+             }
+         
+            if ($version<=$id && $line['object']==9 && !isset($steps[$line['object_id']])){
+                  $steps[$line['object_id']]=$version;        
+            }
+           
+            if ($version<=$id && $line['object']==10 && !isset($usecases[$line['object_id']])){
+                $usecases[$line['object_id']]=$version;
+            }
+            
+             if ($version<=$id && $line['object']==14 && !isset($flows[$line['object_id']])){
+                   $stepforms[$line['object_id']]=$version;
+             }
+             
+              if ($version<=$id && $line['object']==15 && !isset($flows[$line['object_id']])){
+                   $stepifaces[$line['object_id']]=$version;
+             }
+             
+              if ($version<=$id && $line['object']==16 && !isset($flows[$line['object_id']])){
+                   $steprules[$line['object_id']]=$version;
+             }
+             
+        }
+      /* 
+        echo '<pre>';
+        print_r($steps);
+        echo'</pre>';
+
+        echo '<pre>';
+        print_r($flows);
+        echo'</pre>';
+        
+        echo '<pre>';
+        print_r($usecases);
+        echo'</pre>';
+        
+        */     
+         
+        foreach ($steps as $instance=>$versionid){
+           //  echo  'Version::model()->rollback('.$instance.', 9, '.$versionid.' )<br> '; 
+            Version::model()->rollback($instance, 9, $versionid); 
+        }
+        
+        foreach ($flows as $instance=>$versionid){
+          //   echo  'Version::model()->rollback('.$instance.', 8, '.$versionid.' )<br> '; 
+            Version::model()->rollback($instance, 8, $versionid); 
+        }
+        
+        foreach ($usecases as $instance=>$versionid){
+          //   echo  'Version::model()->rollback('.$instance.', 10, '.$versionid.' )<br> '; 
+            Version::model()->rollback($instance, 10, $versionid); 
+        }
+        
+         foreach ($stepforms as $instance=>$versionid){
+          //   echo  'Version::model()->rollback('.$instance.', 10, '.$versionid.' )<br> '; 
+            Version::model()->rollback($instance, 14, $versionid); 
+        }
+        
+         foreach ($stepifaces as $instance=>$versionid){
+          //   echo  'Version::model()->rollback('.$instance.', 10, '.$versionid.' )<br> '; 
+            Version::model()->rollback($instance, 15, $versionid); 
+        }
+        
+         foreach ($steprules as $instance=>$versionid){
+          //   echo  'Version::model()->rollback('.$instance.', 10, '.$versionid.' )<br> '; 
+            Version::model()->rollback($instance, 16, $versionid); 
+        }
+        
+        
+        
+        
+        
+        
+        
+        
+     	$this->redirect(array('/usecase/history/id/'.$uc));
+        }
+        
+        
         public function actionDynamicSteps()
 	{
 	$id=$_POST['usecase_id'];
