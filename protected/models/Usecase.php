@@ -955,6 +955,70 @@ $history[$step['versionid']]=array(
 		return $projects;
     }   
     
+       public function getAllReleaseUCs()
+    {
+        
+      
+   $release=Yii::App()->session['release'];
+
+         $sql="SELECT 
+            `u`.*,
+            `p`.`name` as packname,
+            `p`.`id` as packid,
+            `p`.`number` as packnumber,
+            `s`.`id` as steps,
+            `vu`.`create_date` as create_date
+           
+            FROM `package` `p`
+
+            JOIN  `usecase` `u`
+            on `p`.`package_id`=`u`.`package_id`
+            
+            JOIN `project` `r`
+            ON `r`.`id` =`p`.`project_id`
+            
+            Join `flow` `f`
+            ON `u`.`usecase_id`=`f`.`usecase_id`
+            
+            Join `step` `s`
+            ON `f`.`flow_id`=`s`.`flow_id`
+
+            JOIN `version` `vu`
+            ON `vu`.`foreign_key`=`u`.`id`
+            
+            JOIN `version` `v2`
+            ON `v2`.`foreign_key`=`p`.`id`
+            
+            JOIN `version` `v3`
+            ON `v3`.`foreign_key`=`s`.`id`
+            
+            JOIN `version` `v4`
+            ON `v4`.`foreign_key`=`f`.`id`
+            WHERE 
+            
+            `vu`.`object`=10 
+               AND `vu`.`release`=".$release." 
+            AND
+            `v2`.`object`=5  
+               AND `v2`.`release`=".$release." 
+            AND
+            `v3`.`object`=9  
+                AND `v3`.`release`=".$release." 
+            AND
+            `v4`.`object`=8  
+              AND `v4`.`release`=".$release." 
+            
+                GROUP BY `u`.`id`
+                ORDER BY 
+             `p`.`number` ASC,              
+             `u`.`number` ASC";
+  
+		$connection=Yii::app()->db;
+		$command = $connection->createCommand($sql);
+		$projects = $command->queryAll();
+		return $projects;
+    }   
+    
     
                 public function getReleaseUCs($release)
     {

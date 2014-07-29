@@ -141,6 +141,13 @@ class Version extends CActiveRecord {
         2 => 'update',
         3 => 'delete');
 
+      public static $action_labels = array(1 => 'Create',
+        2 => 'Update',
+        3 => 'Delete');
+     public static $action_types = array(1 => 'success',
+        2 => 'warning',
+        3 => 'important');
+    
     public function tableName() {
         return 'version';
     }

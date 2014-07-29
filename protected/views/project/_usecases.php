@@ -6,11 +6,36 @@ $data = Package::model()->getPackages($model->id);
 
 
 $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
-    'title' => 'Usecases',
+    'title' => 'Usecases by Package',
     'headerIcon' => 'icon-film',
     // when displaying a table, if we include bootstra-widget-table class
     // the table will be 0-padding to the box
     'htmlOptions' => array('class'=>'bootstrap-widget-table'),
+    
+    'headerButtons' => array(
+              
+     array(
+            'class' => 'bootstrap.widgets.TbButton',
+            'type' => 'link', // '', 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
+            'icon'=> 'calendar',
+            'visible'=>$edit,
+            'url'=>'/usecase/deleted',
+             ),
+        /*
+      array(
+            'class' => 'bootstrap.widgets.TbButton',
+            'type'=>'link',
+            'icon'=> 'question-sign',
+            'url'=>'/help/popview/scope/usecase',
+            'htmlOptions' => array('id' => 'popup',),
+    ),
+          */        
+)
+    
+    
+    
+    
+    
 ));
     if (count($data)): ?>
         <table class="table">
@@ -26,7 +51,10 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
             </thead>
             
             <tbody>
-            <?php $pack_counter=0;foreach($data as $item): ?>
+            <?php $pack_counter=0;foreach($data as $item):
+              $usecases = Usecase::model()->getPackageUsecases($item['package_id']); // get the requirements with answers
+    
+             ?>
               
                 
                 <tr class="odd">  
@@ -43,12 +71,23 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                    
  
                       <?php
-       echo CHtml::link(
-    '<i class="icon-remove-sign text-error" rel="tooltip" title="Delete Package"></i>',
-     array('/package/delete','id'=>$item['id']),
-     array('confirm' => 'This will delete this package and all its usecases.  Are you sure?')
-);
-    ?>
+                      if(count($usecases)==0){
+                            echo CHtml::link(
+                            '<i class="icon-remove-sign text-error" rel="tooltip" title="Delete Package"></i>',
+                            array('/package/delete','id'=>$item['id']),
+                            array('confirm' => 'This will delete the package. Are you sure?')
+                            );
+                            } ELSE {
+                                
+                            echo CHtml::link(
+                            '<i class="icon-remove-sign text-warning" rel="tooltip" title="Delete not available, package has Use Cases"></i>',
+                            array(''),
+                            array('confirm' => 'You cannot delete the package while it has Use Cases.')
+                            );   
+                                
+                                
+                            }
+                        ?>
                    <a href="/usecase/create/id/<?php echo $item['id'];?>"><i class="icon-plus-sign-alt" rel="tooltip" title="Add another usecase"></i></a> 
                    <a href="/package/history/id/<?php echo $item['package_id'];?>"><i class="icon-calendar" rel="tooltip" title="Version history"></i></a> 
                   
@@ -71,8 +110,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                    <td></td>
                 </tr>
                <?php 
-        $usecases = Usecase::model()->getPackageUsecases($item['package_id']); // get the requirements with answers
- 
+      
         $counter=0;
         foreach($usecases as $uc) : // Go through each un answered question??>
 

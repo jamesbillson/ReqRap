@@ -3,7 +3,14 @@
     <?php echo CHtml::link(CHtml::encode('Change #'.$data->number), array('view', 'id'=>$data->id)); ?>
 </td>
  <td>
-   <?php echo CHtml::encode(Version::$actions[$data->action]); ?> 
+   <?php 
+   
+    $this->widget('bootstrap.widgets.TbBadge', array(
+    'type'=>Version::$action_types[$data->action], // 'success', 'warning', 'important', 'info' or 'inverse'
+    'label'=>Version::$action_labels[$data->action],
+    )); 
+   
+   ?> 
 </td>
 
 <td>
@@ -19,8 +26,12 @@
     
  
         $object=Version::model()->instanceName($data->object, $data->foreign_id);
-        ?> 
-        <a href="/<?php echo Version::$objects[$data->object]; ?>/view/id/<?php echo $data->foreign_id; ?>">
+        
+     $page = ($object['name']=='deleted')?'history'  :'view'  ;
+         
+     
+?> 
+        <a href="/<?php echo Version::$objects[$data->object]; ?>/<?php echo $page; ?>/id/<?php echo $data->foreign_id; ?>">
         <?php echo $object['number'].' '.$object['name'];?>
         </a>  
    <?php }  
