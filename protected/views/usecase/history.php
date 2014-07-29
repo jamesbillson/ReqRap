@@ -27,7 +27,7 @@ foreach($history as $version=>$item){
                 if($item['active']==1)
                 { ?> 
                         <a href="/usecase/rollback/uc/<?php echo $item['usecase_id'];?>/id/<?php echo $version;?>">
-                <i class="icon-circle-arrow-right" rel="tooltip" data-placement="right" title="Current Version"></i> 
+                <i class="icon-circle-arrow-right" rel="tooltip" data-placement="right" title="Current Version - Roll back all objects to this point."></i> 
                         </a>
                     <?php   }
                 if($item['action']==3)
