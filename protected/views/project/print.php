@@ -6,12 +6,12 @@ $heading=1;
 $cats = Category::model()->getProjectCategory();
 $thisrelease=Release::model()->findbyPK(Yii::App()->session['release']);
 $model=Project::model()->findbyPK($project);
-
-if($model->company->logo_id!=''){
+$src = '';
+if($model->company->logo_id!='') {
     $src = Yii::app()->easyImage->thumbSrcOf(
     Yii::app()->params['photo_folder'].$model->company->logo_id, 
     array('resize' => array('width' => 150))); 
-} ELSE {$src='';}
+}
 
 ?>
 <h1>Requirements Model</h1>
@@ -44,7 +44,10 @@ $section=0;
 
 <?php 
 $objects = Object::model()->getProjectObjects(Yii::app()->session['project']); 
-if (count($objects)):
+if (count($objects)): echo '<div style="page-break-before: always;"></div>';
+  ?>
+
+<?php
 $this->renderPartial('/object/print',array('heading'=>$heading,'objects'=>$objects)); 
 $heading++; 
 endif;
@@ -60,13 +63,21 @@ $section=1;
           
             }
           }
+?>
 
+
+<?php
           
 $actors = Actor::model()->getProjectActors(Yii::app()->session['project']);
  
               $this->generateTree($str, $actors, -1);
-              
-if (count($actors)):
+?>
+
+<?php              
+  if (count($actors)): echo '<div style="page-break-before: always;"></div>';
+?>
+
+<?php
 $this->renderPartial('/actor/print',array('heading'=>$heading,
                                         'actors'=>$actors,
                                         'actorstring'=>$str)); 
@@ -86,7 +97,9 @@ $section=2;
 $numberucs=Version::model()->objectCount(10);
 if ($numberucs>0): // check if there are any usecases
 $packages = Package::model()->getPackages($project);
-if (count($packages)):      
+if (count($packages)):  echo '<div style="page-break-before: always;"></div>';
+?>
+<?php
 $this->renderPartial('/package/print',array('heading'=>$heading,'packages'=>$packages)); 
 $heading++; 
 endif;
@@ -106,8 +119,9 @@ $section=3;
 
 
 $rules = Rule::model()->getProjectRules($project);
-if (count($rules)):
-
+if (count($rules)): echo '<div style="page-break-before: always;"></div>';
+?>
+<?php
 $this->renderPartial('/rule/print',array('heading'=>$heading,'project'=>$project, 'rules'=>$rules)); 
 $heading++;
 endif;
@@ -126,6 +140,8 @@ $section=4;
 
   $numberifaces=Version::model()->objectCount(12);        
           if(count($numberifaces)):
+?>
+<?php
           $this->renderPartial('/iface/print',array('heading'=>$heading)); 
 
 $heading++; 
@@ -143,8 +159,10 @@ $section=5;
           
 $forms = Form::model()->getProjectForms(Yii::app()->session['project']);
 
-if (count($forms)):
+if (count($forms)): 
+?>
 
+<?php
 $this->renderPartial('/form/print',array('heading'=>$heading,'forms'=>$forms)); 
 $heading++; 
 endif;
