@@ -21,10 +21,10 @@ if($model->company->logo_id!='') {
 <h3> <?php echo $model->company->name;?></h3>
 <h4><?php echo Release::$title_status[$thisrelease->status].' '.$thisrelease['number'];?> </h4>
 <?php echo $thisrelease['create_date'];?>
-<div style="height:200px;"></div>
 
-<img src="<?php echo $src;?>">
-
+<?php if ($src) { ?>
+  <img src="<?php echo $src;?>">
+<?php } ?>
 <?php $this->renderPartial('/release/print',array('heading'=>$heading,'thisrelease'=>$thisrelease));
 
  ?>
