@@ -28,7 +28,7 @@ if($model->company->logo_id!='') {
 <?php $this->renderPartial('/release/print',array('heading'=>$heading,'thisrelease'=>$thisrelease));
 
  ?>
-<?php  echo "<div style='page-break-after:void;'>&nbsp;</div>"; ?>
+
 <?php 
 
 $section=0;
