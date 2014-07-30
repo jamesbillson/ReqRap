@@ -24,13 +24,11 @@ if($model->company->logo_id!='') {
 <div style="height:200px;"></div>
 
 <img src="<?php echo $src;?>">
-<br />
-<br />
-<br />
+
 <?php $this->renderPartial('/release/print',array('heading'=>$heading,'thisrelease'=>$thisrelease));
 
  ?>
-
+<?php  echo "<div style='page-break-after:void;'>&nbsp;</div>"; ?>
 <?php 
 
 $section=0;
