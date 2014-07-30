@@ -1,4 +1,4 @@
- 
+ <?php  echo "<div style='page-break-after: always;'>&nbsp;</div>"; ?>
   <?php 
   $category = Category::model()->findbyPK($id);
   ?>
