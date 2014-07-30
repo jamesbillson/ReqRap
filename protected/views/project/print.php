@@ -139,7 +139,7 @@ $section=4;
           }
 
   $numberifaces=Version::model()->objectCount(12);        
-          if(count($numberifaces)):
+          if(count($numberifaces)): echo '<div style="page-break-before: always;"></div>';
 ?>
 <?php
           $this->renderPartial('/iface/print',array('heading'=>$heading)); 
@@ -159,7 +159,7 @@ $section=5;
           
 $forms = Form::model()->getProjectForms(Yii::app()->session['project']);
 
-if (count($forms)): 
+if (count($forms)):  echo '<div style="page-break-before: always;"></div>';
 ?>
 
 <?php

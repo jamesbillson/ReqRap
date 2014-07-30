@@ -22,7 +22,8 @@ if (count($ifacedetails)):
 <h3> IF-<?php echo str_pad($ifacedetail['number'], 3, "0", STR_PAD_LEFT); ?> <?php echo $ifacedetail['name'];?></h3>
 <?php echo $ifacedetail['text'];?><br /><br />
 <?php if (count($image)){ ?>
-<img src="/uploads/images/<?php echo $image['file'];?>" width="600"><br />
+<?php $src = Yii::app()->basePath.'/../'.'uploads/images/'.$image['file']; ?>
+<img src="<?php echo $src; ?>" width="600"><br />
 <?php 
 }
 $subheading++;
