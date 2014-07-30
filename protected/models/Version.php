@@ -728,7 +728,7 @@ class Version extends CActiveRecord {
         $projects = $command->queryAll();
        if (!empty($projects)){
         $name=$projects[0]['name'];
-        $number=$projects[0]['number'];
+        $number=(isset($projects[0]['number']))?$projects[0]['number']: 0 ;
         $catnum=(isset($projects[0]['parentnum']))?str_pad($projects[0]['parentnum'], 2, "0", STR_PAD_LEFT):''; 
 
         $prepend=Version::$numberformat[$object]['prepend'];

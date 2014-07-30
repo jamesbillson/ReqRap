@@ -1,14 +1,10 @@
- <?php echo $this->renderPartial('/project/head',array('tab'=>'usecases')); 
+ <?php
+ $link=Yii::App()->session['release'].'_10_'.$model->usecase_id;
+ echo $this->renderPartial('/project/head',array('tab'=>'usecases','link'=>$link)); 
  $edit=(Yii::App()->session['edit']==1)?TRUE:FALSE;
-//$data = Package::model()->getPackages($model->id);
 
-/*$packagelist=array();
-foreach($data as $item):
-$packagelist=$packagelist+array($item['package_id']=>$item['name']);    
-endforeach;
-//print_r($packagelist);
- * 
- */
+ 
+ 
  ?>
 
 <?php if($edit){ ?>
