@@ -528,9 +528,11 @@ class Version extends CActiveRecord {
     
         }       
 
-         $sql="UPDATE `step` `s`
-            SET `s`.`text` = '".$input[0]."' ,
-                `s`.`result` = '".$input[1]." '
+        $text = str_replace("'", "\'", $input[0]);
+        $result =  str_replace("'", "\'", $input[1]);
+        $sql="UPDATE `step` `s`
+            SET `s`.`text` = '".$text."' ,
+                `s`.`result` = '".$result." '
             WHERE `s`.`id` =".$step[0]['id'];
 	
                 $connection=Yii::app()->db;
