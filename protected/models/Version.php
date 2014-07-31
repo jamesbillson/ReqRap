@@ -529,7 +529,7 @@ class Version extends CActiveRecord {
         }       
 
          $sql="UPDATE `step` `s`
-            SET `s`.`text` = '".$input[0]."' 
+            SET `s`.`text` = '".$input[0]."' ,
                 `s`.`result` = '".$input[1]." '
             WHERE `s`.`id` =".$step[0]['id'];
 	
