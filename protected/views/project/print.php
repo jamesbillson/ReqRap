@@ -137,7 +137,7 @@ $section=4;
           }
 
   $numberifaces=Version::model()->objectCount(12);        
-          if(count($numberifaces)): echo '<div style="page-break-before: always;"></div>';
+          if(count($numberifaces)):;
 ?>
 <?php
           $this->renderPartial('/iface/print',array('heading'=>$heading)); 

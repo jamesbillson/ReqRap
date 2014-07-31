@@ -88,6 +88,11 @@ class ProjectController extends Controller
     }
     Yii::app()->session['setting_tab']='details';
     //echo '<br />redirecting...';
+    
+    //$companyMeta = User::model()->myCompany();
+    //$companyMeta->setEavAttribute('last_project',$id);
+    //$companyMeta->save();
+    
     $this->redirect(array('/project/project/'));
         
     }
