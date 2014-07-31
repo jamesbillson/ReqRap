@@ -46,14 +46,6 @@ $this->menu=array(
 <?php echo $form->error($model,'organisationtype'); ?>
 	</div>
 	
-	<div class="row">
-		<?php echo $form->labelEx($model,'trade_id'); ?>
-		   <?php echo $form->dropDownList($model,
-                'trade_id',
-                CHtml::listData(Trade::model()->findAll('companyowner_id='.User::model()->myCompany()),'id','name'));  ?>
-
-		<?php echo $form->error($model,'trade_id'); ?>
-	</div>
 <div class="row">
 		<?php echo $form->labelEx($model,'foreignid'); ?>
 		<?php echo $form->textField($model,'foreignid',array('size'=>60,'maxlength'=>255)); ?>

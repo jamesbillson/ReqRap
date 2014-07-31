@@ -32,7 +32,7 @@ class CompanyController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('Logoupload','mycreate','mycompanies','create','update','mycompany'),
+				'actions'=>array('Logoupload','mycreate','mycompanies','create','update','mycompany', 'addmeta'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -272,5 +272,19 @@ if ($user->active==0)$this->redirect(array('site/verify'));
       echo $return;
     }
   }
-        
+
+  public function actionAddmeta() {
+  	if ( isset($_POST) && isset($_POST['CompanyMeta']) ) {
+  		$data = $_POST['CompanyMeta'];
+  		$id   = $data['company_id'];
+  		foreach ($data as $key => $meta) {
+  			if ( $key != 'company_id' && $meta != '') {
+  				$companyMeta = Company::model()->findByPk($id);
+  				$companyMeta->setEavAttribute($key, $meta);
+  				$companyMeta->save();
+  			}
+  		}
+  	}
+  	$this -> redirect('/company/mycompany');
+  }
 }

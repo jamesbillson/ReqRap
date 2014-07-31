@@ -315,4 +315,18 @@ class Company extends CActiveRecord
     
     return parent::beforeValidate();
   }  
+
+  public function behaviors() {
+        return array(
+            'company_meta' => array(
+                'class' => 'ext.yiiext.behaviors.model.eav.EEavBehavior',
+                'tableName' => 'company_meta',
+                'entityField' => 'company_id',
+                'attributeField' => 'meta_name',
+                'valueField' => 'meta_value',
+                'modelTableFk' => 'company_id',
+                'safeAttributes' => array(),
+            )
+        );
+    }
 }
