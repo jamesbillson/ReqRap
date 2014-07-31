@@ -235,7 +235,15 @@ $library=  Release::model()->findbyPK($id);
                 Photo::model()->makePhotoCopy($instance['file'],$instance['id'],$release);
             }
          
-         
+           // UPDATE ALL THE WIKI Links to point to the new offsets.
+         $objects = Version::model()->objectList(9,$release);
+
+            foreach ($objects as $instance)
+            {
+                Version::model()->wikiOffset($instance['step_id'],$release,$offset);
+            }
+            
+            
         Package::model()->Renumber();
         Usecase::model()->Renumber();
         $this->redirect(array('/project/view/tab/usecases'));

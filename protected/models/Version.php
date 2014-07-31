@@ -62,7 +62,7 @@ class Version extends CActiveRecord {
         9 => 'flow,actor', //step
         10 => 'package, actor', //usecase
         11 => 'none', //photo
-        12 => 'photo', //iface
+        12 => 'photo,interfacetype', //iface
         13 => 'none', //interfacetype
         14 => 'step,form', //stepform
         15 => 'step,iface', //stepiface
@@ -441,8 +441,14 @@ class Version extends CActiveRecord {
                  $object=$objects[$content[0]];
                  //$link=$release."_".$object."_".$instance;  
                  $name=Version::model()->instanceName($object,$instance);
-                $end[$i]='<a href="/'.Version::$objects[$object].'/view/id/'.$instance.'">'.$name['number'].'-'.$name['name'].'</a>';
-           
+                    if($name['name']!='deleted')
+                        {
+                            $end[$i]='<a href="/'.Version::$objects[$object].'/view/id/'.$instance.'">'.$name['number'].'-'.$name['name'].'</a>';
+                        } 
+                    ELSE 
+                        {
+                            $end[$i]=$name['number'].'-'.$name['name'];
+                        }    
                 }
 // THis is the human readable one that shows in the view screen
                
@@ -456,7 +462,84 @@ class Version extends CActiveRecord {
             
     }
 
-       
+           	public function wikiOffset($step_id, $release, $offset)
+	{
+	
+                   $sql="SELECT `s`.*
+                        FROM `step` `s`
+                        JOIN `version` `vs`
+                        ON `vs`.`foreign_key`=`s`.`id`
+                        WHERE 
+                        `vs`.`object` =9 AND `vs`.`active`=1 AND `vs`.`release`=".$release."  
+                        AND
+                        `s`.`step_id`=".$step_id;
+		$connection=Yii::app()->db;
+		$command = $connection->createCommand($sql);
+		$step = $command->queryAll();
+		
+                
+        $input[0]=$step['text'];            
+        $input[1]=$step['result'];  
+        
+        for($z=0;$z<=1;$z++)
+        {    
+                // get the text.
+                $numberstart =  substr_count($input[$z],"[[");
+                $numberend =  substr_count($input[$z],"]]");
+                if ($numberstart != $numberend) $error=TRUE;
+
+                $end=array();
+                // parse it for wiki syntax.
+                $x=0;
+                $start=explode("[[", $input);
+
+                $end[$x]=$start[0];
+
+                for($i=1;$i<=$numberstart;$i++)
+                {
+                $split =explode("]]",$start[$i]);
+                $end[$x+1]=$split[0];
+                $end[$x+2]=$split[1];
+                $x=$x+2;
+                }
+
+                $number=count($end);
+
+                for($i=1;$i<=$number-1;$i=$i+2)
+                {
+                    // test the content of the wiki brackets
+                    if (substr_count($end[$i],":")==1)
+                    {
+                        $content=  explode(":", $end[$i]);
+
+                        if(in_array($content[0],array('IF','UF','OB','BR','UI')))
+                        { // the link is partly valid
+
+                         $content[1]=$content[1]+$offset;
+                        $end[$i]=$content[0].':'.$content[1]; 
+                        }
+
+            }
+            
+        } // end of loop through string
+        
+        $input[$z]=implode(" ",$end);
+        
+    
+        }       
+
+         $sql="UPDATE `step` `s`
+            SET `s`.`text` = ".$input[0]." 
+                `s`.`result` = ".$input[1]." 
+            WHERE `s`.`id` =".$step['id'];
+	
+                $connection=Yii::app()->db;
+                $command = $connection->createCommand($sql);
+                $command->execute();
+        
+        
+        
+  }
         
     	public function wikiEdit($input)
 	{
@@ -894,7 +977,7 @@ class Version extends CActiveRecord {
         $command = $connection->createCommand($sql);
         $projects = $command->queryAll();
 
-        return $projects[0];
+        if(isset($projects[0])) return $projects[0];
     }
     public function renumber($object,$parentid) {
         $parent=Version::$display[$object]['parent'].'_id';

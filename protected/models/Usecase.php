@@ -822,7 +822,7 @@ $history[$step['versionid']]=array(
 		$connection=Yii::app()->db;
 		$command = $connection->createCommand($sql);
 		$projects = $command->queryAll();
-		return $projects[0];
+		if(isset($projects[0])) return $projects[0];
     }
     
     

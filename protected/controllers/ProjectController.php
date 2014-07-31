@@ -250,23 +250,28 @@ class ProjectController extends Controller
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id the ID of the model to be updated
      */
-    public function actionUpdate($id)
+    public function actionUpdate()
     {
+        $id=Yii::App()->session['project'];
         $model=$this->loadModel($id);
-
-        // Uncomment the following line if AJAX validation is needed
-        // $this->performAjaxValidation($model);
-
+        $mycompany=User::model()->myCompany();
+        if($mycompany==$model->company_id){
+        
+        Yii::App()->session['setting_tab']='settings';
+        
         if(isset($_POST['Project']))
         {
             $model->attributes=$_POST['Project'];
             if($model->save())
-                $this->redirect(array('view','id'=>$model->id,'tab'=>'documents'));
+                $this->redirect(array('project'));
         }
 
         $this->render('update',array(
             'model'=>$model,
         ));
+    } ELSE {
+           $this->redirect(array('site/fail/condition/no_access'));
+    }
     }
 
         public function actionResetLink($id)

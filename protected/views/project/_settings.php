@@ -1,6 +1,6 @@
 
 
-<b>Project Description</b> <a href="/project/update?id=<?php echo $model->id; ?>"><i class="icon-edit"></i></a>
+<b>Project Description</b> <a href="/project/update"><i class="icon-edit"></i></a>
 <br /><?php echo $model->description; ?><br />
 
  <br /> 

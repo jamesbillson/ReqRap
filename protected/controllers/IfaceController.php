@@ -56,7 +56,12 @@ class IfaceController extends Controller
 	{
              Yii::app()->session['setting_tab']='interfaces';  	
             $versions=Version::model()->getVersions($id,12,'iface_id');
+            
+            if(isset($versions[0]['id'])) {
                 $model=$this->loadModel($versions[0]['id']);
+            } ELSE {
+                $this->redirect(array('/site/fail/no_object'));
+            }
                 //need to load other models here and pass them
                 $types=  Interfacetype::model()->getInterfaceTypes();
                 $this->render('view',array('model'=>$model,

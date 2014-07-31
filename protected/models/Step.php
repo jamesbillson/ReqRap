@@ -226,7 +226,7 @@ class Step extends CActiveRecord
 		$connection=Yii::app()->db;
 		$command = $connection->createCommand($sql);
 		$projects = $command->queryAll();
-		return $projects[0];
+		if(isset($projects[0])) return $projects[0];
     }
     
       public function getMainSteps($id) // GET MAIN FOR A UC

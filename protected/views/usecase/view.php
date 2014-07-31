@@ -2,9 +2,6 @@
  $link=Yii::App()->session['release'].'_10_'.$model->usecase_id;
  echo $this->renderPartial('/project/head',array('tab'=>'usecases','link'=>$link)); 
  $edit=(Yii::App()->session['edit']==1)?TRUE:FALSE;
-
- 
- 
  ?>
 
 <?php if($edit){ ?>
@@ -69,7 +66,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                     'source'    => Editable::source($packagelist, 'package_id', 'name'),
                     'placement' => 'right',
                     ));
-               * 
+               
                */
                 ?>
               
