@@ -516,7 +516,7 @@ class Version extends CActiveRecord {
                         { // the link is partly valid
 
                          $content[1]=$content[1]+$offset;
-                        $end[$i]=$content[0].':'.$content[1]; 
+                        $end[$i]='[['.$content[0].':'.$content[1].']]'; 
                         }
 
             }
@@ -532,7 +532,7 @@ class Version extends CActiveRecord {
         $result =  str_replace("'", "\'", $input[1]);
         $sql="UPDATE `step` `s`
             SET `s`.`text` = '".$text."' ,
-                `s`.`result` = '".$result." '
+                `s`.`result` = '".$result."'
             WHERE `s`.`id` =".$step[0]['id'];
 	
                 $connection=Yii::app()->db;

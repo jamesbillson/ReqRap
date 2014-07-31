@@ -8,6 +8,19 @@ $data = Release::model()->findAll(array('order'=>'number ASC',
 $release = Yii::App()->session['release'];
 $currentrelease=Release::model()->currentRelease();
 $owner=(Yii::App()->session['owner']==1)?TRUE:FALSE;
+$library=Library::model()->findAll(array(
+    'condition'=>'owner_id=:x',
+    'params'=>array(':x'=>User::model()->myCompany())));
+$shared=array();
+if(count($library)){
+    foreach ($library as $module){
+     $shared[$module->release_id]=$module->public;
+    }
+    
+    
+}
+
+//print_r($shared);
 ?>
 
 <table class="table">
@@ -62,17 +75,28 @@ $owner=(Yii::App()->session['owner']==1)?TRUE:FALSE;
 
 
       <td>
-    
-      <?php if ($item['id']==$currentrelease && $owner){;?>
-          <a href="/release/finalise/id/<?php echo $item['id'];?>"><i class="icon-certificate" rel="tooltip" title="Finalise Release"></i></a> 
-           
-      <?php 
-      }
+    <?php if (isset($shared[$item['id']])){
+        if($shared[$item['id']]==1){ ?>
+             <a href="/library/view/"><i class="icon-book text-warning" rel="tooltip" title="In Public library"></i></a> 
+     <?php
+        }
+        if ($shared[$item['id']]==0) { ?>
+             <a href="/library/view/"><i class="icon-book" rel="tooltip" title="In Private library"></i></a> 
+     <?php
+        }
+    } ELSE {
+        
+       
       if ($owner && $item['id']!=$currentrelease) {?>
           
       <a href="/library/create/id/<?php echo $item['id'];?>"><i class="icon-book text-success" rel="tooltip" title="Add to library"></i></a> 
       <a href="/release/copy/id/<?php echo $item['id'];?>"><i class="icon-copy" rel="tooltip" title="Copy Release to new project"></i></a>
      
+         <?php
+            }  }
+            if ($item['id']==$currentrelease && $owner){;?>
+          <a href="/release/finalise/id/<?php echo $item['id'];?>"><i class="icon-certificate" rel="tooltip" title="Finalise Release"></i></a> 
+        
         <?php /*
        echo CHtml::link(
     '<i class="icon-remove-sign text-error" rel="tooltip" title="Delete Release"></i>',
@@ -85,12 +109,8 @@ $owner=(Yii::App()->session['owner']==1)?TRUE:FALSE;
     
              <?php } 
           
-       if (in_array(Yii::App()->session['permission'],array(1,2,3))) {?>  
-       
-          
-        <a href="/release/set/id/<?php echo $item['id'];?>"><i class="icon-eye-open " rel="tooltip" title="Browse this release"></i></a> 
-        <?php } ?>
-         <?php if ($item['id']==$release){;?>
+     
+        if ($item['id']==$release){;?>
            <a href="/version/index/id/<?php echo $item['id'];?>"><i class="icon-calendar " rel="tooltip" title="View change log"></i></a> 
         
               <?php } ?>

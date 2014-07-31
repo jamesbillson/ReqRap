@@ -53,12 +53,12 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                         <a href="/release/set/id/<?php echo $item['release_id'];?>"><i class="icon-eye-open" rel="tooltip" title="View project"></i></a> 
 
                        
-                        <a href="/release/copy/id/<?php echo $item['release_id'];?>"><i class="icon-flag text-success" rel="tooltip" title="Copy this project"></i></a> 
+                        <a href="/release/copy/id/<?php echo $item['release_id'];?>"><i class="icon-flag text-success" rel="tooltip" title="Copy this project to a new project"></i></a> 
              <?php if($edit){ ?>
-                        <a href="/release/import/id/<?php echo $item['release_id'];?>"><i class="icon-download text-success" rel="tooltip" title="Import this project"></i></a> 
+                        <a href="/release/import/id/<?php echo $item['release_id'];?>"><i class="icon-download text-success" rel="tooltip" title="Import this project into the current project"></i></a> 
                    <?php } ?>  
                  <?php if((User::model()->myCompany())==(Library::model()->libraryOwner($item['id']))){ ?>    
-                         <a href="/library/delete/id/<?php echo $item['id'];?>"><i class="icon-remove-sign text-error" rel="tooltip" title="View project"></i></a> 
+                         <a href="/library/delete/id/<?php echo $item['id'];?>"><i class="icon-unlink text-error" rel="tooltip" title="Remove from library"></i></a> 
    <a href="/library/update/id/<?php echo $item['id'];?>"><i class="icon-edit" rel="tooltip" title="Edit Details"></i></a> 
                   <?php } ?>        
                    </td>
@@ -118,12 +118,12 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                         <a href="/release/set/id/<?php echo $item['release_id'];?>"><i class="icon-eye-open" rel="tooltip" title="View project"></i></a> 
 
                        
-                        <a href="/release/copy/id/<?php echo $item['release_id'];?>"><i class="icon-flag text-success" rel="tooltip" title="Copy this project"></i></a> 
+                        <a href="/release/copy/id/<?php echo $item['release_id'];?>"><i class="icon-flag text-success" rel="tooltip" title="Copy this project to a new project"></i></a> 
                <?php if($edit){ ?>
-                        <a href="/release/import/id/<?php echo $item['release_id'];?>"><i class="icon-download text-success" rel="tooltip" title="Import this project"></i></a> 
+                        <a href="/release/import/id/<?php echo $item['release_id'];?>"><i class="icon-download text-success" rel="tooltip" title="Import this project into the current project"></i></a> 
               <?php } ?>
                          <?php if((User::model()->myCompany())==(Library::model()->libraryOwner($item['id']))){ ?>    
-                         <a href="/library/delete/id/<?php echo $item['id'];?>"><i class="icon-remove-sign text-error" rel="tooltip" title="View project"></i></a> 
+                         <a href="/library/delete/id/<?php echo $item['id'];?>"><i class="icon-unlink text-error" rel="tooltip" title="Remove from library"></i></a> 
    <a href="/library/update/id/<?php echo $item['id'];?>"><i class="icon-edit" rel="tooltip" title="Edit Details"></i></a> 
       
                  <?php } ?>   

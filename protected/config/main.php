@@ -10,7 +10,7 @@
 // In this example we assume that you unzipped the extension under protected/extensions.
 Yii::setPathOfAlias('bootstrap', dirname(__FILE__).'/../extensions/bootstrap');
 Yii::setPathOfAlias('editable', dirname(__FILE__).'/../extensions/x-editable'); 
-Yii::app()->params['server'] = 'Reqrap';
+Yii::app()->params['server'] = 'reqrap';
 
 return array(
     'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
