@@ -1,3 +1,5 @@
+<h4>Estimate size coefficients</h4>
+Adjust these weighting factors to change the calculation of overall project 'size'.<br /><br />
 <?php 
 	$metaData = $model->getEavAttributes(array('uc_rate', 'uc_ui_rate', 'uc_step_rate', 'uc_rule_rate', 'uc_form_rate'));
 ?>
