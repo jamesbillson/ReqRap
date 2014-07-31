@@ -478,8 +478,8 @@ class Version extends CActiveRecord {
 		$step = $command->queryAll();
 		
                 
-        $input[0]=$step['text'];            
-        $input[1]=$step['result'];  
+        $input[0]=$step[0]['text'];            
+        $input[1]=$step[0]['result'];  
         
         for($z=0;$z<=1;$z++)
         {    
@@ -531,7 +531,7 @@ class Version extends CActiveRecord {
          $sql="UPDATE `step` `s`
             SET `s`.`text` = ".$input[0]." 
                 `s`.`result` = ".$input[1]." 
-            WHERE `s`.`id` =".$step['id'];
+            WHERE `s`.`id` =".$step[0]['id'];
 	
                 $connection=Yii::app()->db;
                 $command = $connection->createCommand($sql);
