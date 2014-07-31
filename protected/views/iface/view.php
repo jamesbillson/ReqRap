@@ -44,9 +44,16 @@ Pick an image for this interface or upload a new one.<br />
 
                     <ul>
                                         <?php foreach ($orphans as $pic){  ?>
-                   <?php $src = Yii::app()->easyImage->thumbSrcOf(
- Yii::app()->params['photo_folder'].$pic['file'], 
- array('resize' => array('width' => 150,'height'=>150))); ?>
+                   <?php 
+                  
+                   $src=Yii::app()->params['photo_folder']."missing.png";
+      if(isset($pic->file) && is_file(Yii::app()->params['photo_folder'].$pic->file))
+      $src = Yii::app()->easyImage->thumbSrcOf(
+                                    Yii::app()->params['photo_folder'].$image->file, 
+                                   array('resize' => array('width' => 150,'height'=>150))); 
+                   
+                  
+      ?>
                         <li><a href="/iface/addimage/iface/<?php echo $model->iface_id; ?>/id/<?php echo $pic['photo_id']; ?>"  rel="tooltip" title="<?php echo $pic['description'] ?>" ><img src="<?php echo $src; ?>" border="0" width="150" height="150"></a></li>        
 <?php 
  }
@@ -89,9 +96,13 @@ array(
       
          
       $image=Photo::model()->findByPk($image_id);
+      $src=Yii::app()->params['photo_folder']."missing.png";
+      if(is_file(Yii::app()->params['photo_folder'].$image->file))
       $src = Yii::app()->easyImage->thumbSrcOf(
                                     Yii::app()->params['photo_folder'].$image->file, 
-                                   array('resize' => array('width' => 150,'height'=>150))); ?>
+                                   array('resize' => array('width' => 150,'height'=>150))); 
+ 
+    ?>
     <div style="float:left;width:100%;">
       <div style="width:160px;float:left;">
           <a id="popup" href="<?php echo '/iface/preview/id/'.$model->iface_id.'/release/'.Yii::app()->session['release']; ?>"><img src="<?php echo $src ?>"/></a>

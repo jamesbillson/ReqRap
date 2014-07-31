@@ -153,7 +153,7 @@ class Interfacetype extends CActiveRecord
             `vi`.`active`=1 AND `vi`.`release`=".$release." AND `vi`.`object`=12
             AND
             `vt`.`active`=1 AND `vt`.`release`=".$release." AND `vt`.`object`=13
-            ";
+            AND `t`.`id`=".$id;
 		$connection=Yii::app()->db;
 		$command = $connection->createCommand($sql);
 		$projects = $command->queryAll();

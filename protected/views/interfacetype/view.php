@@ -22,7 +22,7 @@ echo $this->renderPartial('/project/head',array('tab'=>'usecases'));
  <a href="/iface/view/id/<?php echo $item['iface_id'];?>">
        <?php  echo 'UI-'.str_pad($model['number'], 2, "0", STR_PAD_LEFT).str_pad($item['number'], 3, "0", STR_PAD_LEFT);?>
    </a>  
-         <?php echo $item['name'];?> 
+         <?php echo $item['name'];?> <br />
     
  <?php } ?>
  <?php } ?>

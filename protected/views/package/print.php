@@ -14,11 +14,11 @@ $packusecases = Usecase::model()->getPackageUsecases($package['package_id']);
 
 ?>
 
-              
+<div style="page-break-inside: avoid;">        
 <h3>Package PA-<?php echo $package['number'];?> <?php echo $package['name'];?> Usecase Diagram</h3>
 
 <?php $this->renderPartial('/package/printdiagram',array('package'=>$package));  ?>
-
+</div>
 <h4>&nbsp;</h4>
 <h3>Package PA-<?php echo $package['number'];?> <?php echo $package['name'];?> Usecase Descriptions</h3>           
 

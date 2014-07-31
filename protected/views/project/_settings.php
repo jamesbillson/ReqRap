@@ -46,14 +46,14 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
         <tbody>
         <?php if (count($data)):
             foreach($data as $item):?>
-            <?php if(Yii::App()->session['permission']==1 && $item['number']!=1){ ?> 
+            <?php if(Yii::App()->session['permission']==1){ ?> 
                 <tr class="odd">  
                     <td>   
-                        <?php echo $item['name'];?>
+                        <a href="/interfacetype/view/id/<?php echo $item['interfacetype_id'];?>"><?php echo str_pad($item['number'], 2, "0", STR_PAD_LEFT).'-';?><?php echo $item['name'];?></a>
                     </td>
                    
                     <td>
-                    <?php if(Yii::App()->session['permission']==1){ ?>    
+                    <?php if(Yii::App()->session['permission']==1 && $item['number']!=1){ ?>    
                        <a href="/interfacetype/update/id/<?php echo $item['id'];?>"><i class="icon-edit" rel="tooltip" title="Update"></i></a> 
                        <a href="/interfacetype/remove?id=<?php echo $item['id'];?>"><i class="icon-remove-sign text-error" rel="tooltip" title="Remove"></i></a> 
                     <?php } ?>

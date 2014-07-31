@@ -185,10 +185,15 @@ class ProjectController extends Controller
             }
     }
     public function actionPrint() {
+
+        $project=Project::model()->findbyPK(Yii::app()->session['project']);
+        $filename=$project->name.'.pdf';
         $pdf=Yii::app()->dompdf;    
         $pdf->dompdf->set_paper('a4');     
         $html = $this->renderPartial('print', array(), true);
-        $pdf->generate($html,'test.pdf',false);
+        $pdf->generate($html,$filename,false);
+        
+        //$this->render('print');
     }
     
     /**

@@ -19,12 +19,21 @@ if (count($ifacedetails)):
     $image=Iface::model()->getCurrentImage($ifacedetail['iface_id'],Yii::App()->session['release']);
     
     ?>
+        <?php if (count($image))echo '<div style="page-break-before: always;"></div>'; ?>
 <h3> IF-<?php echo str_pad($ifacedetail['number'], 3, "0", STR_PAD_LEFT); ?> <?php echo $ifacedetail['name'];?></h3>
 <?php echo $ifacedetail['text'];?><br /><br />
 <?php if (count($image)){ ?>
-<?php $src = Yii::app()->basePath.'/../'.'uploads/images/'.$image['file']; ?>
-<img src="<?php echo $src; ?>" width="600"><br />
-<?php 
+<?php
+ if(is_file(Yii::app()->basePath.'/../'.'uploads/images/'.$image['file']))
+                {
+$src = Yii::app()->basePath.'/../'.'uploads/images/'.$image['file']; ?>
+<img src="<?php echo $src; ?>" width="600">
+ <?php } ?>
+
+
+
+<br />
+    <?php 
 }
 $subheading++;
 endforeach ?>
