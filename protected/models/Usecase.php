@@ -199,7 +199,35 @@ class Usecase extends CActiveRecord
         $UC_step_rate=1;
         $UC_rule_rate=3;
         $UC_form_rate=4;
-     $score=array();
+
+        if ( User::model()->myCompany() ) {
+            $metaModel = Company::model()->findByPk(User::model()->myCompany());
+            $metaData = $metaModel->getEavAttributes(array('uc_rate', 'uc_ui_rate', 'uc_step_rate', 'uc_rule_rate', 'uc_form_rate'));
+
+            if ( isset($metaData['uc_rate']) ) {
+                $UC_rate = $metaData['uc_rate'];
+            }
+
+            if ( isset($metaData['uc_ui_rate']) ) {
+                $UC_UI_rate = $metaData['uc_ui_rate'];
+            }
+
+            if ( isset($metaData['uc_step_rate']) ) {
+                $UC_step_rate = $metaData['uc_step_rate'];
+            }
+
+            if ( isset($metaData['uc_rule_rate']) ) {
+                $UC_rule_rate = $metaData['uc_rule_rate'];
+            }
+
+            if ( isset($metaData['uc_form_rate']) ) {
+                $UC_form_rate = $metaData['uc_form_rate'];
+            }
+        }
+
+        
+
+        $score=array();
         $data = Usecase::model()->getProjectUCs();
         if (count($data)){
                
