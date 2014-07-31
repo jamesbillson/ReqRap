@@ -491,7 +491,7 @@ class Version extends CActiveRecord {
                 $end=array();
                 // parse it for wiki syntax.
                 $x=0;
-                $start=explode("[[", $input);
+                $start=explode("[[", $input[$z]);
 
                 $end[$x]=$start[0];
 
