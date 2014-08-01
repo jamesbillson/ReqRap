@@ -48,7 +48,7 @@ if (!isset($tab)) $tab='employees';
 <?php 
 $active = array();
 $active['details']=FALSE;
-$active['sizing']=FALSE;
+$active['output']=FALSE;
 $active['employees']=FALSE;
 $active['scores']=FALSE;
 
@@ -71,13 +71,13 @@ $active['scores']=FALSE;
        // 'visible' => in_array($permission,array(1,2,3,4,5)),
         'content' => $this->renderPartial('_scores',
                 compact('model'),true,false),'active'=>$active['scores']);
-/*
+
     $tabs[] = array('id' => 'sizing', 
-        'label' => 'Settings',
+        'label' => 'Output',
        // 'visible' => in_array($permission,array(1,2,3,4,5)),
-        'content' => $this->renderPartial('_sizing',
-                compact('model'),true,false),'active'=>$active['sizing']);
- */
+        'content' => $this->renderPartial('_output',
+                compact('model'),true,false),'active'=>$active['output']);
+ 
 ?>
 <?php  $this->widget('bootstrap.widgets.TbTabs', array(
     'id' => 'mytabs',

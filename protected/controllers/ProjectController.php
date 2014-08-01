@@ -190,17 +190,26 @@ class ProjectController extends Controller
             }
     }
     public function actionPrint() {
-
-        $project=Project::model()->findbyPK(Yii::app()->session['project']);
+        
+            $metaModel = Company::model()->findByPk(User::model()->myCompany());
+            $metaData = $metaModel->getEavAttributes(array('html_output'));
+               $project=Project::model()->findbyPK(Yii::app()->session['project']);
+            if ( isset($metaData['html_output']) &&  $metaData['html_output']=='on') {
+  
+        echo $this->renderPartial('print', array(), true);
+        
+        
+        //$this->render('print');
+        } ELSE {
+            
         $filename=$project->name.'.pdf';
         $pdf=Yii::app()->dompdf;    
         $pdf->dompdf->set_paper('a4');     
         $html = $this->renderPartial('print', array(), true);
-        $pdf->generate($html,$filename,false);
-        
-        //$this->render('print');
+        $pdf->generate($html,$filename,false); 
+      
+        }
     }
-    
     /**
      * Creates a new model.
      * If creation is successful, the browser will be redirected to the 'view' page.
