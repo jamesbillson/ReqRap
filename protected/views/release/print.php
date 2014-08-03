@@ -10,16 +10,14 @@ $releases = Release::model()->findAll(array('order'=>'number ASC',
 ?>
          <?php if (count($releases)){?>
 <h4>Release History</h4>
-<table class="table">
+<table class="table table-bordered">
 	<thead>
-	<tr>
-		<th>Number</th>
-		<th>Status</th>
-                <th>Date</th>
-     
-	</tr>
+    	<tr>
+    		<td>Number</td>
+    		<td>Status</td>
+            <td>Date</td>
+    	</tr>
 	</thead>
-   
         <tbody>
 
         <?php foreach($releases as $release) {

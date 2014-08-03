@@ -15,7 +15,7 @@ $objectproperties=  Objectproperty::model()->getObjectProperty($object['object_i
 
   if (count($objectproperties)):?>
 
-        <table class="table">
+        <table class="table table-bordered">
             <thead>
                 <tr>
                     

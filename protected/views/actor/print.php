@@ -5,7 +5,7 @@
 <h2>
     <?php echo $heading; ?>. Actors
 </h2>
-<table class="table">
+<table class="table table-bordered">
     <thead>
         <tr>
             <th>Name</th>

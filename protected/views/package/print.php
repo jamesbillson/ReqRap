@@ -28,7 +28,7 @@ $packusecases = Usecase::model()->getPackageUsecases($package['package_id']);
 <h4>UC-<?php echo str_pad($uc['packnumber'], 2, "0", STR_PAD_LEFT).''.str_pad($uc['number'], 3, "0", STR_PAD_LEFT); ?> <?php echo $uc['name'];?></h4>
 
 
-  <table class="table">
+  <table class="table table-bordered">
 
       <tbody>
 

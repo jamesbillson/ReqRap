@@ -199,13 +199,15 @@ class ProjectController extends Controller
         } else {
             define("DOMPDF_DEFAULT_FONT", "sans-serif");
         }
-        
+    //    $html = $this->renderPartial('print', array(), true);
         if ( isset($metaData['html_output']) &&  $metaData['html_output']=='on') {
+
             echo $this->renderPartial('print', array(), true);
         } else {
             $filename=$project->name.'.pdf';
             $pdf=Yii::app()->dompdf;    
             $pdf->dompdf->set_paper('a4');     
+
             $html = $this->renderPartial('print', array(), true);
             $pdf->generate($html,$filename,false); 
         }

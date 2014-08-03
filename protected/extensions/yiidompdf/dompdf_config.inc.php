@@ -319,7 +319,7 @@ def("DOMPDF_AUTOLOAD_PREPEND", false);
 /**
  * Use the more-than-experimental HTML5 Lib parser
  */
-def("DOMPDF_ENABLE_HTML5PARSER", false);
+def("DOMPDF_ENABLE_HTML5PARSER", true);
 require_once(DOMPDF_LIB_DIR . "/html5lib/Parser.php");
 
 // ### End of user-configurable options ###
@@ -387,7 +387,7 @@ def('DEBUGCSS', false);
  * Visible in the PDF itself.
  */
 def('DEBUG_LAYOUT', false);
-def('DEBUG_LAYOUT_LINES', true);
-def('DEBUG_LAYOUT_BLOCKS', true);
-def('DEBUG_LAYOUT_INLINE', true);
-def('DEBUG_LAYOUT_PADDINGBOX', true);
+def('DEBUG_LAYOUT_LINES', false);
+def('DEBUG_LAYOUT_BLOCKS', false);
+def('DEBUG_LAYOUT_INLINE', false);
+def('DEBUG_LAYOUT_PADDINGBOX', false);
