@@ -38,8 +38,8 @@
       // echo CHtml::encode($instance['name']) ;
    if ($data->object==9)
    {
-   echo 'Action: '.Version::model()->wikiOutput($instance['text']).'<br />';
-    echo 'Result: '.Version::model()->wikiOutput($instance['result']).'<br />';
+   echo 'Action: '.Version::model()->wikiOutput($instance['text'],0).'<br />';
+    echo 'Result: '.Version::model()->wikiOutput($instance['result'],0).'<br />';
     ?> 
         <a href="/step/view/id/<?php echo $data->foreign_id; ?>">
         View Use Case

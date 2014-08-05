@@ -279,6 +279,31 @@ class Flow extends CActiveRecord
 		if(isset($projects[0])) return $projects[0];
     }    
     
+        public function getDiffFlowParentUsecase($id,$release)
+    {
+         
+              
+        $sql="SELECT `u`.*
+             FROM `usecase` `u`
+             JOIN `flow` `f`
+             ON  `u`.`usecase_id`=`f`.`usecase_id`
+             JOIN `version` `vf`
+             ON `vf`.`foreign_key`=`f`.`id`
+             JOIN `version` `vu`
+             ON `vu`.`foreign_key`=`u`.`id`
+             WHERE 
+             `vu`.`object`=10 AND `vu`.`active`=1 AND `vu`.`release`=".$release."
+             AND
+             `vf`.`object`=8 AND `vf`.`active`=1 AND `vf`.`release`=".$release." 
+             AND
+             `f`.`flow_id`=".$id;
+		$connection=Yii::app()->db;
+		$command = $connection->createCommand($sql);
+		$projects = $command->queryAll();
+                
+		if(isset($projects[0])) return $projects[0];
+    }    
+    
     
 	/**
 	 * Returns the static model of the specified AR class.

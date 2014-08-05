@@ -71,6 +71,12 @@ class Version extends CActiveRecord {
         18 => 'category'//simple
     );
     
+    public static $child = array(
+        14 => 2, //stepform
+        15 => 12, //stepiface
+        16 => 1, //steprule
+        );
+    
       public static $number = array( // used for Import
         1 => 'rule', // whether a object needs its number offset on import
         2 => 'form',
@@ -128,9 +134,9 @@ class Version extends CActiveRecord {
         11 => array('parent'=>'project','url'=>'none'), //photo
         12 => array('parent'=>'project','url'=>'/project/view/tab/ifaces'), //iface
         13 => array('parent'=>'interfacetype','url'=>'/interfacetype/view/id/#'), //interfacetype
-        14 => array('parent'=>'project','url'=>'none'), //stepform
-        15 => array('parent'=>'project','url'=>'none'), //stepiface
-        16 => array('parent'=>'project','url'=>'none'), //steprule
+        14 => array('parent'=>'form','url'=>'none'), //stepform
+        15 => array('parent'=>'iface','url'=>'none'), //stepiface
+        16 => array('parent'=>'rule','url'=>'none'), //steprule
         17 => array('parent'=>'project','url'=>'/project/view/tab/category'), //category
         18 => array('parent'=>'category','url'=>'/category/view/id/#'),//simple
     );
@@ -400,7 +406,7 @@ class Version extends CActiveRecord {
             
     }
 
-       	public function wikiOutput($input)
+       	public function wikiOutput($input,$print)
 	{
 	$release=Yii::App()->session['release'];
         $project=Yii::App()->session['project'];
@@ -441,10 +447,12 @@ class Version extends CActiveRecord {
                  $object=$objects[$content[0]];
                  //$link=$release."_".$object."_".$instance;  
                  $name=Version::model()->instanceName($object,$instance);
-                    if($name['name']!='deleted')
+                    if($name['name']!='deleted' && $print==0)
                         {
+                    
                             $end[$i]='<a href="/'.Version::$objects[$object].'/view/id/'.$instance.'">'.$name['number'].'-'.$name['name'].'</a>';
-                        } 
+                        
+                        }
                     ELSE 
                         {
                             $end[$i]=$name['number'].'-'.$name['name'];
@@ -1139,8 +1147,79 @@ class Version extends CActiveRecord {
      
     }
     
-  
+     public function getStepObjectParentUC($id,$project,$object)
+    {
+        $sql="SELECT `u`.*
+            FROM `usecase` `u`
+            JOIN `flow` `f` 
+            ON `f`.`usecase_id`=`u`.`usecase_id`
+            JOIN `step` `s`
+            ON `f`.`flow_id`=`s`.`flow_id`
+            JOIN `".Version::$objects[$object]."` `o`
+            ON `o`.`step_id`=`s`.`step_id`
+            JOIN `version` `vs`
+            ON `vs`.`foreign_key`=`s`.`id`
+            JOIN `version` `vf`
+            ON `vf`.`foreign_key`=`f`.`id`
+            JOIN `version` `vu`
+            ON `vu`.`foreign_key`=`u`.`id`  
+            JOIN `version` `vo`
+            ON `vo`.`foreign_key`=`o`.`id`  
+            WHERE 
+            `o`.`id`=".$id."
+            AND 
+            `vu`.`object` =10 AND `vu`.`active`=1 AND `vu`.`project_id`=".$project."
+            AND 
+            `vs`.`object` =9 AND `vs`.`active`=1 AND `vs`.`project_id`=".$project."
+            AND 
+            `vo`.`object` =".$object." AND `vo`.`active`=1 AND `vo`.`project_id`=".$project."
+            AND
+            `vf`.`object` =8 AND `vf`.`active`=1 AND `vf`.`project_id`=".$project;
+		$connection=Yii::app()->db;
+		$command = $connection->createCommand($sql);
+		$projects = $command->queryAll();
+		if(isset($projects[0])) return $projects[0];
+    }
     
+       public function getObjectStepObjectParentUC($id,$link,$project,$object)
+    {
+        $sql="SELECT `u`.*
+            FROM `usecase` `u`
+            JOIN `flow` `f` 
+            ON `f`.`usecase_id`=`u`.`usecase_id`
+            JOIN `step` `s`
+            ON `f`.`flow_id`=`s`.`flow_id`
+            JOIN `step".Version::$objects[$object]."` `l`
+            ON `l`.`step_id`=`s`.`step_id`
+            JOIN `".Version::$objects[$object]."` `o`
+            ON `o`.`".Version::$objects[$object]."_id`=`l`.`".Version::$objects[$object]."_id`
+            JOIN `version` `vs`
+            ON `vs`.`foreign_key`=`s`.`id`
+            JOIN `version` `vf`
+            ON `vf`.`foreign_key`=`f`.`id`
+            JOIN `version` `vu`
+            ON `vu`.`foreign_key`=`u`.`id`  
+            JOIN `version` `vl`
+            ON `vl`.`foreign_key`=`l`.`id` 
+            JOIN `version` `vo`
+            ON `vo`.`foreign_key`=`o`.`id`  
+            WHERE 
+            `o`.`id`=".$id."
+            AND 
+            `vu`.`object` =10 AND `vu`.`active`=1 AND `vu`.`project_id`=".$project."
+            AND 
+            `vs`.`object` =9 AND `vs`.`active`=1 AND `vs`.`project_id`=".$project."
+            AND 
+            `vl`.`object` =".$link." AND `vl`.`active`=1 AND `vl`.`project_id`=".$project."
+            AND 
+            `vo`.`object` =".$object." AND `vo`.`active`=1 AND `vo`.`project_id`=".$project."
+            AND
+            `vf`.`object` =8 AND `vf`.`active`=1 AND `vf`.`project_id`=".$project;
+		$connection=Yii::app()->db;
+		$command = $connection->createCommand($sql);
+		$projects = $command->queryAll();
+		if(isset($projects[0])) return $projects[0];
+    }
     
     public function getParent($object, $id) {
        $sql = "
@@ -1159,7 +1238,51 @@ class Version extends CActiveRecord {
         return $projects[0]['id'];
     }
 
+  public function getStepObject($object, $id, $release) {
+       $sql = "  
+                SELECT `x`.*
+                FROM `".Version::$display[$object]['parent']."` `x` 
+                JOIN `step".Version::$display[$object]['parent']."` `s`
+                ON 
+                `s`.".Version::$display[$object]['parent']."_id=`x`.`".Version::$display[$object]['parent']."_id`
+                JOIN `version` `v`
+                ON `x`.`id` =`v`.`foreign_key`
+                WHERE 
+                `s`.`id`=".$id."
+                AND  
+                `v`.`release`=".$release."  
+                AND `v`.`active`=1  
+                AND `v`.`object`=".Version::$child[$object];
+
+
+        $connection = Yii::app()->db;
+        $command = $connection->createCommand($sql);
+        $object = $command->queryAll();
+
+        return $object[0];
+    }
     
+    // getDiffObject usese the object_id to find the current object as opposed to the one above.
+    public function getDiffObject($object, $id, $release) {
+       $sql = "  
+                SELECT `x`.*
+                FROM `".Version::$objects[$object]."` `x` 
+                JOIN `version` `v`
+                ON `x`.`id` =`v`.`foreign_key`
+                WHERE 
+                `x`.`".Version::$objects[$object]."_id`=".$id."
+                AND  
+                `v`.`release`=".$release."  
+                AND `v`.`active`=1  
+                AND `v`.`object`=".$object;
+
+
+        $connection = Yii::app()->db;
+        $command = $connection->createCommand($sql);
+        $object = $command->queryAll();
+
+        return $object[0];
+    }
      public function objectList($object, $release) {
 
         $sql = "
@@ -1266,7 +1389,20 @@ class Version extends CActiveRecord {
         //print_r($projects);
         return $projects[0]['number'];
     }
+  public function getLastChange($release) {
+        $sql = "
+                  SELECT max(`v`.`number`) as number
+                  from
+                  `version` `v`
+                  WHERE
+                  `v`.`release`=" . $release;
 
+        $connection = Yii::app()->db;
+        $command = $connection->createCommand($sql);
+        $projects = $command->queryAll();
+        //print_r($projects);
+        return $projects[0]['number'];
+    }
     public function importObject($object, $id, $project, $newrelease, $offset, $numberoffset) {
         // this function imports objects and updates their relationships with an offset so
         //objects can be added to an existing project without clashing with existing objects
@@ -1364,6 +1500,9 @@ class Version extends CActiveRecord {
         $command->execute();
     }
 
+    
+    
+    
     public static function model($className = __CLASS__) {
         return parent::model($className);
     }

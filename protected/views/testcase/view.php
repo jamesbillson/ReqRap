@@ -88,10 +88,10 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                     </td>
 
                     <td>   
-                        <?php echo Version::model()->wikiOutput($item['action']);?>
+                        <?php echo Version::model()->wikiOutput($item['action'],0);?>
                     </td>                  
                                  <td>   
-                        <?php echo Version::model()->wikiOutput($item['result']);?>
+                        <?php echo Version::model()->wikiOutput($item['result'],0);?>
                     </td>  
 
                   

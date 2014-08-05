@@ -26,7 +26,7 @@ $name = ($flow['main']==1)?'<strong>Scenario Text</strong> ':'<strong>Alternate 
             <td>
                Step 
                <?php echo $step['number'];?><?php echo $actorname;?>
-               <?php echo Version::model()->wikiOutput($step['text'])." <br />".Version::model()->wikiOutput($step['result'])."</td> "; ?>
+               <?php echo Version::model()->wikiOutput($step['text'],1)." <br />".Version::model()->wikiOutput($step['result'],1)."</td> "; ?>
             </td>
 
              <?php }  ?>

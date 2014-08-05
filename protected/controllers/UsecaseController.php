@@ -332,12 +332,15 @@ class UsecaseController extends Controller
     
       
         foreach ($history as $version=>$line){
-            
+            // Set all the versions to inactive for these objects
              Version::model()->rollbackInactivate($line['object_id'], $line['object']);
             
       
             
-            
+            // Reset each version to point to the most recent version in the array.
+             // do this by comparing if its older than the rollback point ($id) and if
+             // its already been set.  This way it only sets once, at the closest point to the $id
+             
             if ($line['action']!=3 && $version<=$id && $line['object']==8 && !isset($flows[$line['object_id']])){
                    $flows[$line['object_id']]=$version;
              }
@@ -427,88 +430,180 @@ class UsecaseController extends Controller
         
                  public function actionDiff($old, $new)
         {
-            
-        $dataold = Usecase::model()->getReleaseUCs($old);
-        $datanew = Usecase::model()->getReleaseUCs($new);
-        $deletedUC = array();
-        $addedUC=array();
-  //find deleted UC's
-          if (count($dataold))
-            {
-                foreach($dataold as $itemold){
-                    
-                   $matchingNew=-1;
-                    for($i=0;$i<count($datanew);$i++)
+          $thisrelease=Release::model()->findbyPK($new);
+          $oldrelease=Release::model()->findbyPK($old);
+          $lastchangenew=Release::model()->LastChange($new);
+          if ($thisrelease->project_id != $oldrelease->project_id)     $this->redirect(array('site/fail/condition/release_mismatch'));
+          
+          
+          //Check both releases belong to one project and Ownership of both releases.
+          
+          
+          
+            // if its the current release it doesn't have an offset, so use the last change instead
+          if ($thisrelease->status==1) $lastchangenew=Version::model()->getLastChange($thisrelease->id);
+           
+          $lastchangeold=Release::model()->LastChange($old); 
+          $history=array();
+         /* 
+          echo '<h3>params</h3> old release: '.$old.' <br>new release: '.$new.' <br> '
+                 . 'last change in old release: '.$lastchangeold.'<br>'
+                 . 'last change in new release: '.$lastchangenew.'<br>';
+          
+          */
+         $changes=Version::model()->findAll('number >'.$lastchangeold.
+                 ' and number <='.$lastchangenew.' and project_id='.$thisrelease->project_id);
+          
+          $changes=Version::model()->findAll(array('order'=>'id DESC', 
+              'condition'=>'number >:x AND number <=:y AND project_id =:z', 
+              'params'=>array(':x'=>$lastchangeold,
+                            ':y'=>$lastchangenew,
+                            ':z'=>$thisrelease->project_id)));
+          
+               foreach($changes as $change)
+                {
+                    if (!isset($history[$change->object][$change->foreign_id]))
                     {
-                    if($datanew[$i]['usecase_id']==$itemold['usecase_id']) $matchingNew=$datanew[$i]['usecase_id'];
-                        
-                    }
-                    if ($matchingNew == -1) array_push($deletedUC,$itemold['usecase_id']);
-                }
-            }
-            
-
-            
-     // find added UC's     
-           if (count($datanew))
-            {
-                foreach($datanew as $itemnew){
+                    $history[$change->object][$change->foreign_id]['create']=0;
+                        // THere is no entry for this object, so make one
+                    $history[$change->object][$change->foreign_id]['content']=$change->id;
+                    // if this is a create step, set the create flag
+                    if($change->action==1)$history[$change->object][$change->foreign_id]['create']=1;
                     
-                    $matchingOld=-1;
-                    for($i=0;$i<count($dataold);$i++){
-                    if($dataold[$i]['usecase_id']==$itemnew['usecase_id']) $matchingOld=$itemnew['usecase_id'];
                     }
-                    if ($matchingOld == -1) array_push($addedUC,$itemnew['usecase_id']);
-      
-                }
-            }
-            echo'Deleted Use Case ID<br>';
-            foreach ($deletedUC as $UC) echo 'UC ID: '.$UC.'<br>';
+                    // if its was alread set as a change, and now there's a create, update the 'change' to create.
+                    if (isset ($history[$change->object][$change->foreign_id]) 
+                            && $change->action==1)
+                    {
+                       
+                    $history[$change->object][$change->foreign_id]['create']=1;
+                    }
+                    
+                }  
+            $linkparent=array(1=>16,2=>14, 12=>15);
+            $changelog=array(); 
+            $usecasechange=array();
+            if (count($history))
+            {            
+                for($i=1;$i<=18;$i++)
+                {
+                  //  echo '------testing object type: '.$i.'<br>';
+                    if (isset($history[$i])){
+                        foreach($history[$i] as $object)
+                        {
+                  //    echo '-----------Found one object type '.$i.' which is '.$object['content'].'<br>';
+                        
+                        $version=Version::model()->findbyPK($object['content']);
+                        if ($object['create']==1) $version->action=1;
+                        //echo 'change '.$version->number.''
+                        //        . ' '.Version::$action_labels[$version->action].''
+                        //        . ' '.Version::$objects[$version->object].'<br />';
+                        $changelog[$object['content']]['number']=$version->number;
+                        $changelog[$object['content']]['action']=$version->action;
+                        $changelog[$object['content']]['object']=$version->object;
+                        $changelog[$object['content']]['object_id']=$version->foreign_id;
+                      // Rules, Forms and Interfaces 
+                        if($version->object==1 || $version->object==2 || $version->object==12){ //This is a stepform - find the UC
+                        $parentuc=Version::model()->getObjectStepObjectParentUC($version->foreign_key,$linkparent[$version->object], $thisrelease->project_id,$version->object);
+                        $diffobject=Version::model()->getDiffObject($version->object, $version->foreign_id, $new);
+                        $changelog[$object['content']]['usecase_id']=$parentuc['usecase_id'];
+                        $usecasechange[$parentuc['usecase_id']]=(isset($usecasechange[$parentuc['usecase_id']]))?$usecasechange[$parentuc['usecase_id']]+1 : 1;
+                        $changelog[$object['content']]['name']=$diffobject['name'];
+                        $changelog[$object['content']]['text']=$diffobject['text'];
+                         
+                        //echo 'Usecase is '. $parentuc['usecase_id'].'<br />';
+                        } 
+                        
+                      //3 - form property
+                      //4 - Actor
+                      //6 - object
+                      //7 - object property
+                        
+                        if (in_array($version->object,array(3,4,6,7))){
+                        $changelog[$object['content']]['usecase_id']=-1;
+                        $changelog[$object['content']]['name']='none';
+                        $changelog[$object['content']]['description']='none';
+                          
+                        }
+                        
+                                
+                        // FLOWS
+                           if($version->object==8){ //This is a flow - find the UC
+                        $parentuc=Flow::model()->getDiffFlowParentUsecase($version->foreign_id, $new);
+                        $changelog[$object['content']]['usecase_id']=$parentuc['usecase_id'];
+                        $changelog[$object['content']]['name']=$parentuc['name'];
+          
+                        $changelog[$object['content']]['text']='';
+                        $usecasechange[$parentuc['usecase_id']]=(isset($usecasechange[$parentuc['usecase_id']]))? $usecasechange[$parentuc['usecase_id']]+1 :1;
+                        //echo 'Usecase is '. $parentuc['usecase_id'].'<br />';
+                        }
+                        
+                        //STEPS
+                        if($version->object==9){ //This is a step - find the UC
+                        $parentflow=Step::model()->getStepParentFlowByStepID($version->foreign_id);
+                        $parentuc=Flow::model()->getFlowParentUsecase($parentflow['id']);
+                        $changelog[$object['content']]['usecase_id']=$parentuc['usecase_id'];
+                      
+                         $changelog[$object['content']]['name']=$parentflow['text'];
+                         $changelog[$object['content']]['text']=$parentflow['result'];
+                        $usecasechange[$parentuc['usecase_id']]=(isset($usecasechange[$parentuc['usecase_id']]))?$usecasechange[$parentuc['usecase_id']]+1 : 1;
+                        //echo 'Usecase is '. $parentuc['usecase_id'].'<br />';
+                        }
+                        // USECASES
+                       if($version->object==10){ //This is a use case
+                       $changelog[$object['content']]['usecase_id']=$version->foreign_id;
+                       $uc=Usecase::model()->findbyPK($version->foreign_key);
+                       $usecasechange[$parentuc['usecase_id']]=(isset($usecasechange[$version->foreign_id]))?$usecasechange[$version->foreign_id]+1 : 1;  
+                       $changelog[$object['content']]['name']=$uc->name;
+                       $changelog[$object['content']]['text']=$uc->description;
+                     
+                        //echo 'Usecase is '.$version->foreign_id.'<br />';
+                        }
+                        // Relationship to Rules, Forms and Interfaces.
+                        if($version->object==14 || $version->object==15 || $version->object==16){ //This is a stepform - find the UC
+                        $parentuc=Version::model()->getStepObjectParentUC($version->foreign_key,$thisrelease->project_id,$version->object);
+                        $parentobject=Version::model()->getStepObject($version->object,$version->foreign_key,$new);
+                        $changelog[$object['content']]['usecase_id']=$parentuc['usecase_id'];
+                        $usecasechange[$parentuc['usecase_id']]=(isset($usecasechange[$parentuc['usecase_id']]))?$usecasechange[$parentuc['usecase_id']]+1 : 1;
+                        $changelog[$object['content']]['name']=$parentobject['name'];
+                        $changelog[$object['content']]['text']=$parentobject['text'];
+                   
 
-       
-            echo'Added Use Case ID<br>';
-            foreach ($addedUC as $UC) echo 'UC ID: '.$UC.'<br>';  
+                        ///echo 'Usecase is '. $parentuc['usecase_id'].'<br />';
+                       // echo '<br>############ PARENT ##########';
+                        //print_r($parentobject);
+                        }
+                        
+                       
+                        
+                        }
+                    }
+                }        
+            }   
+            ksort($usecasechange); 
             
-             // find changed UC's    
-            
-            
-            // find changed stepiface, steprule, stepform 
-            
-     if (count($datanew))
-            {
-                foreach($datanew as $itemnew){
-                    echo '<br>checking UCs for deleted rules UC #'.$itemnew['usecase_id'] ;
-           $params['new']=$new;
-           $params['old']=$old;
-           $params['id']=$itemnew['usecase_id'];
-           $params['object']=1;
-           $rules=Usecase::model()->linkedObjectComparison($params);
-           print_r($rules);
-           echo '<br />';
-           
-                       echo '<br>checking UCs for deleted forms UC #'.$itemnew['usecase_id'] ;
-           $params['new']=$new;
-           $params['old']=$old;
-           $params['id']=$itemnew['usecase_id'];
-           $params['object']=2;
-           $forms=Usecase::model()->linkedObjectComparison($params);
-             print_r($forms);
-           echo '<br />';
-           
-                }
-            }            
-            // find UC's with added/changed steps.
-        echo '<br>Deleted Rules '.count($rules);
-        echo '<br>Deleted Forms '.count ($forms);
-            
-
-            
-            
-            
-            
-        }
         
 
+            //echo '<h3>Number of changes by Usecase</h3><pre>';
+            //print_r($usecasechange);
+           // echo '</pre>';          
+           // echo '<h3>Changelog</h3><pre>';
+           // print_r($changelog);
+           // echo '</pre>';
+           // echo '<h3>History</h3><pre>';
+           // print_r($history);
+           // echo '</pre>';          
+       
+        
+       
+        $this->render('/project/diff',array(
+			'changelog'=>$changelog,
+                        'usecasechange'=>$usecasechange,
+                        'old'=>$old,
+                        'new'=>$new,
+		));  
+            
+        }
           
         
         

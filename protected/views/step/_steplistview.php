@@ -14,13 +14,13 @@
                         <td> <b>Action:</b><br />
             <?php 
             
-               echo  Version::model()->wikiOutput($item['text']);
+               echo  Version::model()->wikiOutput($item['text'],0);
              ?>
                             <br />
                             <b>Result:</b><br />
                              <?php 
             
-               echo  Version::model()->wikiOutput($item['result']);
+               echo  Version::model()->wikiOutput($item['result'],0);
              ?>
                         </td>
                         <td>

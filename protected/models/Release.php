@@ -137,6 +137,184 @@ class Release extends CActiveRecord
         return $release;
     }
     
+        public function lastChange($id)
+    {
+          
+               $sql="SELECT `offset` FROM `release` `r` WHERE `r`.`id`=".$id;
+                $connection=Yii::app()->db;
+		$command = $connection->createCommand($sql);
+		$releases = $command->queryAll();
+		if (!empty($releases)){
+                    $release=$releases[0]['offset'];
+                } ELSE {
+                    $release=-1;
+                }
+        return $release;
+    }
+    
+    
+           public function getReleaseHistory($id)//this is the release ID.
+    {
+// we need to go through each object and get its history of versions.
+               
+// Objects
+
+// Actors
+               
+// Categories
+               
+// -> Simple
+               
+// UC's (as below)
+//  -> Flow
+//     -> step
+//          ->stepiface
+//          ->stepform
+//          ->steprule
+               
+// Rule 
+               
+// Form
+//  ->formpropert
+
+// Iface
+//    -> photo
+
+
+               
+$history=array();
+
+$usecaselist=Usecase::model()->getAllReleaseUCs($id); //returns all usecase regardless if they've been deleted
+
+$data=Usecase::model()->getUsecaseVersions($usecase_id);
+foreach($data as $uc){
+
+
+$history[$uc['versionid']]=array(
+    'usecase_id'=>$uc['usecase_id'],
+    'object_id'=>$uc['usecase_id'],
+     'name'=>$uc['name'],
+    'detail'=>'',
+    'object'=>10,
+    'number'=>$uc['number'],
+     'action'=>$uc['action'],
+     'date'=>$uc['create_date'],
+        'firstname'=>$uc['firstname'],
+    'lastname'=>$uc['lastname'],
+    'active'=>$uc['active'],
+     );
+
+    $flows=Usecase::model()->getFlowVersions($uc['usecase_id']);
+    foreach($flows as $flow){
+
+
+$history[$flow['versionid']]=array(
+    'object_id'=>$flow['flow_id'],
+    'usecase_id'=>$uc['usecase_id'],
+     'name'=>$flow['name'],
+    'detail'=>'',
+    'object'=>8,
+    'number'=>$flow['number'],
+     'action'=>$flow['action'],
+     'date'=>$flow['create_date'],
+        'firstname'=>$flow['firstname'],
+    'lastname'=>$flow['lastname'],
+     'active'=>$flow['active'],
+     );
+
+     $steps=Usecase::model()->getStepVersions($flow['flow_id']);
+    foreach($steps as $step){
+
+    
+$history[$step['versionid']]=array(
+    'object_id'=>$step['step_id'],
+    'usecase_id'=>$uc['usecase_id'],
+    'name'=>$step['name'],
+    'detail'=>$step['detail'],
+    'object'=>9,
+    'number'=>$step['number'],
+    'action'=>$step['action'],
+    'date'=>$step['create_date'],
+    'firstname'=>$step['firstname'],
+    'lastname'=>$step['lastname'],
+     'active'=>$step['active'],
+     );
+
+ 
+    
+    
+        $stepifaces=Usecase::model()->getStepifaceVersions($flow['flow_id']);
+        foreach($stepifaces as $stepiface){
+        $history[$stepiface['versionid']]=array(
+            'object_id'=>$stepiface['stepiface_id'],
+            'usecase_id'=>$uc['usecase_id'],
+            'name'=>$stepiface['name'],
+            'detail'=>$stepiface['detail'],
+            'object'=>15,
+            'number'=>$stepiface['number'],
+            'action'=>$stepiface['action'],
+            'date'=>$stepiface['create_date'],
+            'firstname'=>$stepiface['firstname'],
+            'lastname'=>$stepiface['lastname'],
+             'active'=>$stepiface['active'],
+             );
+
+            }
+
+
+        $steprules=Usecase::model()->getStepruleVersions($flow['flow_id']);
+        foreach($steprules as $steprule){
+        $history[$steprule['versionid']]=array(
+            'object_id'=>$steprule['steprule_id'],
+            'usecase_id'=>$uc['usecase_id'],
+            'name'=>$steprule['name'],
+            'detail'=>$steprule['detail'],
+            'object'=>16,
+            'number'=>$steprule['number'],
+            'action'=>$steprule['action'],
+            'date'=>$steprule['create_date'],
+            'firstname'=>$steprule['firstname'],
+            'lastname'=>$steprule['lastname'],
+             'active'=>$steprule['active'],
+             );
+
+            }
+
+
+
+        $stepforms=Usecase::model()->getStepformVersions($flow['flow_id']);
+        foreach($stepforms as $stepform){
+       $history[$stepform['versionid']]=array(
+            'object_id'=>$stepform['stepform_id'],
+            'usecase_id'=>$uc['usecase_id'],
+            'name'=>$stepform['name'],
+            'detail'=>'',
+            'object'=>14,
+            'number'=>$stepform['number'],
+            'action'=>$stepform['action'],
+            'date'=>$stepform['create_date'],
+            'firstname'=>$stepform['firstname'],
+            'lastname'=>$stepform['lastname'],
+             'active'=>$stepform['active'],
+             );
+
+            }
+    
+    
+    }
+    
+    
+    
+    
+    
+    }
+}
+            
+            
+		return $history;
+    }
+    
+    
     
          public function createInitial($id)
     {

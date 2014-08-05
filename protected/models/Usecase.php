@@ -367,7 +367,7 @@ class Usecase extends CActiveRecord
     }
     
     
-            public function getHistory($id)
+            public function getHistory($id)//this is a Use Case id
     {
          
 $history=array();
@@ -498,7 +498,8 @@ $history[$step['versionid']]=array(
             
 		return $history;
     }
-        
+     
+   
       public function getUseCaseVersions($id)
     {
           $release=Yii::App()->session['release'];
@@ -983,11 +984,11 @@ $history[$step['versionid']]=array(
 		return $projects;
     }   
     
-       public function getAllReleaseUCs()
+       public function getAllReleaseUCs($id)
     {
         
       
-   $release=Yii::App()->session['release'];
+   $release=$id;
 
          $sql="SELECT 
             `u`.*,
@@ -1040,6 +1041,37 @@ $history[$step['versionid']]=array(
                 ORDER BY 
              `p`.`number` ASC,              
              `u`.`number` ASC";
+  
+		$connection=Yii::app()->db;
+		$command = $connection->createCommand($sql);
+		$projects = $command->queryAll();
+		return $projects;
+    }   
+    
+    
+    
+      public function getAllProjectUCs($id)
+    {
+        
+      
+   $project=$id;
+
+         $sql="SELECT 
+            `u`.*,
+            
+            `vu`.`create_date` as create_date
+           
+            FROM  `usecase` `u`
+            JOIN `version` `vu`
+            ON `vu`.`foreign_key`=`u`.`id`
+            WHERE
+            `vu`.`object`=10 
+            AND 
+            `vu`.`project_id`=".$project." 
+          GROUP BY
+          `u`.`usecase_id`
+            ORDER BY 
+             `u`.`usecase_id` ASC";
   
 		$connection=Yii::app()->db;
 		$command = $connection->createCommand($sql);
