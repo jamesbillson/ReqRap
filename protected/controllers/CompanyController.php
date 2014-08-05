@@ -279,11 +279,17 @@ if ($user->active==0)$this->redirect(array('site/verify'));
   		$data = $_POST['CompanyMeta'];
   		$id   = $data['company_id'];
   		foreach ($data as $key => $meta) {
+
   			if ( $key != 'company_id' && $meta != '') {
   				$companyMeta = Company::model()->findByPk($id);
   				$companyMeta->setEavAttribute($key, $meta);
   				$companyMeta->save();
   			}
+  		}
+  		if ( !isset($_POST['CompanyMeta']['html_output']) ) {
+  			$companyMeta = Company::model()->findByPk($id);
+  			$companyMeta->setEavAttribute('html_output', 0);
+  			$companyMeta->save();
   		}
   	}
   	$this -> redirect('/company/mycompany');

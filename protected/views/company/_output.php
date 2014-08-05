@@ -1,7 +1,5 @@
 <h4>Output configurations</h4>
-
 <?php 
-
 	$metaData = $model->getEavAttributes(array('html_output'));
 ?>
 <form class="form-horizontal" id="user-form" action="<?php echo Yii::app()->createUrl('company/addmeta'); ?>" method="post">
@@ -13,7 +11,7 @@
                     <?php echo Yii::t('app','Output print version as HTML'); ?>
                 </label>
 		<div class="controls">
-                    <input <?php if ( isset($metaData['html_output']) && $metaData['html_output']=='on' ) echo 'CHECKED'; ?> name="CompanyMeta[html_output]" value="html_output" id="html_output" class="" type="checkbox">
+            <input <?php if ( isset($metaData['html_output']) && $metaData['html_output']== 1 ) echo 'checked'; ?> name="CompanyMeta[html_output]" id="html_output" value="1" type="checkbox">
 		</div>
 	</div>
 	<div class="control-group">

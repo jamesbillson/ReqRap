@@ -11,7 +11,7 @@ $me = User::model()->findbyPK(Yii::app()->user->id);
 
 
 
-
+/*
 if(!(Users_meta::model()->ShowMessage('employee1')))
     {
     $employee1=  'This list shows all the people in your company '.CHtml::ajaxLink(
@@ -34,7 +34,7 @@ if(!(Users_meta::model()->ShowMessage('employee1')))
     
     }
 
-  
+  */
 
 
  if (count($data)):?>
@@ -65,7 +65,7 @@ if(!(Users_meta::model()->ShowMessage('employee1')))
 <table class="table tooltipster" >
     <thead >
 	<tr>
-		<th >Type</th>
+		<th>Type</th>
 		<th>Name</th>
 		<th>Email</th>
 		<th>Actions</th>
