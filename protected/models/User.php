@@ -278,4 +278,18 @@ class User extends CActiveRecord
         $command = $connection->createCommand($sql);
         $command->execute();
     } 
+
+    public function behaviors() {
+        return array(
+            'user_meta' => array(
+                'class' => 'ext.yiiext.behaviors.model.eav.EEavBehavior',
+                'tableName' => 'user_meta',
+                'entityField' => 'user_id',
+                'attributeField' => 'meta_name',
+                'valueField' => 'meta_value',
+                'modelTableFk' => 'user_id',
+                'safeAttributes' => array(),
+            )
+        );
+    }
 }

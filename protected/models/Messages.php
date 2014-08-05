@@ -93,7 +93,7 @@ class Messages extends CActiveRecord
 	{
 		// @todo Please modify the following code to remove attributes that should not be searched.
 
-		$criteria=new CDbCriteria;
+		$criteria = new CDbCriteria;
 
 		$criteria->compare('id',$this->id);
 		$criteria->compare('message',$this->message,true);
@@ -118,74 +118,74 @@ class Messages extends CActiveRecord
 		return parent::model($className);
 	}
         
-        public static function getTypes() {
-            
-            return array(
-              1 => 'First View',
-              2 => 'Code'
-            );
-        }
+    public static function getTypes() {
         
- public static function getMessage() {
-
-    $ids = $alert_messages = array();
-
-    if (isset(Yii::app()->user->id)) {
-      $criteria = new CDbCriteria;
-      $criteria->join = "LEFT JOIN user_meta a ON t.id = a.alert_messages_id and a.user_id =:user_id";
-      $criteria->condition = "a.id is null";
-      $criteria->params = array(':user_id' => Yii::app()->user->id);
-      $messages = Messages::model()->findAll($criteria);
-      $alerts_limit = min(5, count($messages)); //number of alters to display on a page
-      
-      foreach ($messages as $message) {
-        // set up the message in session
-        if (self::checkVisibility($message)) {
-          //$alert_messages[] = $message->message;
-          //$ids[] = $message->id;
-          //class="icon-'. $message->message_type .'-sign" 
-          Yii::app()->user->setFlash(Messages::$formats[$message->message_type], '<i data-id="'. $message->id .'"></i>' . $message->message);
-        }
-
-        if (count($alert_messages) >= $alerts_limit)
-          break;
-      }
-      /*if ($alert_messages) {
-        Yii::app()->user->setFlash('info', '<i class="icon-info-sign"></i>' . implode('<br/><i class="icon-info-sign"></i>', $alert_messages));
-        Yii::app()->clientScript->registerScript('alert_message_ids', 'var alert_message_ids = "' . implode(',', $ids) . '";');
-      }*/
+        return array(
+          1 => 'First View',
+          2 => 'Code'
+        );
     }
-  }
         
-        //checks the visiblity of message for a particular page/scope
-  public static function checkVisibility(&$message) {
-    $strExclude = preg_replace('/\*\//', Yii::app()->controller->id . '/', $message->exclude);
-    $strExclude = preg_replace('/\*/', Yii::app()->controller->action->id, $strExclude);
-    if (strpos($strExclude, Yii::app()->controller->id . '/' . Yii::app()->controller->action->id) !== FALSE) {
-      return false;
-    }
+ 	public static function getMessage() {
+	    $ids = $alert_messages = array();
+	    if (isset(Yii::app()->user->id)) 
+	    {
 
-    $str = preg_replace('/\*\//', Yii::app()->controller->id . '/', $message->scope);
-    $str = preg_replace('/\*/', Yii::app()->controller->action->id, $str);
-    
-    if (strpos($str, Yii::app()->controller->id . '/' . Yii::app()->controller->action->id) !== FALSE
-            && (($message->condition=='') || (!isset($message->condition)) || (self::runCode($message->condition)))
-    ) {
+	    	$user_id = Yii::app()->user->id;
+	        $controller_name = Yii::app()->controller->id;
+	        $action_name = Yii::app()->controller->action->id;
+	        $page_visited = $controller_name.'/'.$action_name;
+	        $user = User::model()->findByPk($user_id);
 
-      if ($message->show_once==1) //prevent write to database if the flag is already set
-        UserMeta::model()->createUserMeta($message->id,0);
+	        if ($user->getEavAttribute($page_visited) != 1) {
+		        $user->setEavAttribute($page_visited, 1);
+		        $user->save();
 
-      return true;
-    }else
-      return false;
-  }
+		    	$criteria = new CDbCriteria;
+		      	$criteria->condition = "user_id =:user_id ";
+		      	$criteria->condition = "scope = :scope ";
+		      	$criteria->params = array(':user_id' => Yii::app()->user->id);
+		      	$criteria->params = array(':scope' => $page_visited);
 
-  private static function runCode($code) {
-            
-            if(!$code)
-                return false;
-            
-            //var_dump(eval($code)); exit;
-            return eval($code);
-        }
+		      	$messages = Messages::model()->findAll($criteria);
+		      	$alerts_limit = min(5, count($messages)); //number of alters to display on a page
+	      
+		        foreach ($messages as $message) {
+		        if (self::checkVisibility($message)) {
+		          Yii::app()->user->setFlash(Messages::$formats[$message->message_type], '<i data-id="'. $message->id .'"></i>' . $message->message);
+		        }
+		        if (count($alert_messages) >= $alerts_limit)
+		          break;
+		      	}
+	      	}
+    	}
+  	}
+        
+  	public static function checkVisibility(&$message) {
+		$strExclude = preg_replace('/\*\//', Yii::app()->controller->id . '/', $message->exclude);
+		$strExclude = preg_replace('/\*/', Yii::app()->controller->action->id, $strExclude);
+		if (strpos($strExclude, Yii::app()->controller->id . '/' . Yii::app()->controller->action->id) !== FALSE) {
+		  return false;
+		}
+
+		$str = preg_replace('/\*\//', Yii::app()->controller->id . '/', $message->scope);
+		$str = preg_replace('/\*/', Yii::app()->controller->action->id, $str);
+
+		if (strpos($str, Yii::app()->controller->id . '/' . Yii::app()->controller->action->id) !== FALSE
+		        && (($message->condition=='') || (!isset($message->condition)) || (self::runCode($message->condition)))
+		) {
+			/*
+		  	if ($message->show_once==1) {
+				UserMeta::model()->createUserMeta($message->id,0);
+			}   */
+		    return true;
+		}
+    	return false;
+  	}
+
+  	private static function runCode($code) {
+	    if(!$code)
+	        return false;
+	    return eval($code);
+	}
 }
