@@ -35,7 +35,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                     <th>Description</th>
                     <th>Alias</th>
                     <th>Inherits</th>
-                    <th>Actions</th>
+                    <?php if($edit){ ?><th>Actions</th><?php } ?>
                 </tr>
             </thead>
             

@@ -14,7 +14,7 @@
 </td>
 
 <td>
-   <?php echo CHtml::encode(Version::$objects[$data->object]); ?> 
+   <?php echo CHtml::encode(Version::$object_labels[$data->object]); ?> 
 </td>
 
 <td>

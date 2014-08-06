@@ -19,7 +19,7 @@ if(count($library)){
     
     
 }
-
+$x=0;
 //print_r($shared);
 ?>
 
@@ -37,7 +37,7 @@ if(count($library)){
         <tbody>
 
         <?php foreach($data as $item) {
-            
+          $x++;  
         if(($item['id']!=$currentrelease)||($item['id']==$currentrelease && in_array(Yii::App()->session['permission'],array(1)))) {   
             
         
@@ -75,7 +75,11 @@ if(count($library)){
 
 
       <td>
-    <?php if (isset($shared[$item['id']])){
+         <?php    if ($x!=1){?>
+          <a href="/usecase/diff/old/<?php echo $old;?>/new/<?php echo $item['id'];?>"><b rel="tooltip" title="Compare this version to the previous release">&Delta;</b></a> 
+           <?php
+         }
+        if (isset($shared[$item['id']])){
         if($shared[$item['id']]==1){ ?>
              <a href="/library/view/"><i class="icon-book text-warning" rel="tooltip" title="In Public library"></i></a> 
      <?php
@@ -90,11 +94,13 @@ if(count($library)){
       if ($owner && $item['id']!=$currentrelease) {?>
           
       <a href="/library/create/id/<?php echo $item['id'];?>"><i class="icon-book text-success" rel="tooltip" title="Add to library"></i></a> 
+    <?php }}
+       if ($owner && $item['id']!=$currentrelease) {?>
       <a href="/release/copy/id/<?php echo $item['id'];?>"><i class="icon-copy" rel="tooltip" title="Copy Release to new project"></i></a>
      
          <?php
-            }  }
-            if ($item['id']==$currentrelease && $owner){;?>
+            } 
+            if ($item['id']==$currentrelease && $owner){?>
           <a href="/release/finalise/id/<?php echo $item['id'];?>"><i class="icon-certificate" rel="tooltip" title="Finalise Release"></i></a> 
         
         <?php /*
@@ -113,7 +119,9 @@ if(count($library)){
         if ($item['id']==$release){;?>
            <a href="/version/index/id/<?php echo $item['id'];?>"><i class="icon-calendar " rel="tooltip" title="View change log"></i></a> 
         
-              <?php } ?>
+              <?php } 
+              $old=$item['id'];
+              ?>
               
         </td>
         </tr>

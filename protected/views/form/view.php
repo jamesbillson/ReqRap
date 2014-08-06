@@ -41,7 +41,9 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                     <th>Type</th>
                     <th>Validation</th>
                     <th>Required</th>
+                    <?php if($edit){ ?>
                     <th>Actions</th>
+                    <?php } ?>
                 </tr>
             </thead>
             
