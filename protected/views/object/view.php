@@ -36,18 +36,28 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
           ),
 ));
 
+
 $data=  Objectproperty::model()->getObjectProperty($model->object_id);
 $counter=0;
   if (count($data)):?>
 
         <table class="table">
+            <tr><td>
+                <?php echo$model->description; ?>
+                </td>
+            </tr>
+        </table>
+   <table class="table">
+            </tr>
             <thead>
                 <tr>
                     <th>Ref.</th>
                     <th>Type</th>
                     <th>Name</th>
                     <th>Description</th>
-                    <th>Actions</th>
+                    <?php if($edit){ ?>
+                    <th>Actions</th> 
+                    <?php } ?>
                 </tr>
             </thead>
             
