@@ -173,6 +173,7 @@ return array(
         'easyImage' => array(
             'class' => 'ext.easyimage.EasyImage',
         ),
+        
         'ePdf' => array(
                 'class'         => 'ext.yii-pdf.EYiiPdf',
                 'params'        => array(
