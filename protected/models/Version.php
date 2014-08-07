@@ -32,7 +32,7 @@ class Version extends CActiveRecord {
         8 => 'Flow',
         9 => 'Step',
         10 => 'Use Case',
-        11 => 'Photo',
+        11 => 'Interface Image',
         12 => 'Interface',
         13 => 'Interface Type',
         14 => 'Related Form',
@@ -233,13 +233,14 @@ class Version extends CActiveRecord {
     	public function wikiInput($input,$parent,$parent_id)
 	{
 	$release=Yii::App()->session['release'];
-        $project=Yii::App()->session['project'];
+        $release=Yii::App()->session['project'];
         // get the text.
         $numberstart =  substr_count($input,"[[");
         $numberend =  substr_count($input,"]]");
-        if ($numberstart != $numberend) $error=TRUE;
-        
-        $end=array();
+        $error=TRUE;
+        if ($numberstart == $numberend) {
+        $error=FALSE;
+            $end=array();
         // parse it for wiki syntax.
         $x=0;
         $start=explode("[[", $input);
@@ -310,7 +311,7 @@ class Version extends CActiveRecord {
               // if the text area belongs to a step, we should hook up the object
                 // to that step with a step-thing relationship.
                 // we will need to have the parent type passed through at the top.
-                if ($parent==9 && $name['name']!='deleted')
+                if (isset($name) && $parent==9 && $name['name']!='deleted')
                 {// this is a valid object
                    $step=Step::model()->findbyPK($parent_id);
                    // This is a step
@@ -330,13 +331,13 @@ class Version extends CActiveRecord {
                         {
                         $model=new Steprule;
                         $model->steprule_id=Version::model()->getNextID(16);
-                        $model->project_id= $project;
+                        $model->project_id= $release;
                         $model->release_id=$release;
                         
                         $model->step_id=$step->step_id;
                         $model->rule_id=$instance;
                         $model->save(false);
-                        $version=Version::model()->getNextNumber($project,16,1,$model->primaryKey,$model->steprule_id);
+                        $version=Version::model()->getNextNumber($release,16,1,$model->primaryKey,$model->steprule_id);
 
                 
                         }
@@ -357,13 +358,13 @@ class Version extends CActiveRecord {
                         {
                         $model=new Stepform;
                         $model->stepform_id=Version::model()->getNextID(14);
-                        $model->project_id= $project;
+                        $model->project_id= $release;
                         $model->release_id=$release;
                         
                         $model->step_id=$step->step_id;
                         $model->form_id=$instance;
                         $model->save(false);
-                        $version=Version::model()->getNextNumber($project,14,1,$model->primaryKey,$model->stepform_id);
+                        $version=Version::model()->getNextNumber($release,14,1,$model->primaryKey,$model->stepform_id);
 
                 
                         }
@@ -382,13 +383,13 @@ class Version extends CActiveRecord {
                         {
                         $model=new Stepiface;
                         $model->stepiface_id=Version::model()->getNextID(15);
-                        $model->project_id= $project;
+                        $model->project_id= $release;
                         $model->release_id=$release;
                         
                         $model->step_id=$step->step_id;
                         $model->iface_id=$instance;
                         $model->save(false);
-                        $version=Version::model()->getNextNumber($project,15,1,$model->primaryKey,$model->stepiface_id);
+                        $version=Version::model()->getNextNumber($release,15,1,$model->primaryKey,$model->stepiface_id);
 
                 
                         }
@@ -399,22 +400,24 @@ class Version extends CActiveRecord {
             
             
         } // end of loop through string
-        
-        $result=implode(" ",$end);
+        }
+        $result=$input;
+        if(!$error) $result=implode(" ",$end);
         
         return $result  ;  
             
     }
 
-       	public function wikiOutput($input,$print)
+    public function wikiOutput($input,$print)
 	{
 	$release=Yii::App()->session['release'];
-        $project=Yii::App()->session['project'];
+        $release=Yii::App()->session['project'];
         // get the text.
         $numberstart =  substr_count($input,"[[");
         $numberend =  substr_count($input,"]]");
-        if ($numberstart != $numberend) $error=TRUE;
-        
+        $error=TRUE;
+        if ($numberstart == $numberend) {
+        $error=FALSE;
         $end=array();
         // parse it for wiki syntax.
         $x=0;
@@ -458,14 +461,14 @@ class Version extends CActiveRecord {
                             $end[$i]=$name['number'].'-'.$name['name'];
                         }    
                 }
-// THis is the human readable one that shows in the view screen
+            // THis is the human readable one that shows in the view screen
                
             }
             
         } // end of loop through string
-        
-        $result=implode(" ",$end);
-        
+        }
+        $result=$input;
+        if(!$error)$result=implode(" ",$end);
         return $result  ;  
             
     }
@@ -556,7 +559,7 @@ class Version extends CActiveRecord {
 	// get the text.
         // parse it for wiki links.
         $release=Yii::App()->session['release'];
-        $project=Yii::App()->session['project'];
+        $release=Yii::App()->session['project'];
         // get the text.
         $numberstart =  substr_count($input,"[[");
         $numberend =  substr_count($input,"]]");
@@ -604,8 +607,8 @@ class Version extends CActiveRecord {
 	{
                     
             $object_name=Version::$objects[$object];
-            $project=Yii::App()->session['project'];
-            $release=Release::model()->currentRelease($project);
+            $release=Yii::App()->session['project'];
+            $release=Release::model()->currentRelease($release);
             
             if($object==12){ // its an interface, so we need the type
                 $ifacetypes=  Interfacetype::model()->getInterfacetypes();
@@ -627,7 +630,7 @@ class Version extends CActiveRecord {
                     
                     if($model->save())
                     {
-                    $version=Version::model()->getNextNumber($project,$object,1,$model->primaryKey,$model[$object_name.'_id']);   
+                    $version=Version::model()->getNextNumber($release,$object,1,$model->primaryKey,$model[$object_name.'_id']);   
                     
                     
                     return $model[$object_name.'_id'];
@@ -697,11 +700,11 @@ class Version extends CActiveRecord {
                     Limit 0,1";
         $connection = Yii::app()->db;
         $command = $connection->createCommand($sql);
-        $projects = $command->queryAll();
-        if (!isset($projects[0]['number'])) {
+        $releases = $command->queryAll();
+        if (!isset($releases[0]['number'])) {
             $number = '0';
         } ELSE {
-            $number = $projects[0]['number'] + 1;
+            $number = $releases[0]['number'] + 1;
         }
 
         $sql = "UPDATE `version` 
@@ -818,11 +821,11 @@ class Version extends CActiveRecord {
         
         $connection = Yii::app()->db;
         $command = $connection->createCommand($sql);
-        $projects = $command->queryAll();
-       if (!empty($projects)){
-        $name=$projects[0]['name'];
-        $number=(isset($projects[0]['number']))?$projects[0]['number']: 0 ;
-        $catnum=(isset($projects[0]['parentnum']))?str_pad($projects[0]['parentnum'], 2, "0", STR_PAD_LEFT):''; 
+        $releases = $command->queryAll();
+       if (!empty($releases)){
+        $name=$releases[0]['name'];
+        $number=(isset($releases[0]['number']))?$releases[0]['number']: 0 ;
+        $catnum=(isset($releases[0]['parentnum']))?str_pad($releases[0]['parentnum'], 2, "0", STR_PAD_LEFT):''; 
 
         $prepend=Version::$numberformat[$object]['prepend'];
         $padded=$prepend.'-'.$catnum.str_pad($number, Version::$numberformat[$object]['padding'], "0", STR_PAD_LEFT);
@@ -833,6 +836,7 @@ class Version extends CActiveRecord {
         return $result;
     }
 
+    
      public function getNextID($object) {
         $sql = "SELECT `r`.`" . Version::$objects[$object] . "_id` as `number`
        From `" . Version::$objects[$object] . "` `r`
@@ -841,13 +845,13 @@ class Version extends CActiveRecord {
        LIMIT 0,1";
         $connection = Yii::app()->db;
         $command = $connection->createCommand($sql);
-        $projects = $command->queryAll();
-        if (!isset($projects[0]['number'])) {
-            $projects[0]['number'] = '1';
+        $releases = $command->queryAll();
+        if (!isset($releases[0]['number'])) {
+            $releases[0]['number'] = '1';
         } ELSE {
-            $projects[0]['number'] = $projects[0]['number'] + 1;
+            $releases[0]['number'] = $releases[0]['number'] + 1;
         }
-        return $projects[0]['number'];
+        return $releases[0]['number'];
     }
     
     
@@ -875,9 +879,9 @@ class Version extends CActiveRecord {
 
         $connection = Yii::app()->db;
         $command = $connection->createCommand($sql);
-        $projects = $command->queryAll();
+        $releases = $command->queryAll();
 
-        return $projects;
+        return $releases;
     }
 
     public function getObjectDeletedVersions($id, $parent, $object) {
@@ -904,9 +908,9 @@ class Version extends CActiveRecord {
 
         $connection = Yii::app()->db;
         $command = $connection->createCommand($sql);
-        $projects = $command->queryAll();
+        $releases = $command->queryAll();
 
-        return $projects;
+        return $releases;
     }
 
     public function userDestroy($id) {
@@ -940,9 +944,9 @@ class Version extends CActiveRecord {
 
         $connection = Yii::app()->db;
         $command = $connection->createCommand($sql);
-        $projects = $command->queryAll();
-        if (isset($projects[0]['id'])) {
-            return $projects[0]['id'];
+        $releases = $command->queryAll();
+        if (isset($releases[0]['id'])) {
+            return $releases[0]['id'];
         } ELSE {
             return 0;
         }
@@ -950,7 +954,7 @@ class Version extends CActiveRecord {
     }
     
     public function getVersion($id, $object) {
-        $project = Yii::app()->session['project'];
+        $release = Yii::app()->session['project'];
         $release = Yii::app()->session['release'];
 
         $sql = "SELECT `r`.id
@@ -968,9 +972,9 @@ class Version extends CActiveRecord {
 
         $connection = Yii::app()->db;
         $command = $connection->createCommand($sql);
-        $projects = $command->queryAll();
-        if (isset($projects[0]['id'])) {
-            return $projects[0]['id'];
+        $releases = $command->queryAll();
+        if (isset($releases[0]['id'])) {
+            return $releases[0]['id'];
         } ELSE {
             return 0;
         }
@@ -985,9 +989,9 @@ class Version extends CActiveRecord {
 
         $connection = Yii::app()->db;
         $command = $connection->createCommand($sql);
-        $projects = $command->queryAll();
+        $releases = $command->queryAll();
 
-        if(isset($projects[0])) return $projects[0];
+        if(isset($releases[0])) return $releases[0];
     }
     public function renumber($object,$parentid) {
         $parent=Version::$display[$object]['parent'].'_id';
@@ -997,10 +1001,10 @@ class Version extends CActiveRecord {
 	
              	$connection=Yii::app()->db;
 		$command = $connection->createCommand($sql);
-		$projects = $command->queryAll();
-                if (count($projects)){
+		$releases = $command->queryAll();
+                if (count($releases)){
                     $x=0;
-                     foreach($projects as $object){
+                     foreach($releases as $object){
                          $x++;
                 $sql="UPDATE `".Version::$objects[$object]."` SET `number`=".$x."
                     WHERE `id`=".$object['id'];
@@ -1017,7 +1021,7 @@ class Version extends CActiveRecord {
             
       public function getChildObjects($id,$object) // $object is the Child object type
     {
-          $project=Yii::App()->session['project'];
+          $release=Yii::App()->session['project'];
           $release=Yii::App()->session['release'];
         $sql="
             SELECT 
@@ -1038,9 +1042,9 @@ class Version extends CActiveRecord {
         
         $connection=Yii::app()->db;
 		$command = $connection->createCommand($sql);
-		$projects = $command->queryAll();
+		$releases = $command->queryAll();
 		
-		return $projects;
+		return $releases;
     }  
     
     
@@ -1073,9 +1077,9 @@ class Version extends CActiveRecord {
                 ver_numb DESC";
         $connection = Yii::app()->db;
         $command = $connection->createCommand($sql);
-        $projects = $command->queryAll();
+        $releases = $command->queryAll();
 
-        return $projects;
+        return $releases;
     }
 
      public function getMaxVersionNumber($release) {  // Object_id
@@ -1088,9 +1092,9 @@ class Version extends CActiveRecord {
                 LIMIT 0,1";
         $connection = Yii::app()->db;
         $command = $connection->createCommand($sql);
-        $projects = $command->queryAll();
+        $releases = $command->queryAll();
 
-        return $projects[0]['number'];
+        return $releases[0]['number'];
     }
     
     
@@ -1146,11 +1150,14 @@ class Version extends CActiveRecord {
 
      
     }
-    
-     public function getStepObjectParentUC($id,$project,$object)
+    // USed to get the parent UC in the Diff function
+     public function getStepObjectParentUC($id,$release,$object)
     {
-        $sql="SELECT `u`.*
+        $sql="SELECT `u`.*,
+            `p`.`number`
             FROM `usecase` `u`
+            JOIN `package` `p`
+            ON `p`.`package_id`=`u`.`package_id`
             JOIN `flow` `f` 
             ON `f`.`usecase_id`=`u`.`usecase_id`
             JOIN `step` `s`
@@ -1165,23 +1172,31 @@ class Version extends CActiveRecord {
             ON `vu`.`foreign_key`=`u`.`id`  
             JOIN `version` `vo`
             ON `vo`.`foreign_key`=`o`.`id`  
+            JOIN `version` `vp`
+            ON `vp`.`foreign_key`=`p`.`id`  
+            
             WHERE 
             `o`.`id`=".$id."
             AND 
-            `vu`.`object` =10 AND `vu`.`active`=1 AND `vu`.`project_id`=".$project."
+            `vu`.`object` =10 AND  `vu`.`release`=".$release."
             AND 
-            `vs`.`object` =9 AND `vs`.`active`=1 AND `vs`.`project_id`=".$project."
+            `vs`.`object` =9 AND  `vs`.`release`=".$release."
             AND 
-            `vo`.`object` =".$object." AND `vo`.`active`=1 AND `vo`.`project_id`=".$project."
+            `vp`.`object` =5 AND  `vp`.`release`=".$release."            
+            AND 
+            `vo`.`object` =".$object." AND `vo`.`release`=".$release."
             AND
-            `vf`.`object` =8 AND `vf`.`active`=1 AND `vf`.`project_id`=".$project;
+            `vf`.`object` =8 AND  `vf`.`release`=".$release." 
+             ORDER BY `vo`.`number` DESC, `vu`.`number` DESC, `vs`.`number` DESC, 
+             `vp`.`number` DESC, `vf`.`number` DESC
+             LIMIT 1";
 		$connection=Yii::app()->db;
 		$command = $connection->createCommand($sql);
-		$projects = $command->queryAll();
-		if(isset($projects[0])) return $projects[0];
+		$releases = $command->queryAll();
+		if(isset($releases[0])) return $releases[0];
     }
     
-       public function getObjectStepObjectParentUC($id,$link,$project,$object)
+       public function getObjectStepObjectParentUC($id,$link,$release,$object)
     {
         $sql="SELECT `u`.*
             FROM `usecase` `u`
@@ -1206,19 +1221,19 @@ class Version extends CActiveRecord {
             WHERE 
             `o`.`id`=".$id."
             AND 
-            `vu`.`object` =10 AND `vu`.`active`=1 AND `vu`.`project_id`=".$project."
+            `vu`.`object` =10 AND `vu`.`active`=1 AND `vu`.`project_id`=".$release."
             AND 
-            `vs`.`object` =9 AND `vs`.`active`=1 AND `vs`.`project_id`=".$project."
+            `vs`.`object` =9 AND `vs`.`active`=1 AND `vs`.`project_id`=".$release."
             AND 
-            `vl`.`object` =".$link." AND `vl`.`active`=1 AND `vl`.`project_id`=".$project."
+            `vl`.`object` =".$link." AND `vl`.`active`=1 AND `vl`.`project_id`=".$release."
             AND 
-            `vo`.`object` =".$object." AND `vo`.`active`=1 AND `vo`.`project_id`=".$project."
+            `vo`.`object` =".$object." AND `vo`.`active`=1 AND `vo`.`project_id`=".$release."
             AND
-            `vf`.`object` =8 AND `vf`.`active`=1 AND `vf`.`project_id`=".$project;
+            `vf`.`object` =8 AND `vf`.`active`=1 AND `vf`.`project_id`=".$release;
 		$connection=Yii::app()->db;
 		$command = $connection->createCommand($sql);
-		$projects = $command->queryAll();
-		if(isset($projects[0])) return $projects[0];
+		$releases = $command->queryAll();
+		if(isset($releases[0])) return $releases[0];
     }
     
     public function getParent($object, $id) {
@@ -1233,9 +1248,9 @@ class Version extends CActiveRecord {
 
         $connection = Yii::app()->db;
         $command = $connection->createCommand($sql);
-        $projects = $command->queryAll();
+        $releases = $command->queryAll();
 
-        return $projects[0]['id'];
+        return $releases[0]['id'];
     }
 
   public function getStepObject($object, $id, $release) {
@@ -1299,9 +1314,9 @@ class Version extends CActiveRecord {
 
         $connection = Yii::app()->db;
         $command = $connection->createCommand($sql);
-        $projects = $command->queryAll();
+        $releases = $command->queryAll();
 
-        return $projects;
+        return $releases;
     }
     
     
@@ -1320,9 +1335,9 @@ class Version extends CActiveRecord {
 
         $connection = Yii::app()->db;
         $command = $connection->createCommand($sql);
-        $projects = $command->queryAll();
+        $releases = $command->queryAll();
 
-        return $projects[0]['number'];
+        return $releases[0]['number'];
     }
 
     public function objectChildCount($object,$id) { // the object is child, the id is the parent
@@ -1343,9 +1358,9 @@ class Version extends CActiveRecord {
 
         $connection = Yii::app()->db;
         $command = $connection->createCommand($sql);
-        $projects = $command->queryAll();
+        $releases = $command->queryAll();
 
-        return $projects[0]['number'];
+        return $releases[0]['number'];
     }
     public function getMaxNumber($object, $release) {
 
@@ -1364,30 +1379,30 @@ class Version extends CActiveRecord {
 
         $connection = Yii::app()->db;
         $command = $connection->createCommand($sql);
-        $projects = $command->queryAll();
+        $releases = $command->queryAll();
 
 
-        if (!isset($projects[0]['number'])) {
-            $projects[0]['number'] = 0;
+        if (!isset($releases[0]['number'])) {
+            $releases[0]['number'] = 0;
         } ELSE {
-            $projects[0]['number'] = $projects[0]['number'];
+            $releases[0]['number'] = $releases[0]['number'];
         }
-        return $projects[0]['number'];
+        return $releases[0]['number'];
     }
 
-    public function getMaxID($project) {
+    public function getMaxID($release) {
         $sql = "
                   SELECT max(`v`.`foreign_id`) as number
                   from
                   `version` `v`
                   WHERE
-                  `v`.`project_id`=" . $project;
+                  `v`.`project_id`=" . $release;
 
         $connection = Yii::app()->db;
         $command = $connection->createCommand($sql);
-        $projects = $command->queryAll();
-        //print_r($projects);
-        return $projects[0]['number'];
+        $releases = $command->queryAll();
+        //print_r($releases);
+        return $releases[0]['number'];
     }
   public function getLastChange($release) {
         $sql = "
@@ -1399,11 +1414,11 @@ class Version extends CActiveRecord {
 
         $connection = Yii::app()->db;
         $command = $connection->createCommand($sql);
-        $projects = $command->queryAll();
-        //print_r($projects);
-        return $projects[0]['number'];
+        $releases = $command->queryAll();
+        //print_r($releases);
+        return $releases[0]['number'];
     }
-    public function importObject($object, $id, $project, $newrelease, $offset, $numberoffset) {
+    public function importObject($object, $id, $release, $newrelease, $offset, $numberoffset) {
         // this function imports objects and updates their relationships with an offset so
         //objects can be added to an existing project without clashing with existing objects
         $number = 0.1;
@@ -1415,7 +1430,7 @@ class Version extends CActiveRecord {
     SELECT *
     FROM " . Version::$objects[$object] . " 
     WHERE id=" . $id . ";
-    UPDATE tmptable_1 SET project_id = " . $project . ",
+    UPDATE tmptable_1 SET project_id = " . $release . ",
      " . Version::$objects[$object] . "_id = (" . Version::$objects[$object] . "_id)+" . $offset . ",
     release_id=" . $newrelease . ";";
 
@@ -1481,7 +1496,7 @@ class Version extends CActiveRecord {
     ) VALUES (
     " . $number . ",
     " . $newrelease . ",
-    " . $project . ",
+    " . $release . ",
     1,
     " . $object . ",
     1,

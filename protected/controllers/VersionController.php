@@ -108,7 +108,7 @@ class VersionController extends Controller
 		));
 	}
 
-        
+        /*
         	public function actionLink($id)
 	{
 	        $link =  explode("_", $id);     
@@ -116,7 +116,7 @@ class VersionController extends Controller
 		$this->redirect(array('/'.Version::$objects[$link[0]].'/view/id/'.$link[1]));
 		
 	}
-
+*/
         
 	/**
 	 * Deletes a particular model.
@@ -132,6 +132,28 @@ class VersionController extends Controller
 			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
 	}
 
+                public function actionLink($link)
+	{
+	 
+        $linkbits=  explode("_", $link);            
+        $object=$linkbits[1];
+        $release=$linkbits[0];
+        $object_id=$linkbits[2];
+        $thisrelease=Release::model()->findbyPK($release);
+       
+        $permissiontoview=0;
+           
+          $mycompany=User::model()->myCompany();
+          if ($thisrelease->project->company_id==$mycompany)$permissiontoview=1;
+          $follower=Follower::model()->getProjectFollowerDetails($thisrelease->project->id);
+          if(!empty($follower)) $permissiontoview=1;
+          if ($permissiontoview==0)$this->redirect(array('site/fail/condition/permission_fail'));
+          
+          Yii::App()->session['release']=$release;
+         
+          $this->redirect(array('/'.Version::$objects[$object].'/view/id/'.$object_id));
+        }
+        
                 public function actionRollBack($id)
 	{
 	 $model=Version::model()->findbyPK($id);

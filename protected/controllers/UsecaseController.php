@@ -430,14 +430,29 @@ class UsecaseController extends Controller
         
                  public function actionDiff($old, $new)
         {
+          
+        
+       
+                     
           $thisrelease=Release::model()->findbyPK($new);
+          
           $oldrelease=Release::model()->findbyPK($old);
           $lastchangenew=Release::model()->LastChange($new);
-          if ($thisrelease->project_id != $oldrelease->project_id)     $this->redirect(array('site/fail/condition/release_mismatch'));
+           //Check both releases belong to one project.
+                  
+          //Check Ownership of new release.
           
+          $permissiontoview=0;
+          if ($thisrelease->project_id == $oldrelease->project_id) 
+              { 
           
-          //Check both releases belong to one project and Ownership of both releases.
-          
+          $mycompany=User::model()->myCompany();
+          if ($thisrelease->project->company_id==$mycompany)$permissiontoview=1;
+          $follower=Follower::model()->getProjectFollowerDetails($thisrelease->project->id);
+          if(!empty($follower)) $permissiontoview=1;
+              }
+          if ($permissiontoview==0)$this->redirect(array('site/fail/condition/permission_fail'));
+         
           
           
             // if its the current release it doesn't have an offset, so use the last change instead
@@ -481,6 +496,12 @@ class UsecaseController extends Controller
                     
                 }  
             $linkparent=array(1=>16,2=>14, 12=>15);
+            $parentlink=array(16=>1,14=>2, 15=>12);
+            $ruleformiface=array(
+                1=>array('name'=>'Title', 'text'=>'Rule'),
+                2=>array('name'=>'Title', 'text'=>'Description'),
+                12=>array('name'=>'Title', 'text'=>'Description'),
+                );
             $changelog=array(); 
             $usecasechange=array();
             if (count($history))
@@ -503,29 +524,63 @@ class UsecaseController extends Controller
                         $changelog[$object['content']]['object']=$version->object;
                         $changelog[$object['content']]['object_id']=$version->foreign_id;
                       // Rules, Forms and Interfaces 
-                        if($version->object==1 || $version->object==2 || $version->object==12){ //This is a stepform - find the UC
+                        if($version->object==1 || $version->object==2 || $version->object==12){ 
                         $parentuc=Version::model()->getObjectStepObjectParentUC($version->foreign_key,$linkparent[$version->object], $thisrelease->project_id,$version->object);
                         $diffobject=Version::model()->getDiffObject($version->object, $version->foreign_id, $new);
                         $changelog[$object['content']]['usecase_id']=$parentuc['usecase_id'];
                         $usecasechange[$parentuc['usecase_id']]=(isset($usecasechange[$parentuc['usecase_id']]))?$usecasechange[$parentuc['usecase_id']]+1 : 1;
-                        $changelog[$object['content']]['name']=$diffobject['name'];
-                        $changelog[$object['content']]['text']=$diffobject['text'];
-                         
+                        $changelog[$object['content']]['name']=$ruleformiface[$version->object]['name'].': '.$diffobject['name'];
+                        $changelog[$object['content']]['text']=$ruleformiface[$version->object]['text'].': '.$diffobject['text'];
+                        $changelog[$object['content']]['link']= $new.'_'.$version->object.'_'.$diffobject[Version::$objects[$version->object].'_id'];
                         //echo 'Usecase is '. $parentuc['usecase_id'].'<br />';
+                        //print_r($diffobject);
+                        
                         } 
                         
                       //3 - form property
                       //4 - Actor
                       //6 - object
                       //7 - object property
+                      
                         
-                        if (in_array($version->object,array(3,4,6,7))){
+                        if (in_array($version->object,array(3,4,5,6,7))){
                         $changelog[$object['content']]['usecase_id']=-1;
                         $changelog[$object['content']]['name']='none';
                         $changelog[$object['content']]['description']='none';
-                          
+                        $diffobject=Version::model()->getDiffObject($version->object, $version->foreign_id, $new);
+                        $changelog[$object['content']]['link']= $new.'_'.$version->object.'_'.$diffobject[Version::$objects[$version->object].'_id'];
+                      
                         }
                         
+                         if ($version->object==13){
+                        $changelog[$object['content']]['usecase_id']=-1;
+                        $changelog[$object['content']]['name']='none';
+                        $changelog[$object['content']]['description']='none';
+                        $changelog[$object['content']]['link']= '';
+                      
+                        }
+                        
+                           if($version->object==11){ //This is a photo - find the UC
+                        $diffobject=Version::model()->getDiffObject($version->object, $version->foreign_id, $new);
+                        // find the iface that uses this photo
+                        $iface=Iface::model()->find('photo_id='.$version->foreign_id.' AND release_id='.$new);
+                        if(!empty($iface)) {
+                        $parentuc=Version::model()->getObjectStepObjectParentUC($iface->iface_id,$linkparent[12], $thisrelease->project_id,12);
+                        $changelog[$object['content']]['usecase_id']=$parentuc['usecase_id'];
+                        $usecasechange[$parentuc['usecase_id']]=(isset($usecasechange[$parentuc['usecase_id']]))?$usecasechange[$parentuc['usecase_id']]+1 : 1;
+                        $changelog[$object['content']]['name']=$ruleformiface[12]['name'].': '.$iface['name'];
+                        $changelog[$object['content']]['text']=$ruleformiface[12]['text'].': '.$iface['text'];
+                        $changelog[$object['content']]['link']= $new.'_12_'.$diffobject[Version::$objects[$version->object].'_id'];
+                        //echo 'Usecase is '. $parentuc['usecase_id'].'<br />';
+                        //print_r($diffobject);
+                        } ELSE {
+                        $changelog[$object['content']]['usecase_id']=-1;
+                        $changelog[$object['content']]['name']='none';
+                        $changelog[$object['content']]['description']='none';
+                        $changelog[$object['content']]['link']= '';
+                        
+                        }
+                        } 
                                 
                         // FLOWS
                            if($version->object==8){ //This is a flow - find the UC
@@ -535,6 +590,8 @@ class UsecaseController extends Controller
           
                         $changelog[$object['content']]['text']='';
                         $usecasechange[$parentuc['usecase_id']]=(isset($usecasechange[$parentuc['usecase_id']]))? $usecasechange[$parentuc['usecase_id']]+1 :1;
+                        $changelog[$object['content']]['link']= $new.'_9_'.$parentuc['usecase_id'];
+                    
                         //echo 'Usecase is '. $parentuc['usecase_id'].'<br />';
                         }
                         
@@ -544,9 +601,10 @@ class UsecaseController extends Controller
                         $parentuc=Flow::model()->getFlowParentUsecase($parentflow['id']);
                         $changelog[$object['content']]['usecase_id']=$parentuc['usecase_id'];
                       
-                         $changelog[$object['content']]['name']=$parentflow['text'];
-                         $changelog[$object['content']]['text']=$parentflow['result'];
+                         $changelog[$object['content']]['name']='Action: '.$parentflow['text'];
+                         $changelog[$object['content']]['text']='Result: '.$parentflow['result'];
                         $usecasechange[$parentuc['usecase_id']]=(isset($usecasechange[$parentuc['usecase_id']]))?$usecasechange[$parentuc['usecase_id']]+1 : 1;
+                        $changelog[$object['content']]['link']= $new.'_9_'.$parentuc['usecase_id'];
                         //echo 'Usecase is '. $parentuc['usecase_id'].'<br />';
                         }
                         // USECASES
@@ -556,17 +614,18 @@ class UsecaseController extends Controller
                        $usecasechange[$parentuc['usecase_id']]=(isset($usecasechange[$version->foreign_id]))?$usecasechange[$version->foreign_id]+1 : 1;  
                        $changelog[$object['content']]['name']=$uc->name;
                        $changelog[$object['content']]['text']=$uc->description;
-                     
+                     $changelog[$object['content']]['link']= $new.'_9_'.$uc['usecase_id'];
                         //echo 'Usecase is '.$version->foreign_id.'<br />';
                         }
                         // Relationship to Rules, Forms and Interfaces.
                         if($version->object==14 || $version->object==15 || $version->object==16){ //This is a stepform - find the UC
-                        $parentuc=Version::model()->getStepObjectParentUC($version->foreign_key,$thisrelease->project_id,$version->object);
+                        $parentuc=Version::model()->getStepObjectParentUC($version->foreign_key,$new,$version->object);
                         $parentobject=Version::model()->getStepObject($version->object,$version->foreign_key,$new);
                         $changelog[$object['content']]['usecase_id']=$parentuc['usecase_id'];
                         $usecasechange[$parentuc['usecase_id']]=(isset($usecasechange[$parentuc['usecase_id']]))?$usecasechange[$parentuc['usecase_id']]+1 : 1;
                         $changelog[$object['content']]['name']=$parentobject['name'];
                         $changelog[$object['content']]['text']=$parentobject['text'];
+                       $changelog[$object['content']]['link']= $new.'_9_'.$parentuc['usecase_id'];
                    
 
                         ///echo 'Usecase is '. $parentuc['usecase_id'].'<br />';
@@ -584,15 +643,7 @@ class UsecaseController extends Controller
             
         
 
-            //echo '<h3>Number of changes by Usecase</h3><pre>';
-            //print_r($usecasechange);
-           // echo '</pre>';          
-           // echo '<h3>Changelog</h3><pre>';
-           // print_r($changelog);
-           // echo '</pre>';
-           // echo '<h3>History</h3><pre>';
-           // print_r($history);
-           // echo '</pre>';          
+        
        
         
        
