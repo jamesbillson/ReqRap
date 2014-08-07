@@ -192,22 +192,21 @@ class ProjectController extends Controller
     public function actionPrint() {
         
         $metaModel = Company::model()->findByPk(User::model()->myCompany());
-        $metaData = $metaModel->getEavAttributes(array('html_output'));
+        $metaData = $metaModel->getEavAttributes(array('html_output', 'output_font'));
         $project=Project::model()->findbyPK(Yii::app()->session['project']);
 
         $fontDefault = 'dejavusans';
         if ( isset($metaData['output_font']) && $metaData['output_font'] ) {
             $fontDefault = $metaData['output_font'];
         }
-        
-        if ( isset($metaData['html_output']) &&  $metaData['html_output']=='on') {
+        if ( isset($metaData['html_output']) &&  $metaData['html_output']== 1) {
             echo $this->renderPartial('print', array(), true);
         } else {
             $filename=$project->name.'.pdf';
             $mPDF1 = Yii::app()->ePdf->mpdf('en-GB','A4',9, $fontDefault);
             $mPDF1->SetHeader('First section header');
             $mPDF1->SetFooter('First section footer');
-            $mPDF1->WriteHTML(file_get_contents(Yii::getPathOfAlias('webroot').Yii::app()->theme->baseUrl.'/css/print.css'), 1);
+      //      $mPDF1->WriteHTML(file_get_contents(Yii::getPathOfAlias('webroot').Yii::app()->theme->baseUrl.'/css/print.css'), 1);
             $mPDF1->WriteHTML($this->renderPartial('print', array(), true), 0);
             $mPDF1->Output( $filename, EYiiPdf::OUTPUT_TO_DOWNLOAD);
         }

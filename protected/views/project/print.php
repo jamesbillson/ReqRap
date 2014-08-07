@@ -14,6 +14,7 @@ if($model->company->logo_id!='') {
 }
 
 ?>
+<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->theme->baseUrl.'/css/print.css' ?>" />
 <div class="print" >
   <h1>Requirements Model</h1>
   <h2> <?php echo $model->name;?></h2>
