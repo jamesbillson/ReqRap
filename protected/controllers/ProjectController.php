@@ -176,7 +176,7 @@ class ProjectController extends Controller
      
     }
     
- public function actionExtView($id)
+   public function actionExtView($id)
     {
         $model = Project::model()->find('extlink = \''.$id.'\'');
       
@@ -199,17 +199,16 @@ class ProjectController extends Controller
         } else {
             define("DOMPDF_DEFAULT_FONT", "sans-serif");
         }
-    //    $html = $this->renderPartial('print', array(), true);
         if ( isset($metaData['html_output']) &&  $metaData['html_output']=='on') {
-
             echo $this->renderPartial('print', array(), true);
         } else {
             $filename=$project->name.'.pdf';
-            $pdf=Yii::app()->dompdf;    
-            $pdf->dompdf->set_paper('a4');     
-
-            $html = $this->renderPartial('print', array(), true);
-            $pdf->generate($html,$filename,false); 
+            $mPDF1 = Yii::app()->ePdf->mpdf('', 'A4');
+            $mPDF1->SetHeader('First section header');
+            $mPDF1->SetFooter('First section footer');
+            $mPDF1->WriteHTML(file_get_contents(Yii::getPathOfAlias('webroot').Yii::app()->theme->baseUrl.'/css/print.css'), 1);
+            $mPDF1->WriteHTML($this->renderPartial('print', array(), true), 0);
+            $mPDF1->Output( $filename, EYiiPdf::OUTPUT_TO_DOWNLOAD);
         }
     }
     /**

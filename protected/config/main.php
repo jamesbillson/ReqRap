@@ -173,6 +173,18 @@ return array(
         'easyImage' => array(
             'class' => 'ext.easyimage.EasyImage',
         ),
+        'ePdf' => array(
+                'class'         => 'ext.yii-pdf.EYiiPdf',
+                'params'        => array(
+                    'mpdf'     => array(
+                        'librarySourcePath' => 'application.vendors.mpdf.*',
+                        'constants'         => array(
+                            '_MPDF_TEMP_PATH' => Yii::getPathOfAlias('application.runtime'),
+                        ),
+                        'class'=>'mpdf',
+                    )
+                ),
+        ),
     ),
     
     // application-level parameters that can be accessed

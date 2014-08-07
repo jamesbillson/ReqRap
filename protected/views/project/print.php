@@ -14,14 +14,6 @@ if($model->company->logo_id!='') {
 }
 
 ?>
-<style type="text/css">
-<?php
-  $stylesheet = file_get_contents(Yii::app()->theme->basePath.'/css/bootstrap.min.css'); 
-  echo $stylesheet;
-  $stylesheet = file_get_contents(Yii::app()->theme->basePath.'/css/print.css'); 
-  echo $stylesheet;
-?>
-</style>
 <div class="print" >
   <h1>Requirements Model</h1>
   <h2> <?php echo $model->name;?></h2>
@@ -161,13 +153,14 @@ if($model->company->logo_id!='') {
             }
 
             
-            
+  /*         
   $forms = Form::model()->getProjectForms(Yii::app()->session['project']);
 
-  if (count($forms)):  echo '<div style="page-break-before: always;"></div>';
+  if (count($forms)):  echo '<div style="page-break-before: always;"></div>';*/
   ?>
 
   <?php
+  /*
   $this->renderPartial('/form/print',array('heading'=>$heading,'forms'=>$forms)); 
   $heading++; 
   endif;
@@ -179,7 +172,7 @@ if($model->company->logo_id!='') {
             $this->renderPartial('/category/print',array('heading'=>$heading,'id'=>$cat['id']));   
             $heading++;
             }
-            }
+            }*/
   ?>
 </div>
 
