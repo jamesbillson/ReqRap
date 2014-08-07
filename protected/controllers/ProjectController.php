@@ -196,14 +196,15 @@ class ProjectController extends Controller
         $project=Project::model()->findbyPK(Yii::app()->session['project']);
 
         $fontDefault = 'dejavusans';
+
         if ( isset($metaData['output_font']) && $metaData['output_font'] ) {
             $fontDefault = $metaData['output_font'];
         }
         if ( isset($metaData['html_output']) &&  $metaData['html_output']== 1) {
             echo $this->renderPartial('print', array(), true);
         } else {
-            $filename=$project->name.'.pdf';
-            $mPDF1 = Yii::app()->ePdf->mpdf('en-GB','A4',9, $fontDefault);
+            $filename = $project->name.'.pdf';
+            $mPDF1 = Yii::app()->ePdf->mpdf('','A4',16, $fontDefault);
             $mPDF1->SetHeader('First section header');
             $mPDF1->SetFooter('First section footer');
       //      $mPDF1->WriteHTML(file_get_contents(Yii::getPathOfAlias('webroot').Yii::app()->theme->baseUrl.'/css/print.css'), 1);
