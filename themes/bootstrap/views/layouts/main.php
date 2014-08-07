@@ -77,14 +77,7 @@ if (!empty(Yii::app()->user->id) || !empty(Yii::app()->user->company_id)){
 				)),
          
                              // PM Menu
-                            array('label'=>'Projects',
-                                        'visible'=>!Yii::app()->user->isGuest && $company>0,
-                                        'items'=>array(
-                                                       
-                                                        array('label'=>'Projects', 'url'=>'/project/myprojects'),
-                                                        array('label'=>'Library', 'url'=>'/library/view'),
-                                                        
-				)),
+     
                             /*
                               array('label'=>'Costs',
                                            'visible'=>!Yii::app()->user->isGuest && User::model()->myCompanyType()==1,

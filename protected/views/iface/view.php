@@ -38,27 +38,25 @@ if ($model->photo_id==0 || $image_id==0)
     $orphans=Photo::model()->orphanPics();
     if(count($orphans)){
     ?>   
-Pick an image for this interface or upload a new one.<br />
+    Pick an image for this interface or upload a new one.<br />
             <div class="jcarousel-wrapper">
                 <div class="jcarousel">
 
                     <ul>
-                                        <?php foreach ($orphans as $pic){  ?>
-                   <?php 
+                    <?php foreach ($orphans as $pic){  ?>
+                    <?php 
                   
-                   $src=Yii::app()->params['photo_folder']."missing.png";
-      if(isset($pic->file) && is_file(Yii::app()->params['photo_folder'].$pic->file))
-      $src = Yii::app()->easyImage->thumbSrcOf(
+                    $src=Yii::app()->params['photo_folder']."missing.png";
+                    
+                    if(isset($pic->file) && is_file(Yii::getPathOfAlias('webroot').'/uploads/images/'.$image->file))
+                    $src = Yii::app()->easyImage->thumbSrcOf(
                                     Yii::app()->params['photo_folder'].$image->file, 
                                    array('resize' => array('width' => 150,'height'=>150))); 
-                   
-                  
-      ?>
+                    ?>
                         <li><a href="/iface/addimage/iface/<?php echo $model->iface_id; ?>/id/<?php echo $pic['photo_id']; ?>"  rel="tooltip" title="<?php echo $pic['description'] ?>" ><img src="<?php echo $src; ?>" border="0" width="150" height="150"></a></li>        
-<?php 
- }
-
-?>
+                    <?php 
+                    }
+                    ?>
                      </ul>
                 </div>
 
@@ -67,41 +65,42 @@ Pick an image for this interface or upload a new one.<br />
 
                 <p class="jcarousel-pagination"></p>
             </div>  
-<?php }?>
-<br />                     
+        <?php }?>
+        <br />                     
     
-<div class="row">
-        <div class="span11">
-            <?php //$photo = new Photo;
-$this->widget('ext.EAjaxUpload.EAjaxUpload',
-array(
-        'id'=>'uploadFile',
-        'config'=>array(
-               'action'=>Yii::app()->createUrl("photo/singleupload",array('id'=>$model->project_id,'ifaceId'=>$model->iface_id)),
-               'allowedExtensions'=>array("jpg", "jpeg", "gif", "png", "PNG", "JPG", "GIF", "JPEG"),//array("jpg","jpeg","gif","exe","mov" and etc...
-               'sizeLimit'=>2*1024*1024,// maximum file size in bytes
-               'onComplete'=>"js:function(){window.location.href='/iface/view/id/$model->iface_id' }",
+        <div class="row">
+            <div class="span11">
+                <?php //$photo = new Photo;
+                $this->widget('ext.EAjaxUpload.EAjaxUpload',
+                array(
+                        'id'=>'uploadFile',
+                        'config'=>array(
+                                'action'=>Yii::app()->createUrl("photo/singleupload",array('id'=>$model->project_id,'ifaceId'=>$model->iface_id)),
+                                'allowedExtensions'=>array("jpg", "jpeg", "gif", "png", "PNG", "JPG", "GIF", "JPEG"),//array("jpg","jpeg","gif","exe","mov" and etc...
+                                'sizeLimit'=>2*1024*1024,// maximum file size in bytes
+                                'onComplete'=>"js:function(){window.location.href='/iface/view/id/$model->iface_id' }",
             )));
 ?>
 
         </div>
         <?php } ELSE {
-  $config = array(
-      );
+        $config = array();
  
-      $this->widget('application.extensions.fancybox.EFancyBox', array(
+        $this->widget('application.extensions.fancybox.EFancyBox', array(
         'target'=>'a#popup',
         'config'=>$config,));
  
-      
+       // echo 'image_id: '.$image_id;
          
-      $image=Photo::model()->findByPk($image_id);
-      $src=Yii::app()->params['photo_folder']."missing.png";
-      if(is_file(Yii::app()->params['photo_folder'].$image->file))
-      $src = Yii::app()->easyImage->thumbSrcOf(
-                                    Yii::app()->params['photo_folder'].$image->file, 
-                                   array('resize' => array('width' => 150,'height'=>150))); 
- 
+        $image=Photo::model()->findByPk($image_id);
+        
+        $src=Yii::app()->params['photo_folder']."missing.png";
+        if(is_file(Yii::getPathOfAlias('webroot').'/uploads/images/'.$image->file))      
+        
+        $src = Yii::app()->easyImage->thumbSrcOf(
+                                      Yii::app()->params['photo_folder'].$image->file, 
+                                     array('resize' => array('width' => 150,'height'=>150))); 
+
     ?>
     <div style="float:left;width:100%;">
       <div style="width:160px;float:left;">
