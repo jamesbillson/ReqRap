@@ -275,18 +275,17 @@ if ($user->active==0)$this->redirect(array('site/verify'));
   }
 
   public function actionAddmeta() {
-  	if ( isset($_POST) && isset($_POST['CompanyMeta']) ) {
-  		$data = $_POST['CompanyMeta'];
+  	if ( isset($_POST) && isset($_POST['Companymetaform']) ) {
+  		$data = $_POST['Companymetaform'];
   		$id   = $data['company_id'];
   		foreach ($data as $key => $meta) {
-
-  			if ( $key != 'company_id' && $meta != '') {
+  			if ( $key != 'company_id') {
   				$companyMeta = Company::model()->findByPk($id);
   				$companyMeta->setEavAttribute($key, $meta);
   				$companyMeta->save();
   			}
   		}
-  		if ( !isset($_POST['CompanyMeta']['html_output']) ) {
+  		if ( !isset($_POST['Companymetaform']['html_output']) ) {
   			$companyMeta = Company::model()->findByPk($id);
   			$companyMeta->setEavAttribute('html_output', 0);
   			$companyMeta->save();
