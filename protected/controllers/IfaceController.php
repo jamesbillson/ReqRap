@@ -69,19 +69,16 @@ class IfaceController extends Controller
         	));
 	}
         
-          public function actionPreview($id,$release) // Note that this is form_id
-	{
-         
-              $versions=Version::model()->getVersions($id,12,'iface_id');
-                $model=$this->loadModel($versions[0]['id']);
-                //need to load other models here and pass them
-                $this->layout = 'popup';
-                $types=  Interfacetype::model()->getInterfaceTypes();
-              $this->render('preview',array('model'=>$model,
+    public function actionPreview($id,$release) {
+    	$this->layout = 'popup';
+	    $versions=Version::model()->getVersions($id,12,'iface_id');
+	    $model=$this->loadModel($versions[0]['id']);
+	    $types=  Interfacetype::model()->getInterfaceTypes();
+	    $this->renderPartial('preview',array('model'=>$model,
 			'versions'=>$versions, 'types'=>$types, 'release'=>$release
-        	));
-            
+		));
 	}
+	
 	public function actionCreate()
 	{
               $release=Yii::app()->session['release'];
