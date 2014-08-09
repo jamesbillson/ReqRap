@@ -151,11 +151,17 @@ class User extends CActiveRecord
             
     public function beforeSave()
     {
-     
-        $this->password = md5($this->password); 
+      $user_id = Yii::app()->user->id;
+      $user = User::model()->findByPk($user_id);
+      if ( $user->password ) {
+        if ($this->password !== $user->password) {
+          $this->password = md5($this->password);
+        }
+      } else {
         
-     
-        return parent::beforeSave();
+        $this->password = md5($this->password); 
+      }
+      return parent::beforeSave();
     }
        public function myCompany()
     {
