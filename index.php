@@ -10,7 +10,7 @@ $wp_did_header = true;
 require_once('wordpress/wp-load.php');
 
 // change the following paths if necessary
-$yii=dirname(__FILE__).'/framework/yiilite.php';
+$yii=dirname(__FILE__).'/../yii/framework/yiilite.php';
 $config = dirname(__FILE__).'/protected/config/main.php';
 
 
