@@ -1,0 +1,11 @@
+/**
+ * Stylesheet for non-responsiveness (if enabled through options panel)
+ *
+ */
+ 
+/* Reset the container */
+.container {
+  max-width: none !important;
+  width: 970px;
+}
+

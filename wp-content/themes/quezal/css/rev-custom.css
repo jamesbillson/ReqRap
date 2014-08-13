@@ -1,0 +1,10 @@
+/* Stylesheet for revolution custom styles */
+.tp-bullets.tp-thumbs {
+	background: transparent;
+}
+.tp-thumbs {
+	padding: 0px !important;
+}
+.tp-bullets.tp-thumbs .bullet {
+	opacity: 0.8;
+}

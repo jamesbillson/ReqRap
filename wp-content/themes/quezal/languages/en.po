@@ -1,0 +1,4183 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Quezal\n"
+"POT-Creation-Date: 2014-08-02 17:31+0530\n"
+"PO-Revision-Date: 2014-08-02 17:32+0530\n"
+"Last-Translator: Tansh <creative.tansh@gmail.com>\n"
+"Language-Team: Tansh\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.6.7\n"
+"X-Poedit-Basepath: .\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPath-1: ..\n"
+
+#: ../quezal/404.php:68 404.php:68
+msgid "404"
+msgstr ""
+
+#: ../quezal/404.php:73
+#: ../quezal/includes/templates/post-formats/content-none.php:24 404.php:73
+#: includes/templates/post-formats/content-none.php:24
+msgid ""
+"It seems we can&rsquo;t find what you&rsquo;re looking for. Try with search."
+msgstr ""
+
+#: ../quezal/admin/extensions/customizer/extension_customizer.php:467
+#: ../quezal/admin/framework.php:1761
+#: admin/extensions/customizer/extension_customizer.php:467
+#: admin/framework.php:1761
+msgid "You have changes that are not saved. Would you like to save them now?"
+msgstr ""
+
+#: ../quezal/admin/extensions/customizer/extension_customizer.php:468
+#: ../quezal/admin/framework.php:1769
+#: admin/extensions/customizer/extension_customizer.php:468
+#: admin/framework.php:1769
+msgid "Are you sure? Resetting will lose all custom values."
+msgstr ""
+
+#: ../quezal/admin/extensions/customizer/extension_customizer.php:469
+#: ../quezal/admin/framework.php:1785
+#: admin/extensions/customizer/extension_customizer.php:469
+#: admin/framework.php:1785
+msgid ""
+"Your current options will be replaced with the values of this preset. Would "
+"you like to proceed?"
+msgstr ""
+
+#: ../quezal/admin/extensions/customizer/extension_customizer.php:502
+#: admin/extensions/customizer/extension_customizer.php:502
+msgid "You have changes that are not saved.  Would you like to save them now?"
+msgstr ""
+
+#: ../quezal/admin/extensions/customizer/extension_customizer.php:503
+#: admin/extensions/customizer/extension_customizer.php:503
+msgid "Are you sure?  Resetting will lose all custom values."
+msgstr ""
+
+#: ../quezal/admin/extensions/customizer/extension_customizer.php:504
+#: admin/extensions/customizer/extension_customizer.php:504
+msgid ""
+"Your current options will be replaced with the values of this preset.  Would "
+"you like to proceed?"
+msgstr ""
+
+#: ../quezal/admin/framework.php:172 admin/framework.php:172
+#, php-format
+msgid "Options panel created using %1$s"
+msgstr ""
+
+#: ../quezal/admin/framework.php:172 admin/framework.php:172
+msgid "Redux Framework"
+msgstr ""
+
+#: ../quezal/admin/framework.php:176 ../quezal/admin/framework.php:180
+#: admin/framework.php:176 admin/framework.php:180
+msgid "Options"
+msgstr ""
+
+#: ../quezal/admin/framework.php:1218 ../quezal/admin/framework.php:1219
+#: ../quezal/admin/framework.php:3363 ../quezal/admin/framework.php:3442
+#: admin/framework.php:1218 admin/framework.php:1219 admin/framework.php:3363
+#: admin/framework.php:3442
+msgid "System Info"
+msgstr ""
+
+#: ../quezal/admin/framework.php:1777 admin/framework.php:1777
+msgid "Are you sure? Resetting will lose all custom values in this section."
+msgstr ""
+
+#: ../quezal/admin/framework.php:1792 admin/framework.php:1792
+msgid "Please Wait"
+msgstr ""
+
+#: ../quezal/admin/framework.php:1938 admin/framework.php:1938
+msgid "Hints"
+msgstr ""
+
+#: ../quezal/admin/framework.php:1939 admin/framework.php:1939
+msgid "<p>"
+msgstr ""
+
+#: ../quezal/admin/framework.php:2063 ../quezal/includes/meta-box/init.php:252
+#: admin/framework.php:2063 includes/meta-box/init.php:252
+msgid "Default"
+msgstr ""
+
+#: ../quezal/admin/framework.php:3115 admin/framework.php:3115
+msgid "Warning- This options panel will not work properly without javascript!"
+msgstr ""
+
+#: ../quezal/admin/framework.php:3189 admin/framework.php:3189
+msgid "Expand"
+msgstr ""
+
+#: ../quezal/admin/framework.php:3191 ../quezal/admin/framework.php:3499
+#: admin/framework.php:3191 admin/framework.php:3499
+msgid "Save Changes"
+msgstr ""
+
+#: ../quezal/admin/framework.php:3195 ../quezal/admin/framework.php:3503
+#: admin/framework.php:3195 admin/framework.php:3503
+msgid "Reset Section"
+msgstr ""
+
+#: ../quezal/admin/framework.php:3197 ../quezal/admin/framework.php:3505
+#: admin/framework.php:3197 admin/framework.php:3505
+msgid "Reset All"
+msgstr ""
+
+#: ../quezal/admin/framework.php:3202 ../quezal/admin/framework.php:3510
+#: admin/framework.php:3202 admin/framework.php:3510
+msgid "Working..."
+msgstr ""
+
+#: ../quezal/admin/framework.php:3222 admin/framework.php:3222
+msgid "Settings Imported!"
+msgstr ""
+
+#: ../quezal/admin/framework.php:3237 admin/framework.php:3237
+msgid "All Defaults Restored!"
+msgstr ""
+
+#: ../quezal/admin/framework.php:3251 admin/framework.php:3251
+msgid "Section Defaults Restored!"
+msgstr ""
+
+#: ../quezal/admin/framework.php:3265 admin/framework.php:3265
+msgid "Settings Saved!"
+msgstr ""
+
+#: ../quezal/admin/framework.php:3283 admin/framework.php:3283
+msgid "Settings have changed, you should save them!"
+msgstr ""
+
+#: ../quezal/admin/framework.php:3291 admin/framework.php:3291
+msgid "error(s) were found!"
+msgstr ""
+
+#: ../quezal/admin/framework.php:3299 admin/framework.php:3299
+msgid "warning(s) were found!"
+msgstr ""
+
+#: ../quezal/admin/inc/class.redux_filesystem.php:22
+#: admin/inc/class.redux_filesystem.php:22
+msgid "Unable to create a required directory. Please ensure that"
+msgstr ""
+
+#: ../quezal/admin/inc/class.redux_filesystem.php:24
+#: admin/inc/class.redux_filesystem.php:24
+msgid ""
+"has the proper read/write permissions or enter your FTP information below."
+msgstr ""
+
+#: ../quezal/admin/inc/class.redux_functions.php:252
+#: admin/inc/class.redux_functions.php:252
+msgid "Dismiss"
+msgstr ""
+
+#: ../quezal/admin/inc/debug.php:41 ../quezal/admin/inc/debug.php:69
+#: ../quezal/admin/inc/debug.php:76 ../quezal/admin/inc/debug.php:77
+#: admin/inc/debug.php:41 admin/inc/debug.php:69 admin/inc/debug.php:76
+#: admin/inc/debug.php:77
+msgid "Options Object"
+msgstr ""
+
+#: ../quezal/admin/inc/debug.php:54 admin/inc/debug.php:54
+msgid "Show Object in Javascript Console Object"
+msgstr ""
+
+#: ../quezal/admin/inc/fields/background/field_background.php:124
+#: ../quezal/admin/inc/fields/color/field_color.php:72
+#: ../quezal/admin/inc/fields/color_gradient/field_color_gradient.php:79
+#: ../quezal/admin/inc/fields/color_gradient/field_color_gradient.php:91
+#: ../quezal/admin/inc/fields/color_rgba/field_color_rgba.php:77
+#: admin/inc/fields/background/field_background.php:124
+#: admin/inc/fields/color/field_color.php:72
+#: admin/inc/fields/color_gradient/field_color_gradient.php:79
+#: admin/inc/fields/color_gradient/field_color_gradient.php:91
+#: admin/inc/fields/color_rgba/field_color_rgba.php:77
+msgid "Transparent"
+msgstr ""
+
+#: ../quezal/admin/inc/fields/background/field_background.php:141
+#: admin/inc/fields/background/field_background.php:141
+msgid "Background Repeat"
+msgstr ""
+
+#: ../quezal/admin/inc/fields/background/field_background.php:157
+#: admin/inc/fields/background/field_background.php:157
+msgid "Background Clip"
+msgstr ""
+
+#: ../quezal/admin/inc/fields/background/field_background.php:173
+#: admin/inc/fields/background/field_background.php:173
+msgid "Background Origin"
+msgstr ""
+
+#: ../quezal/admin/inc/fields/background/field_background.php:188
+#: admin/inc/fields/background/field_background.php:188
+msgid "Background Size"
+msgstr ""
+
+#: ../quezal/admin/inc/fields/background/field_background.php:203
+#: admin/inc/fields/background/field_background.php:203
+msgid "Background Attachment"
+msgstr ""
+
+#: ../quezal/admin/inc/fields/background/field_background.php:223
+#: admin/inc/fields/background/field_background.php:223
+msgid "Background Position"
+msgstr ""
+
+#: ../quezal/admin/inc/fields/background/field_background.php:277
+#: ../quezal/admin/inc/fields/media/field_media.php:112
+#: admin/inc/fields/background/field_background.php:277
+#: admin/inc/fields/media/field_media.php:112
+msgid "No media selected"
+msgstr ""
+
+#: ../quezal/admin/inc/fields/background/field_background.php:314
+#: ../quezal/admin/inc/fields/media/field_media.php:154
+#: ../quezal/admin/inc/fields/slides/field_slides.php:126
+#: ../quezal/admin/inc/fields/slides/field_slides.php:188
+#: admin/inc/fields/background/field_background.php:314
+#: admin/inc/fields/media/field_media.php:154
+#: admin/inc/fields/slides/field_slides.php:126
+#: admin/inc/fields/slides/field_slides.php:188
+msgid "Upload"
+msgstr ""
+
+#: ../quezal/admin/inc/fields/background/field_background.php:321
+#: ../quezal/admin/inc/fields/media/field_media.php:161
+#: ../quezal/admin/inc/fields/multi_text/field_multi_text.php:68
+#: ../quezal/admin/inc/fields/multi_text/field_multi_text.php:72
+#: ../quezal/admin/inc/fields/multi_text/field_multi_text.php:75
+#: ../quezal/admin/inc/fields/slides/field_slides.php:133
+#: ../quezal/admin/inc/fields/slides/field_slides.php:190
+#: ../quezal/includes/meta-box/helpers/cmb_Meta_Box_types.php:305
+#: ../quezal/includes/meta-box/helpers/cmb_Meta_Box_types.php:705
+#: ../quezal/includes/meta-box/helpers/cmb_Meta_Box_types.php:765
+#: admin/inc/fields/background/field_background.php:321
+#: admin/inc/fields/media/field_media.php:161
+#: admin/inc/fields/multi_text/field_multi_text.php:68
+#: admin/inc/fields/multi_text/field_multi_text.php:72
+#: admin/inc/fields/multi_text/field_multi_text.php:75
+#: admin/inc/fields/slides/field_slides.php:133
+#: admin/inc/fields/slides/field_slides.php:190
+#: includes/meta-box/helpers/cmb_Meta_Box_types.php:305
+#: includes/meta-box/helpers/cmb_Meta_Box_types.php:705
+#: includes/meta-box/helpers/cmb_Meta_Box_types.php:765
+msgid "Remove"
+msgstr ""
+
+#: ../quezal/admin/inc/fields/border/field_border.php:114
+#: ../quezal/admin/inc/fields/spacing/field_spacing.php:191
+#: ../quezal/portfolio-2col.php:24 ../quezal/portfolio-3col.php:24
+#: ../quezal/portfolio-4col.php:24
+#: admin/inc/fields/border/field_border.php:114
+#: admin/inc/fields/spacing/field_spacing.php:191 portfolio-2col.php:24
+#: portfolio-3col.php:24 portfolio-4col.php:24
+msgid "All"
+msgstr ""
+
+#: ../quezal/admin/inc/fields/border/field_border.php:127
+#: ../quezal/admin/inc/fields/spacing/field_spacing.php:215
+#: admin/inc/fields/border/field_border.php:127
+#: admin/inc/fields/spacing/field_spacing.php:215
+msgid "Top"
+msgstr ""
+
+#: ../quezal/admin/inc/fields/border/field_border.php:134
+#: ../quezal/admin/inc/fields/spacing/field_spacing.php:222
+#: admin/inc/fields/border/field_border.php:134
+#: admin/inc/fields/spacing/field_spacing.php:222
+msgid "Right"
+msgstr ""
+
+#: ../quezal/admin/inc/fields/border/field_border.php:141
+#: ../quezal/admin/inc/fields/spacing/field_spacing.php:229
+#: admin/inc/fields/border/field_border.php:141
+#: admin/inc/fields/spacing/field_spacing.php:229
+msgid "Bottom"
+msgstr ""
+
+#: ../quezal/admin/inc/fields/border/field_border.php:148
+#: ../quezal/admin/inc/fields/spacing/field_spacing.php:236
+#: admin/inc/fields/border/field_border.php:148
+#: admin/inc/fields/spacing/field_spacing.php:236
+msgid "Left"
+msgstr ""
+
+#: ../quezal/admin/inc/fields/border/field_border.php:162
+#: admin/inc/fields/border/field_border.php:162
+msgid "Border style"
+msgstr ""
+
+#: ../quezal/admin/inc/fields/color_gradient/field_color_gradient.php:68
+#: admin/inc/fields/color_gradient/field_color_gradient.php:68
+msgid "From "
+msgstr ""
+
+#: ../quezal/admin/inc/fields/color_gradient/field_color_gradient.php:82
+#: admin/inc/fields/color_gradient/field_color_gradient.php:82
+msgid "To "
+msgstr ""
+
+#: ../quezal/admin/inc/fields/dimensions/field_dimensions.php:161
+#: admin/inc/fields/dimensions/field_dimensions.php:161
+msgid "Width"
+msgstr ""
+
+#: ../quezal/admin/inc/fields/dimensions/field_dimensions.php:177
+#: ../quezal/admin/inc/fields/typography/field_typography.php:455
+#: admin/inc/fields/dimensions/field_dimensions.php:177
+#: admin/inc/fields/typography/field_typography.php:455
+msgid "Height"
+msgstr ""
+
+#: ../quezal/admin/inc/fields/dimensions/field_dimensions.php:188
+#: ../quezal/admin/inc/fields/dimensions/field_dimensions.php:189
+#: ../quezal/admin/inc/fields/spacing/field_spacing.php:245
+#: ../quezal/admin/inc/fields/spacing/field_spacing.php:246
+#: admin/inc/fields/dimensions/field_dimensions.php:188
+#: admin/inc/fields/dimensions/field_dimensions.php:189
+#: admin/inc/fields/spacing/field_spacing.php:245
+#: admin/inc/fields/spacing/field_spacing.php:246
+msgid "Units"
+msgstr ""
+
+#: ../quezal/admin/inc/fields/gallery/field_gallery.php:73
+#: admin/inc/fields/gallery/field_gallery.php:73
+msgid "Add/Edit Gallery"
+msgstr ""
+
+#: ../quezal/admin/inc/fields/gallery/field_gallery.php:74
+#: admin/inc/fields/gallery/field_gallery.php:74
+msgid "Clear Gallery"
+msgstr ""
+
+#: ../quezal/admin/inc/fields/link_color/field_link_color.php:87
+#: admin/inc/fields/link_color/field_link_color.php:87
+msgid "Regular"
+msgstr ""
+
+#: ../quezal/admin/inc/fields/link_color/field_link_color.php:91
+#: admin/inc/fields/link_color/field_link_color.php:91
+msgid "Hover"
+msgstr ""
+
+#: ../quezal/admin/inc/fields/link_color/field_link_color.php:95
+#: admin/inc/fields/link_color/field_link_color.php:95
+msgid "Visited"
+msgstr ""
+
+#: ../quezal/admin/inc/fields/link_color/field_link_color.php:99
+#: admin/inc/fields/link_color/field_link_color.php:99
+msgid "Active"
+msgstr ""
+
+#: ../quezal/admin/inc/fields/multi_text/field_multi_text.php:60
+#: admin/inc/fields/multi_text/field_multi_text.php:60
+msgid "Add More"
+msgstr ""
+
+#: ../quezal/admin/inc/fields/password/field_password.php:62
+#: admin/inc/fields/password/field_password.php:62
+msgid "Password"
+msgstr ""
+
+#: ../quezal/admin/inc/fields/password/field_password.php:63
+#: admin/inc/fields/password/field_password.php:63
+msgid "Username"
+msgstr ""
+
+#: ../quezal/admin/inc/fields/select/field_select.php:82
+#: ../quezal/admin/inc/fields/select_image/field_select_image.php:62
+#: admin/inc/fields/select/field_select.php:82
+#: admin/inc/fields/select_image/field_select_image.php:62
+msgid "Select an item"
+msgstr ""
+
+#: ../quezal/admin/inc/fields/select/field_select.php:126
+#: ../quezal/admin/inc/fields/select_image/field_select_image.php:143
+#: admin/inc/fields/select/field_select.php:126
+#: admin/inc/fields/select_image/field_select_image.php:143
+msgid "No items of this type were found."
+msgstr ""
+
+#: ../quezal/admin/inc/fields/slides/field_slides.php:68
+#: admin/inc/fields/slides/field_slides.php:68
+msgid "Slide"
+msgstr ""
+
+#: ../quezal/admin/inc/fields/slides/field_slides.php:73
+#: admin/inc/fields/slides/field_slides.php:73
+#, php-format
+msgid "New %s"
+msgstr ""
+
+#: ../quezal/admin/inc/fields/slides/field_slides.php:145
+#: ../quezal/admin/inc/fields/slides/field_slides.php:200
+#: ../quezal/functions.php:1109 admin/inc/fields/slides/field_slides.php:145
+#: admin/inc/fields/slides/field_slides.php:200 functions.php:1109
+msgid "Title"
+msgstr ""
+
+#: ../quezal/admin/inc/fields/slides/field_slides.php:149
+#: ../quezal/admin/inc/fields/slides/field_slides.php:204
+#: admin/inc/fields/slides/field_slides.php:149
+#: admin/inc/fields/slides/field_slides.php:204
+msgid "Description"
+msgstr ""
+
+#: ../quezal/admin/inc/fields/slides/field_slides.php:153
+#: ../quezal/admin/inc/fields/slides/field_slides.php:207
+#: admin/inc/fields/slides/field_slides.php:153
+#: admin/inc/fields/slides/field_slides.php:207
+msgid "URL"
+msgstr ""
+
+#: ../quezal/admin/inc/fields/slides/field_slides.php:167
+#: ../quezal/admin/inc/fields/slides/field_slides.php:220
+#: admin/inc/fields/slides/field_slides.php:167
+#: admin/inc/fields/slides/field_slides.php:220
+#, php-format
+msgid "Delete %s"
+msgstr ""
+
+#: ../quezal/admin/inc/fields/slides/field_slides.php:223
+#: admin/inc/fields/slides/field_slides.php:223
+#, php-format
+msgid "Add %s"
+msgstr ""
+
+#: ../quezal/admin/inc/fields/switch/field_switch.php:41
+#: admin/inc/fields/switch/field_switch.php:41
+msgid "On"
+msgstr ""
+
+#: ../quezal/admin/inc/fields/switch/field_switch.php:44
+#: admin/inc/fields/switch/field_switch.php:44
+msgid "Off"
+msgstr ""
+
+#: ../quezal/admin/inc/fields/typography/field_typography.php:256
+#: admin/inc/fields/typography/field_typography.php:256
+msgid "Font Family"
+msgstr ""
+
+#: ../quezal/admin/inc/fields/typography/field_typography.php:257
+#: admin/inc/fields/typography/field_typography.php:257
+msgid "Font family"
+msgstr ""
+
+#: ../quezal/admin/inc/fields/typography/field_typography.php:283
+#: ../quezal/admin/inc/fields/typography/field_typography.php:284
+#: admin/inc/fields/typography/field_typography.php:283
+#: admin/inc/fields/typography/field_typography.php:284
+msgid "Backup Font Family"
+msgstr ""
+
+#: ../quezal/admin/inc/fields/typography/field_typography.php:298
+#: ../quezal/admin/inc/fields/typography/field_typography.php:305
+#: admin/inc/fields/typography/field_typography.php:298
+#: admin/inc/fields/typography/field_typography.php:305
+msgid "Font style"
+msgstr ""
+
+#: ../quezal/admin/inc/fields/typography/field_typography.php:299
+#: admin/inc/fields/typography/field_typography.php:299
+msgid "Font Weight &amp; Style"
+msgstr ""
+
+#: ../quezal/admin/inc/fields/typography/field_typography.php:305
+#: admin/inc/fields/typography/field_typography.php:305
+msgid "Style"
+msgstr ""
+
+#: ../quezal/admin/inc/fields/typography/field_typography.php:335
+#: admin/inc/fields/typography/field_typography.php:335
+msgid "Font subsets"
+msgstr ""
+
+#: ../quezal/admin/inc/fields/typography/field_typography.php:337
+#: admin/inc/fields/typography/field_typography.php:337
+msgid "Font Subsets"
+msgstr ""
+
+#: ../quezal/admin/inc/fields/typography/field_typography.php:338
+#: admin/inc/fields/typography/field_typography.php:338
+msgid "Subsets"
+msgstr ""
+
+#: ../quezal/admin/inc/fields/typography/field_typography.php:338
+#: admin/inc/fields/typography/field_typography.php:338
+msgid "Font script"
+msgstr ""
+
+#: ../quezal/admin/inc/fields/typography/field_typography.php:355
+#: ../quezal/admin/inc/fields/typography/field_typography.php:356
+#: ../quezal/admin/inc/fields/typography/field_typography.php:357
+#: admin/inc/fields/typography/field_typography.php:355
+#: admin/inc/fields/typography/field_typography.php:356
+#: admin/inc/fields/typography/field_typography.php:357
+msgid "Text Align"
+msgstr ""
+
+#: ../quezal/admin/inc/fields/typography/field_typography.php:378
+#: ../quezal/admin/inc/fields/typography/field_typography.php:379
+#: ../quezal/admin/inc/fields/typography/field_typography.php:380
+#: admin/inc/fields/typography/field_typography.php:378
+#: admin/inc/fields/typography/field_typography.php:379
+#: admin/inc/fields/typography/field_typography.php:380
+msgid "Text Transform"
+msgstr ""
+
+#: ../quezal/admin/inc/fields/typography/field_typography.php:401
+#: ../quezal/admin/inc/fields/typography/field_typography.php:402
+#: ../quezal/admin/inc/fields/typography/field_typography.php:403
+#: admin/inc/fields/typography/field_typography.php:401
+#: admin/inc/fields/typography/field_typography.php:402
+#: admin/inc/fields/typography/field_typography.php:403
+msgid "Font Variant"
+msgstr ""
+
+#: ../quezal/admin/inc/fields/typography/field_typography.php:421
+#: ../quezal/admin/inc/fields/typography/field_typography.php:422
+#: ../quezal/admin/inc/fields/typography/field_typography.php:423
+#: admin/inc/fields/typography/field_typography.php:421
+#: admin/inc/fields/typography/field_typography.php:422
+#: admin/inc/fields/typography/field_typography.php:423
+msgid "Text Decoration"
+msgstr ""
+
+#: ../quezal/admin/inc/fields/typography/field_typography.php:445
+#: ../quezal/admin/inc/fields/typography/field_typography.php:446
+#: ../quezal/functions.php:816
+#: admin/inc/fields/typography/field_typography.php:445
+#: admin/inc/fields/typography/field_typography.php:446 functions.php:816
+msgid "Font Size"
+msgstr ""
+
+#: ../quezal/admin/inc/fields/typography/field_typography.php:446
+#: admin/inc/fields/typography/field_typography.php:446
+msgid "Size"
+msgstr ""
+
+#: ../quezal/admin/inc/fields/typography/field_typography.php:454
+#: ../quezal/admin/inc/fields/typography/field_typography.php:455
+#: admin/inc/fields/typography/field_typography.php:454
+#: admin/inc/fields/typography/field_typography.php:455
+msgid "Line Height"
+msgstr ""
+
+#: ../quezal/admin/inc/fields/typography/field_typography.php:463
+#: ../quezal/admin/inc/fields/typography/field_typography.php:464
+#: admin/inc/fields/typography/field_typography.php:463
+#: admin/inc/fields/typography/field_typography.php:464
+msgid "Word Spacing"
+msgstr ""
+
+#: ../quezal/admin/inc/fields/typography/field_typography.php:472
+#: ../quezal/admin/inc/fields/typography/field_typography.php:473
+#: admin/inc/fields/typography/field_typography.php:472
+#: admin/inc/fields/typography/field_typography.php:473
+msgid "Letter Spacing"
+msgstr ""
+
+#: ../quezal/admin/inc/fields/typography/field_typography.php:491
+#: admin/inc/fields/typography/field_typography.php:491
+msgid "Font Color"
+msgstr ""
+
+#: ../quezal/admin/inc/fields/typography/field_typography.php:493
+#: admin/inc/fields/typography/field_typography.php:493
+msgid "Font color"
+msgstr ""
+
+#: ../quezal/admin/inc/fields/typography/field_typography.php:822
+#: admin/inc/fields/typography/field_typography.php:822
+msgid "Standard Fonts"
+msgstr ""
+
+#: ../quezal/admin/inc/fields/typography/field_typography.php:929
+#: admin/inc/fields/typography/field_typography.php:929
+msgid "Google Webfonts"
+msgstr ""
+
+#: ../quezal/admin/inc/import_export.php:78 admin/inc/import_export.php:78
+msgid "Import / Export Options"
+msgstr ""
+
+#: ../quezal/admin/inc/import_export.php:81 admin/inc/import_export.php:81
+msgid "Import Options"
+msgstr ""
+
+#: ../quezal/admin/inc/import_export.php:82 admin/inc/import_export.php:82
+msgid "Import from file"
+msgstr ""
+
+#: ../quezal/admin/inc/import_export.php:82 admin/inc/import_export.php:82
+msgid "Import from URL"
+msgstr ""
+
+#: ../quezal/admin/inc/import_export.php:85 admin/inc/import_export.php:85
+msgid ""
+"Input your backup file below and hit Import to restore your sites options "
+"from a backup."
+msgstr ""
+
+#: ../quezal/admin/inc/import_export.php:90 admin/inc/import_export.php:90
+msgid ""
+"Input the URL to another sites options set and hit Import to load the "
+"options from that site."
+msgstr ""
+
+#: ../quezal/admin/inc/import_export.php:94 admin/inc/import_export.php:94
+msgid "Import"
+msgstr ""
+
+#: ../quezal/admin/inc/import_export.php:94 admin/inc/import_export.php:94
+msgid ""
+"WARNING! This will overwrite all existing option values, please proceed with "
+"caution!"
+msgstr ""
+
+#: ../quezal/admin/inc/import_export.php:97 admin/inc/import_export.php:97
+msgid "Export Options"
+msgstr ""
+
+#: ../quezal/admin/inc/import_export.php:100 admin/inc/import_export.php:100
+msgid ""
+"Here you can copy/download your current option settings. Keep this safe as "
+"you can use it as a backup should anything go wrong, or you can use it to "
+"restore your settings on this site (or any other site)."
+msgstr ""
+
+#: ../quezal/admin/inc/import_export.php:104 admin/inc/import_export.php:104
+msgid "Copy"
+msgstr ""
+
+#: ../quezal/admin/inc/import_export.php:104
+#: ../quezal/includes/meta-box/helpers/cmb_Meta_Box_types.php:705
+#: ../quezal/includes/meta-box/helpers/cmb_Meta_Box_types.php:765
+#: admin/inc/import_export.php:104
+#: includes/meta-box/helpers/cmb_Meta_Box_types.php:705
+#: includes/meta-box/helpers/cmb_Meta_Box_types.php:765
+msgid "Download"
+msgstr ""
+
+#: ../quezal/admin/inc/import_export.php:104 admin/inc/import_export.php:104
+msgid "Copy Link"
+msgstr ""
+
+#: ../quezal/admin/inc/import_export.php:140
+#: ../quezal/admin/inc/import_export.php:149
+#: ../quezal/admin/inc/import_export.php:150
+#: ../quezal/includes/options-config.php:1832 admin/inc/import_export.php:140
+#: admin/inc/import_export.php:149 admin/inc/import_export.php:150
+#: includes/options-config.php:1832
+msgid "Import / Export"
+msgstr ""
+
+#: ../quezal/admin/inc/tracking.php:130 admin/inc/tracking.php:130
+msgid "Help improve Our Panel"
+msgstr ""
+
+#: ../quezal/admin/inc/tracking.php:131 admin/inc/tracking.php:131
+msgid ""
+"Please helps us improve our panel by allowing us to gather anonymous usage "
+"stats so we know which configurations, plugins and themes to test to ensure "
+"compatability."
+msgstr ""
+
+#: ../quezal/admin/inc/tracking.php:136 admin/inc/tracking.php:136
+msgid "Allow tracking"
+msgstr ""
+
+#: ../quezal/admin/inc/tracking.php:141 admin/inc/tracking.php:141
+msgid "Do not allow tracking"
+msgstr ""
+
+#: ../quezal/admin/inc/tracking.php:152 admin/inc/tracking.php:152
+msgid "Welcome to the Redux Demo Panel"
+msgstr ""
+
+#: ../quezal/admin/inc/tracking.php:153 admin/inc/tracking.php:153
+msgid "Getting Started"
+msgstr ""
+
+#: ../quezal/admin/inc/tracking.php:153 admin/inc/tracking.php:153
+#, php-format
+msgid ""
+"This panel demonstrates the many features of Redux.  Before digging in, we "
+"suggest you get up to speed by reviewing %1$s."
+msgstr ""
+
+#: ../quezal/admin/inc/tracking.php:153 admin/inc/tracking.php:153
+msgid "our documentation"
+msgstr ""
+
+#: ../quezal/admin/inc/tracking.php:154 admin/inc/tracking.php:154
+msgid "Redux Generator"
+msgstr ""
+
+#: ../quezal/admin/inc/tracking.php:154 admin/inc/tracking.php:154
+#, php-format
+msgid ""
+"Want to get a head start? Use the %1$s. It will create a customized "
+"boilerplate theme or a standalone admin folder complete with all things "
+"Redux (with the help of Underscores and TGM). Save yourself a headache and "
+"try it today."
+msgstr ""
+
+#: ../quezal/admin/inc/tracking.php:155 admin/inc/tracking.php:155
+msgid "Redux Extensions"
+msgstr ""
+
+#: ../quezal/admin/inc/tracking.php:155 admin/inc/tracking.php:155
+#, php-format
+msgid ""
+"Did you know we have extensions, which greatly enhance the features of "
+"Redux?  Visit our %1$s to learn more!"
+msgstr ""
+
+#: ../quezal/admin/inc/tracking.php:155 admin/inc/tracking.php:155
+msgid "extensions directory"
+msgstr ""
+
+#: ../quezal/admin/inc/tracking.php:156 admin/inc/tracking.php:156
+msgid "Like Redux?"
+msgstr ""
+
+#: ../quezal/admin/inc/tracking.php:156 admin/inc/tracking.php:156
+#, php-format
+msgid ""
+"If so, please %1$s and consider making a %2$s to keep development of Redux "
+"moving forward."
+msgstr ""
+
+#: ../quezal/admin/inc/tracking.php:156 admin/inc/tracking.php:156
+msgid "leave us a favorable review on WordPress.org"
+msgstr ""
+
+#: ../quezal/admin/inc/tracking.php:156 admin/inc/tracking.php:156
+msgid "donation"
+msgstr ""
+
+#: ../quezal/admin/inc/tracking.php:157 admin/inc/tracking.php:157
+msgid "Newsletter"
+msgstr ""
+
+#: ../quezal/admin/inc/tracking.php:157 admin/inc/tracking.php:157
+msgid ""
+"If you'd like to keep up to with all things Redux, please subscribe to our "
+"newsletter"
+msgstr ""
+
+#: ../quezal/admin/inc/tracking.php:158 admin/inc/tracking.php:158
+msgid "Email address"
+msgstr ""
+
+#: ../quezal/admin/inc/tracking.php:158 admin/inc/tracking.php:158
+msgid "Subscribe"
+msgstr ""
+
+#: ../quezal/admin/inc/tracking.php:167 admin/inc/tracking.php:167
+msgid "Close"
+msgstr ""
+
+#: ../quezal/admin/inc/validation/color/validation_color.php:15
+#: ../quezal/admin/inc/validation/color_rgba/validation_color_rgba.php:14
+#: ../quezal/admin/inc/validation/colorrgba/validation_colorrgba.php:16
+#: admin/inc/validation/color/validation_color.php:15
+#: admin/inc/validation/color_rgba/validation_color_rgba.php:14
+#: admin/inc/validation/colorrgba/validation_colorrgba.php:16
+msgid "This field must be a valid color value."
+msgstr ""
+
+#: ../quezal/admin/inc/validation/comma_numeric/validation_comma_numeric.php:16
+#: admin/inc/validation/comma_numeric/validation_comma_numeric.php:16
+msgid ""
+"You must provide a comma separated list of numerical values for this option."
+msgstr ""
+
+#: ../quezal/admin/inc/validation/date/validation_date.php:16
+#: admin/inc/validation/date/validation_date.php:16
+msgid "This field must be a valid date."
+msgstr ""
+
+#: ../quezal/admin/inc/validation/email/validation_email.php:16
+#: ../quezal/admin/inc/validation/email_not_empty/validation_email_not_empty.php:16
+#: admin/inc/validation/email/validation_email.php:16
+#: admin/inc/validation/email_not_empty/validation_email_not_empty.php:16
+msgid "You must provide a valid email for this option."
+msgstr ""
+
+#: ../quezal/admin/inc/validation/no_html/validation_no_html.php:15
+#: admin/inc/validation/no_html/validation_no_html.php:15
+msgid ""
+"You must not enter any HTML in this field, all HTML tags have been removed."
+msgstr ""
+
+#: ../quezal/admin/inc/validation/no_special_chars/validation_no_special_chars.php:16
+#: admin/inc/validation/no_special_chars/validation_no_special_chars.php:16
+msgid ""
+"You must not enter any special characters in this field, all special "
+"characters have been removed."
+msgstr ""
+
+#: ../quezal/admin/inc/validation/not_empty/validation_not_empty.php:16
+#: admin/inc/validation/not_empty/validation_not_empty.php:16
+msgid "This field cannot be empty. Please provide a value."
+msgstr ""
+
+#: ../quezal/admin/inc/validation/numeric/validation_numeric.php:16
+#: ../quezal/admin/inc/validation/numeric_not_empty/validation_numeric_not_empty.php:16
+#: admin/inc/validation/numeric/validation_numeric.php:16
+#: admin/inc/validation/numeric_not_empty/validation_numeric_not_empty.php:16
+msgid "You must provide a numerical value for this option."
+msgstr ""
+
+#: ../quezal/admin/inc/validation/url/validation_url.php:16
+#: admin/inc/validation/url/validation_url.php:16
+msgid "You must provide a valid URL for this option."
+msgstr ""
+
+#: ../quezal/comments.php:34 comments.php:34
+msgid "Navigate Comments"
+msgstr ""
+
+#: ../quezal/comments.php:37 comments.php:37
+msgid "<div class=\"prev-arrow\"><i class=\" icon-left-open-big\"></i></div>"
+msgstr ""
+
+#: ../quezal/comments.php:40 comments.php:40
+msgid "<div class=\"next-arrow\"><i class=\" icon-right-open-big\"></i></div>"
+msgstr ""
+
+#: ../quezal/comments.php:47 ../twentyfourteen/comments.php:59 comments.php:47
+msgid "Comments are closed."
+msgstr ""
+
+#: ../quezal/comments.php:57 comments.php:57
+msgid "Name (required)"
+msgstr ""
+
+#: ../quezal/comments.php:58 comments.php:58
+msgid "Email (required)"
+msgstr ""
+
+#: ../quezal/comments.php:59 ../quezal/comments.php:71 comments.php:59
+#: comments.php:71
+msgid "Website"
+msgstr ""
+
+#: ../quezal/comments.php:60 comments.php:60
+msgid "Comment here"
+msgstr ""
+
+#: ../quezal/comments.php:63 comments.php:63
+msgid "Name"
+msgstr ""
+
+#: ../quezal/comments.php:67 comments.php:67
+msgid "Email"
+msgstr ""
+
+#: ../quezal/comments.php:78 comments.php:78
+msgid "Leave a Reply"
+msgstr ""
+
+#: ../quezal/comments.php:79 comments.php:79
+msgid "Post comment"
+msgstr ""
+
+#: ../quezal/comments.php:80 comments.php:80
+msgctxt "noun"
+msgid "Comment"
+msgstr ""
+
+#: ../quezal/functions.php:186 functions.php:186
+#, php-format
+msgid ""
+"<cite class=\"fn custom-fn\">%s</cite> <span class=\"says\">says:</span>"
+msgstr ""
+
+#: ../quezal/functions.php:190 functions.php:190
+#, php-format
+msgid "%1$s at %2$s"
+msgstr ""
+
+#: ../quezal/functions.php:192 functions.php:192
+msgid "(Edit)"
+msgstr ""
+
+#: ../quezal/functions.php:203 functions.php:203
+msgid "Your comment is awaiting moderation."
+msgstr ""
+
+#: ../quezal/functions.php:224 functions.php:224
+msgid "posted by "
+msgstr ""
+
+#: ../quezal/functions.php:227 functions.php:227
+#, php-format
+msgid "View all posts by %s"
+msgstr ""
+
+#: ../quezal/functions.php:244 ../quezal/functions.php:251 functions.php:244
+#: functions.php:251
+msgid ", "
+msgstr ""
+
+#: ../quezal/functions.php:245 functions.php:245
+msgid "tagged:  "
+msgstr ""
+
+#: ../quezal/functions.php:252 functions.php:252
+msgid "in "
+msgstr ""
+
+#: ../quezal/functions.php:267 functions.php:267
+#, php-format
+msgctxt "1: post format name. 2: date"
+msgid "%1$s on %2$s"
+msgstr ""
+
+#: ../quezal/functions.php:272 functions.php:272
+#, php-format
+msgid "Permalink to %s"
+msgstr ""
+
+#: ../quezal/functions.php:401 functions.php:401
+msgid "Icon Feature"
+msgstr ""
+
+#: ../quezal/functions.php:405 ../quezal/functions.php:500
+#: ../quezal/functions.php:565 ../quezal/functions.php:686
+#: ../quezal/functions.php:784 ../quezal/functions.php:833
+#: ../quezal/functions.php:882 ../quezal/functions.php:924
+#: ../quezal/functions.php:967 ../quezal/functions.php:1004
+#: ../quezal/functions.php:1041 ../quezal/functions.php:1061
+#: ../quezal/functions.php:1103 ../quezal/functions.php:1208
+#: ../quezal/functions.php:1379 ../quezal/functions.php:1476
+#: ../quezal/functions.php:1626 ../quezal/functions.php:1792 functions.php:405
+#: functions.php:500 functions.php:565 functions.php:686 functions.php:784
+#: functions.php:833 functions.php:882 functions.php:924 functions.php:967
+#: functions.php:1004 functions.php:1041 functions.php:1061 functions.php:1103
+#: functions.php:1208 functions.php:1379 functions.php:1476 functions.php:1626
+#: functions.php:1792
+msgid "Content"
+msgstr ""
+
+#: ../quezal/functions.php:411 functions.php:411
+msgid "Icon Position"
+msgstr ""
+
+#: ../quezal/functions.php:423 ../quezal/functions.php:571
+#: ../quezal/functions.php:790 functions.php:423 functions.php:571
+#: functions.php:790
+msgid "Select Icon"
+msgstr ""
+
+#: ../quezal/functions.php:432 functions.php:432
+msgid "Icon style"
+msgstr ""
+
+#: ../quezal/functions.php:445 functions.php:445
+msgid "Icon Background Color"
+msgstr ""
+
+#: ../quezal/functions.php:448 ../quezal/functions.php:457
+#: ../quezal/functions.php:582 ../quezal/functions.php:1506
+#: ../quezal/functions.php:1515 functions.php:448 functions.php:457
+#: functions.php:582 functions.php:1506 functions.php:1515
+msgid "Leave blank for theme default."
+msgstr ""
+
+#: ../quezal/functions.php:454 ../quezal/functions.php:579 functions.php:454
+#: functions.php:579
+msgid "Icon Color"
+msgstr ""
+
+#: ../quezal/functions.php:463 ../quezal/functions.php:588 functions.php:463
+#: functions.php:588
+msgid "Feature Heading"
+msgstr ""
+
+#: ../quezal/functions.php:472 ../quezal/functions.php:597 functions.php:472
+#: functions.php:597
+msgid "Make Feature Boxed"
+msgstr ""
+
+#: ../quezal/functions.php:480 ../quezal/functions.php:605 functions.php:480
+#: functions.php:605
+msgid "Box Padding"
+msgstr ""
+
+#: ../quezal/functions.php:484 ../quezal/functions.php:609 functions.php:484
+#: functions.php:609
+msgid "Give it like (Top Right Bottom Left) : 20px 20px 20px 20px"
+msgstr ""
+
+#: ../quezal/functions.php:490 ../quezal/functions.php:615 functions.php:490
+#: functions.php:615
+msgid "Box Border Width"
+msgstr ""
+
+#: ../quezal/functions.php:494 ../quezal/functions.php:619 functions.php:494
+#: functions.php:619
+msgid "Give it like (Top Right Bottom Left) : 0 1px 0 0"
+msgstr ""
+
+#: ../quezal/functions.php:503 ../quezal/functions.php:628
+#: ../quezal/functions.php:836 ../quezal/functions.php:927
+#: ../quezal/functions.php:1007 ../quezal/functions.php:1064
+#: ../quezal/functions.php:1211 functions.php:503 functions.php:628
+#: functions.php:836 functions.php:927 functions.php:1007 functions.php:1064
+#: functions.php:1211
+msgid "Enter your content."
+msgstr ""
+
+#: ../quezal/functions.php:561 functions.php:561
+msgid "Contact Info Box"
+msgstr ""
+
+#: ../quezal/functions.php:625 functions.php:625
+msgid "Contact Info"
+msgstr ""
+
+#: ../quezal/functions.php:682 functions.php:682
+msgid "Testimonial"
+msgstr ""
+
+#: ../quezal/functions.php:692 functions.php:692
+msgid "Number of Testimonial to Show in Carousel"
+msgstr ""
+
+#: ../quezal/functions.php:694 functions.php:694
+msgid "4"
+msgstr ""
+
+#: ../quezal/functions.php:701 functions.php:701
+msgid "Sort Testimonials By"
+msgstr ""
+
+#: ../quezal/functions.php:714 functions.php:714
+msgid "Arrange Sorted Testimonials"
+msgstr ""
+
+#: ../quezal/functions.php:723 functions.php:723
+msgid ""
+"Disable Carousel in case you have only one item to show. This is to avoid "
+"carousel fade effect."
+msgstr ""
+
+#: ../quezal/functions.php:780 functions.php:780
+msgid "List with icon"
+msgstr ""
+
+#: ../quezal/functions.php:798 functions.php:798
+msgid "Icon color"
+msgstr ""
+
+#: ../quezal/functions.php:807 functions.php:807
+msgid "List text color"
+msgstr ""
+
+#: ../quezal/functions.php:819 functions.php:819
+msgid "Give it as : 20px. Leave blank for same as body font size."
+msgstr ""
+
+#: ../quezal/functions.php:825 functions.php:825
+msgid "Enable border bottom"
+msgstr ""
+
+#: ../quezal/functions.php:878 functions.php:878
+msgid "Box"
+msgstr ""
+
+#: ../quezal/functions.php:888 ../quezal/includes/options-config.php:1556
+#: ../quezal/includes/options-config.php:1638 functions.php:888
+#: includes/options-config.php:1556 includes/options-config.php:1638
+msgid "Background Color"
+msgstr ""
+
+#: ../quezal/functions.php:891 functions.php:891
+msgid "Leave blank / clear for theme default"
+msgstr ""
+
+#: ../quezal/functions.php:897 ../quezal/functions.php:1512 functions.php:897
+#: functions.php:1512
+msgid "Border Color"
+msgstr ""
+
+#: ../quezal/functions.php:900 functions.php:900
+msgid "Leave blank / clear for no border."
+msgstr ""
+
+#: ../quezal/functions.php:906 functions.php:906
+msgid "Border Width"
+msgstr ""
+
+#: ../quezal/functions.php:909 functions.php:909
+msgid "Border width. Ex: 1px 0 1px 0 (top, right, bottom, left)"
+msgstr ""
+
+#: ../quezal/functions.php:915 functions.php:915
+msgid "Padding to box"
+msgstr ""
+
+#: ../quezal/functions.php:926 functions.php:926
+msgid "<p>I am box text block. Click edit button to change this text.</p>"
+msgstr ""
+
+#: ../quezal/functions.php:963 functions.php:963
+msgid "Blockquote"
+msgstr ""
+
+#: ../quezal/functions.php:973 functions.php:973
+msgid "Blockquote Style"
+msgstr ""
+
+#: ../quezal/functions.php:986 functions.php:986
+msgid "Quote Author / Source"
+msgstr ""
+
+#: ../quezal/functions.php:995 functions.php:995
+msgid "Link to source"
+msgstr ""
+
+#: ../quezal/functions.php:1037 functions.php:1037
+msgid "Alert"
+msgstr ""
+
+#: ../quezal/functions.php:1047 functions.php:1047
+msgid "Alert Style"
+msgstr ""
+
+#: ../quezal/functions.php:1099 functions.php:1099
+msgid "Pricing"
+msgstr ""
+
+#: ../quezal/functions.php:1118 functions.php:1118
+msgid "Currency Symbol"
+msgstr ""
+
+#: ../quezal/functions.php:1120 functions.php:1120
+msgid "$"
+msgstr ""
+
+#: ../quezal/functions.php:1127 functions.php:1127
+msgid "Price"
+msgstr ""
+
+#: ../quezal/functions.php:1129 functions.php:1129
+msgid "129"
+msgstr ""
+
+#: ../quezal/functions.php:1136 functions.php:1136
+msgid "Cents"
+msgstr ""
+
+#: ../quezal/functions.php:1138 functions.php:1138
+msgid "99"
+msgstr ""
+
+#: ../quezal/functions.php:1145 functions.php:1145
+msgid "Price Label"
+msgstr ""
+
+#: ../quezal/functions.php:1147 functions.php:1147
+msgid "/month"
+msgstr ""
+
+#: ../quezal/functions.php:1154 functions.php:1154
+msgid "Button Style"
+msgstr ""
+
+#: ../quezal/functions.php:1163 functions.php:1163
+msgid "Button Color"
+msgstr ""
+
+#: ../quezal/functions.php:1172 functions.php:1172
+msgid "Button link text"
+msgstr ""
+
+#: ../quezal/functions.php:1174 functions.php:1174
+msgid "Link"
+msgstr ""
+
+#: ../quezal/functions.php:1181 functions.php:1181
+msgid "Button link URL"
+msgstr ""
+
+#: ../quezal/functions.php:1190 functions.php:1190
+msgid "Open link in"
+msgstr ""
+
+#: ../quezal/functions.php:1199 functions.php:1199
+msgid "Table type"
+msgstr ""
+
+#: ../quezal/functions.php:1210 functions.php:1210
+msgid "<p>I am a text block. Click edit button to change this text.</p>"
+msgstr ""
+
+#: ../quezal/functions.php:1375 functions.php:1375
+msgid "Team Member"
+msgstr ""
+
+#: ../quezal/functions.php:1385 functions.php:1385
+msgid "Person ID"
+msgstr ""
+
+#: ../quezal/functions.php:1387 functions.php:1387
+msgid "ID"
+msgstr ""
+
+#: ../quezal/functions.php:1394 functions.php:1394
+msgid "Hide Excerpt"
+msgstr ""
+
+#: ../quezal/functions.php:1403 functions.php:1403
+msgid "Make Team Member Boxed"
+msgstr ""
+
+#: ../quezal/functions.php:1411 functions.php:1411
+msgid "Box Border Color"
+msgstr ""
+
+#: ../quezal/functions.php:1415 ../quezal/functions.php:1425
+#: functions.php:1415 functions.php:1425
+msgid "Leave blank for default."
+msgstr ""
+
+#: ../quezal/functions.php:1421 functions.php:1421
+msgid "Box Background Color"
+msgstr ""
+
+#: ../quezal/functions.php:1472 functions.php:1472
+msgid "Button With prettyPhoto"
+msgstr ""
+
+#: ../quezal/functions.php:1482 functions.php:1482
+msgid "Lightbox Style"
+msgstr ""
+
+#: ../quezal/functions.php:1494 functions.php:1494
+msgid "Button Text"
+msgstr ""
+
+#: ../quezal/functions.php:1503 functions.php:1503
+msgid "Link Text and Icon Color"
+msgstr ""
+
+#: ../quezal/functions.php:1521 functions.php:1521
+msgid "Video / Image Link"
+msgstr ""
+
+#: ../quezal/functions.php:1530 functions.php:1530
+msgid "Video / Image Title"
+msgstr ""
+
+#: ../quezal/functions.php:1622 functions.php:1622
+msgid "Portfolio Grid"
+msgstr ""
+
+#: ../quezal/functions.php:1632 functions.php:1632
+msgid "Number of columns"
+msgstr ""
+
+#: ../quezal/functions.php:1644 functions.php:1644
+msgid "Number of posts to show in carousel"
+msgstr ""
+
+#: ../quezal/functions.php:1646 functions.php:1646
+msgid "6"
+msgstr ""
+
+#: ../quezal/functions.php:1653 ../quezal/functions.php:1807
+#: functions.php:1653 functions.php:1807
+msgid "Filter by Category"
+msgstr ""
+
+#: ../quezal/functions.php:1662 ../quezal/functions.php:1816
+#: functions.php:1662 functions.php:1816
+msgid "Sort Posts By"
+msgstr ""
+
+#: ../quezal/functions.php:1675 ../quezal/functions.php:1830
+#: functions.php:1675 functions.php:1830
+msgid "Arrange Sorted Posts"
+msgstr ""
+
+#: ../quezal/functions.php:1684 functions.php:1684
+msgid "Hide Heading"
+msgstr ""
+
+#: ../quezal/functions.php:1693 functions.php:1693
+msgid "Select Zoom / Link"
+msgstr ""
+
+#: ../quezal/functions.php:1705 functions.php:1705
+msgid "Open Window In"
+msgstr ""
+
+#: ../quezal/functions.php:1788 functions.php:1788
+msgid "Recent Post"
+msgstr ""
+
+#: ../quezal/functions.php:1798 functions.php:1798
+msgid "Number of Posts to Show in Carousel"
+msgstr ""
+
+#: ../quezal/functions.php:1800 functions.php:1800
+msgid "2"
+msgstr ""
+
+#: ../quezal/functions.php:1839 functions.php:1839
+msgid "Hide Title"
+msgstr ""
+
+#: ../quezal/functions.php:1848 functions.php:1848
+msgid "Hide Date"
+msgstr ""
+
+#: ../quezal/functions.php:1857 functions.php:1857
+msgid "Hide Thumbnail"
+msgstr ""
+
+#: ../quezal/functions.php:1866 functions.php:1866
+msgid "Hide Post Excerpt"
+msgstr ""
+
+#: ../quezal/includes/bk-compatiblity.php:32
+#: ../quezal/includes/bk-compatiblity.php:42 includes/bk-compatiblity.php:32
+#: includes/bk-compatiblity.php:42
+#, php-format
+msgid ""
+"Theme requires at least WordPress version 3.6. You have version %s. Please "
+"upgrade and try again."
+msgstr ""
+
+#: ../quezal/includes/helpers.php:28 includes/helpers.php:28
+msgctxt "Previous post link"
+msgid "<span class=\"prev-arrow\"><i class=\"icon-arrow-left12\"></i></span>"
+msgstr ""
+
+#: ../quezal/includes/helpers.php:31 includes/helpers.php:31
+msgctxt "Next post link"
+msgid "<span class=\"next-arrow\"><i class=\"icon-arrow-right12\"></i></span>"
+msgstr ""
+
+#: ../quezal/includes/helpers.php:55 includes/helpers.php:55
+msgid "<span class=\"prev-arrow\"><i class=\"icon-arrow-left12\"></i></span>"
+msgstr ""
+
+#: ../quezal/includes/helpers.php:60 includes/helpers.php:60
+msgid "<span class=\"next-arrow\"><i class=\"icon-arrow-right12\"></i></span>"
+msgstr ""
+
+#: ../quezal/includes/helpers.php:76 includes/helpers.php:76
+msgid "Thumbnail"
+msgstr ""
+
+#: ../quezal/includes/helpers.php:106 includes/helpers.php:106
+msgid "No thumb"
+msgstr ""
+
+#: ../quezal/includes/include-plugins.php:118
+#: ../quezal/includes/tgm-plugin-activation.php:196
+#: includes/include-plugins.php:118 includes/tgm-plugin-activation.php:196
+msgid "Install Required Plugins"
+msgstr ""
+
+#: ../quezal/includes/include-plugins.php:119
+#: ../quezal/includes/tgm-plugin-activation.php:197
+#: includes/include-plugins.php:119 includes/tgm-plugin-activation.php:197
+msgid "Install Plugins"
+msgstr ""
+
+#: ../quezal/includes/include-plugins.php:120
+#: ../quezal/includes/tgm-plugin-activation.php:198
+#: includes/include-plugins.php:120 includes/tgm-plugin-activation.php:198
+#, php-format
+msgid "Installing Plugin: %s"
+msgstr ""
+
+#: ../quezal/includes/include-plugins.php:121 includes/include-plugins.php:121
+msgid "Something went wrong with the plugin API."
+msgstr ""
+
+#: ../quezal/includes/include-plugins.php:132
+#: ../quezal/includes/tgm-plugin-activation.php:210
+#: includes/include-plugins.php:132 includes/tgm-plugin-activation.php:210
+msgid "Return to Required Plugins Installer"
+msgstr ""
+
+#: ../quezal/includes/include-plugins.php:133
+#: ../quezal/includes/tgm-plugin-activation.php:212
+#: ../quezal/includes/tgm-plugin-activation.php:1951
+#: includes/include-plugins.php:133 includes/tgm-plugin-activation.php:212
+#: includes/tgm-plugin-activation.php:1951
+msgid "Plugin activated successfully."
+msgstr ""
+
+#: ../quezal/includes/include-plugins.php:134 includes/include-plugins.php:134
+#, php-format
+msgid "All plugins installed and activated successfully. %s"
+msgstr ""
+
+#: ../quezal/includes/meta-box/config-metabox.php:93
+#: includes/meta-box/config-metabox.php:93
+msgid "Audio Embed Code"
+msgstr ""
+
+#: ../quezal/includes/meta-box/config-metabox.php:112
+#: includes/meta-box/config-metabox.php:112
+msgid "Select Revolution Slider"
+msgstr ""
+
+#: ../quezal/includes/meta-box/config-metabox.php:122
+#: includes/meta-box/config-metabox.php:122
+msgid "Revolution slider for gallery post."
+msgstr ""
+
+#: ../quezal/includes/meta-box/config-metabox.php:133
+#: includes/meta-box/config-metabox.php:133
+msgid "Link Text and URL"
+msgstr ""
+
+#: ../quezal/includes/meta-box/config-metabox.php:141
+#: includes/meta-box/config-metabox.php:141
+msgid "Link text"
+msgstr ""
+
+#: ../quezal/includes/meta-box/config-metabox.php:146
+#: includes/meta-box/config-metabox.php:146
+msgid "Link URL"
+msgstr ""
+
+#: ../quezal/includes/meta-box/config-metabox.php:158
+#: includes/meta-box/config-metabox.php:158
+msgid "Quote Source"
+msgstr ""
+
+#: ../quezal/includes/meta-box/config-metabox.php:177
+#: includes/meta-box/config-metabox.php:177
+msgid "Video Embed Code"
+msgstr ""
+
+#: ../quezal/includes/meta-box/config-metabox.php:196
+#: includes/meta-box/config-metabox.php:196
+msgid "Client info"
+msgstr ""
+
+#: ../quezal/includes/meta-box/config-metabox.php:217
+#: includes/meta-box/config-metabox.php:217
+msgid "Member Job Title"
+msgstr ""
+
+#: ../quezal/includes/meta-box/config-metabox.php:238
+#: includes/meta-box/config-metabox.php:238
+msgid "Member Social Network. Provide URL."
+msgstr ""
+
+#: ../quezal/includes/meta-box/config-metabox.php:246
+#: includes/meta-box/config-metabox.php:246
+msgid "Behance"
+msgstr ""
+
+#: ../quezal/includes/meta-box/config-metabox.php:252
+#: includes/meta-box/config-metabox.php:252
+msgid "Delicious"
+msgstr ""
+
+#: ../quezal/includes/meta-box/config-metabox.php:258
+#: includes/meta-box/config-metabox.php:258
+msgid "Dribbble"
+msgstr ""
+
+#: ../quezal/includes/meta-box/config-metabox.php:264
+#: includes/meta-box/config-metabox.php:264
+msgid "Dropbox"
+msgstr ""
+
+#: ../quezal/includes/meta-box/config-metabox.php:270
+#: includes/meta-box/config-metabox.php:270
+msgid "Facebook"
+msgstr ""
+
+#: ../quezal/includes/meta-box/config-metabox.php:276
+#: includes/meta-box/config-metabox.php:276
+msgid "Flickr"
+msgstr ""
+
+#: ../quezal/includes/meta-box/config-metabox.php:282
+#: includes/meta-box/config-metabox.php:282
+msgid "Googleplus"
+msgstr ""
+
+#: ../quezal/includes/meta-box/config-metabox.php:288
+#: includes/meta-box/config-metabox.php:288
+msgid "Instagram"
+msgstr ""
+
+#: ../quezal/includes/meta-box/config-metabox.php:294
+#: includes/meta-box/config-metabox.php:294
+msgid "Linkedin"
+msgstr ""
+
+#: ../quezal/includes/meta-box/config-metabox.php:300
+#: includes/meta-box/config-metabox.php:300
+msgid "Paypal"
+msgstr ""
+
+#: ../quezal/includes/meta-box/config-metabox.php:306
+#: includes/meta-box/config-metabox.php:306
+msgid "Pinterest"
+msgstr ""
+
+#: ../quezal/includes/meta-box/config-metabox.php:312
+#: includes/meta-box/config-metabox.php:312
+msgid "Skype"
+msgstr ""
+
+#: ../quezal/includes/meta-box/config-metabox.php:318
+#: includes/meta-box/config-metabox.php:318
+msgid "Soundcloud"
+msgstr ""
+
+#: ../quezal/includes/meta-box/config-metabox.php:324
+#: includes/meta-box/config-metabox.php:324
+msgid "Stumbleupon"
+msgstr ""
+
+#: ../quezal/includes/meta-box/config-metabox.php:330
+#: includes/meta-box/config-metabox.php:330
+msgid "Tumblr"
+msgstr ""
+
+#: ../quezal/includes/meta-box/config-metabox.php:336
+#: includes/meta-box/config-metabox.php:336
+msgid "Twitter"
+msgstr ""
+
+#: ../quezal/includes/meta-box/config-metabox.php:342
+#: includes/meta-box/config-metabox.php:342
+msgid "Vimeo"
+msgstr ""
+
+#: ../quezal/includes/meta-box/config-metabox.php:348
+#: includes/meta-box/config-metabox.php:348
+msgid "Youtube"
+msgstr ""
+
+#: ../quezal/includes/meta-box/config-metabox.php:354
+#: includes/meta-box/config-metabox.php:354
+msgid "Mail"
+msgstr ""
+
+#: ../quezal/includes/meta-box/config-metabox.php:367
+#: includes/meta-box/config-metabox.php:367
+msgid "Read Me"
+msgstr ""
+
+#: ../quezal/includes/meta-box/config-metabox.php:376
+#: includes/meta-box/config-metabox.php:376
+msgid ""
+"Go through<br> - Theme Options > Portfolio <br>- Settings > Visual "
+"Composer<br><br>Refer Help Document for more info."
+msgstr ""
+
+#: ../quezal/includes/meta-box/config-metabox.php:388
+#: includes/meta-box/config-metabox.php:388
+msgid "Portfolio Item Type"
+msgstr ""
+
+#: ../quezal/includes/meta-box/config-metabox.php:400
+#: includes/meta-box/config-metabox.php:400
+msgid "Image"
+msgstr ""
+
+#: ../quezal/includes/meta-box/config-metabox.php:401
+#: includes/meta-box/config-metabox.php:401
+msgid "Video"
+msgstr ""
+
+#: ../quezal/includes/meta-box/config-metabox.php:402
+#: ../twentyfourteen/inc/widgets.php:62
+#: ../twentyfourteen/taxonomy-post_format.php:39
+#: includes/meta-box/config-metabox.php:402
+msgid "Audio"
+msgstr ""
+
+#: ../quezal/includes/meta-box/config-metabox.php:403
+#: includes/meta-box/config-metabox.php:403
+msgid "Gallery"
+msgstr ""
+
+#: ../quezal/includes/meta-box/config-metabox.php:414
+#: includes/meta-box/config-metabox.php:414
+msgid "If - Video Post"
+msgstr ""
+
+#: ../quezal/includes/meta-box/config-metabox.php:423
+#: includes/meta-box/config-metabox.php:423
+msgid ""
+"Enter URL here. <br/>Video will be displayed on zoom.<br/><br/><strong>URL "
+"examples</strong><br/> Youtube - http://youtu.be/XSGBVzeBUbk <br/><br/>  "
+"Vimeo - http://vimeo.com/69228454"
+msgstr ""
+
+#: ../quezal/includes/meta-box/config-metabox.php:435
+#: includes/meta-box/config-metabox.php:435
+msgid "If zoom on hover"
+msgstr ""
+
+#: ../quezal/includes/meta-box/config-metabox.php:444
+#: includes/meta-box/config-metabox.php:444
+msgid "Title to lightbox Image / video."
+msgstr ""
+
+#: ../quezal/includes/meta-box/config-metabox.php:456
+#: includes/meta-box/config-metabox.php:456
+msgid "If link on hover : <br>External Link URL"
+msgstr ""
+
+#: ../quezal/includes/meta-box/config-metabox.php:464
+#: includes/meta-box/config-metabox.php:464
+msgid ""
+"<br>Checkbox to enable external link <br><br> If unchecked, link will "
+"display portfolio details page. <br><br>"
+msgstr ""
+
+#: ../quezal/includes/meta-box/config-metabox.php:474
+#: includes/meta-box/config-metabox.php:474
+msgid "Tick the checkbox and give link here"
+msgstr ""
+
+#: ../quezal/includes/meta-box/config-metabox.php:485
+#: includes/meta-box/config-metabox.php:485
+msgid "If Video/ Audio Post - Embed Code :"
+msgstr ""
+
+#: ../quezal/includes/meta-box/config-metabox.php:494
+#: includes/meta-box/config-metabox.php:494
+msgid "This will be displayed on portfolio item details page."
+msgstr ""
+
+#: ../quezal/includes/meta-box/helpers/cmb_Meta_Box_ajax.php:47
+#: includes/meta-box/helpers/cmb_Meta_Box_ajax.php:47
+msgid "Please Try Again"
+msgstr ""
+
+#: ../quezal/includes/meta-box/helpers/cmb_Meta_Box_ajax.php:131
+#: includes/meta-box/helpers/cmb_Meta_Box_ajax.php:131
+msgid "Remove Embed"
+msgstr ""
+
+#: ../quezal/includes/meta-box/helpers/cmb_Meta_Box_ajax.php:134
+#: includes/meta-box/helpers/cmb_Meta_Box_ajax.php:134
+#, php-format
+msgid "No oEmbed Results Found for %s. View more info at"
+msgstr ""
+
+#: ../quezal/includes/meta-box/helpers/cmb_Meta_Box_field.php:449
+#: includes/meta-box/helpers/cmb_Meta_Box_field.php:449
+msgid "Add Group"
+msgstr ""
+
+#: ../quezal/includes/meta-box/helpers/cmb_Meta_Box_field.php:450
+#: includes/meta-box/helpers/cmb_Meta_Box_field.php:450
+msgid "Remove Group"
+msgstr ""
+
+#: ../quezal/includes/meta-box/helpers/cmb_Meta_Box_types.php:249
+#: includes/meta-box/helpers/cmb_Meta_Box_types.php:249
+msgid "Add Row"
+msgstr ""
+
+#: ../quezal/includes/meta-box/helpers/cmb_Meta_Box_types.php:600
+#: ../quezal/includes/meta-box/helpers/cmb_Meta_Box_types.php:634
+#: includes/meta-box/helpers/cmb_Meta_Box_types.php:600
+#: includes/meta-box/helpers/cmb_Meta_Box_types.php:634
+msgid "No terms"
+msgstr ""
+
+#: ../quezal/includes/meta-box/helpers/cmb_Meta_Box_types.php:673
+#: ../quezal/includes/meta-box/helpers/cmb_Meta_Box_types.php:727
+#: includes/meta-box/helpers/cmb_Meta_Box_types.php:673
+#: includes/meta-box/helpers/cmb_Meta_Box_types.php:727
+msgid "Add or Upload File"
+msgstr ""
+
+#: ../quezal/includes/meta-box/helpers/cmb_Meta_Box_types.php:694
+#: ../quezal/includes/meta-box/helpers/cmb_Meta_Box_types.php:757
+#: includes/meta-box/helpers/cmb_Meta_Box_types.php:694
+#: includes/meta-box/helpers/cmb_Meta_Box_types.php:757
+msgid "Remove Image"
+msgstr ""
+
+#: ../quezal/includes/meta-box/helpers/cmb_Meta_Box_types.php:705
+#: ../quezal/includes/meta-box/helpers/cmb_Meta_Box_types.php:765
+#: includes/meta-box/helpers/cmb_Meta_Box_types.php:705
+#: includes/meta-box/helpers/cmb_Meta_Box_types.php:765
+msgid "File:"
+msgstr ""
+
+#: ../quezal/includes/meta-box/init.php:251 includes/meta-box/init.php:251
+msgid "Clear"
+msgstr ""
+
+#: ../quezal/includes/meta-box/init.php:253 includes/meta-box/init.php:253
+msgid "Select Color"
+msgstr ""
+
+#: ../quezal/includes/meta-box/init.php:254 includes/meta-box/init.php:254
+msgid "Current Color"
+msgstr ""
+
+#: ../quezal/includes/meta-box/init.php:1155 includes/meta-box/init.php:1155
+msgid "Save"
+msgstr ""
+
+#: ../quezal/includes/options-config.php:117 includes/options-config.php:117
+msgid "Section via hook"
+msgstr ""
+
+#: ../quezal/includes/options-config.php:118 includes/options-config.php:118
+msgid ""
+"<p class=\"description\">This is a section created by adding a filter to the "
+"sections array. Can be used by child themes to add/remove sections from the "
+"options.</p>"
+msgstr ""
+
+#: ../quezal/includes/options-config.php:198 includes/options-config.php:198
+#, php-format
+msgid "Customize &#8220;%s&#8221;"
+msgstr ""
+
+#: ../quezal/includes/options-config.php:215 includes/options-config.php:215
+#, php-format
+msgid "By %s"
+msgstr ""
+
+#: ../quezal/includes/options-config.php:216 includes/options-config.php:216
+#, php-format
+msgid "Version %s"
+msgstr ""
+
+#: ../quezal/includes/options-config.php:217
+#: ../quezal/includes/widgets/custom-widgets.php:192
+#: includes/options-config.php:217 includes/widgets/custom-widgets.php:192
+msgid "Tags"
+msgstr ""
+
+#: ../quezal/includes/options-config.php:222 includes/options-config.php:222
+#, php-format
+msgid "This <a href=\"%1$s\">child theme</a> requires its parent theme, %2$s."
+msgstr ""
+
+#: ../quezal/includes/options-config.php:222 includes/options-config.php:222
+msgid "http://codex.wordpress.org/Child_Themes"
+msgstr ""
+
+#: ../quezal/includes/options-config.php:249
+#: ../quezal/includes/options-config.php:533 includes/options-config.php:249
+#: includes/options-config.php:533
+msgid "General"
+msgstr ""
+
+#: ../quezal/includes/options-config.php:254 includes/options-config.php:254
+msgid "Favicon / Touch Icons"
+msgstr ""
+
+#: ../quezal/includes/options-config.php:260 includes/options-config.php:260
+msgid "Favicon"
+msgstr ""
+
+#: ../quezal/includes/options-config.php:261 includes/options-config.php:261
+msgid "Upload Favicon (16px x 16px ico/png/jpg)"
+msgstr ""
+
+#: ../quezal/includes/options-config.php:268 includes/options-config.php:268
+msgid "Standard iPhone Touch Icon"
+msgstr ""
+
+#: ../quezal/includes/options-config.php:269 includes/options-config.php:269
+msgid "Upload Icon ( 57px x 57px png )"
+msgstr ""
+
+#: ../quezal/includes/options-config.php:276 includes/options-config.php:276
+msgid "Retina iPhone Touch Icon"
+msgstr ""
+
+#: ../quezal/includes/options-config.php:277 includes/options-config.php:277
+msgid "Upload Icon ( 114px x 114px png )"
+msgstr ""
+
+#: ../quezal/includes/options-config.php:284 includes/options-config.php:284
+msgid "Standard iPad Touch Icon"
+msgstr ""
+
+#: ../quezal/includes/options-config.php:285 includes/options-config.php:285
+msgid "Upload Icon ( 72px x 72px png )"
+msgstr ""
+
+#: ../quezal/includes/options-config.php:292 includes/options-config.php:292
+msgid "Retina iPad Touch Icon"
+msgstr ""
+
+#: ../quezal/includes/options-config.php:293 includes/options-config.php:293
+msgid "Upload Icon ( 144px x 144px png )"
+msgstr ""
+
+#: ../quezal/includes/options-config.php:299 includes/options-config.php:299
+msgid "Responsive"
+msgstr ""
+
+#: ../quezal/includes/options-config.php:304 includes/options-config.php:304
+msgid "Responsiveness"
+msgstr ""
+
+#: ../quezal/includes/options-config.php:311 includes/options-config.php:311
+msgid "Tracking Code"
+msgstr ""
+
+#: ../quezal/includes/options-config.php:317 includes/options-config.php:317
+msgid "Tracking Code in Header"
+msgstr ""
+
+#: ../quezal/includes/options-config.php:318 includes/options-config.php:318
+msgid ""
+"Paste your Google Analytics (or other) tracking code here. <br>This will be "
+"added into the header of theme."
+msgstr ""
+
+#: ../quezal/includes/options-config.php:326 includes/options-config.php:326
+msgid "Tracking Code in Footer"
+msgstr ""
+
+#: ../quezal/includes/options-config.php:327 includes/options-config.php:327
+msgid ""
+"Paste your Google Analytics (or other) tracking code here. <br>This will be "
+"added into the footer of theme."
+msgstr ""
+
+#: ../quezal/includes/options-config.php:334 includes/options-config.php:334
+msgid "Comments on Pages (other than posts)"
+msgstr ""
+
+#: ../quezal/includes/options-config.php:339 includes/options-config.php:339
+msgid "Comments on pages"
+msgstr ""
+
+#: ../quezal/includes/options-config.php:348 includes/options-config.php:348
+msgid " Typography & Styling"
+msgstr ""
+
+#: ../quezal/includes/options-config.php:355 includes/options-config.php:355
+msgid "Body Typography"
+msgstr ""
+
+#: ../quezal/includes/options-config.php:384 includes/options-config.php:384
+msgid "Headings Typography"
+msgstr ""
+
+#: ../quezal/includes/options-config.php:389 includes/options-config.php:389
+msgid "H1"
+msgstr ""
+
+#: ../quezal/includes/options-config.php:413 includes/options-config.php:413
+msgid "H2"
+msgstr ""
+
+#: ../quezal/includes/options-config.php:437 includes/options-config.php:437
+msgid "H3"
+msgstr ""
+
+#: ../quezal/includes/options-config.php:461 includes/options-config.php:461
+msgid "H4"
+msgstr ""
+
+#: ../quezal/includes/options-config.php:485 includes/options-config.php:485
+msgid "H5"
+msgstr ""
+
+#: ../quezal/includes/options-config.php:509 includes/options-config.php:509
+msgid "H6"
+msgstr ""
+
+#: ../quezal/includes/options-config.php:539
+#: ../quezal/includes/options-config.php:617
+#: ../quezal/includes/options-config.php:845
+#: ../quezal/includes/options-config.php:899 includes/options-config.php:539
+#: includes/options-config.php:617 includes/options-config.php:845
+#: includes/options-config.php:899
+msgid "Link Color"
+msgstr ""
+
+#: ../quezal/includes/options-config.php:554 includes/options-config.php:554
+msgid "Button Font"
+msgstr ""
+
+#: ../quezal/includes/options-config.php:578 includes/options-config.php:578
+msgid "Slide Panel Typography"
+msgstr ""
+
+#: ../quezal/includes/options-config.php:608
+#: ../quezal/includes/options-config.php:890 includes/options-config.php:608
+#: includes/options-config.php:890
+msgid "Headings Color"
+msgstr ""
+
+#: ../quezal/includes/options-config.php:632
+#: ../quezal/includes/options-config.php:1207 includes/options-config.php:632
+#: includes/options-config.php:1207
+msgid "Topbar"
+msgstr ""
+
+#: ../quezal/includes/options-config.php:662 includes/options-config.php:662
+msgid "Topbar Link Hover Color"
+msgstr ""
+
+#: ../quezal/includes/options-config.php:671 includes/options-config.php:671
+msgid "Social Icon Color"
+msgstr ""
+
+#: ../quezal/includes/options-config.php:679 includes/options-config.php:679
+msgid "Menu Typography"
+msgstr ""
+
+#: ../quezal/includes/options-config.php:684 includes/options-config.php:684
+msgid "Menu link"
+msgstr ""
+
+#: ../quezal/includes/options-config.php:709 includes/options-config.php:709
+msgid "Menu Link Hover Color"
+msgstr ""
+
+#: ../quezal/includes/options-config.php:718 includes/options-config.php:718
+msgid "Menu Active Link Color"
+msgstr ""
+
+#: ../quezal/includes/options-config.php:726 includes/options-config.php:726
+msgid "Dropdown Link"
+msgstr ""
+
+#: ../quezal/includes/options-config.php:750 includes/options-config.php:750
+msgid "Dropdown Background Color"
+msgstr ""
+
+#: ../quezal/includes/options-config.php:764 includes/options-config.php:764
+msgid "Dropdown Border Color"
+msgstr ""
+
+#: ../quezal/includes/options-config.php:773 includes/options-config.php:773
+msgid "Dropdown Link Color"
+msgstr ""
+
+#: ../quezal/includes/options-config.php:782 includes/options-config.php:782
+msgid "Dropdown Link Hover Color"
+msgstr ""
+
+#: ../quezal/includes/options-config.php:790
+#: ../quezal/includes/options-config.php:1465 includes/options-config.php:790
+#: includes/options-config.php:1465
+msgid "Page Header"
+msgstr ""
+
+#: ../quezal/includes/options-config.php:795 includes/options-config.php:795
+msgid "Page Title"
+msgstr ""
+
+#: ../quezal/includes/options-config.php:820 includes/options-config.php:820
+msgid "Font size"
+msgstr ""
+
+#: ../quezal/includes/options-config.php:860 includes/options-config.php:860
+msgid "Footer Typography"
+msgstr ""
+
+#: ../quezal/includes/options-config.php:914 includes/options-config.php:914
+msgid "Widgets"
+msgstr ""
+
+#: ../quezal/includes/options-config.php:919 includes/options-config.php:919
+msgid "Widget Heading"
+msgstr ""
+
+#: ../quezal/includes/options-config.php:944
+#: ../quezal/includes/options-config.php:967
+#: ../quezal/includes/options-config.php:990 includes/options-config.php:944
+#: includes/options-config.php:967 includes/options-config.php:990
+msgid "Widgets / Bordered List - Border Color"
+msgstr ""
+
+#: ../quezal/includes/options-config.php:953
+#: ../quezal/includes/options-config.php:976
+#: ../quezal/includes/options-config.php:999 includes/options-config.php:953
+#: includes/options-config.php:976 includes/options-config.php:999
+msgid "Social Network Widget - Icons Color"
+msgstr ""
+
+#: ../quezal/includes/options-config.php:962 includes/options-config.php:962
+msgid "Settings for Top Slide Panel Widgets"
+msgstr ""
+
+#: ../quezal/includes/options-config.php:985 includes/options-config.php:985
+msgid "Settings for Footer Widgets"
+msgstr ""
+
+#: ../quezal/includes/options-config.php:1009 includes/options-config.php:1009
+msgid "Theme Base Colors"
+msgstr ""
+
+#: ../quezal/includes/options-config.php:1027 includes/options-config.php:1027
+msgid ""
+"Other suggested - Theme Base Colors. <br> Try these by pasting color values "
+"above."
+msgstr ""
+
+#: ../quezal/includes/options-config.php:1034 includes/options-config.php:1034
+msgid "#ce3f00"
+msgstr ""
+
+#: ../quezal/includes/options-config.php:1042 includes/options-config.php:1042
+msgid "#00a5ce"
+msgstr ""
+
+#: ../quezal/includes/options-config.php:1050 includes/options-config.php:1050
+msgid "#0061ce"
+msgstr ""
+
+#: ../quezal/includes/options-config.php:1058 includes/options-config.php:1058
+msgid "#74ce00"
+msgstr ""
+
+#: ../quezal/includes/options-config.php:1066 includes/options-config.php:1066
+msgid "Body / Others"
+msgstr ""
+
+#: ../quezal/includes/options-config.php:1073 includes/options-config.php:1073
+msgid "Body"
+msgstr ""
+
+#: ../quezal/includes/options-config.php:1079 includes/options-config.php:1079
+msgid "Body Background"
+msgstr ""
+
+#: ../quezal/includes/options-config.php:1087 includes/options-config.php:1087
+msgid "Sidebar"
+msgstr ""
+
+#: ../quezal/includes/options-config.php:1102 includes/options-config.php:1102
+msgid "Padding top to Sidebar"
+msgstr ""
+
+#: ../quezal/includes/options-config.php:1104
+#: ../quezal/includes/options-config.php:1235
+#: ../quezal/includes/options-config.php:1291
+#: ../quezal/includes/options-config.php:1430
+#: ../quezal/includes/options-config.php:1455
+#: ../quezal/includes/options-config.php:1502 includes/options-config.php:1104
+#: includes/options-config.php:1235 includes/options-config.php:1291
+#: includes/options-config.php:1430 includes/options-config.php:1455
+#: includes/options-config.php:1502
+msgid "No need of unit. It will be in px."
+msgstr ""
+
+#: ../quezal/includes/options-config.php:1115 includes/options-config.php:1115
+msgid "Header Section"
+msgstr ""
+
+#: ../quezal/includes/options-config.php:1121 includes/options-config.php:1121
+msgid "Select a Header Layout"
+msgstr ""
+
+#: ../quezal/includes/options-config.php:1138 includes/options-config.php:1138
+msgid "Enable / Disable / Select Elements"
+msgstr ""
+
+#: ../quezal/includes/options-config.php:1143 includes/options-config.php:1143
+msgid "Sticky Header"
+msgstr ""
+
+#: ../quezal/includes/options-config.php:1152 includes/options-config.php:1152
+msgid "These will work according to header layout selected."
+msgstr ""
+
+#: ../quezal/includes/options-config.php:1157 includes/options-config.php:1157
+msgid "Show Slide Panel"
+msgstr ""
+
+#: ../quezal/includes/options-config.php:1164 includes/options-config.php:1164
+msgid "Show Topbar"
+msgstr ""
+
+#: ../quezal/includes/options-config.php:1171 includes/options-config.php:1171
+msgid "Social in Topbar"
+msgstr ""
+
+#: ../quezal/includes/options-config.php:1178 includes/options-config.php:1178
+msgid "Search in Topbar"
+msgstr ""
+
+#: ../quezal/includes/options-config.php:1185 includes/options-config.php:1185
+msgid "Topbar Text Area : Links or Text"
+msgstr ""
+
+#: ../quezal/includes/options-config.php:1187 includes/options-config.php:1187
+msgid ""
+"If Text, enter text below.<br> If links, secondary menu will be displayed."
+msgstr ""
+
+#: ../quezal/includes/options-config.php:1198 includes/options-config.php:1198
+msgid "Enter text for topbar text area here. HTML is allowed."
+msgstr ""
+
+#: ../quezal/includes/options-config.php:1215
+#: ../quezal/includes/options-config.php:1270
+#: ../quezal/includes/options-config.php:1481
+#: ../quezal/includes/options-config.php:1596 includes/options-config.php:1215
+#: includes/options-config.php:1270 includes/options-config.php:1481
+#: includes/options-config.php:1596
+msgid "Background"
+msgstr ""
+
+#: ../quezal/includes/options-config.php:1233
+#: ../quezal/includes/options-config.php:1289
+#: ../quezal/includes/options-config.php:1500
+#: ../quezal/includes/options-config.php:1615 includes/options-config.php:1233
+#: includes/options-config.php:1289 includes/options-config.php:1500
+#: includes/options-config.php:1615
+msgid "Padding (top & bottom)"
+msgstr ""
+
+#: ../quezal/includes/options-config.php:1244
+#: ../quezal/includes/options-config.php:1300
+#: ../quezal/includes/options-config.php:1511 includes/options-config.php:1244
+#: includes/options-config.php:1300 includes/options-config.php:1511
+msgid "Border Bottom"
+msgstr ""
+
+#: ../quezal/includes/options-config.php:1251
+#: ../quezal/includes/options-config.php:1307
+#: ../quezal/includes/options-config.php:1518 includes/options-config.php:1251
+#: includes/options-config.php:1307 includes/options-config.php:1518
+msgid "Border Bottom Color"
+msgstr ""
+
+#: ../quezal/includes/options-config.php:1262 includes/options-config.php:1262
+msgid "Header"
+msgstr ""
+
+#: ../quezal/includes/options-config.php:1318 includes/options-config.php:1318
+msgid "Logo & Menu"
+msgstr ""
+
+#: ../quezal/includes/options-config.php:1326 includes/options-config.php:1326
+msgid "Logo"
+msgstr ""
+
+#: ../quezal/includes/options-config.php:1333 includes/options-config.php:1333
+msgid ""
+"If Image Logo : Upload logo image using field below. <br/><br/> If text "
+"logo : Provide text using field below."
+msgstr ""
+
+#: ../quezal/includes/options-config.php:1343 includes/options-config.php:1343
+msgid "If Image Logo"
+msgstr ""
+
+#: ../quezal/includes/options-config.php:1345
+#: ../quezal/includes/options-config.php:1398 includes/options-config.php:1345
+#: includes/options-config.php:1398
+msgid "Upload logo."
+msgstr ""
+
+#: ../quezal/includes/options-config.php:1351 includes/options-config.php:1351
+msgid "If Text Logo"
+msgstr ""
+
+#: ../quezal/includes/options-config.php:1352 includes/options-config.php:1352
+msgid "Enter text for logo and set font below."
+msgstr ""
+
+#: ../quezal/includes/options-config.php:1361 includes/options-config.php:1361
+msgid "Set font for logo text."
+msgstr ""
+
+#: ../quezal/includes/options-config.php:1376 includes/options-config.php:1376
+msgid "Set font color and hover color for logo text."
+msgstr ""
+
+#: ../quezal/includes/options-config.php:1390 includes/options-config.php:1390
+msgid "Retina Logo (Optional)"
+msgstr ""
+
+#: ../quezal/includes/options-config.php:1396 includes/options-config.php:1396
+msgid "For Retina Image Logo"
+msgstr ""
+
+#: ../quezal/includes/options-config.php:1407 includes/options-config.php:1407
+msgid "Retina Logo Dimensions (Width/Height)"
+msgstr ""
+
+#: ../quezal/includes/options-config.php:1409 includes/options-config.php:1409
+msgid ""
+"Enter width / height of logo for retina device. <br>It should be the width "
+"of normal / standard logo, not the retina logo."
+msgstr ""
+
+#: ../quezal/includes/options-config.php:1419 includes/options-config.php:1419
+msgid "Sticky Header Logo"
+msgstr ""
+
+#: ../quezal/includes/options-config.php:1428 includes/options-config.php:1428
+msgid "Sticky header Logo Width. <br>Height will be taken accordingly."
+msgstr ""
+
+#: ../quezal/includes/options-config.php:1438 includes/options-config.php:1438
+msgid "Menu"
+msgstr ""
+
+#: ../quezal/includes/options-config.php:1453 includes/options-config.php:1453
+msgid "Margin Top to Menu"
+msgstr ""
+
+#: ../quezal/includes/options-config.php:1473 includes/options-config.php:1473
+msgid "Show Page Header"
+msgstr ""
+
+#: ../quezal/includes/options-config.php:1526 includes/options-config.php:1526
+msgid "Breadcrumb"
+msgstr ""
+
+#: ../quezal/includes/options-config.php:1534 includes/options-config.php:1534
+msgid "Slide Panel"
+msgstr ""
+
+#: ../quezal/includes/options-config.php:1542
+#: ../quezal/includes/options-config.php:1581 includes/options-config.php:1542
+#: includes/options-config.php:1581
+msgid "Number of Columns"
+msgstr ""
+
+#: ../quezal/includes/options-config.php:1544
+#: ../quezal/includes/options-config.php:1583 includes/options-config.php:1544
+#: includes/options-config.php:1583
+msgid ""
+"Select number of columns. <br> Then add widgets to these columns: Appearance "
+"> Widgets"
+msgstr ""
+
+#: ../quezal/includes/options-config.php:1564 includes/options-config.php:1564
+msgid "Slide panel Button Background Color"
+msgstr ""
+
+#: ../quezal/includes/options-config.php:1574 includes/options-config.php:1574
+msgid "Footer"
+msgstr ""
+
+#: ../quezal/includes/options-config.php:1617 includes/options-config.php:1617
+msgid "No need of unit. It will be in px.<br> Default : Top: 60, Bottom: 30"
+msgstr ""
+
+#: ../quezal/includes/options-config.php:1626 includes/options-config.php:1626
+msgid "Take to Top Arrow Above Footer"
+msgstr ""
+
+#: ../quezal/includes/options-config.php:1631 includes/options-config.php:1631
+msgid "Show Take to Top Arrow Section"
+msgstr ""
+
+#: ../quezal/includes/options-config.php:1648 includes/options-config.php:1648
+msgid "Blog"
+msgstr ""
+
+#: ../quezal/includes/options-config.php:1655 includes/options-config.php:1655
+msgid "Blog Page Title"
+msgstr ""
+
+#: ../quezal/includes/options-config.php:1662
+#: ../quezal/includes/templates/headers/page-header.php:36
+#: ../twentyfourteen/archive.php:40
+#: ../twentyfourteen/taxonomy-post_format.php:51
+#: includes/options-config.php:1662
+#: includes/templates/headers/page-header.php:36
+msgid "Archives"
+msgstr ""
+
+#: ../quezal/includes/options-config.php:1667 includes/options-config.php:1667
+msgid "Select Archives Layout."
+msgstr ""
+
+#: ../quezal/includes/options-config.php:1679
+#: ../quezal/includes/options-config.php:1708 includes/options-config.php:1679
+#: includes/options-config.php:1708
+msgid "Sidebar Position"
+msgstr ""
+
+#: ../quezal/includes/options-config.php:1681 includes/options-config.php:1681
+msgid "Select archives sidebar position."
+msgstr ""
+
+#: ../quezal/includes/options-config.php:1691 includes/options-config.php:1691
+msgid "Single Post"
+msgstr ""
+
+#: ../quezal/includes/options-config.php:1696 includes/options-config.php:1696
+msgid "Select Layout."
+msgstr ""
+
+#: ../quezal/includes/options-config.php:1710 includes/options-config.php:1710
+msgid "Select sidebar position."
+msgstr ""
+
+#: ../quezal/includes/options-config.php:1722 includes/options-config.php:1722
+msgid "Portfolio"
+msgstr ""
+
+#: ../quezal/includes/options-config.php:1729 includes/options-config.php:1729
+msgid "Portfolio Grid Pages (2,3,4 columns)"
+msgstr ""
+
+#: ../quezal/includes/options-config.php:1734 includes/options-config.php:1734
+msgid "Portfolio items per page"
+msgstr ""
+
+#: ../quezal/includes/options-config.php:1735 includes/options-config.php:1735
+msgid "Specify the number of portfolio items to display per page."
+msgstr ""
+
+#: ../quezal/includes/options-config.php:1742 includes/options-config.php:1742
+msgid "Sort Portfolio Items"
+msgstr ""
+
+#: ../quezal/includes/options-config.php:1754 includes/options-config.php:1754
+msgid "Arrange Sorted Portfolio Items"
+msgstr ""
+
+#: ../quezal/includes/options-config.php:1756 includes/options-config.php:1756
+msgid ""
+"For more flxible re-ordering, refer help document for recommended plugin"
+msgstr ""
+
+#: ../quezal/includes/options-config.php:1766 includes/options-config.php:1766
+msgid "Portfolio Filter"
+msgstr ""
+
+#: ../quezal/includes/options-config.php:1773 includes/options-config.php:1773
+msgid "Heading to Portfolio Item"
+msgstr ""
+
+#: ../quezal/includes/options-config.php:1780 includes/options-config.php:1780
+msgid " Excerpt of Portfolio Item"
+msgstr ""
+
+#: ../quezal/includes/options-config.php:1787 includes/options-config.php:1787
+msgid "Select zoom or link on hover"
+msgstr ""
+
+#: ../quezal/includes/options-config.php:1798 includes/options-config.php:1798
+msgid "Portfolio Details Pages"
+msgstr ""
+
+#: ../quezal/includes/options-config.php:1803 includes/options-config.php:1803
+msgid "Predefined content"
+msgstr ""
+
+#: ../quezal/includes/options-config.php:1805 includes/options-config.php:1805
+msgid ""
+"Check to enable predefined content on portfolio details page. This includes "
+"only image set through featured image."
+msgstr ""
+
+#: ../quezal/includes/options-config.php:1813 includes/options-config.php:1813
+msgid "Custom CSS"
+msgstr ""
+
+#: ../quezal/includes/options-config.php:1820 includes/options-config.php:1820
+msgid "CSS Code"
+msgstr ""
+
+#: ../quezal/includes/options-config.php:1821 includes/options-config.php:1821
+msgid ""
+"Paste your CSS Code. <br><br> DO NOT edit style.css <br><br> Always keep "
+"backup, in case of accidental 'Reset'. <br><br>You can use custom.css "
+"(placed in folder named as css) to write your own styes instead of this "
+"small block. <br><br>Consider using child theme for easy theme update. "
+"<br><br> Refer theme Help Document for more info."
+msgstr ""
+
+#: ../quezal/includes/options-config.php:1833 includes/options-config.php:1833
+msgid "Import and Export your Redux Framework settings from file, text or URL."
+msgstr ""
+
+#: ../quezal/includes/options-config.php:1854 includes/options-config.php:1854
+msgid "Theme Information"
+msgstr ""
+
+#: ../quezal/includes/options-config.php:1868 includes/options-config.php:1868
+msgid "Documentation"
+msgstr ""
+
+#: ../quezal/includes/options-config.php:1879 includes/options-config.php:1879
+msgid "Help Document"
+msgstr ""
+
+#: ../quezal/includes/options-config.php:1880 includes/options-config.php:1880
+msgid ""
+"<p>Please go through help document for more info. It is included in main zip "
+"file you have downloaded. <br><br>Make sure to select option \"Main File(s)” "
+"while downloading. This contains all files & documentation. <br><br>Find it "
+"here : Main zip > help-documents > quezal-help</p>"
+msgstr ""
+
+#: ../quezal/includes/options-config.php:1904
+#: ../quezal/includes/options-config.php:1905 includes/options-config.php:1904
+#: includes/options-config.php:1905
+msgid "Theme Options"
+msgstr ""
+
+#: ../quezal/includes/page-builder/add-params.php:23
+#: includes/page-builder/add-params.php:23
+msgid "Make Row Fullwidth"
+msgstr ""
+
+#: ../quezal/includes/page-builder/add-params.php:26
+#: includes/page-builder/add-params.php:26
+msgid "Yes, please"
+msgstr ""
+
+#: ../quezal/includes/page-builder/add-params.php:28
+#: includes/page-builder/add-params.php:28
+msgid ""
+"This will work only with <strong>home page and fullwidth page template</"
+"strong>. <br>  Do not give '<strong>left and right margin and padding</"
+"strong>' to row in design option tab to make row fulwidth. Even do not write "
+"0. <br> If need to give border give 0, for left and right border. <br> Check "
+"help document for more info."
+msgstr ""
+
+#: ../quezal/includes/plugins/portfolio-post-types.php:19
+#: includes/plugins/portfolio-post-types.php:19
+msgctxt "post type general name"
+msgid "Portfolio Items"
+msgstr ""
+
+#: ../quezal/includes/plugins/portfolio-post-types.php:20
+#: includes/plugins/portfolio-post-types.php:20
+msgctxt "post type singular name"
+msgid "Portfolio Item"
+msgstr ""
+
+#: ../quezal/includes/plugins/portfolio-post-types.php:21
+#: includes/plugins/portfolio-post-types.php:21
+msgid "Portfolio Items"
+msgstr ""
+
+#: ../quezal/includes/plugins/portfolio-post-types.php:22
+#: ../quezal/includes/plugins/team-post-types.php:22
+#: ../quezal/includes/plugins/testimonial-post-types.php:22
+#: includes/plugins/portfolio-post-types.php:22
+#: includes/plugins/team-post-types.php:22
+#: includes/plugins/testimonial-post-types.php:22
+msgid "Add New"
+msgstr ""
+
+#: ../quezal/includes/plugins/portfolio-post-types.php:23
+#: includes/plugins/portfolio-post-types.php:23
+msgid "Add New Portfolio Item"
+msgstr ""
+
+#: ../quezal/includes/plugins/portfolio-post-types.php:24
+#: includes/plugins/portfolio-post-types.php:24
+msgid "Edit Portfolio Item"
+msgstr ""
+
+#: ../quezal/includes/plugins/portfolio-post-types.php:25
+#: includes/plugins/portfolio-post-types.php:25
+msgid "New Portfolio Item"
+msgstr ""
+
+#: ../quezal/includes/plugins/portfolio-post-types.php:26
+#: includes/plugins/portfolio-post-types.php:26
+msgid "View Portfolio Item"
+msgstr ""
+
+#: ../quezal/includes/plugins/portfolio-post-types.php:27
+#: includes/plugins/portfolio-post-types.php:27
+msgid "Search Portfolio Items"
+msgstr ""
+
+#: ../quezal/includes/plugins/portfolio-post-types.php:28
+#: includes/plugins/portfolio-post-types.php:28
+msgid "No Portfolio Items found"
+msgstr ""
+
+#: ../quezal/includes/plugins/portfolio-post-types.php:29
+#: includes/plugins/portfolio-post-types.php:29
+msgid "No Portfolio Items found in Trash"
+msgstr ""
+
+#: ../quezal/includes/plugins/portfolio-post-types.php:54
+#: includes/plugins/portfolio-post-types.php:54
+msgctxt "taxonomy general name"
+msgid "Portfolio Categories"
+msgstr ""
+
+#: ../quezal/includes/plugins/portfolio-post-types.php:55
+#: includes/plugins/portfolio-post-types.php:55
+msgctxt "taxonomy singular name"
+msgid "Portfolio Category"
+msgstr ""
+
+#: ../quezal/includes/plugins/portfolio-post-types.php:56
+#: includes/plugins/portfolio-post-types.php:56
+msgid "Search Portfolio Categories"
+msgstr ""
+
+#: ../quezal/includes/plugins/portfolio-post-types.php:57
+#: includes/plugins/portfolio-post-types.php:57
+msgid "All Portfolio Categories"
+msgstr ""
+
+#: ../quezal/includes/plugins/portfolio-post-types.php:58
+#: includes/plugins/portfolio-post-types.php:58
+msgid "Edit Portfolio Category"
+msgstr ""
+
+#: ../quezal/includes/plugins/portfolio-post-types.php:59
+#: includes/plugins/portfolio-post-types.php:59
+msgid "View Portfolio Category"
+msgstr ""
+
+#: ../quezal/includes/plugins/portfolio-post-types.php:60
+#: includes/plugins/portfolio-post-types.php:60
+msgid "Parent Portfolio Category"
+msgstr ""
+
+#: ../quezal/includes/plugins/portfolio-post-types.php:61
+#: includes/plugins/portfolio-post-types.php:61
+msgid "Parent Portfolio Category:"
+msgstr ""
+
+#: ../quezal/includes/plugins/portfolio-post-types.php:62
+#: includes/plugins/portfolio-post-types.php:62
+msgid "Update Portfolio Category"
+msgstr ""
+
+#: ../quezal/includes/plugins/portfolio-post-types.php:63
+#: includes/plugins/portfolio-post-types.php:63
+msgid "Add New Portfolio Category"
+msgstr ""
+
+#: ../quezal/includes/plugins/portfolio-post-types.php:64
+#: includes/plugins/portfolio-post-types.php:64
+msgid "New Portfolio Category Name"
+msgstr ""
+
+#: ../quezal/includes/plugins/team-post-types.php:19
+#: includes/plugins/team-post-types.php:19
+msgctxt "post type general name"
+msgid "Team"
+msgstr ""
+
+#: ../quezal/includes/plugins/team-post-types.php:20
+#: includes/plugins/team-post-types.php:20
+msgctxt "post type singular name"
+msgid "Team Member"
+msgstr ""
+
+#: ../quezal/includes/plugins/team-post-types.php:21
+#: includes/plugins/team-post-types.php:21
+msgid "Team Members"
+msgstr ""
+
+#: ../quezal/includes/plugins/team-post-types.php:23
+#: includes/plugins/team-post-types.php:23
+msgid "Add New Team Member"
+msgstr ""
+
+#: ../quezal/includes/plugins/team-post-types.php:24
+#: includes/plugins/team-post-types.php:24
+msgid "Edit Team Member"
+msgstr ""
+
+#: ../quezal/includes/plugins/team-post-types.php:25
+#: includes/plugins/team-post-types.php:25
+msgid "New Team Member"
+msgstr ""
+
+#: ../quezal/includes/plugins/team-post-types.php:26
+#: includes/plugins/team-post-types.php:26
+msgid "View Team Member"
+msgstr ""
+
+#: ../quezal/includes/plugins/team-post-types.php:27
+#: includes/plugins/team-post-types.php:27
+msgid "Search Team Members"
+msgstr ""
+
+#: ../quezal/includes/plugins/team-post-types.php:28
+#: includes/plugins/team-post-types.php:28
+msgid "No Team Members found"
+msgstr ""
+
+#: ../quezal/includes/plugins/team-post-types.php:29
+#: includes/plugins/team-post-types.php:29
+msgid "No Team Members found in Trash"
+msgstr ""
+
+#: ../quezal/includes/plugins/testimonial-post-types.php:19
+#: includes/plugins/testimonial-post-types.php:19
+msgctxt "post type general name"
+msgid "Testimonial Items"
+msgstr ""
+
+#: ../quezal/includes/plugins/testimonial-post-types.php:20
+#: includes/plugins/testimonial-post-types.php:20
+msgctxt "post type singular name"
+msgid "Testimonial Item"
+msgstr ""
+
+#: ../quezal/includes/plugins/testimonial-post-types.php:21
+#: includes/plugins/testimonial-post-types.php:21
+msgid "Testimonial Items"
+msgstr ""
+
+#: ../quezal/includes/plugins/testimonial-post-types.php:23
+#: includes/plugins/testimonial-post-types.php:23
+msgid "Add New Testimonial Item"
+msgstr ""
+
+#: ../quezal/includes/plugins/testimonial-post-types.php:24
+#: includes/plugins/testimonial-post-types.php:24
+msgid "Edit Testimonial Item"
+msgstr ""
+
+#: ../quezal/includes/plugins/testimonial-post-types.php:25
+#: includes/plugins/testimonial-post-types.php:25
+msgid "New Testimonial Item"
+msgstr ""
+
+#: ../quezal/includes/plugins/testimonial-post-types.php:26
+#: includes/plugins/testimonial-post-types.php:26
+msgid "View Testimonial Item"
+msgstr ""
+
+#: ../quezal/includes/plugins/testimonial-post-types.php:27
+#: includes/plugins/testimonial-post-types.php:27
+msgid "Search Testimonial Items"
+msgstr ""
+
+#: ../quezal/includes/plugins/testimonial-post-types.php:28
+#: includes/plugins/testimonial-post-types.php:28
+msgid "No Testimonial Items found"
+msgstr ""
+
+#: ../quezal/includes/plugins/testimonial-post-types.php:29
+#: includes/plugins/testimonial-post-types.php:29
+msgid "No Testimonial Items found in Trash"
+msgstr ""
+
+#: ../quezal/includes/templates/headers/header-v1.php:44
+#: ../quezal/includes/templates/headers/header-v2.php:26
+#: includes/templates/headers/header-v1.php:44
+#: includes/templates/headers/header-v2.php:26
+msgid "Social Network Widget not activated yet - Activate!"
+msgstr ""
+
+#: ../quezal/includes/templates/headers/header-v1.php:47
+#: ../quezal/includes/templates/headers/header-v2.php:29
+#: includes/templates/headers/header-v1.php:47
+#: includes/templates/headers/header-v2.php:29
+msgid "OR Disable through options panel."
+msgstr ""
+
+#: ../quezal/includes/templates/headers/page-header.php:30
+#: includes/templates/headers/page-header.php:30
+#, php-format
+msgid "Daily Archives : %s"
+msgstr ""
+
+#: ../quezal/includes/templates/headers/page-header.php:32
+#: includes/templates/headers/page-header.php:32
+#, php-format
+msgid "Monthly Archives : %s"
+msgstr ""
+
+#: ../quezal/includes/templates/headers/page-header.php:32
+#: ../twentyfourteen/archive.php:34
+#: includes/templates/headers/page-header.php:32
+msgctxt "monthly archives date format"
+msgid "F Y"
+msgstr ""
+
+#: ../quezal/includes/templates/headers/page-header.php:34
+#: includes/templates/headers/page-header.php:34
+#, php-format
+msgid "Yearly Archives : %s"
+msgstr ""
+
+#: ../quezal/includes/templates/headers/page-header.php:34
+#: ../twentyfourteen/archive.php:37
+#: includes/templates/headers/page-header.php:34
+msgctxt "yearly archives date format"
+msgid "Y"
+msgstr ""
+
+#: ../quezal/includes/templates/headers/page-header.php:42
+#: includes/templates/headers/page-header.php:42
+#, php-format
+msgid "Category Archives : %s"
+msgstr ""
+
+#: ../quezal/includes/templates/headers/page-header.php:46
+#: includes/templates/headers/page-header.php:46
+#, php-format
+msgid "Tagged : %s"
+msgstr ""
+
+#: ../quezal/includes/templates/headers/page-header.php:50
+#: ../twentyfourteen/author.php:31
+#: includes/templates/headers/page-header.php:50
+#, php-format
+msgid "All posts by %s"
+msgstr ""
+
+#: ../quezal/includes/templates/headers/page-header.php:54
+#: includes/templates/headers/page-header.php:54
+#, php-format
+msgid "%s Archives"
+msgstr ""
+
+#: ../quezal/includes/templates/headers/page-header.php:78
+#: includes/templates/headers/page-header.php:78
+#, php-format
+msgid "Search Results for : %s"
+msgstr ""
+
+#: ../quezal/includes/templates/post-formats/author-bio.php:14
+#: includes/templates/post-formats/author-bio.php:14
+#, php-format
+msgid "About %s"
+msgstr ""
+
+#: ../quezal/includes/templates/post-formats/content-audio.php:24
+#: ../quezal/includes/templates/post-formats/content-gallery.php:24
+#: ../quezal/includes/templates/post-formats/content-image.php:19
+#: ../quezal/includes/templates/post-formats/content-link.php:22
+#: ../quezal/includes/templates/post-formats/content-quote.php:21
+#: ../quezal/includes/templates/post-formats/content-video.php:24
+#: ../quezal/includes/templates/post-formats/content.php:20
+#: includes/templates/post-formats/content-audio.php:24
+#: includes/templates/post-formats/content-gallery.php:24
+#: includes/templates/post-formats/content-image.php:19
+#: includes/templates/post-formats/content-link.php:22
+#: includes/templates/post-formats/content-quote.php:21
+#: includes/templates/post-formats/content-video.php:24
+#: includes/templates/post-formats/content.php:20
+msgid "0 Replies"
+msgstr ""
+
+#: ../quezal/includes/templates/post-formats/content-audio.php:24
+#: ../quezal/includes/templates/post-formats/content-gallery.php:24
+#: ../quezal/includes/templates/post-formats/content-image.php:19
+#: ../quezal/includes/templates/post-formats/content-link.php:22
+#: ../quezal/includes/templates/post-formats/content-quote.php:21
+#: ../quezal/includes/templates/post-formats/content-video.php:24
+#: ../quezal/includes/templates/post-formats/content.php:20
+#: includes/templates/post-formats/content-audio.php:24
+#: includes/templates/post-formats/content-gallery.php:24
+#: includes/templates/post-formats/content-image.php:19
+#: includes/templates/post-formats/content-link.php:22
+#: includes/templates/post-formats/content-quote.php:21
+#: includes/templates/post-formats/content-video.php:24
+#: includes/templates/post-formats/content.php:20
+msgid "1 Replies"
+msgstr ""
+
+#: ../quezal/includes/templates/post-formats/content-audio.php:24
+#: ../quezal/includes/templates/post-formats/content-gallery.php:24
+#: ../quezal/includes/templates/post-formats/content-image.php:19
+#: ../quezal/includes/templates/post-formats/content-link.php:22
+#: ../quezal/includes/templates/post-formats/content-quote.php:21
+#: ../quezal/includes/templates/post-formats/content-video.php:24
+#: ../quezal/includes/templates/post-formats/content.php:20
+#: includes/templates/post-formats/content-audio.php:24
+#: includes/templates/post-formats/content-gallery.php:24
+#: includes/templates/post-formats/content-image.php:19
+#: includes/templates/post-formats/content-link.php:22
+#: includes/templates/post-formats/content-quote.php:21
+#: includes/templates/post-formats/content-video.php:24
+#: includes/templates/post-formats/content.php:20
+msgid "% Replies"
+msgstr ""
+
+#: ../quezal/includes/templates/post-formats/content-audio.php:35
+#: ../quezal/includes/templates/post-formats/content-gallery.php:35
+#: ../quezal/includes/templates/post-formats/content-image.php:30
+#: ../quezal/includes/templates/post-formats/content-link.php:38
+#: ../quezal/includes/templates/post-formats/content-video.php:35
+#: ../quezal/includes/templates/post-formats/content.php:31
+#: includes/templates/post-formats/content-audio.php:35
+#: includes/templates/post-formats/content-gallery.php:35
+#: includes/templates/post-formats/content-image.php:30
+#: includes/templates/post-formats/content-link.php:38
+#: includes/templates/post-formats/content-video.php:35
+#: includes/templates/post-formats/content.php:31
+msgid "Read more"
+msgstr ""
+
+#: ../quezal/includes/templates/post-formats/content-none.php:12
+#: ../twentyfourteen/content-none.php:12
+#: includes/templates/post-formats/content-none.php:12
+msgid "Nothing Found"
+msgstr ""
+
+#: ../quezal/includes/templates/post-formats/content-none.php:16
+#: includes/templates/post-formats/content-none.php:16
+#, php-format
+msgid "Ready to go for your first post? <a href=\"%1$s\">Get started</a>."
+msgstr ""
+
+#: ../quezal/includes/templates/post-formats/content-none.php:19
+#: includes/templates/post-formats/content-none.php:19
+msgid ""
+"Sorry, no results were found for your search terms. Please try again with "
+"different keywords."
+msgstr ""
+
+#: ../quezal/includes/templates/post-formats/content-search.php:26
+#: includes/templates/post-formats/content-search.php:26
+msgid "From : Blog Post"
+msgstr ""
+
+#: ../quezal/includes/templates/post-formats/content-search.php:43
+#: includes/templates/post-formats/content-search.php:43
+msgid "From : Pages"
+msgstr ""
+
+#: ../quezal/includes/templates/post-formats/content-search.php:63
+#: includes/templates/post-formats/content-search.php:63
+msgid "From : Portfolio"
+msgstr ""
+
+#: ../quezal/includes/templates/post-formats/content-search.php:78
+#: includes/templates/post-formats/content-search.php:78
+msgid "From : Team Members"
+msgstr ""
+
+#: ../quezal/includes/templates/post-formats/content-search.php:92
+#: includes/templates/post-formats/content-search.php:92
+msgid "From : Testimonials"
+msgstr ""
+
+#: ../quezal/includes/templates/post-formats/single-content.php:13
+#: ../quezal/page.php:23 ../quezal/template-blank.php:74
+#: ../quezal/template-full-page-header.php:23 ../quezal/template-full.php:23
+#: ../quezal/template-left-sidebar.php:24
+#: includes/templates/post-formats/single-content.php:13 page.php:23
+#: template-blank.php:74 template-full-page-header.php:23 template-full.php:23
+#: template-left-sidebar.php:24
+msgid "Pages :"
+msgstr ""
+
+#: ../quezal/includes/tgm-plugin-activation.php:199
+#: includes/tgm-plugin-activation.php:199
+msgid "Something went wrong."
+msgstr ""
+
+#: ../quezal/includes/tgm-plugin-activation.php:211
+#: includes/tgm-plugin-activation.php:211
+msgid "Return to the dashboard"
+msgstr ""
+
+#: ../quezal/includes/tgm-plugin-activation.php:213
+#: ../quezal/includes/tgm-plugin-activation.php:1638
+#: includes/tgm-plugin-activation.php:213
+#: includes/tgm-plugin-activation.php:1638
+msgid "The following plugin was activated successfully:"
+msgid_plural "The following plugins were activated successfully:"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../quezal/includes/tgm-plugin-activation.php:214
+#: includes/tgm-plugin-activation.php:214
+#, php-format
+msgid "All plugins installed and activated successfully. %1$s"
+msgstr ""
+
+#: ../quezal/includes/tgm-plugin-activation.php:215
+#: includes/tgm-plugin-activation.php:215
+msgid "Dismiss this notice"
+msgstr ""
+
+#: ../quezal/includes/tgm-plugin-activation.php:544
+#: ../quezal/includes/tgm-plugin-activation.php:2168
+#: includes/tgm-plugin-activation.php:544
+#: includes/tgm-plugin-activation.php:2168
+msgid "Return to the Dashboard"
+msgstr ""
+
+#: ../quezal/includes/tgm-plugin-activation.php:1174
+#: includes/tgm-plugin-activation.php:1174
+msgid "Private Repository"
+msgstr ""
+
+#: ../quezal/includes/tgm-plugin-activation.php:1177
+#: includes/tgm-plugin-activation.php:1177
+msgid "Pre-Packaged"
+msgstr ""
+
+#: ../quezal/includes/tgm-plugin-activation.php:1182
+#: includes/tgm-plugin-activation.php:1182
+msgid "WordPress Repository"
+msgstr ""
+
+#: ../quezal/includes/tgm-plugin-activation.php:1185
+#: includes/tgm-plugin-activation.php:1185
+msgid "Required"
+msgstr ""
+
+#: ../quezal/includes/tgm-plugin-activation.php:1185
+#: includes/tgm-plugin-activation.php:1185
+msgid "Recommended"
+msgstr ""
+
+#: ../quezal/includes/tgm-plugin-activation.php:1188
+#: includes/tgm-plugin-activation.php:1188
+msgid "Not Installed"
+msgstr ""
+
+#: ../quezal/includes/tgm-plugin-activation.php:1190
+#: includes/tgm-plugin-activation.php:1190
+msgid "Installed But Not Activated"
+msgstr ""
+
+#: ../quezal/includes/tgm-plugin-activation.php:1290
+#: ../quezal/includes/tgm-plugin-activation.php:1398
+#: includes/tgm-plugin-activation.php:1290
+#: includes/tgm-plugin-activation.php:1398
+msgid "Install"
+msgstr ""
+
+#: ../quezal/includes/tgm-plugin-activation.php:1312
+#: ../quezal/includes/tgm-plugin-activation.php:1399
+#: includes/tgm-plugin-activation.php:1312
+#: includes/tgm-plugin-activation.php:1399
+msgid "Activate"
+msgstr ""
+
+#: ../quezal/includes/tgm-plugin-activation.php:1361
+#: includes/tgm-plugin-activation.php:1361
+#, php-format
+msgid ""
+"No plugins to install or activate. <a href=\"%1$s\" title=\"Return to the "
+"Dashboard\">Return to the Dashboard</a>"
+msgstr ""
+
+#: ../quezal/includes/tgm-plugin-activation.php:1377
+#: includes/tgm-plugin-activation.php:1377
+msgid "Plugin"
+msgstr ""
+
+#: ../quezal/includes/tgm-plugin-activation.php:1378
+#: includes/tgm-plugin-activation.php:1378
+msgid "Source"
+msgstr ""
+
+#: ../quezal/includes/tgm-plugin-activation.php:1379
+#: includes/tgm-plugin-activation.php:1379
+msgid "Type"
+msgstr ""
+
+#: ../quezal/includes/tgm-plugin-activation.php:1380
+#: includes/tgm-plugin-activation.php:1380
+msgid "Status"
+msgstr ""
+
+#: ../quezal/includes/tgm-plugin-activation.php:1508
+#: includes/tgm-plugin-activation.php:1508
+msgid "No plugins are available to be installed at this time."
+msgstr ""
+
+#: ../quezal/includes/tgm-plugin-activation.php:1616
+#: includes/tgm-plugin-activation.php:1616
+msgid "No plugins are available to be activated at this time."
+msgstr ""
+
+#: ../quezal/includes/tgm-plugin-activation.php:1934
+#: includes/tgm-plugin-activation.php:1934
+msgid "Install package not available."
+msgstr ""
+
+#: ../quezal/includes/tgm-plugin-activation.php:1935
+#: includes/tgm-plugin-activation.php:1935
+#, php-format
+msgid "Downloading install package from <span class=\"code\">%s</span>&#8230;"
+msgstr ""
+
+#: ../quezal/includes/tgm-plugin-activation.php:1936
+#: includes/tgm-plugin-activation.php:1936
+msgid "Unpacking the package&#8230;"
+msgstr ""
+
+#: ../quezal/includes/tgm-plugin-activation.php:1937
+#: includes/tgm-plugin-activation.php:1937
+msgid "Installing the plugin&#8230;"
+msgstr ""
+
+#: ../quezal/includes/tgm-plugin-activation.php:1938
+#: includes/tgm-plugin-activation.php:1938
+msgid "Plugin install failed."
+msgstr ""
+
+#: ../quezal/includes/tgm-plugin-activation.php:1939
+#: includes/tgm-plugin-activation.php:1939
+msgid "Plugin installed successfully."
+msgstr ""
+
+#: ../quezal/includes/tgm-plugin-activation.php:1950
+#: includes/tgm-plugin-activation.php:1950
+msgid "Plugin activation failed."
+msgstr ""
+
+#: ../quezal/includes/tgm-plugin-activation.php:2064
+#: includes/tgm-plugin-activation.php:2064
+msgid ""
+"The installation and activation process is starting. This process may take a "
+"while on some hosts, so please be patient."
+msgstr ""
+
+#: ../quezal/includes/tgm-plugin-activation.php:2065
+#: includes/tgm-plugin-activation.php:2065
+#, php-format
+msgid "%1$s installed and activated successfully."
+msgstr ""
+
+#: ../quezal/includes/tgm-plugin-activation.php:2065
+#: ../quezal/includes/tgm-plugin-activation.php:2074
+#: includes/tgm-plugin-activation.php:2065
+#: includes/tgm-plugin-activation.php:2074
+msgid "Show Details"
+msgstr ""
+
+#: ../quezal/includes/tgm-plugin-activation.php:2065
+#: ../quezal/includes/tgm-plugin-activation.php:2074
+#: includes/tgm-plugin-activation.php:2065
+#: includes/tgm-plugin-activation.php:2074
+msgid "Hide Details"
+msgstr ""
+
+#: ../quezal/includes/tgm-plugin-activation.php:2066
+#: includes/tgm-plugin-activation.php:2066
+msgid "All installations and activations have been completed."
+msgstr ""
+
+#: ../quezal/includes/tgm-plugin-activation.php:2067
+#: includes/tgm-plugin-activation.php:2067
+#, php-format
+msgid "Installing and Activating Plugin %1$s (%2$d/%3$d)"
+msgstr ""
+
+#: ../quezal/includes/tgm-plugin-activation.php:2071
+#: includes/tgm-plugin-activation.php:2071
+msgid ""
+"The installation process is starting. This process may take a while on some "
+"hosts, so please be patient."
+msgstr ""
+
+#: ../quezal/includes/tgm-plugin-activation.php:2072
+#: includes/tgm-plugin-activation.php:2072
+#, php-format
+msgid "An error occurred while installing %1$s: <strong>%2$s</strong>."
+msgstr ""
+
+#: ../quezal/includes/tgm-plugin-activation.php:2073
+#: includes/tgm-plugin-activation.php:2073
+#, php-format
+msgid "The installation of %1$s failed."
+msgstr ""
+
+#: ../quezal/includes/tgm-plugin-activation.php:2074
+#: includes/tgm-plugin-activation.php:2074
+#, php-format
+msgid "%1$s installed successfully."
+msgstr ""
+
+#: ../quezal/includes/tgm-plugin-activation.php:2075
+#: includes/tgm-plugin-activation.php:2075
+msgid "All installations have been completed."
+msgstr ""
+
+#: ../quezal/includes/tgm-plugin-activation.php:2076
+#: includes/tgm-plugin-activation.php:2076
+#, php-format
+msgid "Installing Plugin %1$s (%2$d/%3$d)"
+msgstr ""
+
+#: ../quezal/includes/widgets/custom-widgets.php:19
+#: includes/widgets/custom-widgets.php:19
+msgid "The most recent posts on your site"
+msgstr ""
+
+#: ../quezal/includes/widgets/custom-widgets.php:20
+#: includes/widgets/custom-widgets.php:20
+msgid "Custom - Recent Posts"
+msgstr ""
+
+#: ../quezal/includes/widgets/custom-widgets.php:77
+#: includes/widgets/custom-widgets.php:77
+msgid "Posted on: "
+msgstr ""
+
+#: ../quezal/includes/widgets/custom-widgets.php:82
+#: includes/widgets/custom-widgets.php:82
+msgid " / by: "
+msgstr ""
+
+#: ../quezal/includes/widgets/custom-widgets.php:134
+#: ../quezal/includes/widgets/custom-widgets.php:224
+#: ../quezal/includes/widgets/custom-widgets.php:474
+#: ../quezal/includes/widgets/custom-widgets.php:1189
+#: ../twentyfourteen/inc/widgets.php:255
+#: includes/widgets/custom-widgets.php:134
+#: includes/widgets/custom-widgets.php:224
+#: includes/widgets/custom-widgets.php:474
+#: includes/widgets/custom-widgets.php:1189
+msgid "Title:"
+msgstr ""
+
+#: ../quezal/includes/widgets/custom-widgets.php:140
+#: ../twentyfourteen/inc/widgets.php:258
+#: includes/widgets/custom-widgets.php:140
+msgid "Number of posts to show:"
+msgstr ""
+
+#: ../quezal/includes/widgets/custom-widgets.php:147
+#: includes/widgets/custom-widgets.php:147
+msgid "Display thumbnail?"
+msgstr ""
+
+#: ../quezal/includes/widgets/custom-widgets.php:153
+#: includes/widgets/custom-widgets.php:153
+msgid "Display post date?"
+msgstr ""
+
+#: ../quezal/includes/widgets/custom-widgets.php:159
+#: includes/widgets/custom-widgets.php:159
+msgid "Display author name?"
+msgstr ""
+
+#: ../quezal/includes/widgets/custom-widgets.php:165
+#: includes/widgets/custom-widgets.php:165
+msgid "Display excerpt?"
+msgstr ""
+
+#: ../quezal/includes/widgets/custom-widgets.php:180
+#: includes/widgets/custom-widgets.php:180
+msgid "Your most used tags in cloud format"
+msgstr ""
+
+#: ../quezal/includes/widgets/custom-widgets.php:181
+#: includes/widgets/custom-widgets.php:181
+msgid "Custom - Tag Cloud"
+msgstr ""
+
+#: ../quezal/includes/widgets/custom-widgets.php:248
+#: includes/widgets/custom-widgets.php:248
+msgid "Flickr photo stream"
+msgstr ""
+
+#: ../quezal/includes/widgets/custom-widgets.php:249
+#: includes/widgets/custom-widgets.php:249
+msgid "Custom - Flickr Feed"
+msgstr ""
+
+#: ../quezal/includes/widgets/custom-widgets.php:294
+#: ../quezal/includes/widgets/custom-widgets.php:603
+#: ../quezal/includes/widgets/custom-widgets.php:746
+#: ../quezal/includes/widgets/custom-widgets.php:939
+#: includes/widgets/custom-widgets.php:294
+#: includes/widgets/custom-widgets.php:603
+#: includes/widgets/custom-widgets.php:746
+#: includes/widgets/custom-widgets.php:939
+msgid "Title :"
+msgstr ""
+
+#: ../quezal/includes/widgets/custom-widgets.php:301
+#: includes/widgets/custom-widgets.php:301
+msgid ""
+"Flickr ID : <a href=\"http://idgettr.com/\" target=\"_blank\">Get your "
+"flickr ID</a>"
+msgstr ""
+
+#: ../quezal/includes/widgets/custom-widgets.php:307
+#: includes/widgets/custom-widgets.php:307
+msgid "Number of photos to show (max 10) :"
+msgstr ""
+
+#: ../quezal/includes/widgets/custom-widgets.php:313
+#: includes/widgets/custom-widgets.php:313
+msgid "Sort by :"
+msgstr ""
+
+#: ../quezal/includes/widgets/custom-widgets.php:317
+#: includes/widgets/custom-widgets.php:317
+msgid "latest"
+msgstr ""
+
+#: ../quezal/includes/widgets/custom-widgets.php:320
+#: includes/widgets/custom-widgets.php:320
+msgid "random"
+msgstr ""
+
+#: ../quezal/includes/widgets/custom-widgets.php:337
+#: includes/widgets/custom-widgets.php:337
+msgid "Twitter feed widget"
+msgstr ""
+
+#: ../quezal/includes/widgets/custom-widgets.php:338
+#: includes/widgets/custom-widgets.php:338
+msgid "Custom - Twitter Feed"
+msgstr ""
+
+#: ../quezal/includes/widgets/custom-widgets.php:395
+#: includes/widgets/custom-widgets.php:395
+msgid "@"
+msgstr ""
+
+#: ../quezal/includes/widgets/custom-widgets.php:480
+#: includes/widgets/custom-widgets.php:480
+msgid "App Consumer Key :"
+msgstr ""
+
+#: ../quezal/includes/widgets/custom-widgets.php:486
+#: includes/widgets/custom-widgets.php:486
+msgid "App Consumer Secret :"
+msgstr ""
+
+#: ../quezal/includes/widgets/custom-widgets.php:492
+#: includes/widgets/custom-widgets.php:492
+msgid "App Access Token :"
+msgstr ""
+
+#: ../quezal/includes/widgets/custom-widgets.php:498
+#: includes/widgets/custom-widgets.php:498
+msgid "App Access Token Secret :"
+msgstr ""
+
+#: ../quezal/includes/widgets/custom-widgets.php:504
+#: includes/widgets/custom-widgets.php:504
+msgid "Twitter Username :"
+msgstr ""
+
+#: ../quezal/includes/widgets/custom-widgets.php:509
+#: includes/widgets/custom-widgets.php:509
+msgid "Number of Tweets :"
+msgstr ""
+
+#: ../quezal/includes/widgets/custom-widgets.php:526
+#: includes/widgets/custom-widgets.php:526
+msgid "Facebook like box"
+msgstr ""
+
+#: ../quezal/includes/widgets/custom-widgets.php:527
+#: includes/widgets/custom-widgets.php:527
+msgid "Custom - Facebook Like Box"
+msgstr ""
+
+#: ../quezal/includes/widgets/custom-widgets.php:609
+#: includes/widgets/custom-widgets.php:609
+msgid "Facebook Page URL :"
+msgstr ""
+
+#: ../quezal/includes/widgets/custom-widgets.php:615
+#: includes/widgets/custom-widgets.php:615
+msgid "Like Box Width :"
+msgstr ""
+
+#: ../quezal/includes/widgets/custom-widgets.php:621
+#: includes/widgets/custom-widgets.php:621
+msgid "Color Scheme :"
+msgstr ""
+
+#: ../quezal/includes/widgets/custom-widgets.php:625
+#: includes/widgets/custom-widgets.php:625
+msgid "Light"
+msgstr ""
+
+#: ../quezal/includes/widgets/custom-widgets.php:628
+#: includes/widgets/custom-widgets.php:628
+msgid "Dark"
+msgstr ""
+
+#: ../quezal/includes/widgets/custom-widgets.php:635
+#: includes/widgets/custom-widgets.php:635
+msgid "Show Faces"
+msgstr ""
+
+#: ../quezal/includes/widgets/custom-widgets.php:641
+#: includes/widgets/custom-widgets.php:641
+msgid "Show Header"
+msgstr ""
+
+#: ../quezal/includes/widgets/custom-widgets.php:647
+#: includes/widgets/custom-widgets.php:647
+msgid "Show Stream"
+msgstr ""
+
+#: ../quezal/includes/widgets/custom-widgets.php:653
+#: includes/widgets/custom-widgets.php:653
+msgid "Show border"
+msgstr ""
+
+#: ../quezal/includes/widgets/custom-widgets.php:669
+#: includes/widgets/custom-widgets.php:669
+msgid "Contact info"
+msgstr ""
+
+#: ../quezal/includes/widgets/custom-widgets.php:670
+#: includes/widgets/custom-widgets.php:670
+msgid "Custom - Contact Info"
+msgstr ""
+
+#: ../quezal/includes/widgets/custom-widgets.php:752
+#: includes/widgets/custom-widgets.php:752
+msgid "Email address :"
+msgstr ""
+
+#: ../quezal/includes/widgets/custom-widgets.php:758
+#: includes/widgets/custom-widgets.php:758
+msgid "Email Link Text :"
+msgstr ""
+
+#: ../quezal/includes/widgets/custom-widgets.php:764
+#: includes/widgets/custom-widgets.php:764
+msgid "Address :"
+msgstr ""
+
+#: ../quezal/includes/widgets/custom-widgets.php:772
+#: includes/widgets/custom-widgets.php:772
+msgid "Automatically add paragraphs to address"
+msgstr ""
+
+#: ../quezal/includes/widgets/custom-widgets.php:777
+#: includes/widgets/custom-widgets.php:777
+msgid "Phone :"
+msgstr ""
+
+#: ../quezal/includes/widgets/custom-widgets.php:793
+#: includes/widgets/custom-widgets.php:793
+msgid "Social network"
+msgstr ""
+
+#: ../quezal/includes/widgets/custom-widgets.php:794
+#: includes/widgets/custom-widgets.php:794
+msgid "Custom - Social Network"
+msgstr ""
+
+#: ../quezal/includes/widgets/custom-widgets.php:810
+#: includes/widgets/custom-widgets.php:810
+msgid "aim"
+msgstr ""
+
+#: ../quezal/includes/widgets/custom-widgets.php:813
+#: includes/widgets/custom-widgets.php:813
+msgid "behance"
+msgstr ""
+
+#: ../quezal/includes/widgets/custom-widgets.php:816
+#: includes/widgets/custom-widgets.php:816
+msgid "delicious"
+msgstr ""
+
+#: ../quezal/includes/widgets/custom-widgets.php:819
+#: includes/widgets/custom-widgets.php:819
+msgid "dribbble"
+msgstr ""
+
+#: ../quezal/includes/widgets/custom-widgets.php:822
+#: includes/widgets/custom-widgets.php:822
+msgid "dropbox"
+msgstr ""
+
+#: ../quezal/includes/widgets/custom-widgets.php:825
+#: includes/widgets/custom-widgets.php:825
+msgid "facebook"
+msgstr ""
+
+#: ../quezal/includes/widgets/custom-widgets.php:828
+#: includes/widgets/custom-widgets.php:828
+msgid "flickr"
+msgstr ""
+
+#: ../quezal/includes/widgets/custom-widgets.php:831
+#: includes/widgets/custom-widgets.php:831
+msgid "forrst"
+msgstr ""
+
+#: ../quezal/includes/widgets/custom-widgets.php:834
+#: includes/widgets/custom-widgets.php:834
+msgid "googleplus"
+msgstr ""
+
+#: ../quezal/includes/widgets/custom-widgets.php:837
+#: includes/widgets/custom-widgets.php:837
+msgid "instagram"
+msgstr ""
+
+#: ../quezal/includes/widgets/custom-widgets.php:840
+#: includes/widgets/custom-widgets.php:840
+msgid "lastfm"
+msgstr ""
+
+#: ../quezal/includes/widgets/custom-widgets.php:843
+#: includes/widgets/custom-widgets.php:843
+msgid "linkedin"
+msgstr ""
+
+#: ../quezal/includes/widgets/custom-widgets.php:846
+#: includes/widgets/custom-widgets.php:846
+msgid "paypal"
+msgstr ""
+
+#: ../quezal/includes/widgets/custom-widgets.php:849
+#: includes/widgets/custom-widgets.php:849
+msgid "picasa"
+msgstr ""
+
+#: ../quezal/includes/widgets/custom-widgets.php:852
+#: includes/widgets/custom-widgets.php:852
+msgid "pinterest"
+msgstr ""
+
+#: ../quezal/includes/widgets/custom-widgets.php:855
+#: includes/widgets/custom-widgets.php:855
+msgid "skype"
+msgstr ""
+
+#: ../quezal/includes/widgets/custom-widgets.php:858
+#: includes/widgets/custom-widgets.php:858
+msgid "soundcloud"
+msgstr ""
+
+#: ../quezal/includes/widgets/custom-widgets.php:861
+#: includes/widgets/custom-widgets.php:861
+msgid "stumbleupon"
+msgstr ""
+
+#: ../quezal/includes/widgets/custom-widgets.php:864
+#: includes/widgets/custom-widgets.php:864
+msgid "tumblr"
+msgstr ""
+
+#: ../quezal/includes/widgets/custom-widgets.php:867
+#: includes/widgets/custom-widgets.php:867
+msgid "twitter"
+msgstr ""
+
+#: ../quezal/includes/widgets/custom-widgets.php:870
+#: includes/widgets/custom-widgets.php:870
+msgid "vimeo"
+msgstr ""
+
+#: ../quezal/includes/widgets/custom-widgets.php:873
+#: includes/widgets/custom-widgets.php:873
+msgid "yahoo"
+msgstr ""
+
+#: ../quezal/includes/widgets/custom-widgets.php:876
+#: includes/widgets/custom-widgets.php:876
+msgid "yelp"
+msgstr ""
+
+#: ../quezal/includes/widgets/custom-widgets.php:879
+#: includes/widgets/custom-widgets.php:879
+msgid "youtube"
+msgstr ""
+
+#: ../quezal/includes/widgets/custom-widgets.php:882
+#: includes/widgets/custom-widgets.php:882
+msgid "rss"
+msgstr ""
+
+#: ../quezal/includes/widgets/custom-widgets.php:885
+#: includes/widgets/custom-widgets.php:885
+msgid "mail"
+msgstr ""
+
+#: ../quezal/includes/widgets/custom-widgets.php:945
+#: includes/widgets/custom-widgets.php:945
+msgid "Tooltip Position :"
+msgstr ""
+
+#: ../quezal/includes/widgets/custom-widgets.php:949
+#: includes/widgets/custom-widgets.php:949
+msgid "top"
+msgstr ""
+
+#: ../quezal/includes/widgets/custom-widgets.php:952
+#: includes/widgets/custom-widgets.php:952
+msgid "bottom"
+msgstr ""
+
+#: ../quezal/includes/widgets/custom-widgets.php:958
+#: includes/widgets/custom-widgets.php:958
+msgid "Aim URL :"
+msgstr ""
+
+#: ../quezal/includes/widgets/custom-widgets.php:964
+#: includes/widgets/custom-widgets.php:964
+msgid "Behance URL :"
+msgstr ""
+
+#: ../quezal/includes/widgets/custom-widgets.php:970
+#: includes/widgets/custom-widgets.php:970
+msgid "Delicious URL :"
+msgstr ""
+
+#: ../quezal/includes/widgets/custom-widgets.php:976
+#: includes/widgets/custom-widgets.php:976
+msgid "Dribbble URL :"
+msgstr ""
+
+#: ../quezal/includes/widgets/custom-widgets.php:982
+#: includes/widgets/custom-widgets.php:982
+msgid "Dropbox URL :"
+msgstr ""
+
+#: ../quezal/includes/widgets/custom-widgets.php:988
+#: includes/widgets/custom-widgets.php:988
+msgid "Facebook URL :"
+msgstr ""
+
+#: ../quezal/includes/widgets/custom-widgets.php:994
+#: includes/widgets/custom-widgets.php:994
+msgid "Flickr URL :"
+msgstr ""
+
+#: ../quezal/includes/widgets/custom-widgets.php:1000
+#: includes/widgets/custom-widgets.php:1000
+msgid "Forrst URL :"
+msgstr ""
+
+#: ../quezal/includes/widgets/custom-widgets.php:1006
+#: includes/widgets/custom-widgets.php:1006
+msgid "Googleplus URL :"
+msgstr ""
+
+#: ../quezal/includes/widgets/custom-widgets.php:1012
+#: includes/widgets/custom-widgets.php:1012
+msgid "Instagram URL :"
+msgstr ""
+
+#: ../quezal/includes/widgets/custom-widgets.php:1018
+#: includes/widgets/custom-widgets.php:1018
+msgid "Lastfm URL :"
+msgstr ""
+
+#: ../quezal/includes/widgets/custom-widgets.php:1024
+#: includes/widgets/custom-widgets.php:1024
+msgid "Linkedin URL :"
+msgstr ""
+
+#: ../quezal/includes/widgets/custom-widgets.php:1030
+#: includes/widgets/custom-widgets.php:1030
+msgid "Paypal URL :"
+msgstr ""
+
+#: ../quezal/includes/widgets/custom-widgets.php:1036
+#: includes/widgets/custom-widgets.php:1036
+msgid "Picasa URL :"
+msgstr ""
+
+#: ../quezal/includes/widgets/custom-widgets.php:1042
+#: includes/widgets/custom-widgets.php:1042
+msgid "Pinterest URL :"
+msgstr ""
+
+#: ../quezal/includes/widgets/custom-widgets.php:1048
+#: includes/widgets/custom-widgets.php:1048
+msgid "Skype Username : Privide Username Only"
+msgstr ""
+
+#: ../quezal/includes/widgets/custom-widgets.php:1054
+#: includes/widgets/custom-widgets.php:1054
+msgid "Soundcloud URL :"
+msgstr ""
+
+#: ../quezal/includes/widgets/custom-widgets.php:1060
+#: includes/widgets/custom-widgets.php:1060
+msgid "Stumbleupon URL :"
+msgstr ""
+
+#: ../quezal/includes/widgets/custom-widgets.php:1066
+#: includes/widgets/custom-widgets.php:1066
+msgid "Tumblr URL :"
+msgstr ""
+
+#: ../quezal/includes/widgets/custom-widgets.php:1072
+#: includes/widgets/custom-widgets.php:1072
+msgid "Twitter URL :"
+msgstr ""
+
+#: ../quezal/includes/widgets/custom-widgets.php:1078
+#: includes/widgets/custom-widgets.php:1078
+msgid "Vimeo URL :"
+msgstr ""
+
+#: ../quezal/includes/widgets/custom-widgets.php:1084
+#: includes/widgets/custom-widgets.php:1084
+msgid "Yahoo URL :"
+msgstr ""
+
+#: ../quezal/includes/widgets/custom-widgets.php:1090
+#: includes/widgets/custom-widgets.php:1090
+msgid "Yelp URL :"
+msgstr ""
+
+#: ../quezal/includes/widgets/custom-widgets.php:1096
+#: includes/widgets/custom-widgets.php:1096
+msgid "Youtube URL :"
+msgstr ""
+
+#: ../quezal/includes/widgets/custom-widgets.php:1102
+#: includes/widgets/custom-widgets.php:1102
+msgid "RSS URL :"
+msgstr ""
+
+#: ../quezal/includes/widgets/custom-widgets.php:1108
+#: includes/widgets/custom-widgets.php:1108
+msgid "Mail URL :"
+msgstr ""
+
+#: ../quezal/includes/widgets/custom-widgets.php:1126
+#: includes/widgets/custom-widgets.php:1126
+msgid "Sidebar menu "
+msgstr ""
+
+#: ../quezal/includes/widgets/custom-widgets.php:1127
+#: includes/widgets/custom-widgets.php:1127
+msgid "Custom - Sidebar Menu"
+msgstr ""
+
+#: ../quezal/includes/widgets/custom-widgets.php:1196
+#: includes/widgets/custom-widgets.php:1196
+msgid "Show Page Siblings"
+msgstr ""
+
+#: ../quezal/includes/widgets/custom-widgets.php:1201
+#: includes/widgets/custom-widgets.php:1201
+msgid "Show Page Children"
+msgstr ""
+
+#: ../quezal/includes/widgets/sidebars.php:17 includes/widgets/sidebars.php:17
+msgid "Blog Widgets"
+msgstr ""
+
+#: ../quezal/includes/widgets/sidebars.php:19 includes/widgets/sidebars.php:19
+msgid ""
+"This area will be shown as a post sidebar. Widgets will be stacked in this "
+"column."
+msgstr ""
+
+#: ../quezal/includes/widgets/sidebars.php:28 includes/widgets/sidebars.php:28
+msgid "Page Widgets"
+msgstr ""
+
+#: ../quezal/includes/widgets/sidebars.php:30 includes/widgets/sidebars.php:30
+msgid ""
+"This area will be shown as a page sidebar. Widgets will be stacked in this "
+"column."
+msgstr ""
+
+#: ../quezal/includes/widgets/sidebars.php:39 includes/widgets/sidebars.php:39
+msgid "Topbar Social Icons"
+msgstr ""
+
+#: ../quezal/includes/widgets/sidebars.php:41 includes/widgets/sidebars.php:41
+msgid "Widgets in this column will appear in topbar."
+msgstr ""
+
+#: ../quezal/includes/widgets/sidebars.php:57 includes/widgets/sidebars.php:57
+msgid ""
+"This area is a dynamically generated footer widget column. Widgets will be "
+"stacked in here."
+msgstr ""
+
+#: ../quezal/includes/widgets/sidebars.php:71 includes/widgets/sidebars.php:71
+msgid ""
+"This area is a dynamically generated slide panel widget column. Widgets will "
+"be stacked in here."
+msgstr ""
+
+#: ../quezal/searchform.php:5 searchform.php:5
+msgid "Type & Enter..."
+msgstr ""
+
+#: ../twentyfourteen/404.php:17
+msgid "Not Found"
+msgstr ""
+
+#: ../twentyfourteen/404.php:21
+msgid "It looks like nothing was found at this location. Maybe try a search?"
+msgstr ""
+
+#: ../twentyfourteen/archive.php:31
+#, php-format
+msgid "Daily Archives: %s"
+msgstr ""
+
+#: ../twentyfourteen/archive.php:34
+#, php-format
+msgid "Monthly Archives: %s"
+msgstr ""
+
+#: ../twentyfourteen/archive.php:37
+#, php-format
+msgid "Yearly Archives: %s"
+msgstr ""
+
+#: ../twentyfourteen/category.php:20
+#, php-format
+msgid "Category Archives: %s"
+msgstr ""
+
+#: ../twentyfourteen/comments.php:27
+#, php-format
+msgid "One thought on &ldquo;%2$s&rdquo;"
+msgid_plural "%1$s thoughts on &ldquo;%2$s&rdquo;"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../twentyfourteen/comments.php:34 ../twentyfourteen/comments.php:52
+msgid "Comment navigation"
+msgstr ""
+
+#: ../twentyfourteen/comments.php:35 ../twentyfourteen/comments.php:53
+msgid "&larr; Older Comments"
+msgstr ""
+
+#: ../twentyfourteen/comments.php:36 ../twentyfourteen/comments.php:54
+msgid "Newer Comments &rarr;"
+msgstr ""
+
+#: ../twentyfourteen/content-aside.php:17
+#: ../twentyfourteen/content-audio.php:17
+#: ../twentyfourteen/content-featured-post.php:28
+#: ../twentyfourteen/content-gallery.php:17
+#: ../twentyfourteen/content-image.php:17
+#: ../twentyfourteen/content-link.php:17
+#: ../twentyfourteen/content-quote.php:17
+#: ../twentyfourteen/content-video.php:17 ../twentyfourteen/content.php:19
+msgctxt "Used between list items, there is a space after the comma."
+msgid ", "
+msgstr ""
+
+#: ../twentyfourteen/content-aside.php:37
+#: ../twentyfourteen/content-audio.php:37
+#: ../twentyfourteen/content-gallery.php:37
+#: ../twentyfourteen/content-image.php:37
+#: ../twentyfourteen/content-link.php:37
+#: ../twentyfourteen/content-quote.php:37
+#: ../twentyfourteen/content-video.php:37 ../twentyfourteen/content.php:38
+#: ../twentyfourteen/inc/widgets.php:194
+msgid "Leave a comment"
+msgstr ""
+
+#: ../twentyfourteen/content-aside.php:37
+#: ../twentyfourteen/content-audio.php:37
+#: ../twentyfourteen/content-gallery.php:37
+#: ../twentyfourteen/content-image.php:37
+#: ../twentyfourteen/content-link.php:37
+#: ../twentyfourteen/content-quote.php:37
+#: ../twentyfourteen/content-video.php:37 ../twentyfourteen/content.php:38
+#: ../twentyfourteen/inc/widgets.php:194
+msgid "1 Comment"
+msgstr ""
+
+#: ../twentyfourteen/content-aside.php:37
+#: ../twentyfourteen/content-audio.php:37
+#: ../twentyfourteen/content-gallery.php:37
+#: ../twentyfourteen/content-image.php:37
+#: ../twentyfourteen/content-link.php:37
+#: ../twentyfourteen/content-quote.php:37
+#: ../twentyfourteen/content-video.php:37 ../twentyfourteen/content.php:38
+#: ../twentyfourteen/inc/widgets.php:194
+msgid "% Comments"
+msgstr ""
+
+#: ../twentyfourteen/content-aside.php:40
+#: ../twentyfourteen/content-audio.php:40
+#: ../twentyfourteen/content-gallery.php:40
+#: ../twentyfourteen/content-image.php:40
+#: ../twentyfourteen/content-link.php:40 ../twentyfourteen/content-page.php:28
+#: ../twentyfourteen/content-quote.php:40
+#: ../twentyfourteen/content-video.php:40 ../twentyfourteen/content.php:42
+#: ../twentyfourteen/image.php:34
+#: ../twentyfourteen/page-templates/contributors.php:35
+msgid "Edit"
+msgstr ""
+
+#: ../twentyfourteen/content-aside.php:46
+#: ../twentyfourteen/content-audio.php:46
+#: ../twentyfourteen/content-gallery.php:46
+#: ../twentyfourteen/content-image.php:46
+#: ../twentyfourteen/content-link.php:46
+#: ../twentyfourteen/content-quote.php:46
+#: ../twentyfourteen/content-video.php:46 ../twentyfourteen/content.php:54
+#: ../twentyfourteen/inc/widgets.php:127 ../twentyfourteen/inc/widgets.php:172
+msgid "Continue reading <span class=\"meta-nav\">&rarr;</span>"
+msgstr ""
+
+#: ../twentyfourteen/content-aside.php:48
+#: ../twentyfourteen/content-audio.php:48
+#: ../twentyfourteen/content-gallery.php:48
+#: ../twentyfourteen/content-image.php:48
+#: ../twentyfourteen/content-link.php:48 ../twentyfourteen/content-page.php:22
+#: ../twentyfourteen/content-quote.php:48
+#: ../twentyfourteen/content-video.php:48 ../twentyfourteen/content.php:56
+#: ../twentyfourteen/image.php:54
+msgid "Pages:"
+msgstr ""
+
+#: ../twentyfourteen/content-none.php:18
+#, php-format
+msgid ""
+"Ready to publish your first post? <a href=\"%1$s\">Get started here</a>."
+msgstr ""
+
+#: ../twentyfourteen/content-none.php:22
+msgid ""
+"Sorry, but nothing matched your search terms. Please try again with some "
+"different keywords."
+msgstr ""
+
+#: ../twentyfourteen/content-none.php:27
+msgid ""
+"It seems we can&rsquo;t find what you&rsquo;re looking for. Perhaps "
+"searching can help."
+msgstr ""
+
+#: ../twentyfourteen/footer.php:21
+msgid "http://wordpress.org/"
+msgstr ""
+
+#: ../twentyfourteen/footer.php:21
+#, php-format
+msgid "Proudly powered by %s"
+msgstr ""
+
+#: ../twentyfourteen/functions.php:83
+msgid "Top primary menu"
+msgstr ""
+
+#: ../twentyfourteen/functions.php:84
+msgid "Secondary menu in left sidebar"
+msgstr ""
+
+#: ../twentyfourteen/functions.php:171
+msgid "Primary Sidebar"
+msgstr ""
+
+#: ../twentyfourteen/functions.php:173
+msgid "Main sidebar that appears on the left."
+msgstr ""
+
+#: ../twentyfourteen/functions.php:180
+msgid "Content Sidebar"
+msgstr ""
+
+#: ../twentyfourteen/functions.php:182
+msgid "Additional sidebar that appears on the right."
+msgstr ""
+
+#: ../twentyfourteen/functions.php:189
+msgid "Footer Widget Area"
+msgstr ""
+
+#: ../twentyfourteen/functions.php:191
+msgid "Appears in the footer section of the site."
+msgstr ""
+
+#: ../twentyfourteen/functions.php:213
+msgctxt "Lato font: on or off"
+msgid "on"
+msgstr ""
+
+#: ../twentyfourteen/functions.php:254
+msgid "Previous"
+msgstr ""
+
+#: ../twentyfourteen/functions.php:255
+msgid "Next"
+msgstr ""
+
+#: ../twentyfourteen/functions.php:372
+#, php-format
+msgid "%d Article"
+msgid_plural "%d Articles"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../twentyfourteen/functions.php:488
+#, php-format
+msgid "Page %s"
+msgstr ""
+
+#: ../twentyfourteen/header.php:48
+msgid "Search"
+msgstr ""
+
+#: ../twentyfourteen/header.php:52
+msgid "Primary Menu"
+msgstr ""
+
+#: ../twentyfourteen/header.php:53
+msgid "Skip to content"
+msgstr ""
+
+#: ../twentyfourteen/image.php:65
+msgid "Previous Image"
+msgstr ""
+
+#: ../twentyfourteen/image.php:66
+msgid "Next Image"
+msgstr ""
+
+#: ../twentyfourteen/inc/back-compat.php:37
+#: ../twentyfourteen/inc/back-compat.php:47
+#: ../twentyfourteen/inc/back-compat.php:60
+#, php-format
+msgid ""
+"Twenty Fourteen requires at least WordPress version 3.6. You are running "
+"version %s. Please upgrade and try again."
+msgstr ""
+
+#: ../twentyfourteen/inc/customizer.php:19
+#: ../twentyfourteen/inc/customizer.php:20
+msgid "Background may only be visible on wide screens."
+msgstr ""
+
+#: ../twentyfourteen/inc/customizer.php:28
+msgid "Site Title Color"
+msgstr ""
+
+#: ../twentyfourteen/inc/customizer.php:31
+msgid "Display Site Title &amp; Tagline"
+msgstr ""
+
+#: ../twentyfourteen/inc/customizer.php:35
+#: ../twentyfourteen/inc/featured-content.php:408
+msgid "Featured Content"
+msgstr ""
+
+#: ../twentyfourteen/inc/customizer.php:36
+#: ../twentyfourteen/inc/featured-content.php:409
+#, php-format
+msgid ""
+"Use a <a href=\"%1$s\">tag</a> to feature your posts. If no posts match the "
+"tag, <a href=\"%2$s\">sticky posts</a> will be displayed instead."
+msgstr ""
+
+#: ../twentyfourteen/inc/customizer.php:37
+#: ../twentyfourteen/inc/customizer.php:102
+#: ../twentyfourteen/inc/featured-content.php:410
+#: ../twentyfourteen/inc/featured-content.php:419
+#: ../twentyfourteen/inc/featured-content.php:479
+msgctxt "featured content default tag slug"
+msgid "featured"
+msgstr ""
+
+#: ../twentyfourteen/inc/customizer.php:50
+msgid "Layout"
+msgstr ""
+
+#: ../twentyfourteen/inc/customizer.php:54
+msgid "Grid"
+msgstr ""
+
+#: ../twentyfourteen/inc/customizer.php:55
+msgid "Slider"
+msgstr ""
+
+#: ../twentyfourteen/inc/customizer.php:99
+msgid "Twenty Fourteen"
+msgstr ""
+
+#: ../twentyfourteen/inc/customizer.php:102
+#, php-format
+msgid ""
+"The home page features your choice of up to 6 posts prominently displayed in "
+"a grid or slider, controlled by a <a href=\"%1$s\">tag</a>; you can change "
+"the tag and layout in <a href=\"%2$s\">Appearance &rarr; Customize</a>. If "
+"no posts match the tag, <a href=\"%3$s\">sticky posts</a> will be displayed "
+"instead."
+msgstr ""
+
+#: ../twentyfourteen/inc/customizer.php:103
+#, php-format
+msgid ""
+"Enhance your site design by using <a href=\"%s\">Featured Images</a> for "
+"posts you&rsquo;d like to stand out (also known as post thumbnails). This "
+"allows you to associate an image with your post without inserting it. Twenty "
+"Fourteen uses featured images for posts and pages&mdash;above the "
+"title&mdash;and in the Featured Content area on the home page."
+msgstr ""
+
+#: ../twentyfourteen/inc/customizer.php:104
+#, php-format
+msgid ""
+"For an in-depth tutorial, and more tips and tricks, visit the <a href=\"%s"
+"\">Twenty Fourteen documentation</a>."
+msgstr ""
+
+#: ../twentyfourteen/inc/featured-content.php:431
+msgid "Tag Name"
+msgstr ""
+
+#: ../twentyfourteen/inc/featured-content.php:436
+msgid "Don&rsquo;t display tag on front end."
+msgstr ""
+
+#: ../twentyfourteen/inc/template-tags.php:45
+msgid "&larr; Previous"
+msgstr ""
+
+#: ../twentyfourteen/inc/template-tags.php:46
+msgid "Next &rarr;"
+msgstr ""
+
+#: ../twentyfourteen/inc/template-tags.php:53
+msgid "Posts navigation"
+msgstr ""
+
+#: ../twentyfourteen/inc/template-tags.php:80
+msgid "Post navigation"
+msgstr ""
+
+#: ../twentyfourteen/inc/template-tags.php:84
+msgid "<span class=\"meta-nav\">Published In</span>%title"
+msgstr ""
+
+#: ../twentyfourteen/inc/template-tags.php:86
+msgid "<span class=\"meta-nav\">Previous Post</span>%title"
+msgstr ""
+
+#: ../twentyfourteen/inc/template-tags.php:87
+msgid "<span class=\"meta-nav\">Next Post</span>%title"
+msgstr ""
+
+#: ../twentyfourteen/inc/template-tags.php:104
+msgid "Sticky"
+msgstr ""
+
+#: ../twentyfourteen/inc/widgets.php:34
+msgid "Twenty Fourteen Ephemera"
+msgstr ""
+
+#: ../twentyfourteen/inc/widgets.php:36
+msgid ""
+"Use this widget to list your recent Aside, Quote, Video, Audio, Image, "
+"Gallery, and Link posts."
+msgstr ""
+
+#: ../twentyfourteen/inc/widgets.php:54
+#: ../twentyfourteen/taxonomy-post_format.php:33
+msgid "Images"
+msgstr ""
+
+#: ../twentyfourteen/inc/widgets.php:55
+msgid "More images"
+msgstr ""
+
+#: ../twentyfourteen/inc/widgets.php:58
+#: ../twentyfourteen/taxonomy-post_format.php:36
+msgid "Videos"
+msgstr ""
+
+#: ../twentyfourteen/inc/widgets.php:59
+msgid "More videos"
+msgstr ""
+
+#: ../twentyfourteen/inc/widgets.php:63
+msgid "More audio"
+msgstr ""
+
+#: ../twentyfourteen/inc/widgets.php:66
+#: ../twentyfourteen/taxonomy-post_format.php:42
+msgid "Quotes"
+msgstr ""
+
+#: ../twentyfourteen/inc/widgets.php:67
+msgid "More quotes"
+msgstr ""
+
+#: ../twentyfourteen/inc/widgets.php:70
+#: ../twentyfourteen/taxonomy-post_format.php:45
+msgid "Links"
+msgstr ""
+
+#: ../twentyfourteen/inc/widgets.php:71
+msgid "More links"
+msgstr ""
+
+#: ../twentyfourteen/inc/widgets.php:74
+#: ../twentyfourteen/taxonomy-post_format.php:48
+msgid "Galleries"
+msgstr ""
+
+#: ../twentyfourteen/inc/widgets.php:75
+msgid "More galleries"
+msgstr ""
+
+#: ../twentyfourteen/inc/widgets.php:79
+#: ../twentyfourteen/taxonomy-post_format.php:30
+msgid "Asides"
+msgstr ""
+
+#: ../twentyfourteen/inc/widgets.php:80
+msgid "More asides"
+msgstr ""
+
+#: ../twentyfourteen/inc/widgets.php:162
+#, php-format
+msgid "This gallery contains <a href=\"%1$s\" rel=\"bookmark\">%2$s photo</a>."
+msgid_plural ""
+"This gallery contains <a href=\"%1$s\" rel=\"bookmark\">%2$s photos</a>."
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../twentyfourteen/inc/widgets.php:206
+#, php-format
+msgid "%s <span class=\"meta-nav\">&rarr;</span>"
+msgstr ""
+
+#: ../twentyfourteen/inc/widgets.php:261
+msgid "Post format to show:"
+msgstr ""
+
+#: ../twentyfourteen/search.php:18
+#, php-format
+msgid "Search Results for: %s"
+msgstr ""
+
+#: ../twentyfourteen/tag.php:22
+#, php-format
+msgid "Tag Archives: %s"
+msgstr ""
