@@ -1,0 +1,92 @@
+#page {
+    padding-top: 60px;
+}
+#code {
+  padding: 2px 4px;
+color: #000000;
+white-space: nowrap;
+background-color: #f7f7f9;
+border: 1px solid #e1e1e8;
+-webkit-border-radius: 4px;
+-moz-border-radius: 4px;
+border-radius: 4px; 
+}
+
+#footer {
+color: #000000;
+font-size: .8em;
+}
+#signupForm{
+	float:right;
+}
+#signupImg{
+	float:left;
+}
+.thumPro{
+    height:154px;  
+    line-height: 154px;
+    text-align: center;
+    background: #f8f8f8;
+    position: relative;
+    cursor: pointer;
+    margin-bottom:10px;
+}
+.thumPro .delThumPro{
+    width: 100%;
+    height:100%;
+    background-color:rgb(255,255,255);
+    opacity: 0.45;
+    position: absolute;
+    top:0;
+    display: none;
+    font-size: 48px;
+}
+.thumPro img{
+    vertical-align: middle;
+    max-height:154px;
+}
+
+/** alerts style **/
+.alert {
+    
+    margin-bottom: 4px !important;
+}
+
+
+.well-reqrap{
+  min-height: 20px;
+  padding: 19px;
+  margin-bottom: 20px;
+  background-color: #f6e094;
+  border: 1px solid #e3e3e3;
+  -webkit-border-radius: 4px;
+     -moz-border-radius: 4px;
+          border-radius: 4px;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+     -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+          box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+
+
+}
+
+.well-green{
+  min-height: 20px;
+  padding: 19px;
+  margin-bottom: 20px;
+  background-color: #92f490;
+  border: 1px solid #e3e3e3;
+  -webkit-border-radius: 4px;
+     -moz-border-radius: 4px;
+          border-radius: 4px;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+     -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+          box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+
+
+}
+
+.row.projecthead {
+    
+     padding-bottom:12px;
+     font-family: Verdana, sans-serif;
+}
