@@ -1,15 +1,11 @@
-
-# Rewrite Engine
+# BEGIN WordPress
 <IfModule mod_rewrite.c>
-RewriteEngine On
-
-RewriteCond %{REQUEST_FILENAME} \.(js|ico|gif|jpg|png|css|pdf|doc)$ [OR]
-RewriteCond %{REQUEST_FILENAME} favicon.ico$ [OR]
-RewriteCond %{REQUEST_FILENAME} -s [OR]
-RewriteCond %{REQUEST_FILENAME} -l [OR]
-RewriteCond %{REQUEST_FILENAME} -d
-
-# Redirect all incoming urls to the application
-RewriteRule ^.*$ - [NC,L]
-RewriteRule ^.*$ index.php [NC,L]
+	RewriteEngine On
+	RewriteBase /
+	RewriteRule ^index\.php$ - [L]
+	RewriteCond %{REQUEST_FILENAME} !-f
+	RewriteCond %{REQUEST_FILENAME} !-d
+	RewriteRule . /index.php [L]
 </IfModule>
+
+# END WordPress
