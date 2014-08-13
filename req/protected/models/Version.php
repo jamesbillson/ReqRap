@@ -630,7 +630,7 @@ class Version extends CActiveRecord {
                     
                     if($model->save())
                     {
-                    $version=Version::model()->getNextNumber($release,$object,1,$model->primaryKey,$model[$object_name.'_id']);   
+                    $version=Version::model()->getNextNumber($model->project_id,$object,1,$model->primaryKey,$model[$object_name.'_id']);   
                     
                     
                     return $model[$object_name.'_id'];
