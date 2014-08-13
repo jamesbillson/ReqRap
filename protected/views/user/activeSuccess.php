@@ -1,3 +1,0 @@
-<p>
-Register success
-</p>

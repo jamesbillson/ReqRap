@@ -1,1 +1,0 @@
-ALTER TABLE  `subcontract` ADD  `type` TINYINT( 1 ) NOT NULL COMMENT  'subcontract or internal' AFTER  `description`
