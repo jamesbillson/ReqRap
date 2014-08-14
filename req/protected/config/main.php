@@ -105,7 +105,7 @@ return array(
                             ),   
                         ),
             'user' => array(
-                        'class' => 'auth.components.AuthWebUser',
+                        'class' => 'wpUser',
                       
             ),
 			'easyImage' => array(

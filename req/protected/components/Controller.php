@@ -56,10 +56,9 @@ $action=$action->id;
          !($controller == 'site' && $action == 'newpassword')
              )
          {
-            
+
             if (Yii::app()->user->isGuest){
                 $this->redirect('/req/user/join');
-            
                 
             }
         }      

@@ -137,9 +137,9 @@ class Messages extends CActiveRecord
 	        $page_visited = $controller_name.'/'.$action_name;
 	        $user = User::model()->findByPk($user_id);
 
-	        if ($user->getEavAttribute($page_visited) != 1) {
-		        $user->setEavAttribute($page_visited, 1);
-		        $user->save();
+	     //   if ($user->getEavAttribute($page_visited) != 1) {
+		   //     $user->setEavAttribute($page_visited, 1);
+		     //   $user->save();
 
 		    	$criteria = new CDbCriteria;
 		      	$criteria->condition = "user_id =:user_id ";
@@ -157,7 +157,7 @@ class Messages extends CActiveRecord
 		        if (count($alert_messages) >= $alerts_limit)
 		          break;
 		      	}
-	      	}
+	      //	}
     	}
   	}
         
