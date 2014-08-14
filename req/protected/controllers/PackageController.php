@@ -88,19 +88,19 @@ class PackageController extends Controller
             if($dir==1){
                     for ($i = 0; $i <= count($packages)-1; $i++) 
                     {
-                       echo 'going up'.$i.'<br />';
+                    //   echo 'going up'.$i.'<br />';
                     if ($packages[$i]['number']==$oldnum) $nextid=$packages[$i+1]['id'];
                     }
                 } 
             if($dir==2){
                     for ($i = count($packages)-1; $i > 0; $i--) 
                     {
-                       echo 'going down'.$i.'<br />';
+                    //   echo 'going down'.$i.'<br />';
                     if ($packages[$i]['number']==$oldnum) $nextid=$packages[$i-1]['id'];
                     }
                 } 
                 
-                   echo '$nextid up ='.$nextid.'<br />';     
+                  // echo '$nextid up ='.$nextid.'<br />';     
                 
             $model2 = $this->loadmodel($nextid);
             
