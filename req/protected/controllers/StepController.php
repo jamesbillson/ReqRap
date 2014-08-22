@@ -73,9 +73,13 @@ class StepController extends Controller
 	{
 		$project=Yii::App()->session['project'];
                 //$flow=Flow::model()->findbyPK($id);	
-                $flow = Flow::model()->with('usecase')->findByPk($id);
+                $flow = Flow::model()->findByPk($id);
+                $usecaseid = Version::model()->getVersion($flow->usecase_id,10);
+                $usecase=Usecase::model()->findByPk($usecaseid);
                 
-            $model=new Step;
+    
+    
+                $model=new Step;
                 
                 $number= 1+ Step::model()->getNextNumber($id);
                 $model->number=$number;
@@ -84,7 +88,7 @@ class StepController extends Controller
                 $model->release_id=Release::model()->currentRelease($project);
                 $model->text = 'Actor ...';
                 $model->result = 'System ...';
-                $model->actor_id=$flow->usecase->actor_id;
+                $model->actor_id=$usecase->actor_id;
                 $model->step_id=Version::model()->getNextID(9);
                 $model->save();
                 $version=Version::model()->getNextNumber($project,9,1,$model->getPrimaryKey(),$model->step_id);   
