@@ -75,7 +75,7 @@ $counter=0;
                          else {
                              echo '<td>Relationship</td><td>';
                             //echo 'relation to this object with object_id='.$item['name'];
-                            $object=Object::model()->findbyPK(Version::model()->getVersion($item['name'],6));
+                            $object=Object::model()->findbyPK(Version::model()->getVersion($item['object_id'],6));
                             echo 'OB-'.str_pad($object->number, 3, "0", STR_PAD_LEFT).' '.$object->name;
                             }
                         
