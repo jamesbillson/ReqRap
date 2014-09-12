@@ -11,7 +11,7 @@
 Yii::setPathOfAlias('bootstrap', dirname(__FILE__).'/../extensions/bootstrap');
 Yii::setPathOfAlias('editable', dirname(__FILE__).'/../extensions/x-editable'); 
 Yii::app()->params['server'] = 'reqrap';
-
+Yii::app()->params['app_dir'] = '/req';
 return array(
     'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
     'name'=>'ReqRap',

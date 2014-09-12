@@ -214,8 +214,8 @@ class SiteController extends Controller {
       $model->attributes = $_POST['LoginForm'];
       // validate user input and redirect to the previous page if valid
       if ($model->validate() && $model->login())
-        $this->redirect('http://'.Yii::app()->params['server'].'/site/index');
-    }
+    $this->redirect('http://'.Yii::app()->params['server'].'/'.Yii::app()->params['app_dir'].'site/index');      
+  }
     
     
     // display the login form
@@ -224,7 +224,7 @@ class SiteController extends Controller {
       $this->render('login', array('model' => $model)); //
       // $this->redirect(array('site/login')); /// redirect to target page 
     } else {
-   $this->redirect('http://'.Yii::app()->params['server'].'/site/index');      
+   $this->redirect('http://'.Yii::app()->params['server'].'/'.Yii::app()->params['app_dir'].'site/index');      
 //$this->render('index'); /// redirect to target page 
     }
   }

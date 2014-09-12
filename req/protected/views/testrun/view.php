@@ -36,10 +36,10 @@ $data=  Testrun::model()->getTestRun($id);
                 $testresult=Testresult::model()->findbyPK($teststep['id']);
             ?>
            <td>
-             <?php echo $teststep['action'] ; ?>     
+             <?php echo Version::model()->wikiOutput($teststep['action'],0) ; ?>     
            </td>
            <td>
-             <?php echo $teststep['result'] ; ?>  
+             <?php echo Version::model()->wikiOutput($teststep['result'],0) ; ?>  
            </td>
            
            
