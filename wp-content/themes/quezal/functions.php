@@ -1883,3 +1883,57 @@ vc_map( array(
 
 // Add new shortcode
 }
+
+use WordPress\ORM\Model\Users;
+
+function add_new_user($userID) {
+	$mgm_member = mgm_get_member($userID);
+	$custom_fields = $mgm_member->custom_fields;
+	/*
+	$user = new Users;
+	if ( isset($_POST['user_password']) ) {
+		$user->set_password(md5($_POST['user_password']));
+		$salt = uniqid('',true);
+		$user->set_salt($salt);
+		$user->set_verification_code(urlencode($salt));
+	}
+	$user->set_firstname($custom_fields->first_name);
+	$user->set_lastname($custom_fields->last_name);
+   	$user->set_username($custom_fields->email);
+   	$user->set_email($custom_fields->email);
+   	$user->save();*/
+   	$salt = uniqid('',true);
+   	if ( isset($_POST['user_password']) ) {
+   		$password = md5($_POST['user_password']);
+   	} else {
+   		$password = '';
+   	}
+   	global $wpdb;
+   	$wpdb->insert(
+	'user', 
+		array( 
+			'id' => $userID, 
+			'password' => $password,
+			'firstname' => $custom_fields->first_name,
+			'lastname' => $custom_fields->last_name,
+			'username' => $custom_fields->email,
+			'email' => $custom_fields->email,
+			'salt' => $salt,
+			'verification_code' => urlencode($salt),
+			'active' => 0,
+		)
+	);
+   	return true;
+}
+add_action('mgm_user_register', 'add_new_user');
+
+function active_user($transaction) {
+	$userID = $transaction['user_id'];
+	$user = Users::find_one($userID);
+	$user->set_active(1);
+    $user->set_type(1);
+    $user->save();
+    return true;
+}
+
+add_action('mgm_membership_transaction_success', 'active_user');
