@@ -10,8 +10,10 @@
 // In this example we assume that you unzipped the extension under protected/extensions.
 Yii::setPathOfAlias('bootstrap', dirname(__FILE__).'/../extensions/bootstrap');
 Yii::setPathOfAlias('editable', dirname(__FILE__).'/../extensions/x-editable'); 
-Yii::app()->params['server'] = 'reqrap';
-Yii::app()->params['app_dir'] = '/req';
+Yii::app()->params['server'] = 'reqer.dev';
+Yii::app()->params['app_name'] = 'ReqRap';
+Yii::app()->params['app_dir'] = 'req/';
+
 return array(
     'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
     'name'=>'ReqRap',
@@ -35,9 +37,9 @@ return array(
                 'application.extensions.iwi.*',
                 'application.widgets.bootstrap.*',
                 'application.modules.auth.components.*',
-				'application.controllers.*',
+                'application.controllers.*',
                 'ext.YiiMailer.YiiMailer',
-				'editable.*',
+                'editable.*',
     ),
     'aliases' => array(
        'xupload' => 'ext.xupload' //assuming you extracted the files to the extensions folder
@@ -45,6 +47,7 @@ return array(
 
     'theme'=>'bootstrap', // requires you to copy the theme under your themes directory
         'modules'=>array(
+       
             'gii'=>array(
             'generatorPaths'=>array(
             'bootstrap.gii',
@@ -81,37 +84,39 @@ return array(
             'bootstrap' => array(
                        'class' => 'ext.bootstrap.components.Bootstrap',
                        'responsiveCss' => true,
-                       'fontAwesomeCss' => false,
+                       'fontAwesomeCss'=> false,
                         ),
-		    'editable' => array(
-						'class'     => 'editable.EditableConfig',
-						'form'      => 'bootstrap',        //form style: 'bootstrap', 'jqueryui', 'plain' 
-						'mode'      => 'popup',            //mode: 'popup' or 'inline'  
-						'defaults'  => array(              //default settings for all editable elements
-						'emptytext' => 'Click to edit'
-										)
-						),
-            /*
+            'editable' => array(
+                        'class'     => 'editable.EditableConfig',
+                        'form'      => 'bootstrap',        //form style: 'bootstrap', 'jqueryui', 'plain' 
+                        'mode'      => 'popup',            //mode: 'popup' or 'inline'  
+                        'defaults'  => array(              //default settings for all editable elements
+                        'emptytext' => 'Click to edit'
+                                        )
+                        ),
+                        /*
             'fontawesome'=>array (
                             'class'=>'ext.fontawesome.components.FontAwesome',
                             'publishAwesome'=>FALSE
-                        ),*/
-                            
-            'authManager'=>array(
-                        'class' => 'CDbAuthManager',
-                        'connectionID' => 'db',
-                        'behaviors' => array(
-                            'auth.components.AuthBehavior',
-                            ),   
                         ),
-            'user' => array(
-                        'class' => 'wpUser',
-                      
+                           */ 
+            'authManager'=>array(
+                'behaviors' => array(
+                    'class' => 'auth.components.AuthBehavior',
+                ),   
             ),
-			'easyImage' => array(
-						'class' => 'ext.easyimage.EasyImage',
-			),
-            'dompdf'=>array(
+            /*
+            'user' => array(
+                'class' => 'auth.components.AuthWebUser',
+            ),*/
+            'user'  => array(
+                'class' => 'wpUser',
+            ),
+            'easyImage' => array(
+                'class' => 'ext.easyimage.EasyImage',
+            ),
+            
+               'dompdf'=>array(
                 'class'=>'ext.yiidompdf.yiidompdf'
             ),
         // uncomment the following to enable URLs in path-format
@@ -136,10 +141,11 @@ return array(
         */
         // uncomment the following to use a MySQL database
         'session' => array(
-                'sessionName' => 'SiteSession',
-                'class' => 'CHttpSession',
-                'autoStart' => true,
-                ),
+            'autoStart' => true,
+            'cookieMode'=>'none',
+            'sessionName' => 'session',
+            'timeout' => 28800,
+        ),
         'db'=>array(
             'connectionString' => 'mysql:host=localhost;dbname=req',
             'emulatePrepare' => true,
@@ -164,27 +170,14 @@ return array(
                     'levels'=>'error, warning',
                 ),
                 // uncomment the following to show log messages on web pages #################################
-                
+              /*  
                 array(
                     'class'=>'CWebLogRoute',
-                ),
+                ), */
             ),
         ),
         'easyImage' => array(
             'class' => 'ext.easyimage.EasyImage',
-        ),
-        
-        'ePdf' => array(
-                'class'         => 'ext.yii-pdf.EYiiPdf',
-                'params'        => array(
-                    'mpdf'     => array(
-                        'librarySourcePath' => 'application.vendors.mpdf.*',
-                        'constants'         => array(
-                            '_MPDF_TEMP_PATH' => Yii::getPathOfAlias('application.runtime'),
-                        ),
-                        'class'=>'mpdf',
-                    )
-                ),
         ),
     ),
     
@@ -192,7 +185,7 @@ return array(
     // using Yii::app()->params['paramName']
     'params'=>array(
         // this is used in contact page
-        'adminEmail'=>'ReqRap <info@reqrap.com>',
+        'adminEmail'=>'reqrap@reqrap.com',
         'photo_folder'=>'/uploads/images/',
     ),
     

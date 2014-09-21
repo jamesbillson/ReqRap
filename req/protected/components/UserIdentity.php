@@ -49,10 +49,12 @@ class UserIdentity extends CUserIdentity
             }
             else if(!$users->validatePassword($this->password)) {
                 $this->errorCode = self::ERROR_PASSWORD_INVALID;
-            }
-            else {           
+            } else {           
                 $this->errorCode = self::ERROR_NONE;
                 $this->_id = $users->id;
+                $this->username = $users->username;
+                $this->setState('id', $this->_id);
+                wp_set_auth_cookie( $this->_id );
             }
             
             return !$this->errorCode;

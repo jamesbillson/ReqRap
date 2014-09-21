@@ -234,6 +234,7 @@ class SiteController extends Controller {
    */
   public function actionLogout() {
     Yii::app()->user->logout();
+    wp_logout();
     $this->redirect(Yii::app()->homeUrl);
   }
 
