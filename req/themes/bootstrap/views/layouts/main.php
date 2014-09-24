@@ -53,12 +53,12 @@ if (!empty(Yii::app()->user->id) || !empty(Yii::app()->user->company_id)){
                                         'itemOptions'=>array('style'=>'font-size:'.$font.'em;'),
                                        'url'=>'',
                                        'visible'=>!Yii::app()->user->isGuest),
-				 array('label'=>'Home', 'url'=>array(('/site/index'))),
+				 array('label'=>'Home', 'url'=> UrlHelper::getPrefixLink(('/site/index'))),
                                  array('label'=>'Benefits',
-                                       'url'=>array(),
+                                       'url'=>(UrlHelper::getPrefixLink('site/benefits')),
                                        'visible'=>Yii::app()->user->isGuest),
                                  array('label'=>'Plans', 
-                                        'url'=>array(UrlHelper::getPrefixLink('site/plans')),
+                                        'url'=>(UrlHelper::getPrefixLink('site/plans')),
                                         'visible'=>Yii::app()->user->isGuest),
                                 array('label'=>'Contacts',
                                         'visible'=>!Yii::app()->user->isGuest && $company>0,
@@ -100,7 +100,7 @@ if (!empty(Yii::app()->user->id) || !empty(Yii::app()->user->company_id)){
                                         'visible'=>!Yii::app()->user->isGuest && $company>0,
                                         'items'=>array(
                                                         array('label'=>'Logout ('.Yii::app()->user->name.')',
-                                                                'url'=>array(UrlHelper::getPrefixLink('site/logout')), 
+                                                                'url'=>UrlHelper::getPrefixLink('/site/logout'), 
                                                                 'visible'=>!Yii::app()->user->isGuest),
                                                         array('label'=>'My Account', 
                                                             'url'=>UrlHelper::getPrefixLink('user/update')),
@@ -109,7 +109,7 @@ if (!empty(Yii::app()->user->id) || !empty(Yii::app()->user->company_id)){
                                                        
 				)),
 			 array('label'=>'Login', 
-                                'url'=>array(UrlHelper::getPrefixLink('site/login')), 
+                                'url'=>(UrlHelper::getPrefixLink('site/login')), 
                                
                                 'visible'=>Yii::app()->user->isGuest),
                                     ),

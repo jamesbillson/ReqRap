@@ -61,7 +61,7 @@ Learn More about ReqRap's features.</p>
     'type'=>'primary',
     'label'=>'ReqRap Analysis Principles',
     'block'=>true,
-      'url'=>'/site/principles'
+      'url'=>UrlHelper::getPrefixLink('site/principles')
 )); ?>  
     </div>
     <div class="span3">
@@ -69,7 +69,7 @@ Learn More about ReqRap's features.</p>
     'type'=>'primary',
     'label'=>'More about Features',
     'block'=>true,
-          'url'=>'/site/features'
+          'url'=>UrlHelper::getPrefixLink('site/features')
 )); ?> 
     </div>
         <div class="span3">
@@ -77,7 +77,7 @@ Learn More about ReqRap's features.</p>
     'type'=>'success',
     'label'=>'Get a Free Account',
     'block'=>true,
-          'url'=>'user/join'
+          'url'=>UrlHelper::getPrefixLink('user/join')
 )); ?> 
     </div>
 </div>
