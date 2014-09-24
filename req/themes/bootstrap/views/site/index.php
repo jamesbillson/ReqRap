@@ -26,7 +26,7 @@ $this->pageTitle=Yii::app()->name; ?>
         $src = Yii::app()->easyImage->thumbSrcOf(
  Yii::app()->params['photo_folder'].$model->logo_id, 
  array('resize' => array('width' => 150)));
-        } ELSE { $src="/images/furniture/logo.png";}
+        } ELSE { $src="/req/images/furniture/logo.png";}
         ?>
  
       <img src="<?php echo $src;?>" align="right">

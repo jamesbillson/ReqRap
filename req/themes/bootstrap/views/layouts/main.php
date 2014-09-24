@@ -30,7 +30,7 @@ if (!empty(Yii::app()->user->id) || !empty(Yii::app()->user->company_id)){
     $font=1.6*(15/$namelength);
     if ($font > 2.2)$font=2.2;
    }
-   $img='<img src="/images/furniture/logo.png">';
+   $img='<img src="'.UrlHelper::getPrefixLink('images/furniture/logo.png').'">';
 }ELSE{
     $img='';
 }
@@ -47,33 +47,33 @@ if (!empty(Yii::app()->user->id) || !empty(Yii::app()->user->company_id)){
 			'class'=>'bootstrap.widgets.TbMenu','encodeLabel'=>false,
 			'items'=>array(
                                     array(
-                                       'label'=>'<img src="/images/furniture/logo.png">',
+                                       'label'=>'<img src="'.UrlHelper::getPrefixLink('images/furniture/logo.png').'">',
                                         'visible'=>Yii::app()->user->isGuest),
                                     array('label'=>$cname,
                                         'itemOptions'=>array('style'=>'font-size:'.$font.'em;'),
                                        'url'=>'',
                                        'visible'=>!Yii::app()->user->isGuest),
-				 array('label'=>'Home', 'url'=>array('/site/index')),
+				 array('label'=>'Home', 'url'=>array(('/site/index'))),
                                  array('label'=>'Benefits',
-                                       'url'=>array('/site/benefits'),
+                                       'url'=>array(),
                                        'visible'=>Yii::app()->user->isGuest),
                                  array('label'=>'Plans', 
-                                        'url'=>array('/site/plans'),
+                                        'url'=>array(UrlHelper::getPrefixLink('site/plans')),
                                         'visible'=>Yii::app()->user->isGuest),
                                 array('label'=>'Contacts',
                                         'visible'=>!Yii::app()->user->isGuest && $company>0,
                                         'items'=>array(
                                                       
-                                                        array('label'=>'Contacts', 'url'=>'/contact/mycontacts'),
-                                                        array('label'=>'Companies', 'url'=>'/company/mycompanies'),
+                                                        array('label'=>'Contacts', 'url'=>UrlHelper::getPrefixLink('contact/mycontacts')),
+                                                        array('label'=>'Companies', 'url'=>UrlHelper::getPrefixLink('company/mycompanies')),
                                                         
 				)),
                              // Analyst Menu
                             array('label'=>'Projects',
                                         'visible'=>!Yii::app()->user->isGuest && $company>0,
                                         'items'=>array(
-                                                         array('label'=>'Projects', 'url'=>'/project/myrequirements'),
-                                                        array('label'=>'Library', 'url'=>'/library/view'),
+                                                         array('label'=>'Projects', 'url'=>UrlHelper::getPrefixLink('project/myrequirements')),
+                                                        array('label'=>'Library', 'url'=>UrlHelper::getPrefixLink('library/view')),
 				)),
          
                              // PM Menu
@@ -100,16 +100,16 @@ if (!empty(Yii::app()->user->id) || !empty(Yii::app()->user->company_id)){
                                         'visible'=>!Yii::app()->user->isGuest && $company>0,
                                         'items'=>array(
                                                         array('label'=>'Logout ('.Yii::app()->user->name.')',
-                                                                'url'=>array('/site/logout'), 
+                                                                'url'=>array(UrlHelper::getPrefixLink('site/logout')), 
                                                                 'visible'=>!Yii::app()->user->isGuest),
                                                         array('label'=>'My Account', 
-                                                            'url'=>'/user/update'),
+                                                            'url'=>UrlHelper::getPrefixLink('user/update')),
                                                         array('label'=>'My Company Settings', 
-                                                            'url'=>'/company/mycompany'),
+                                                            'url'=>UrlHelper::getPrefixLink('company/mycompany')),
                                                        
 				)),
 			 array('label'=>'Login', 
-                                'url'=>array('/site/login'), 
+                                'url'=>array(UrlHelper::getPrefixLink('site/login')), 
                                
                                 'visible'=>Yii::app()->user->isGuest),
                                     ),
@@ -131,7 +131,7 @@ if (!empty(Yii::app()->user->id) || !empty(Yii::app()->user->company_id)){
                     'fade'=>true, // use transitions?
                     'closeText'=>'&times;', // close link text - if set to false, no close link is displayed  
                     'events' => array('click' => 'js:function(e) {
-                            $.get("'. $this->createUrl("messages/process?ids=") .'"+$(e.target).next("i").attr("data-id"));
+                            $.get("'. $this->createUrl(UrlHelper::getPrefixLink("messages/process?ids=")) .'"+$(e.target).next("i").attr("data-id"));
                         }'
                     )
                 )
@@ -144,8 +144,8 @@ if (!empty(Yii::app()->user->id) || !empty(Yii::app()->user->company_id)){
 	<div class="clear"></div>
 	<div id="footernav" style="text-align:center;margin-top:50px">
           
-    <a href="/site/terms">Term of Use</a> |
-    <a href="/site/privacy">Privacy</a> | <a href="/site/contact">Contact</a>
+    <a href="<?php echo UrlHelper::getPrefixLink('site/terms'); ?>">Term of Use</a> |
+    <a href="<?php echo UrlHelper::getPrefixLink('site/privacy') ?>">Privacy</a> | <a href="<?php echo UrlHelper::getPrefixLink('site/contact') ?>">Contact</a>
         </div>
 	<div id="footer" style="text-align:center">
           

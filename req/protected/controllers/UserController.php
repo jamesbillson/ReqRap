@@ -272,12 +272,12 @@ class UserController extends Controller
             $identity->errorCode = UserIdentity::ERROR_NONE;
             Yii::app()->user->login($identity, (Yii::app()->params['loggedInDays'] * 60 * 60 * 24 ));
 
-            $this->redirect(array('/company/mycreate'));
+            $this->redirect(array('/req/company/mycreate'));
             //return;
           //}
         }
       }
-      $this->redirect(array('site/fail'));
+      $this->redirect(array('/req/site/fail'));
     }
 
       public function actionReInvite($id)
@@ -291,7 +291,7 @@ class UserController extends Controller
             //go back to the original follow object screen
             //pick the object from an array by the index.
             Yii::app()->user->setFlash('success', "Invite Sent.");
-        $this->redirect(array('/company/mycompany'));
+        $this->redirect(array('/req/company/mycompany'));
                 
     }
     
@@ -309,7 +309,7 @@ class UserController extends Controller
             Yii::app()->user->login($identity, (Yii::app()->params['loggedInDays'] * 60 * 60 * 24 ));
                        
             
-   $this->redirect(array('/company/mycompany'));
+   $this->redirect(array('/req/company/mycompany'));
         }
             
     }
@@ -359,7 +359,7 @@ class UserController extends Controller
                 
                 
                 
-                $this->redirect(array('company/mycompany'));
+                $this->redirect(array('/req/company/mycompany'));
             }
            
         }
@@ -378,7 +378,7 @@ class UserController extends Controller
         //check the uuencoded password string.
         $salt = urldecode($id); 
         $model = User::model()->find("salt = '".$salt."'");
-        if (!isset($model->id))  $this->redirect(array('site/fail/nomatch'));
+        if (!isset($model->id))  $this->redirect(array('/req/site/fail/nomatch'));
         // there is a matching user.
         // model loads the existing user
         //$model=$this->loadModel($newaccount->id);
@@ -401,7 +401,7 @@ class UserController extends Controller
             $identity->errorCode = UserIdentity::ERROR_NONE;
             Yii::app()->user->login($identity, (Yii::app()->params['loggedInDays'] * 60 * 60 * 24 ));
             
-            $this->redirect(array('/company/mycompany'));      
+            $this->redirect(array('/req/company/mycompany'));      
         }
         
             }
@@ -460,7 +460,7 @@ class UserController extends Controller
        $model=$this->loadModel($id);
        $model->admin=1;
 	if($model->save())
-	$this->redirect(array('/company/mycompany'));
+	$this->redirect(array('/req/company/mycompany'));
 		
        }
 		
@@ -472,7 +472,7 @@ class UserController extends Controller
        $model=$this->loadModel($id);
        $model->admin=0;
 	if($model->save())
-		$this->redirect(array('/company/mycompany'));
+		$this->redirect(array('/req/company/mycompany'));
 		
        }
 
@@ -486,7 +486,7 @@ class UserController extends Controller
        $model=$this->loadModel($id);
        $model->company_id=0;
 	if($model->save())
-		$this->redirect(array('/company/mycompany'));
+		$this->redirect(array('/req/company/mycompany'));
 		
        }
 
