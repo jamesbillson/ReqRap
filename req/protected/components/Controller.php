@@ -58,8 +58,7 @@ $action=$action->id;
          {
 
             if (Yii::app()->user->isGuest){
-                $this->redirect('/req/user/join');
-                
+                $this->redirect('/register');
             }
         }      
   

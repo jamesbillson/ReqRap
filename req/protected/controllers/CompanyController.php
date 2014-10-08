@@ -115,7 +115,7 @@ class CompanyController extends Controller
                 //$user->save();
                             
                             
-			$this->redirect(array('/req/site/index'));
+			$this->redirect(UrlHelper::getPrefixLink('site/index'));
                 }}
 
 		$this->render('mycreate',array(
@@ -292,6 +292,6 @@ class CompanyController extends Controller
   			$companyMeta->save();
   		}
   	}
-  	$this -> redirect('/req/company/mycompany');
+  	$this->redirect(UrlHelper::getPrefixLink('company/mycompany'));
   }
 }
