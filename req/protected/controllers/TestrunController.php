@@ -86,7 +86,7 @@ class TestrunController extends Controller
 		$model=$this->loadModel($id);
                 $model->status=3;
 		$model->save();
-		$this->redirect(('/req/project/view/tab/testcases'));
+		$this->redirect(array('/req/project/view/tab/testcases'));
 		
 	}
         
@@ -108,7 +108,7 @@ class TestrunController extends Controller
 		{
 			$model->attributes=$_POST['Testrun'];
 			if($model->save())
-				$this->redirect(('/req/view','id'=>$model->id));
+				$this->redirect(array('/req/view','id'=>$model->id));
 		}
 
 		$this->render('update',array(

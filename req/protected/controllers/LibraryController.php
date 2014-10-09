@@ -96,7 +96,7 @@ class LibraryController extends Controller
 		{
 			$model->attributes=$_POST['Library'];
 			if($model->save())
-				$this->redirect(('view','id'=>$model->id));
+				$this->redirect(array('view','id'=>$model->id));
 		}
 
 		$this->render('update',array(
@@ -115,7 +115,7 @@ class LibraryController extends Controller
 
 		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
 		if(isset($_GET['ajax'])) $this->redirect(array('admin'));
-                $this->redirect(('/req/library/view'));
+                $this->redirect(array('/req/library/view'));
 	}
 
 	/**

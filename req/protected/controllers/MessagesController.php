@@ -95,7 +95,7 @@ if(isset($_POST['Messages']))
 $model->attributes=$_POST['Messages'];
 $model->condition = $_POST['Messages']['condition']; 
 if($model->save())
-$this->redirect(('view','id'=>$model->id));
+$this->redirect(array('view','id'=>$model->id));
 }
 
 $this->render('update',array(

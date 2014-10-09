@@ -95,7 +95,7 @@ class UsesController extends Controller
 		{
 			$model->attributes=$_POST['Uses'];
 			if($model->save())
-				$this->redirect(('/req/view','id'=>$model->uses));
+				$this->redirect(array('/req/view','id'=>$model->uses));
 		}
 
 		$this->render('update',array(

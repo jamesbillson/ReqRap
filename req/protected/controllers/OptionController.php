@@ -78,7 +78,7 @@ class OptionController extends Controller
 		{
 			$model->attributes=$_POST['Option'];
 			if($model->save())
-				$this->redirect(('view','id'=>$model->option));
+				$this->redirect(array('view','id'=>$model->option));
 		}
 
 		$this->render('create',array(
@@ -102,7 +102,7 @@ class OptionController extends Controller
 		{
 			$model->attributes=$_POST['Option'];
 			if($model->save())
-				$this->redirect(('view','id'=>$model->option));
+				$this->redirect(array('view','id'=>$model->option));
 		}
 
 		$this->render('update',array(

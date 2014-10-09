@@ -98,7 +98,7 @@ if (Yii::App()->session['permission'] ==0)  $this->redirect(array('site/fail/con
         
     </a> 
     <?php } ?>
-    <a href="/project/view/">
+    <a href=<?php echo UrlHelper::getPrefixLink('/project/view/') ?>>
          <?php
                  
                  $this->widget('bootstrap.widgets.TbLabel', array(

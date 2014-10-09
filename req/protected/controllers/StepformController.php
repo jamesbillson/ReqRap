@@ -75,7 +75,7 @@ class StepformController extends Controller
                // echo "</pre>";
                 if($model->save()){
                     Version::model()->getNextNumber($project,14,1,$model->primaryKey,$model->stepform_id);
-                $this->redirect(('/req/form/view/id/'.$model->form_id));
+                $this->redirect(array('/req/form/view/id/'.$model->form_id));
                  }
                  $error_string='';
                  foreach ($model->getErrors() as $message) 
@@ -85,7 +85,7 @@ class StepformController extends Controller
           Yii::app()->user->setFlash('error', ' Something went wrong, all we can report is:<br/> '.$error_string);
 
 
-          $this->redirect(('/req/site/fail/reason/form_no_save'));
+          $this->redirect(array('/req/site/fail/reason/form_no_save'));
        
            
         }
@@ -128,7 +128,7 @@ class StepformController extends Controller
                   
                 }
                   $step = Step::model()->with('flow')->findByPk($_POST['step_db_id']);
-                  $this->redirect(('/req/step/update/id/'.$step->id.'/flow/'.$step->flow->id));
+                  $this->redirect(array('/req/step/update/id/'.$step->id.'/flow/'.$step->flow->id));
 		
 	}
         
@@ -177,7 +177,7 @@ class StepformController extends Controller
                         if($new->save())
 			$version=Version::model()->getNextNumber($project->id,2,14,$model->id,$model->stepiface_id);
                 
-                        $this->redirect(('/req/view','id'=>$model->step_id));
+                        $this->redirect(array('/req/view','id'=>$model->step_id));
                         
 		}
 
@@ -199,7 +199,7 @@ class StepformController extends Controller
                $version=Version::model()->getNextNumber($project_id,14,3,$model->id,$model->stepform_id);
      
                
-$this->redirect(('/req/step/update/flow/'.$flow['id'].'/id/'.$step['id']));
+$this->redirect(array('/req/step/update/flow/'.$flow['id'].'/id/'.$step['id']));
                 
 	}
         
@@ -209,7 +209,7 @@ $this->redirect(('/req/step/update/flow/'.$flow['id'].'/id/'.$step['id']));
             $project=Yii::App()->session['project'];
             $model=Stepform::model()->findByPK($id);
             $version=Version::model()->getNextNumber($project,14,3,$model->id,$model->stepform_id);
-            $this->redirect(('/req/usecase/view/id/'.$ucid));
+            $this->redirect(array('/req/usecase/view/id/'.$ucid));
                 
 	}    
 	public function actionIndex()

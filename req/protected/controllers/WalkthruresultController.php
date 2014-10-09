@@ -81,7 +81,7 @@ class WalkthruresultController extends Controller
                                               
                         
 			if($newresult->save())
-				$this->redirect(('/req/walkthrupath/run/','id'=>$newresult->id));
+				$this->redirect(array('/req/walkthrupath/run/','id'=>$newresult->id));
 		}
 
 		$this->render('/req/walkthrupath/run/',array(

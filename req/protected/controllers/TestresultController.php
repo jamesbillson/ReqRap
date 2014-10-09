@@ -71,7 +71,7 @@ class TestresultController extends Controller
 		{
 			$model->attributes=$_POST['Testresult'];
 			if($model->save())
-				$this->redirect(('/req/view','id'=>$model->id));
+				$this->redirect(array('/req/view','id'=>$model->id));
 		}
 
 		$this->render('create',array(
@@ -95,7 +95,7 @@ class TestresultController extends Controller
 		{
 			$model->attributes=$_POST['Testresult'];
 			if($model->save())
-				$this->redirect(('/req/view','id'=>$model->id));
+				$this->redirect(array('/req/view','id'=>$model->id));
 		}
 
 		$this->render('update',array(

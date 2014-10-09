@@ -129,7 +129,7 @@ class FollowerController extends Controller
         if(!isset($_GET['ajax']))
         {
                 Yii::App()->session['setting_tab']='followers';
-                $this->redirect(('/req/project/project'));
+                $this->redirect(array('/req/project/project'));
                 }
                 
         }
@@ -214,7 +214,7 @@ class FollowerController extends Controller
 
                //set the tab to followers
                 Yii::App()->session['setting_tab']='followers';
-                $this->redirect(('/req/project/project'));
+                $this->redirect(array('/req/project/project'));
          
                 }
         }
@@ -240,7 +240,7 @@ class FollowerController extends Controller
             //go back to the original follow object screen
             //pick the object from an array by the index.
             
-        $this->redirect(('/req/project/project','tab'=>'followers'));
+        $this->redirect(array('/req/project/project','tab'=>'followers'));
                 
     }
     
@@ -251,7 +251,7 @@ class FollowerController extends Controller
         $link = urldecode($id);
         $follower = Follower::model()->find("link = '".$link."'");
         // if it doesn't match, redirect to sorry page.
-        if (!isset($follower->id))  $this->redirect(('/req/site/fail'));
+        if (!isset($follower->id))  $this->redirect(array('/req/site/fail'));
         //if it does match, see what kind of contact they are
         $contact = Contact::model()->findbyPk($follower->contact_id);
         $matchuser = User::model()->find("username = '".$contact->email."'"); 
@@ -260,7 +260,7 @@ class FollowerController extends Controller
         //give them a join form.
         if (!isset($matchuser->id)) {
             Yii::app()->user->logout();
-            $this->redirect(('/req/user/joinfollower/id/'.$contact->id));
+            $this->redirect(array('/req/user/joinfollower/id/'.$contact->id));
         }
         //on successful save of the user,                  
         //confirm them  (Do this on home page - show follower invites, send email on join).              
@@ -289,7 +289,7 @@ class FollowerController extends Controller
             Follower::model()->sendAcceptConfirm($follower->id);
             
             
-   $this->redirect(('/req/project/set','id'=>$follower->foreign_key));
+   $this->redirect(array('/req/project/set','id'=>$follower->foreign_key));
         }
            //send a welcome email
             //send an email to the inviter to say they have joined.

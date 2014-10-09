@@ -77,7 +77,7 @@ class OrganisationtypeController extends Controller
 		{
 			$model->attributes=$_POST['Organisationtype'];
 			if($model->save())
-				$this->redirect(('view','id'=>$model->id));
+				$this->redirect(array('view','id'=>$model->id));
 		}
 
 		$this->render('create',array(
@@ -101,7 +101,7 @@ class OrganisationtypeController extends Controller
 		{
 			$model->attributes=$_POST['Organisationtype'];
 			if($model->save())
-				$this->redirect(('view','id'=>$model->id));
+				$this->redirect(array('view','id'=>$model->id));
 		}
 
 		$this->render('update',array(

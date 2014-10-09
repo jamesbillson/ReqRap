@@ -109,10 +109,10 @@ class UserController extends Controller
         if(isset($_POST['User']))
         {
             $model->attributes=$_POST['User'];
-            if($model->save())
-                $this->redirect(('/req/view','id'=>$model->id));
+            if ($model->save()) {
+                $this->redirect(array('/req/view','id'=>$model->id));
         }
-
+ }
         $this->render('create',array(
             'model'=>$model,
             //        'users'=>$users,
@@ -440,7 +440,7 @@ class UserController extends Controller
                 $model->attributes=$_POST['User'];
                 $model->password = $_POST['User']['password'];
                 if($model->save())
-                    $this->redirect(('/req/view','id'=>$model->id));
+                    $this->redirect(array('/req/view','id'=>$model->id));
             }
         }
 

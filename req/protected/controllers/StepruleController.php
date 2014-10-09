@@ -101,7 +101,7 @@ class StepruleController extends Controller
                   
                 }
                   $step = Step::model()->with('flow')->findByPk($_POST['step_db_id']);
-             $this->redirect(('/req/step/update/id/'.$step->id.'/flow/'.$step->flow->id));
+             $this->redirect(array('/req/step/update/id/'.$step->id.'/flow/'.$step->flow->id));
 		
 	}
         
@@ -122,7 +122,7 @@ class StepruleController extends Controller
                // echo "</pre>";
                 if($model->save()){
                     Version::model()->getNextNumber($project,16,1,$model->primaryKey,$model->steprule_id);
-                $this->redirect(('/req/rule/view/id/'.$model->rule_id));
+                $this->redirect(array('/req/rule/view/id/'.$model->rule_id));
                  }
                  
                 }
@@ -147,7 +147,7 @@ class StepruleController extends Controller
 			if($model->save())
                         $version=Version::model()->getNextNumber($project->id,1,16,$model->primaryKey,$model->steprule_id);
                       
-				$this->redirect(('view','id'=>$model->step_id));
+				$this->redirect(array('view','id'=>$model->step_id));
 		}
 
 		$this->render('create',array(
@@ -174,7 +174,7 @@ class StepruleController extends Controller
                         if($new->save())
 			$version=Version::model()->getNextNumber($project->id,2,16,$model->id,$model->steprule_id);
                 
-                        $this->redirect(('view','id'=>$model->step_id));
+                        $this->redirect(array('view','id'=>$model->step_id));
                         
 		}
 
@@ -189,7 +189,7 @@ class StepruleController extends Controller
             $project=Yii::App()->session['project'];
             $model=Steprule::model()->findByPK($id);
             $version=Version::model()->getNextNumber($project,16,3,$model->id,$model->steprule_id);
-            $this->redirect(('/req/usecase/view/id/'.$ucid));
+            $this->redirect(array('/req/usecase/view/id/'.$ucid));
                 
 	} 
          
@@ -209,7 +209,7 @@ class StepruleController extends Controller
               // print_r($flow);
               // echo "</pre>";
                
-$this->redirect(('/req/step/update/flow/'.$flow['id'].'/id/'.$step['id']));
+$this->redirect(array('/req/step/update/flow/'.$flow['id'].'/id/'.$step['id']));
                 
                 
                 
