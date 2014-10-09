@@ -1902,6 +1902,7 @@ function add_new_user($userID) {
    	$user->set_username($custom_fields->email);
    	$user->set_email($custom_fields->email);
    	$user->save();*/
+
    	$salt = uniqid('',true);
    	if ( isset($_POST['user_password']) ) {
    		$password = md5($_POST['user_password']);
@@ -1923,6 +1924,14 @@ function add_new_user($userID) {
 			'active' => 0,
 		)
 	);
+
+	if ( isset($mgm_member->membership_type) && $mgm_member->membership_type == 'free' ) {
+		$user = Users::find_one($userID);
+		//$user->set_active(1);
+	    $user->set_type(0);
+	    $user->save();
+	}
+	send_email($userID, urlencode($salt));
    	return true;
 }
 add_action('mgm_user_register', 'add_new_user');
@@ -1930,10 +1939,44 @@ add_action('mgm_user_register', 'add_new_user');
 function active_user($transaction) {
 	$userID = $transaction['user_id'];
 	$user = Users::find_one($userID);
-	$user->set_active(1);
+//	$user->set_active(1);
     $user->set_type(1);
     $user->save();
     return true;
 }
 
 add_action('mgm_membership_transaction_success', 'active_user');
+
+function send_email($userID, $link) {
+	$mgm_member = mgm_get_member($userID);
+	$custom_fields = $mgm_member->custom_fields;
+	add_filter( 'wp_mail_content_type', 'set_html_content_type' );
+
+	$body = 'Dear '.$custom_fields->first_name.',
+                    <br />
+                    Hi, it looks like you\'ve created a ReqRap account, the 
+                    rapid web requirements system.<br />
+                    To confirm your email address and activate your account follow 
+                    the link below and complete the join form.
+                    <br />
+                    Click here to accept <a href="'.site_url().'/req/user/active/verifycode/'.$link.'">'.site_url().'/user/active/verifycode/'.$link.'</a>                   
+                    <br />
+                    <br />
+                    Thanks, 
+                    from the ReqRap Team.
+                    ';
+	wp_mail( $custom_fields->email, 'You have registered an account on ReqRap', $body);
+}
+
+function set_html_content_type() {
+	return 'text/html';
+}
+
+
+function redirect_login_page() {
+	$login_url = home_url().'/req/site/login';
+    wp_redirect( $login_url, 301 ); exit;
+}
+add_shortcode( 'redirect_login_page', 'redirect_login_page' );
+
+
