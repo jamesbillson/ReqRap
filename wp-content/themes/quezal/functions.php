@@ -1926,10 +1926,14 @@ function add_new_user($userID) {
 	);
 
 	if ( isset($mgm_member->membership_type) && $mgm_member->membership_type == 'free' ) {
-		$user = Users::find_one($userID);
+		global $wpdb;
+	//	$user = Users::find_one($userID);
+	//		var_dump($userID);exit;
+	//	var_dump($user);exit;
 		//$user->set_active(1);
-	    $user->set_type(0);
-	    $user->save();
+		$wpdb->query("UPDATE user SET type = 0 WHERE id = $userID ");
+	  //  $user->set_type(0);
+	   // $user->save();
 	}
 	send_email($userID, urlencode($salt));
    	return true;
@@ -1937,12 +1941,14 @@ function add_new_user($userID) {
 add_action('mgm_user_register', 'add_new_user');
 
 function active_user($transaction) {
+/*
 	$userID = $transaction['user_id'];
 	$user = Users::find_one($userID);
 //	$user->set_active(1);
     $user->set_type(1);
     $user->save();
-    return true;
+    return true;*/
+    $wpdb->query("UPDATE user SET type = 1 WHERE id = $userID ");
 }
 
 add_action('mgm_membership_transaction_success', 'active_user');
@@ -1978,5 +1984,3 @@ function redirect_login_page() {
     wp_redirect( $login_url, 301 ); exit;
 }
 add_shortcode( 'redirect_login_page', 'redirect_login_page' );
-
-
