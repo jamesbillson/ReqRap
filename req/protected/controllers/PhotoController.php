@@ -69,7 +69,7 @@ class PhotoController extends Controller {
         {
             $model->attributes=$_POST['Photo'];
             if($model->save())
-                $this->redirect(array('list'));
+                $this->redirect(('/req/list'));
         }
 
     $model = new Photo;
@@ -79,7 +79,7 @@ class PhotoController extends Controller {
       $model->photo_id = Version::model()->getNextID(11);
       if ($model->save())
         $version = Version::model()->getNextNumber($project_id, 11, 1, $model->primaryKey, $model->photo_id);
-      $this->redirect(array('/iface/view/id/' . $project));
+      $this->redirect(('/req/iface/view/id/' . $project));
     }
 
     $this->render('create', array(
@@ -103,7 +103,7 @@ class PhotoController extends Controller {
       $model->photo_id = Version::model()->getNextID(11);
       if ($model->save())
         $version = Version::model()->getNextNumber($project_id, 11, 1, $model->primaryKey, $model->photo_id);
-      $this->redirect(array('/iface/view/id/' . $project));
+      $this->redirect(('/req/iface/view/id/' . $project));
     }
 
     $this->render('create', array(
@@ -152,7 +152,7 @@ class PhotoController extends Controller {
      // }
 
   
-        $this->redirect('/photo/list');
+        $this->redirect('/req/photo/list');
     }
   }
 

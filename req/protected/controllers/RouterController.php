@@ -103,7 +103,7 @@ public function actionpreView($id) // Note that this is rule_id
                     {
                       
                      $version=Version::model()->getNextNumber($project,1,1,$model->primaryKey,$model->rule_id);   
-                     $this->redirect(array('/project/view/tab/rules/id/'.$project));
+                     $this->redirect(('/req/project/view/tab/rules/id/'.$project));
 		    }
                         
                 }
@@ -135,7 +135,7 @@ public function actionpreView($id) // Note that this is rule_id
 			if($new->save())
                         {
 			$version=Version::model()->getNextNumber($model->project_id, 1, 2,$new->primaryKey,$model->rule_id);
-                        $this->redirect(array('/project/view/tab/rules/id/'.$model->project_id));
+                        $this->redirect(('/req/project/view/tab/rules/id/'.$model->project_id));
                         }        
 		}
 
@@ -150,7 +150,7 @@ public function actionpreView($id) // Note that this is rule_id
          $project=$model->project_id;
          Rule::model()->rollback($model->rule_id, $id);
          //Version::model()->rollback($id,object)
-         $this->redirect(array('/project/view/tab/rules/id/'.$project));
+         $this->redirect(('/req/project/view/tab/rules/id/'.$project));
         }
         
         
@@ -167,7 +167,7 @@ public function actionpreView($id) // Note that this is rule_id
             $version=Version::model()->getNextNumber($model->project_id,1,3,$id,$model->rule_id);  
 	    //$model->active=0;
             $model->save();
-	$this->redirect(array('/project/view/tab/rules/id/'.$model->project_id));
+	$this->redirect(('/req/project/view/tab/rules/id/'.$model->project_id));
                         
             
             }

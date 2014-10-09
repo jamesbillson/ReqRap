@@ -293,7 +293,7 @@ class SiteController extends Controller {
 
 
     if (empty($_GET['code']))
-      $this->redirect('/site/login');
+      $this->redirect('/req/site/login');
 
     $model = new User('newPassword');
 

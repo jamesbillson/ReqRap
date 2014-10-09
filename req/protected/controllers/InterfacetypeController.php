@@ -79,7 +79,7 @@ class InterfacetypeController extends Controller
                                 {
 				
                                 $version=Version::model()->getNextNumber($project,13,1,$model->primaryKey,$model->interfacetype_id);   
-                                $this->redirect(array('/req/project/project'));
+                                $this->redirect(('/req/project/project'));
                                 
                                 }
                  }
@@ -111,7 +111,7 @@ class InterfacetypeController extends Controller
                  
                  if($new->save()){
                       $version=Version::model()->getNextNumber($project,13,2,$new->primaryKey,$new->interfacetype_id);   
-                      $this->redirect(array('/req/project/project'));
+                      $this->redirect(('/req/project/project'));
                  }
 				
 		}
@@ -148,7 +148,7 @@ class InterfacetypeController extends Controller
                    
                 }
                     
-                $this->redirect(array('/req/project/project'));
+                $this->redirect(('/req/project/project'));
 		}
                     $this->render('swap',array(
 			'model'=>$model,
@@ -163,10 +163,10 @@ class InterfacetypeController extends Controller
             $children=Iface::model()->getCategoryIfaces($model->interfacetype_id);
             if (empty($children)) {
             $version=Version::model()->getNextNumber($model->project_id,13,3,$id,$model->interfacetype_id);  
-	    $this->redirect(array('/req/project/project/'));
+	    $this->redirect(('/req/project/project/'));
             } ELSE {
                 Yii::app()->user->setFlash('error', "This interface type is in use, please pick a new type to transfer the images to.");
-            $this->redirect(array('/req/interfacetype/swap/id/'.$model->id));    
+            $this->redirect(('/req/interfacetype/swap/id/'.$model->id));    
             }
         }
 

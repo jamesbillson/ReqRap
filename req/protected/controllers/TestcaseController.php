@@ -105,7 +105,7 @@ class TestcaseController extends Controller
             // Show a spreadsheet style form with all the Steps, Results, and Comments.
             
             
-                $this->redirect(array('/req/testrun/view/id/'.$testrun));
+                $this->redirect(('/req/testrun/view/id/'.$testrun));
         } 
         
 
@@ -128,7 +128,7 @@ class TestcaseController extends Controller
             
             //Display the Test Case page at the end.
            Yii::App()->session['setting_tab']='testcases'; 
-          $this->redirect(array('/req/project/view/'));
+          $this->redirect(('/req/project/view/'));
             
             
             
@@ -153,7 +153,7 @@ class TestcaseController extends Controller
                             $teststep->result='First result.';
                             $teststep->save();
                   
-                            $this->redirect(array('/req/project/testing'));
+                            $this->redirect(('/req/project/testing'));
                         
                         }
 		}
@@ -234,7 +234,7 @@ if (!empty($mainflow)){
                 
               } ELSE {
                         // The case hasn't saved 
-                    $this->redirect(array('/req/site/fail'));
+                    $this->redirect(('/req/site/fail'));
                    // echo 'MAIN Test Case not saved<br /><pre>';
                    // print_r ($testcase->getErrors());
                    //  echo '</pre>';
@@ -347,7 +347,7 @@ if (!empty($all_flows[$i])){
                          
                     } ELSE {
                 // The case hasn't saved  
-                   $this->redirect(array('/req/site/fail'));
+                   $this->redirect(('/req/site/fail'));
                    //echo 'ALT Test Case not saved';
                     }
                 }
@@ -466,8 +466,8 @@ if (!empty($all_flows[$i])){
 		$model=$this->loadModel($id);
          
                 $model->delete();
-                if ($ucid !=-1) $this->redirect(array('/req/usecase/view/id/'.$ucid));
-                $this->redirect(array('/req/project/view/tab/details'));
+                if ($ucid !=-1) $this->redirect(('/req/usecase/view/id/'.$ucid));
+                $this->redirect(('/req/project/view/tab/details'));
 	}
 
 	/**

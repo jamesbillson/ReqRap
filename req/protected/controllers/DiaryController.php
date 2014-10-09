@@ -69,7 +69,7 @@ public function actionCreate($id)
 		{
 			$model->attributes=$_POST['Diary'];
 			if($model->save())
-			$this->redirect(array('/project/diary','id'=>$model->project_id));
+			$this->redirect(('/req/project/diary','id'=>$model->project_id));
 		}
 
 		$this->render('create',array(
@@ -92,7 +92,7 @@ public function actionCreate($id)
 		{
 			$model->attributes=$_POST['Diary'];
 			if($model->save())
-				$this->redirect(array('view','id'=>$model->id));
+				$this->redirect(('view','id'=>$model->id));
 		}
 
 		$this->render('update',array(

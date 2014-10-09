@@ -116,7 +116,7 @@ class FlowController extends Controller
              }   
              $this->renumberFlows($id);
               $step = Step::model()->with('flow')->findByPk($stepid);
-             $this->redirect(array('/req/step/update/flow/'.$step->flow->id.'/id/'.$step->id));
+             $this->redirect(('/req/step/update/flow/'.$step->flow->id.'/id/'.$step->id));
 		
 
 	}
@@ -151,7 +151,7 @@ class FlowController extends Controller
                  $model->save();
                 
 		
-		$this->redirect(array('/step/update/flow/'.$model->id.'/id/-1'));
+		$this->redirect(('/req/step/update/flow/'.$model->id.'/id/-1'));
 		
 	}
  
@@ -174,7 +174,7 @@ class FlowController extends Controller
 			if($new->save())
                         {
 			$version=Version::model()->getNextNumber($model->project_id, 9, 2,$new->getPrimaryKey(),$model->flow_id);
-                        $this->redirect(array('/req/usecase/view/id/'.$model->project_id));
+                        $this->redirect(('/req/usecase/view/id/'.$model->project_id));
                         }        
 		}
 
@@ -191,7 +191,7 @@ class FlowController extends Controller
             $version=Version::model()->getNextNumber($project,8,3,$id,$model->flow_id); 
             //$model->save();
             $this->renumberFlows($model->usecase_id);
-            $this->redirect(array('/req/usecase/view/id/'.$model->usecase_id));
+            $this->redirect(('/req/usecase/view/id/'.$model->usecase_id));
          }
         
 	/**

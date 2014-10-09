@@ -71,7 +71,7 @@ class TestresultController extends Controller
 		{
 			$model->attributes=$_POST['Testresult'];
 			if($model->save())
-				$this->redirect(array('view','id'=>$model->id));
+				$this->redirect(('/req/view','id'=>$model->id));
 		}
 
 		$this->render('create',array(
@@ -95,7 +95,7 @@ class TestresultController extends Controller
 		{
 			$model->attributes=$_POST['Testresult'];
 			if($model->save())
-				$this->redirect(array('view','id'=>$model->id));
+				$this->redirect(('/req/view','id'=>$model->id));
 		}
 
 		$this->render('update',array(
@@ -123,7 +123,7 @@ class TestresultController extends Controller
 
 		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
 		if(!isset($_GET['ajax']))
-			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
+			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : '/req/admin/');
 	}
 
 	/**

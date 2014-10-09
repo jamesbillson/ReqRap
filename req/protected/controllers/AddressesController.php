@@ -74,7 +74,7 @@ class AddressesController extends Controller
 		{
 			$model->attributes=$_POST['Addresses'];
 			if($model->save())
-			$this->redirect(array('/req/'.  Addresses::$destination[$model->type].'/id/'.$model->foreign_key));
+			$this->redirect(('/req/'.  Addresses::$destination[$model->type].'/id/'.$model->foreign_key));
 		}
 
 		$this->render('create',array(
@@ -114,7 +114,7 @@ class AddressesController extends Controller
                     
 			$model->attributes=$_POST['Addresses'];
 			if($model->save())
-                        $this->redirect(array('/req/'.Addresses::$destination[$model->type].'/id/'.$model->foreign_key));
+                        $this->redirect(('/req/'.Addresses::$destination[$model->type].'/id/'.$model->foreign_key));
 		}
 
 		$this->render('update',array(
@@ -143,7 +143,7 @@ class AddressesController extends Controller
                 $fk=$model->foreign_key;
                 $type=$model->type;
                 $model->delete();
-              	$this->redirect(array('/req/'.Addresses::$destination[$type].'/id/'.$fk));
+              	$this->redirect(('/req/'.Addresses::$destination[$type].'/id/'.$fk));
 		
          }
 	/**

@@ -90,7 +90,7 @@ class SimpleController extends Controller
                      $version=Version::model()->getNextNumber($project,18,1,$model->primaryKey,$model->simple_id);   
                      Simple::model()->Renumber($category_id);
      
-                     $this->redirect(array('/category/view/id/'.$model->category_id));
+                     $this->redirect(('/req/category/view/id/'.$model->category_id));
 		    }
                         
                 }
@@ -121,7 +121,7 @@ class SimpleController extends Controller
 			if($new->save())
                         {
 			$version=Version::model()->getNextNumber($project, 18, 2,$new->primaryKey,$new->simple_id);
-                        $this->redirect(array('/category/view/id/'.$model->category_id));
+                        $this->redirect(('/req/category/view/id/'.$model->category_id));
                         }        
 		}
 
@@ -144,7 +144,7 @@ class SimpleController extends Controller
             $model->save();
             Simple::model()->Renumber($model->category_id);
      
-            $this->redirect(array('/category/view/id/'.$model->category_id));
+            $this->redirect(('/req/category/view/id/'.$model->category_id));
             
             
             }
@@ -178,7 +178,7 @@ class SimpleController extends Controller
           
           
            
-          $this->redirect(array('/category/view/id/'.$model->category_id));
+          $this->redirect(('/req/category/view/id/'.$model->category_id));
 	
 	}
         

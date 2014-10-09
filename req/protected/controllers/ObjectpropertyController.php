@@ -91,7 +91,7 @@ class ObjectpropertyController extends Controller
                     if($model->save())
                     {
                      $version=Version::model()->getNextNumber($project,7,1,$model->primaryKey,$model->objectproperty_id);   
-                     $this->redirect(array('/object/view/id/'.$model->object_id));
+                     $this->redirect(('/req/object/view/id/'.$model->object_id));
 		    }
                         
                 }
@@ -124,7 +124,7 @@ class ObjectpropertyController extends Controller
 			if($new->save())
                         {
 			$version=Version::model()->getNextNumber($project, 7, 2,$new->primaryKey,$new->objectproperty_id);
-                        $this->redirect(array('/object/view/id/'.$model->object_id));
+                        $this->redirect(('/req/object/view/id/'.$model->object_id));
                         }        
 		}
 
@@ -146,7 +146,7 @@ class ObjectpropertyController extends Controller
 	    //$model->active=0;
             $model->save();
             Objectproperty::model()->renumber($model->object_id);
-            $this->redirect(array('/object/view/id/'.$model->object_id));
+            $this->redirect(('/req/object/view/id/'.$model->object_id));
             
             }
 
@@ -191,7 +191,7 @@ class ObjectpropertyController extends Controller
           
           
            
-          $this->redirect(array('/object/view/id/'.$model->object_id));
+          $this->redirect(('/req/object/view/id/'.$model->object_id));
 	
 	}
         

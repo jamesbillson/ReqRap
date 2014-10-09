@@ -61,7 +61,7 @@ public function actionSet($id)
         Yii::App()->session['release']=$id;
         $release=Release::model()->findbyPK($id);
         Yii::App()->session['project']=$release->project->id;
-         $this->redirect(array('/req/project/view/tab/usecases/'));
+         $this->redirect(('/req/project/view/tab/usecases/'));
 	}
 
  public function actionSetCurrent()
@@ -90,7 +90,7 @@ public function actionSet($id)
         $id=Release::model()->currentRelease();
         Yii::App()->session['release']=$release_id;
         Yii::app()->session['setting_tab']='details';
-        $this->redirect(array('/req/project/project/'));
+        $this->redirect(('/req/project/project/'));
         
          
 	}
@@ -147,7 +147,7 @@ $release->offset=$model->offset;
          // set project to the new  release.
          Yii::App()->session['release']=$model->id;
          Yii::App()->session['project']=$model->project_id;
-         $this->redirect(array('/req/project/project/'));
+         $this->redirect(('/req/project/project/'));
         	
 	}
         
@@ -198,7 +198,7 @@ $library=  Release::model()->findbyPK($id);
          
             // echo '<a href="/project/myrequirements">projects</a>';
 	
-        		$this->redirect(array('/req/project/myrequirements'));
+        		$this->redirect(('/req/project/myrequirements'));
              
 	}
         
@@ -246,7 +246,7 @@ $library=  Release::model()->findbyPK($id);
             
         Package::model()->Renumber();
         Usecase::model()->Renumber();
-        $this->redirect(array('/req/project/view/tab/usecases'));
+        $this->redirect(('/req/project/view/tab/usecases'));
         }
         
         

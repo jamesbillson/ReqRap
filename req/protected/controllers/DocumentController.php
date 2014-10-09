@@ -113,7 +113,7 @@ class DocumentController extends Controller
                     
                     if($version->save()){
                         $uploadFile->saveAs(Yii::getPathOfAlias("webroot").'/uploads/'.$uniNameFile);
-                        $this->redirect(array('/project/view','id'=>$project->id,'tab'=>'documents'));
+                        $this->redirect(('/req/project/view','id'=>$project->id,'tab'=>'documents'));
                         return;
                     }
                 }
@@ -138,7 +138,7 @@ class DocumentController extends Controller
         {
             $model->attributes=$_POST['Document'];
             if($model->save())
-                $this->redirect(array('view','id'=>$model->id));
+                $this->redirect(('/req/view','id'=>$model->id));
         }
 
         $this->render('update',array(
@@ -163,7 +163,7 @@ class DocumentController extends Controller
      public function actionRemove($id,$project)
     {
         $this->loadModel($id)->delete();
-        $this->redirect(array('/project/view','id'=>$project,'tab'=>'documents'));
+        $this->redirect(('/req/project/view','id'=>$project,'tab'=>'documents'));
     }
     
     

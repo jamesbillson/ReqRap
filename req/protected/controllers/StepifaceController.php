@@ -99,7 +99,7 @@ class StepifaceController extends Controller
                 
                 if($model->save()){
                     Version::model()->getNextNumber($project,15,1,$model->primaryKey,$model->stepiface_id);
-                $this->redirect(array('/iface/view/id/'.$model->iface_id));
+                $this->redirect(('/req/iface/view/id/'.$model->iface_id));
                  }
                  
                 }
@@ -151,7 +151,7 @@ class StepifaceController extends Controller
           
              $step = Step::model()->with('flow')->findByPk($_POST['step_db_id']);
              
-             $this->redirect(array('/step/update/id/'.$step->id.'/flow/'.$step->flow->id));
+             $this->redirect(('/req/step/update/id/'.$step->id.'/flow/'.$step->flow->id));
 		
 	}
         
@@ -175,7 +175,7 @@ class StepifaceController extends Controller
                         if($new->save())
 			$version=Version::model()->getNextNumber($project->id,2,15,$model->id,$model->stepiface_id);
                 
-                        $this->redirect(array('view','id'=>$model->step_id));
+                        $this->redirect(('view','id'=>$model->step_id));
                         
 		}
 
@@ -191,7 +191,7 @@ class StepifaceController extends Controller
             $project=Yii::App()->session['project'];
             $model=Stepiface::model()->findByPK($id);
             $version=Version::model()->getNextNumber($project,15,3,$model->id,$model->stepiface_id);
-            $this->redirect(array('/usecase/view/id/'.$ucid));
+            $this->redirect(('/req/usecase/view/id/'.$ucid));
                 
 	} 
 
@@ -207,7 +207,7 @@ class StepifaceController extends Controller
                $version=Version::model()->getNextNumber($project,15,3,$model->id,$model->stepiface_id);
     
                
-$this->redirect(array('/step/update/flow/'.$flow['id'].'/id/'.$step['id']));
+$this->redirect(('/req/step/update/flow/'.$flow['id'].'/id/'.$step['id']));
                 
 	}
         

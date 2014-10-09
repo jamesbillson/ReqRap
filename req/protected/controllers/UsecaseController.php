@@ -128,7 +128,7 @@ class UsecaseController extends Controller
                           $step->save(false);
                           // make version
                           $version=Version::model()->getNextNumber($project,9,1,$step->primaryKey,$step->step_id);
-			$this->redirect(array('/project/view/tab/usecases/'));
+			$this->redirect(('/req/project/view/tab/usecases/'));
                 }}
 
 		$this->render('create',array(
@@ -165,7 +165,7 @@ class UsecaseController extends Controller
                  $new->release_id=$release;	
                  if($new->save()){
                       $version=Version::model()->getNextNumber($project,10,2,$new->primaryKey,$new->usecase_id);   
-                      $this->redirect(array('/usecase/view/id/'.$new->usecase_id));
+                      $this->redirect(('/req/usecase/view/id/'.$new->usecase_id));
                  }
 				
 		}
@@ -233,7 +233,7 @@ class UsecaseController extends Controller
                  
                 if($new->save()){
                       $version=Version::model()->getNextNumber($project,10,2,$new->primaryKey,$new->usecase_id);   
-                      $this->redirect(array('/usecase/view/id/'.$new->usecase_id));
+                      $this->redirect(('/req/usecase/view/id/'.$new->usecase_id));
                  }
                 }}
              $this->render('packchange',array(
@@ -297,7 +297,7 @@ class UsecaseController extends Controller
             // save them both
             
           
-		$this->redirect(array('/project/view/'));
+		$this->redirect(('/req/project/view/'));
 	
 	}
         
@@ -313,7 +313,7 @@ class UsecaseController extends Controller
         $model = $this->loadModel($id);
         $version=Version::model()->getNextNumber($project,10,3,$model->id,$model->usecase_id);  
 	Usecase::model()->Renumber();
-      	$this->redirect(array('/project/view/'));
+      	$this->redirect(('/req/project/view/'));
 	}
 
         public function actionRollback($uc,$id)
@@ -405,7 +405,7 @@ class UsecaseController extends Controller
         
         
         
-     	$this->redirect(array('/usecase/history/id/'.$uc));
+     	$this->redirect(('/req/usecase/history/id/'.$uc));
         }
         
         
@@ -451,7 +451,7 @@ class UsecaseController extends Controller
           $follower=Follower::model()->getProjectFollowerDetails($thisrelease->project->id);
           if(!empty($follower)) $permissiontoview=1;
               }
-          if ($permissiontoview==0)$this->redirect(array('site/fail/condition/permission_fail'));
+          if ($permissiontoview==0)$this->redirect(array('/req/site/fail/condition/permission_fail'));
          
           
           

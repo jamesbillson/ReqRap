@@ -69,13 +69,13 @@ public function actionCreate($id)
                    $model->release_id=$release;
                     if($model->save())
                     {
-                    if($model->object == 0) $this->redirect(array('/req/project/view/tab/usecases'));    
+                    if($model->object == 0) $this->redirect(('/req/project/view/tab/usecases'));    
                         if($model->object >0) {
                             if($model->instance == 0) 
                             {    
-                            $this->redirect(array('/req/project/view/tab/'.Version::$objects[$model->object].'s'));
+                            $this->redirect(('/req/project/view/tab/'.Version::$objects[$model->object].'s'));
                             } 
-                        $this->redirect(array('/req/'.Version::$objects[$model->object].'/view/id/'.$model->instance));
+                        $this->redirect(('/req/'.Version::$objects[$model->object].'/view/id/'.$model->instance));
                         }
                     
                     }

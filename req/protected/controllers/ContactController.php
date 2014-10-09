@@ -109,7 +109,7 @@ class ContactController extends Controller
                             $this->render('update',compact('model','newCompany','addresses','address'));                        
                     }
                 } 
-                $this->redirect(array('/req/contact/mycontacts'));
+                $this->redirect(('/req/contact/mycontacts'));
             }
         }
 
@@ -173,7 +173,7 @@ class ContactController extends Controller
                     }
 
                 } 
-                $this->redirect(array('/req/contact/mycontacts'));
+                $this->redirect(('/req/contact/mycontacts'));
             }
         }
 

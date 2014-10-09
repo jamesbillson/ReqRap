@@ -94,7 +94,7 @@ class StepController extends Controller
                 $version=Version::model()->getNextNumber($project,9,1,$model->getPrimaryKey(),$model->step_id);   
                      
 		
-		$this->redirect(array('/step/update/flow/'.$model->flow_id.'/id/'.$model->id));
+		$this->redirect(('/req/step/update/flow/'.$model->flow_id.'/id/'.$model->id));
 		
 	}
 
@@ -126,7 +126,7 @@ class StepController extends Controller
                 $version=Version::model()->getNextNumber($project,9,1,$model->getPrimaryKey(),$model->step_id);   
                      
 		$this->renumberSteps($flow->id);
-		$this->redirect(array('/step/update/flow/'.$model->flow_id.'/id/'.$model->id));
+		$this->redirect(('/req/step/update/flow/'.$model->flow_id.'/id/'.$model->id));
 		
 		
 	}
@@ -196,7 +196,7 @@ public function actionUpdate($flow,$id)
                         $new->result = Version::model()->wikiInput($new->result,9,$newid);
                         $new->save();
 
-                        $this->redirect(array('/step/update/flow/'.$model->id.'/id/-1'));
+                        $this->redirect(('/req/step/update/flow/'.$model->id.'/id/-1'));
                         
                         }        
                     
@@ -248,11 +248,11 @@ public function actionUpdate($flow,$id)
             
             
              $this->renumberFlows($usecase_id);
-             $this->redirect(array('/usecase/view/id/'.$usecase_id));
+             $this->redirect(('/req/usecase/view/id/'.$usecase_id));
              }
              Step::model()->reNumber($flow_id);
             //echo 'renumbering flow '.$flow_id;
-            $this->redirect(array('/step/update/flow/'.$fid.'/id/-1'));
+            $this->redirect(('/req/step/update/flow/'.$fid.'/id/-1'));
 		
 	}
 

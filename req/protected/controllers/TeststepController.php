@@ -72,7 +72,7 @@ class TeststepController extends Controller
                             $teststep->result='Result.';
                             $teststep->save();
                   
-                            $this->redirect(array('/testcase/view/id/'.$id));
+                            $this->redirect(('/req/testcase/view/id/'.$id));
                         
 	}
 
@@ -92,7 +92,7 @@ class TeststepController extends Controller
 		{
 			$model->attributes=$_POST['Teststep'];
 			if($model->save())
-				$this->redirect(array('/testcase/view','id'=>$model->testcase_id));
+				$this->redirect(('/req/testcase/view','id'=>$model->testcase_id));
 		}
 
 		$this->render('update',array(
@@ -111,7 +111,7 @@ class TeststepController extends Controller
         $testcase_id=$model->testcase_id;
         $model->delete();
 
-		    $this->redirect(array('/testcase/view/id/'.$testcase_id));
+		    $this->redirect(('/req/testcase/view/id/'.$testcase_id));
                 }
 
 	/**

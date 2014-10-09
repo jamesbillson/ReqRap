@@ -92,7 +92,7 @@ class DocumentversionController extends Controller
                 if($model->save()){
                     $uploadFile->saveAs(Yii::getPathOfAlias("webroot").'/uploads/'.$uniNameFile);
                     if ($_POST['Documentversion']['notify']='on') Follower::model()->sendNewDocumentNotification($model->document->project->id);
-                    $this->redirect(array('/req/project/view','id'=>$model->document->project->id,'tab'=>'documents'));
+                    $this->redirect(('/req/project/view','id'=>$model->document->project->id,'tab'=>'documents'));
                     }
             }
 

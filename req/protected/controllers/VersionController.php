@@ -100,7 +100,7 @@ class VersionController extends Controller
 		{
 			$model->attributes=$_POST['Version'];
 			if($model->save())
-				$this->redirect(array('view','id'=>$model->id));
+				$this->redirect(('/req/view','id'=>$model->id));
 		}
 
 		$this->render('update',array(
@@ -129,7 +129,7 @@ class VersionController extends Controller
 
 		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
 		if(!isset($_GET['ajax']))
-			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
+			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : '/req/admin/');
 	}
 
                 public function actionLink($link)
@@ -147,11 +147,11 @@ class VersionController extends Controller
           if ($thisrelease->project->company_id==$mycompany)$permissiontoview=1;
           $follower=Follower::model()->getProjectFollowerDetails($thisrelease->project->id);
           if(!empty($follower)) $permissiontoview=1;
-          if ($permissiontoview==0)$this->redirect(array('/req/site/fail/condition/permission_fail'));
+          if ($permissiontoview==0)$this->redirect(('/req/site/fail/condition/permission_fail'));
           
           Yii::App()->session['release']=$release;
          
-          $this->redirect(array('/req'.Version::$objects[$object].'/view/id/'.$object_id));
+          $this->redirect(('/req'.Version::$objects[$object].'/view/id/'.$object_id));
         }
         
                 public function actionRollBack($id)
@@ -162,7 +162,7 @@ class VersionController extends Controller
          $object_id=$model->foreign_id;
          if (Version::$display[$model->object]['parent'] !='none') $object_id=Version::model()->getParent($model->object, $id);
          $url=str_replace('#', $object_id, $url);
-        $this->redirect(array($url));
+        $this->redirect(('/req/'.$url));
         }
 	        public function actionRenumber($object,$id)
 	{
@@ -176,7 +176,7 @@ class VersionController extends Controller
          $object_id=$model->foreign_id;
          if (Version::$display[$model->object]['parent'] !='none') $object_id=Version::model()->getParent($model->object, $id);
          $url=str_replace('#', $object_id, $url);
-        $this->redirect(array($url));
+        $this->redirect(('/req/'.$url));
         }
         
               public function actionMove($dir, $id, $object) //down 1, up 2
@@ -224,7 +224,7 @@ class VersionController extends Controller
          if (Version::$display[$object]['parent'] !='project') 
              $url=str_replace('#', $object_id, $url);
          // redirect to the url
-         $this->redirect(array($url));
+         $this->redirect(('/req/'.$url));
          
          // $this->redirect(array('/category/view/id/'.$model->category_id));
 	

@@ -98,7 +98,7 @@ class CountriesController extends Controller
 		{
 			$model->attributes=$_POST['Countries'];
 			if($model->save())
-				$this->redirect(array('view','id'=>$model->id));
+				$this->redirect(('view','id'=>$model->id));
 		}
 
 		$this->render('update',array(

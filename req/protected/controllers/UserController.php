@@ -110,7 +110,7 @@ class UserController extends Controller
         {
             $model->attributes=$_POST['User'];
             if($model->save())
-                $this->redirect(array('view','id'=>$model->id));
+                $this->redirect(('/req/view','id'=>$model->id));
         }
 
         $this->render('create',array(
@@ -272,12 +272,12 @@ class UserController extends Controller
             $identity->errorCode = UserIdentity::ERROR_NONE;
             Yii::app()->user->login($identity, (Yii::app()->params['loggedInDays'] * 60 * 60 * 24 ));
 
-            $this->redirect(array('/req/company/mycreate'));
+            $this->redirect(('/req/company/mycreate'));
             //return;
           //}
         }
       }
-      $this->redirect(array('/req/site/fail'));
+      $this->redirect(('/req/site/fail'));
     }
 
       public function actionReInvite($id)
@@ -291,7 +291,7 @@ class UserController extends Controller
             //go back to the original follow object screen
             //pick the object from an array by the index.
             Yii::app()->user->setFlash('success', "Invite Sent.");
-        $this->redirect(array('/req/company/mycompany'));
+        $this->redirect(('/req/company/mycompany'));
                 
     }
     
@@ -309,7 +309,7 @@ class UserController extends Controller
             Yii::app()->user->login($identity, (Yii::app()->params['loggedInDays'] * 60 * 60 * 24 ));
                        
             
-   $this->redirect(array('/req/company/mycompany'));
+   $this->redirect(('/req/company/mycompany'));
         }
             
     }
@@ -359,7 +359,7 @@ class UserController extends Controller
                 
                 
                 
-                $this->redirect(array('/req/company/mycompany'));
+                $this->redirect(('/req/company/mycompany'));
             }
            
         }
@@ -378,7 +378,7 @@ class UserController extends Controller
         //check the uuencoded password string.
         $salt = urldecode($id); 
         $model = User::model()->find("salt = '".$salt."'");
-        if (!isset($model->id))  $this->redirect(array('/req/site/fail/nomatch'));
+        if (!isset($model->id))  $this->redirect(('/req/site/fail/nomatch'));
         // there is a matching user.
         // model loads the existing user
         //$model=$this->loadModel($newaccount->id);
@@ -401,7 +401,7 @@ class UserController extends Controller
             $identity->errorCode = UserIdentity::ERROR_NONE;
             Yii::app()->user->login($identity, (Yii::app()->params['loggedInDays'] * 60 * 60 * 24 ));
             
-            $this->redirect(array('/req/company/mycompany'));      
+            $this->redirect(('/req/company/mycompany'));      
         }
         
             }
@@ -440,7 +440,7 @@ class UserController extends Controller
                 $model->attributes=$_POST['User'];
                 $model->password = $_POST['User']['password'];
                 if($model->save())
-                    $this->redirect(array('view','id'=>$model->id));
+                    $this->redirect(('/req/view','id'=>$model->id));
             }
         }
 
@@ -460,7 +460,7 @@ class UserController extends Controller
        $model=$this->loadModel($id);
        $model->admin=1;
 	if($model->save())
-	$this->redirect(array('/req/company/mycompany'));
+	$this->redirect(('/req/company/mycompany'));
 		
        }
 		
@@ -472,7 +472,7 @@ class UserController extends Controller
        $model=$this->loadModel($id);
        $model->admin=0;
 	if($model->save())
-		$this->redirect(array('/req/company/mycompany'));
+		$this->redirect(('/req/company/mycompany'));
 		
        }
 
@@ -486,7 +486,7 @@ class UserController extends Controller
        $model=$this->loadModel($id);
        $model->company_id=0;
 	if($model->save())
-		$this->redirect(array('/req/company/mycompany'));
+		$this->redirect(('/req/company/mycompany'));
 		
        }
 
@@ -503,7 +503,7 @@ class UserController extends Controller
 
         // if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
         if(!isset($_GET['ajax']))
-            $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
+            $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : '/req/admin');
     }
 
     /**

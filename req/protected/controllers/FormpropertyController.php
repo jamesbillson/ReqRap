@@ -94,7 +94,7 @@ class FormpropertyController extends Controller
                     {
                    
                      $version=Version::model()->getNextNumber($project,3,1,$model->primaryKey,$model->formproperty_id);   
-                     $this->redirect(array('/req/form/view/id/'.$model->form_id));
+                     $this->redirect(('/req/form/view/id/'.$model->form_id));
 		    }
                         
                 }
@@ -125,7 +125,7 @@ class FormpropertyController extends Controller
 			if($new->save())
                         {
 			$version=Version::model()->getNextNumber($project, 3, 2,$new->primaryKey,$model->formproperty_id);
-                       $this->redirect(array('/req/form/view/id/'.$model->form_id));
+                       $this->redirect(('/req/form/view/id/'.$model->form_id));
                         
                         }        
 		}
@@ -144,7 +144,7 @@ class FormpropertyController extends Controller
             $version=Version::model()->getNextNumber($project,3,3,$id,$model->formproperty_id);  
             $model->save();
             Formproperty::model()->renumber($model->form_id);
-            $this->redirect(array('/req/form/view/id/'.$model->form_id));
+            $this->redirect(('/req/form/view/id/'.$model->form_id));
             
             }
 
@@ -153,7 +153,7 @@ class FormpropertyController extends Controller
 	 $model=$this->loadModel($id);
          $formproperty=$model->formproperty_id;
          Formproperty::model()->rollback($model->formproperty_id, $id);
-         $this->redirect(array('/req/formproperty/view/id/'.$formproperty));
+         $this->redirect(('/req/formproperty/view/id/'.$formproperty));
         }
         
 	public function actionIndex()
@@ -194,7 +194,7 @@ class FormpropertyController extends Controller
           
           
            
-          $this->redirect(array('/req/form/view/id/'.$model->form_id));
+          $this->redirect(('/req/form/view/id/'.$model->form_id));
 	
 	}
         

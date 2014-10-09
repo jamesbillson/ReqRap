@@ -106,7 +106,7 @@ class Users_metaController extends Controller
 	{
 	        $link =  explode("_", $id);     
                
-		$this->redirect(array('/req'.Version::$objects[$link[0]].'/view/id/'.$link[1]));
+		$this->redirect(('/req'.Version::$objects[$link[0]].'/view/id/'.$link[1]));
 		
 	}
 
@@ -122,7 +122,7 @@ class Users_metaController extends Controller
 
 		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
 		if(!isset($_GET['ajax']))
-			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
+			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : '/req/admin');
 	}
 
                 public function actionRollBack($id)
@@ -133,7 +133,7 @@ class Users_metaController extends Controller
          $object_id=$model->foreign_id;
          if (Version::$display[$model->object]['parent'] !='none') $object_id=Version::model()->getParent($model->object, $id);
          $url=str_replace('#', $object_id, $url);
-        $this->redirect(array($url));
+        $this->redirect(('/req/'.$url));
         }
 	        public function actionRenumber($object,$id)
 	{
@@ -147,7 +147,7 @@ class Users_metaController extends Controller
          $object_id=$model->foreign_id;
          if (Version::$display[$model->object]['parent'] !='none') $object_id=Version::model()->getParent($model->object, $id);
          $url=str_replace('#', $object_id, $url);
-        $this->redirect(array($url));
+        $this->redirect(('/req/'.$url));
         }
         
               public function actionMove($dir, $id, $object) //down 1, up 2
@@ -195,7 +195,7 @@ class Users_metaController extends Controller
          if (Version::$display[$object]['parent'] !='project') 
              $url=str_replace('#', $object_id, $url);
          // redirect to the url
-         $this->redirect(array($url));
+         $this->redirect(('/req/'.$url));
          
          // $this->redirect(array('/category/view/id/'.$model->category_id));
 	

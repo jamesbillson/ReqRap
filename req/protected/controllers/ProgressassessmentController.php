@@ -90,7 +90,7 @@ class ProgressassessmentController extends Controller
                 $model->date=date('y-m-d',time());
 		if($model->save())
                 {
-		$this->redirect(array('/req/boqitem/boq','id'=>$_POST['project']));
+		$this->redirect(('/req/boqitem/boq','id'=>$_POST['project']));
                 }
                 echo ' Failed: claim_id '.$model->claim_id;
                 echo '<br />amount '.$model->amount;

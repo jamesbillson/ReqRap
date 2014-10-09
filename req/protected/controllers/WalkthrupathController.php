@@ -86,9 +86,9 @@ class WalkthrupathController extends Controller
                         $newresult->user_id=Yii::App()->user->id;
                         $newresult->walkthrupath_id=$_POST['id'] ;
 			if($newresult->save())
-			$this->redirect(array('/walkthrupath/view','id'=>$_POST['id']));
+			$this->redirect(('/req/walkthrupath/view','id'=>$_POST['id']));
 		}
-	$this->redirect(array('/project/walkthru/'));
+	$this->redirect(('/req/project/walkthru/'));
 	}
 
 	public function actionCreate($id)
@@ -106,7 +106,7 @@ class WalkthrupathController extends Controller
                 }
             }
             
-          $this->redirect(array('/project/walkthru/'));
+          $this->redirect(('/req/project/walkthru/'));
             
 	}
 
@@ -158,7 +158,7 @@ if (!empty($mainflow)){
              } ELSE 
                  {
                         // The case hasn't saved 
-                    $this->redirect(array('/site/fail'));
+                    $this->redirect(('/req/site/fail'));
                 }
             
  }             
@@ -261,7 +261,7 @@ if (!empty($all_flows[$i])){
                          
                     } ELSE {
                 // The case hasn't saved  
-                   $this->redirect(array('/site/fail'));
+                   $this->redirect(('/req/site/fail'));
                    //echo 'walkthrough not saved';
                     }
                 }
@@ -368,7 +368,7 @@ if (!empty($all_flows[$i])){
          
                 $model->delete();
                
-                $this->redirect(array('/project/project/'));
+                $this->redirect(('/req/project/project/'));
 	}
 
 	/**

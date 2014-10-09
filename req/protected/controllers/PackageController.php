@@ -108,7 +108,7 @@ class PackageController extends Controller
             $model2->number=$oldnum;
             $model->save(false);
             $model2->save(false);
-            $this->redirect(array('/req/project/view/tab/usecases'));
+            $this->redirect(('/req/project/view/tab/usecases'));
 	
 	}
         
@@ -133,7 +133,7 @@ class PackageController extends Controller
                     if($model->save())
                     {
                      $version=Version::model()->getNextNumber($project,5,1,$model->primaryKey,$model->package_id);   
-                     $this->redirect(array('/req/project/view/tab/usecases'));
+                     $this->redirect(('/req/project/view/tab/usecases'));
 		    }
                         
                 }
@@ -170,7 +170,7 @@ class PackageController extends Controller
                         {
 			$version=Version::model()->getNextNumber($project, 5, 2,$new->primaryKey,$model->package_id);
                            
-                         $this->redirect(array('/req/project/view/tab/usecases/'));
+                         $this->redirect(('/req/project/view/tab/usecases/'));
                          }        
 		}
 
@@ -190,7 +190,7 @@ public function actionDelete($id)
             $model=$this->loadModel($id);
             $version=Version::model()->getNextNumber($project,5,3,$id,$model->package_id);  
             $model->save();
-             $this->redirect(array('/req/project/view/tab/usecases/'));
+             $this->redirect(('/req/project/view/tab/usecases/'));
             }
         
         
