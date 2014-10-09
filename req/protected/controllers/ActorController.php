@@ -95,7 +95,7 @@ class ActorController extends Controller
                     if($model->save())
                     {
                      $version=Version::model()->getNextNumber($id,4,1,$model->primaryKey,$model->actor_id);   
-                     $this->redirect(array('/req/project/view/tab/actors/id/'.$id));
+                     $this->redirect(('/req/project/view/tab/actors/id/'.$id));
 		    }
                         
                 }
@@ -130,7 +130,7 @@ class ActorController extends Controller
 			if($new->save())
                         {
 			$version=Version::model()->getNextNumber($model->project_id, 4, 2,$new->primaryKey,$model->actor_id);
-                        $this->redirect(array('/req/project/view/tab/actors/'));
+                        $this->redirect(('/req/project/view/tab/actors/'));
                         }        
 		}
 
@@ -142,7 +142,7 @@ class ActorController extends Controller
 	{
 	$release=Yii::App()->session['release'];
         Version::model()->rollback($object_id,4,$versionid);
-        $this->redirect(array('/req/rules/view/id/'.$object_id));
+        $this->redirect(('/req/rules/view/id/'.$object_id));
         }
 
       
@@ -165,14 +165,14 @@ public function actionDelete($id)
             
             $version=Version::model()->getNextNumber($model->project_id,4,3,$id,$model->actor_id);  
             $model->save();
-            $this->redirect(array('/req/project/view/tab/actors'));
+            $this->redirect(('/req/project/view/tab/actors'));
             //echo 'deleted number is '.$number;
             
             //echo  'number steps '.count($actor_step).'number defaults '.count($default_actor);
             
             //break;
             } ELSE {
-              $this->redirect(array('/req/actor/view/id/'.$model->actor_id));
+              $this->redirect(('/req/actor/view/id/'.$model->actor_id));
               
             }
 

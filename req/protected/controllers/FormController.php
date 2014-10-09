@@ -99,7 +99,7 @@ class FormController extends Controller
                     {
                       
                      $version=Version::model()->getNextNumber($id,2,1,$model->primaryKey,$model->form_id);   
-                     $this->redirect(array('/project/view/tab/forms/id/'.$id));
+                     $this->redirect(('/req/project/view/tab/forms/id/'.$id));
 		    }
                         
                 }
@@ -137,7 +137,7 @@ class FormController extends Controller
 			if($new->save())
                         {
 			$version=Version::model()->getNextNumber($project, 2, 2,$new->primaryKey,$model->form_id);
-                        $this->redirect(array('/project/view/tab/forms/id/'.$project));
+                        $this->redirect(('/req/project/view/tab/forms/id/'.$project));
                         }        
 		}
 
@@ -157,7 +157,7 @@ public function actionDelete($id)
             $model=$this->loadModel($id);
             $version=Version::model()->getNextNumber($model->project_id,2,3,$id,$model->form_id);  
 	    $model->save();
-            $this->redirect(array('/project/view/tab/forms/id/'.$model->project_id));
+            $this->redirect(('/req/project/view/tab/forms/id/'.$model->project_id));
             
             }
 

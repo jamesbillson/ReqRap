@@ -82,7 +82,7 @@ class ObjectController extends Controller
                     if($model->save())
                     {
                      $version=Version::model()->getNextNumber($project,6,1,$model->primaryKey,$model->object_id);   
-                     $this->redirect(array('/req/project/view/'));
+                     $this->redirect('/req/project/view/');
 		    }
                         
                 }
@@ -113,7 +113,7 @@ class ObjectController extends Controller
 			if($new->save())
                         {
 			$version=Version::model()->getNextNumber($project, 6, 2,$new->primaryKey,$model->object_id);
-                        $this->redirect(array('/req/project/view/'));
+                        $this->redirect('/req/project/view/');
                         }        
 		}
 
@@ -178,7 +178,7 @@ class ObjectController extends Controller
               
                  
                   
-                $this->redirect(array('/req/project/view/tab/forms'));        
+                $this->redirect('/req/project/view/tab/forms');        
             
 	}
 
@@ -198,7 +198,7 @@ public function actionDelete($id)
             $version=Version::model()->getNextNumber($model->project_id,6,3,$id,$model->object_id); 
             
             $model->save();
-            $this->redirect(array('/req/project/view/tab/objects/id/'.$model->project_id));
+            $this->redirect('/req/project/view/tab/objects/id/'.$model->project_id);
             
             }
 

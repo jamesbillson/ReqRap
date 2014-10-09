@@ -82,7 +82,7 @@ class CategoryController extends Controller
                     if($model->save())
                     {
                      $version=Version::model()->getNextNumber($project,17,1,$model->primaryKey,$model->category_id);   
-                     $this->redirect(array('/req/project/view/tab/category/id/'.$project));
+                     $this->redirect('/req/project/view/tab/category/id/'.$project);
 		    }
                         
                 }
@@ -116,7 +116,7 @@ class CategoryController extends Controller
 			if($new->save())
                         {
 			$version=Version::model()->getNextNumber($project, 17, 2,$new->primaryKey,$model->category_id);
-                        $this->redirect(array('/req/project/view/tab/category/id/'.$model->project_id));
+                        $this->redirect('/req/project/view/tab/category/id/'.$model->project_id);
                         }        
 		}
 
@@ -141,7 +141,7 @@ class CategoryController extends Controller
 			if($new->save())
                         {
 			$version=Version::model()->getNextNumber($project, 17, 2,$new->primaryKey,$model->category_id);
-                        $this->redirect(array('/req/project/view/tab/details/id/'.$model->project_id));
+                        $this->redirect('/req/project/view/tab/details/id/'.$model->project_id);
                         }        
 		
 
@@ -169,7 +169,7 @@ class CategoryController extends Controller
 			if($new->save())
                         {
 			$version=Version::model()->getNextNumber($project, 17, 2,$new->primaryKey,$model->category_id);
-                        $this->redirect(array('/req/project/view/tab/details/id/'.$model->project_id));
+                        $this->redirect('/req/project/view/tab/details/id/'.$model->project_id);
                         }        
 		
 		$this->render('update',array(
@@ -188,7 +188,7 @@ public function actionDelete($id)
             $version=Version::model()->getNextNumber($model->project_id,17,3,$id,$model->category_id); 
             
             $model->save();
-            $this->redirect(array('/req/project/view/tab/category/id/'.$model->project_id));
+            $this->redirect('/req/project/view/tab/category/id/'.$model->project_id);
             
             }
 

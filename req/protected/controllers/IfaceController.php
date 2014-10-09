@@ -60,7 +60,7 @@ class IfaceController extends Controller
             if(isset($versions[0]['id'])) {
                 $model=$this->loadModel($versions[0]['id']);
             } ELSE {
-                $this->redirect(array('/req/site/fail/no_object'));
+                $this->redirect(('/req/site/fail/no_object'));
             }
                 //need to load other models here and pass them
                 $types=  Interfacetype::model()->getInterfaceTypes();
@@ -117,7 +117,7 @@ class IfaceController extends Controller
                      $version=Version::model()->getNextNumber($project,12,1,$model->primaryKey,$model->iface_id);   
                    
                 
-                    	$this->redirect(array('/req/project/view/'));
+                    	$this->redirect(('/req/project/view/'));
 		   } }
 
 		$this->render('create',array(
@@ -160,10 +160,10 @@ public function actionUpdate($ucid,$id)
                       $version=Version::model()->getNextNumber($project,12,2,$new->primaryKey,$new->iface_id);   
                       
                       if($uc=-1){
-                           $this->redirect(array('/req/iface/view/id/'.$new->iface_id)); 
+                           $this->redirect(('/req/iface/view/id/'.$new->iface_id)); 
                         }
                       ELSE {
-                        $this->redirect(array('/req/usecase/view/id/'.$uc));  
+                        $this->redirect(('/req/usecase/view/id/'.$uc));  
                           
                       }
                       
@@ -215,9 +215,9 @@ public function actionaddimage($iface, $id)
           Version::model()->getNextNumber($project,12,3,$id,$model->iface_id);  
 	       if($ucid!=-1) 
                {
-               $this->redirect(array('/req/usecase/view/id/'.$ucid));
+               $this->redirect(('/req/usecase/view/id/'.$ucid));
                } ELSE {
-               $this->redirect(array('/req/project/view/'));
+               $this->redirect(('/req/project/view/'));
                }
                
          }

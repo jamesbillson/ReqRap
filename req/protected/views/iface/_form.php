@@ -63,7 +63,7 @@
              </select>
             
         </div>
-        <a href="/interfacetype/projectview?id=<?php echo Yii::App()->session['project']; ?>">Edit Types</a>
+        <a href="<?php echo UrlHelper::getPrefixLink('/project/view?id=')?><?php echo Yii::App()->session['project']; ?>">Edit Types</a>
 	<div class="row">
 	
 		

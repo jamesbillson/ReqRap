@@ -15,13 +15,13 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
 		'type' => 'primary', // '', 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
 		'label'=> 'Add Rule',
              'visible'=> $edit,
-            'url'=>'/rule/create/type/0/id/'.$model->id,
+            'url'=>UrlHelper::getPrefixLink('/rule/create/type/0/id/'.$model->id),
 	),
 	 array(
         'class' => 'bootstrap.widgets.TbButton',
         'type'=>'link',
         'icon'=> 'question-sign',
-         'url'=>'/help/popview/scope/rules',
+         'url'=>UrlHelper::getPrefixLink('/help/popview/scope/rules'),
         'htmlOptions' => array('id' => 'popup',),
     ),
            
@@ -43,7 +43,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
 <?php if (count($data)):?>
         <?php foreach($data as $item) {?>
         <tr class="odd">  
-    <td> <a href="/rule/view/id/<?php echo $item['rule_id'];?>"> 
+    <td> <a href="<?php echo UrlHelper::getPrefixLink('/rule/view/id/') ?><?php echo $item['rule_id'];?>"> 
         BR-<?php echo str_pad($item['number'], 3, "0", STR_PAD_LEFT); ?> 
         </a> 
     </td>
@@ -71,9 +71,9 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
 
       <td>
            <?php if($edit){ ?>
-        <a href="/rule/update/id/<?php echo $item['id'];?>"><i class="icon-edit" rel="tooltip" title="Edit Details"></i></a> 
-        <a href="/rule/delete/id/<?php echo $item['id'];?>"><i class="icon-remove-sign text-error" rel="tooltip" title="Remove/Uninvite"></i></a> 
-       <a href="/rule/history/id/<?php echo $item['rule_id'];?>"><i class="icon-calendar" rel="tooltip" title="Version history"></i></a> 
+        <a href="<?php echo UrlHelper::getPrefixLink('/rule/update/id/') ?><?php echo $item['id'];?>"><i class="icon-edit" rel="tooltip" title="Edit Details"></i></a> 
+        <a href="<?php echo UrlHelper::getPrefixLink('/rule/delete/id/') ?><?php echo $item['id'];?>"><i class="icon-remove-sign text-error" rel="tooltip" title="Remove/Uninvite"></i></a> 
+       <a href="<?php echo UrlHelper::getPrefixLink('/rule/history/id/') ?><?php echo $item['rule_id'];?>"><i class="icon-calendar" rel="tooltip" title="Version history"></i></a> 
              
              <?php }  ?> 
         </td>
@@ -109,7 +109,7 @@ if (count($deleted)):?>
         <tbody>
         <?php foreach($deleted as $item) {?>
            <tr class="odd">  
-                <td> <a href="/rule/view/id/<?php echo $item['rule_id'];?>"> 
+                <td> <a href="<?php echo UrlHelper::getPrefixLink('/rule/view/id/') ?><?php echo $item['rule_id'];?>"> 
                 BR-<?php echo str_pad($item['number'], 3, "0", STR_PAD_LEFT); ?></a> 
                 </td>
    

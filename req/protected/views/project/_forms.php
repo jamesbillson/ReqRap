@@ -15,13 +15,13 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
         'type' => 'primary', // '', 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
         'label'=> 'Add Form',
          'visible'=> $edit,
-        'url'=>'/form/create/uc/-1/id/'.$model->id,
+        'url'=>UrlHelper::getPrefixLink('/form/create/uc/-1/id/'.$model->id),
     ),
      array(
         'class' => 'bootstrap.widgets.TbButton',
         'type'=>'link',
         'icon'=> 'question-sign',
-         'url'=>'/help/popview/scope/forms',
+         'url'=>UrlHelper::getPrefixLink('/help/popview/scope/forms'),
         'htmlOptions' => array('id' => 'popup',),
     ),
 ))); 
@@ -50,7 +50,7 @@ if (count($data)):?>
                 
                 <tr class="odd">  
                     <td>   
-                         <a href="/form/view/id/<?php echo $item['form_id'];?>">
+                         <a href="<?php echo UrlHelper::getPrefixLink('/form/view/id/') ?><?php echo $item['form_id'];?>">
                          UF-<?php echo str_pad($item['number'], 3, "0", STR_PAD_LEFT); ?> 
                     </a> 
                     </td>
@@ -74,9 +74,9 @@ if (count($data)):?>
                   
                     <td>
                           <?php if($edit){ ?>
-                        <a href="/form/update/id/<?php echo $item['id'];?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
-                        <a href="/form/delete/ucid/<?php echo $model->id;?>/type/2/id/<?php echo $item['id'];?>"><i class="icon-remove-sign text-error" rel="tooltip" title="Delete"></i></a> 
-                      <a href="/form/history/id/<?php echo $item['form_id'];?>"><i class="icon-calendar" rel="tooltip" title="History"></i></a> 
+                        <a href="<?php echo UrlHelper::getPrefixLink('/form/update/id/')?><?php echo $item['id'];?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
+                        <a href="<?php echo UrlHelper::getPrefixLink('/form/delete/ucid/') ?><?php echo $model->id;?>/type/2/id/<?php echo $item['id'];?>"><i class="icon-remove-sign text-error" rel="tooltip" title="Delete"></i></a> 
+                      <a href="<?php echo UrlHelper::getPrefixLink('/form/history/id/') ?><?php echo $item['form_id'];?>"><i class="icon-calendar" rel="tooltip" title="History"></i></a> 
                      <?php } ?>
                     </td>
                 </tr>
@@ -107,7 +107,7 @@ if (count($deleted)):?>
         <tbody>
         <?php foreach($deleted as $item) {?>
            <tr class="odd">  
-                <td> <a href="/form/history/id/<?php echo $item['form_id'];?>"> 
+                <td> <a href="<?php echo UrlHelper::getPrefixLink('/form/history/id/') ?><?php echo $item['form_id'];?>"> 
                 UF-<?php echo str_pad($item['number'], 3, "0", STR_PAD_LEFT); ?></a> 
                 </td>
    

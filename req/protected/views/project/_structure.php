@@ -64,10 +64,10 @@ $cats = Category::model()->getProjectCategory();
         </td>
         <td>
           <?php if($cat['order']>1){ ?>   
-         <a href="/category/up/id/<?php echo $cat['id'];?>"><i class="icon-arrow-up " rel="tooltip" title="Move this earlier"></i></a> 
+         <a href="<?php echo UrlHelper::getPrefixLink('/category/up/id/')?><?php echo $cat['id'];?>"><i class="icon-arrow-up " rel="tooltip" title="Move this earlier"></i></a> 
       <?php } ?>
          <?php if($cat['order']<6){?>   
-         <a href="/category/down/id/<?php echo $cat['id'];?>"><i class="icon-arrow-down " rel="tooltip" title="Move this later"></i></a> 
+         <a href="<?php echo UrlHelper::getPrefixLink('/category/down/id/')?><?php echo $cat['id'];?>"><i class="icon-arrow-down " rel="tooltip" title="Move this later"></i></a> 
            <?php } ?> 
         </td>
         </tr>

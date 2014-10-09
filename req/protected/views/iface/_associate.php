@@ -12,7 +12,7 @@ $stepid=-1;
 
     <div class="form">
     
-    <form method="POST" action="/stepiface/associate">
+    <form method="POST" action="<?php echo  UrlHelper::getPrefixLink('/stepiface/associate') ?>">
    	<div class="row">
             <p>Usecase</p>
             
@@ -20,7 +20,7 @@ $stepid=-1;
 			array('empty' => 'Select Usecase',
 			'ajax' => array(
 			'type'=>'POST', //request type
-			'url'=>CController::createUrl('/usecase/dynamicsteps'), //url to call.
+			'url'=>CController::createUrl(UrlHelper::getPrefixLink('/usecase/dynamicsteps')), //url to call.
 			'update'=>'#step_id', //selector to update
 			))); 
 	   if($ucid==-1)

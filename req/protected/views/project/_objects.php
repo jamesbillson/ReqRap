@@ -17,13 +17,13 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
         'type' => 'primary', // '', 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
         'label'=> 'Add Object',
          'visible'=> $edit,
-        'url'=>'/object/create/id/'.$model->id,
+        'url'=> UrlHelper::getPrefixLink('/object/create/id/').$model->id,
     ),
      array(
         'class' => 'bootstrap.widgets.TbButton',
         'type'=>'link',
         'icon'=> 'question-sign',
-         'url'=>'/help/popview/scope/objects',
+         'url'=> UrlHelper::getPrefixLink('/help/popview/scope/objects'),
         'htmlOptions' => array('id' => 'popup',),
     ),
 ))); 
@@ -47,7 +47,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                 <tr class="odd">  
                    
                     <td>
-                        <a href="/object/view/id/<?php echo $item['object_id'];?>">OB-<?php echo str_pad($item['number'], 3, "0", STR_PAD_LEFT); ?></a>
+                        <a href="<?php echo UrlHelper::getPrefixLink('/object/view/id/') ?><?php echo $item['object_id'];?>">OB-<?php echo str_pad($item['number'], 3, "0", STR_PAD_LEFT); ?></a>
                     </td>
                     <td>
                         <?php if(Version::model()->objectChildCount(7,$item['object_id'])==0)
@@ -61,22 +61,22 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                     </td>            
                     <td>
                          <?php if($edit){ ?>
-                        <a href="/object/update/id/<?php echo $item['id'];?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
-                        <a href="/object/delete?id=<?php echo $item['id'];?>"><i class="icon-remove-sign text-error" rel="tooltip" title="Delete"></i></a> 
-                        <a href="/object/convert/id/<?php echo $item['object_id'];?>"><i class="icon-list-alt" rel="tooltip" title="Make a Form for this Object"></i></a> 
+                        <a href="<?php echo UrlHelper::getPrefixLink('/object/update/id/') ?><?php echo $item['id'];?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
+                        <a href="<?php echo UrlHelper::getPrefixLink('/object/delete?id=') ?><?php echo $item['id'];?>"><i class="icon-remove-sign text-error" rel="tooltip" title="Delete"></i></a> 
+                        <a href="<?php echo UrlHelper::getPrefixLink('/object/convert/id/') ?><?php echo $item['object_id'];?>"><i class="icon-list-alt" rel="tooltip" title="Make a Form for this Object"></i></a> 
               
-                        <a href="/object/history/id/<?php echo $item['object_id'];?>"><i class="icon-calendar" rel="tooltip" title="Version history"></i></a> 
+                        <a href="<?php echo UrlHelper::getPrefixLink('/object/history/id/') ?><?php echo $item['object_id'];?>"><i class="icon-calendar" rel="tooltip" title="Version history"></i></a> 
                         
 
                             <?php if($counter!=0) { ?>
-                            <a href="/version/move/object/6/dir/2/id/<?php echo $item['id'];?>"><i class="icon-arrow-up" rel="tooltip" title="Move Up"></i></a> 
+                            <a href="<?php echo UrlHelper::getPrefixLink('/version/move/object/6/dir/2/id/') ?><?php echo $item['id'];?>"><i class="icon-arrow-up" rel="tooltip" title="Move Up"></i></a> 
                            
                             <?php } ELSEIF(count($data)>1) {?>   
                            
                             <i class="icon-flag" rel="tooltip" title="Start"></i>
                             <?php } ?>          
                             <?php if($counter!=count($data)-1) { ?>        
-                            <a href="/version/move/object/6/dir/1/id/<?php echo $item['id'];?>"><i class="icon-arrow-down" rel="tooltip" title="Move Down"></i></a> 
+                            <a href="<?php echo UrlHelper::getPrefixLink('/version/move/object/6/dir/1/id/') ?><?php echo $item['id'];?>"><i class="icon-arrow-down" rel="tooltip" title="Move Down"></i></a> 
                             <?php } ELSEIF(count($data)>1) {?>
                              <i class="icon-flag" rel="tooltip" title="End"></i>   
                             <?php } ?> 
@@ -111,7 +111,7 @@ if (count($deleted)):?>
         <tbody>
         <?php foreach($deleted as $item) {?>
            <tr class="odd">  
-                <td> <a href="/rule/view/id/<?php echo $item['object_id'];?>"> 
+                <td> <a href="<?php echo UrlHelper::getPrefixLink('/rule/view/id/') ?><?php echo $item['object_id'];?>"> 
                 OI-<?php echo str_pad($item['number'], 3, "0", STR_PAD_LEFT); ?></a> 
                 </td>
    

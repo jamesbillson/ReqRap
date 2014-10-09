@@ -15,13 +15,13 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
         'type' => 'primary', // '', 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
         'label'=> 'Add Actor',
          'visible'=> $edit,
-        'url'=>'/actor/create/id/'.$model->id,
+        'url'=> UrlHelper::getPrefixLink('/actor/create/id/'.$model->id),
     ),
     array(
         'class' => 'bootstrap.widgets.TbButton',
         'type'=>'link',
         'icon'=> 'question-sign',
-         'url'=>'/help/popview/scope/actors',
+         'url'=> UrlHelper::getPrefixLink('/help/popview/scope/actors'),
         'htmlOptions' => array('id' => 'popup',),
     ),
 ))); 
@@ -43,7 +43,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
             <?php foreach($data as $item):?>
                 <tr class="odd">  
                     <td>   
-                        <a href="/actor/view/id/<?php echo $item['actor_id'];?>">
+                        <a href="<?php echo UrlHelper::getPrefixLink('/actor/view/id/')?><?php echo $item['actor_id'];?>">
                             <?php echo $item['name'];?>
                         </a>
                     </td>
@@ -61,9 +61,9 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                   
                     <td>
                       <?php if($edit){ ?>
-                     <a href="/actor/update/id/<?php echo $item['id'];?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
-                     <a href="/actor/delete/id/<?php echo $item['id'];?>"><i class="icon-remove-sign text-error" rel="tooltip" title="Delete"></i></a> 
-                     <a href="/actor/history/id/<?php echo $item['actor_id'];?>"><i class="icon-calendar" rel="tooltip" title="Version History"></i></a> 
+                     <a href="<?php echo UrlHelper::getPrefixLink('/actor/update/id/')?><?php echo $item['id'];?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
+                     <a href="<?php echo UrlHelper::getPrefixLink('/actor/delete/id/')?><?php echo $item['id'];?>"><i class="icon-remove-sign text-error" rel="tooltip" title="Delete"></i></a> 
+                     <a href="<?php echo UrlHelper::getPrefixLink('/actor/history/id/')?><?php echo $item['actor_id'];?>"><i class="icon-calendar" rel="tooltip" title="Version History"></i></a> 
                       <?php  } ?>
                     </td>
                 </tr>
@@ -79,7 +79,7 @@ $this->endWidget();
 
 ?>
 <br />
-<img src="/images/tree/tree.php?data=<?php echo $actorstring;?>">
+<img src="<?php echo UrlHelper::getPrefixLink('/images/tree/tree.php')?>?data=<?php echo $actorstring;?>">
 <br />
   <?php if($edit){ ?>
 
@@ -103,7 +103,7 @@ if (count($deleted)):?>
         <tbody>
         <?php foreach($deleted as $item) {?>
            <tr class="odd">  
-                <td> <a href="/actor/history/id/<?php echo $item['actor_id'];?>"> 
+                <td> <a href="<?php echo UrlHelper::getPrefixLink('/actor/history/id/')?><?php echo $item['actor_id'];?>"> 
                 UF-<?php echo str_pad($item['number'], 3, "0", STR_PAD_LEFT); ?></a> 
                 </td>
    
