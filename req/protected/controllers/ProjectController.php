@@ -93,7 +93,7 @@ class ProjectController extends Controller
     //$companyMeta->setEavAttribute('last_project',$id);
     //$companyMeta->save();
     
-    $this->redirect(array('/req/project/project/'));
+    $this->redirect(('/req/project/project/'));
         
     }
     
@@ -186,7 +186,7 @@ class ProjectController extends Controller
                     'model'=>$model,'tab'=>'documents'
                 ));
             } ELSE {    
-            $this->redirect(array('/req/site/fail/condition/no_access'));
+            $this->redirect(('/req/site/fail/condition/no_access'));
             }
     }
     public function actionPrint() {
@@ -291,7 +291,7 @@ class ProjectController extends Controller
             'model'=>$model,
         ));
     } ELSE {
-           $this->redirect(array('/req/site/fail/condition/no_access'));
+           $this->redirect(('/req/site/fail/condition/no_access'));
     }
     }
 
@@ -308,7 +308,7 @@ class ProjectController extends Controller
             ));
         } ELSE {
      
-                  $this->redirect(array('/req/site/fail/condition/no_access'));
+                  $this->redirect(('/req/site/fail/condition/no_access'));
         }
     }
     
@@ -351,7 +351,7 @@ unset(Yii::app()->session['project']);
                    $this->render('details',compact('model'));
          } ELSE {
                         // You are not permitted to see this page
-                  $this->redirect(array('/req/site/fail/condition/no_access'));
+                  $this->redirect(('/req/site/fail/condition/no_access'));
         }
     }
         public function actionAddProjectAddress($id)
@@ -371,7 +371,7 @@ unset(Yii::app()->session['project']);
                    $this->render('address',compact('model','addresses'));
          } ELSE {
                         // You are not permitted to see this page
-                  $this->redirect(array('/req/site/fail/condition/no_access'));
+                  $this->redirect(('/req/site/fail/condition/no_access'));
         }
     }
     
@@ -385,7 +385,7 @@ unset(Yii::app()->session['project']);
                 'model'=>$model,
             ));
         } ELSE {
-                  $this->redirect(array('/req/site/fail/condition/no_access'));
+                  $this->redirect(('/req/site/fail/condition/no_access'));
         }
     }
     public function actionMyTenders()

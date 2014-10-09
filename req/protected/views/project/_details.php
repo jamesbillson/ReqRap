@@ -48,7 +48,7 @@ $x=0;
             <?php 
          if (in_array(Yii::App()->session['permission'],array(1,2,3))) {?>  
             <strong>
-        <a href="/release/set/id/<?php echo $item['id'];?>">
+        <a href="<?php echo UrlHelper::getPrefixLink('/release/set/id/')?><?php echo $item['id'];?>">
         
              <?php if ($item['id']==$release){;?>     
         <?php echo $item['number']; ?> 
@@ -76,16 +76,16 @@ $x=0;
 
       <td>
          <?php    if ($x!=1){?>
-          <a href="/usecase/diff/old/<?php echo $old;?>/new/<?php echo $item['id'];?>"><b rel="tooltip" title="Compare this version to the previous release">&Delta;</b></a> 
+          <a href="<?php echo UrlHelper::getPrefixLink('/usecase/diff/old/')?><?php echo $old;?>/new/<?php echo $item['id'];?>"><b rel="tooltip" title="Compare this version to the previous release">&Delta;</b></a> 
            <?php
          }
         if (isset($shared[$item['id']])){
         if($shared[$item['id']]==1){ ?>
-             <a href="/library/view/"><i class="icon-book text-warning" rel="tooltip" title="In Public library"></i></a> 
+             <a href="<?php echo UrlHelper::getPrefixLink('/library/view/') ?>"><i class="icon-book text-warning" rel="tooltip" title="In Public library"></i></a> 
      <?php
         }
         if ($shared[$item['id']]==0) { ?>
-             <a href="/library/view/"><i class="icon-book" rel="tooltip" title="In Private library"></i></a> 
+             <a href="<?php echo UrlHelper::getPrefixLink('/library/view/') ?>"><i class="icon-book" rel="tooltip" title="In Private library"></i></a> 
      <?php
         }
     } ELSE {
@@ -93,15 +93,15 @@ $x=0;
        
       if ($owner && $item['id']!=$currentrelease) {?>
           
-      <a href="/library/create/id/<?php echo $item['id'];?>"><i class="icon-book text-success" rel="tooltip" title="Add to library"></i></a> 
+      <a href="<?php echo UrlHelper::getPrefixLink('/library/create/id/') ?><?php echo $item['id'];?>"><i class="icon-book text-success" rel="tooltip" title="Add to library"></i></a> 
     <?php }}
        if ($owner && $item['id']!=$currentrelease) {?>
-      <a href="/release/copy/id/<?php echo $item['id'];?>"><i class="icon-copy" rel="tooltip" title="Copy Release to new project"></i></a>
+      <a href="<?php echo UrlHelper::getPrefixLink('/release/copy/id/')?><?php echo $item['id'];?>"><i class="icon-copy" rel="tooltip" title="Copy Release to new project"></i></a>
      
          <?php
             } 
             if ($item['id']==$currentrelease && $owner){?>
-          <a href="/release/finalise/id/<?php echo $item['id'];?>"><i class="icon-certificate" rel="tooltip" title="Finalise Release"></i></a> 
+          <a href="<?php echo UrlHelper::getPrefixLink('/release/finalise/id/') ?><?php echo $item['id'];?>"><i class="icon-certificate" rel="tooltip" title="Finalise Release"></i></a> 
         
         <?php /*
        echo CHtml::link(
@@ -117,7 +117,7 @@ $x=0;
           
      
         if ($item['id']==$release){;?>
-           <a href="/version/index/id/<?php echo $item['id'];?>"><i class="icon-calendar " rel="tooltip" title="View change log"></i></a> 
+           <a href="<?php echo UrlHelper::getPrefixLink('/version/index/id/')?><?php echo $item['id'];?>"><i class="icon-calendar " rel="tooltip" title="View change log"></i></a> 
         
               <?php } 
               $old=$item['id'];

@@ -20,7 +20,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
         'class' => 'bootstrap.widgets.TbButton',
         'type' => 'primary', // '', 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
         'label'=> 'Add Project',
-        'url'=>array('project/create')
+        'url'=>array(UrlHelper::getPrefixLink('project/create'))
     )),
 ));
 
@@ -49,7 +49,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                 <?php    foreach($data as $item): ?>
                 <tr class="odd">  
                     <td>
-                       <a href="/project/set/id/<?php echo $item['id'];?>"><?php echo $item['name'];?></a> 
+                       <a href="<?php echo UrlHelper::getPrefixLink('/project/set/id/') ?><?php echo $item['id'];?>"><?php echo $item['name'];?></a> 
                     </td>
                     
                     <td>
@@ -64,7 +64,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                         
                         
                         
-                       <a href="/project/update?id=<?php echo $item['id'];?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
+                       <a href="<?php echo UrlHelper::getPrefixLink('/project/update?id=') ?><?php echo $item['id'];?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
                 
                     </td>
                 </tr>
@@ -85,7 +85,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                 <tr class="odd"> 
              
                     <td>
-                       <a href="/project/set/id/<?php echo $item['id'];?>"><?php echo $item['pname'];?></a> 
+                       <a href="<?php echo UrlHelper::getPrefixLink('/project/set/id/')?><?php echo $item['id'];?>"><?php echo $item['pname'];?></a> 
                        
                     </td>
                    

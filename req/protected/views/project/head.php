@@ -53,7 +53,7 @@ if (Yii::App()->session['permission'] ==0)  $this->redirect(array('site/fail/con
     
     <div class="span6">  
              <div class="row">
-            <form action="/project/set/">
+            <form action="<?php echo UrlHelper::getPrefixLink('/project/set/') ?>">
             <input type="hidden" name="tab" value="details">
             <select name="id" onchange="this.form.submit()">
 
@@ -79,7 +79,7 @@ if (Yii::App()->session['permission'] ==0)  $this->redirect(array('site/fail/con
          }
         ?>
             <?php if(isset($currentrelease) && $release == $currentrelease) {?>
-    <a href="/project/project/">
+    <a href="<?php echo UrlHelper::getPrefixLink('/project/project/') ?>">
            <?php
     $this->widget('bootstrap.widgets.TbLabel', array(
     'type'=>'info', // 'success', 'warning', 'important', 'info' or 'inverse'
@@ -88,7 +88,7 @@ if (Yii::App()->session['permission'] ==0)  $this->redirect(array('site/fail/con
     </a>
             <?php }  ?>
              <?php if(isset($currentrelease) && $release != $currentrelease){ ?>
-    <a href="/release/setcurrent/">
+    <a href="<?php echo UrlHelper::getPrefixLink('/release/setcurrent/') ?>">
         
      <?php
     $this->widget('bootstrap.widgets.TbLabel', array(
@@ -115,7 +115,7 @@ if (Yii::App()->session['permission'] ==0)  $this->redirect(array('site/fail/con
     if(($phase==2)){
       
       ?>
-    <a href="/project/testing/">
+    <a href="<?php echo UrlHelper::getPrefixLink('/project/testing/') ?>">
          <?php
     $this->widget('bootstrap.widgets.TbLabel', array(
     'type'=>'info', // 'success', 'warning', 'important', 'info' or 'inverse'
@@ -123,7 +123,7 @@ if (Yii::App()->session['permission'] ==0)  $this->redirect(array('site/fail/con
     )); ?>
     </a>
      
-    <a href="/project/walkthru/">
+    <a href="<?php echo UrlHelper::getPrefixLink('/project/walkthru/') ?>">
         <?php
     $this->widget('bootstrap.widgets.TbLabel', array(
     'type'=>'info', // 'success', 'warning', 'important', 'info' or 'inverse'
@@ -148,7 +148,7 @@ if (Yii::App()->session['permission'] ==0)  $this->redirect(array('site/fail/con
                 <?php
   
     if($my_project){  ?>
-          <a target="_new" href="/project/print" ><i class="icon-print " rel="tooltip" title="View Print Version"></i></a>
+          <a target="_new" href="<?php echo UrlHelper::getPrefixLink('/project/print') ?>" ><i class="icon-print " rel="tooltip" title="View Print Version"></i></a>
        
     <?php  } ?>
 
@@ -173,10 +173,10 @@ if (Yii::App()->session['permission'] ==0)  $this->redirect(array('site/fail/con
     if(isset($link)){ 
         //echo $link;
         ?>
-          <a id="popup" href="/note/create/id/<?php echo $link; ?>" >
+          <a id="popup" href="<?php echo UrlHelper::getPrefixLink('/note/create/id/') ?><?php echo $link; ?>" >
               <i class="icon-comment" rel="tooltip" title="Make a Note"></i></a> 
     <?php if(count(Note::model()->getNotes($link))) {?>      
-            <a href="/note/view/id/<?php echo $link; ?>" ><i class="icon-comments" rel="tooltip" title="View Notes"></i></a> 
+            <a href="<?php echo UrlHelper::getPrefixLink('/note/view/id/') ?><?php echo $link; ?>" ><i class="icon-comments" rel="tooltip" title="View Notes"></i></a> 
       
 
     <?php  }} ?> 
