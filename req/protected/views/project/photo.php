@@ -4,7 +4,7 @@ echo $this->renderPartial('/project/head',array('tab'=>'usecases')); ?>
 
 <h2>Add interface images</h2>
   
-<a href="/photo/list/">View all images</a>
+<a href="<?php echo UrlHelper::getPrefixLink('/photo/list/'); ?>">View all images</a>
 
 <?php if(isset($model->id)): ?>
    

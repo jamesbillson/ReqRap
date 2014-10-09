@@ -5,7 +5,7 @@ $images=Photo::model()->getProjectImages();
  $edit=(Yii::App()->session['edit']==1)?TRUE:FALSE;
     ?>
 
-<a href="/project/view/tab/interfaces">Back to Interfaces</a>
+<a href="<?php echo UrlHelper::getPrefixLink('/project/view/tab/interfaces') ?>">Back to Interfaces</a>
 <?php      
 $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
     'title' => 'Images',
@@ -28,7 +28,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                                     Yii::app()->params['photo_folder'].$image['file'], 
                                     array('resize' => array('width' => 154))); ?>
 
-                  <a href="/photo/view/id/<?php echo $image['id']; ?>"> <img src="<?php echo $src ?>"/></a>
+                  <a href="<?php echo UrlHelper::getPrefixLink('/photo/view/id/') ?><?php echo $image['id']; ?>"> <img src="<?php echo $src ?>"/></a>
                       
                   </td>
                   <td>
@@ -36,11 +36,11 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                   </td>
                      <td>
                       <?php if($edit){ ?>
-                        <a href="/photo/update/id/<?php echo $image['id'];?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
+                        <a href="<?php echo UrlHelper::getPrefixLink('/photo/update/id/') ?><?php echo $image['id'];?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
                             <?php if($iface==-1){ ?>
-                            <a href="/photo/delete/id/<?php echo $image['id'];?>"><i class="icon-remove-sign text-error" rel="tooltip" title="Delete"></i></a> 
+                            <a href="<?php echo UrlHelper::getPrefixLink('/photo/delete/id/') ?><?php echo $image['id'];?>"><i class="icon-remove-sign text-error" rel="tooltip" title="Delete"></i></a> 
                             <?php } ELSE {?> Interface: 
-                            <a href="/iface/view/id/<?php echo $iface['iface_id'];?>"><?php echo $iface['name'];?></a>
+                            <a href="<?php echo UrlHelper::getPrefixLink('/iface/view/id/')?><?php echo $iface['iface_id'];?>"><?php echo $iface['name'];?></a>
                       <?php } } ?>
                    </td>
                 <?php endforeach ?>

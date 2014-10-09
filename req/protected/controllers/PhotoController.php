@@ -258,11 +258,18 @@ class PhotoController extends Controller {
 
                 //set path and filename
                 $path = Yii::getPathOfAlias("webroot").Yii::app()->params['photo_folder'];
-                if(!file_exists($path)){
-                    if(mkdir($path, 0755, true)){
-                       return false; 
-                    }
+              
+                if(file_exists($path)){
+                    @mkdir($path, 077, true);
+                } else {
+                   
                 }
+
+                if (is_writable($path)  == false) {
+                  throw new CHttpException(500,'Folder '.Yii::app()->params['photo_folder'].' should be write');
+                  return false;
+                }
+                
 
                 $file_name = Utils::uniqueFile($upload->name);
                 $file_name = 'xxxxxxxx'.$file_name;
