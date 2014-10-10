@@ -68,7 +68,7 @@ if (count($data)):
                
             </td>          
             <td>
-                <a href="/contact/delete?id=<?php echo $item['id'];?>"><i class="icon-remove-sign" rel="tooltip" title="Delete"></i></a> 
+                <a href="<?php echo UrlHelper::getPrefixLink('/contact/delete?id=')?><?php echo $item['id'];?>"><i class="icon-remove-sign" rel="tooltip" title="Delete"></i></a> 
             </td>
         </tr>
        <?php endforeach; ?>

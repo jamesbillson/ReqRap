@@ -11,7 +11,7 @@ $me = User::model()->findbyPK(Yii::app()->user->id);
 <div class="well">
     <h1><?php echo $model->name; ?></h1>
      <?php    if($me->admin==1) {?>
-    <a href="/company/update?id=<?php echo $model->id; ?>">
+    <a href="<?php echo UrlHelper::getPrefixLink('/company/update?id=')?><?php echo $model->id; ?>">
         <i class="icon-cog"></i></a>
  <?php 
      }

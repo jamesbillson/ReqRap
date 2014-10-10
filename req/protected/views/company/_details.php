@@ -4,7 +4,7 @@
  
 
 <h3>Details
-   <a href="/company/update/"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
+   <a href="<?php echo UrlHelper::getPrefixLink('/company/update/')?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
 </h3>
 
 <strong><?php echo $model->name; ?></strong>

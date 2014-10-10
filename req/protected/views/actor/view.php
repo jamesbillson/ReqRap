@@ -7,9 +7,9 @@ $permission=Yii::App()->session['permission'];
 ?>
 <h2>Actor <?php echo $model->name; ?>     
 
-    <a href="/actor/update/id/<?php echo $model->id;?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
+    <a href="<?php echo UrlHelper::getPrefixLink('/actor/update/id/') ?><?php echo $model->id;?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
            </h2>
-<a href="/project/view/tab/actors/">Back to Actors</a><br />
+<a href="<?php echo UrlHelper::getPrefixLink('/project/view/tab/actors/') ?>">Back to Actors</a><br />
 
 	<b><?php echo CHtml::encode($model->getAttributeLabel('name')); ?>:</b>
         <br />
@@ -51,7 +51,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
             <?php foreach($data as $item):?>
                 <tr class="odd">  
                     <td>   
-                        <a href="/usecase/view/id/<?php echo $item['usecaseid'];?>">UC-<?php echo str_pad($item['packagenumber'], 2, "0", STR_PAD_LEFT); ?><?php echo str_pad($item['usecasenumber'], 3, "0", STR_PAD_LEFT); ?></a>
+                        <a href="<?php echo UrlHelper::getPrefixLink('/usecase/view/id/') ?><?php echo $item['usecaseid'];?>">UC-<?php echo str_pad($item['packagenumber'], 2, "0", STR_PAD_LEFT); ?><?php echo str_pad($item['usecasenumber'], 3, "0", STR_PAD_LEFT); ?></a>
  <?php echo $item['usecasename'];?>
                     </td>
                   
@@ -92,7 +92,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
             <?php foreach($data as $item):?>
                 <tr class="odd">  
                     <td>   
-                        <a href="/usecase/view/id/<?php echo $item['usecase_id'];?>">UC-<?php echo str_pad($item['packagenumber'], 2, "0", STR_PAD_LEFT); ?><?php echo str_pad($item['number'], 3, "0", STR_PAD_LEFT); ?></a>
+                        <a href="<?php echo UrlHelper::getPrefixLink('/usecase/view/id/')?><?php echo $item['usecase_id'];?>">UC-<?php echo str_pad($item['packagenumber'], 2, "0", STR_PAD_LEFT); ?><?php echo str_pad($item['number'], 3, "0", STR_PAD_LEFT); ?></a>
  <?php echo $item['name'];?>
                     </td>
                    
@@ -123,7 +123,7 @@ $this->endWidget();
                 <tr>
                     <td>
                 <?php if ($item['active'] != 1 && $item['action']!=3){    ?> 
-                <a href="/version/rollback/id/<?php echo $item['versionid'];?>"><i class="icon-repeat" rel="tooltip" data-placement="right" title="Roll Back to this Version"></i></a> 
+                <a href="<?php echo UrlHelper::getPrefixLink('/version/rollback/id/')?><?php echo $item['versionid'];?>"><i class="icon-repeat" rel="tooltip" data-placement="right" title="Roll Back to this Version"></i></a> 
                 <?php  } ELSE { ?> 
                 <i class="icon-circle-arrow-right" rel="tooltip" data-placement="right" title="Current Version"></i> 
                 <?php   } ?>  

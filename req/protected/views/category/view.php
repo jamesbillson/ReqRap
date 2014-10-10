@@ -6,7 +6,7 @@ $permission=Yii::App()->session['permission'];
 ?>
    
 <br>
-<a href="/project/view/tab/category">Back to all sections</a>
+<a href="<?php echo UrlHelper::getPrefixLink('/project/view/tab/category')?>">Back to all sections</a>
 <?php 
 
 $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
@@ -21,7 +21,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
         'type' => 'primary', // '', 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
         'label'=> 'Add Simple Requirement',
         'visible'=>$edit,
-        'url'=>array('simple/create', 'id'=>$model->id)
+        'url'=> UrlHelper::getPrefixLink('simple/create/?id='.$model->id)
     )),
 ));
 
@@ -58,20 +58,20 @@ $counter=0; ?>
                   
                     <td>
                         <?php if($edit){ ?>
-                        <a href="/simple/update/id/<?php echo $item['id'];?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
-                        <a href="/simple/delete?id=<?php echo $item['id'];?>"><i class="icon-remove-sign text-error" rel="tooltip" title="Delete"></i></a> 
-                     <a href="/simple/history/id/<?php echo $item['simple_id'];?>"><i class="icon-calendar" rel="tooltip" title="History"></i></a> 
+                        <a href="<?php echo UrlHelper::getPrefixLink('/simple/update/id/')?><?php echo $item['id'];?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
+                        <a href="<?php echo UrlHelper::getPrefixLink('/simple/delete?id=')?><?php echo $item['id'];?>"><i class="icon-remove-sign text-error" rel="tooltip" title="Delete"></i></a> 
+                     <a href="<?php echo UrlHelper::getPrefixLink('/simple/history/id/')?><?php echo $item['simple_id'];?>"><i class="icon-calendar" rel="tooltip" title="History"></i></a> 
                         
 
  <?php if($counter!=0) { ?>
-                            <a href="/version/move/object/18/dir/2/id/<?php echo $item['id'];?>"><i class="icon-arrow-up" rel="tooltip" title="Move Up"></i></a> 
+                            <a href="<?php echo UrlHelper::getPrefixLink('/version/move/object/18/dir/2/id/')?><?php echo $item['id'];?>"><i class="icon-arrow-up" rel="tooltip" title="Move Up"></i></a> 
                            
  <?php } ELSEIF(count($data)>1) {?>   
                            
                             <i class="icon-flag" rel="tooltip" title="Start"></i>
                             <?php } ?>          
                             <?php if($counter!=count($data)-1) { ?>        
-                            <a href="/version/move/object/18/dir/1/id/<?php echo $item['id'];?>"><i class="icon-arrow-down" rel="tooltip" title="Move Down"></i></a> 
+                            <a href="<?php echo UrlHelper::getPrefixLink('/version/move/object/18/dir/1/id/')?><?php echo $item['id'];?>"><i class="icon-arrow-down" rel="tooltip" title="Move Down"></i></a> 
                             <?php } ELSEIF(count($data)>1) {?>
                              <i class="icon-flag" rel="tooltip" title="End"></i>   
                             <?php } ?> 
@@ -116,7 +116,7 @@ if (count($deleted)):?>
         <tbody>
         <?php foreach($deleted as $item) {?>
            <tr class="odd">  
-                <td> <a href="/simple/view/id/<?php echo $item['simple_id'];?>"> 
+                <td> <a href="<?php echo UrlHelper::getPrefixLink('/simple/view/id/')?><?php echo $item['simple_id'];?>"> 
                 <?php echo $item['number']; ?></a> 
                 </td>
    

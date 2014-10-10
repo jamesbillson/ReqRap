@@ -52,7 +52,7 @@ if(!(Users_meta::model()->ShowMessage('employee1')))
         'type' => 'primary', // '', 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
         'label'=> 'Invite User',
         'visible'=>$me->admin==1,
-        'url'=>array('/user/invite'),
+        'url'=>UrlHelper::getPrefixLink('/user/invite'),
       
     )),
 ));
@@ -93,22 +93,22 @@ if(!(Users_meta::model()->ShowMessage('employee1')))
             <td>
                
                  <?php    if($me->id==$item['id'] && $me->admin!=1) {?>
-                 <a href="/user/view/id/<?php echo $item['id'];?>"><i class="icon-eye-open" rel="tooltip" title="View"></i></a> 
+                 <a href="<?php echo UrlHelper::getPrefixLink('/user/view/id/')?><?php echo $item['id'];?>"><i class="icon-eye-open" rel="tooltip" title="View"></i></a> 
     
                     <?php }?>
                 <?php    if($me->admin==1) {?>
                   <?php    if($item['type']==0) {?>
-                <a href="/user/reinvite/id/<?php echo $item['id'];?>"><i class="icon-envelope" rel="tooltip" title="Resend Invitation Email"></i></a> 
+                <a href="<?php echo UrlHelper::getPrefixLink('/user/reinvite/id/')?><?php echo $item['id'];?>"><i class="icon-envelope" rel="tooltip" title="Resend Invitation Email"></i></a> 
                 <?php }?>
   <a href="/user/view/id/<?php echo $item['id'];?>"><i class="icon-eye-open" rel="tooltip" title="View"></i></a> 
     
                             <?php if($item['admin']==1 && count($admin)>1) {?>
-                             <a href="/user/demote/id/<?php echo $item['id'];?>"><i class="icon-circle-arrow-down" rel="tooltip" title="Remove Administrator Rights"></i> </a>
+                             <a href="<?php echo UrlHelper::getPrefixLink('/user/demote/id/')?><?php echo $item['id'];?>"><i class="icon-circle-arrow-down" rel="tooltip" title="Remove Administrator Rights"></i> </a>
                             <?php }?>
                              <?php if($item['admin']!=1) {?>
-                             <a href="/user/promote/id/<?php echo $item['id'];?>"><i class="icon-circle-arrow-up" rel="tooltip" title="Promote to Administrator"></i> </a>
+                             <a href="<?php echo UrlHelper::getPrefixLink('/user/promote/id/')?><?php echo $item['id'];?>"><i class="icon-circle-arrow-up" rel="tooltip" title="Promote to Administrator"></i> </a>
                            
-                             <a href="/user/sack/id/<?php echo $item['id'];?>"><i class="icon-remove-sign" rel="tooltip" title="Remove user from company"></i></a> 
+                             <a href="<?php echo UrlHelper::getPrefixLink('/user/sack/id/')?><?php echo $item['id'];?>"><i class="icon-remove-sign" rel="tooltip" title="Remove user from company"></i></a> 
               <?php }?>
                <?php }?>
  

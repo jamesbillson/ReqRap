@@ -6,8 +6,8 @@ $mytype=CHtml::encode($data->type);
 
 	<b><?php echo CHtml::encode($data->name); ?></b> 
   
-        <a href="/addresses/update/id/<?php echo $myid; ?>/type/<?php echo $mytype; ?>"><i class="icon-edit"></i></a>
-        <a href="/addresses/remove/id/<?php echo $myid; ?>/type/<?php echo $mytype; ?>"><i class="icon-remove-sign"></i></a>
+        <a href="<?php echo UrlHelper::getPrefixLink('/addresses/update/id/')?><?php echo $myid; ?>/type/<?php echo $mytype; ?>"><i class="icon-edit"></i></a>
+        <a href="<?php echo UrlHelper::getPrefixLink('/addresses/remove/id/')?><?php echo $myid; ?>/type/<?php echo $mytype; ?>"><i class="icon-remove-sign"></i></a>
  
         <br />
 
