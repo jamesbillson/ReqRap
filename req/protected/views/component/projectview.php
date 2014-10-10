@@ -20,7 +20,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
         'class' => 'bootstrap.widgets.TbButton',
         'type' => 'primary', // '', 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
         'label'=> 'Add Component',
-        'url'=>'/component/create?id='.$project->id,
+        'url'=>UrlHelper::getPrefixLink('/component/create?id='.$project->id),
     ),
     
 ))); 
@@ -49,9 +49,9 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
 
                   
                     <td>
-                        <a href="/component/update/id/<?php echo $item['id'];?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
+                        <a href="<?php echo UrlHelper::getPrefixLink('/component/update/id/')?><?php echo $item['id'];?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
                        <?php   if (empty($children)){ ?>    
-                        <a href="/component/delete?id=<?php echo $item['id'];?>"><i class="icon-remove-sign" rel="tooltip" title="Delete"></i></a> 
+                        <a href="<?php echo UrlHelper::getPrefixLink('/component/delete?id=')?><?php echo $item['id'];?>"><i class="icon-remove-sign" rel="tooltip" title="Delete"></i></a> 
                    <?php } ?>
                     </td>
                 </tr>
