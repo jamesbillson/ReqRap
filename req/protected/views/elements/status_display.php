@@ -1,6 +1,6 @@
 <?php if ($model):?>
 <?php if (!isset($is_not_form)):?>
-<form method="POST" action="/contentStatus/create<?php echo isset($history)?'?history=1':''?>" id="form-<?php echo $model->tableName()?>-<?php echo $model->id?>">
+<form method="POST" action="<?php echo UrlHelper::getPrefixLink('/contentStatus/create')?><?php echo isset($history)?'?history=1':''?>" id="form-<?php echo $model->tableName()?>-<?php echo $model->id?>">
 <?php endif;?>
     <input name="ContentStatus[content_type]" type="hidden" value="<?php echo $model->tableName()?>" />
     <input name="ContentStatus[foreign_key]" type="hidden" value="<?php echo $model->id?>" />

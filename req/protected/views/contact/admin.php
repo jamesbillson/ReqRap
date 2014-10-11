@@ -68,7 +68,7 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 
 
 <?php $this->widget('bootstrap.widgets.TbBreadcrumbs', array(
-    'links'=>array('Admin'=>'index.php?r=site/admin', 'Contact')));
+    'links'=>array('Admin'=>'index.php?r=/req/site/admin', 'Contact')));
 
 
  $this->widget('bootstrap.widgets.TbGridView', array(

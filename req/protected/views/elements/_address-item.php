@@ -2,9 +2,9 @@
     <div class="row">
         <h4><?php echo CHtml::encode($data->name); ?>
         <?php 
-            echo "<a href=\"/addresses/update?id=".$data->id."\">
+            echo "<a href=\"/req/addresses/update?id=".$data->id."\">
             <i class=\"icon-edit\" rel=\"tooltip\" title=\"Edit\"></i></a>&nbsp;&nbsp;";
-            echo '<a href="/addresses/delete?id='.$data->id .'&returnUrl='.$_SERVER["REQUEST_URI"].'" class="icon-remove"></a>';
+            echo '<a href="/req/addresses/delete?id='.$data->id .'&returnUrl='.$_SERVER["REQUEST_URI"].'" class="icon-remove"></a>';
         ?>
         </h4>
     </div>

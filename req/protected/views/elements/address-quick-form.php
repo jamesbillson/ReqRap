@@ -38,7 +38,7 @@
 <script type="text/javascript">
 $(document).ready(function(){
     $('#addAddressClick').click(function(){
-        $('#addDres').parent().parent().append('<img src="/themes/bootstrap/img/loading.gif" id="loading"/>');
+        $('#addDres').parent().parent().append('<img src="/req/themes/bootstrap/img/loading.gif" id="loading"/>');
         var url = '<?php echo CController::createUrl("/addresses/quickAdd")?>';
         var name = $('#Addresses_name').val();
         var add1 = $('#Addresses_address1').val();

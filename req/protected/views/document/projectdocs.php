@@ -7,7 +7,7 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-    array('label'=>'Create Document', 'url'=>array('document/create/id/'.$id)),
+    array('label'=>'Create Document', 'url'=>UrlHelper::getPrefixLink('document/create/id/'.$id)),
 
 );
 ?>
@@ -46,7 +46,7 @@ if (count($data)):
             </td>
              
             <td>
-                <a href="/document/delete?id=<?php echo $item['id'];?>"><i class="icon-remove-sign" rel="tooltip" title="Delete"></i></a> 
+                <a href="<?php echo UrlHelper::getPrefixLink('/document/delete?id=')?><?php echo $item['id'];?>"><i class="icon-remove-sign" rel="tooltip" title="Delete"></i></a> 
             </td>
         </tr>
        <?php endforeach; ?>

@@ -13,7 +13,7 @@
     'label'=>'Add a contact',
     'type'=>'primary', // null, 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
     'size'=>'small', // null, 'large', 'small' or 'mini'
-    'url'=>array('contact/create')
+    'url'=> UrlHelper::getPrefixLink('contact/create')
 ));
       ?>  
 </div>
