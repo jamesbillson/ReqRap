@@ -28,7 +28,7 @@ $('.search-form form').submit(function(){
 
 <h1>Manage Users</h1>
 <?php $this->widget('bootstrap.widgets.TbBreadcrumbs', array(
-    'links'=>array('Admin'=>'index.php?r=site/admin', 'User'))); ?>
+    'links'=>array('Admin'=>'index.php?r=/req/site/admin', 'User'))); ?>
 <p>
 You may optionally enter a comparison operator (<b>&lt;</b>, <b>&lt;=</b>, <b>&gt;</b>, <b>&gt;=</b>, <b>&lt;&gt;</b>
 or <b>=</b>) at the beginning of each of your search values to specify how the comparison should be done.

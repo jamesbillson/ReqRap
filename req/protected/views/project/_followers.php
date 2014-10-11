@@ -13,13 +13,13 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
         'type' => 'primary', // '', 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
         'label'=> 'Add Collaborator',
         'visible'=>Yii::App()->session['permission']==1,
-        'url'=>array('follower/addFollower', 'id'=>$model->id, 'type'=>1)
+        'url'=>UrlHelper::getPrefixLink('follower/addFollower/?id=').$model->id.'&type=1'
     ),
            array(
         'class' => 'bootstrap.widgets.TbButton',
         'type'=>'link',
         'icon'=> 'question-sign',
-         'url'=>'/help/popview/scope/followers',
+         'url'=>UrlHelper::getPrefixLink('/help/popview/scope/followers'),
         'htmlOptions' => array('id' => 'popup',),
     ),
           )
@@ -58,8 +58,8 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                     </td>
                     <td>
                     <?php if(Yii::App()->session['permission']==1){ ?>    
-                       <a href="/contact/view/id/<?php echo $item['id'];?>"><i class="icon-eye-open" rel="tooltip" title="View"></i></a> 
-                       <a href="/follower/remove?id=<?php echo $item['follower_id'];?>"><i class="icon-remove-sign" rel="tooltip" title="Remove/Uninvite"></i></a> 
+                       <a href="<?php echo UrlHelper::getPrefixLink('/contact/view/id/')?><?php echo $item['id'];?>"><i class="icon-eye-open" rel="tooltip" title="View"></i></a> 
+                       <a href="<?php echo UrlHelper::getPrefixLink('/follower/remove?id=')?><?php echo $item['follower_id'];?>"><i class="icon-remove-sign" rel="tooltip" title="Remove/Uninvite"></i></a> 
                     <?php } ?>
                     </td>
                 </tr>
@@ -84,9 +84,9 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                         <?php echo Follower::$followerstatus[$item['confirmed']];?>
                     </td>
                     <td>
-                        <a href="/contact/view/id/<?php echo $item['id'];?>"><i class="icon-eye-open" rel="tooltip" title="View"></i></a> 
-                        <a href="/follower/remove?id=<?php echo $item['follower_id'];?>"><i class="icon-remove-sign" rel="tooltip" title="Remove/Uninvite"></i></a> 
-                        <a href="/follower/resendinvite/id/<?php echo $item['follower_id'];?>/fk/<?php echo $model->id;?>"><i class="icon-envelope" rel="tooltip" title="Reinvite"></i></a> 
+                        <a href="<?php echo UrlHelper::getPrefixLink('/contact/view/id/')?><?php echo $item['id'];?>"><i class="icon-eye-open" rel="tooltip" title="View"></i></a> 
+                        <a href="<?php echo UrlHelper::getPrefixLink('/follower/remove?id=')?><?php echo $item['follower_id'];?>"><i class="icon-remove-sign" rel="tooltip" title="Remove/Uninvite"></i></a> 
+                        <a href="<?php echo UrlHelper::getPrefixLink('/follower/resendinvite/id/')?><?php echo $item['follower_id'];?>/fk/<?php echo $model->id;?>"><i class="icon-envelope" rel="tooltip" title="Reinvite"></i></a> 
                     </td>
                 </tr>
             <?php endforeach ?>

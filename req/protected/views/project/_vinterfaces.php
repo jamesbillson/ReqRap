@@ -41,7 +41,7 @@ if (count($data)):?>
                     <td>   
                        
                         
-                     <a href="/iface/view/id/<?php echo $item['iface_id'];?>">
+                     <a href="<?php echo UrlHelper::getPrefixLink('/iface/view/id/')?><?php echo $item['iface_id'];?>">
                           
                         IF-<?php echo str_pad($item['typenumber'], 2, "0", STR_PAD_LEFT); ?><?php echo str_pad($item['number'], 3, "0", STR_PAD_LEFT); ?>
                    </a>

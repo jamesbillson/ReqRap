@@ -19,7 +19,7 @@ $project=Yii::App()->session['project'];
                 <tbody>
                 <?php foreach($deleted as $item) {?>
                    <tr class="odd">  
-                        <td> <a href="/usecase/history/id/<?php echo $item['usecase_id'];?>"> 
+                        <td> <a href="<?php echo UrlHelper::getPrefixLink('/usecase/history/id/')?><?php echo $item['usecase_id'];?>"> 
                         <?php echo $item['name']; ?></a> 
                         </td>
 

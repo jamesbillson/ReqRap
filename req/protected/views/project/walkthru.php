@@ -50,7 +50,7 @@ $walkthrupaths= Walkthrupath::model()->findAll('release_id='.$release);
                     <td>   
                        
                         
-                     <a href="/walkthrupath/view/id/<?php echo $walkthrupath->id;?>">
+                     <a href="<?php echo UrlHelper::getPrefixLink('/walkthrupath/view/id/')?><?php echo $walkthrupath->id;?>">
                      WT-<?php echo str_pad($walkthrupath->number, 4, "0", STR_PAD_LEFT) ?>    
                       </a>
                     </td>
@@ -67,7 +67,7 @@ $walkthrupaths= Walkthrupath::model()->findAll('release_id='.$release);
                     
                     <td>
                              
-                     <a href="/walkthrupath/run/id/<?php echo $walkthrupath->id;?>"><i class="icon-check" rel="tooltip" title="Run the Test Case"></i></a> 
+                     <a href="<?php echo UrlHelper::getPrefixLink('/walkthrupath/run/id/')?><?php echo $walkthrupath->id;?>"><i class="icon-check" rel="tooltip" title="Run the Test Case"></i></a> 
                              
                     </td>
                 </tr>

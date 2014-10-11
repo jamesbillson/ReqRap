@@ -8,9 +8,9 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	array('label'=>'List Follower', 'url'=>array('index')),
-	array('label'=>'Create Follower', 'url'=>array('create')),
-	array('label'=>'Update Follower', 'url'=>array('update', 'id'=>$model->id)),
+	array('label'=>'List Follower', 'url'=>UrlHelper::getPrefixLink('index')),
+	array('label'=>'Create Follower', 'url'=>UrlHelper::getPrefixLink('create')),
+	array('label'=>'Update Follower', 'url'=>UrlHelper::getPrefixLink('update/?id='.$model->id),
 	array('label'=>'Delete Follower', 'url'=>'#', 'linkOptions'=>array('submit'=>array('delete','id'=>$model->id),'confirm'=>'Are you sure you want to delete this item?')),
 	array('label'=>'Manage Follower', 'url'=>array('admin')),
 );

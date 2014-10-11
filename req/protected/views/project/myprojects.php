@@ -17,7 +17,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
         'class' => 'bootstrap.widgets.TbButton',
         'type' => 'primary', // '', 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
         'label'=> 'Add Project',
-        'url'=>array('project/create')
+        'url'=>UrlHelper::getPrefixLink('project/create')
     )),
 ));
     if (count($data)):?>
@@ -33,13 +33,13 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                 <?php foreach($data as $item): ?>
                 <tr class="odd">  
                     <td>
-                       <a href="/project/view/id/<?php echo $item['id'];?>/tab/documents"><?php echo $item['name'];?></a> 
+                       <a href="<?php echo UrlHelper::getPrefixLink('/project/view/id/')?><?php echo $item['id'];?>/tab/documents"><?php echo $item['name'];?></a> 
                     </td>
                     <td>
                        <?php echo Project::$buildstage[$item['stage']];?> 
                     </td>
                     <td>
-                        <a href="/project/delete?id=<?php echo $item['id'];?>"><i class="icon-remove-sign" rel="tooltip" title="Remove/Uninvite"></i></a> 
+                        <a href="<?php echo UrlHelper::getPrefixLink('/project/delete?id=')?><?php echo $item['id'];?>"><i class="icon-remove-sign" rel="tooltip" title="Remove/Uninvite"></i></a> 
                     </td>
                 </tr>
                <?php endforeach?>
@@ -75,11 +75,11 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
             <?php foreach($data as $item):?>
             <tr class="odd">  
                 <td>
-                   <a href="/project/view/id/<?php echo $item['id'];?>/tab/documents"><?php echo $item['pname'];?></a> 
+                   <a href="<?php echo UrlHelper::getPrefixLink('/project/view/id/')?><?php echo $item['id'];?>/tab/documents"><?php echo $item['pname'];?></a> 
                    <?php echo Project::$buildstage[$item['stage']];?>
                 </td>
                 <td>
-                    <a href="/project/delete?id=<?php echo $item['id'];?>"><i class="icon-remove-sign" rel="tooltip" title="Remove/Uninvite"></i></a>
+                    <a href="<?php echo UrlHelper::getPrefixLink('/project/delete?id=')?><?php echo $item['id'];?>"><i class="icon-remove-sign" rel="tooltip" title="Remove/Uninvite"></i></a>
                 </td>
             </tr>
            <?php endforeach?>

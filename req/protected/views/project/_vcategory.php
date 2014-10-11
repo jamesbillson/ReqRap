@@ -17,7 +17,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
         'type' => 'primary', // '', 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
         'label'=> 'Add Category',
          'visible'=> $edit,
-        'url'=>'/category/create/id/'.$model->id,
+        'url'=>UrlHelper::getPrefixLink('/category/create/id/').$model->id,
     ),
     
 ))); 
@@ -38,7 +38,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                 <tr class="odd">  
                    
                     <td>
-                        <a href="/category/view/id/<?php echo $item['category_id'];?>"><b><?php echo $item['name'];?></b></a>
+                        <a href="<?php echo UrlHelper::getPrefixLink('/category/view/id/')?><?php echo $item['category_id'];?>"><b><?php echo $item['name'];?></b></a>
                     </td>
 
                     <td>
@@ -46,9 +46,9 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                     </td>            
                     <td>
                          <?php if($edit){ ?>
-                        <a href="/category/update/id/<?php echo $item['id'];?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
-                        <a href="/category/delete?id=<?php echo $item['id'];?>"><i class="icon-remove-sign text-error" rel="tooltip" title="Delete"></i></a> 
-                        <a href="/category/history/id/<?php echo $item['category_id'];?>"><i class="icon-calendar" rel="tooltip" title="Version history"></i></a> 
+                        <a href="<?php echo UrlHelper::getPrefixLink('/category/update/id/')?><?php echo $item['id'];?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
+                        <a href="<?php echo UrlHelper::getPrefixLink('/category/delete?id=')?><?php echo $item['id'];?>"><i class="icon-remove-sign text-error" rel="tooltip" title="Delete"></i></a> 
+                        <a href="<?php echo UrlHelper::getPrefixLink('/category/history/id/')?><?php echo $item['category_id'];?>"><i class="icon-calendar" rel="tooltip" title="Version history"></i></a> 
                          <?php } ?>
                     </td>
                 </tr>
@@ -79,7 +79,7 @@ if (count($deleted)):?>
         <tbody>
         <?php foreach($deleted as $item) {?>
            <tr class="odd">  
-                <td> <a href="/category/view/id/<?php echo $item['id'];?>"> 
+                <td> <a href="<?php echo UrlHelper::getPrefixLink('/category/view/id/')?><?php echo $item['id'];?>"> 
                 Section-<?php echo str_pad($item['number'], 3, "0", STR_PAD_LEFT); ?></a> 
                 </td>
    

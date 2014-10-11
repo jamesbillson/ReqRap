@@ -54,7 +54,7 @@ if (count($data)):?>
               
 
       <td>
-                   <a href="/documentversion/download/id/<?php echo $item['version_id'];?>"><i class="icon-download-alt" rel="tooltip" title="Download this Document"></i></a> 
+                   <a href="<?php echo UrlHelper::getPrefixLink('/documentversion/download/id/')?><?php echo $item['version_id'];?>"><i class="icon-download-alt" rel="tooltip" title="Download this Document"></i></a> 
                       
                
                  

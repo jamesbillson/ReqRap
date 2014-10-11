@@ -7,8 +7,8 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	array('label'=>'Create Interfacetype', 'url'=>array('create')),
-	array('label'=>'Manage Interfacetype', 'url'=>array('admin')),
+	array('label'=>'Create Interfacetype', 'url'=>UrlHelper::getPrefixLink('create')),
+	array('label'=>'Manage Interfacetype', 'url'=>UrlHelper::getPrefixLink('admin')),
 );
 ?>
 

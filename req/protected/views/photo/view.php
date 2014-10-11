@@ -24,7 +24,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                                     Yii::app()->params['photo_folder'].$item->file, 
                                     array('resize' => array('width' => 154))); ?>
 
-                        <a href="/photo/view/id/<?php echo $item->id; ?>"> <img src="<?php echo $src ?>"/></a>
+                        <a href="<?php echo UrlHelper::getPrefixLink('/photo/view/id/')?><?php echo $item->id; ?>"> <img src="<?php echo $src ?>"/></a>
                       
                    </td>
                    <td>
@@ -32,8 +32,8 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                    </td>
                      <td>
                       <?php if($edit){ ?>
-                        <a href="/photo/update/id/<?php echo $item->id;?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
-                        <a href="/photo/delete/id/<?php echo $item->id;?>"><i class="icon-remove-sign text-error" rel="tooltip" title="Delete"></i></a> 
+                        <a href="<?php echo UrlHelper::getPrefixLink('/photo/update/id/')?><?php echo $item->id;?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
+                        <a href="<?php echo UrlHelper::getPrefixLink('/photo/delete/id/')?><?php echo $item->id;?>"><i class="icon-remove-sign text-error" rel="tooltip" title="Delete"></i></a> 
                           <?php } ?>
                    </td>
                 <?php endforeach ?>

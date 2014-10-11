@@ -9,10 +9,10 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	array('label'=>'List Flow', 'url'=>array('index')),
-	array('label'=>'Create Flow', 'url'=>array('create')),
-	array('label'=>'View Flow', 'url'=>array('view', 'id'=>$model->id)),
-	array('label'=>'Manage Flow', 'url'=>array('admin')),
+	array('label'=>'List Flow', 'url'=>UrlHelper::getPrefixLink('index')),
+	array('label'=>'Create Flow', 'url'=>UrlHelper::getPrefixLink('create')),
+	array('label'=>'View Flow', 'url'=>UrlHelper::getPrefixLink('view/?id=').$model->id),
+	array('label'=>'Manage Flow', 'url'=>UrlHelper::getPrefixLink('admin')),
 );
 ?>
 

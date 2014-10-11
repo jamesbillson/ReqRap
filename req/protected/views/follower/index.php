@@ -7,8 +7,8 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	array('label'=>'Create Follower', 'url'=>array('create')),
-	array('label'=>'Manage Follower', 'url'=>array('admin')),
+	array('label'=>'Create Follower', 'url'=>UrlHelper::getPrefixLink('create')),
+	array('label'=>'Manage Follower', 'url'=>UrlHelper::getPrefixLink('admin')),
 );
 ?>
 

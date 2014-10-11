@@ -29,7 +29,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
         <tr class="odd"> 
    
         <td>   
-        <a href="/user/detail?id=<?php echo $item['id'];?>">
+        <a href="<?php echo UrlHelper::getPrefixLink('/user/detail?id=')?><?php echo $item['id'];?>">
         <?php echo $item->firstname.' '.$item->lastname;?>
         </a>
         </td>
@@ -41,7 +41,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
     
         
         <td>
-        <a href="/company/view?id=<?php echo $item->company_id;?>">
+        <a href="<?php echo UrlHelper::getPrefixLink('/company/view?id=')?><?php echo $item->company_id;?>">
             <?php if(isset($item->company->name)){
                 echo $item->company->name;?>
                </a>
@@ -53,12 +53,12 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
         </td>  
         
         <td>
-         <a href="/user/actup?id=<?php echo $item['id'];?>"><i class="icon-user" rel="tooltip" title="Act as this User"></i></a> 
+         <a href="<?php echo UrlHelper::getPrefixLink('/user/actup?id=')?><?php echo $item['id'];?>"><i class="icon-user" rel="tooltip" title="Act as this User"></i></a> 
        
             <?php
        echo CHtml::link(
     '<i class="icon-trash" rel="tooltip" title="Remove this User and all their assets"></i>',
-     array('/user/destroy','id'=>$item['id']),
+     UrlHelper::getPrefixLink('/user/destroy/?id='.$item['id']),
      array('confirm' => 'This will permanently delete this user, there is NO undo.  Are you sure?')
 );
     ?>

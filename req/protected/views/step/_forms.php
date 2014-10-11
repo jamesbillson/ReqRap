@@ -24,7 +24,7 @@
 </div>
  
 <div class="modal-body">
-    <form action="/stepform/createinline/" method="POST">
+    <form action="<?php echo UrlHelper::getPrefixLink('/stepform/createinline/')?>" method="POST">
         <input type="hidden" name="step_id" value="<?php echo $item['id']; ?>">
         <input type="hidden" name="project_id" value="<?php echo $project; ?>">
         <input type="hidden" name="step_db_id" value="<?php echo $item['id']; ?>">

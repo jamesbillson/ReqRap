@@ -25,7 +25,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
         'type' => 'primary', // '', 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
         'label'=> 'Add Form Property',
         'visible'=>$edit,
-        'url'=>array('formproperty/create', 'id'=>$model->form_id)
+        'url'=>UrlHelper::getPrefixLink('formproperty/create/?id=').$model->form_id
     )),
 ));
 
@@ -70,18 +70,18 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                     </td>                   
                     <td>
                    <?php if($edit){ ?>
-                        <a href="/formproperty/update/id/<?php echo $item['id'];?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
-                        <a href="/formproperty/delete/id/<?php echo $item['id'];?>"><i class="icon-remove-sign text-error" rel="tooltip" title="Delete"></i></a> 
-                     <a href="/formproperty/history/id/<?php echo $item['formproperty_id'];?>"><i class="icon-calendar" rel="tooltip" title="History"></i></a> 
+                        <a href="<?php echo UrlHelper::getPrefixLink('/formproperty/update/id/')?><?php echo $item['id'];?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
+                        <a href="<?php echo UrlHelper::getPrefixLink('/formproperty/delete/id/')?><?php echo $item['id'];?>"><i class="icon-remove-sign text-error" rel="tooltip" title="Delete"></i></a> 
+                     <a href="<?php echo UrlHelper::getPrefixLink('/formproperty/history/id/')?><?php echo $item['formproperty_id'];?>"><i class="icon-calendar" rel="tooltip" title="History"></i></a> 
                    
                             <?php if($counter!=0) { ?>
-                            <a href="/formproperty/move/dir/2/id/<?php echo $item['id'];?>"><i class="icon-arrow-up" rel="tooltip" title="Move Up"></i></a> 
+                            <a href="<?php echo UrlHelper::getPrefixLink('/formproperty/move/dir/2/id/')?><?php echo $item['id'];?>"><i class="icon-arrow-up" rel="tooltip" title="Move Up"></i></a> 
                             <?php } ELSEIF(count($data)>1) {?>   
                            
                             <i class="icon-flag" rel="tooltip" title="Start"></i>
                             <?php } ?>          
                             <?php if($counter!=count($data)-1) { ?>        
-                            <a href="/formproperty/move/dir/1/id/<?php echo $item['id'];?>"><i class="icon-arrow-down" rel="tooltip" title="Move Down"></i></a> 
+                            <a href="<?php echo UrlHelper::getPrefixLink('/formproperty/move/dir/1/id/')?><?php echo $item['id'];?>"><i class="icon-arrow-down" rel="tooltip" title="Move Down"></i></a> 
                             <?php } ELSEIF(count($data)>1) {?>
                              <i class="icon-flag" rel="tooltip" title="End"></i>   
                             <?php } ?>     
@@ -117,12 +117,12 @@ $this->endWidget(); ?>
  <?php } ELSE { ?>
  Interface is used in the following UC's:<br />
    <?php foreach($stepform as $item){?>
- <a href="/usecase/view/id/<?php echo $item['usecase_id'];?>">
+ <a href="<?php echo UrlHelper::getPrefixLink('/usecase/view/id/')?><?php echo $item['usecase_id'];?>">
        <?php  echo 'UC-'.str_pad($item['package_number'], 2, "0", STR_PAD_LEFT).
          str_pad($item['usecase_number'], 3, "0", STR_PAD_LEFT);?>
  </a>
          <?php echo $item['usecase_name'];?> 
-         (<a href="/step/update/id/-1/flow/<?php echo $item['flow_id'];?>"><?php echo $item['flow_name'];?> Flow</a>)
+         (<a href="<?php echo UrlHelper::getPrefixLink('/step/update/id/-1/flow/')?><?php echo $item['flow_id'];?>"><?php echo $item['flow_name'];?> Flow</a>)
            
          <br />
  <?php } ?>
@@ -154,7 +154,7 @@ if (count($deleted)):?>
         <tbody>
         <?php foreach($deleted as $item) {?>
            <tr class="odd">  
-                <td> <a href="/form/history/id/<?php echo $item['form_id'];?>"> 
+                <td> <a href="<?php echo UrlHelper::getPrefixLink('/form/history/id/')?><?php echo $item['form_id'];?>"> 
                 <?php echo $item['number']; ?></a> 
                 </td>
    

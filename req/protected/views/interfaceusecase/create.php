@@ -8,8 +8,8 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	array('label'=>'List Interfaceusecase', 'url'=>array('index')),
-	array('label'=>'Manage Interfaceusecase', 'url'=>array('admin')),
+	array('label'=>'List Interfaceusecase', 'url'=>UrlHelper::getPrefixLink('index')),
+	array('label'=>'Manage Interfaceusecase', 'url'=>UrlHelper::getPrefixLink('admin')),
 );
 ?>
 

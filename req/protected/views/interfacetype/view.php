@@ -19,7 +19,7 @@ echo $this->renderPartial('/project/head',array('tab'=>'usecases'));
  <?php } ELSE {?>
  The following interfaces have this Type:<br />
    <?php foreach($interfaces as $item){?>
- <a href="/iface/view/id/<?php echo $item['iface_id'];?>">
+ <a href="<?php echo UrlHelper::getPrefixLink('/iface/view/id/')?><?php echo $item['iface_id'];?>">
        <?php  echo 'UI-'.str_pad($model['number'], 2, "0", STR_PAD_LEFT).str_pad($item['number'], 3, "0", STR_PAD_LEFT);?>
    </a>  
          <?php echo $item['name'];?> <br />
@@ -39,7 +39,7 @@ echo $this->renderPartial('/project/head',array('tab'=>'usecases'));
                 <tr>
                     <td>
                 <?php if ($item['active'] != 1 && $item['action']!=3){    ?> 
-                <a href="/version/rollback/id/<?php echo $item['versionid'];?>"><i class="icon-repeat" rel="tooltip" data-placement="right" name="Roll Back to this Version"></i></a> 
+                <a href="<?php echo UrlHelper::getPrefixLink('/version/rollback/id/')?><?php echo $item['versionid'];?>"><i class="icon-repeat" rel="tooltip" data-placement="right" name="Roll Back to this Version"></i></a> 
                 <?php  } ELSE { ?> 
                 <i class="icon-circle-arrow-right" rel="tooltip" data-placement="right" name="Current Version"></i> 
                 <?php   } ?>  

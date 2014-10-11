@@ -18,7 +18,7 @@
     <br />
     <br />
     <br />
-<h3 style="text-align:center;margin-bottom:30px"> <a href="/site/benefits">Find out how -></a> </h3>
+<h3 style="text-align:center;margin-bottom:30px"> <a href="<?php echo UrlHelper::getPrefixLink('/site/benefits')?>">Find out how -></a> </h3>
 
     
     </div>

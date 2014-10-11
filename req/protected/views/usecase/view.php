@@ -20,7 +20,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                     'type' => 'link', // '', 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
                     'icon'=> 'edit',
                     'visible'=>$edit,
-                    'url'=>'/usecase/update/id/'.$model->id,
+                    'url'=>UrlHelper::getPrefixLink('/usecase/update/id/'.$model->id,
                     
                       ),
      array(
@@ -28,14 +28,14 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                     'type' => 'link', // '', 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
                     'icon'=> 'calendar',
                  'visible'=>$edit,
-                    'url'=>'/usecase/history/id/'.$model->usecase_id,
+                    'url'=>UrlHelper::getPrefixLink('/usecase/history/id/'.$model->usecase_id),
                     
                       ),
       array(
         'class' => 'bootstrap.widgets.TbButton',
         'type'=>'link',
         'icon'=> 'question-sign',
-         'url'=>'/help/popview/scope/usecase',
+         'url'=>UrlHelper::getPrefixLink('/help/popview/scope/usecase'),
         'htmlOptions' => array('id' => 'popup',),
     ),
                   
@@ -49,10 +49,10 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
 
           <tr class="odd">
 
-              <td>  <a href="/package/view/id/<?php echo $package['package_id']; ?>"><b>Package</b></a>
+              <td>  <a href="<?php echo UrlHelper::getPrefixLink('/package/view/id/')?><?php echo $package['package_id']; ?>"><b>Package</b></a>
               </td>
               <td>   
-                  <?php echo $package['name']; ?><a href="/usecase/packchange/id/<?php echo $model->id; ?>"> <i class="icon-gift" rel="tooltip" title="Move to another package"></i></a>
+                  <?php echo $package['name']; ?><a href="<?php echo UrlHelper::getPrefixLink('/usecase/packchange/id/')?><?php echo $model->id; ?>"> <i class="icon-gift" rel="tooltip" title="Move to another package"></i></a>
                   <?php
                   /*
                 $package_model=Package::model()->findbyPK($package['id']);  
@@ -121,7 +121,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
           <tr class="odd">
 
               <td>   
-                  <b><a href="/actor/view/id/<?php echo $item['actor_id'];?>"><?php echo $item['name'];?></a></b>
+                  <b><a href="<?php echo UrlHelper::getPrefixLink('/actor/view/id/')?><?php echo $item['actor_id'];?>"><?php echo $item['name'];?></a></b>
                 
               </td> 
               <td>
@@ -172,14 +172,14 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
 
           <tr class="odd">
 
-              <td>  <a href="/rule/view/id/<?php echo $item['rule_id'];?>"> BR-<?php echo str_pad($item['number'], 4, "0", STR_PAD_LEFT); ?> </a>
+              <td>  <a href="<?php echo UrlHelper::getPrefixLink('/rule/view/id/')?><?php echo $item['rule_id'];?>"> BR-<?php echo str_pad($item['number'], 4, "0", STR_PAD_LEFT); ?> </a>
                  <?php if ($item['text']=='stub')echo '<i class="icon-exclamation-sign text-warning" rel="tooltip" title="Incomplete Rule"></i>';?>
              <b><?php echo $item['name'];?></b>
                   </td>
               <td>
                 <?php if($edit){ ?>
-                <a href="/steprule/unlink/id/<?php echo $item['xid'];?>/ucid/<?php echo $model->usecase_id;?>"><i class="icon-link text-error" rel="tooltip" title="Unlink this rule"></i></a> 
-                <a href="/rule/update/id/<?php echo $item['id'];?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
+                <a href="<?php echo UrlHelper::getPrefixLink('/steprule/unlink/id/')?><?php echo $item['xid'];?>/ucid/<?php echo $model->usecase_id;?>"><i class="icon-link text-error" rel="tooltip" title="Unlink this rule"></i></a> 
+                <a href="<?php echo UrlHelper::getPrefixLink('/rule/update/id/')?><?php echo $item['id'];?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
                 
                     <?php } ?> 
               </td>
@@ -232,15 +232,15 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
           
           <tr>
               <td>   
-                  <a href="/iface/view/id/<?php echo $item['iface_id'];?>"><?php echo 'UI-'.str_pad($item['typenum'], 2, "0", STR_PAD_LEFT).'-'.str_pad($item['number'], 3, "0", STR_PAD_LEFT);?> </a>
+                  <a href="<?php echo UrlHelper::getPrefixLink('/iface/view/id/')?><?php echo $item['iface_id'];?>"><?php echo 'UI-'.str_pad($item['typenum'], 2, "0", STR_PAD_LEFT).'-'.str_pad($item['number'], 3, "0", STR_PAD_LEFT);?> </a>
                   <b><?php echo $item['name'];?></a>
                 
               </td> 
               <td>
                   <?php if($edit){ ?>
 
-                  <a href="/stepiface/unlink/id/<?php echo $item['xid'];?>/ucid/<?php echo $model->usecase_id;?>"><i class="icon-link text-error" rel="tooltip" title="Unlink from Usecase"></i></a> 
-                  <a href="/iface/update/id/<?php echo $item['id'];?>/ucid/<?php echo $model->id;?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
+                  <a href="<?php echo UrlHelper::getPrefixLink('/stepiface/unlink/id/')?><?php echo $item['xid'];?>/ucid/<?php echo $model->usecase_id;?>"><i class="icon-link text-error" rel="tooltip" title="Unlink from Usecase"></i></a> 
+                  <a href="<?php echo UrlHelper::getPrefixLink('/iface/update/id/')?><?php echo $item['id'];?>/ucid/<?php echo $model->id;?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
              <?php } ?> 
               </td>
          
@@ -289,8 +289,8 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
               <td>
                   <?php if($edit){ ?>
 
-                  <a href="/stepform/unlink/id/<?php echo $item['xid'];?>/ucid/<?php echo $model->usecase_id;?>"><i class="icon-link text-error" rel="tooltip" title="Unlink from Usecase"></i></a> 
-                  <a href="/form/update/id/<?php echo $item['id'];?>/ucid/<?php echo $model->id;?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
+                  <a href="<?php echo UrlHelper::getPrefixLink('/stepform/unlink/id/')?><?php echo $item['xid'];?>/ucid/<?php echo $model->usecase_id;?>"><i class="icon-link text-error" rel="tooltip" title="Unlink from Usecase"></i></a> 
+                  <a href="<?php echo UrlHelper::getPrefixLink('/form/update/id/')?><?php echo $item['id'];?>/ucid/<?php echo $model->id;?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
              <?php } ?> 
               </td>
          

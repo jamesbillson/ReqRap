@@ -8,9 +8,9 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	array('label'=>'List Interfaceusecase', 'url'=>array('index')),
-	array('label'=>'Create Interfaceusecase', 'url'=>array('create')),
-	array('label'=>'Update Interfaceusecase', 'url'=>array('update', 'id'=>$model->interface_id)),
+	array('label'=>'List Interfaceusecase', 'url'=>UrlHelper::getPrefixLink('index')),
+	array('label'=>'Create Interfaceusecase', 'url'=>UrlHelper::getPrefixLink('create')),
+	array('label'=>'Update Interfaceusecase', 'url'=>UrlHelper::getPrefixLink('update', 'id'=>$model->interface_id)),
 	array('label'=>'Delete Interfaceusecase', 'url'=>'#', 'linkOptions'=>array('submit'=>array('delete','id'=>$model->interface_id),'confirm'=>'Are you sure you want to delete this item?')),
 	array('label'=>'Manage Interfaceusecase', 'url'=>array('admin')),
 );

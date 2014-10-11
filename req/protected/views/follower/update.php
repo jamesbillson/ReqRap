@@ -9,10 +9,10 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	array('label'=>'List Follower', 'url'=>array('index')),
-	array('label'=>'Create Follower', 'url'=>array('create')),
-	array('label'=>'View Follower', 'url'=>array('view', 'id'=>$model->id)),
-	array('label'=>'Manage Follower', 'url'=>array('admin')),
+	array('label'=>'List Follower', 'url'=>UrlHelper::getPrefixLink('index')),
+	array('label'=>'Create Follower', 'url'=>UrlHelper::getPrefixLink('create')),
+	array('label'=>'View Follower', 'url'=>UrlHelper::getPrefixLink('view/?id=').$model->id),
+	array('label'=>'Manage Follower', 'url'=>UrlHelper::getPrefixLink('admin')),
 );
 ?>
 

@@ -15,7 +15,7 @@ $box2 = $this->beginWidget('bootstrap.widgets.TbBox', array(
                     'class' => 'bootstrap.widgets.TbButton',
                     'type' => 'primary', // '', 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
                     'label'=> 'Add Invoice',
-                    'url'=>'/cost/create/id/'.$model->id,
+                    'url'=>UrlHelper::getPrefixLink('/cost/create/id/').$model->id,
                     
                       ),
      
@@ -51,8 +51,8 @@ if (count($costs)):
         </td>
 
             <td>
-                   <a href="/cost/allocate/id/<?php echo $item['costid'];?>"><i class="icon-eye-open" rel="tooltip" title="View Invoice"></i></a> 
-                   <a href="/costallocation/delete/?id=<?php echo $item['allocationid'];?>&packageid=<?php echo $item['id'];?>"><i class="icon-remove-sign" rel="tooltip" title="Remove/Uninvite"></i></a> 
+                   <a href="<?php echo UrlHelper::getPrefixLink('/cost/allocate/id/')?><?php echo $item['costid'];?>"><i class="icon-eye-open" rel="tooltip" title="View Invoice"></i></a> 
+                   <a href="<?php echo UrlHelper::getPrefixLink('/costallocation/delete/?id=')?><?php echo $item['allocationid'];?>&packageid=<?php echo $item['id'];?>"><i class="icon-remove-sign" rel="tooltip" title="Remove/Uninvite"></i></a> 
        
             
             </td>

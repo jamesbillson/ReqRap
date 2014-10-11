@@ -59,7 +59,7 @@ if (count($steps)):
                                     <tr>
                                         <td>  
                                             <?php if ($edit) { ?>
-                                                <a href="/step/insert/id/<?php echo $steps[$key]['id'] ?>"><i class="icon-plus-sign-alt" rel="tooltip" title="Insert a new step"></i> Add Step</a>
+                                                <a href="<?php echo UrlHelper::getPrefixLink('/step/insert/id/')?><?php echo $steps[$key]['id'] ?>"><i class="icon-plus-sign-alt" rel="tooltip" title="Insert a new step"></i> Add Step</a>
                                             <?php } ?> 
                                         </td> 
                                     </tr>
@@ -117,19 +117,19 @@ if (count($steps)):
                             <?php if ($item['step_id'] == $model->startstep_id) { // THIS IS Start step  ?>
                                 Start
                             <?php } ELSE { ?>
-                                <a href="/flow/updateendpoints/end/1/flow/<?php echo $model->id; ?>/id/<?php echo $item['step_id']; ?>"><i class="icon-chevron-right" rel="tooltip" title="Move the START of this flow here"></i></a> 
+                                <a href="<?php echo UrlHelper::getPrefixLink('/flow/updateendpoints/end/1/flow/')?><?php echo $model->id; ?>/id/<?php echo $item['step_id']; ?>"><i class="icon-chevron-right" rel="tooltip" title="Move the START of this flow here"></i></a> 
 
                             <?php } ?>
                             <?php if ($item['step_id'] == $model->rejoinstep_id) { // THIS IS Start step ?>
                                 END  
                             <?php } ELSE { ?>
-                                <a href="/flow/updateendpoints/end/2/id/<?php echo $item['step_id']; ?>/flow/<?php echo $model->id; ?>"><i class="icon-chevron-left" rel="tooltip" title="Move the END of this Flow Here"></i></a> 
+                                <a href="<?php echo UrlHelper::getPrefixLink('/flow/updateendpoints/end/2/id/')?><?php echo $item['step_id']; ?>/flow/<?php echo $model->id; ?>"><i class="icon-chevron-left" rel="tooltip" title="Move the END of this Flow Here"></i></a> 
                             <?php } ?>
                         </td>
                     <?php endforeach ?>   
             </tbody>
         </table>
     <?php endif; // end count of results   ?>
-    <a href="/step/create/id/<?php echo $model->id; ?>"><i class="icon-plus-sign-alt" rel="tooltip" title="Add another step"></i> Add Step</a> 
+    <a href="<?php echo UrlHelper::getPrefixLink('/step/create/id/')?><?php echo $model->id; ?>"><i class="icon-plus-sign-alt" rel="tooltip" title="Add another step"></i> Add Step</a> 
 <?php } ?>
             

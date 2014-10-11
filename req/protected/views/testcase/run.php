@@ -1,12 +1,12 @@
 
-<h3>Project: <a href="/project/view/tab/objects/id/<?php echo $model->project->id; ?>"><?php echo $model->project->name; ?></a></h3>
+<h3>Project: <a href="<?php echo UrlHelper::getPrefixLink('/project/view/tab/objects/id/')?><?php echo $model->project->id; ?>"><?php echo $model->project->name; ?></a></h3>
 <?php 
 
 if(!empty($model->usecase_id))
     {
     $usecase=Usecase::model()->findbyPK($model->usecase_id);?>
 <?php if(!empty($teststep_id)) ;?>
-<h4><a href="/usecase/view/id/<?php echo $usecase->id; ?>"><?php echo $usecase->name; ?></a></h4>
+<h4><a href="<?php echo UrlHelper::getPrefixLink('/usecase/view/id/')?><?php echo $usecase->id; ?>"><?php echo $usecase->name; ?></a></h4>
 
    <?php  }
 
@@ -30,7 +30,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                     'class' => 'bootstrap.widgets.TbButton',
                     'type' => 'primary', // '', 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
                     'label'=> 'Re-Run this Test Case',
-                    'url'=>'/testcase/rerun/id/'.$model->id,
+                    'url'=>UrlHelper::getPrefixLink('/testcase/rerun/id/'.$model->id),
                     
                       ),
      

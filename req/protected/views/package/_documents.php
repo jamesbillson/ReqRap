@@ -26,7 +26,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
 		'class' => 'bootstrap.widgets.TbButton',
 		'type' => 'primary', // '', 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
 		'label'=> 'Add Document',
-            'url'=>'/document/create?id='.$model->project->id,
+            'url'=>UrlHelper::getPrefixLink('/document/create?id=').$model->project->id,
 	),))); 
  }
  ELSE
@@ -89,10 +89,10 @@ if (count($data)):?>
               
 
       <td>
-                   <a href="/document/view/id/<?php echo $item['docid'];?>"><i class="icon-eye-open" rel="tooltip" title="View Document History"></i></a> 
+                   <a href="<?php echo UrlHelper::getPrefixLink('/document/view/id/')?><?php echo $item['docid'];?>"><i class="icon-eye-open" rel="tooltip" title="View Document History"></i></a> 
             
                    <?php if($upload==1){ ?>
-                   <a href="/documentversion/create/id/<?php echo $item['docid'];?>"><i class="icon-upload" rel="tooltip" title="Upload New Version"></i></a> 
+                   <a href="<?php echo UrlHelper::getPrefixLink('/documentversion/create/id/')?><?php echo $item['docid'];?>"><i class="icon-upload" rel="tooltip" title="Upload New Version"></i></a> 
                    <?php } ?>
                  
             

@@ -25,7 +25,7 @@ $data = Object::model()->getProjectObjects(Yii::app()->session['project']);
                 <tr class="odd">  
                    
                     <td>
-                        <a href="/object/view/id/<?php echo $item['object_id'];?>">OB-<?php echo str_pad($item['number'], 3, "0", STR_PAD_LEFT); ?></a>
+                        <a href="<?php echo UrlHelper::getPrefixLink('/object/view/id/')?><?php echo $item['object_id'];?>">OB-<?php echo str_pad($item['number'], 3, "0", STR_PAD_LEFT); ?></a>
                     </td>
                  
                     <td>    

@@ -17,4 +17,4 @@
 After you activate your account you must create an organisation so you can invite work colleagues 
 to collaborate on your projects.  Then you can create as many ReqRap projects as you like.
 <br><br>
-This <a href="/site/gettingstarted/">getting started guide</a> will help you get going.
+This <a href="<?php echo UrlHelper::getPrefixLink('/site/gettingstarted/')?>">getting started guide</a> will help you get going.

@@ -13,7 +13,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
         'class' => 'bootstrap.widgets.TbButton',
         'type' => 'primary', // '', 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
         'label'=> 'Add Document',
-        'url'=>'/document/create?id='.Yii::app()->session['project'],
+        'url'=>UrlHelper::getPrefixLink('/document/create?id=').Yii::app()->session['project'],
     ),
     
 )
@@ -59,10 +59,10 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                         <?php echo $item['version'];?>
                     </td>
                     <td>
-                        <a href="/document/view/id/<?php echo $item['docid'];?>"><i class="icon-eye-open" rel="tooltip" title="View Document History"></i></a> 
-                        <a href="/documentversion/download/id/<?php echo $item['version_id'];?>"><i class="icon-download-alt" rel="tooltip" title="Download this Document"></i></a> 
-                        <a href="/documentversion/create/id/<?php echo $item['docid'];?>"><i class="icon-upload" rel="tooltip" title="Upload New Version"></i></a> 
-                        <a href="/document/remove/id/<?php echo $item['docid'];?>/project/<?php echo $model->id;?>"><i class="icon-remove-sign" rel="tooltip" title="Remove Document"></i></a> 
+                        <a href="<?php echo UrlHelper::getPrefixLink('/document/view/id/')?><?php echo $item['docid'];?>"><i class="icon-eye-open" rel="tooltip" title="View Document History"></i></a> 
+                        <a href="<?php echo UrlHelper::getPrefixLink('/documentversion/download/id/')?><?php echo $item['version_id'];?>"><i class="icon-download-alt" rel="tooltip" title="Download this Document"></i></a> 
+                        <a href="<?php echo UrlHelper::getPrefixLink('/documentversion/create/id/')?><?php echo $item['docid'];?>"><i class="icon-upload" rel="tooltip" title="Upload New Version"></i></a> 
+                        <a href="<?php echo UrlHelper::getPrefixLink('/document/remove/id/')?><?php echo $item['docid'];?>/project/<?php echo $model->id;?>"><i class="icon-remove-sign" rel="tooltip" title="Remove Document"></i></a> 
                     </td>
                 </tr>
             <?php

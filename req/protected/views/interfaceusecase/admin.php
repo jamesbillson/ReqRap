@@ -8,8 +8,8 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	array('label'=>'List Interfaceusecase', 'url'=>array('index')),
-	array('label'=>'Create Interfaceusecase', 'url'=>array('create')),
+	array('label'=>'List Interfaceusecase', 'url'=>UrlHelper::getPrefixLink('index')),
+	array('label'=>'Create Interfaceusecase', 'url'=>UrlHelper::getPrefixLink('create')),
 );
 
 Yii::app()->clientScript->registerScript('search', "

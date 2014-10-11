@@ -9,7 +9,7 @@ echo $this->renderPartial('/project/head');
 if(!empty($model->usecase_id))
     {
     $usecase=Usecase::model()->findbyPK($model->usecase_id);?>
-<h4><a href="/usecase/view/id/<?php echo $usecase->usecase_id; ?>"><?php echo $usecase->name; ?></a></h4>
+<h4><a href="<?php echo UrlHelper::getPrefixLink('/usecase/view/id/')?><?php echo $usecase->usecase_id; ?>"><?php echo $usecase->name; ?></a></h4>
 
    <?php  }
 
@@ -96,9 +96,9 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
 
                   
                     <td>
-                        <a href="/teststep/update/id/<?php echo $item['id'];?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
-                       <?php if(count($data)>1){;?> <a href="/teststep/delete/id/<?php echo $item['id'];?>"><i class="icon-remove-sign" rel="tooltip" title="Delete"></i></a> <?php } ?>
-                      <a href="/teststep/create/id/<?php echo $item['testcase_id'];?>/step/<?php echo $item['id'];?>"><i class="icon-plus-sign-alt" rel="tooltip" title="Add new step after"></i></a> 
+                        <a href="<?php echo UrlHelper::getPrefixLink('/teststep/update/id/')?><?php echo $item['id'];?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
+                       <?php if(count($data)>1){;?> <a href="<?php echo UrlHelper::getPrefixLink('/teststep/delete/id/')?><?php echo $item['id'];?>"><i class="icon-remove-sign" rel="tooltip" title="Delete"></i></a> <?php } ?>
+                      <a href="<?php echo UrlHelper::getPrefixLink('/teststep/create/id/')?><?php echo $item['testcase_id'];?>/step/<?php echo $item['id'];?>"><i class="icon-plus-sign-alt" rel="tooltip" title="Add new step after"></i></a> 
                    
                     </td>
                 </tr>

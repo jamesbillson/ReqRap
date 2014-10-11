@@ -69,7 +69,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
             <?php foreach($data as $item):?>
                 <tr class="odd">  
                     <td>   
-                        <a href="/iface/view/id/<?php echo $item['iface_id'];?>">IF-<?php echo str_pad($model->number, 2, "0", STR_PAD_LEFT); ?>
+                        <a href="<?php echo UrlHelper::getPrefixLink('/iface/view/id/')?><?php echo $item['iface_id'];?>">IF-<?php echo str_pad($model->number, 2, "0", STR_PAD_LEFT); ?>
                             <?php echo str_pad($item['number'], 3, "0", STR_PAD_LEFT); ?>
                            </a>
                         <?php echo $item['name'];?>

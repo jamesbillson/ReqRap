@@ -46,7 +46,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                     <td>   
                        
                         
-                     <a href="/testcase/view/id/<?php echo $testcase['id'];?>">
+                     <a href="<?php echo UrlHelper::getPrefixLink('/testcase/view/id/')?><?php echo $testcase['id'];?>">
                      TC-<?php echo str_pad($testcase['number'], 4, "0", STR_PAD_LEFT) ?>    
                       </a>
                     </td>

@@ -1,6 +1,6 @@
-        <link rel="stylesheet" type="text/css" href="<?php Yii::app()->baseUrl?>/css/carousel.css">
-        <script type="text/javascript" src="<?php Yii::app()->baseUrl?>/js/jquery.jcarousel.min.js"></script>
-        <script type="text/javascript" src="<?php Yii::app()->baseUrl?>/js/jcarousel.responsive.js"></script>
+<link rel="stylesheet" type="text/css" href="<?php Yii::app()->baseUrl?>/css/carousel.css">
+<script type="text/javascript" src="<?php Yii::app()->baseUrl?>/js/jquery.jcarousel.min.js"></script>
+<script type="text/javascript" src="<?php Yii::app()->baseUrl?>/js/jcarousel.responsive.js"></script>
 <?php 
 $link=Yii::App()->session['release'].'_12_'.$model->iface_id;
 echo $this->renderPartial('/project/head',array('tab'=>'usecases','link'=>$link)); 
@@ -16,10 +16,10 @@ endforeach;
 ?>
 
 <h2>Interface UI-<?php echo str_pad($type_number, 2, "0", STR_PAD_LEFT).str_pad($model->number, 3, "0", STR_PAD_LEFT); ?> 
-     <a href="/iface/update/ucid/-1/id/<?php echo $model->id;?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
+     <a href="<?php echo UrlHelper::getPrefixLink('/iface/update/ucid/-1/id/')?><?php echo $model->id;?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
 
 </h2>
-<a href="/project/view/tab/interfaces">Back to Interfaces</a>
+<a href="<?php echo UrlHelper::getPrefixLink('/project/view/tab/interfaces')?>">Back to Interfaces</a>
 <h3>   <?php echo $model->name;?> </h3>
 <strong>Interface type: </strong><?php echo $type_name;?>
 
@@ -53,7 +53,7 @@ if ($model->photo_id==0 || $image_id==0)
                                     Yii::app()->params['photo_folder'].$image->file, 
                                    array('resize' => array('width' => 150,'height'=>150))); 
                     ?>
-                        <li><a href="/iface/addimage/iface/<?php echo $model->iface_id; ?>/id/<?php echo $pic['photo_id']; ?>"  rel="tooltip" title="<?php echo $pic['description'] ?>" ><img src="<?php echo $src; ?>" border="0" width="150" height="150"></a></li>        
+                        <li><a href="<?php echo UrlHelper::getPrefixLink('/iface/addimage/iface/')?><?php echo $model->iface_id; ?>/id/<?php echo $pic['photo_id']; ?>"  rel="tooltip" title="<?php echo $pic['description'] ?>" ><img src="<?php echo $src; ?>" border="0" width="150" height="150"></a></li>        
                     <?php 
                     }
                     ?>
@@ -104,11 +104,11 @@ if ($model->photo_id==0 || $image_id==0)
     ?>
     <div style="float:left;width:100%;">
       <div style="width:160px;float:left;">
-          <a id="popup" href="<?php echo '/iface/preview/id/'.$model->iface_id.'/release/'.Yii::app()->session['release']; ?>"><img src="<?php echo $src ?>"/></a>
+          <a id="popup" href="<?php echo  UrlHelper::getPrefixLink('/iface/preview/id/').$model->iface_id.'/release/'.Yii::app()->session['release']; ?>"><img src="<?php echo $src ?>"/></a>
       </div>
       <div style="float:left;margin-top: 50px;">
-        <a href="<?php echo Yii::app()->baseUrl?>/iface/update/ucid/0/id/<?php echo $model->id;?>"><i class="icon-link text-error" rel="tooltip" title="Unlink this image"></i>Unlink</a> <br />
-    <a href="<?php echo Yii::app()->baseUrl?>/photo/update/id/<?php echo $image->id;?>"><i class="icon-edit" rel="tooltip" title="Remove"></i>Edit</a> 
+        <a href="<?php echo UrlHelper::getPrefixLink('/iface/update/ucid/0/id/')?><?php echo $model->id;?>"><i class="icon-link text-error" rel="tooltip" title="Unlink this image"></i>Unlink</a> <br />
+    <a href="<?php echo UrlHelper::getPrefixLink('/photo/update/id/')?><?php echo $image->id;?>"><i class="icon-edit" rel="tooltip" title="Remove"></i>Edit</a> 
     
     
       </div>
@@ -160,7 +160,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
             <?php foreach($data as $item):?>
                 <tr class="odd">  
                     <td>   
-                        <a href="/usecase/view/id/<?php echo $item['usecase_id'];?>">UC-<?php echo str_pad($item['package_number'], 2, "0", STR_PAD_LEFT); ?>
+                        <a href="/req/usecase/view/id/<?php echo $item['usecase_id'];?>">UC-<?php echo str_pad($item['package_number'], 2, "0", STR_PAD_LEFT); ?>
                             <?php echo str_pad($item['usecase_number'], 3, "0", STR_PAD_LEFT); ?></a>
                         <?php echo $item['usecase_name'];?>
                     </td>

@@ -12,7 +12,7 @@ $stepid=-1;
 
     <div class="form">
     
-    <form method="POST" action="/stepform/associate">
+    <form method="POST" action="<?php echo UrlHelper::getPrefixLink('/stepform/associate')?>">
    	<div class="row">
             <p>Usecase</p>
             

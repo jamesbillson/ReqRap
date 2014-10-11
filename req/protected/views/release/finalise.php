@@ -13,11 +13,11 @@ Date Created <?echo $model->create_date;?>
 
 
 
-        <a href="/release/finalise/id/<?php echo $model->id;?>"><i class="icon-flag" rel="tooltip" title="Finalise Release"></i></a> 
+        <a href="<?php echo UrlHelper::getPrefixLink('/release/finalise/id/')?><?php echo $model->id;?>"><i class="icon-flag" rel="tooltip" title="Finalise Release"></i></a> 
       
           
-          <a href="/release/update/id/<?php echo $model->id;?>"><i class="icon-edit" rel="tooltip" title="Edit Details"></i></a> 
-        <a href="/rule/delete/id/<?php echo $model->id;?>"><i class="icon-remove-sign text-error" rel="tooltip" title="Remove/Uninvite"></i></a> 
+          <a href="<?php echo UrlHelper::getPrefixLink('/release/update/id/')?><?php echo $model->id;?>"><i class="icon-edit" rel="tooltip" title="Edit Details"></i></a> 
+        <a href="<?php echo UrlHelper::getPrefixLink('/rule/delete/id/')?><?php echo $model->id;?>"><i class="icon-remove-sign text-error" rel="tooltip" title="Remove/Uninvite"></i></a> 
     
               
     

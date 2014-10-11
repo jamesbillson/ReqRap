@@ -21,12 +21,12 @@ foreach($history as $version=>$item){
             <table>
                 <tr><td>
                 <?php if($item['active']==0 && $item['action']<3){  ?>
-                <a href="/usecase/rollback/uc/<?php echo $item['usecase_id'];?>/id/<?php echo $version;?>">
+                <a href="<?php echo UrlHelper::getPrefixLink('/usecase/rollback/uc/');?><?php echo $item['usecase_id'];?>/id/<?php echo $version;?>">
                 <i class="icon-repeat" rel="tooltip" data-placement="right" title="Roll Back to this Version"></i></a> 
                 <?php  } 
                 if($item['active']==1)
                 { ?> 
-                        <a href="/usecase/rollback/uc/<?php echo $item['usecase_id'];?>/id/<?php echo $version;?>">
+                        <a href="<?php echo UrlHelper::getPrefixLink('/usecase/rollback/uc/')?><?php echo $item['usecase_id'];?>/id/<?php echo $version;?>">
                 <i class="icon-circle-arrow-right" rel="tooltip" data-placement="right" title="Current Version - Roll back all objects to this point."></i> 
                         </a>
                     <?php   }

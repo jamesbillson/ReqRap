@@ -4,7 +4,7 @@ $data = Variation::model()->variationContractitems($model->id);
 
 ?>
 <h1><?php echo $model->project->company->name; ?></h1>
-<h2><a href="/project/view/id/<?php echo $model->project->id; ?>/tab/variations"><?php echo $model->project->name; ?></a></h2>
+<h2><a href="<?php echo UrlHelper::getPrefixLink('/project/view/id/')?><?php echo $model->project->id; ?>/tab/variations"><?php echo $model->project->name; ?></a></h2>
 
 
 <h3><?php echo Variation::$type[$model->contract];?>: <?php echo $model->name; ?></h3>
@@ -25,7 +25,7 @@ $form = $this->beginWidget(
     array(
         'id' => 'variation-form',
         'type'=> 'vertical',
-        'action'=>'/variation/update/id/'.$model->id,
+        'action'=>UrlHelper::getPrefixLink('/variation/update/?id='.$model->id),
         'htmlOptions' => array('class' => 'well'), // for inset effect
     )
 );
@@ -62,7 +62,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
         'class' => 'bootstrap.widgets.TbButton',
         'type' => 'primary', // '', 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
         'label'=> 'Add Contract Item',
-        'url'=>'/contractitem/create?id='.$model->id,
+        'url'=>UrlHelper::getPrefixLink('/contractitem/create?id='.$model->id),
     ),
     
 ))); 
@@ -97,8 +97,8 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
              
 
                     <td>
-                      <a href="/contractitem/update/id/<?php echo $item['itemid'];?>/vid/<?php echo $item['id'];?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
-                      <a href="/contractitem/delete/id/<?php echo $item['itemid'];?>"><i class="icon-remove-sign" rel="tooltip" title="Delete"></i></a> 
+                      <a href="<?php echo UrlHelper::getPrefixLink('/contractitem/update/id/')?><?php echo $item['itemid'];?>/vid/<?php echo $item['id'];?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
+                      <a href="<?php echo UrlHelper::getPrefixLink('/contractitem/delete/id/')?><?php echo $item['itemid'];?>"><i class="icon-remove-sign" rel="tooltip" title="Delete"></i></a> 
                     </td>
                 </tr>
                <?php    $total=$total+$item['amount'];
@@ -120,7 +120,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
     'label'=>'Create Contract Items from Packages',
     'type'=>'success', // null, 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
     'size'=>'small', // null, 'large', 'small' or 'mini'
-    'url'=>array('project/packagescontract?vid='.$model->id.'&pid='.$model->project->id)
+    'url'=>UrlHelper::getPrefixLink('project/packagescontract?vid='.$model->id.'&pid='.$model->project->id)
         )); 
         } elseif ($model->project->claimtype==1){
            

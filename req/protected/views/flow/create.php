@@ -8,8 +8,8 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	array('label'=>'List Flow', 'url'=>array('index')),
-	array('label'=>'Manage Flow', 'url'=>array('admin')),
+	array('label'=>'List Flow', 'url'=>UrlHelper::getPrefixLink('index')),
+	array('label'=>'Manage Flow', 'url'=>UrlHelper::getPrefixLink('admin')),
 );
 ?>
 

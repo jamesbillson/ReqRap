@@ -5,5 +5,5 @@
    The main choices are analyst who creates projects,<br />
    client who approving projects<br />
    or a tester who runs test plans.<br />
-   <a href="/company/mycreate">Create your company now</a>
+   <a href="<?php echo UrlHelper::getPrefixLink('/company/mycreate')?>">Create your company now</a>
 </p>

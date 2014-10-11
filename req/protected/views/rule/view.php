@@ -21,7 +21,7 @@ echo $this->renderPartial('/project/head',array('tab'=>'rules','link'=>$link));
                     'type' => 'link', // '', 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
                     'icon'=> 'edit',
                     'visible'=>$edit,
-                    'url'=>'/rule/update/id/'.$model->id,
+                    'url'=>UrlHelper::getPrefixLink('/rule/update/id/'.$model->id),
                     
                       ),
    
@@ -63,12 +63,12 @@ echo $this->renderPartial('/project/head',array('tab'=>'rules','link'=>$link));
  <?php } ELSE { ?>
  Interface is used in the following UC's:<br />
    <?php foreach($steprule as $item){?>
- <a href="/usecase/view/id/<?php echo $item['usecase_id'];?>">
+ <a href="<?php echo UrlHelper::getPrefixLink('/usecase/view/id/')?><?php echo $item['usecase_id'];?>">
        <?php  echo 'UC-'.str_pad($item['package_number'], 2, "0", STR_PAD_LEFT).
          str_pad($item['usecase_number'], 3, "0", STR_PAD_LEFT);?>
  </a>
          <?php echo $item['usecase_name'];?> 
-         (<a href="/step/update/id/-1/flow/<?php echo $item['flow_id'];?>"><?php echo $item['flow_name'];?> Flow</a>)
+         (<a href="<?php echo UrlHelper::getPrefixLink('/step/update/id/-1/flow/')?><?php echo $item['flow_id'];?>"><?php echo $item['flow_name'];?> Flow</a>)
            
          <br />
  <?php } ?>
@@ -86,7 +86,7 @@ echo $this->renderPartial('/project/head',array('tab'=>'rules','link'=>$link));
                 <tr>
                     <td>
                 <?php if ($item['active'] != 1 && $item['action']!=3){    ?> 
-                <a href="/version/rollback/id/<?php echo $item['versionid'];?>"><i class="icon-repeat" rel="tooltip" data-placement="right" name="Roll Back to this Version"></i></a> 
+                <a href="<?php echo UrlHelper::getPrefixLink('/version/rollback/id/')?><?php echo $item['versionid'];?>"><i class="icon-repeat" rel="tooltip" data-placement="right" name="Roll Back to this Version"></i></a> 
                 <?php  } ELSE { ?> 
                 <i class="icon-circle-arrow-right" rel="tooltip" data-placement="right" name="Current Version"></i> 
                 <?php   } ?>  

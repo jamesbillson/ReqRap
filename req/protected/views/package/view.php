@@ -23,7 +23,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                     'class' => 'bootstrap.widgets.TbButton',
                     'type' => 'primary', // '', 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
                     'label'=> 'Add Use Case',
-                    'url'=>'/usecase/create/id/'.$model->id,
+                    'url'=>UrlHelper::getPrefixLink('/usecase/create/id/').$model->id,
                       ),
      
 )));  
@@ -40,7 +40,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
           <tr class="odd">
 
               <td> 
-                   <a href="/usecase/view/id/<?php echo $item['usecase_id'];?>"> UC-<?php echo str_pad($model->number, 2, "0", STR_PAD_LEFT).''.str_pad($item['number'], 3, "0", STR_PAD_LEFT); ?></a>
+                   <a href="<?php echo UrlHelper::getPrefixLink('/usecase/view/id/')?><?php echo $item['usecase_id'];?>"> UC-<?php echo str_pad($model->number, 2, "0", STR_PAD_LEFT).''.str_pad($item['number'], 3, "0", STR_PAD_LEFT); ?></a>
                </td> 
               <td>
                    <b><?php echo $item['name'];?></a></b>
@@ -48,9 +48,9 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
               </td> 
               <td>
                   <?php if($edit){ ?>
-               <a href="/usecase/delete/id/<?php echo $item['id'];?>"><i class="icon-remove-sign text-error" rel="tooltip" title="Edit"></i> 
-               <a href="/usecase/update/id/<?php echo $item['id'];?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
-               <a href="/usecase/history/id/<?php echo $item['usecase_id'];?>"><i class="icon-calendar" rel="tooltip" title="History"></i></a> 
+               <a href="<?php echo UrlHelper::getPrefixLink('/usecase/delete/id/')?><?php echo $item['id'];?>"><i class="icon-remove-sign text-error" rel="tooltip" title="Edit"></i> 
+               <a href="<?php echo UrlHelper::getPrefixLink('/usecase/update/id/')?><?php echo $item['id'];?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
+               <a href="<?php echo UrlHelper::getPrefixLink('/usecase/history/id/')?><?php echo $item['usecase_id'];?>"><i class="icon-calendar" rel="tooltip" title="History"></i></a> 
               
                             <?php if($counter!=0) { ?>
                             <a href="/version/move/object/10/dir/2/id/<?php echo $item['id'];?>"><i class="icon-arrow-up" rel="tooltip" title="Move Up"></i></a> 
@@ -60,7 +60,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                             <i class="icon-flag" rel="tooltip" title="Start"></i>
                             <?php } ?>          
                             <?php if($counter!=count($usecases)-1) { ?>        
-                            <a href="/version/move/object/10/dir/1/id/<?php echo $item['id'];?>"><i class="icon-arrow-down" rel="tooltip" title="Move Down"></i></a> 
+                            <a href="<?php echo UrlHelper::getPrefixLink('/version/move/object/10/dir/1/id/')?><?php echo $item['id'];?>"><i class="icon-arrow-down" rel="tooltip" title="Move Down"></i></a> 
                             <?php } ELSEIF(count($usecases)>1) {?>
                              <i class="icon-flag" rel="tooltip" title="End"></i>   
                             <?php } ?> 
@@ -99,7 +99,7 @@ if (count($deleted)):?>
         <tbody>
         <?php foreach($deleted as $item) {?>
            <tr class="odd">  
-                <td> <a href="/usecase/view/id/<?php echo $item['usecase_id'];?>"> 
+                <td> <a href="<?php echo UrlHelper::getPrefixLink('/usecase/view/id/')?><?php echo $item['usecase_id'];?>"> 
                 UC-<?php echo str_pad($item['number'], 3, "0", STR_PAD_LEFT); ?></a> 
                 </td>
    

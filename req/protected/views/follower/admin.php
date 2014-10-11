@@ -8,8 +8,8 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	array('label'=>'List Follower', 'url'=>array('index')),
-	array('label'=>'Create Follower', 'url'=>array('create')),
+	array('label'=>'List Follower', 'url'=>UrlHelper::getPrefixLink('index')),
+	array('label'=>'Create Follower', 'url'=>UrlHelper::getPrefixLink('create')),
 );
 
 Yii::app()->clientScript->registerScript('search', "

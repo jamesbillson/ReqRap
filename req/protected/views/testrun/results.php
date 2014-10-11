@@ -7,7 +7,7 @@ echo $this->renderPartial('/project/head',array('tab'=>'testcases'));
 $testruns=Testrun::model()->findAll('testcase_id='.$id);
 Yii::App()->session['setting_tab']='testcases';
 ?>
-<a href="/project/view">Back to testcases</a>
+<a href="<?php echo UrlHelper::getPrefixLink('/project/view')?>">Back to testcases</a>
 <?php 
 
 

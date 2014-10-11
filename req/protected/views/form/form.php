@@ -22,7 +22,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
         'type' => 'primary', // '', 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
         'label'=> 'Add Form Property',
         'visible'=>$edit,
-        'url'=>array('formproperty/create', 'id'=>$model->form_id)
+        'url'=>UrlHelper::getPrefixLink('formproperty/create/?id=').$model->form_id
     )),
 ));
 
@@ -65,9 +65,9 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                     </td>                   
                     <td>
                    <?php if($edit){ ?>
-                        <a href="/formproperty/update/id/<?php echo $item['id'];?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
-                        <a href="/formproperty/delete?id=<?php echo $item['id'];?>"><i class="icon-remove-sign" rel="tooltip" title="Delete"></i></a> 
-                     <a href="/formproperty/history/id/<?php echo $item['formproperty_id'];?>"><i class="icon-calendar" rel="tooltip" title="History"></i></a> 
+                        <a href="<?php echo UrlHelper::getPrefixLink('/formproperty/update/id/')?><?php echo $item['id'];?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
+                        <a href="<?php echo UrlHelper::getPrefixLink('/formproperty/delete?id=')?><?php echo $item['id'];?>"><i class="icon-remove-sign" rel="tooltip" title="Delete"></i></a> 
+                     <a href="<?php echo UrlHelper::getPrefixLink('/formproperty/history/id/')?><?php echo $item['formproperty_id'];?>"><i class="icon-calendar" rel="tooltip" title="History"></i></a> 
                    <?php } ?>
                     </td>
                 </tr>
@@ -102,7 +102,7 @@ if (count($deleted)):?>
         <tbody>
         <?php foreach($deleted as $item) {?>
            <tr class="odd">  
-                <td> <a href="/form/history/id/<?php echo $item['form_id'];?>"> 
+                <td> <a href="<?php echo UrlHelper::getPrefixLink('/form/history/id/')?><?php echo $item['form_id'];?>"> 
                 <?php echo $item['number']; ?></a> 
                 </td>
    

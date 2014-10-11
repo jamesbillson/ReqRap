@@ -118,7 +118,7 @@ $data=  Testrun::model()->getTestRun($id);
             'label'=>'Finalise',
             'type'=>'success', // null, 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
             'size'=>'small', // null, 'large', 'small' or 'mini'
-            'url'=>array('testrun/finish/id/'.$id)
+            'url'=>UrlHelper::getPrefixLink('testrun/finish/?id/='.$id)
 ));
          ?>                 
                        

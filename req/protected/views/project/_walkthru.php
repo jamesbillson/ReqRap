@@ -24,7 +24,7 @@ echo $this->renderPartial('/project/head',array('tab'=>'','link'=>$link));
 $project=Yii::App()->session['project'];
 $walkthrupaths= Walkthrupath::model()->findAll('release_id='.$release);
 
-$url='/walkthrupath/create/id/'.$release;
+$url=UrlHelper::getPrefixLink('/walkthrupath/create/id/').$release;
 ?>
 <?php 
 
@@ -80,7 +80,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                     <td>   
                        
                        
-                     <a href="/walkthrupath/view/id/<?php echo $walkthrupath['id'];?>">
+                     <a href="<?php echo UrlHelper::getPrefixLink('/walkthrupath/view/id/')?><?php echo $walkthrupath['id'];?>">
                      WT-<?php echo str_pad($walkthrupath['number'], 4, "0", STR_PAD_LEFT) ?>    
                       </a>
                     </td>
@@ -98,7 +98,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                     
                     <td>
                         <?php if($permission==1){ ?>
-                    <a href="/walkthrupath/delete/id/<?php echo $walkthrupath['id'];?>"><i class="icon-remove-sign text-error" rel="tooltip" title="Remove"></i></a> 
+                    <a href="<?php echo UrlHelper::getPrefixLink('/walkthrupath/delete/id/')?><?php echo $walkthrupath['id'];?>"><i class="icon-remove-sign text-error" rel="tooltip" title="Remove"></i></a> 
                       <?php } ?> 
                     </td>
                 </tr>

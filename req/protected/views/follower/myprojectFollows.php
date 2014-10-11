@@ -24,15 +24,15 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
         <?php foreach($data as $item) {?>
         <tr class="odd"> 
             <td>
-        <a href="/company/view?id=<?php echo $item['cid'];?>"><?php echo $item['cname'];?></a>
+        <a href="<?php echo UrlHelper::getPrefixLink('/company/view?id=')?><?php echo $item['cid'];?>"><?php echo $item['cname'];?></a>
                 
             </td>    
         <td>   
-        <a href="/project/view?id=<?php echo $item['id'];?>&tab=documents"><?php echo $item['name'];?></a>
+        <a href="<?php echo UrlHelper::getPrefixLink('/project/view?id=')?><?php echo $item['id'];?>&tab=documents"><?php echo $item['name'];?></a>
         </td>
          
         <td>
-         <a href="/follower/delete?id=<?php echo $item['id'];?>"><i class="icon-remove-sign" rel="tooltip" title="Ignore"></i></a> 
+         <a href="<?php echo UrlHelper::getPrefixLink('/follower/delete?id=')?><?php echo $item['id'];?>"><i class="icon-remove-sign" rel="tooltip" title="Ignore"></i></a> 
        
             
             </td>

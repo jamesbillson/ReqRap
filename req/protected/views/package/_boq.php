@@ -91,9 +91,9 @@ while($x <= $number_components)
             <td>  <?php  echo number_format($boq[$x][$y]['extension'], 0, '.', ','); ?></td>
             
               <td>   
-           <a href="/boqitem/duplicate?id=<?php echo $boq[$x][$y]['id'];?>"><i class="icon-plus-sign" rel="tooltip" title="Add Another"></i></a> 
-         <a href="/boqitem/update/id/<?php echo $boq[$x][$y]['id'];?>"><i class="icon-edit" rel="tooltip" title="Edit Details"></i></a> 
-          <a href="/boqitem/remove?id=<?php echo $boq[$x][$y]['id'];?>"><i class="icon-remove-sign" rel="tooltip" title="Remove/Uninvite"></i></a> 
+           <a href="<?php echo UrlHelper::getPrefixLink('/boqitem/duplicate?id=')?><?php echo $boq[$x][$y]['id'];?>"><i class="icon-plus-sign" rel="tooltip" title="Add Another"></i></a> 
+         <a href="<?php echo UrlHelper::getPrefixLink('/boqitem/update/id/')?><?php echo $boq[$x][$y]['id'];?>"><i class="icon-edit" rel="tooltip" title="Edit Details"></i></a> 
+          <a href="<?php echo UrlHelper::getPrefixLink('/boqitem/remove?id=')?><?php echo $boq[$x][$y]['id'];?>"><i class="icon-remove-sign" rel="tooltip" title="Remove/Uninvite"></i></a> 
          
               </td>
             

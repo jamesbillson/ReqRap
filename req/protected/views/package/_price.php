@@ -12,7 +12,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                     'class' => 'bootstrap.widgets.TbButton',
                     'type' => 'primary', // '', 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
                     'label'=> 'Add Item',
-                    'url'=>'/subcontractitem/create/id/'.$model->subcontract->id,
+                    'url'=>UrlHelper::getPrefixLink('/subcontractitem/create/id/').$model->subcontract->id,
                     
                       ),
      
@@ -66,9 +66,9 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
 
             <td>
    
-      <a href="/subcontractitem/update?id=<?php echo $item['id'];?>"><i class="icon-edit" rel="tooltip" title="Edit this subcontract item"></i></a> 
+      <a href="<?php echo UrlHelper::getPrefixLink('/subcontractitem/update?id=')?><?php echo $item['id'];?>"><i class="icon-edit" rel="tooltip" title="Edit this subcontract item"></i></a> 
      <?php  if($item['type']==2) { ?>
-      <a href="/subcontractitem/measure?id=<?php echo $item['id'];?>"><i class="icon-lock" rel="tooltip" title="Finalise the measure of item"></i></a> 
+      <a href="<?php echo UrlHelper::getPrefixLink('/subcontractitem/measure?id=')?><?php echo $item['id'];?>"><i class="icon-lock" rel="tooltip" title="Finalise the measure of item"></i></a> 
             <?php } ?>
             </td>
         </tr>

@@ -8,7 +8,7 @@ $permission=Yii::App()->session['permission'];
 ?>
 <?php 
 
- $url='/testcase/create/id/'.$release;
+ $url = UrlHelper::getPrefixLink('/testcase/create/id/').$release;
 
 
 $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
@@ -24,7 +24,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
         'label'=> 'Add Manual Case',
         'visible'=>in_array($permission,array(1,4)),
         //'visible'=> $edit,
-        'url'=>'/testcase/createmanual/',
+        'url'=>UrlHelper::getPrefixLink('/testcase/createmanual/'),
     ),
            
     array(
@@ -93,7 +93,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                     <td>   
                        
                         
-                     <a href="/testcase/view/id/<?php echo $testcase->id;?>">
+                     <a href="<?php echo UrlHelper::getPrefixLink('/testcase/view/id/')?><?php echo $testcase->id;?>">
                      TC-<?php echo str_pad($testcase['number'], 4, "0", STR_PAD_LEFT) ?>    
                       </a>
                     </td>
@@ -107,7 +107,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                     Not Run
                     <?php }
                     if($running) { ?>
-                    <a href="/testcase/viewrun/id/<?php echo $testcase->id;?>">Running</a>
+                    <a href="<?php echo UrlHelper::getPrefixLink('/testcase/viewrun/id/')?><?php echo $testcase->id;?>">Running</a>
                     <?php } ?> 
                     <?php  if ($closed && !$running) { echo 'Complete';} ?>
                     </td> 
@@ -123,17 +123,17 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                     </td>
                     
                     <td>
-  <a href="/release/delete/id/<?php echo $testcase['id'];?>"><i class="icon-remove-sign text-error" rel="tooltip" title="Remove"></i></a> 
+  <a href="<?php echo UrlHelper::getPrefixLink('/release/delete/id/') ?><?php echo $testcase['id'];?>"><i class="icon-remove-sign text-error" rel="tooltip" title="Remove"></i></a> 
                                     
   <?php if($notrun) { ?>
-                    <a href="/testcase/run/id/<?php echo $testcase['id'];?>"><i class="icon-check" rel="tooltip" title="Run the Test Case"></i></a> 
+                    <a href="<?php echo UrlHelper::getPrefixLink('/testcase/run/id/')?><?php echo $testcase['id'];?>"><i class="icon-check" rel="tooltip" title="Run the Test Case"></i></a> 
                     <?php } ?> 
                     <?php if($closed && !$running) { ?>
-                    <a href="/testcase/run/id/<?php echo $testcase['id'];?>"><i class="icon-repeat" rel="tooltip" title="Re-Run the Test Case"></i></a> 
+                    <a href="<?php echo UrlHelper::getPrefixLink('/testcase/run/id/')?><?php echo $testcase['id'];?>"><i class="icon-repeat" rel="tooltip" title="Re-Run the Test Case"></i></a> 
                     <?php
                     }
                     if($closed) { ?>
-                    <a href="/testcase/results/id/<?php echo $testcase->id;?>"><i class="icon-eye-open" rel="tooltip" title="View Runs"></i></a>
+                    <a href="<?php echo UrlHelper::getPrefixLink('/testcase/results/id/')?><?php echo $testcase->id;?>"><i class="icon-eye-open" rel="tooltip" title="View Runs"></i></a>
                     <?php } ?>
                     </td>
                 </tr>

@@ -1,7 +1,7 @@
 
 <h4>Approver's comments</h4>
  <div class="row offset1">
-<form action="/walkthrupath/run/" method="POST" name="Walkthruresult">
+<form action="<?php echo UrlHelper::getPrefixLink('/walkthrupath/run/')?>" method="POST" name="Walkthruresult">
 	 <div class="row">
 	 <select name="result">
         <?php foreach (Walkthruresult::$result as $key=>$result) { ?>

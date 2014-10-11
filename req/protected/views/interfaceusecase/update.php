@@ -9,10 +9,10 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	array('label'=>'List Interfaceusecase', 'url'=>array('index')),
-	array('label'=>'Create Interfaceusecase', 'url'=>array('create')),
-	array('label'=>'View Interfaceusecase', 'url'=>array('view', 'id'=>$model->interface_id)),
-	array('label'=>'Manage Interfaceusecase', 'url'=>array('admin')),
+	array('label'=>'List Interfaceusecase', 'url'=>UrlHelper::getPrefixLink('index')),
+	array('label'=>'Create Interfaceusecase', 'url'=>UrlHelper::getPrefixLink('create')),
+	array('label'=>'View Interfaceusecase', 'url'=>UrlHelper::getPrefixLink('view/?id=').$model->interface_id),
+	array('label'=>'Manage Interfaceusecase', 'url'=>UrlHelper::getPrefixLink('admin')),
 );
 ?>
 

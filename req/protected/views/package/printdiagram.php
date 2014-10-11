@@ -102,7 +102,7 @@ endif;
 
 <br />
 
-<img src="<?php echo  'http://'.Yii::app()->params['server'].'/images/'.$package['id'] ?>test.png">
+<img src="<?php echo  'http://'.Yii::app()->params['server'].'/req/images/'.$package['id'] ?>test.png">
 
  <?php  // endforeach;
   //  endif; ?>  

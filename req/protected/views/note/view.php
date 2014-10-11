@@ -32,8 +32,8 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                    </td>
                      <td>
                       <?php //if($permission){ ?>
-                        <a href="/note/update/id/<?php echo $item->id;?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
-                        <a href="/note/delete/id/<?php echo $item->id;?>"><i class="icon-remove-sign text-error" rel="tooltip" title="Delete"></i></a> 
+                        <a href="<?php echo UrlHelper::getPrefixLink('/note/update/id/')?><?php echo $item->id;?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
+                        <a href="<?php echo UrlHelper::getPrefixLink('/note/delete/id/')?><?php echo $item->id;?>"><i class="icon-remove-sign text-error" rel="tooltip" title="Delete"></i></a> 
                           <?php //} ?>
                    </td>
                 <?php endforeach ?>

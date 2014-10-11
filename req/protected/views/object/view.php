@@ -8,7 +8,7 @@ echo $this->renderPartial('/project/head',array('tab'=>'objects','link'=>$link))
     	
         
 <br>
-<a href="/project/view/tab/objects">Back to Objects</a>
+<a href="<?php echo UrlHelper::getPrefixLink('/project/view/tab/objects')?>">Back to Objects</a>
 <?php 
 
 
@@ -24,14 +24,14 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
         'type' => 'primary', // '', 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
         'label'=> 'Add Property',
         'visible'=>$edit,
-        'url'=>array('objectproperty/create', 'id'=>$model->id,'type'=>1)
+        'url'=>UrlHelper::getPrefixLink('/objectproperty/create/?id='.$model->id.'&type=1')
     ),
              array(
         'class' => 'bootstrap.widgets.TbButton',
         'type' => 'primary', // '', 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
         'label'=> 'Add Relationship',
         'visible'=>$edit,
-        'url'=>array('objectproperty/create', 'id'=>$model->id,'type'=>2)
+        'url'=>UrlHelper::getPrefixLink('objectproperty/create/?id='.$model->id,.'&type=2'
     )
           ),
 ));
@@ -89,20 +89,20 @@ $counter=0;
                   
                     <td>
                         <?php if($edit){ ?>
-                        <a href="/objectproperty/update/id/<?php echo $item['id'];?>/type/<?php echo $item['type'];?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
-                        <a href="/objectproperty/delete?id=<?php echo $item['id'];?>"><i class="icon-remove-sign text-error" rel="tooltip" title="Delete"></i></a> 
-                        <a href="/objectproperty/history/id/<?php echo $item['objectproperty_id'];?>"><i class="icon-calendar" rel="tooltip" title="History"></i></a> 
+                        <a href="<?php echo UrlHelper::getPrefixLink('/objectproperty/update/id/')?><?php echo $item['id'];?>/type/<?php echo $item['type'];?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
+                        <a href="<?php echo UrlHelper::getPrefixLink('/objectproperty/delete?id=')?><?php echo $item['id'];?>"><i class="icon-remove-sign text-error" rel="tooltip" title="Delete"></i></a> 
+                        <a href="<?php echo UrlHelper::getPrefixLink('/objectproperty/history/id/')?><?php echo $item['objectproperty_id'];?>"><i class="icon-calendar" rel="tooltip" title="History"></i></a> 
                         
                      
                         <?php if($counter!=0) { ?>
-                            <a href="/version/move/object/7/dir/2/id/<?php echo $item['id'];?>"><i class="icon-arrow-up" rel="tooltip" title="Move Up"></i></a> 
+                            <a href="<?php echo UrlHelper::getPrefixLink('/version/move/object/7/dir/2/id/')?><?php echo $item['id'];?>"><i class="icon-arrow-up" rel="tooltip" title="Move Up"></i></a> 
                            
                         <?php } ELSEIF(count($data)>1) {?>   
                            
                             <i class="icon-flag" rel="tooltip" title="Start"></i>
                             <?php } ?>          
                             <?php if($counter!=count($data)-1) { ?>        
-                            <a href="/version/move/object/7/dir/1/id/<?php echo $item['id'];?>"><i class="icon-arrow-down" rel="tooltip" title="Move Down"></i></a> 
+                            <a href="<?php echo UrlHelper::getPrefixLink('/version/move/object/7/dir/1/id/')?><?php echo $item['id'];?>"><i class="icon-arrow-down" rel="tooltip" title="Move Down"></i></a> 
                             <?php } ELSEIF(count($data)>1) {?>
                              <i class="icon-flag" rel="tooltip" title="End"></i>   
                             <?php } ?> 
@@ -143,7 +143,7 @@ if (count($deleted)):?>
         <tbody>
         <?php foreach($deleted as $item) {?>
            <tr class="odd">  
-                <td> <a href="/objectproperty/view/id/<?php echo $item['objectproperty_id'];?>"> 
+                <td> <a href="<?php echo UrlHelper::getPrefixLink('/objectproperty/view/id/')?><?php echo $item['objectproperty_id'];?>"> 
                 <?php echo $item['number']; ?></a> 
                 </td>
    
