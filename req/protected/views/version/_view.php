@@ -31,7 +31,7 @@
          
      
 ?> 
-        <a href="/<?php echo Version::$objects[$data->object]; ?>/<?php echo $page; ?>/id/<?php echo $data->foreign_id; ?>">
+        <a href="<?php echo UrlHelper::getPrefixLink('/')?><?php echo Version::$objects[$data->object]; ?>/<?php echo $page; ?>/id/<?php echo $data->foreign_id; ?>">
         <?php echo $object['number'].' '.$object['name'];?>
         </a>  
    <?php }  
@@ -41,7 +41,7 @@
    echo 'Action: '.Version::model()->wikiOutput($instance['text'],0).'<br />';
     echo 'Result: '.Version::model()->wikiOutput($instance['result'],0).'<br />';
     ?> 
-        <a href="/step/view/id/<?php echo $data->foreign_id; ?>">
+        <a href="<?php echo UrlHelper::getPrefixLink('/step/view/id/')?><?php echo $data->foreign_id; ?>">
         View Use Case
         </a>  
    <?php

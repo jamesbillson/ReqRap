@@ -27,16 +27,7 @@
 		<?php echo $form->labelEx($model,'email'); ?>
 		<?php echo $form->textField($model,'email',array('size'=>60,'maxlength'=>255)); ?>
 		<?php echo $form->error($model,'email'); ?>
-	</div>
-
-
-<?php
-$message=User::model()->findByPk(1);
-print_r($message);
-?>
-
-
-        
+	</div>        
 	<div class="row buttons">
 		<?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>
 	</div>

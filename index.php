@@ -11,7 +11,12 @@
  *
  * @var bool
  */
+error_reporting(E_ALL);
+ini_set('display_errors',1);
 define('WP_USE_THEMES', true);
-
-/** Loads the WordPress Environment and Template */
+/*require_once(dirname(__FILE__).'/../yii/framework/yii.php');
+Yii::$enableIncludePath = false;
+Yii::createWebApplication(dirname(__FILE__).'/req/protected/config/main.php');*/
 require( dirname( __FILE__ ) . '/wp-blog-header.php' );
+/** Loads the WordPress Environment and Template */
+

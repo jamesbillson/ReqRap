@@ -5338,7 +5338,9 @@ function mgm_get_custom_url($name, $load_default = false, $query_arg = array()) 
 				$url = mgm_site_url($login_url);
 			}else{
 			// default
-				$url = site_url('wp-login.php?action=login', 'login');					
+				//var_dump();exit;
+				$url = site_url('wp-login.php?action=login', 'login');	
+				$url = constant('YII_URL').'site/login';				
 			}				
 		break;
 		case 'register':

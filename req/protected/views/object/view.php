@@ -26,15 +26,14 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
         'visible'=>$edit,
         'url'=>UrlHelper::getPrefixLink('/objectproperty/create/?id='.$model->id.'&type=1')
     ),
-             array(
+    array(
         'class' => 'bootstrap.widgets.TbButton',
         'type' => 'primary', // '', 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
         'label'=> 'Add Relationship',
         'visible'=>$edit,
-        'url'=>UrlHelper::getPrefixLink('objectproperty/create/?id='.$model->id,.'&type=2'
-    )
-          ),
-));
+        'url'=> UrlHelper::getPrefixLink('objectproperty/create/?id='.$model->id.'&type=2'),
+    ),
+) ));
 
 
 $data=  Objectproperty::model()->getObjectProperty($model->object_id);
@@ -102,7 +101,7 @@ $counter=0;
                             <i class="icon-flag" rel="tooltip" title="Start"></i>
                             <?php } ?>          
                             <?php if($counter!=count($data)-1) { ?>        
-                            <a href="<?php echo UrlHelper::getPrefixLink('/version/move/object/7/dir/1/id/')?><?php echo $item['id'];?>"><i class="icon-arrow-down" rel="tooltip" title="Move Down"></i></a> 
+                            <a href="<?php echo UrlHelper::getPrefixLink('/version/move/object/7/dir/1/id/') ?><?php echo $item['id'];?>"><i class="icon-arrow-down" rel="tooltip" title="Move Down"></i></a> 
                             <?php } ELSEIF(count($data)>1) {?>
                              <i class="icon-flag" rel="tooltip" title="End"></i>   
                             <?php } ?> 

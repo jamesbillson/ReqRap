@@ -15,6 +15,7 @@
  *
  * @since 1.0.0
  */
+define('YII_URL', 'http://' . $_SERVER['HTTP_HOST'] .'/req/');
 define( 'WPINC', 'wp-includes' );
 
 // Include files required for initialization.

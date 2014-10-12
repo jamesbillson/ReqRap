@@ -317,28 +317,20 @@ class UserController extends Controller
     
     public function actionInvite()
     {
-        $model=new User;
-
-        // Uncomment the following line if AJAX validation is needed
-        // $this->performAjaxValidation($model);
-
-        if(isset($_POST['User']))
-        {
-            $model->attributes=$_POST['User'];
-            $model->password ='temp';
-            $model->username = $model->email ;
-            $model->company_id = User::model()->myCompany();
-            $model->verification_code = substr(sha1($model->email . time()), 0, 10);
-          
-            $sender=User::model()->findbyPK(Yii::app()->user->id);
-           // print_r($sender);
-           
-              
-            if($model->save())
-            {
-            
-                $message=User::model()->findByPk($model->id);
-                $link = urlencode($message->salt);
+      try {
+            $model = new User;
+            if(isset($_POST['User'])) {
+                $model->attributes = $_POST['User'];
+                $model->password ='temp';
+                $model->username = $model->email ;
+                $model->company_id = User::model()->myCompany();
+                $model->verification_code = substr(sha1($model->email . time()), 0, 10);
+                
+                $sender=User::model()->findbyPK(Yii::app()->user->id);
+                
+                if($model->validate() && $model->save()) {
+                    $message=User::model()->findByPk($model->id);
+                    $link = urlencode($message->salt);
                     $mail = new YiiMailer();
                     $mail->setFrom($sender->email, $sender->firstname.' '.$sender->lastname);
                     $mail->setTo($message->email);
@@ -356,20 +348,15 @@ class UserController extends Controller
                     If you have received this email in error, simply ignore it.
                     ');
                     $mail->Send();
-                
-                
-                
-                $this->redirect(('/req/company/mycompany'));
+                    $this->redirect(('/req/company/mycompany'));
+                }
             }
-           
+        } catch(Exception $e) {
+          throw new Exception($e->getMessage());
         }
-        
         $this->render('invite',array(
-            'model'=>$model,
-            //        'users'=>$users,
+            'model'=>$model
         ));
-      
-            
     }
     
     public function actionAccept($id)

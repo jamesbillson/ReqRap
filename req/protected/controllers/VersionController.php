@@ -179,22 +179,16 @@ class VersionController extends Controller
         $this->redirect(array('/req/'.$url));
         }
         
-              public function actionMove($dir, $id, $object) //down 1, up 2
+    public function actionMove($dir, $id, $object) //down 1, up 2
 	{
-            $object_model= Version::$objects[$object];
-            $object_model=ucfirst($object_model);
+            $object_model = Version::$objects[$object];
+            $object_model = ucfirst($object_model);
             $model = $object_model::model()->findbyPK($id);
             $parent=Version::$display[$object]['parent'].'_id';
             $oldnum=$model->number;
             $objects=Version::model()->getChildObjects($model->$parent,$object);
-            //$objects=Simple::model()->getCategorySimple($model->category_id);
-            
-            //echo "<pre>";
-            //print_r($objects);
-            //echo "</pre>";
             $nextid=0;
-            
-            if($dir==1){ // DOWN
+            if($dir==1) { // DOWN
                     for ($i = 0; $i <= count($objects)-1; $i++) {
                     if ($objects[$i]['number']==$oldnum) $nextid=$objects[$i+1]['id'];
                     }
@@ -224,7 +218,7 @@ class VersionController extends Controller
          if (Version::$display[$object]['parent'] !='project') 
              $url=str_replace('#', $object_id, $url);
          // redirect to the url
-         $this->redirect(array('/req/'.$url));
+         $this->redirect('/req/'.$url);
          
          // $this->redirect(array('/category/view/id/'.$model->category_id));
 	

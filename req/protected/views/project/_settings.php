@@ -19,7 +19,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
         'type' => 'primary', // '', 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
         'label'=> 'Add Interface Type',
         'visible'=>Yii::App()->session['permission']==1,
-        'url'=>UrlHelper::getPrefixLink(('interfacetype/create')
+        'url'=>UrlHelper::getPrefixLink('interfacetype/create')
     ),
            array(
         'class' => 'bootstrap.widgets.TbButton',
