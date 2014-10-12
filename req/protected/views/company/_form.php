@@ -62,7 +62,7 @@ array(
                'action'=>Yii::app()->createUrl("/company/logoupload",array('id'=>$model->id)),
                'allowedExtensions'=>array("jpg", "jpeg", "gif", "png", "PNG", "JPG", "GIF", "JPEG"),//array("jpg","jpeg","gif","exe","mov" and etc...
                'sizeLimit'=>2*1024*1024,// maximum file size in bytes
-            'onComplete'=>"js:function(){window.location.href='/company/update/id/$model->id' }",
+            'onComplete'=>"js:function(){window.location.href='/req/company/update/id/$model->id' }",
             )));
         ?>
 

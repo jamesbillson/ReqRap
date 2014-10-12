@@ -236,42 +236,42 @@ class CompanyController extends Controller
 		));
 	}
         
-        public function actionLogoupload($id) {
-    if (isset($id) && Company::model()->findByPk($id)) {
-      Yii::import("ext.EAjaxUpload.qqFileUploader");
-      $folder = Yii::getPathOfAlias("webroot") . Yii::app()->params['photo_folder'];
-      if (!file_exists($folder)) {
-        if (mkdir($folder, 0755, true)) {
-          return false;
-        }
-      }
-      $allowedExtensions = array("jpg", "jpeg", "gif", "png", "PNG", "JPG", "GIF", "JPEG"); //array("jpg","jpeg","gif","exe","mov" and etc...
-      $sizeLimit = 2 * 1024 * 1024; // maximum file size in bytes
-      $uploader = new qqFileUploader($allowedExtensions, $sizeLimit);
+    public function actionLogoupload($id) {
+    	if (isset($id) && Company::model()->findByPk($id)) {
+			Yii::import("ext.EAjaxUpload.qqFileUploader");
+			$folder = Yii::getPathOfAlias("webroot") . Yii::app()->params['photo_folder'];
+			if (!file_exists($folder)) {
+				if (mkdir($folder, 0755, true)) {
+				  return false;
+				}
+			}
+			$allowedExtensions = array("jpg", "jpeg", "gif", "png", "PNG", "JPG", "GIF", "JPEG"); //array("jpg","jpeg","gif","exe","mov" and etc...
+			$sizeLimit = 2 * 1024 * 1024; // maximum file size in bytes
+			$uploader = new qqFileUploader($allowedExtensions, $sizeLimit);
 
-      $result = $uploader->handleUpload($folder);
-      if ($result) {
-        $project = Yii::App()->session['project'];
-        $release = Yii::App()->session['release'];
-        $mycompany = User::model()->myCompany();
-        
-        $file_name = Utils::uniqueFile($result['filename']);
-        $file_name = 'logo'.$mycompany.'-'.$file_name;
-        $path = Yii::getPathOfAlias("webroot").Yii::app()->params['photo_folder'];
-        rename($path.$result['filename'], $path.$file_name);
-         
-        
-        
-        //persist into database
-       $model=$this->loadModel($id);
-       $model->logo_id = $file_name;
-        
-       if ($model->save()) {
-          // Add image to interface
-        }
-      }
-      $return = htmlspecialchars(json_encode($result), ENT_NOQUOTES);
-      echo $return;
+			$result = $uploader->handleUpload($folder);
+			if ($result) {
+			$project = Yii::App()->session['project'];
+			$release = Yii::App()->session['release'];
+			$mycompany = User::model()->myCompany();
+
+			$file_name = Utils::uniqueFile($result['filename']);
+			$file_name = 'logo'.$mycompany.'-'.$file_name;
+			$path = Yii::getPathOfAlias("webroot").Yii::app()->params['photo_folder'];
+			rename($path.$result['filename'], $path.$file_name);
+			 
+
+
+			//persist into database
+			$model=$this->loadModel($id);
+			$model->logo_id = $file_name;
+
+			if ($model->save()) {
+			  // Add image to interface
+			}
+			}
+			$return = htmlspecialchars(json_encode($result), ENT_NOQUOTES);
+			echo $return;
     }
   }
 

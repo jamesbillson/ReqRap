@@ -100,7 +100,7 @@ if(!(Users_meta::model()->ShowMessage('employee1')))
                   <?php    if($item['type']==0) {?>
                 <a href="<?php echo UrlHelper::getPrefixLink('/user/reinvite/id/')?><?php echo $item['id'];?>"><i class="icon-envelope" rel="tooltip" title="Resend Invitation Email"></i></a> 
                 <?php }?>
-  <a href="/user/view/id/<?php echo $item['id'];?>"><i class="icon-eye-open" rel="tooltip" title="View"></i></a> 
+  <a href="<?php echo UrlHelper::getPrefixLink('/user/view/id/')?><?php echo $item['id'];?>"><i class="icon-eye-open" rel="tooltip" title="View"></i></a> 
     
                             <?php if($item['admin']==1 && count($admin)>1) {?>
                              <a href="<?php echo UrlHelper::getPrefixLink('/user/demote/id/')?><?php echo $item['id'];?>"><i class="icon-circle-arrow-down" rel="tooltip" title="Remove Administrator Rights"></i> </a>
