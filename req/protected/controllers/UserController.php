@@ -330,7 +330,7 @@ class UserController extends Controller
                 
                 if($model->validate() && $model->save()) {
                     $message=User::model()->findByPk($model->id);
-                    var_dump($message);exit;
+                   // var_dump($message);exit;
                     $link = urlencode($message->salt);
                     $mail = new YiiMailer();
                     $mail->setFrom($sender->email, $sender->firstname.' '.$sender->lastname);

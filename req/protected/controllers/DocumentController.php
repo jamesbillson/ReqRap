@@ -85,7 +85,7 @@ class DocumentController extends Controller
             $version = new Documentversion;
             $project = Project::model()->findByPk($_GET['id']);
             
-            if(isset($_POST['Document']))
+            if(isset($_POST['Document']) && isset($_POST['Documentversion']) && isset($_POST['Documenttype']))
             {
                 $model->attributes = $_POST['Document'];
                 $model->foreign_key = $_POST['Document']['foreign_key'];

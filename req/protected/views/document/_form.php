@@ -16,8 +16,8 @@ $docType = CHtml::listData($data, 'id', 'name');
 
     <p class="note">Fields with <span class="required">*</span> are required.</p>
 
-    <?php echo $form->errorSummary($model,array('class'=>'span3')); ?>
-    <?php //echo $form->errorSummary($version,array('class'=>'span3')); ?>
+    <?php echo $form->errorSummary(array($model,$version)); ?>
+    <?php //echo $form->errorSummary(,array('class'=>'span3')); ?>
     
     <?php echo $form->textFieldRow($model, 'name', array('class'=>'span3')); ?>
      <?php 
