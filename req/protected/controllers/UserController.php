@@ -325,12 +325,12 @@ class UserController extends Controller
                 $model->username = $model->email ;
                 $model->company_id = User::model()->myCompany();
                 $model->verification_code = substr(sha1($model->email . time()), 0, 10);
-                
-                $sender=User::model()->findbyPK(Yii::app()->user->id);
+               // $model->isNewRecord = true;
+                $sender = User::model()->findbyPK(Yii::app()->user->id);
                 
                 if($model->validate() && $model->save()) {
-                    $message=User::model()->findByPk($model->id);
-                   // var_dump($message);exit;
+
+                    $message = User::model()->findByPk($model->id);
                     $link = urlencode($message->salt);
                     $mail = new YiiMailer();
                     $mail->setFrom($sender->email, $sender->firstname.' '.$sender->lastname);
