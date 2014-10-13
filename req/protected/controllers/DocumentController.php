@@ -102,6 +102,8 @@ class DocumentController extends Controller
 
                     $version->attributes = $_POST['Documentversion'];
                     $uploadFile = CUploadedFile::getInstance($version,'file');
+                    if (!isset($uploadFile->name)) 
+                        throw new CHttpException(500 ,'File name shouldn\'t empty ');
                     $uniNameFile = Utils::uniqueFile($uploadFile->name);
                     
                     $version->file = $uniNameFile;
@@ -113,7 +115,7 @@ class DocumentController extends Controller
                     
                     if($version->save()){
                         $uploadFile->saveAs(Yii::getPathOfAlias("webroot").'/uploads/'.$uniNameFile);
-                        $this->redirect(array('/req/project/view','id'=>$project->id,'tab'=>'documents'));
+                        $this->redirect(UrlHelper::getPrefixLink('/project/view/?id='.$project->id.'&tab=documents'));
                         return;
                     }
                 }
@@ -163,7 +165,7 @@ class DocumentController extends Controller
      public function actionRemove($id,$project)
     {
         $this->loadModel($id)->delete();
-        $this->redirect(array('/req/project/view','id'=>$project,'tab'=>'documents'));
+        $this->redirect(UrlHelper::getPrefixLink('/project/view/?id='.$project.'&tab=documents'));
     }
     
     
