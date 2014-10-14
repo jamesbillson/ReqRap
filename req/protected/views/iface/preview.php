@@ -7,7 +7,7 @@ $image=Iface::model()->getCurrentImage($model->iface_id,$release);
      array('resize' => array('width' => 500)));
 
 ?>
-<img src="<?php echo $src;?>">
+<img width="500px" alt="" src="<?php echo $src;?>">
 <?php
 } 
 ?>
