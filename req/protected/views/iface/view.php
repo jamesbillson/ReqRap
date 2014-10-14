@@ -1,6 +1,6 @@
-<link rel="stylesheet" type="text/css" href="<?php Yii::app()->baseUrl?>/css/carousel.css">
-<script type="text/javascript" src="<?php Yii::app()->baseUrl?>/js/jquery.jcarousel.min.js"></script>
-<script type="text/javascript" src="<?php Yii::app()->baseUrl?>/js/jcarousel.responsive.js"></script>
+<link rel="stylesheet" type="text/css" href="<?php Yii::app()->baseUrl?>/req/css/carousel.css">
+<script type="text/javascript" src="<?php Yii::app()->baseUrl?>/req/js/jquery.jcarousel.min.js"></script>
+<script type="text/javascript" src="<?php Yii::app()->baseUrl?>/req/js/jcarousel.responsive.js"></script>
 <?php 
 $link=Yii::App()->session['release'].'_12_'.$model->iface_id;
 echo $this->renderPartial('/project/head',array('tab'=>'usecases','link'=>$link)); 

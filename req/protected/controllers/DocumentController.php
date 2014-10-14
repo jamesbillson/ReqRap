@@ -110,6 +110,10 @@ class DocumentController extends Controller
 
                     $version->document_id = $model->id;
                     $version->version = '1.0';
+
+                    if ($version->date == '') 
+                        throw new CHttpException('Date should not be empty ');
+
                     $date=explode("/",$version->date);
                     $version->date = $date[2]."-".$date[0]."-".$date[1];
                     
