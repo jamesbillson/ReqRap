@@ -53,7 +53,9 @@ $action=$action->id;
          !($controller == 'site' && $action == 'manage_construction_online') &&
          !($controller == 'site' && $action == 'login') &&
          !($controller == 'site' && $action == 'forgotpassword') &&
-         !($controller == 'site' && $action == 'newpassword')
+         !($controller == 'site' && $action == 'newpassword') &&
+         !($controller == 'reset' && $action == 'index') &&
+         !($controller == 'reset' && $action == 'success')
              )
          {
 
