@@ -257,7 +257,8 @@ class PhotoController extends Controller {
             if (isset($upload)){   
 
                 //set path and filename
-                $path = Yii::getPathOfAlias("webroot").Yii::app()->params['photo_folder'];
+                //$path = Yii::getPathOfAlias("webroot").Yii::app()->params['photo_folder'];
+                $path = Yii::getPathOfAlias("webroot") . '/uploads/images/';
               
                 if(file_exists($path)){
                     @mkdir($path, 077, true);
@@ -289,7 +290,7 @@ class PhotoController extends Controller {
                     $model->user_id=Yii::App()->user->id;
                     
                     $model->file = $file_name;                    
-                    
+                   // $path = Yii::getPathOfAlias("webroot") . '/uploads/images/';
                     if($model->save()){
                         // return data to the fileuploader
                         Version::model()->getNextNumber($project,11,1,$model->primaryKey,$model->photo_id);   
@@ -327,7 +328,8 @@ class PhotoController extends Controller {
   public function actionSingleupload($id, $ifaceId = null) {
     if (isset($id) && Project::model()->findByPk($id)) {
       Yii::import("ext.EAjaxUpload.qqFileUploader");
-      $folder = Yii::getPathOfAlias("webroot") . Yii::app()->params['photo_folder'];
+      $folder = Yii::getPathOfAlias("webroot") . '/uploads/images/';
+
       if (!file_exists($folder)) {
         if (mkdir($folder, 0755, true)) {
           return false;
@@ -338,6 +340,7 @@ class PhotoController extends Controller {
       $uploader = new qqFileUploader($allowedExtensions, $sizeLimit);
 
       $result = $uploader->handleUpload($folder);
+
       if ($result) {
         $project = Yii::App()->session['project'];
         $release = Yii::App()->session['release'];
@@ -345,10 +348,8 @@ class PhotoController extends Controller {
         
         $file_name = Utils::uniqueFile($result['filename']);
         $file_name = 'xxxxxxxx'.$file_name;
-        $path = Yii::getPathOfAlias("webroot").Yii::app()->params['photo_folder'];
+        $path = Yii::getPathOfAlias("webroot") . '/uploads/images/';
         rename($path.$result['filename'], $path.$file_name);
-         
-        
         
         //persist into database
         $model = new Photo;

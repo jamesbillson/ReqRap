@@ -5,4 +5,8 @@ class UrlHelper {
 		$beautiful_url = str_replace('//', '/', $url);
 		return 'http://'.$beautiful_url;
 	}
+
+	public static function getPath($file) {
+		return Yii::getPathOfAlias('webroot').'/uploads/images/'.$file;
+	}
 }

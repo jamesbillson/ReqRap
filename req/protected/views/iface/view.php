@@ -44,13 +44,14 @@ if ($model->photo_id==0 || $image_id==0)
 
                     <ul>
                     <?php foreach ($orphans as $pic){  ?>
-                    <?php 
-                  
-                    $src=Yii::app()->params['photo_folder']."missing.png";
+                    <?php
+
+                    $src = UrlHelper::getPath("missing.png");
                     
-                    if(isset($pic->file) && is_file(Yii::getPathOfAlias('webroot').'/uploads/images/'.$image->file))
-                    $src = Yii::app()->easyImage->thumbSrcOf(
-                                    Yii::app()->params['photo_folder'].$image->file, 
+        
+                    if(isset($pic['file']) && is_file(UrlHelper::getPath($pic['file'])))
+                    	$src = Yii::app()->easyImage->thumbSrcOf(
+                                    Yii::getPathOfAlias("webroot") . '/uploads/images/'.$pic['file'], 
                                    array('resize' => array('width' => 150,'height'=>150))); 
                     ?>
                         <li><a href="<?php echo UrlHelper::getPrefixLink('/iface/addimage/iface/')?><?php echo $model->iface_id; ?>/id/<?php echo $pic['photo_id']; ?>"  rel="tooltip" title="<?php echo $pic['description'] ?>" ><img src="<?php echo $src; ?>" border="0" width="150" height="150"></a></li>        
@@ -78,7 +79,7 @@ if ($model->photo_id==0 || $image_id==0)
                                 'action'=>Yii::app()->createUrl("photo/singleupload",array('id'=>$model->project_id,'ifaceId'=>$model->iface_id)),
                                 'allowedExtensions'=>array("jpg", "jpeg", "gif", "png", "PNG", "JPG", "GIF", "JPEG"),//array("jpg","jpeg","gif","exe","mov" and etc...
                                 'sizeLimit'=>2*1024*1024,// maximum file size in bytes
-                                'onComplete'=>"js:function(){window.location.href='/iface/view/id/$model->iface_id' }",
+                                'onComplete'=>"js:function(){window.location.href='/req/iface/view/id/$model->iface_id' }",
             )));
 ?>
 
@@ -94,11 +95,12 @@ if ($model->photo_id==0 || $image_id==0)
          
         $image=Photo::model()->findByPk($image_id);
         
-        $src=Yii::app()->params['photo_folder']."missing.png";
-        if(is_file(Yii::getPathOfAlias('webroot').'/uploads/images/'.$image->file))      
+        $src= UrlHelper::getPath("missing.png");
+        
+        if (is_file(UrlHelper::getPath($image->file)))      
         
         $src = Yii::app()->easyImage->thumbSrcOf(
-                                      Yii::app()->params['photo_folder'].$image->file, 
+                                      UrlHelper::getPath($image['file']), 
                                      array('resize' => array('width' => 150,'height'=>150))); 
 
     ?>

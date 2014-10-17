@@ -20,7 +20,7 @@ $stepid=-1;
 			array('empty' => 'Select Usecase',
 			'ajax' => array(
 			'type'=>'POST', //request type
-			'url'=>CController::createUrl(UrlHelper::getPrefixLink('/usecase/dynamicsteps')), //url to call.
+			'url'=>CController::createUrl('/usecase/dynamicsteps/'), //url to call.
 			'update'=>'#step_id', //selector to update
 			))); 
 	   if($ucid==-1)

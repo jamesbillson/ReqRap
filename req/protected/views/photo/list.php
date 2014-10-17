@@ -25,7 +25,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
         <tr>
             <td>
                         <?php $src = Yii::app()->easyImage->thumbSrcOf(
-                                    Yii::app()->params['photo_folder'].$image['file'], 
+                                    Yii::getPathOfAlias("webroot") . '/uploads/images/'.$image['file'], 
                                     array('resize' => array('width' => 154))); ?>
 
                   <a href="<?php echo UrlHelper::getPrefixLink('/photo/view/id/') ?><?php echo $image['id']; ?>"> <img src="<?php echo $src ?>"/></a>
