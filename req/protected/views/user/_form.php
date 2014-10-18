@@ -27,6 +27,18 @@
 		<?php echo $form->error($model,'email'); ?>
 	</div>
 
+	<div class="row">
+		<?php echo $form->labelEx($model,'password'); ?>
+		<?php echo $form->passwordField($model,'password',array('size'=>60,'maxlength'=>255, 'value' => '')); ?>
+		<?php echo $form->error($model,'password'); ?>
+	</div>
+
+	<div class="row">
+		<?php echo $form->labelEx($model,'cpassword'); ?>
+		<?php echo $form->passwordField($model,'cpassword',array('size'=>60,'maxlength'=>255)); ?>
+		<?php echo $form->error($model,'cpassword'); ?>
+	</div>
+
 	
 
 

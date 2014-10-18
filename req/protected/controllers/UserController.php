@@ -414,21 +414,24 @@ class UserController extends Controller
 
         if(isset($_POST['User']))
         {   
-            $model->scenario = 'update';
-            if(empty($_POST['User']['password'])){
+            if(empty($_POST['User']['password'])) {
+                $model->scenario = 'update';
                 $model->firstname=$_POST['User']['firstname'];
                 $model->lastname=$_POST['User']['lastname'];
                 $model->email=$_POST['User']['email'];
                 $model->username=$_POST['User']['email'];
-                $model->password=$model->password;
+              //  $model->password=$model->password;
                 $model->salt =  $model->generateSalt();
                 if($model->save())
-                    $this->redirect(array('view','id'=>$model->id));
+                    $this->redirect('/req/user/update');
             }else{
+                $model->scenario = 'newPassword';
                 $model->attributes=$_POST['User'];
                 $model->password = $_POST['User']['password'];
-                if($model->save())
-                    $this->redirect(array('/req/view','id'=>$model->id));
+                if( $model->save() ) {
+                  wp_set_password( $_POST['User']['password'], $model->id );
+                  $this->redirect('/req/user/update');
+                }
             }
         }
 
