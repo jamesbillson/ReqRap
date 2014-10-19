@@ -29,25 +29,20 @@
           <?php if ( $tcsn_option['tcsn_select_topbar_info'] == 'tcsn_text' ) {  echo $tcsn_option['tcsn_text_topbar_info']; } ?>
         </div>
         <div class="col-md-6 col-sm-6 col-xs-12">
-          <?php if( $tcsn_option['tcsn_show_topbar_search'] == 1 ) { ?>
+         
           <div class="search-header">
-            <?php get_search_form(); ?>
+             <?php if ( is_user_logged_in() ) { ?>
+            I'm logged in 
+             <?php } ELSE {?> 
+            <a href="/req/site/login/">Login</a> |  <a href="/register/">Register</a>
+            <?php } ?> 
           </div>
-          <?php } ?>
+          
           <?php if( $tcsn_option['tcsn_show_topbar_social'] == 1 ) { ?>
           <div class="header-wiget-area">
-            <?php if ( is_active_sidebar( 'widget-social-network' ) ) : ?>
+          
             <?php dynamic_sidebar( 'widget-social-network' ); ?>
-            <?php else : ?>
-            <div class="widget-alert">
-              <p>
-                <?php _e( 'Social Network Widget not activated yet - Activate!', 'tcsn_theme' ); ?>
-              </p>
-              <p>
-                <?php _e( 'OR Disable through options panel.', 'tcsn_theme' ); ?>
-              </p>
-            </div>
-            <?php endif; ?>
+
           </div>
           <?php } ?>
         </div>
