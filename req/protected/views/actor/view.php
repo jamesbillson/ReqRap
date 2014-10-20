@@ -5,10 +5,13 @@ echo $this->renderPartial('/project/head',array('tab'=>'actors','link'=>$link));
 $permission=Yii::App()->session['permission']; 
  $edit=(Yii::App()->session['edit']==1)?TRUE:FALSE;
 ?>
-<h2>Actor <?php echo $model->name; ?>     
-
-    <a href="<?php echo UrlHelper::getPrefixLink('/actor/update/id/') ?><?php echo $model->id;?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
-           </h2>
+<h2>
+    Actor <?php echo $model->name; ?><a href="<?php echo UrlHelper::getPrefixLink('/actor/update/id/') ?><?php echo $model->id;?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
+    <select class="pull-right" name="mass_action" id="mass-action">
+        <option value="0">Please Select</option>
+        <option value="1">Replace Actor</option>
+    </select>       
+</h2>
 <a href="<?php echo UrlHelper::getPrefixLink('/project/view/tab/actors/') ?>">Back to Actors</a><br />
 
 	<b><?php echo CHtml::encode($model->getAttributeLabel('name')); ?>:</b>
@@ -155,4 +158,71 @@ $this->endWidget();
 <?php $this->endWidget(); 
 
   }?>
+<input type="hidden" id="old-actor" value="<?php echo $model->actor_id ?>" />
+<!-- Modal -->
+<div class="modal fade" id="list-actor" tabindex="-1" role="dialog" aria-labelledby="list-actor-lable" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="myModalLabel">Replace Actor</h4>
+      </div>
+      <div class="modal-body">
+        <?php 
+            $project_id= Yii::app()->session['project'];
+            $actorModel = Actor::model()->findAll(
+                array(
+                    'condition' => 'actor_id != :actor_id && project_id = :project_id',
+                    'params' => array(':actor_id' => $model->actor_id, ':project_id' => $project_id)
+                )
+            );
+            if ($actorModel == NULL) {
+                echo 'Actor doesn\'t exists'; 
+            } else {
+            ?>
+                <select id="actor-target">
+                    <?php foreach($actorModel as $actor) {  ?>
+                        <option value="<?php echo $actor->actor_id; ?>"><?php echo $actor['name'] ?></option>
+                    <?php } ?>
+                </select>  
+            <?php
+                
+            }
+            
+        ?>
+      </div>
+      <div class="modal-footer">
+        <button id="change-actor" type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
 
+<script type="text/javascript">
+    $('document').ready(function() {
+        $('#mass-action').on('change',function(e) {
+            if ($(this).val() == 1) {
+                $('#list-actor').modal();
+            }
+            return false;
+        });
+        $('#change-actor').on('click',function(e) {
+            e.preventDefault();
+            var url = "<?php echo UrlHelper::getPrefixLink('actor/changeactor'); ?>";
+            
+            var old_actor = $('#old-actor').val();
+            var new_actor = $( "#actor-target option:selected" ).val();
+            var redirect_url = "<?php echo UrlHelper::getPrefixLink('actor/view/'); ?>";
+            $.ajax(url+'/old/'+old_actor+'/new/'+new_actor)
+                          .done(function() {
+                            alert( "success" );
+                            window.location.href =  redirect_url+'id/'+new_actor;
+                          })
+                          .fail(function() {
+                            alert( "error" );
+                            location.reload();
+                          });
+            return false;
+        });
+    });
+</script>

@@ -430,9 +430,14 @@ class UserController extends Controller
                 $model->password = $_POST['User']['password'];
                 if( $model->save() ) {
                   wp_set_password( $_POST['User']['password'], $model->id );
+                  $modelLogin = new LoginForm;
+                  $modelLogin->username = $_POST['User']['email'];
+                  $modelLogin->password = $_POST['User']['password'];
+                  $modelLogin->login();
                   $this->redirect('/req/user/update');
                 }
             }
+            Yii::app()->user->setFlash('success', "Profile Updated");
         }
 
         $this->render('update',array(

@@ -32,7 +32,7 @@ class ActorController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('diagram','tree','create','update','delete','rollback','history'),
+				'actions'=>array('diagram','tree','create','update','delete','rollback','history', 'changeactor'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -211,6 +211,32 @@ public function actionDelete($id)
 			throw new CHttpException(404,'The requested page does not exist.');
 		return $model;
 	}
+
+
+	public function actionChangeactor($old, $new) {
+		$connection=Yii::app()->db;
+    	$command = $connection->createCommand("CALL changeActor(:old_actor, :new_actor, @success)"); 
+        $command->bindParam(":old_actor", $old, PDO::PARAM_INT);
+        $command->bindParam(":new_actor", $new, PDO::PARAM_INT);
+        $command->execute();
+        $valueOut = $connection->createCommand("select @success as result;")->queryScalar();
+       
+        $release_id = Yii::App()->session['release'];
+        $project_id = Yii::App()->session['project'];
+
+        $sql = "UPDATE `version` 
+                SET 
+               `active`=0
+                WHERE
+               `project_id`=" . $project_id . "
+                AND
+               `release`= " . $release_id . "
+                AND
+               `object`= " . $old;
+        $command = $connection->createCommand($sql);
+        $command->execute();
+        echo $valueOut;
+  	}
 
 	/**
 	 * Performs the AJAX validation.
