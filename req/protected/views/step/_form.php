@@ -97,7 +97,7 @@ if (count($steps)):
         </tbody>
     </table>
     <?php if ($edit) { ?>
-        <a href="/step/create/id/<?php echo $model->id; ?>"><i class="icon-plus-sign-alt" rel="tooltip" title="Add another step"></i> Add Step</a> 
+        <a href="<?php echo UrlHelper::getPrefixLink('/step/create/id/')?><?php echo $model->id; ?>"><i class="icon-plus-sign-alt" rel="tooltip" title="Add another step"></i> Add Step</a> 
     <?php } ?>    
 <?php endif; // end count of results   ?>
 <?php if ($model->main != 1) { // THIS IS AN ALTERNATE FLOW So we show the main flow entry and exit ?>  

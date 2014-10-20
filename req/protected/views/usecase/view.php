@@ -20,7 +20,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                     'type' => 'link', // '', 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
                     'icon'=> 'edit',
                     'visible'=>$edit,
-                    'url'=>UrlHelper::getPrefixLink('/usecase/update/id/'.$model->id,
+                    'url'=>UrlHelper::getPrefixLink('/usecase/update/id/'.$model->id),
                     
                       ),
      array(
