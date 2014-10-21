@@ -14,7 +14,7 @@
     <?php 
  if($model->logo_id!=''){
     $src = Yii::app()->easyImage->thumbSrcOf(
-    Yii::app()->params['photo_folder'].$model->logo_id, 
+    UrlHelper::getPath($model->logo_id), 
     array('resize' => array('width' => 150,'height'=>150))); 
     
     

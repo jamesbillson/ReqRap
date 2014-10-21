@@ -451,7 +451,10 @@ class UsecaseController extends Controller
           $follower=Follower::model()->getProjectFollowerDetails($thisrelease->project->id);
           if(!empty($follower)) $permissiontoview=1;
               }
-          if ($permissiontoview==0)$this->redirect(array('/req/site/fail/condition/permission_fail'));
+          if ($permissiontoview==0) {
+            ReportHelper::processError('Usecase Controller, Dynamic Steps action', '/req/site/fail/condition/permission_fail');  
+            //$this->redirect(array('/req/site/fail/condition/permission_fail'));
+          }
          
           
           

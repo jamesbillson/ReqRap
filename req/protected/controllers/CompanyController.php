@@ -49,22 +49,23 @@ class CompanyController extends Controller
 	 * Displays a particular model.
 	 * @param integer $id the ID of the model to be displayed
 	 */
-	public function actionView($id)
-	{
-            $model =$this->loadModel($id);
-            $mycompany = User::model()->myCompany();
-	if ($mycompany==$id){	
-            $this->render('mycompany',array(
-			'model'=>$model,
-		));
-	} ELSEif ($model->companyowner_id ==$mycompany ){
-        $this->render('view',array(
-			'model'=>$model,
-		));
-         }ELSE {
-        $this -> redirect('/req/site/fail');
-        }
-        } 
+	public function actionView($id) {
+
+        $model = $this->loadModel($id);
+        $mycompany = User::model()->myCompany();
+
+		if ($mycompany == $id) {	
+	            $this->render('mycompany',array(
+				'model'=>$model,
+			));
+		} else if ($model->companyowner_id == $mycompany) {
+	        $this->render('view',array(
+				'model'=>$model,
+			));
+	    } else {
+	    	ReportHelper::processError('Company Controller, View Action Error');
+	    }
+    } 
 
         
         

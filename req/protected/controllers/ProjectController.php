@@ -185,8 +185,9 @@ class ProjectController extends Controller
                 $this->render('print',array(
                     'model'=>$model,'tab'=>'documents'
                 ));
-            } ELSE {    
-            $this->redirect(('/req/site/fail/condition/no_access'));
+            } else {  
+                ReportHelper::processError('Project Controller, ExtView action', '/req/site/fail/condition/no_access');  
+                //$this->redirect(('/req/site/fail/condition/no_access'));
             }
     }
     public function actionPrint() {
@@ -276,26 +277,27 @@ class ProjectController extends Controller
         $id=Yii::App()->session['project'];
         $model=$this->loadModel($id);
         $mycompany=User::model()->myCompany();
-        if($mycompany==$model->company_id){
+        if($mycompany==$model->company_id) {
         
-        Yii::App()->session['setting_tab']='settings';
-        
-        if(isset($_POST['Project']))
-        {
-            $model->attributes=$_POST['Project'];
-            if($model->save())
-                $this->redirect(array('project'));
+            Yii::App()->session['setting_tab']='settings';
+            
+            if(isset($_POST['Project']))
+            {
+                $model->attributes=$_POST['Project'];
+                if($model->save())
+                    $this->redirect(array('project'));
+            }
+
+            $this->render('update',array(
+                'model'=>$model,
+            ));
+        } else {
+            ReportHelper::processError('Project Controller, Update action', '/req/site/fail/condition/no_access');  
+              // $this->redirect(('/req/site/fail/condition/no_access'));
         }
-
-        $this->render('update',array(
-            'model'=>$model,
-        ));
-    } ELSE {
-           $this->redirect(('/req/site/fail/condition/no_access'));
-    }
     }
 
-        public function actionResetLink($id)
+    public function actionResetLink($id)
     {
        $model = $this->loadModel($id);
         if(User::model()->myCompany()== $model->company_id)
@@ -306,9 +308,9 @@ class ProjectController extends Controller
         $this->render('details',array(
                 'model'=>$model,
             ));
-        } ELSE {
-     
-                  $this->redirect(('/req/site/fail/condition/no_access'));
+        } else {
+            ReportHelper::processError('Project Controller, Reset Link action', '/req/site/fail/condition/no_access');  
+            //$this->redirect(('/req/site/fail/condition/no_access'));
         }
     }
     
@@ -349,9 +351,10 @@ unset(Yii::app()->session['project']);
         if(User::model()->myCompany()== $model->company_id)//check this project belongs to my company
         {
                    $this->render('details',compact('model'));
-         } ELSE {
-                        // You are not permitted to see this page
-                  $this->redirect(('/req/site/fail/condition/no_access'));
+         } else {
+            // You are not permitted to see this page
+            ReportHelper::processError('Project Controller, Details action', '/req/site/fail/condition/no_access');  
+            //$this->redirect(('/req/site/fail/condition/no_access'));
         }
     }
         public function actionAddProjectAddress($id)
@@ -369,9 +372,10 @@ unset(Yii::app()->session['project']);
                                 }
                      } 
                    $this->render('address',compact('model','addresses'));
-         } ELSE {
-                        // You are not permitted to see this page
-                  $this->redirect(('/req/site/fail/condition/no_access'));
+         } else {
+            // You are not permitted to see this page
+            ReportHelper::processError('Project Controller, Add Project Address action', '/req/site/fail/condition/no_access');  
+            //$this->redirect(('/req/site/fail/condition/no_access'));
         }
     }
     
@@ -384,8 +388,9 @@ unset(Yii::app()->session['project']);
         $this->render('diary',array(
                 'model'=>$model,
             ));
-        } ELSE {
-                  $this->redirect(('/req/site/fail/condition/no_access'));
+        } else {
+            ReportHelper::processError('Project Controller, Add Diary action', '/req/site/fail/condition/no_access');  
+            //$this->redirect(('/req/site/fail/condition/no_access'));
         }
     }
     public function actionMyTenders()

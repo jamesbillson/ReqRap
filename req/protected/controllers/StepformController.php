@@ -84,8 +84,8 @@ class StepformController extends Controller
                 }
           Yii::app()->user->setFlash('error', ' Something went wrong, all we can report is:<br/> '.$error_string);
 
-
-          $this->redirect(array('/req/site/fail/reason/form_no_save'));
+          ReportHelper::processError('Stepform Controller, Associate action', '/req/site/fail/reason/form_no_save');  
+          //$this->redirect(array('/req/site/fail/reason/form_no_save'));
        
            
         }

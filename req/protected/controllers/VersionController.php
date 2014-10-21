@@ -147,8 +147,10 @@ class VersionController extends Controller
           if ($thisrelease->project->company_id==$mycompany)$permissiontoview=1;
           $follower=Follower::model()->getProjectFollowerDetails($thisrelease->project->id);
           if(!empty($follower)) $permissiontoview=1;
-          if ($permissiontoview==0)$this->redirect(array('/req/site/fail/condition/permission_fail'));
-          
+          if ($permissiontoview==0) {
+          	//$this->redirect(array('/req/site/fail/condition/permission_fail'));
+          	ReportHelper::processError('Version Controller, Delete action', '/req/site/fail/condition/permission_fail');  
+          }
           Yii::App()->session['release']=$release;
          
           $this->redirect(array('/req'.Version::$objects[$object].'/view/id/'.$object_id));

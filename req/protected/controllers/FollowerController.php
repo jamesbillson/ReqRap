@@ -251,7 +251,10 @@ class FollowerController extends Controller
         $link = urldecode($id);
         $follower = Follower::model()->find("link = '".$link."'");
         // if it doesn't match, redirect to sorry page.
-        if (!isset($follower->id))  $this->redirect(array('/req/site/fail'));
+        if (!isset($follower->id))  {
+            //$this->redirect(array('/req/site/fail'));
+            ReportHelper::processError('Follower Controller, Accept action');
+        }
         //if it does match, see what kind of contact they are
         $contact = Contact::model()->findbyPk($follower->contact_id);
         $matchuser = User::model()->find("username = '".$contact->email."'"); 

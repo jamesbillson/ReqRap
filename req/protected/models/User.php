@@ -163,8 +163,17 @@ class User extends CActiveRecord
       }
       return parent::beforeSave();
     }
-       public function myCompany()
-    {
+
+    /**
+     * Checking current use is developer
+     * @return boolean
+     */
+    public function isDeveloper() {
+      $is_developer = Yii::app()->user->developer; 
+      return $is_developer;
+    }
+
+    public function myCompany() {
             $user= Yii::app()->user->id;   
               
         $sql="SELECT `c`.`id` FROM `company` `c` 

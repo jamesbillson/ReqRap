@@ -232,12 +232,13 @@ if (!empty($mainflow)){
                       $result->save();  
                   */      
                 
-              } ELSE {
+              } else {
                         // The case hasn't saved 
-                    $this->redirect(('/req/site/fail'));
+                   // $this->redirect(('/req/site/fail'));
                    // echo 'MAIN Test Case not saved<br /><pre>';
                    // print_r ($testcase->getErrors());
                    //  echo '</pre>';
+                  ReportHelper::processError('Testcase Controller, Make action', '/req/site/fail');  
               }
             
  }             
@@ -345,9 +346,10 @@ if (!empty($all_flows[$i])){
                          
                          
                          
-                    } ELSE {
+                    } else {
                 // The case hasn't saved  
-                   $this->redirect(('/req/site/fail'));
+                    //$this->redirect(('/req/site/fail'));
+                    ReportHelper::processError('Testcase Controller, Make action', '/req/site/fail');  
                    //echo 'ALT Test Case not saved';
                     }
                 }

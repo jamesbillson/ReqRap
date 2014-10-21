@@ -24,6 +24,16 @@ class wpUser extends CWebUser implements IWebUser, IApplicationComponent {
             }
             return $name;
         }
+
+        public function getDeveloper () {
+            $user = User::model()->findByPK($this->getId());
+            $developer = '';
+            if ($user) {
+                $developer = $user->developer;
+            }
+            return $developer;
+        }
+
         public function loginRequired() {
             wp_login_form(array('redirect' => Yii::app()->getRequest()->getUrl()));
         }

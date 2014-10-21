@@ -59,8 +59,9 @@ class IfaceController extends Controller
             
             if(isset($versions[0]['id'])) {
                 $model=$this->loadModel($versions[0]['id']);
-            } ELSE {
-                $this->redirect(('/req/site/fail/no_object'));
+            } else {
+                //$this->redirect(());
+                ReportHelper::processError('Iface Controller, View action', '/req/site/fail/no_object');
             }
                 //need to load other models here and pass them
                 $types=  Interfacetype::model()->getInterfaceTypes();

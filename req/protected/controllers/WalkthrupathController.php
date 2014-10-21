@@ -155,10 +155,12 @@ if (!empty($mainflow)){
              
                }
               }  
-             } ELSE 
+             } else 
                  {
                         // The case hasn't saved 
-                    $this->redirect(array('/req/site/fail'));
+                    //$this->redirect(array('/req/site/fail'));
+                    ReportHelper::processError('Walkthrupath Controller, Make action', '/req/site/fail');  
+
                 }
             
  }             
@@ -259,10 +261,11 @@ if (!empty($all_flows[$i])){
                          
                          
                          
-                    } ELSE {
+                    } else {
                 // The case hasn't saved  
-                   $this->redirect(array('/req/site/fail'));
+                      //$this->redirect(array('/req/site/fail'));
                    //echo 'walkthrough not saved';
+                    ReportHelper::processError('Walkthrupath Controller, Make action', '/req/site/fail');
                     }
                 }
                 }
