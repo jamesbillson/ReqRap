@@ -69,7 +69,7 @@ if (count($data)){
             if(count($uses)==0)
                 {
                 $actorphan++;
-                $actorphanlist.='<a href="/actor/view/id/'.$item['actor_id'].'">'.$item['name'].'</a><br />';
+                $actorphanlist.='<a href="'.UrlHelper::getPrefixLink("/actor/view/id/").''.$item['actor_id'].'">'.$item['name'].'</a><br />';
                 }
         }
         $actorphanscore=100-(($actorphan/$actcount)*100);

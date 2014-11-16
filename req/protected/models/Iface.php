@@ -62,14 +62,14 @@ class Iface extends CActiveRecord
                     if(!count(Iface::model()->getCurrentImage($item['iface_id'],Yii::App()->session['release'])) && $item['text']=='') 
                         {
                         $ifstub++;
-                        $ifstublist.='<a href="/iface/view/id/'.$item['iface_id'].'"> UI-'.str_pad($type['number'], 2, "0", STR_PAD_LEFT).str_pad($item['number'], 3, "0", STR_PAD_LEFT).' '.$item['name'].'</a><br />';
+                        $ifstublist.='<a href="'.UrlHelper::getPrefixLink("/iface/view/id/").''.$item['iface_id'].'"> UI-'.str_pad($type['number'], 2, "0", STR_PAD_LEFT).str_pad($item['number'], 3, "0", STR_PAD_LEFT).' '.$item['name'].'</a><br />';
 
                         } 
                 $uses=Usecase::model()->getLinkUsecase($item['iface_id'],12,15);
                     if(count($uses)==0)
                            { 
                            $iforphan++;
-                        $iforphanlist.='<a href="/iface/view/id/'.$item['iface_id'].'"> UI-'.str_pad($type['number'], 2, "0", STR_PAD_LEFT).str_pad($item['number'], 3, "0", STR_PAD_LEFT).' '.$item['name'].'</a><br />';
+                        $iforphanlist.='<a href="'.UrlHelper::getPrefixLink("/iface/view/id/").''.$item['iface_id'].'"> UI-'.str_pad($type['number'], 2, "0", STR_PAD_LEFT).str_pad($item['number'], 3, "0", STR_PAD_LEFT).' '.$item['name'].'</a><br />';
 
                            }
                 }

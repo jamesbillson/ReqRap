@@ -159,10 +159,40 @@ if (!empty(Yii::app()->user->id) || !empty(Yii::app()->user->company_id)){
 	</div><!-- footer -->
 
 </div><!-- page -->
-
-
-</body>
-</html>
+<div id="ajax-login" class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title">Login</h4>
+      </div>
+      <div class="modal-body">
+        <form class="form-horizontal" id="login-form" action="/req/site/login" method="post">        
+          <div class="row" style="margin-top: 10px;">
+            <div class="span1">email: </div>
+            <div class="span2">    
+                <input name="LoginForm[username]" id="LoginForm_username" type="text">                
+                <span class="help-inline error" id="LoginForm_username_em_" style="display: none;"></span>            
+            </div>
+          </div>
+          <div class="row" style="margin-top: 10px;">
+              <div class="span1">password: </div>
+              <div class="span2">
+                  <input hint="" name="LoginForm[password]" id="LoginForm_password" type="password">                <span class="help-inline error" id="LoginForm_password_em_" style="display: none;"></span>            </div>
+          </div>
+          <div class="row" style="margin-top: 10px;"> 
+              <div class="span3" style="width:230px;">
+                  <input id="ytLoginForm_rememberMe" type="hidden" value="0" name="LoginForm[rememberMe]"><input name="LoginForm[rememberMe]" id="LoginForm_rememberMe" value="1" type="checkbox"> Remember me on this computer<br>
+              </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary" id="ajax-login--btn" type="submit" name="yt0">Login</button>            
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -173,3 +203,6 @@ if (!empty(Yii::app()->user->id) || !empty(Yii::app()->user->company_id)){
   ga('send', 'pageview');
 
 </script>
+<script type="text/javascript" src="<?php echo get_template_directory_uri(); ?>/js/ajax-login.js"></script>
+</body>
+</html>

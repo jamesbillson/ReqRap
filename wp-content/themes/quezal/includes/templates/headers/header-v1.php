@@ -14,8 +14,12 @@
   <?php if( $tcsn_option['tcsn_show_topbar'] == 1 ) { ?>
   <div id="topbar">
     <div class="container">
-      <div class="row">
-        <div class="col-md-6 col-sm-6 col-xs-12 topbar-left">
+      <div class="row"> 
+          <div class="col-md-3 col-sm-3 col-xs-6 topbar-left">
+          <img src="/req/images/furniture/logo_sm.png">    
+          </div>
+          <div class="col-md-6 col-sm-6 col-xs-12 topbar-left">
+            
           <?php if ( $tcsn_option['tcsn_select_topbar_info'] == 'tcsn_links' ) { ?>
           <?php if( has_nav_menu( 'secondary_menu' ) ) {
 			  wp_nav_menu( array( 
@@ -28,12 +32,12 @@
 		  } ?>
           <?php if ( $tcsn_option['tcsn_select_topbar_info'] == 'tcsn_text' ) {  echo $tcsn_option['tcsn_text_topbar_info']; } ?>
         </div>
-        <div class="col-md-6 col-sm-6 col-xs-12">
+        <div class="col-md-3 col-sm-3 col-xs-6">
          
           <div class="search-header">
              <?php if ( is_user_logged_in() ) { ?>
-            I'm logged in 
-             <?php } ELSE {?> 
+            <a href="/req/site/login?action=logout">Logout</a>
+ <?php  } ELSE {?> 
             <a href="/req/site/login/">Login</a> |  <a href="/register/">Register</a>
             <?php } ?> 
           </div>

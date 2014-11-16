@@ -116,13 +116,13 @@ if (count($data)){
         if(count($fields)==0) 
             {
             $formstub++;
-            $formstublist.='<a href="/form/view/id/'.$item['form_id'].'"> UF-'.str_pad($item['number'], 3, "0", STR_PAD_LEFT).' '.$item['name'].'</a><br />';
+            $formstublist.='<a href="'.UrlHelper::getPrefixLink("/form/view/id/").''.$item['form_id'].'"> UF-'.str_pad($item['number'], 3, "0", STR_PAD_LEFT).' '.$item['name'].'</a><br />';
             }
                 $uses=Usecase::model()->getLinkUsecase($item['form_id'],2,14);
                 if(count($uses)==0) 
                     {
                     $formorphan++;
-                    $formorphanlist.='<a href="/form/view/id/'.$item['form_id'].'"> UF-'.str_pad($item['number'], 3, "0", STR_PAD_LEFT).' '.$item['name'].'</a><br />';
+                    $formorphanlist.='<a href="'.UrlHelper::getPrefixLink("/form/view/id/").''.$item['form_id'].'"> UF-'.str_pad($item['number'], 3, "0", STR_PAD_LEFT).' '.$item['name'].'</a><br />';
                     }
         endforeach;
         $formstubscore=100-(($formstub/$formcount)*100);

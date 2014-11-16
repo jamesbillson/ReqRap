@@ -74,7 +74,7 @@ if (count($data)){
         if(count($fields)==0) 
             {
             $obstub++;
-            $obstublist.='<a href="/object/view/id/'.$item['object_id'].'"> OB-'.str_pad($item['number'], 3, "0", STR_PAD_LEFT).' '.$item['name'].'</a><br />';
+            $obstublist.='<a href="'.UrlHelper::getPrefixLink("/object/view/id/").''.$item['object_id'].'"> OB-'.str_pad($item['number'], 3, "0", STR_PAD_LEFT).' '.$item['name'].'</a><br />';
             }
 
         endforeach;

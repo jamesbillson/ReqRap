@@ -55,7 +55,8 @@ $action=$action->id;
          !($controller == 'site' && $action == 'forgotpassword') &&
          !($controller == 'site' && $action == 'newpassword') &&
          !($controller == 'reset' && $action == 'index') &&
-         !($controller == 'reset' && $action == 'success')
+         !($controller == 'reset' && $action == 'success') && 
+         !($controller == 'ajax' && $action == 'login')
              )
          {
 

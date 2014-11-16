@@ -3,7 +3,7 @@
                             $links = Step::model()->getStepLinks($item['id'], 1, 16);
                             foreach ($links as $link) {
                             ?>
-                                    <a href="/rule/view/id/<?php echo $link['rule_id']; ?>"> BR-<?php echo str_pad($link['number'], 3, "0", STR_PAD_LEFT); ?></a>  <?php echo $link['name']; ?> <a href="/steprule/delete/id/<?php echo $link['xid']; ?>"><i class="icon-link text-error" rel="tooltip" title="Unlink this rule"></i></a><br/>
+                                    <a href="<?php echo UrlHelper::getPrefixLink('/rule/view/id/'); ?><?php echo $link['rule_id']; ?>"> BR-<?php echo str_pad($link['number'], 3, "0", STR_PAD_LEFT); ?></a>  <?php echo $link['name']; ?> <a href="/steprule/delete/id/<?php echo $link['xid']; ?>"><i class="icon-link text-error" rel="tooltip" title="Unlink this rule"></i></a><br/>
                             <?php } ?>
                                 <br />
 <?php $rules = Rule::model()->getProjectRules($project); ?>   

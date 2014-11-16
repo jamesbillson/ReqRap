@@ -1,18 +1,5 @@
-  <?php
-  /*
-  $packages = Package::model()->getPackages($project);
-  if (count($packages)): ?>
- 
-  <h2><?php echo $heading; ?>. Packages and Usecases</h2>
-<?php $heading++; ?>
-  <?php foreach($packages as $package): ?>
-   <h3>
-        Package PA-<?php echo $package['number'];?> <?php echo $package['name'];?>
-   </h3>
-                      
-
 <?php
-   * */
+$path =  Yii::getPathOfAlias('webroot');
    
 $usecases = Usecase::model()->getPackageUsecases($package['package_id']); 
 
@@ -43,9 +30,9 @@ imageline ($im,0,0,0,$imheight,$black);
 imageline ($im,0,$imheight-1,600,$imheight-1,$black);
 imageline ($im,599,$imheight-1,599,0,$black);
 $font = 'images/arial.ttf';
-$actorimage = imagecreatefrompng("images/actor.png");
-$xsystemimage= imagecreatefrompng("images/xsystem.png");
-$elipse = imagecreatefrompng("images/elipse.png");
+$actorimage = imagecreatefrompng("$path/images/actor.png");
+$xsystemimage= imagecreatefrompng("$path/images/xsystem.png");
+$elipse = imagecreatefrompng("$path/images/elipse.png");
 
 imagettftext($im, 14, 0, 10, 30, $black, $font, $package['name']);
 $yactor=array();
@@ -92,7 +79,7 @@ imageline ($im,100,$yactor[$ucactor['actor_id']]+35,$x,$y+50,$black);
 
 
 // Output the image
-imagepng($im,"images/".$package['id']."test.png");
+imagepng($im,"$path/images/".$package['id']."test.png");
 // Free up memory
 imagedestroy($im);
 

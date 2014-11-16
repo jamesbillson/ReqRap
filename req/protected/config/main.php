@@ -1,3 +1,4 @@
+
 <?php
 //this is a new comment
 // uncomment the following to define a path alias
@@ -141,10 +142,9 @@ return array(
         */
         // uncomment the following to use a MySQL database
         'session' => array(
-            'autoStart' => true,
-            'cookieMode'=>'none',
-            'sessionName' => 'session',
-            'timeout' => 28800,
+                'sessionName' => 'SiteSession',
+                'class' => 'CHttpSession',
+                'autoStart' => true,
         ),
         'db'=>array(
             'connectionString' => 'mysql:host=localhost;dbname=req',
@@ -170,14 +170,26 @@ return array(
                     'levels'=>'error, warning',
                 ),
                 // uncomment the following to show log messages on web pages #################################
-              /*  
                 array(
                     'class'=>'CWebLogRoute',
-                ), */
+                    'enabled' => YII_DEBUG,
+                ), 
             ),
         ),
         'easyImage' => array(
             'class' => 'ext.easyimage.EasyImage',
+        ),
+                'ePdf' => array(
+                'class'         => 'ext.yii-pdf.EYiiPdf',
+                'params'        => array(
+                    'mpdf'     => array(
+                        'librarySourcePath' => 'application.vendors.mpdf.*',
+                        'constants'         => array(
+                            '_MPDF_TEMP_PATH' => Yii::getPathOfAlias('application.runtime'),
+                        ),
+                        'class'=>'mpdf',
+                    )
+                ),
         ),
     ),
     
@@ -185,8 +197,8 @@ return array(
     // using Yii::app()->params['paramName']
     'params'=>array(
         // this is used in contact page
-        'adminEmail'=>'reqrap@reqrap.com',
-        'photo_folder'=>'/uploads/images/',
+        'adminEmail'=>   'reqrap@reqrap.com',
+        'photo_folder'=> dirname(__FILE__).DIRECTORY_SEPARATOR.'../..'.'/uploads/images/',
     ),
     
 );

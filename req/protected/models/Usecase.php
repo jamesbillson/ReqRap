@@ -169,7 +169,7 @@ class Usecase extends CActiveRecord
 
                 if((count($steps)+$ucscore)<=1) {
                     $ucstub++;
-                $ucstublist.= '<a href="/usecase/view/id/'.$item['usecase_id'].'">'.$item['name'].'<br /></a>';
+                    $ucstublist.= '<a href="'.UrlHelper::getPrefixLink("/usecase/view/id/").''.$item['usecase_id'].'">'.$item['name'].'<br /></a>';
                 }
                 endforeach;
         }

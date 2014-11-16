@@ -94,8 +94,7 @@ class CompanyController extends Controller
 	{
 		$model=new Company;
 		$user = User::model()->findbyPK(Yii::app()->user->id);
-		
-		if ($user->active==0)$this->redirect(array('/site/verify'));
+		if ($user != NULL && $user->active==0)$this->redirect(array('/site/verify'));
 		
 		if(isset($_POST['Company']))
 		{

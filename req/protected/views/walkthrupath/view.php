@@ -22,7 +22,7 @@ $data= Walkthrustep::model()->findAll('walkthrupath_id='.$model->id);
 <?php
 
 $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
-    'title' => 'Walk Through Path: <a href="/req/usecase/view/id/'.$usecase->usecase_id.'">'.$title['number'].' '.$title['name'].'</a>',
+    'title' => 'Walk Through Path: <a href="'.UrlHelper::getPrefixLink("/req/usecase/view/id/").''.$usecase->usecase_id.'">'.$title['number'].' '.$title['name'].'</a>',
     'headerIcon' => 'icon-check',
     'htmlOptions' => array('class'=>'bootstrap-widget-table'),
        'headerButtons' => array(

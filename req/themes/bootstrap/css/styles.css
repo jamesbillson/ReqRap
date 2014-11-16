@@ -90,3 +90,7 @@ font-size: .8em;
      padding-bottom:12px;
      font-family: Verdana, sans-serif;
 }
+#ajax-login {
+  display: none;
+}
+

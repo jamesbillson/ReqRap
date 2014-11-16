@@ -82,13 +82,13 @@ public function toDo()
 
                     if ($item['text']=='stub') {
                         $stub++; 
-                    $stublist.='<a href="/rule/view/id/'.$item['rule_id'].'"> BR-'.str_pad($item['number'], 3, "0", STR_PAD_LEFT).' '.$item['name'].'</a><br />';
+                    $stublist.='<a href="'.UrlHelper::getPrefixLink("/rule/view/id/").''.$item['rule_id'].'"> BR-'.str_pad($item['number'], 3, "0", STR_PAD_LEFT).' '.$item['name'].'</a><br />';
 
                     }
                 $uses=Usecase::model()->getLinkUsecase($item['rule_id'],1,16);
 
                     if(count($uses)==0){$orphan++;
-                    $orphanlist.='<a href="/rule/view/id/'.$item['rule_id'].'"> BR-'.str_pad($item['number'], 3, "0", STR_PAD_LEFT).' '.$item['name'].'</a><br />';
+                    $orphanlist.='<a href="'.UrlHelper::getPrefixLink("/rule/view/id/").''.$item['rule_id'].'"> BR-'.str_pad($item['number'], 3, "0", STR_PAD_LEFT).' '.$item['name'].'</a><br />';
 
                     }
                 }

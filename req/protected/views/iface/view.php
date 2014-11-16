@@ -162,7 +162,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
             <?php foreach($data as $item):?>
                 <tr class="odd">  
                     <td>   
-                        <a href="/req/usecase/view/id/<?php echo $item['usecase_id'];?>">UC-<?php echo str_pad($item['package_number'], 2, "0", STR_PAD_LEFT); ?>
+                        <a href="<?php echo UrlHelper::getPrefixLink('/req/usecase/view/id/'); ?><?php echo $item['usecase_id'];?>">UC-<?php echo str_pad($item['package_number'], 2, "0", STR_PAD_LEFT); ?>
                             <?php echo str_pad($item['usecase_number'], 3, "0", STR_PAD_LEFT); ?></a>
                         <?php echo $item['usecase_name'];?>
                     </td>

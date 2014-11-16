@@ -22,11 +22,13 @@ $this->pageTitle=Yii::app()->name; ?>
 </div>
   <div class="span5 pull-right">
         <?php 
+        
         if($model->logo_id !='') {
         $src = Yii::app()->easyImage->thumbSrcOf(
-  UrlHelper::getPath($model->logo_id), 
- array('resize' => array('width' => 150)));
-        } ELSE { $src="/req/images/furniture/logo.png";}
+  UrlHelper::getPath($model->logo_id), array('resize' => array('width' => 150)));
+        } else { 
+          $src="/req/images/furniture/logo.png";
+        }
         ?>
  
       <img src="<?php echo $src;?>" align="right">
@@ -85,8 +87,8 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
             <?php echo $item['modified_date'];?>
       </td>
         <td>
-          <a href="/follower/accept?id=<?php echo $item['link'];?>"><i class="icon-thumbs-up" rel="tooltip" title="Accept"></i></a>
-            <a href="/follower/delete?id=<?php echo $item['id'];?>"><i class="icon-remove-sign" rel="tooltip" title="Ignore"></i></a> 
+          <a href="<?php echo UrlHelper::getPrefixLink('/follower/accept?id=')?><?php echo $item['link'];?>"><i class="icon-thumbs-up" rel="tooltip" title="Accept"></i></a>
+            <a href="<?php echo UrlHelper::getPrefixLink('/follower/delete?id=')?><?php echo $item['id'];?>"><i class="icon-remove-sign" rel="tooltip" title="Ignore"></i></a> 
        
             
             </td>
@@ -110,8 +112,8 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
             <?php echo $item['modified_date'];?>
       </td>
         <td>
-          <a href="/follower/accept?id=<?php echo $item['link'];?>"><i class="icon-thumbs-up" rel="tooltip" title="Accept"></i></a>
-            <a href="/follower/delete?id=<?php echo $item['id'];?>"><i class="icon-remove-sign" rel="tooltip" title="Ignore"></i></a> 
+          <a href="<?php echo UrlHelper::getPrefixLink('/follower/accept?id=')?><?php echo $item['link'];?>"><i class="icon-thumbs-up" rel="tooltip" title="Accept"></i></a>
+            <a href="<?php echo UrlHelper::getPrefixLink('/follower/delete?id=')?><?php echo $item['id'];?>"><i class="icon-remove-sign" rel="tooltip" title="Ignore"></i></a> 
        
             
             </td>
@@ -173,11 +175,11 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
         <?php echo $item['cname'];?>
         </td>
         <td>   
-         <a href="/project/set/id/<?php echo $item['id'];?>"><?php echo $item['pname'];?></a>
+         <a href="<?php echo UrlHelper::getPrefixLink('/project/set/id/')?><?php echo $item['id'];?>"><?php echo $item['pname'];?></a>
         </td>
 
         <td>
-            <a href="/follower/delete?id=<?php echo $item['fid'];?>"><i class="icon-remove-sign" rel="tooltip" title="Delete"></i></a> 
+            <a href="<?php echo UrlHelper::getPrefixLink('/follower/delete?id=')?><?php echo $item['fid'];?>"><i class="icon-remove-sign" rel="tooltip" title="Delete"></i></a> 
        
             
             </td>
@@ -198,11 +200,11 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
         <?php echo $item['cname'];?>
         </td>
     <td>   
-        <a href="/package/view?id=<?php echo $item['id'];?>&tab=bidder"><?php echo $item['pname'];?> - <?php echo $item['name'];?></a>
+        <a href="<?php echo UrlHelper::getPrefixLink('/package/view?id=')?><?php echo $item['id'];?>&tab=bidder"><?php echo $item['pname'];?> - <?php echo $item['name'];?></a>
         </td>
         <td>
           
-            <a href="/follower/delete?id=<?php echo $item['fid'];?>"><i class="icon-remove-sign" rel="tooltip" title="Delete"></i></a> 
+            <a href="<?php echo UrlHelper::getPrefixLink('/follower/delete?id=')?><?php echo $item['fid'];?>"><i class="icon-remove-sign" rel="tooltip" title="Delete"></i></a> 
        
             
             </td>
@@ -230,7 +232,7 @@ if(!empty($bids)) {
      $this->widget('bootstrap.widgets.TbMenu', array(
     'type'=>'list',
     'items'=>array(
-        array('label'=>'Projects', 'icon'=>'star-empty', 'url'=>array('project/myrequirements')),
+        array('label'=>'Projects', 'icon'=>'star-empty', 'url'=> UrlHelper::getPrefixLink('project/myrequirements')),
       
        ),
     
@@ -243,7 +245,7 @@ if(!empty($construction))  {
      $this->widget('bootstrap.widgets.TbMenu', array(
     'type'=>'list',
     'items'=>array(
-         array('label'=>'Testing', 'icon'=>'star-empty', 'url'=>array('project/myprojects')),
+         array('label'=>'Testing', 'icon'=>'star-empty', 'url'=>UrlHelper::getPrefixLink('project/myprojects')),
      
        ),
 ));  
@@ -259,7 +261,7 @@ if(empty($tenders) && empty($construction)  && empty($bids) && $type !=4){
     'label'=>'Create a Project +',
     'type'=>'success', // null, 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
     'size'=>'small', // null, 'large', 'small' or 'mini'
-    'url'=>array('project/create')
+    'url'=> UrlHelper::getPrefixLink('project/create')
 ));
     echo '<br /><br />';
 };
@@ -267,8 +269,8 @@ if(empty($tenders) && empty($construction)  && empty($bids) && $type !=4){
  $this->widget('bootstrap.widgets.TbMenu', array(
     'type'=>'list',
     'items'=>array(
-        array('label'=>'Contacts', 'icon'=>'star-empty', 'url'=>array('contact/mycontacts')),
-        array('label'=>'Companies', 'icon'=>'star-empty', 'url'=>array('company/mycompanies')),
+        array('label'=>'Contacts', 'icon'=>'star-empty', 'url'=> UrlHelper::getPrefixLink('contact/mycontacts')),
+        array('label'=>'Companies', 'icon'=>'star-empty', 'url'=> UrlHelper::getPrefixLink('company/mycompanies')),
          ),
     
    
@@ -278,7 +280,7 @@ if(empty($tenders) && empty($construction)  && empty($bids) && $type !=4){
     'type'=>'list',
     'items'=>array(
     
-        array('label'=>'My Company Settings', 'icon'=>'cog', 'url'=>array('company/mycompany')),
+        array('label'=>'My Company Settings', 'icon'=>'cog', 'url'=> UrlHelper::getPrefixLink('company/mycompany')),
        ),
     )); 
 if($user_id==121 || $user_id==140)   {
@@ -286,7 +288,7 @@ if($user_id==121 || $user_id==140)   {
      $this->widget('bootstrap.widgets.TbMenu', array(
     'type'=>'list',
     'items'=>array(
-         array('label'=>'User Report', 'icon'=>'user', 'url'=>array('user/view')),
+         array('label'=>'User Report', 'icon'=>'user', 'url'=> UrlHelper::getPrefixLink('user/view')),
      
        ),
 ));  

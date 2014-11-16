@@ -72,9 +72,9 @@ class IfaceController extends Controller
         
     public function actionPreview($id,$release) {
     	$this->layout = 'popup';
-	    $versions=Version::model()->getVersions($id,12,'iface_id');
-	    $model=$this->loadModel($versions[0]['id']);
-	    $types=  Interfacetype::model()->getInterfaceTypes();
+	    $versions = Version::model()->getVersions($id,12,'iface_id');
+	    $model = $this->loadModel($versions[0]['id']);
+	    $types =  Interfacetype::model()->getInterfaceTypes();
 	    $this->renderPartial('preview',array('model'=>$model,
 			'versions'=>$versions, 'types'=>$types, 'release'=>$release
 		));

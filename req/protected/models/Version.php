@@ -453,7 +453,7 @@ class Version extends CActiveRecord {
                     if($name['name']!='deleted' && $print==0)
                         {
                     
-                            $end[$i]='<a href="/'.Version::$objects[$object].'/view/id/'.$instance.'">'.$name['number'].'-'.$name['name'].'</a>';
+                            $end[$i]='<a href="'.UrlHelper::getPrefixLink('/').''.Version::$objects[$object].'/view/id/'.$instance.'">'.$name['number'].'-'.$name['name'].'</a>';
                         
                         }
                     ELSE 
