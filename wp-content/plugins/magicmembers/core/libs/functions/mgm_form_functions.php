@@ -151,7 +151,7 @@ function mgm_user_login_form($use_default_links = true) {
 				$links[] = sprintf('<a class="mgm-register-link" href="%s">%s</a>', mgm_get_custom_url('register'), __('Register', 'mgm'));			
 			}
 			// lostpassword
-			$links[] = sprintf('<a class="mgm-lostpassword-link" href="%s" title="%s">%s</a>', mgm_get_custom_url('lostpassword'), __('Password Lost and Found', 'mgm'), __('Lost your password?', 'mgm'));					
+			$links[] = sprintf('<a class="mgm-lostpassword-link" href="%s" title="%s">%s</a>', '/req/site/login/forgot/show/', __('Password Lost and Found', 'mgm'), __('Lost your password?', 'mgm'));					
 		}
 	} 
 	
@@ -268,7 +268,7 @@ function mgm_sidebar_user_login_form($register_text='', $lostpassword_text='') {
 	// lostpassword link	
 	if ($lostpassword_text) {
 		// get urls from settings		
-		$links[] = sprintf('<a class="mgm-lostpassword-link" href="%s">%s</a>', mgm_get_custom_url('lostpassword'), $lostpassword_text);
+		$links[] = sprintf('<a class="mgm-lostpassword-link" href="%s">%s</a>', '/req/site/login/forgot/show/', $lostpassword_text);
 	}
 	
 	// apply filters
@@ -561,7 +561,7 @@ function mgm_user_register_form($args=array(), $use_default_links = false) {
 	$links[] = sprintf('<a class="mgm-login-link" href="%s" title="%s">%s</a>', mgm_get_custom_url('login', $use_default_links), __('Log in','mgm'), __('Log in','mgm'));
 	// lostpassword link
 	if ( get_option('users_can_register') ){			
-		$links[] = sprintf('<a class="mgm-lostpassword-link" href="%s" title="%s">%s</a>', mgm_get_custom_url('lostpassword', $use_default_links), __('Password Lost and Found','mgm'), __('Lost your password','mgm'));
+		$links[] = sprintf('<a class="mgm-lostpassword-link" href="%s" title="%s">%s</a>', '/req/site/login/forgot/show/', __('Password Lost and Found','mgm'), __('Lost your password','mgm'));
 	}
 	
 	// apply filters

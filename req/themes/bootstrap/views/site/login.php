@@ -76,7 +76,14 @@ $this->breadcrumbs = array(
     </div><!-- form -->
 </div>
 </div>
-<?php $this->beginWidget('bootstrap.widgets.TbModal', array('id'=>'forgot-password--form')); ?>
+<?php 
+$autoOpen = false;
+if (isset($_GET) && isset($_GET['forgot']) && $_GET['forgot'] === 'show' ) {
+    $autoOpen = true;
+}
+
+?>
+<?php $this->beginWidget('bootstrap.widgets.TbModal', array('id'=>'forgot-password--form', 'autoOpen' => $autoOpen)); ?>
  
 <div class="modal-header">
     <a class="close" data-dismiss="modal">&times;</a>

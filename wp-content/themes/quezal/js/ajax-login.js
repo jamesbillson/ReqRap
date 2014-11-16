@@ -1,6 +1,6 @@
 jQuery(document).ready(function() {
 	(function() {
-		jQuery('a[href*="/req/site/login"]').on('click', function(e) {
+		jQuery('.mgm-login-link').on('click', function(e) {
 			e.preventDefault();
 			jQuery('#ajax-login').modal('show');
 			return false;

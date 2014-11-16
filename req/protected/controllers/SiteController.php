@@ -253,14 +253,7 @@ class SiteController extends Controller {
           //send the email
           $model->verification_code = substr(sha1($model->email . time()), 0, 10);
           $model->save(false);
-/*
-          $message = $this->renderPartial('email_newpassword', array('code' => $model->verification_code), true);
-          $headers = 'MIME-Version: 1.0' . "\r\n";
-          $headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
-          $headers .= 'From: '  .Yii::app()->params['adminEmail'] . "\r\n";
 
-          mail($model->email, 'Forgot Password Email', $message, $headers);
-*/
               $mail = new YiiMailer();
               $mail->setFrom('info@reqrap.com', 'ReqRap Password Support');
               $mail->setTo($model->email);
