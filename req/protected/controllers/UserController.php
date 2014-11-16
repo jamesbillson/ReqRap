@@ -418,8 +418,8 @@ class UserController extends Controller
                 $model->scenario = 'update';
                 $model->firstname=$_POST['User']['firstname'];
                 $model->lastname=$_POST['User']['lastname'];
-                $model->email=$_POST['User']['email'];
-                $model->username=$_POST['User']['email'];
+         //       $model->email=$_POST['User']['email'];
+          //      $model->username=$_POST['User']['email'];
               //  $model->password=$model->password;
                 $model->salt =  $model->generateSalt();
                 if($model->save())
@@ -431,7 +431,7 @@ class UserController extends Controller
                 if( $model->save() ) {
                   wp_set_password( $_POST['User']['password'], $model->id );
                   $modelLogin = new LoginForm;
-                  $modelLogin->username = $_POST['User']['email'];
+            //      $modelLogin->username = $_POST['User']['email'];
                   $modelLogin->password = $_POST['User']['password'];
                   $modelLogin->login();
                   $this->redirect('/req/user/update');
