@@ -10,7 +10,7 @@
                     return;
                 
                 $.ajax({
-                    url: "/site/forgotpassword",
+                    url: "'.UrlHelper::getPrefixLink("/site/forgotpassword").'",
                     type: "POST",
                     data: form.serialize(),
                     dataType: "JSON",

@@ -36,7 +36,7 @@
          
           <div class="search-header">
              <?php if ( is_user_logged_in() ) { ?>
-            <a href="/req/site/login?action=logout">Logout</a>
+            <a href="/req/site/logout/">Logout</a>
  <?php  } ELSE {?> 
             <a href="/req/site/login/">Login</a> |  <a href="/register/">Register</a>
             <?php } ?> 

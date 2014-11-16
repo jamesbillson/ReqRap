@@ -39,8 +39,8 @@ if( bool_from_yn(mgm_get_setting('enable_nested_shortcode_parsing')) ) {
 // add_filter('the_content'			   , 'mgm_load_payment_jsfiles');//load payment js/css files, discarded
 add_action('mgm_url_router_post_process', 'mgm_guest_lockdown');
 // [footer credits]
-add_action('mgm_footer_credits'        , 'mgm_print_footer_credits');
-add_action('wp_footer'                 , 'mgm_footer_credits');
+//add_action('mgm_footer_credits'        , 'mgm_print_footer_credits');
+//add_action('wp_footer'                 , 'mgm_footer_credits');
 add_filter('retrieve_password_title'   , 'mgm_modify_retrieve_password_emailsubject');//modify password reset email subject
 add_filter('retrieve_password_message' , 'mgm_modify_retrieve_password_emailbody');//modify password reset email body
 add_filter('password_reset_title'      , 'mgm_modify_lost_password_emailsubject');//modify lost password reset email subject

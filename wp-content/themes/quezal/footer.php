@@ -53,4 +53,33 @@
   <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
 <![endif]-->
 <?php wp_footer(); ?>
+<div id="ajax-login" class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title">Login</h4>
+      </div>
+      <div class="modal-body">
+        <form id="ajax-login--form" class="form-horizontal" action="/req/site/login" method="post">        
+        	<div class="row" style="margin-top: 10px;">
+            	<div class="col-md-2">Email</div>
+	            <div class="col-md-10">    
+	                <input name="LoginForm[username]" id="LoginForm_username" type="text">                
+	        	</div>
+	        </div>
+	        <div class="row" style="margin-top: 10px;">
+	            <div class="col-md-2">Password</div>
+	            <div class="col-md-10">
+	           		<input hint="" name="LoginForm[password]" id="LoginForm_password" type="password">          
+	           	</div>
+	        </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+      	<button class="btn btn-primary" id="ajax-login--btn" type="submit" name="yt0">Login</button>            
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 </body></html>

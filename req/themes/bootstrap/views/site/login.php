@@ -57,7 +57,7 @@ $this->breadcrumbs = array(
                     'type'=>'link',
                     'htmlOptions'=>array(                       
                         'data-toggle'=>'modal',
-                        'data-target'=>'#myModal',
+                        'data-target'=>'#forgot-password--form',
                         ),
                     )); 
                 ?>
@@ -76,7 +76,7 @@ $this->breadcrumbs = array(
     </div><!-- form -->
 </div>
 </div>
-<?php $this->beginWidget('bootstrap.widgets.TbModal', array('id'=>'myModal')); ?>
+<?php $this->beginWidget('bootstrap.widgets.TbModal', array('id'=>'forgot-password--form')); ?>
  
 <div class="modal-header">
     <a class="close" data-dismiss="modal">&times;</a>
