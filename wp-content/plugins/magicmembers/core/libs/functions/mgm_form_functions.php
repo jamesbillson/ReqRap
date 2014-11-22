@@ -543,7 +543,31 @@ function mgm_user_register_form($args=array(), $use_default_links = false) {
 	
 	// attach custom fields via default hook
 	$form_html .= apply_filters('mgm_register_form', $form_html);
-		
+	$packs = mgm_get_class('subscription_packs');
+	$free = $packs->get_pack(2);
+	$free_description = @$free['description'];
+	$pro = $packs->get_pack(3);
+	$pro_description = @$pro['description'];
+	$enterprise = $packs->get_pack(4);
+	$enterprise_description = $enterprise['description'];
+
+
+	//adding custom subscription option code
+	$form_html .= '<div class="new_subscription_options_box">';	
+	$form_html .= '<label>Subscription Options</label>';
+	$form_html .= '<div data-subscription="free" class="free-option subscription-option">
+						<h4>Free</h4>
+						<p><span>'.$free_description.'</span></p>
+					</div>';
+	$form_html .= '<div data-subscription="pro" class="pro-option subscription-option">
+						<h4>Pro <br /> $25/mth</h4>
+						<p><span>'.$pro_description.'</span></p>
+					</div>';
+	$form_html .= '<div data-subscription="enterprise" class="enterprise-option subscription-option">
+						<h4>Enterprise <br /> $50/mth</h4>
+						<p><span>'.$enterprise_description.'</span></p>
+					</div>';
+	$form_html .= '</div>';
 	// output form	
 	$html = '<div class="mgm_register_form">
 				' . $error_html . '

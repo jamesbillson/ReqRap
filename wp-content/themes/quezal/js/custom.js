@@ -146,6 +146,22 @@ jQuery(document).ready(function($) {
 	createHTML(secondList);
 	$pagesList.after('<ul class="list-sitemap"></ul>').next().html(ListHTML);
 	
+	(function() {
+		jQuery('.subscription-option').on('click', function() {
+			var option = jQuery(this).data('subscription');
+			jQuery('.mgm_subs_option input').removeAttr('checked');
+			if(option === 'free') {
+				jQuery('#mgm_subscription_2').attr('checked', 'checked');
+			} else if(option === 'pro') {
+				jQuery('#mgm_subscription_3').attr('checked', 'checked');
+			} else {
+				jQuery('#mgm_subscription_4').attr('checked', 'checked');
+			}
+			jQuery('#registerform').submit();
+			return false;
+		});
+	}());
+
 }); // Close document ready
 
 

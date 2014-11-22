@@ -2314,3 +2314,60 @@ blockquote, blockquote.pull-right {
 	background-color: #060606;
 	color: #fff;
 }
+
+ #mgm_card_expiry_month, #mgm_card_expiry_year, #mgm_card_code, #mgm_eway_form .mgm_payment_field, #mgm_eway_form .input {
+	width: 547px !important;
+}
+#mgm_eway_form .ccfields_pack_desc, .mgm_get_subs_btn {
+	text-align: left !important;
+}
+#mgm_eway_form .button {
+	width: 100px !important;
+	height: 35px !important;
+}
+#mgm_eway_form .field {
+	width: 547px;
+	float: left;
+	margin-right: 10px;
+}
+#mgm_paypal_form, #mgm_eway_form {
+	margin: 10px 0px;
+}
+.subscription_options_box, .register-page-buttons {
+	display: none;
+}
+
+.new_subscription_options_box .subscription-option {
+	width: 200px;
+	height: 120px;
+	float: left;
+	text-align: center;
+	color: #fff;
+	padding: 10px;
+	box-shadow: 2px 5px 5px #888;
+	margin: 5px 50px 20px 0px;
+	cursor: pointer;
+	position: relative;
+}
+	.new_subscription_options_box .free-option {
+ 		background-color: #63a51b;
+ 	}
+ 	.new_subscription_options_box .pro-option {
+ 		background-color: #528ad8;
+ 	}
+ 	.new_subscription_options_box .enterprise-option {
+ 		background-color: #e87630;
+ 	}
+ 	.new_subscription_options_box .subscription-option h4 {
+ 		color: #fff;
+ 	} 
+ 	.new_subscription_options_box .subscription-option  p {
+ 		position: absolute;
+ 		bottom: -5px;
+ 	}
+ 	.free-option p, .pro-option p{
+ 		left: 30px;
+ 	}
+ 	.enterprise-option p {
+ 		left: 70px;
+ 	}
