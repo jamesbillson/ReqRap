@@ -33,4 +33,7 @@
     <?php endforeach ?>
     </tbody>
 </table>
-<img src="<?php echo  Yii::app()->basePath.'/../'.$img->getImage($actorstring); ?>">
+
+<?php if(is_file(Yii::app()->basePath.'/../'.$img->getImage($actorstring))) { ?>
+<img src="<?php echo  UrlHelper::getPrefixLink($img->getImage($actorstring)); ?>">
+<?php } ?>

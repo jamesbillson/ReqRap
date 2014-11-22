@@ -43,7 +43,8 @@ $showsubhead=0;
 <?php
  if(is_file(Yii::app()->basePath.'/../'.'uploads/images/'.$image['file']))
                 {
-$src = Yii::app()->basePath.'/../'.'uploads/images/'.$image['file']; ?>
+
+$src = UrlHelper::getPrefixLink('/uploads/images/'.$image['file']); ?>
 <img src="<?php echo $src; ?>" width="600">
  <?php } ?>
 

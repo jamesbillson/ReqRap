@@ -282,7 +282,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
           <tr class="odd">
 
               <td>   
-                  <a href="/form/view/id/<?php echo $item['form_id'];?>"><?php echo 'UF-'.str_pad($item['number'], 3, "0", STR_PAD_LEFT);?> </a>
+                  <a href="<?php echo UrlHelper::getPrefixLink('/form/view/id/'); ?><?php echo $item['form_id'];?>"><?php echo 'UF-'.str_pad($item['number'], 3, "0", STR_PAD_LEFT);?> </a>
                   <b><?php echo $item['name'];?></b>
                 
               </td> 
