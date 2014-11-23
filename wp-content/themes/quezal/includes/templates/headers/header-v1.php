@@ -16,12 +16,12 @@
     <div class="container">
       <div class="row"> 
           <div class="col-md-3 col-sm-3 col-xs-6 topbar-left">
-          <img src="/req/images/furniture/logo_sm.png">    
+          <a href="/"><img src="/req/images/furniture/logo_sm.png">    </a>
           </div>
           <div class="col-md-6 col-sm-6 col-xs-12 topbar-left">
             
-          <?php //if ( $tcsn_option['tcsn_select_topbar_info'] == 'tcsn_links' ) { ?>
-          <?php /*if( has_nav_menu( 'secondary_menu' ) ) {
+          <?php if ( $tcsn_option['tcsn_select_topbar_info'] == 'tcsn_links' ) { ?>
+          <?php if( has_nav_menu( 'secondary_menu' ) ) {
 			  wp_nav_menu( array( 
 					'theme_location'  => 'secondary_menu',
 					'container'       => 'div',
@@ -29,26 +29,16 @@
 					'depth'           => -1,
 					) ); ?>
           <?php  }  
-		  } */ ?>
-		  <div class="secondary-menu">
-		  	<ul id="menu-main-menu" class="menu">
-			  	<li id="menu-item-113" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-113">
-			  		<a href="<?php echo get_site_url(); ?>/benefits/">Benefits</a>
-			  	</li>
-				<li id="menu-item-112" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-112">
-					<a href="<?php echo get_site_url(); ?>/plans/">Plans</a>
-				</li>
-			</ul>
-		 </div>
+		  } ?>
           <?php if ( $tcsn_option['tcsn_select_topbar_info'] == 'tcsn_text' ) {  echo $tcsn_option['tcsn_text_topbar_info']; } ?>
         </div>
         <div class="col-md-3 col-sm-3 col-xs-6">
          
           <div class="search-header">
              <?php if ( is_user_logged_in() ) { ?>
-            <a  href="/req/site/logout/">Logout</a>
- <?php  } else {?> 
-            <a class="mgm-login-link" href="/req/site/login/">Login</a> |  <a href="/register/">Register</a>
+            <a href="/req/site/login/action/logout">Logout</a>
+ <?php  } ELSE {?> 
+            <a href="/req/site/login/">Login</a> |  <a href="/register/">Register</a>
             <?php } ?> 
           </div>
           
