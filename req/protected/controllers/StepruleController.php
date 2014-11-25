@@ -98,10 +98,34 @@ class StepruleController extends Controller
                         
                   $model->save(false);
                   $version=Version::model()->getNextNumber($project,16,1,$model->primaryKey,$model->steprule_id);
-                  
+                  /***
+				  Code For Handing Ajax Requests
+				  */
+				  if(Yii::app()->request->isAjaxRequest)
+				  {
+					 if(!isset($rule)){
+						$rule = Rule::model()->find('rule_id=? and project_id=? and release_id = ?',array( $model->rule_id,$model->project_id,$model->release_id));
+					 }
+					 $response['status']=1;
+					 $response['id']=$rule->rule_id;
+					 $response['title']='BR-'.str_pad($rule->number, 3, "0", STR_PAD_LEFT).' '.$rule->name;
+					 $response['xid']= $model->id;
+					 $response['name']=$rule->name;
+					 $response['code']='BR-'.str_pad($rule->number, 3, "0", STR_PAD_LEFT);
+					 echo json_encode($response);
+					 die;
+					  
+				  }
+				  
                 }
-                  $step = Step::model()->with('flow')->findByPk($_POST['step_db_id']);
-             $this->redirect(array('/req/step/update/id/'.$step->id.'/flow/'.$step->flow->id));
+			if(Yii::app()->request->isAjaxRequest)
+			  {
+				  $response['status']=0;
+		 		  echo json_encode($response);
+		 		  die;
+			  }
+             $step = Step::model()->with('flow')->findByPk($_POST['step_db_id']);
+             $this->redirect(array('/step/update/id/'.$step->id.'/flow/'.$step->flow->id));
 		
 	}
         
@@ -198,7 +222,7 @@ class StepruleController extends Controller
                $project_id=Yii::App()->session['project'];
                $model=Steprule::model()->findByPK($id);
                $step=Step::model()->findByPK(Version::model()->getVersion($model->step_id,9));
-               $flow=Step::model()->getStepParentFlow($step->id);
+               $flow=Step::model()->getStepParentFlowByStepID($step->step_id);
                
                $version=Version::model()->getNextNumber($project_id,16,3,$model->id,$model->steprule_id);
              //  echo "<pre>";

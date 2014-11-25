@@ -72,7 +72,7 @@ class Bootstrap extends CApplicationComponent
 	 * @since 0.9.10
 	 */
 	public $enableJS = true;
-
+	public $enableDropzone = true;
 	/**
 	 * @var array plugin initial options (name=>options).
 	 * Each array key-value pair represents the initial options for a single plugin class,
@@ -275,6 +275,9 @@ class Bootstrap extends CApplicationComponent
 
 		if ($this->enableNotifierJS) {
 			$cs->registerPackage('notify');
+		}
+		if ($this->enableDropzone) {
+			$cs->registerPackage('dropzone');
 		}
 	}
 

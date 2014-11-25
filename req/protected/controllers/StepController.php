@@ -154,7 +154,7 @@ public function actionUpdate($flow,$id)
 	if($id!=-1){
            
             $step= Step::model()->findByPk($id);
-            $flow = Step::model()->getStepParentFlow($id);
+            $flow = Step::model()->getStepParentFlowByStepID($step->step_id);
             $usecase= Flow::model()->getFlowParentUsecase($flow['id']);
             $package= Usecase::model()->getUsecaseParentPackage($usecase['id']);
             $model = Flow::model()->findByPk($flow['id']);

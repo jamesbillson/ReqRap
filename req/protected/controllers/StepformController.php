@@ -125,10 +125,34 @@ class StepformController extends Controller
                         
                         $model->save(false);
                         $version=Version::model()->getNextNumber($project,14,1,$model->primaryKey,$model->stepform_id);
+				/***
+				  Code For Handing Ajax Requests
+				  */
+				  if(Yii::app()->request->isAjaxRequest)
+				  {
+					 if(!isset($form)){
+						$form = Form::model()->find('form_id=? and project_id=? and release_id = ?',array( $model->form_id,$model->project_id,$model->release_id));
+					 }
+					$response['status']=1;
+					 $response['id']=$form->form_id;
+					 $response['title']='UF- '.str_pad($form->number, 3, "0", STR_PAD_LEFT).' '.$form->name;
+					 $response['xid']= $model->id;
+					 $response['name']=$form->name;
+					 $response['code']='UF- '.str_pad($form->number, 3, "0", STR_PAD_LEFT);
+					 echo json_encode($response);
+					 die;
+					  
+				  }
                   
                 }
+			if(Yii::app()->request->isAjaxRequest)
+			  {
+				  $response['status']=0;
+		 		  echo json_encode($response);
+		 		  die;
+			  }
                   $step = Step::model()->with('flow')->findByPk($_POST['step_db_id']);
-                  $this->redirect(array('/req/step/update/id/'.$step->id.'/flow/'.$step->flow->id));
+                  $this->redirect(array('/step/update/id/'.$step->id.'/flow/'.$step->flow->id));
 		
 	}
         
@@ -194,7 +218,7 @@ class StepformController extends Controller
 		  $project_id=Yii::App()->session['project'];
                $model=Stepform::model()->findByPK($id);
                $step=Step::model()->findByPK(Version::model()->getVersion($model->step_id,9));
-               $flow=Step::model()->getStepParentFlow($step->id);
+               $flow=Step::model()->getStepParentFlowByStepID($step->step_id);
                
                $version=Version::model()->getNextNumber($project_id,14,3,$model->id,$model->stepform_id);
      

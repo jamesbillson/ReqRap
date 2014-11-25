@@ -250,27 +250,20 @@ class PhotoController extends Controller {
                 header('Content-type: text/plain');
             }
             $data = array();
-
+			
             $photo = new Photo;
             $upload = CUploadedFile::getInstance($photo, 'file');
             
             if (isset($upload)){   
 
                 //set path and filename
-                //$path = Yii::getPathOfAlias("webroot").Yii::app()->params['photo_folder'];
-                $path = Yii::getPathOfAlias("webroot") . '/uploads/images/';
-              
-                if(file_exists($path)){
-                    @mkdir($path, 077, true);
-                } else {
-                   
+                $path = Yii::getPathOfAlias("webroot").Yii::app()->params['photo_folder'];
+				
+				if(!file_exists($path)){
+                    if(mkdir($path, 0755, true)){
+                       return false; 
+                    }
                 }
-
-                if (is_writable($path)  == false) {
-                  throw new CHttpException(500,'Folder '.Yii::app()->params['photo_folder'].' should be write');
-                  return false;
-                }
-                
 
                 $file_name = Utils::uniqueFile($upload->name);
                 $file_name = 'xxxxxxxx'.$file_name;
@@ -290,11 +283,22 @@ class PhotoController extends Controller {
                     $model->user_id=Yii::App()->user->id;
                     
                     $model->file = $file_name;                    
-                   // $path = Yii::getPathOfAlias("webroot") . '/uploads/images/';
+                    
                     if($model->save()){
                         // return data to the fileuploader
                         Version::model()->getNextNumber($project,11,1,$model->primaryKey,$model->photo_id);   
-                   
+                   		$iface=new Iface;
+                        $iface->number=Iface::model()->getNextIfaceNumber($project);
+                        $iface->iface_id=Version::model()->getNextID(12);
+                        $iface->project_id= $project;
+                        $iface->release_id=$release;
+                        $iface->name=$upload->name;
+						$iface->photo_id=$model->photo_id;
+                        $iface->interfacetype_id=Interfacetype::model()->getUnclassified($project);
+                        $iface->project_id=$project;
+						$iface->save(false);
+                        $version=Version::model()->getNextNumber($project,12,1,$iface->primaryKey,$iface->iface_id);
+                               
                         $data[] = array(
                             'name' => $upload->name,
                             'type' => $upload->type,
@@ -302,7 +306,9 @@ class PhotoController extends Controller {
                             'url' => Yii::app()->params['photo_folder'].$model->file,
                             'thumbnail_url' => $src,
                             'delete_url' => Controller::createUrl('photo/ajaxDelete',array('photo_id' => $model->id, 'method' => 'uploader')),
-                            'delete_type' => 'POST'
+                            'delete_type' => 'POST',
+							'iface_id' =>$iface->id,
+							'photo_id' =>$model->photo_id
                         );
                   
                     

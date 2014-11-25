@@ -23,7 +23,7 @@ $this->pageTitle=Yii::app()->name; ?>
   <div class="span5 pull-right">
         <?php 
         
-        if($model->logo_id !='') {
+        if($model->logo_id !=''&& file_exists(UrlHelper::getPath($model->logo_id)) ) {
         $src = Yii::app()->easyImage->thumbSrcOf(
   UrlHelper::getPath($model->logo_id), array('resize' => array('width' => 150)));
         } else { 

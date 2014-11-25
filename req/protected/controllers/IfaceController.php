@@ -153,20 +153,29 @@ public function actionUpdate($ucid,$id)
       if($ucid==-1){
 		 $new->attributes=$_POST['Iface'];
       }
+	  
+			  
                  $new->number=$model->number;
                  $new->project_id=$project;
                  $new->iface_id=$model->iface_id;
                  $new->release_id=$release;	
-                 if($new->save()){
+				 if($new->save()){
                       $version=Version::model()->getNextNumber($project,12,2,$new->primaryKey,$new->iface_id);   
-                      
+                      /***
+				  Code For Handing Ajax Requests
+				  */
+				  if(Yii::app()->request->isAjaxRequest)
+				  {
+					  die;
+				  }else{
                       if($uc=-1){
-                           $this->redirect(('/req/iface/view/id/'.$new->iface_id)); 
+                           $this->redirect(array('/iface/view/id/'.$new->iface_id)); 
                         }
                       ELSE {
-                        $this->redirect(('/req/usecase/view/id/'.$uc));  
+                        $this->redirect(array('/usecase/view/id/'.$uc));  
                           
                       }
+				  }
                       
                  }
 				

@@ -141,17 +141,40 @@ class StepifaceController extends Controller
                             }	
                             else 
                             {
+								
                                  $model->iface_id=$_POST['interface'];
-                             }
+                            }
                         
                   $model->save(false);
                   $version=Version::model()->getNextNumber($project,15,1,$model->primaryKey,$model->stepiface_id);
-                  
+                  /***
+				  Code For Handing Ajax Requests
+				  */
+				  if(Yii::app()->request->isAjaxRequest)
+				  {
+					 if(!isset($iface)){
+						$iface = Iface::model()->find('iface_id=? and project_id=? and release_id = ?',array( $model->iface_id,$model->project_id,$model->release_id));
+					 }
+					  $response['status']=1;
+					  $response['id']=$model->iface_id;
+					  $response['title']=Version::$numberformat[12]['prepend'].'- '.str_pad($iface->interfacetype_id, 2, "0", STR_PAD_LEFT ).str_pad($iface->number, Version::$numberformat[12]['padding'], "0", STR_PAD_LEFT).' '.$iface->name;
+					  $response['name']=$iface->name;
+					  $response['code']=Version::$numberformat[12]['prepend'].'- '.str_pad($iface->interfacetype_id, 2, "0", STR_PAD_LEFT ).str_pad($iface->number, Version::$numberformat[12]['padding'], "0", STR_PAD_LEFT);
+					  $response['xid']= $model->id;
+					  echo json_encode($response);
+					  die;
+					  
+				  }
                 }
-          
+          	  if(Yii::app()->request->isAjaxRequest)
+			  {
+				  $response['status']=0;
+		 		  echo json_encode($response);
+		 		  die;
+			  }
              $step = Step::model()->with('flow')->findByPk($_POST['step_db_id']);
              
-             $this->redirect(array('/req/step/update/id/'.$step->id.'/flow/'.$step->flow->id));
+             $this->redirect(array('/step/update/id/'.$step->id.'/flow/'.$step->flow->id));
 		
 	}
         
@@ -202,7 +225,7 @@ class StepifaceController extends Controller
                 $model=Stepiface::model()->findbyPK($id);
                
                $step=Step::model()->findByPK(Version::model()->getVersion($model->step_id,9));
-               $flow=Step::model()->getStepParentFlow($step->id);
+               $flow=Step::model()->getStepParentFlowByStepID($step->step_id);
                
                $version=Version::model()->getNextNumber($project,15,3,$model->id,$model->stepiface_id);
     
