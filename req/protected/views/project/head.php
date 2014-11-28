@@ -41,7 +41,7 @@ $edit=(Yii::App()->session['edit']==1)?TRUE:FALSE;
 echo '<!--project is '.Yii::App()->session['project'].' release is '.Yii::App()->session['release'].' permissions '.Follower::$type[Yii::App()->session['permission']].' ('.Yii::App()->session['permission'].')-->';
      
 
-if (Yii::App()->user->id==121){
+if (Yii::App()->user->id==121 || Yii::App()->user->id==70){
 echo 'project is '.Yii::App()->session['project'].' current release is '.$currentrelease.' release is '.Yii::App()->session['release'].' permissions '.Follower::$type[Yii::App()->session['permission']].' ('.Yii::App()->session['permission'].')';
 echo '<br /> tab: '.$tab. ' edit permissions are '.$edit;}
 if (Yii::App()->session['permission'] ==0)  $this->redirect(array('site/fail/condition/no_access_head'));
