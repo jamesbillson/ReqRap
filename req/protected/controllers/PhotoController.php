@@ -257,8 +257,8 @@ class PhotoController extends Controller {
             if (isset($upload)){   
 
                 //set path and filename
-                $path = Yii::getPathOfAlias("webroot").Yii::app()->params['photo_folder'];
-				
+                //$path = Yii::getPathOfAlias("webroot").Yii::app()->params['photo_folder'];
+		$path = '../req/uploads/images/';		
 				if(!file_exists($path)){
                     if(mkdir($path, 0755, true)){
                        return false; 
