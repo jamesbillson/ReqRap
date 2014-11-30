@@ -95,14 +95,22 @@ if ($model->photo_id==0 || $image_id==0)
          
         $image=Photo::model()->findByPk($image_id);
         
-        $src= UrlHelper::getPath("missing.png");
-        
-        if (is_file(UrlHelper::getPath($image->file)))      
-        
+        //$src= UrlHelper::getPath("missing.png");
+         $src= '/req/uploads/images/missing.png';
+        //if (is_file(UrlHelper::getPath($image['file'])))  
+         
+          if (is_file(Yii::getPathOfAlias("webroot") . '/uploads/images/'.$image['file'])) 
+         $src = Yii::app()->easyImage->thumbSrcOf(
+                                    Yii::getPathOfAlias("webroot") . '/uploads/images/'.$image['file'], 
+                                    array('resize' => array('width' => 154)));
+         
+         /*
+        if (is_file('/req/uploads/images/'.$image->file))    
         $src = Yii::app()->easyImage->thumbSrcOf(
-                                      UrlHelper::getPath($image['file']), 
+                                    '/req/uploads/images/'.$image->file, 
+                                    // UrlHelper::getPath($image['file']), 
                                      array('resize' => array('width' => 150,'height'=>150))); 
-
+*/
     ?>
     <div style="float:left;width:100%;">
       <div style="width:160px;float:left;">
@@ -110,16 +118,18 @@ if ($model->photo_id==0 || $image_id==0)
       </div>
       <div style="float:left;margin-top: 50px;">
         <a href="<?php echo UrlHelper::getPrefixLink('/iface/update/ucid/0/id/')?><?php echo $model->id;?>"><i class="icon-link text-error" rel="tooltip" title="Unlink this image"></i>Unlink</a> <br />
-    <a href="<?php echo UrlHelper::getPrefixLink('/photo/update/id/')?><?php echo $image->id;?>"><i class="icon-edit" rel="tooltip" title="Remove"></i>Edit</a> 
+        <a href="<?php echo UrlHelper::getPrefixLink('/photo/update/id/')?><?php echo $image->id;?>"><i class="icon-edit" rel="tooltip" title="Remove"></i>Edit</a> 
     
     
       </div>
       
     </div>
 <br />
-<?php echo $image->description; ?>
-                        
-                    
+<?php echo $image->description;
+//echo '<br>'.Yii::getPathOfAlias("webroot") . '/uploads/images/'.$image['file'];
+?>
+  
+
         <?php } ?> 
 
 <br />
