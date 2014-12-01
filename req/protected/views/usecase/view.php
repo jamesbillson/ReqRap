@@ -178,7 +178,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                   </td>
               <td>
                 <?php if($edit){ ?>
-                <a href="<?php echo UrlHelper::getPrefixLink('/steprule/unlink/id/')?><?php echo $item['xid'];?>/ucid/<?php echo $model->usecase_id;?>"><i class="icon-link text-error" rel="tooltip" title="Unlink this rule"></i></a> 
+                <a href="<?php echo UrlHelper::getPrefixLink('/steprule/unlink/id/')?><?php echo $item['xid'];?>/ucid/<?php echo $model->usecase_id;?>"><i class="icon-unlink text-error" rel="tooltip" title="Unlink this rule"></i></a> 
                 <a href="<?php echo UrlHelper::getPrefixLink('/rule/update/id/')?><?php echo $item['id'];?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
                 
                     <?php } ?> 
@@ -239,7 +239,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
               <td>
                   <?php if($edit){ ?>
 
-                  <a href="<?php echo UrlHelper::getPrefixLink('/stepiface/unlink/id/')?><?php echo $item['xid'];?>/ucid/<?php echo $model->usecase_id;?>"><i class="icon-link text-error" rel="tooltip" title="Unlink from Usecase"></i></a> 
+                  <a href="<?php echo UrlHelper::getPrefixLink('/stepiface/unlink/id/')?><?php echo $item['xid'];?>/ucid/<?php echo $model->usecase_id;?>"><i class="icon-unlink text-error" rel="tooltip" title="Unlink from Usecase"></i></a> 
                   <a href="<?php echo UrlHelper::getPrefixLink('/iface/update/id/')?><?php echo $item['id'];?>/ucid/<?php echo $model->id;?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
              <?php } ?> 
               </td>
@@ -289,7 +289,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
               <td>
                   <?php if($edit){ ?>
 
-                  <a href="<?php echo UrlHelper::getPrefixLink('/stepform/unlink/id/')?><?php echo $item['xid'];?>/ucid/<?php echo $model->usecase_id;?>"><i class="icon-link text-error" rel="tooltip" title="Unlink from Usecase"></i></a> 
+                  <a href="<?php echo UrlHelper::getPrefixLink('/stepform/unlink/id/')?><?php echo $item['xid'];?>/ucid/<?php echo $model->usecase_id;?>"><i class="icon-unlink text-error" rel="tooltip" title="Unlink from Usecase"></i></a> 
                   <a href="<?php echo UrlHelper::getPrefixLink('/form/update/id/')?><?php echo $item['id'];?>/ucid/<?php echo $model->id;?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
              <?php } ?> 
               </td>
