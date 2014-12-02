@@ -117,7 +117,7 @@ if ($model->photo_id==0 || $image_id==0)
           <a id="popup" href="<?php echo  UrlHelper::getPrefixLink('/iface/preview/id/').$model->iface_id.'/release/'.Yii::app()->session['release']; ?>"><img src="<?php echo $src ?>"/></a>
       </div>
       <div style="float:left;margin-top: 50px;">
-        <a href="<?php echo UrlHelper::getPrefixLink('/iface/update/ucid/0/id/')?><?php echo $model->id;?>"><i class="icon-link text-error" rel="tooltip" title="Unlink this image"></i>Unlink</a> <br />
+        <a href="<?php echo UrlHelper::getPrefixLink('/iface/update/ucid/0/id/')?><?php echo $model->id;?>"><i class="icon-unlink text-error" rel="tooltip" title="Unlink this image"></i>Unlink</a> <br />
         <a href="<?php echo UrlHelper::getPrefixLink('/photo/update/id/')?><?php echo $image->id;?>"><i class="icon-edit" rel="tooltip" title="Remove"></i>Edit</a> 
     
     
