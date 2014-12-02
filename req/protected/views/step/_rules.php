@@ -8,7 +8,7 @@
 
                             ?>
 
-                                    <span data-id="[[BR:<?php echo $link['rule_id']; ?>]]" ><a href="<?php echo Yii::app()->getBaseUrl();  ?>/rule/view/id/<?php echo $link['rule_id']; ?>"> BR-<?php echo str_pad($link['number'], 3, "0", STR_PAD_LEFT); ?></a>  <?php echo $link['name']; ?> <a href="<?php echo Yii::app()->getBaseUrl();  ?>/steprule/delete/id/<?php echo $link['xid']; ?>" class="unlink_object" data-id="[[BR:<?php echo $link['rule_id']; ?>]]" ><i class="icon-link text-error" rel="tooltip" title="Unlink this rule"></i></a><br/></span>
+                                    <span data-id="[[BR:<?php echo $link['rule_id']; ?>]]" ><a href="<?php echo Yii::app()->getBaseUrl();  ?>/rule/view/id/<?php echo $link['rule_id']; ?>"> BR-<?php echo str_pad($link['number'], 3, "0", STR_PAD_LEFT); ?></a>  <?php echo $link['name']; ?> <a href="<?php echo Yii::app()->getBaseUrl();  ?>/steprule/delete/id/<?php echo $link['xid']; ?>" class="unlink_object" data-id="[[BR:<?php echo $link['rule_id']; ?>]]" ><i class="icon-unlink text-error" rel="tooltip" title="Unlink this rule"></i></a><br/></span>
 
                             <?php
 

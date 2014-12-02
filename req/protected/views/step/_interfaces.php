@@ -20,7 +20,7 @@
 
                                     <?php echo str_pad($category['typenumber'], 2, "0", STR_PAD_LEFT ).str_pad($link['number'], Version::$numberformat[12]['padding'], "0", STR_PAD_LEFT); ?>  </a>
 
-                                <?php echo $link['name']; ?> <a href="<?php echo Yii::app()->getBaseUrl();  ?>/stepiface/delete/id/<?php echo $link['xid']; ?>" class="unlink_object" data-id="[[UI:<?php echo $link['iface_id']; ?>]]" ><i class="icon-link text-error" rel="tooltip" title="Unlink this interface"></i></a><br /></span>
+                                <?php echo $link['name']; ?> <a href="<?php echo Yii::app()->getBaseUrl();  ?>/stepiface/delete/id/<?php echo $link['xid']; ?>" class="unlink_object" data-id="[[UI:<?php echo $link['iface_id']; ?>]]" ><i class="icon-unlink text-error" rel="tooltip" title="Unlink this interface"></i></a><br /></span>
 
                             <?php
 
