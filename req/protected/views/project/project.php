@@ -29,6 +29,7 @@ $active['followers']=FALSE;
 $active['settings']=FALSE;
 $active['notes']=FALSE;
 $active['todo']=FALSE;
+$active['output'] = false;
 
 
  $active[$tab]=TRUE;
@@ -66,6 +67,12 @@ $active['todo']=FALSE;
             'visible' => in_array($permission,array(1,5)),
             'content' => $this->renderPartial('_todo',
                     compact('model'),true,false),'active'=>$active['todo']);
+
+        $tabs[] = array('id' => 'output',
+            'label' => 'Output',
+            'visible' => in_array($permission,array(1,5)),
+            'content' => $this->renderPartial('_output',
+                    compact('model'),true,false),'active'=>$active['output']);
 
 ?>
 <?php  $this->widget('bootstrap.widgets.TbTabs', array(

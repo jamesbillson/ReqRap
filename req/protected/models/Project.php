@@ -91,6 +91,20 @@ class Project extends CActiveRecord
 		);
 	}
 
+	public function behaviors() {
+        return array(
+            'user_meta' => array(
+                'class' => 'ext.yiiext.behaviors.model.eav.EEavBehavior',
+                'tableName' => 'project_meta',
+                'entityField' => 'project_id',
+                'attributeField' => 'meta_name',
+                'valueField' => 'meta_value',
+                'modelTableFk' => 'project_id',
+                'safeAttributes' => array(),
+            )
+        );
+    }
+
 	/**
 	 * Retrieves a list of models based on the current search/filter conditions.
 	 * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.

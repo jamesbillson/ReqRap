@@ -28,7 +28,7 @@ class ProjectController extends Controller
     {
         return array(
             array('allow',  // allow all users to perform 'index' and 'view' actions
-                'actions'=>array('index','view','extview'),
+                'actions'=>array('index','view','extview', 'addmeta'),
                 'users'=>array('*'),
             ),
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -192,9 +192,10 @@ class ProjectController extends Controller
     }
     public function actionPrint() {
         
-        $metaModel = Company::model()->findByPk(User::model()->myCompany());
-        $metaData = $metaModel->getEavAttributes(array('html_output', 'output_font'));
-        $project=Project::model()->findbyPK(Yii::app()->session['project']);
+      //  $metaModel = Company::model()->findByPk(User::model()->myCompany());
+        $id = Yii::App()->session['project'];
+        $project = Project::model()->findByPk($id);
+        $metaData  = $project->getEavAttributes(array('html_output', 'output_font'));
 
         $fontDefault = 'dejavusans';
 
@@ -462,6 +463,24 @@ unset(Yii::app()->session['project']);
 
             $this->render('tenderSummary',compact('model','project'));
         }
+    }
+
+    public function actionAddmeta() {
+        if ( isset($_POST) && isset($_POST['Projectmetaform']) ) {
+            $data = $_POST['Projectmetaform'];
+            $id =  Yii::App()->session['project'];
+            foreach ($data as $key => $meta) {
+                $projectMeta = Project::model()->findByPk($id);
+                $projectMeta->setEavAttribute($key, $meta);
+                $projectMeta->save();
+            }
+            if (!isset($_POST['Projectmetaform']['html_output']) ) {
+                $projectMeta = Project::model()->findByPk($id);
+                $projectMeta->setEavAttribute('html_output', 0);
+                $projectMeta->save();
+            }
+        }
+        $this->redirect(UrlHelper::getPrefixLink('project/project/'));
     }
 
 }

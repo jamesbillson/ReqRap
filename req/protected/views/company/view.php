@@ -1,4 +1,4 @@
-<?php echo $this->renderPartial('/project/head'); ?>
+<?php //echo $this->renderPartial('/project/head'); ?>
 
 <h3><?php echo CHtml::encode($model->name); ?></h3>
 <div class="view">

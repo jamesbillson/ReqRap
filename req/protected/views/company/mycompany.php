@@ -72,11 +72,11 @@ $active['scores']=FALSE;
         'content' => $this->renderPartial('_scores',
                 compact('model'),true,false),'active'=>$active['scores']);
 
-    $tabs[] = array('id' => 'sizing', 
+   /* $tabs[] = array('id' => 'sizing', 
         'label' => 'Output',
        // 'visible' => in_array($permission,array(1,2,3,4,5)),
         'content' => $this->renderPartial('_output',
-                compact('model'),true,false),'active'=>$active['output']);
+                compact('model'),true,false),'active'=>$active['output']); */
  
 ?>
 <?php  $this->widget('bootstrap.widgets.TbTabs', array(
