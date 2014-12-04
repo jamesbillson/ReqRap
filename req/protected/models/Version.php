@@ -233,7 +233,7 @@ class Version extends CActiveRecord {
     	public function wikiInput($input,$parent,$parent_id)
 	{
 	$release=Yii::App()->session['release'];
-        $release=Yii::App()->session['project'];
+        $project=Yii::App()->session['project'];
         // get the text.
         $numberstart =  substr_count($input,"[[");
         $numberend =  substr_count($input,"]]");
@@ -331,13 +331,21 @@ class Version extends CActiveRecord {
                         {
                         $model=new Steprule;
                         $model->steprule_id=Version::model()->getNextID(16);
-                        $model->project_id= $release;
+                        $model->project_id= $project;
                         $model->release_id=$release;
                         
                         $model->step_id=$step->step_id;
                         $model->rule_id=$instance;
-                        $model->save(false);
-                        $version=Version::model()->getNextNumber($release,16,1,$model->primaryKey,$model->steprule_id);
+                     //                             echo "<pre>";
+                      //      print_r($model);
+                      //      die;
+                            $model->save(false);
+                        
+
+                        
+                        
+                        
+                        $version=Version::model()->getNextNumber($project,16,1,$model->primaryKey,$model->steprule_id);
 
                 
                         }
@@ -358,13 +366,13 @@ class Version extends CActiveRecord {
                         {
                         $model=new Stepform;
                         $model->stepform_id=Version::model()->getNextID(14);
-                        $model->project_id= $release;
+                        $model->project_id= $project;
                         $model->release_id=$release;
                         
                         $model->step_id=$step->step_id;
                         $model->form_id=$instance;
                         $model->save(false);
-                        $version=Version::model()->getNextNumber($release,14,1,$model->primaryKey,$model->stepform_id);
+                        $version=Version::model()->getNextNumber($project,14,1,$model->primaryKey,$model->stepform_id);
 
                 
                         }
@@ -383,13 +391,13 @@ class Version extends CActiveRecord {
                         {
                         $model=new Stepiface;
                         $model->stepiface_id=Version::model()->getNextID(15);
-                        $model->project_id= $release;
+                        $model->project_id= $project;
                         $model->release_id=$release;
                         
                         $model->step_id=$step->step_id;
                         $model->iface_id=$instance;
                         $model->save(false);
-                        $version=Version::model()->getNextNumber($release,15,1,$model->primaryKey,$model->stepiface_id);
+                        $version=Version::model()->getNextNumber($project,15,1,$model->primaryKey,$model->stepiface_id);
 
                 
                         }
@@ -411,7 +419,7 @@ class Version extends CActiveRecord {
     public function wikiOutput($input,$print)
 	{
 	$release=Yii::App()->session['release'];
-        $release=Yii::App()->session['project'];
+        $project=Yii::App()->session['project'];
         // get the text.
         $numberstart =  substr_count($input,"[[");
         $numberend =  substr_count($input,"]]");
@@ -559,7 +567,7 @@ class Version extends CActiveRecord {
 	// get the text.
         // parse it for wiki links.
         $release=Yii::App()->session['release'];
-        $release=Yii::App()->session['project'];
+        $project=Yii::App()->session['project'];
         // get the text.
         $numberstart =  substr_count($input,"[[");
         $numberend =  substr_count($input,"]]");
