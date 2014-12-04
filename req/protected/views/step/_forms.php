@@ -72,6 +72,9 @@
 		$form_name=array();
 		$form_id_value=array();
 		foreach ($forms as $form) {
+			
+			$form['name']=str_replace("'",'',$form['name']);
+			$form['name']=str_replace("\\",'',$form['name']);
 
 			$forms_text_transform[$form['form_id']]='UF- '.str_pad($form['number'], 3, "0", STR_PAD_LEFT).' '.$form['name'];
 

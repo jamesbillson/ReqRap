@@ -461,7 +461,7 @@ class Version extends CActiveRecord {
                     if($name['name']!='deleted' && $print==0)
                         {
                     
-                           $end[$i]='<a href="'.Yii::app()->getBaseUrl().'/'.Version::$objects[$object].'/view/id/'.$instance.'" data-id="[['.$content[0].':'.$instance.']]" >'.$name['number'].'-'.$name['name'].'</a>';
+                           $end[$i]='<a href="'.Yii::app()->getBaseUrl().'/'.Version::$objects[$object].'/view/id/'.$instance.'" data-id="[['.$content[0].':'.$instance.']]" >'.$name['number'].'-'.stripslashes($name['name']).'</a>';
                         
                         }
                     ELSE 

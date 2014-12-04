@@ -69,6 +69,8 @@
 		$rule_id_value=array();
 		foreach ($rules as $rule) {
 
+			$rule['name']=str_replace("'",'',$rule['name']);
+			$rule['name']=str_replace("\\",'',$rule['name']);
 			$rules_text_transform[$rule['rule_id']]='BR- '.str_pad($rule['number'], 3, "0", STR_PAD_LEFT).' '.$rule['name'];
 
 			$rule_name[]=$rule['name'];

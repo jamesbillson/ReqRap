@@ -84,7 +84,8 @@
 		foreach ($interfaces as $iface) { 
 
 		 $category=Iface::model()->getIfaceType($iface['iface_id']);
-
+			$iface['name']=str_replace("'",'',$iface['name']);
+			$iface['name']=str_replace("\\",'',$iface['name']);
 		 $interfaces_text_transform[$iface['iface_id']]=Version::$numberformat[12]['prepend'].'- '.str_pad($category['typenumber'], 2, "0", STR_PAD_LEFT ).str_pad($iface['number'], Version::$numberformat[12]['padding'], "0", STR_PAD_LEFT).' '.$iface['name'];
 
 		 
