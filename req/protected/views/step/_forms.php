@@ -80,15 +80,9 @@
 
 			$form_name[]=$form['name'];
 
-		$form_id_name[$form['name']]=$form['form_id'];
-
-		$arr['value']=$form['form_id'];
-
-		$arr['text']=$form['name'];		
-
-		$form_id_value[]=$arr;
-
-			?>
+		$form_id_name[$form['name']]=$form['id'];
+		$form_id_value[$form['id']]=$form['form_id'];
+		?>
 
                 <option value="<?php echo $form['form_id']; ?>"><?php echo $form['name']; ?></option>
 
@@ -146,11 +140,11 @@ $(document).ready(function(){
 
 							 div1_html=$('#text_text_div_1').html();
 
-							 form_id=$form_json[form];
-
+							 fid=$form_json[form];
+							 form_id=$formvalue_json[fid];	
 							 form_title=$forms_text_transform[form_id];
 
-							  ajax_data={form:form_id,step_id:'<?php echo $item['id']; ?>',project_id:'<?php echo $project; ?>',step_db_id:'<?php echo $item['id']; ?>'};
+							  ajax_data={form:form_id,step_id:'<?php echo $item['id']; ?>',project_id:'<?php echo $project; ?>',step_db_id:'<?php echo $item['id']; ?>',fid:fid};
 
 							 makeFormAjax(ajax_data,'#text_text_div_1','#SForm_popup');
 
@@ -198,11 +192,11 @@ $(document).ready(function(){
 
 							 updater:function(form){
 
-					     	 form_id=$form_json[form];
-
+					     	  fid=$form_json[form];
+							 form_id=$formvalue_json[fid];	
 							 form_title=$forms_text_transform[form_id];
 
-							 ajax_data={form:form_id,step_id:'<?php echo $item['id']; ?>',project_id:'<?php echo $project; ?>',step_db_id:'<?php echo $item['id']; ?>'};
+							  ajax_data={form:form_id,step_id:'<?php echo $item['id']; ?>',project_id:'<?php echo $project; ?>',step_db_id:'<?php echo $item['id']; ?>',fid:fid};
 
 							 makeFormAjax(ajax_data,'#result_text_div_2','#SForm_popup2');
 

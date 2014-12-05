@@ -92,13 +92,9 @@
 
 		$iface_name[]=$iface['name'];
 
-		$iface_id_name[$iface['name']]=$iface['iface_id'];
+		$iface_id_name[$iface['name']]=$iface['itemid'];
 
-		$arr['value']=$iface['iface_id'];
-
-		$arr['text']=$iface['name'];		
-
-		$iface_id_value[]=$arr;?>
+		$iface_id_value[$iface['itemid']]=$iface['iface_id'];?>
 
          <option value="<?php echo $iface['iface_id']; ?>"><?php echo $iface['name']; ?></option>
 
@@ -162,11 +158,11 @@ $(document).ready(function(){
 
 					     	 div1_html=$('#text_text_div_1').html();
 
-							 iface_id=$iface_json[iface];
-
+							 ifid=$iface_json[iface];
+							 iface_id=$iface_value_json[ifid];
 							 iface_title=$interfaces_text_transform[iface_id];
 
-							 ajax_data={interface:iface_id,step_id:'<?php echo $item['step_id']; ?>',project_id:'<?php echo $project; ?>',step_db_id:'<?php echo $item['id']; ?>'};	
+							 ajax_data={interface:iface_id,step_id:'<?php echo $item['step_id']; ?>',project_id:'<?php echo $project; ?>',step_db_id:'<?php echo $item['id']; ?>',ifid:ifid};	
 
 							 makeIfaceAjax(ajax_data,'#text_text_div_1','#Iface_popup');
 
@@ -212,11 +208,11 @@ $("#typeaheadIfaceSearch2").typeahead({
 
 					     	 div1_html=$('#result_text_div_2').html();
 
-							 iface_id=$iface_json[iface];
-
+							 ifid=$iface_json[iface];
+							 iface_id=$iface_value_json[ifid];
 							 iface_title=$interfaces_text_transform[iface_id];
 
-							 ajax_data={interface:iface_id,step_id:'<?php echo $item['step_id']; ?>',project_id:'<?php echo $project; ?>',step_db_id:'<?php echo $item['id']; ?>'};	
+							 ajax_data={interface:iface_id,step_id:'<?php echo $item['step_id']; ?>',project_id:'<?php echo $project; ?>',step_db_id:'<?php echo $item['id']; ?>',ifid:ifid};
 
 							 makeIfaceAjax(ajax_data,'#result_text_div_2','#Iface_popup2');
 

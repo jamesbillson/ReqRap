@@ -75,13 +75,10 @@
 
 			$rule_name[]=$rule['name'];
 
-		$rule_id_name[$rule['name']]=$rule['rule_id'];
+		$rule_id_name[$rule['name']]=$rule['id'];
 
-		$arr['value']=$rule['rule_id'];
-
-		$arr['text']=$rule['name'];		
-
-		$rule_id_value[]=$arr;
+		
+		$rule_id_value[$rule['id']]=$rule['rule_id'];
 
 			
 
@@ -150,11 +147,11 @@ $(document).ready(function(){
 
 							 div1_html=$('#text_text_div_1').html();
 
-							 rule_id=$rule_json[rule];
-
+							 rid=$rule_json[rule];
+							 rule_id = $rulevalue_json[rid];
 							 rule_title=$rules_text_transform[rule_id];
 
-							 ajax_data={rule:rule_id,step_id:'<?php echo $item['id']; ?>',project_id:'<?php echo $project; ?>',step_db_id:'<?php echo $item['id']; ?>'};
+							 ajax_data={rule:rule_id,step_id:'<?php echo $item['id']; ?>',project_id:'<?php echo $project; ?>',step_db_id:'<?php echo $item['id']; ?>',rid:rid};
 
 							 makeRuleAjax(ajax_data,'#text_text_div_1','#SRule_popup');
 
@@ -208,11 +205,11 @@ $(document).ready(function(){
 
 							 updater:function(rule){
 
-					     	 rule_id=$rule_json[rule];
-
+					     	 rid=$rule_json[rule];
+							 rule_id = $rulevalue_json[rid];
 							 rule_title=$rules_text_transform[rule_id];
 
-							 ajax_data={rule:rule_id,step_id:'<?php echo $item['id']; ?>',project_id:'<?php echo $project; ?>',step_db_id:'<?php echo $item['id']; ?>'};
+							 ajax_data={rule:rule_id,step_id:'<?php echo $item['id']; ?>',project_id:'<?php echo $project; ?>',step_db_id:'<?php echo $item['id']; ?>',rid:rid};
 
 							 makeRuleAjax(ajax_data,'#result_text_div_2','#SRule_popup2');
 

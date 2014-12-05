@@ -104,7 +104,7 @@ class StepruleController extends Controller
 				  if(Yii::app()->request->isAjaxRequest)
 				  {
 					 if(!isset($rule)){
-						$rule = Rule::model()->find('rule_id=? and project_id=? and release_id = ?',array( $model->rule_id,$model->project_id,$model->release_id));
+						$rule = Rule::model()->findByPK($_POST['rid']);
 					 }
 					 $response['status']=1;
 					 $response['id']=$rule->rule_id;
@@ -232,6 +232,10 @@ class StepruleController extends Controller
               // echo "<pre>";
               // print_r($flow);
               // echo "</pre>";
+			   if(Yii::app()->request->isAjaxRequest)
+				  {
+					  die;
+				  }
                
 $this->redirect(array('/req/step/update/flow/'.$flow['id'].'/id/'.$step['id']));
                 

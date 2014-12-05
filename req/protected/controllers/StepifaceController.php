@@ -153,7 +153,7 @@ class StepifaceController extends Controller
 				  if(Yii::app()->request->isAjaxRequest)
 				  {
 					 if(!isset($iface)){
-						$iface = Iface::model()->find('iface_id=? and project_id=? and release_id = ?',array( $model->iface_id,$model->project_id,$model->release_id));
+						$iface = Iface::model()->findByPk($_POST['ifid']);
 					 }
 					  $response['status']=1;
 					  $response['id']=$model->iface_id;
@@ -228,7 +228,10 @@ class StepifaceController extends Controller
                $flow=Step::model()->getStepParentFlowByStepID($step->step_id);
                
                $version=Version::model()->getNextNumber($project,15,3,$model->id,$model->stepiface_id);
-    
+    			 if(Yii::app()->request->isAjaxRequest)
+				  {
+					  die;
+				  }
                
 $this->redirect(array('/req/step/update/flow/'.$flow['id'].'/id/'.$step['id']));
                 
