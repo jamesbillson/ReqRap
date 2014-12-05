@@ -84,7 +84,7 @@ class StepifaceController extends Controller
         
         
         
-         public function actionAssociate()
+     public function actionAssociate()
 	{
 	        $project=Yii::App()->session['project'];	
                 $model=new Stepiface;
