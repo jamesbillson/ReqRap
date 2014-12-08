@@ -259,7 +259,7 @@ class UserController extends Controller
     }
 
     public function actionActive(){
-
+Yii::app()->user->logout();
       if(isset($_GET['verifycode']) && $user = User::model()->findByAttributes(array('salt'=>$_GET['verifycode'])) ){
         if(isset($user)) {
           $user->active = 1;
