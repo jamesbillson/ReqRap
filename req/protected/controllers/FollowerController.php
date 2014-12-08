@@ -269,26 +269,17 @@ class FollowerController extends Controller
         {
            //connect the contact to the user as they have linked the account.
             Contact::model()->connectUser($matchuser->id);
-           // LOG THEM IN..
-            
-            
-            
           $user = User::model()->findByAttributes(array('id'=>$matchuser->id));
-        if(isset($user)) {
-            $identity = new UserIdentity($user->email, $user->password);
-            $identity->setId($user->id);
-
-            //just add code to auto authentication
-            $identity->authenticate();
-            $identity->errorCode = UserIdentity::ERROR_NONE;
-            Yii::app()->user->login($identity, (Yii::app()->params['loggedInDays'] * 60 * 60 * 24 ));
-            Follower::model()->sendAcceptConfirm($follower->id);
-            
-            
-   $this->redirect(array('/req/project/set','id'=>$follower->foreign_key));
-        }
-           //send a welcome email
-            //send an email to the inviter to say they have joined.
+	        if(isset($user)) {
+	            $identity = new UserIdentity($user->email, $user->password);
+	            $identity->setId($user->id);
+	            //just add code to auto authentication
+	            $identity->authenticate();
+	            $identity->errorCode = UserIdentity::ERROR_NONE;
+	            Yii::app()->user->login($identity, (Yii::app()->params['loggedInDays'] * 60 * 60 * 24 ));
+	            Follower::model()->sendAcceptConfirm($follower->id);
+	   					$this->redirect(array('/project/set','id'=>$follower->foreign_key));
+	        }
         }                                    
     }
 }

@@ -183,12 +183,12 @@ class ProjectController extends Controller
     {
         $model = Project::model()->find('extlink = \''.$id.'\'');
       
-        if(!($model===null))
+        if(!($model === null))
             {
                 $this->render('print',array(
                     'model'=>$model,'tab'=>'documents'
                 ));
-            } else {  
+            } else {
                 ReportHelper::processError('Project Controller, ExtView action', '/req/site/fail/condition/no_access');  
                 //$this->redirect(('/req/site/fail/condition/no_access'));
             }
