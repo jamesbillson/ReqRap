@@ -514,7 +514,7 @@ unset(Yii::app()->session['project']);
      
      $this->ProtoFlowStore($ucDef);
      
-     $this->redirect('/project/prototype',array('model'=>$model,'ucDef'=>$ucDef));
+     $this->redirect(Yii::app()->getBaseUrl().'/project/prototype',array('model'=>$model,'ucDef'=>$ucDef));
      
     }
       public function ProtoFlowStore($ucDef)

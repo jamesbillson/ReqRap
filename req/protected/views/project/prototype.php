@@ -45,7 +45,7 @@ echo $this->renderPartial('/project/head',array('tab'=>$tab)); ?>
                 <?php echo str_pad($type['number'], 2, "0", STR_PAD_LEFT).'-'.$type['name'];?></b>
                 <br>
                 <?php foreach($data as $item){?>
-                <a href="/project/protoflowifaceadd/id/<?php echo $item['iface_id']?>/type/12" class="thumbnail" rel="tooltip" data-title="UI-<?php echo str_pad($type['number'], 2, "0", STR_PAD_LEFT); ?><?php echo str_pad($item['number'], 3, "0", STR_PAD_LEFT); ?>">
+                <a href="<?php echo Yii::app()->getBaseUrl();  ?>/project/protoflowifaceadd/id/<?php echo $item['iface_id']?>/type/12" class="thumbnail" rel="tooltip" data-title="UI-<?php echo str_pad($type['number'], 2, "0", STR_PAD_LEFT); ?><?php echo str_pad($item['number'], 3, "0", STR_PAD_LEFT); ?>">
                 <?php   
                 $this->widget('bootstrap.widgets.TbBadge', array(
                 'type'=>'info',
@@ -120,7 +120,7 @@ $packusecases = Usecase::model()->getPackageUsecases($package['package_id']);
 </div>
 
 <?php foreach($packusecases as $uc){ ?>
-<br /><a href="protoflowview/id/<?php echo $uc['id'];?>">
+<br /><a href="<?php echo Yii::app()->getBaseUrl();  ?>/project/protoflowview/id/<?php echo $uc['id'];?>">
 UC-<?php echo str_pad($uc['packnumber'], 2, "0", STR_PAD_LEFT).''.str_pad($uc['number'], 3, "0", STR_PAD_LEFT); ?> 
     </a>
         <b><?php echo $uc['name'];?></b>
