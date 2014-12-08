@@ -8,5 +8,6 @@ class UrlHelper {
 
 	public static function getPath($file) {
 		return Yii::getPathOfAlias('webroot').'/uploads/images/'.$file;
+                //return '/req/uploads/images/'.$file;
 	}
 }

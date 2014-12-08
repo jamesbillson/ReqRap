@@ -6,6 +6,6 @@ class FontHelper {
             'dejavusansmono' => Yii::t('global', 'Dejavusansmono'),
             'dejavusanscondensed' => Yii::t('global','Dejavusanscondensed'),
         );
-        return CHtml::activeDropDownList($model, $name, $options, array('class' => 'select form-control', 'empty' => Yii::t('global', '-- Please font --')));
+        return CHtml::activeDropDownList($model, $name, $options, array('class' => 'select form-control', 'empty' => Yii::t('global', '-- Please select font --')));
     }
 }
