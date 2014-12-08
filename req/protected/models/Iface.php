@@ -155,8 +155,9 @@ class Iface extends CActiveRecord
             `i`.`interfacetype_id`,
             `i`.`id`,
             `t`.`name` as type, 
-            `t`.`interfacetype_id` as typenum,
+            `t`.`number` as typenum,
             `x`.`id` as xid
+            
             FROM `iface` `i`
             JOIN `interfacetype` `t` 
             on `i`.`interfacetype_id`=`t`.`interfacetype_id`
@@ -178,13 +179,7 @@ class Iface extends CActiveRecord
 
 WHERE
             `f`.`usecase_id`=".$id."
-            AND `f`.`project_id`=".$project."    
-            AND `i`.`project_id`=".$project."
-            AND `s`.`project_id`=".$project."
-            AND `x`.`project_id`=".$project."
-            AND `t`.`project_id`=".$project."
-                            AND
-            `f`.`release_id`=".$release."    
+            AND `f`.`release_id`=".$release."    
             AND `i`.`release_id`=".$release."
             AND `s`.`release_id`=".$release."
             AND `x`.`release_id`=".$release."
@@ -202,9 +197,6 @@ WHERE
             `vf`.`object` =8 AND `vf`.`active`=1  
                  AND `vf`.`release`=".$release."
  
-
-
-
              GROUP BY `i`.`id`
              ORDER BY typenum ASC, `i`.`number` ASC";
         
