@@ -32,7 +32,10 @@ class ProjectController extends Controller
                 'users'=>array('*'),
             ),
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
-                'actions'=>array('walkthru','testing','addprojectaddress','set','photo','print',
+                'actions'=>array('prototype','protoifaceadd','ProtoFlowIfaceAdd',
+                    'protoflowsave','protoFlowView','protoflow','protoActor','ProtoPackage',
+                   'ProtoFlowStore','ProtoFlowLoad','ProtoFlowClear',
+                    'ProtoDescriptionSet','ProtoNameSet','ProtoActorSet','walkthru','testing','addprojectaddress','set','photo','print',
                     'diary','resetlink','details',
                     'myrequirements','project','delete','create','update','myprojects','projectpackagelist','TenderSummary'),
                 'users'=>array('@'),
@@ -426,6 +429,404 @@ unset(Yii::app()->session['project']);
         ));
     }
 
+        public function actionPrototype()
+    {
+     
+    
+     $model = $this->loadModel(Yii::app()->session['project']);
+     $ucDef=$this->ProtoFlowLoad();
+     $this->render('prototype',array('model'=>$model,'ucDef'=>$ucDef));
+     
+    }
+   
+    
+      public function actionProtoActor()
+    {
+
+     $ucDef=$this->ProtoFlowLoad();
+     $model = $this->loadModel(Yii::app()->session['project']);
+     $ucDef['actor_id']=$_POST['value'];
+     $this->ProtoFlowStore($ucDef);
+     $this->redirect('prototype',array('model'=>$model,'ucDef'=>$ucDef));
+     
+    }
+    
+        public function actionProtoPackage()
+    {
+
+     $ucDef=$this->ProtoFlowLoad();
+     $model = $this->loadModel(Yii::app()->session['project']);
+     $ucDef['package_id']=$_POST['value'];
+     $this->ProtoFlowStore($ucDef);
+     $this->redirect('prototype',array('model'=>$model,'ucDef'=>$ucDef));
+     
+    }
+    
+      public function actionProtoFlowClear()
+    {
+  
+     $this->ProtoFlowErase();
+     $ucDef=$this->ProtoFlowLoad();
+     
+     $model = $this->loadModel(Yii::app()->session['project']);
+     
+     $this->render('prototype',array('model'=>$model,'ucDef'=>$ucDef));
+     
+    }
+    
+       public function actionProtoFlowIfaceAdd($id,$type)
+    {
+     //
+     // Load the ucDef back from the user parameter
+    //       $this->ProtoFlowLoad($data);
+        
+         $ucDef= $this->ProtoFlowLoad();  
+     //
+     /*
+     echo '<pre>';
+     print_r($ucDef);
+     echo '</pre>';
+     */
+     //
+           //find the form or iface
+         
+     
+     if($type==12){
+      $model=Iface::model()->findByPk(Version::model()->getVersion($id,$type));
+      $wikiLink="[[UI:".$model->iface_id."]]";
+     }
+           if($type==2){
+      $model=Form::model()->findByPk(Version::model()->getVersion($id,$type));
+     $wikiLink="[[UF:".$model->form_id."]]";
+           }
+     //define a new step with the chosen iface
+     $step=array();
+     $step['action']='Undefined action';
+     $step['resultname']=$model->name;
+     $step['resulttype']=$type;
+     $step['object_id']=$id;
+     $step['resulttext']='System displays '.$wikiLink;
+     // $ucDef['flow'][$flowNum]['step'][$stepNum]['rule'][$ruleNum]['name']=$rule['name'];
+     array_push($ucDef['flow'][1]['step'],$step);
+     $model = $this->loadModel(Yii::app()->session['project']);
+     
+     // Save the ucDef
+     
+     $this->ProtoFlowStore($ucDef);
+     
+     $this->redirect('/project/prototype',array('model'=>$model,'ucDef'=>$ucDef));
+     
+    }
+      public function ProtoFlowStore($ucDef)
+    {
+     $release=Yii::App()->session['release'];
+     $ucDefJSON=  json_encode($ucDef);
+     $companyMeta = Company::model()->findByPk(User::model()->myCompany());
+     $companyMeta->setEavAttribute('temp_flow_'.$release, $ucDefJSON);
+     $companyMeta->save();
+  		
+    }
+    
+      public function ProtoFlowLoad()
+    {
+        $release=Yii::App()->session['release'];
+        $metaModel = Company::model()->findByPk(User::model()->myCompany());
+        $metaData = $metaModel->getEavAttributes(array('temp_flow_'.$release));
+        if (  !empty($metaData['temp_flow_'.$release]) ) {
+            $ucDefjson = $metaData['temp_flow_'.$release];
+            $ucDef=  json_decode($ucDefjson,true); 
+        } ELSE {
+            $this->ProtoFlowErase();
+            
+            $metaData = $metaModel->getEavAttributes(array('temp_flow_'.$release));
+            $ucDefjson = $metaData['temp_flow_'.$release];
+            $ucDef=  json_decode($ucDefjson,true); 
+            }
+        
+         
+     return $ucDef;
+    }
+    
+        public function ProtoFlowErase()
+    {
+$release=Yii::App()->session['release'];
+            $ucDef=array();
+            $ucDef['name']='Undefined Flow';
+            $ucDef['description']='Description';
+            $ucDef['actor_id']=-1;
+            $ucDef['package_id']=-1;
+            $ucDef['id']=-1;
+            $ucDef['flow']=array();
+            $ucDef['flow'][1]['name']='Main';
+            $ucDef['flow'][1]['step']=array();
+        
+        
+            $companyMeta = Company::model()->findByPk(User::model()->myCompany());
+            $companyMeta->setEavAttribute('temp_flow_'.$release, json_encode($ucDef));
+            $companyMeta->save();
+  	
+   
+    }
+    
+       public function actionProtoFlowView($id)
+    {
+     $tab=Yii::App()->session['setting_tab'];
+
+     
+     $usecase=Usecase::model()->findbyPK($id);
+        $ucDef=array();
+        $ucDef['name']=$usecase->name;
+        $ucDef['id']=$usecase->usecase_id;
+        $ucDef['actor_id']=$usecase->actor_id;
+        $ucDef['package_id']=$usecase->package_id;
+        $ucDef['description']=$usecase->description;
+        $flowNum=0;
+        $flows = Flow::model()->getUCFlow($usecase->id); // get flows
+                foreach($flows as $aflow) { // LOOP THRU FLOWS
+                $flowNum++;    
+                $stepNum=0;  
+
+                $steps= Step::model()->getFlowSteps($aflow['flow_id']); // get steps
+                $name = ($aflow['main']==1)?'<strong>Scenario Text</strong> ':'<strong>Alternate Course '.
+                        $aflow['name'].
+                        '</strong><br />Start after main step '.$aflow['start'].
+                        ' re-join at main step '.$aflow['rejoin'];
+                        $ucDef['flow'][$flowNum]['name']=$name;
+                                foreach($steps as $step){ 
+                                $stepNum++;
+                                //$flowDef[$flowNum][$stepNum]=$step['id'];
+                                $ifaces=Step::getStepLinks($step['id'],12,15);
+                                $forms=Step::getStepLinks($step['id'],2,14);
+                                $rules=Step::getStepLinks($step['id'],1,16);
+
+                                $ucDef['flow'][$flowNum]['step'][$stepNum]['action']= Version::model()->wikiOutput($step['text'],1);
+
+
+
+                                    $name='none';
+                                    if(count($ifaces)){ 
+                                        $name=$ifaces[0]['name'];
+                                        $type='12';
+                                        $object_id=$ifaces[0]['iface_id'];
+                                    }
+                                    if(count($forms)) {
+                                        $name=$forms[0]['name'];
+                                        $type ='2';
+                                        $object_id=$forms[0]['form_id'];
+                                    }
+                                    $ucDef['flow'][$flowNum]['step'][$stepNum]['resultname']= $name;
+                                    $ucDef['flow'][$flowNum]['step'][$stepNum]['resulttype']= $type;
+                                    $ucDef['flow'][$flowNum]['step'][$stepNum]['object_id']= $object_id;
+                                    $ucDef['flow'][$flowNum]['step'][$stepNum]['resulttext']= Version::model()->wikiOutput($step['result'],1);
+
+                                        if(count($rules)){
+                                        $ruleNum=0;
+                                                   foreach($rules as $rule){ 
+                                                   $ruleNum++;
+                                                   $ucDef['flow'][$flowNum]['step'][$stepNum]['rule'][$ruleNum]['name']=$rule['name'];
+                                                   $ucDef['flow'][$flowNum]['step'][$stepNum]['rule'][$ruleNum]['number']=$rule['number'];     
+                                                    }
+                                         }
+
+                         }   
+
+             }
+      $this->ProtoFlowStore($ucDef);
+     $model = $this->loadModel(Yii::app()->session['project']);
+     $this->render('prototype',array('model'=>$model,'ucDef'=>$ucDef));
+
+     
+     
+     
+    } 
+    
+          public function actionProtoFlowSave()
+    {
+          
+        $release=Yii::App()->session['release'];
+        $project=Yii::App()->session['project'];
+              
+        // Load the ucDef from the company_meta
+              $ucDef=$this->ProtoFlowLoad();
+             // echo '<pre>';
+            //  print_r($ucDef);
+            //  echo '</pre>';
+        
+        // check if this use case exists or if its new.
+              if ($ucDef['id']==-1){ // if its new make a new usecase
+        
+                
+                $new= new Usecase;
+		 $new->description=$ucDef['description'];
+                 $new->name=$ucDef['name'];
+		 $new->actor_id=$ucDef['actor_id'];
+                 $new->package_id=$ucDef['package_id'];
+                 $new->preconditions='none';
+                 $new->number=Usecase::model()->getNextNumber($ucDef['package_id']);
+                 $new->usecase_id=Version::model()->getNextID(10);
+                 $new->project_id=$project;
+                 $new->release_id=$release;	
+                 if ($new->save()){
+                 $version=Version::model()->getNextNumber($project,10,2,$new->primaryKey,$new->usecase_id);  
+                 
+                   $flow=new Flow;
+                        $flow->name='Main';
+                        $flow->main=1;
+                        $flow->startstep_id=0;
+                        $flow->rejoinstep_id=0;
+                        $flow->usecase_id=$new->usecase_id;
+                        $flow->flow_id=Version::model()->getNextID(8);
+                        $flow->project_id= $project;
+                        $flow->release_id=Release::model()->currentRelease($project);
+                        $flow->save(false);
+                        $version=Version::model()->getNextNumber($project,8,1,$flow->primaryKey,$flow->flow_id);
+                        //make version
+                        
+                        // Got to go through all the steps and save them...
+                       //$ucDef['flow'][$flowNum]['step'][$stepNum]['resulttext']
+                    
+                 } ELSE {
+                 //$this->redirect('/site/fail/didnotsave');   
+                     echo 'Usecase has not saved <br /><pre>';
+                     print_r($ucDef);
+                     echo '</pre>';
+
+                 }                    	
+		
+                    
+              } ELSE { // if its existing update the usecase with the values from ucDef.
+                  
+                  
+                 // load the UC
+                  //find the id from the usecase_id
+                  $usecase=Usecase::model()->findbyPK(Version::model()->getVersion($ucDef['id'],10));
+                          
+                  
+                  // update the UC details with the ones in ucDef
+                  $usecase->description = $ucDef['description']; 
+                  $usecase->name = $ucDef['name'];
+                  $usecase->actor_id = $ucDef['actor_id'];
+                  $usecase->package_id = $ucDef['package_id'];
+                  
+                  
+                  //save the UC
+                  if ($usecase->save()){
+                  $version=Version::model()->getNextNumber($project,10,2,$usecase->primaryKey,$usecase->usecase_id);  
+                 
+                   // find a flow with 
+                  $flows=Flow::model()->getUCReleaseFlow($usecase->usecase_id, $release);
+                  $steps=Step::model()->getFlowSteps($flows[0]['flow_id']);
+                  $flow=Flow::model()->findbyPK($flows[0]['id']);
+                      // erase all the steps
+                  foreach ($steps as $step){
+                      
+                      $version=Version::model()->getNextNumber($project,9,3,$step['id'],$step['step_id']);  
+                      
+                  }
+                      //  echo '<pre>';
+                      //  print_r($steps);
+                      //  echo '</pre>';
+                  // cycle through the steps and add the ones in ucDef
+                
+                  }
+                  
+              }
+              
+                  foreach($ucDef['flow'][1]['step'] as $step) {
+                            
+                             // echo 'Number '.Step::model()->getNextNumber($flow->id).'<br />';
+                        $newstep=new Step;
+                        $newstep->flow_id=$flow->flow_id;
+                        $newstep->number =  Step::model()->getNextNumber($flow->id)+1;
+                        $newstep->text=$step['action'];
+                        $newstep->actor_id=$ucDef['actor_id'];
+                        $newstep->result=$step['resulttext'];
+                        $newstep->step_id=Version::model()->getNextID(9);
+                        $newstep->project_id= Yii::app()->session['project'];
+                        $newstep->release_id=Release::model()->currentRelease($project);
+                        if($newstep->save()){;
+                          // make version
+                        $version=Version::model()->getNextNumber($project,9,1,$newstep->primaryKey,$newstep->step_id);
+                    Step::model()->reNumber($flow->flow_id);
+                       // echo 'step text '.$newstep->text.'<br />';
+                        //echo 'step number '.$newstep->number.'<br />';
+                       // echo 'flow id to get number '.$flow->id.'<br />';
+                          // $ucDef['flow'][$flowNum]['step'][$stepNum]['rule'][$ruleNum]['name']=$rule['name'];
+                        } ELSE {
+                        echo 'Didnt save the step';
+                        }
+                          if($step['resulttype']==12){ // its an interfacet so add the stepiface
+                                $newstepiface=new Stepiface;
+                                $newstepiface->stepiface_id=Version::model()->getNextID(15);
+                                $newstepiface->project_id= $project;
+                                $newstepiface->release_id=Release::model()->currentRelease($project);
+                                $newstepiface->step_id=$newstep->step_id;
+                                $newstepiface->iface_id=$step['object_id'];
+                                $newstepiface->save(false);
+                                $version=Version::model()->getNextNumber($project,15,1,$newstepiface->primaryKey,$newstepiface->stepiface_id);
+                  
+                       //     echo 'Flow id is:'.$flow->id.'<br />';
+                        //              echo '<br / > STEPS <br /><pre>';
+                       // print_r($steps);
+                       // echo '</pre>';
+              
+                              
+                          }
+                          
+                            if($step['resulttype']==2){ // its a form so add the stepiform
+                              
+                          }
+                          
+                        }
+                 
+             
+      $this->redirect('prototype');
+    } 
+    
+    public function actionProtoFlow($id)
+	{
+		$usecase=Usecase::model()->findbyPK($id);
+                $this->render('_protoflow',array(
+			'usecase'=>$usecase,
+		));  
+                    
+	}
+      public function actionProtoIfaceAdd()
+    {
+     $tab=Yii::App()->session['setting_tab'];
+    $flow['add']=1;
+     $model = $this->loadModel(Yii::app()->session['project']);
+     $this->render('prototype',array('model'=>$model,'flow'=>$flow));
+     
+    }
+       public function actionProtoTitleSet()
+	{
+           
+	$ucDef= $this->ProtoFlowLoad();  
+        $ucDef['name']=$_POST['value'];
+        $this->ProtoFlowStore($ucDef);
+        }
+    
+     
+       public function actionProtoNameSet()
+	{
+           
+	$ucDef= $this->ProtoFlowLoad();  
+        $ucDef['name']=$_POST['value'];
+        $this->ProtoFlowStore($ucDef);
+        }
+        
+       public function actionProtoDescriptionSet()
+	{
+           
+	$ucDef= $this->ProtoFlowLoad();  
+        $ucDef['description']=$_POST['value'];
+        $this->ProtoFlowStore($ucDef);
+        }
+    
+    
+    
+    
     /**
      * Returns the data model based on the primary key given in the GET variable.
      * If the data model is not found, an HTTP exception will be raised.
