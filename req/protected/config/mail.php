@@ -3,8 +3,8 @@ return array(
     'viewPath' => 'application.views.mail',
     'layoutPath' => 'application.views.layouts',
     'baseDirPath' => 'webroot.images.mail',
-      'savePath' => 'webroot.assets.mail',
-    'testMode' => true,
+    'savePath' => 'webroot.assets.mail',
+    'testMode' => false,
     'layout' => 'mail',
     'CharSet' => 'UTF-8',
     'AltBody' => Yii::t('YiiMailer','You need an HTML capable viewer to read this message.'),
@@ -28,4 +28,11 @@ return array(
 		'smtp_error'           => Yii::t('YiiMailer','SMTP server error: '),
 		'variable_set'         => Yii::t('YiiMailer','Cannot set or reset variable: ')
     ),
+	'Mailer' => 'smtp',
+	'Host' => 'smtp.gmail.com',
+	'Port' => 465,
+	'SMTPSecure' => 'ssl',
+	'SMTPAuth' => true,
+	'Username' => 'mailer@billson.com',
+	'Password' => 'Aut0mailer',
 );

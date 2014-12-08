@@ -238,7 +238,7 @@ class Follower extends CActiveRecord
             You\'ve accepted the invitation to follow '.$projectName.' managed by '.$companyName.'. 
             <br />The system will send you notifications when documents are updated by default, 
             but you can change the settings whenever you like by going to your account page.
-             <a href="http://www.ReqRap.com/user/myaccount/">http://www.ReqRap.com/user/myaccount/</a>
+             <a href="http://www.ReqRap.com/req/user/myaccount/">http://www.ReqRap.com/req/user/myaccount/</a>
             <br />
             Don\'t forget you can access the draft requirements without logging in directly here:
             <a href="http://'.Yii::app()->params['server'].'/project/extview/id/'.$extlink.'">'.Yii::app()->params['server'].'/project/extview/id/'.$extlink.'</a>          
@@ -321,7 +321,7 @@ class Follower extends CActiveRecord
             Thanks for using ReqRap.<br />
             Note: The system will send you notifications when documents are updated by default, 
             but you can change the settings whenever you like by going to your account page. 
-            <a href="http://www.ReqRap.com/user/myaccount/">http://www.ReqRap.com/user/myaccount/</a>
+            <a href="http://www.ReqRap.com/req/user/myaccount/">http://www.ReqRap.com/req/user/myaccount/</a>
             <br />
             ');
   

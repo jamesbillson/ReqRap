@@ -117,16 +117,11 @@ class ActorController extends Controller
          //   echo "about to check";
 		if(isset($_POST['Actor']))
 		{
-                  //   echo "CUNT:<pre>";
-            // print_r($_POST['Actor']);
-            // echo "</pre>";
                          $new->attributes=$_POST['Actor'];
-                         //$new->inherits=$_POST['Actor']['inherits'];
                          $new->project_id=$model->project_id;
                          $new->actor_id=$model->actor_id;
                          $new->release_id=$release;
                          $new->number=$model->number;
-                         //$new->inherits=$model->inherits;
 			if($new->save())
                         {
 			$version=Version::model()->getNextNumber($model->project_id, 4, 2,$new->primaryKey,$model->actor_id);
