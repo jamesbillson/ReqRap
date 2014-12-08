@@ -1985,3 +1985,17 @@ function redirect_login_page() {
     wp_redirect( $login_url, 301 ); exit;
 }
 add_shortcode( 'redirect_login_page', 'redirect_login_page' );
+
+add_filter( 'logout_url', 'wp_req_logout_url' );
+function wp_req_logout_url( $default ) {
+	$logout_url = home_url().'/req/site/logout/';
+    // set your URL here
+    return is_admin() ? $logout_url : $default;
+}
+add_filter( 'show_admin_bar', '__return_false' );
+
+
+
+
+
+
