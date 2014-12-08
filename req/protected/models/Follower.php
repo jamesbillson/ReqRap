@@ -180,10 +180,10 @@ class Follower extends CActiveRecord
             account, just click the link below to get instant access to the project\'s
                     resources.
             <br />
-            Click here to accept <a href="http://'.Yii::app()->params['server'].'/follower/accept/id/'.$follower->link.'">'.Yii::app()->params['server'].'/follower/accept/id/'.$follower->link.'</a>                   
+            Click here to accept <a href="http://'.Yii::app()->params['server'].'/req/follower/accept/id/'.$follower->link.'">'.Yii::app()->params['server'].'/req/follower/accept/id/'.$follower->link.'</a>                   
             <br />
             You can access the project documents without logging in directly here:
-            <a href="http://'.Yii::app()->params['server'].'/project/extview/id/'.$extlink.'">'.Yii::app()->params['server'].'/project/extview/id/'.$extlink.'</a>          
+            <a href="http://'.Yii::app()->params['server'].'/req/project/extview/id/'.$extlink.'">'.Yii::app()->params['server'].'/req/project/extview/id/'.$extlink.'</a>          
             
             
             ');
@@ -197,10 +197,10 @@ class Follower extends CActiveRecord
             You\'ve been invited to follow a ReqRap project.  You can follow the link below
             to create an account on ReqRap and to get access to project resources.
             <br />
-            Click here to accept <a href="http://'.Yii::app()->params['server'].'/follower/accept/id/'.$follower->link.'">'.Yii::app()->params['server'].'/follower/accept/id/'.$follower->link.'</a>                   
+            Click here to accept <a href="http://'.Yii::app()->params['server'].'/req/follower/accept/id/'.$follower->link.'">'.Yii::app()->params['server'].'/req/follower/accept/id/'.$follower->link.'</a>                   
             <br />
              You can access the project documents without logging in directly here:
-            <a href="http://'.Yii::app()->params['server'].'/project/extview/id/'.$extlink.'">'.Yii::app()->params['server'].'/project/extview/id/'.$extlink.'</a>          
+            <a href="http://'.Yii::app()->params['server'].'/req/project/extview/id/'.$extlink.'">'.Yii::app()->params['server'].'/req/project/extview/id/'.$extlink.'</a>          
             
             ');
         }
@@ -241,7 +241,7 @@ class Follower extends CActiveRecord
              <a href="http://www.ReqRap.com/req/user/myaccount/">http://www.ReqRap.com/req/user/myaccount/</a>
             <br />
             Don\'t forget you can access the draft requirements without logging in directly here:
-            <a href="http://'.Yii::app()->params['server'].'/project/extview/id/'.$extlink.'">'.Yii::app()->params['server'].'/project/extview/id/'.$extlink.'</a>          
+            <a href="http://'.Yii::app()->params['server'].'/req/project/extview/id/'.$extlink.'">'.Yii::app()->params['server'].'/req/project/extview/id/'.$extlink.'</a>          
                <br />
                   <br />
                   Thanks for using ReqRap.
@@ -314,8 +314,8 @@ class Follower extends CActiveRecord
             for '.$projectName.' managed by '.$companyName.'. 
             <br />
             Don\'t forget you can access the draft requirements without logging in directly here:
-            <a href="http://'.Yii::app()->params['server'].'/project/extview/id/'.$extlink.'">
-            http://'.Yii::app()->params['server'].'/project/extview/id/'.$extlink.'</a>          
+            <a href="http://'.Yii::app()->params['server'].'/req/project/extview/id/'.$extlink.'">
+            http://'.Yii::app()->params['server'].'/req/project/extview/id/'.$extlink.'</a>          
             <br />
             <br />
             Thanks for using ReqRap.<br />
