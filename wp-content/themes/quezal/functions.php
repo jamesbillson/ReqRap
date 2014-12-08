@@ -69,6 +69,16 @@ if ( ! isset( $content_width ) )
 if ( version_compare( $GLOBALS['wp_version'], '3.6-alpha', '<' ) )
 	require get_template_directory() . '/includes/bk-compatiblity.php';
 
+
+add_action('after_setup_theme', 'remove_admin_bar');
+
+    function remove_admin_bar() {
+        if (!current_user_can('administrator') && !is_admin()) {
+        show_admin_bar(false);
+        }
+
+    }
+
 /**
  * Sets up theme defaults and registers the various WordPress features that theme supports.
  *
@@ -1966,7 +1976,7 @@ function send_email($userID, $link) {
                     To confirm your email address and activate your account follow 
                     the link below and complete the join form.
                     <br />
-                    Click here to accept <a href="'.site_url().'/req/user/active/verifycode/'.$link.'">'.site_url().'/user/active/verifycode/'.$link.'</a>                   
+                    Click here to accept <a href="'.site_url().'/req/user/active/verifycode/'.$link.'">'.site_url().'/req/user/active/verifycode/'.$link.'</a>                   
                     <br />
                     <br />
                     Thanks, 
