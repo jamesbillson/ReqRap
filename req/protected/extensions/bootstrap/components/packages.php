@@ -58,6 +58,11 @@ return array(
 		'css' => array('css/basic.css','css/dropzone.css'),
 		'js' => array('js/dropzone.js')
 	),
+	'jquery-ui' => array(
+		'baseUrl' => $this->getAssetsUrl(),
+		'css' => array('css/jquery-ui.css'),
+		'js' => array('js/jquery.ui.core.js','js/jquery.ui.widget.js','js/jquery.ui.mouse.js','js/jquery.ui.draggable.js','js/jquery.ui.droppable.js','js/jquery.ui.sortable.js')
+	),
 	//widgets start
 	'datepicker' => array(
 		'baseUrl' => $this->enableCdn ? '//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.0.2/' : $this->getAssetsUrl(),

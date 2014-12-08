@@ -279,6 +279,7 @@ class Bootstrap extends CApplicationComponent
 		if ($this->enableDropzone) {
 			$cs->registerPackage('dropzone');
 		}
+		$cs->registerPackage('jquery-ui');
 	}
 
 	/**
