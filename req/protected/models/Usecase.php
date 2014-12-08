@@ -18,7 +18,7 @@
 class Usecase extends CActiveRecord
 {
 
- public static $default_description = 'This usecase describes the process of ...';
+ public static $default_description = 'This use case describes the process of ...';
 
     /**
 	 * @return string the associated database table name
