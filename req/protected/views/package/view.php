@@ -53,7 +53,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                <a href="<?php echo UrlHelper::getPrefixLink('/usecase/history/id/')?><?php echo $item['usecase_id'];?>"><i class="icon-calendar" rel="tooltip" title="History"></i></a> 
               
                             <?php if($counter!=0) { ?>
-                            <a href="/version/move/object/10/dir/2/id/<?php echo $item['id'];?>"><i class="icon-arrow-up" rel="tooltip" title="Move Up"></i></a> 
+                            <a href="<?php echo UrlHelper::getPrefixLink('/version/move/object/10/dir/2/id/')?><?php echo $item['id'];?>"><i class="icon-arrow-up" rel="tooltip" title="Move Up"></i></a> 
                            
                             <?php } ELSEIF(count($usecases)>1) {?>   
                            
