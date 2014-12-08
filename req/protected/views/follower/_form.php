@@ -43,7 +43,7 @@
 </div>
 <!-- form -->
 <div class="row">
-    <a href="<?php echo UrlHelper::getPrefixLink('contact/createfollow?id=')?><?php echo $fk; ?>">Create contact and invite</a>
+    <a href="<?php echo UrlHelper::getPrefixLink('contact/create/follow?id=')?><?php echo $fk; ?>">Create contact and invite</a>
 </div>
 
 

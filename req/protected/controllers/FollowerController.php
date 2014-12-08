@@ -188,7 +188,7 @@ class FollowerController extends Controller
         
     public function actionAddFollower($id,$type)
     {
-        $model=new Follower;
+        $model = new Follower;
         
         // Uncomment the following line if AJAX validation is needed
         // $this->performAjaxValidation($model);
@@ -205,18 +205,11 @@ class FollowerController extends Controller
             $model->modified_date=date("Y-m-d H:i:s", time());
             $model->link=uniqid('',true);
          //echo 'created now follower about to save';
-            if($model->save())
-            {
-                // use sendInvite function to send invite using function.
-                //debug $this->redirect(array('/site/admin?id='.$model->primaryKey));
-              // echo 'saved follower about to email';
-               Follower::model()->sendInvite($model->primaryKey);
-
-               //set the tab to followers
+            if($model->save()) {
+                Follower::model()->sendInvite($model->primaryKey);
                 Yii::App()->session['setting_tab']='followers';
-                $this->redirect(array('/req/project/project'));
-         
-                }
+								$this->redirect(('/req/project/project'));
+             }
         }
         //check user
        // $user = User::model()->findByPk(Yii::app()->user->id);
@@ -240,7 +233,7 @@ class FollowerController extends Controller
             //go back to the original follow object screen
             //pick the object from an array by the index.
             
-        $this->redirect(array('/req/project/project','tab'=>'followers'));
+        $this->redirect(array('/project/project','tab'=>'followers'));
                 
     }
     
