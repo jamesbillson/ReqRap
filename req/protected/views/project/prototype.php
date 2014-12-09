@@ -1,5 +1,4 @@
 <?php 
-
 $tab=Yii::App()->session['setting_tab'];
 if (!isset($tab)) $tab='details';
 echo $this->renderPartial('/project/head',array('tab'=>$tab)); ?>
@@ -32,31 +31,35 @@ echo $this->renderPartial('/project/head',array('tab'=>$tab)); ?>
 <?php $types = Interfacetype::model()->getInterfacetypes(); ?>
        <table>
     <?php foreach($types as $type){
-    $data = Iface::model()->getCategoryIfaces($type['interfacetype_id']);
-        if (count($data)){?>
-            <tr>     
+    $data = Iface::model()->getCategoryIfaces($type['interfacetype_id']);?>
+        <tr>     
 
-                <td valign="top" class="ifaceDroppable" data-id="<?php echo $type['interfacetype_id']; ?>"><b>
+                <td id="Ifacetype_<?php echo $type['interfacetype_id']; ?>" valign="top" class="ifaceDroppable" data-id="<?php echo $type['interfacetype_id']; ?>"><b>
                 <?php echo str_pad($type['number'], 2, "0", STR_PAD_LEFT).'-'.$type['name'];?></b>
                 <br>
-           
+	  <?php  if (count($data)){?>
+          
+           <ul>
                 <?php foreach($data as $item){?>
-                <a  data-ifacetype="<?php echo $item['interfacetype_id']; ?>" data-iface="<?php echo $item['iface_id']?>" data-id="<?php echo $item['id']?>" style="float:left;" href="<?php echo Yii::app()->getBaseUrl();  ?>/project/protoflowifaceadd/id/<?php echo $item['iface_id']?>/type/12" class="thumbnail ifaceDraggable" rel="tooltip" data-title="UI-<?php echo str_pad($type['number'], 2, "0", STR_PAD_LEFT); ?><?php echo str_pad($item['number'], 3, "0", STR_PAD_LEFT); ?>">
+                <li data-ifacetype="<?php echo $item['interfacetype_id']; ?>" data-iface="<?php echo $item['iface_id']?>" data-id="<?php echo $item['id']?>" style="float:left;text-align:center; list-style:none;" class="ifaceDraggable">
+                <a   href="<?php echo Yii::app()->getBaseUrl();  ?>/project/protoflowifaceadd/id/<?php echo $item['iface_id']?>/type/12" class="thumbnail " rel="tooltip" data-title="UI-<?php echo str_pad($type['number'], 2, "0", STR_PAD_LEFT); ?><?php echo str_pad($item['number'], 3, "0", STR_PAD_LEFT); ?>">
+               <span style=" text-align:center"><i class="icon-file icon-4x"></i><br />
                 <?php   
-                $this->widget('bootstrap.widgets.TbBadge', array(
+				echo $item['name'];
+               /* $this->widget('bootstrap.widgets.TbBadge', array(
                 'type'=>'info',
                 'label'=>$item['name'].' +' ,
-                )); 
-                 ?>  
-                </a>
+                )); */
+                 ?></span>  
+                </a></li>
             
              
                 
         
            
-     <?php } ?> </div>
-     </td>
-         <?php } ?> </tr><?php } ?>
+     <?php } ?></ul> </div>
+     
+         <?php } ?> </td></tr><?php } ?>
                 <tr>
                 <td valign="top">
                     
@@ -65,17 +68,18 @@ echo $this->renderPartial('/project/head',array('tab'=>$tab)); ?>
         $data = Form::model()->getProjectForms(Yii::app()->session['project']);
             if (count($data)){
                 foreach($data as $item): ?>
-                    <a style="float:left;" href="#" class="thumbnail" rel="tooltip" data-title="UF-<?php echo str_pad($item['number'], 3, "0", STR_PAD_LEFT); ?>">              
+                    <a style="float:left;text-align:center;" href="#" class="thumbnail" rel="tooltip" data-title="UF-<?php echo str_pad($item['number'], 3, "0", STR_PAD_LEFT); ?>">              
                
-               
+                 <span style=" text-align:center"><i class="icon-file-text icon-4x" style="color:#f89406;"></i><br />
            
                 <?php   
-                 $this->widget('bootstrap.widgets.TbBadge', array(
+				echo $item['name'];
+                /* $this->widget('bootstrap.widgets.TbBadge', array(
     'type'=>'warning',
     'label'=>$item['name'].' +' ,
-    )); 
+    )); */
      ?>  
-                </a>     
+            </span>    </a>     
                  
             <?php endforeach;
             }?>
@@ -140,6 +144,7 @@ if (count($actors)):?>
             
 <script type="text/javascript">
 var drg;
+
 $(document).ready(function(){
 $( ".ifaceDraggable" ).draggable({opacity: 0.6,
                     cursor: 'move',
@@ -166,6 +171,7 @@ $( ".ifaceDroppable" ).droppable({
 						   
 						   });
 					drg.attr('data-ifacetype',Ifacetype_id);
+				
 				}
 				}
 		});

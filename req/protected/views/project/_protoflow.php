@@ -108,7 +108,6 @@ class FakePackage
 }
 
 
-
 ?>
 
 <table class="thumbnail">   
@@ -208,7 +207,7 @@ $this->widget(
                 foreach($flow['step'] as $step){ 
                $types=array(2=>'warning',12=>'info');
                 ?>
-        <td valign="top">
+        <td valign="middle">
       <a href="#" class="thumbnail" rel="tooltip"
          data-title="<?php echo Version::model()->wikiOutput($step['action'],1);?>">
                 <?php 
@@ -218,17 +217,25 @@ $this->widget(
                 )); 
              ?>
             </a></td>
+            <td valign="middle"><span><i class="icon-arrow-right icon-2x text-info"></i></span></td>
             <td valign="top">
             
-            <a href="#" class="thumbnail" rel="tooltip" data-title="<?php  
+            <a href="#" class="thumbnail" style="text-align:center;" rel="tooltip" data-title="<?php  
                echo Version::model()->wikiOutput($step['resulttext'],1);?>">
-                
-                  <?php   
-                 $this->widget('bootstrap.widgets.TbBadge', array(
+                  <span style=" text-align:center">
+                  <?php if($step['resulttype']==2){ ?>
+                  <i class="icon-file-text icon-4x" style="color:#f89406;"></i>
+                  <?php }else { ?>
+                  <i class="icon-file icon-4x"></i>
+                  <?php } ?>
+                  <br />
+                  <?php  
+				  echo $step['resultname'];
+                 /*$this->widget('bootstrap.widgets.TbBadge', array(
                 'type'=>$types[$step['resulttype']],
                 'label'=>$step['resultname'],
-                )); 
-                 ?>  
+                )); */
+                 ?> </span> 
                </a>
       
        <?php
