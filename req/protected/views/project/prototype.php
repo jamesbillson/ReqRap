@@ -103,45 +103,61 @@ echo $this->renderPartial('/project/head',array('tab'=>$tab)); ?>
 
    ?>
 
+<div id="packageTabs">
+<ul id="yw9" class="nav nav-tabs">
 <?php 
 $project=Yii::App()->session['project'];
  $packages = Package::model()->getPackages($project);
+ $pi=0;
+ foreach($packages as $package){
+	 $class='';
+	if($pi==0)
+	{
+		$class='active';
+	}
+	$pi++;
+	echo '<li class="'.$class.'"><a data-toggle="tab" href="#package_'.$package['id'].'">PA-'.$package['number'].' '.$package['name'].'</a></li>';	
+}
+ ?>
+</ul> 
+<div class="tab-content">
+<?php 
+$pi=0; 
 foreach($packages as $package){
 $packusecases = Usecase::model()->getPackageUsecases($package['package_id']);
-
- if (count($packusecases)>0){
-
-
-
+ $class='';
+	if($pi==0)
+	{
+		$class='active in';
+	}
+	$pi++;
 ?>
+<div id="package_<?php echo $package['id'];  ?>" class="tab-pane fade <?php echo $class; ?>">
 
-<div>        
-<h3>Package PA-<?php echo $package['number'];?> <?php echo $package['name'];?></h3>
-
-</div>
-
-<?php foreach($packusecases as $uc){ ?>
+<?php
+if (count($packusecases)>0){
+echo '<div class="span4">';	
+foreach($packusecases as $uc){ ?>
 <br /><a href="<?php echo Yii::app()->getBaseUrl();  ?>/project/protoflowview/id/<?php echo $uc['id'];?>">
 UC-<?php echo str_pad($uc['packnumber'], 2, "0", STR_PAD_LEFT).''.str_pad($uc['number'], 3, "0", STR_PAD_LEFT); ?> 
     </a>
         <b><?php echo $uc['name'];?></b>
-(<?php 
-$actors = Actor::model()->getActors($uc['usecase_id']); // get the requirements with answers
 
-if (count($actors)):?>
-                  <?php foreach($actors as $actor) : ?>  
-                  <?php echo $actor['name'];?>,  
-                  <?php endforeach ?> 
-<?php endif; // end count of results ?> ) 
-<?php echo $uc['description']; ?>
+<?php // echo $uc['description']; ?>
          
 
-<?php } // End if there are any UC's in this package ?>
-<?php } // END LOOP THROUGH USE CASES ?>   
-          
+<?php } 
+echo '</div> <div class="span8">';
+$this->renderPartial('/package/printdiagram',array('package'=>$package)); 
+echo "</div>";
+// End if there are any UC's in this package ?>
+<?php } // END LOOP THROUGH USE CASES ?>  
+
+</div>          
  
 <?php } // END LOOP THROUGH PACKAGES?>
-            
+</div>
+</div>            
 <script type="text/javascript">
 var drg;
 
