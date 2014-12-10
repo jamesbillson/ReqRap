@@ -98,7 +98,12 @@ class FormController extends Controller
                     if($model->save())
                     {
                       
-                     $version=Version::model()->getNextNumber($id,2,1,$model->primaryKey,$model->form_id);   
+                     $version=Version::model()->getNextNumber($id,2,1,$model->primaryKey,$model->form_id); 
+					if(Yii::app()->request->isAjaxRequest)
+				  		{
+					  		die;
+					  	}
+					 
                      $this->redirect(('/req/project/view/tab/forms/id/'.$id));
 		    }
                         

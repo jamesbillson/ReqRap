@@ -34,9 +34,11 @@ echo $this->renderPartial('/project/head',array('tab'=>$tab)); ?>
     $data = Iface::model()->getCategoryIfaces($type['interfacetype_id']);?>
         <tr>     
 
-                <td id="Ifacetype_<?php echo $type['interfacetype_id']; ?>" valign="top" class="ifaceDroppable" data-id="<?php echo $type['interfacetype_id']; ?>"><b>
+                <td id="Ifacetype_<?php echo $type['interfacetype_id']; ?>" valign="top" class="ifaceDroppable" data-id="<?php echo $type['interfacetype_id']; ?>">
+                <span><b>
                 <?php echo str_pad($type['number'], 2, "0", STR_PAD_LEFT).'-'.$type['name'];?></b>
-                <br>
+                <a href="#" class="add_iface" data-id="<?php echo $type['interfacetype_id']; ?>" style="float:right"><i class="icon-plus-sign-alt icon-large text-info"></i></a>
+                </span><br/><br/>
 	  <?php  if (count($data)){?>
           
            <ul>
@@ -63,7 +65,7 @@ echo $this->renderPartial('/project/head',array('tab'=>$tab)); ?>
                 <tr>
                 <td valign="top">
                     
-                    <b>Forms</b><br>
+                  <span><b>Forms</b> <a href="#" data-toggle="modal" class="add_form" style="float:right"><i class="icon-plus-sign-alt icon-large text-info"></i></a></span><br/><br/>
      <?php
         $data = Form::model()->getProjectForms(Yii::app()->session['project']);
             if (count($data)){
@@ -102,11 +104,13 @@ echo $this->renderPartial('/project/head',array('tab'=>$tab)); ?>
 
 
    ?>
-
+<br />
+<br />
 <div id="packageTabs">
 <ul id="yw9" class="nav nav-tabs">
 <?php 
 $project=Yii::App()->session['project'];
+
  $packages = Package::model()->getPackages($project);
  $pi=0;
  foreach($packages as $package){
@@ -157,11 +161,116 @@ echo "</div>";
  
 <?php } // END LOOP THROUGH PACKAGES?>
 </div>
-</div>            
+</div>   
+
+<?php // Iface Add model ?>
+<div id="IfaceAddModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="Add Iface" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+    <h3 id="myModalLabel">Add Iface Info</h3>
+  </div>
+  <div class="modal-body">
+  <form id="IfaceForm" method="post" action="<?php echo Yii::app()->getBaseUrl();  ?>/iface/create/">
+   		<input type="hidden" name="Iface[photo_id]" id="IfacePhotoId" value="0" />
+        <input type="hidden" name="Iface[interfacetype_id]" id="intefaceTypeId" value="1" /> 
+		<label class="required" for="Iface_name">Name <span class="required">*</span></label>
+        <input type="text" value="" id="Iface_name" name="Iface[name]" maxlength="255" size="60">															 
+  </form>
+  </div>
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+    <button class="btn btn-primary" id="saveIface" >Save changes</button>
+  </div>
+</div>
+
+<?php // Add Form modal ?>
+
+<div id="FormAddModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="Add Form" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+    <h3>Add Form</h3>
+  </div>
+  <div class="modal-body">
+  <form id="ObjectForm" method="post" action="<?php echo Yii::app()->getBaseUrl();  ?>/form/create/uc/-1/id/<?php echo $project; ?>">
+   		<input type="hidden" name="Form[project_id]"  value="<?php echo $project; ?>" />
+        
+		<label class="required" for="Form_name">Name <span class="required">*</span></label>
+        <input type="text" value="" id="Form_name" name="Form[name]" maxlength="255" size="60">															 
+  </form>
+  </div>
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+    <button class="btn btn-primary" id="saveForm" >Save changes</button>
+  </div>
+</div>
+
+         
 <script type="text/javascript">
 var drg;
 
 $(document).ready(function(){
+
+$(".add_form").on('click',function(e){
+									e.preventDefault();
+									$("#Form_name").val('');
+									 $("#FormAddModal").modal('show');
+									
+									
+									});
+
+// code for add form ajax
+
+$("#saveForm").on('click',function(e){
+								e.preventDefault();
+								url=$("#ObjectForm").attr('action');
+								if($.trim($("#Form_name").val()))
+								{
+								$.ajax({
+									   type:'POST',
+									   url:url,
+									   data:$("#ObjectForm").serialize(),
+									   success:function(data){
+										   $("#FormAddModal").modal('hide');
+										   location.href='<?php echo Yii::app()->getBaseUrl();  ?>/project/prototype';
+									   }
+									   });
+								}else
+								{
+									alert('Please enter Form name');
+								}
+						});
+
+
+$(".add_iface").on('click',function(e){
+									e.preventDefault();
+									Ifacetype_id=$(this).attr('data-id');
+									$("#intefaceTypeId").val(Ifacetype_id);
+									$("#Iface_name").val('');
+									 $("#IfaceAddModal").modal('show');
+									
+									
+									});
+
+$("#saveIface").on('click',function(e){
+								e.preventDefault();
+								url=$("#IfaceForm").attr('action');
+								if($.trim($("#Iface_name").val()))
+								{
+								$.ajax({
+									   type:'POST',
+									   url:url,
+									   data:$("#IfaceForm").serialize(),
+									   success:function(data){
+										   $("#IfaceAddModal").modal('hide');
+										   location.href='<?php echo Yii::app()->getBaseUrl();  ?>/project/prototype';
+									   }
+									   });
+								}else
+								{
+									alert('Please enter interface name');
+								}
+						});
+						   
 $( ".ifaceDraggable" ).draggable({opacity: 0.6,
                     cursor: 'move',
 					revert:"invalid",

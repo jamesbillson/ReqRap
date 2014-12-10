@@ -116,7 +116,10 @@ class IfaceController extends Controller
                      
 			if($model->save()){
                      $version=Version::model()->getNextNumber($project,12,1,$model->primaryKey,$model->iface_id);   
-                   
+                  if(Yii::app()->request->isAjaxRequest)
+				  {
+					  die;
+				  }
                 
                     	$this->redirect(('/req/project/view/'));
 		   } }
