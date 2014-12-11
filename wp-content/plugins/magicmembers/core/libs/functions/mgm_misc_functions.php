@@ -712,7 +712,8 @@ function mgm_mail($to, $subject, $message, $headers = '', $attachments = array()
 		}
 	}
 	// send mail
-	$status = @wp_mail( $to, $subject, $message, $headers, $attachments );
+	$status = true;
+	//$status = @wp_mail( $to, $subject, $message, $headers, $attachments );
 
 	// apply globally
 	if( ! bool_from_yn(mgm_get_setting('email_headers_global')) ){
