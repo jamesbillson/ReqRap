@@ -258,29 +258,25 @@ class UserController extends Controller
         ));
     }
 
-    public function actionActive(){
-Yii::app()->user->logout();
-      if(isset($_GET['verifycode']) && $user = User::model()->findByAttributes(array('salt'=>$_GET['verifycode'])) ){
+    public function actionActive() {
+			Yii::app()->user->logout();
+			wp_logout();
+      if(isset($_GET['verifycode']) && $user = User::model()->findByAttributes(array('salt'=>$_GET['verifycode'])) ) {
         if(isset($user)) {
-          $user->active = 1;
-          $user->type = 1;
-          User::model()->activate($user->id);
-          //if($user->save()){
-
+          	$user->active = 1;
+          	$user->type = 1;
+          	User::model()->activate($user->id);
             $identity = new UserIdentity($user->email, $user->password);
             $identity->setId($user->id);
             $identity->errorCode = UserIdentity::ERROR_NONE;
             Yii::app()->user->login($identity, (Yii::app()->params['loggedInDays'] * 60 * 60 * 24 ));
-
             $this->redirect(('/req/company/mycreate'));
-            //return;
-          //}
         }
       }
-      $this->redirect(('/req/site/fail'));
+			ReportHelper::processError('User Controller, Active action', '/req/site/fail');
     }
 
-      public function actionReInvite($id)
+    public function actionReInvite($id)
     {
        
             $model=$this->loadModel($id);
