@@ -26,7 +26,7 @@ if ( is_user_logged_in() ) { ?>
 <!--
 		jQuery(document).ready(function() {
 			if(jQuery('#menu').size()) {
-				jQuery('#menu').append('<li class="menu-item menu-item-type-post_type menu-item-object-page" ><a href="/req/">Main Project</a></li>');
+				jQuery('#menu').append('<li class="menu-item menu-item-type-post_type menu-item-object-page" ><a href="/req/">My Projects</a></li>');
 			}
 		});
 //-->

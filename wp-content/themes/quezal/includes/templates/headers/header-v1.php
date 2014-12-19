@@ -7,6 +7,13 @@
  * @since Quezal 1.0
  */
 ?>
+<?php 
+	$is_magicmember = true;
+	
+	if(isset($_GET['method']) && $_GET['method'] == 'payment_processed') {
+		$is_magicmember = false;
+	}
+?>
 <?php global $tcsn_option; ?>
 <?php get_template_part( 'includes/templates/headers/slide-panel' ); ?>
 
@@ -21,7 +28,7 @@
           <div class="col-md-6 col-sm-6 col-xs-12 topbar-left">
             
           <?php if ( $tcsn_option['tcsn_select_topbar_info'] == 'tcsn_links' ) { ?>
-          <?php if( has_nav_menu( 'secondary_menu' ) ) {
+          <?php if( has_nav_menu( 'secondary_menu' ) && $is_magicmember ) {
 			  wp_nav_menu( array( 
 					'theme_location'  => 'secondary_menu',
 					'container'       => 'div',
@@ -76,13 +83,14 @@
           <?php endif; ?>
         </div>
         <!-- .logo -->
-        
+        <?php if ($is_magicmember) {?>
         <div class="col-md-8 col-sm-8 col-xs-12">
           <nav class="menu-wrapper clearfix">
             <?php get_template_part( 'includes/templates/headers/main-menu' ); ?>
           </nav>
           <!-- #menu --> 
         </div>
+        <?php } ?>
       </div>
     </div>
   </div>
