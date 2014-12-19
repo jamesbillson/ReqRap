@@ -362,7 +362,7 @@ class Step extends CActiveRecord
                     }
     }    
     
-               public function getStepLinks($id,$object,$relation)
+               static public function getStepLinks($id,$object,$relation)
     {
           $project=Yii::App()->session['project'];
            $release=Yii::App()->session['release'];

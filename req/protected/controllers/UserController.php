@@ -270,6 +270,7 @@ class UserController extends Controller
             $identity->setId($user->id);
             $identity->errorCode = UserIdentity::ERROR_NONE;
             Yii::app()->user->login($identity, (Yii::app()->params['loggedInDays'] * 60 * 60 * 24 ));
+            wp_set_auth_cookie( $user->id );
             $this->redirect(('/req/company/mycreate'));
         }
       }

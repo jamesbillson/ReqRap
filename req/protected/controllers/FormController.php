@@ -101,6 +101,9 @@ class FormController extends Controller
                      $version=Version::model()->getNextNumber($id,2,1,$model->primaryKey,$model->form_id); 
 					if(Yii::app()->request->isAjaxRequest)
 				  		{
+							$data['id']=$model->form_id;
+					  		echo json_encode($data);
+
 					  		die;
 					  	}
 					 

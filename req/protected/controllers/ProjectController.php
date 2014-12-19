@@ -37,7 +37,7 @@ class ProjectController extends Controller
                    'ProtoFlowStore','ProtoFlowLoad','ProtoFlowClear',
                     'ProtoDescriptionSet','ProtoNameSet','ProtoActorSet','walkthru','testing','addprojectaddress','set','photo','print',
                     'diary','resetlink','details',
-                    'myrequirements','project','delete','create','update','myprojects','projectpackagelist','TenderSummary'),
+                    'myrequirements','project','delete','create','update','myprojects','projectpackagelist','TenderSummary','RearrangeProtoSteps','RemoveProtoSteps'),
                 'users'=>array('@'),
             ),
             array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -474,7 +474,7 @@ unset(Yii::app()->session['project']);
      
     }
     
-       public function actionProtoFlowIfaceAdd($id,$type)
+       public function actionProtoFlowIfaceAdd($id,$type,$step_index=-1)
     {
      //
      // Load the ucDef back from the user parameter
@@ -507,12 +507,22 @@ unset(Yii::app()->session['project']);
      $step['object_id']=$id;
      $step['resulttext']='System displays '.$wikiLink;
      // $ucDef['flow'][$flowNum]['step'][$stepNum]['rule'][$ruleNum]['name']=$rule['name'];
+	 if($step_index==-1)
+	 {
      array_push($ucDef['flow'][1]['step'],$step);
+	 }else
+	 {
+		array_splice($ucDef['flow'][1]['step'],$step_index,0,array($step)); 
+	 }
      $model = $this->loadModel(Yii::app()->session['project']);
      
      // Save the ucDef
      
      $this->ProtoFlowStore($ucDef);
+	  if(Yii::app()->request->isAjaxRequest)
+		{
+		 die;
+		}
      
      $this->redirect(Yii::app()->getBaseUrl().'/project/prototype',array('model'=>$model,'ucDef'=>$ucDef));
      
@@ -633,7 +643,7 @@ $release=Yii::App()->session['release'];
              }
       $this->ProtoFlowStore($ucDef);
      $model = $this->loadModel(Yii::app()->session['project']);
-     $this->render('prototype',array('model'=>$model,'ucDef'=>$ucDef));
+    $this->redirect(Yii::app()->getBaseUrl().'/project/prototype',array('model'=>$model,'ucDef'=>$ucDef));
 
      
      
@@ -662,13 +672,16 @@ $release=Yii::App()->session['release'];
 		 $new->actor_id=$ucDef['actor_id'];
                  $new->package_id=$ucDef['package_id'];
                  $new->preconditions='none';
-                 $new->number=Usecase::model()->getNextNumber($ucDef['package_id']);
+				 //get package.id from package.packag_id from the version table
+				 $package_versions=Version::model()->getVersions($ucDef['package_id'],5,'package_id');
+                 $new->number=Usecase::model()->getNextNumber($package_versions[0]['id']);
                  $new->usecase_id=Version::model()->getNextID(10);
                  $new->project_id=$project;
                  $new->release_id=$release;	
                  if ($new->save()){
                  $version=Version::model()->getNextNumber($project,10,2,$new->primaryKey,$new->usecase_id);  
                  
+				 $ucDef['id']=$new->usecase_id;
                    $flow=new Flow;
                         $flow->name='Main';
                         $flow->main=1;
@@ -747,7 +760,12 @@ $release=Yii::App()->session['release'];
                         if($newstep->save()){;
                           // make version
                         $version=Version::model()->getNextNumber($project,9,1,$newstep->primaryKey,$newstep->step_id);
-                    Step::model()->reNumber($flow->flow_id);
+                    	Step::model()->reNumber($flow->flow_id);
+						$newid= $newstep->getPrimaryKey();
+						$newstep->text = Version::model()->wikiInput($newstep->text,9,$newid);
+                        $newstep->result = Version::model()->wikiInput($newstep->result,9,$newid);
+                        $newstep->save();
+
                        // echo 'step text '.$newstep->text.'<br />';
                         //echo 'step number '.$newstep->number.'<br />';
                        // echo 'flow id to get number '.$flow->id.'<br />';
@@ -755,7 +773,7 @@ $release=Yii::App()->session['release'];
                         } ELSE {
                         echo 'Didnt save the step';
                         }
-                          if($step['resulttype']==12){ // its an interfacet so add the stepiface
+                          /*if($step['resulttype']==12){ // its an interfacet so add the stepiface
                                 $newstepiface=new Stepiface;
                                 $newstepiface->stepiface_id=Version::model()->getNextID(15);
                                 $newstepiface->project_id= $project;
@@ -775,7 +793,7 @@ $release=Yii::App()->session['release'];
                           
                             if($step['resulttype']==2){ // its a form so add the stepiform
                               
-                          }
+                          }*/
                           
                         }
                  
@@ -795,8 +813,11 @@ $release=Yii::App()->session['release'];
     {
      $tab=Yii::App()->session['setting_tab'];
     $flow['add']=1;
+	 $ucDef= $this->ProtoFlowLoad();  
      $model = $this->loadModel(Yii::app()->session['project']);
-     $this->render('prototype',array('model'=>$model,'flow'=>$flow));
+	 
+     $this->render('prototype',array('model'=>$model,'flow'=>$flow,'ucDef'=>$ucDef));
+	 
      
     }
        public function actionProtoTitleSet()
@@ -883,5 +904,27 @@ $release=Yii::App()->session['release'];
         }
         $this->redirect(UrlHelper::getPrefixLink('project/project/'));
     }
+	
+	public function actionRearrangeProtoSteps($new_index,$old_index)
+	{
+		$ucDef= $this->ProtoFlowLoad();
+		$step = array($ucDef['flow'][1]['step'][$old_index]);
+		unset($ucDef['flow'][1]['step'][$old_index]);
+		array_splice($ucDef['flow'][1]['step'],$new_index,0,$step);
+		$this->ProtoFlowStore($ucDef);
+		 die;
+		
+		
+	}
+	 public function actionRemoveProtoSteps($index=-1)
+	 {
+		 if($index!=-1){
+		 $ucDef= $this->ProtoFlowLoad();
+		 unset($ucDef['flow'][1]['step'][$index]);
+		 $ucDef['flow'][1]['step']=array_values($ucDef['flow'][1]['step']);
+		 $this->ProtoFlowStore($ucDef);
+		 }
+		 die;
+	 }
 
 }

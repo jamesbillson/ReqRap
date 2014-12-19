@@ -32,7 +32,7 @@ class UsecaseController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('deleted','rollback','diff','packchange','dynamicsteps','create','update','delete','move','history'),
+				'actions'=>array('deleted','rollback','diff','packchange','dynamicsteps','create','update','delete','move','history', 'clone'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -83,7 +83,7 @@ class UsecaseController extends Controller
         
         
         
-        public function actionCreate($id)
+  public function actionCreate($id)
 	{
             Yii::app()->session['setting_tab']='usecases';
 		$model=new Usecase;
@@ -134,6 +134,66 @@ class UsecaseController extends Controller
 		$this->render('create',array(
 			'model'=>$model,'package'=>$package,'number'=>$number
 		));
+	}
+	
+	
+	public function actionClone($id, $usecase) {
+		try {
+
+			$model = Usecase::model()->findByAttributes(array('usecase_id' => $usecase));
+
+			if(isset($model->name)) {
+				$model->name = 'Clone of '.$model->name;
+			}
+			
+			$project = Yii::app()->session['project'];
+			$number  = Usecase::model()->getNextNumber($id);
+			$package =  Package::model()->findByAttributes(array('package_id' => $id));
+			if(isset($_POST['Usecase']))
+			{
+					
+				$model->attributes=$_POST['Usecase'];
+				$model->package_id=$package->package_id;
+				$model->project_id= $project;
+				$model->release_id=Release::model()->currentRelease($project);
+				// set usecase_id
+				$model->usecase_id=Version::model()->getNextID(10);
+				if($model->save()){
+					$version=Version::model()->getNextNumber($project,10,1,$model->primaryKey,$model->usecase_id);
+					$flow=new Flow;
+					$flow->name='Main';
+					$flow->main=1;
+					$flow->startstep_id=0;
+					$flow->rejoinstep_id=0;
+					$flow->usecase_id=$model->usecase_id;
+					$flow->flow_id=Version::model()->getNextID(8);
+					$flow->project_id= $project;
+					$flow->release_id=Release::model()->currentRelease($project);
+					$flow->save(false);
+					$version=Version::model()->getNextNumber($project,8,1,$flow->primaryKey,$flow->flow_id);
+					//make version
+					$step=new Step;
+					$step->flow_id=$flow->flow_id;
+					$step->number=  Step::model()->getNextNumber($id);
+					$step->text='Actor action.';
+					$step->actor_id=$model->actor_id;
+					$step->result='System result.';
+					$step->step_id=Version::model()->getNextID(9);
+					$step->project_id= Yii::app()->session['project'];
+					$step->release_id=Release::model()->currentRelease($project);
+					$step->save(false);
+					// make version
+					$version=Version::model()->getNextNumber($project,9,1,$step->primaryKey,$step->step_id);
+					$this->redirect(('/req/project/view/tab/usecases/'));
+				}}
+				
+			$this->render('create',array(
+				'model'=>$model,'package'=>$package,'number'=>$number
+			));
+		} catch(Exception $e) {
+			var_dump($e->getMessage());exit;
+			ReportHelper::processError($e->getMessage());
+		}
 	}
 
 	/**

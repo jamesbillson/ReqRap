@@ -28,7 +28,7 @@ class wpUser extends CWebUser implements IWebUser, IApplicationComponent {
         public function getDeveloper () {
             $user = User::model()->findByPK($this->getId());
             $developer = '';
-            if ($user) {
+            if ($user && isset($user->developer)) {
                 $developer = $user->developer;
             }
             return $developer;

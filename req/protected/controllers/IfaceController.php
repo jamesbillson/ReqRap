@@ -52,7 +52,7 @@ class IfaceController extends Controller
 
 
 
-        public function actionView($id) // Note that this is form_id
+    public function actionView($id) // Note that this is form_id
 	{
              Yii::app()->session['setting_tab']='interfaces';  	
             $versions=Version::model()->getVersions($id,12,'iface_id');
@@ -118,6 +118,8 @@ class IfaceController extends Controller
                      $version=Version::model()->getNextNumber($project,12,1,$model->primaryKey,$model->iface_id);   
                   if(Yii::app()->request->isAjaxRequest)
 				  {
+					  $data['id']=$model->iface_id;
+					  echo json_encode($data);
 					  die;
 				  }
                 
@@ -155,6 +157,10 @@ public function actionUpdate($ucid,$id)
 		{
       if($ucid==-1){
 		 $new->attributes=$_POST['Iface'];
+		 if(!isset($_POST['Iface']['photo_id']))
+			{
+				$new->photo_id=$model->photo_id; 
+		 	}
       }
 	  
 			  
@@ -162,6 +168,7 @@ public function actionUpdate($ucid,$id)
                  $new->project_id=$project;
                  $new->iface_id=$model->iface_id;
                  $new->release_id=$release;	
+				 
 				 if($new->save()){
                       $version=Version::model()->getNextNumber($project,12,2,$new->primaryKey,$new->iface_id);   
                       /***
