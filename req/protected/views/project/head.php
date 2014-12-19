@@ -106,7 +106,23 @@ if (Yii::App()->session['permission'] ==0)  $this->redirect(array('site/fail/con
     // 'success', 'warning', 'important', 'info' or 'inverse'
     'label'=>'Model',
                   
-)); ?>
+)); 
+
+
+if (Yii::App()->user->id==121 || Yii::App()->user->id==70  ){
+?>
+
+<a href=<?php echo UrlHelper::getPrefixLink('/project/prototype/') ?>>
+         <?php
+                 
+                 $this->widget('bootstrap.widgets.TbLabel', array(
+    'type'=>'info',
+    // 'success', 'warning', 'important', 'info' or 'inverse'
+    'label'=>'Prototype',
+                  
+)); 
+}
+?>
         
         
     </a>  

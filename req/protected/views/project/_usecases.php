@@ -149,6 +149,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                <i class="icon-flag" rel="tooltip" title="End"></i>   
                <?php } ?>  
                <?php } ?> 
+               <a href="<?php echo UrlHelper::getPrefixLink('/usecase/clone/id/') ?><?php echo $item['package_id'];?>/usecase/<?php echo $uc['usecase_id'];?>"><i class="icon-pencil" rel="tooltip" title="Clone"></i> </a>
                </td></tr>
          
         <?php  $counter++;

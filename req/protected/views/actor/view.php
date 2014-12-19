@@ -9,7 +9,7 @@ $permission=Yii::App()->session['permission'];
     Actor <?php echo $model->name; ?><a href="<?php echo UrlHelper::getPrefixLink('/actor/update/id/') ?><?php echo $model->id;?>"><i class="icon-edit" rel="tooltip" title="Edit"></i></a> 
     <select class="pull-right" name="mass_action" id="mass-action">
         <option value="0">Please Select</option>
-        <option value="1">Replace Actor</option>
+        <option value="1"><?php echo ('Swap Actor') ?></option>
     </select>       
 </h2>
 <a href="<?php echo UrlHelper::getPrefixLink('/project/view/tab/actors/') ?>">Back to Actors</a><br />
@@ -173,7 +173,8 @@ $this->endWidget();
             $actorModel = Actor::model()->findAll(
                 array(
                     'condition' => 'actor_id != :actor_id && project_id = :project_id',
-                    'params' => array(':actor_id' => $model->actor_id, ':project_id' => $project_id)
+                    'params' => array(':actor_id' => $model->actor_id, ':project_id' => $project_id),
+										'group' => 'actor_id'
                 )
             );
             if ($actorModel == NULL) {

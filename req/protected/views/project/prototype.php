@@ -17,34 +17,44 @@ echo $this->renderPartial('/project/head',array('tab'=>$tab)); ?>
 
 
 
-               $this->widget('bootstrap.widgets.TbButton', array(
+              /* $this->widget('bootstrap.widgets.TbButton', array(
     'label'=>'Add',
     'type'=>'primary', // null, 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
     'size'=>'small', // null, 'large', 'small' or 'mini'
     'url'=>array('project/protoifaceadd')
-));
+));*/
     
    ?>
 
-     
+ <style>
+  .connectedSort { list-style-type: none; margin: 0; padding: 0; float:left; }
+  .connectedSort li { margin: 3px 3px 3px 0; padding: 1px; float: left; text-align: center; }
+  </style>     
 
-<?php $types = Interfacetype::model()->getInterfacetypes(); ?>
-       <table>
+<?php
+$sortableObject_ids='';
+$types = Interfacetype::model()->getInterfacetypes(); ?>
+     <div class="row-fluid">
     <?php foreach($types as $type){
-    $data = Iface::model()->getCategoryIfaces($type['interfacetype_id']);?>
-        <tr>     
+    $data = Iface::model()->getCategoryIfaces($type['interfacetype_id']);
+	 $sortableObject_ids.="#Ifacetype_".$type['interfacetype_id'].", ";
+	?>
+    
+        <div class="row-fluid">    
 
-                <td id="Ifacetype_<?php echo $type['interfacetype_id']; ?>" valign="top" class="ifaceDroppable" data-id="<?php echo $type['interfacetype_id']; ?>">
-                <span><b>
-                <?php echo str_pad($type['number'], 2, "0", STR_PAD_LEFT).'-'.$type['name'];?></b>
-                <a href="#" class="add_iface" data-id="<?php echo $type['interfacetype_id']; ?>" style="float:right"><i class="icon-plus-sign-alt icon-large text-info"></i></a>
+                 <span><b>
+                <?php echo str_pad($type['number'], 2, "0", STR_PAD_LEFT).'-'.$type['name'];?></b>&nbsp;&nbsp;&nbsp;
+                <a href="#" class="add_iface" data-id="<?php echo $type['interfacetype_id']; ?>" style=""><i class="icon-plus-sign-alt icon-large text-info"></i></a>
                 </span><br/><br/>
-	  <?php  if (count($data)){?>
+                 <ul class="connectedSortable row-fluid connectedSort thumbnail" style="min-height:20px;" id="Ifacetype_<?php echo $type['interfacetype_id']; ?>" data-id="<?php echo $type['interfacetype_id']; ?>"  >
+	  <?php  if (count($data)){
+		 
+		  ?>
           
-           <ul>
+          
                 <?php foreach($data as $item){?>
-                <li data-ifacetype="<?php echo $item['interfacetype_id']; ?>" data-iface="<?php echo $item['iface_id']?>" data-id="<?php echo $item['id']?>" style="float:left;text-align:center; list-style:none;" class="ifaceDraggable">
-                <a   href="<?php echo Yii::app()->getBaseUrl();  ?>/project/protoflowifaceadd/id/<?php echo $item['iface_id']?>/type/12" class="thumbnail " rel="tooltip" data-title="UI-<?php echo str_pad($type['number'], 2, "0", STR_PAD_LEFT); ?><?php echo str_pad($item['number'], 3, "0", STR_PAD_LEFT); ?>">
+                <li data-ifacetype="<?php echo $item['interfacetype_id']; ?>" data-Oid="<?php echo $item['iface_id']?>" data-id="<?php echo $item['id']?>" style="float:left;text-align:center; list-style:none;" data-type="12" >
+                <a   href="<?php echo Yii::app()->getBaseUrl();  ?>/project/protoflowifaceadd/id/<?php echo $item['iface_id']?>/type/12" class="thumbnail " rel="tooltip"  data-title="UI-<?php echo str_pad($type['number'], 2, "0", STR_PAD_LEFT); ?><?php echo str_pad($item['number'], 3, "0", STR_PAD_LEFT); ?>">
                <span style=" text-align:center"><i class="icon-file icon-4x"></i><br />
                 <?php   
 				echo $item['name'];
@@ -59,18 +69,23 @@ echo $this->renderPartial('/project/head',array('tab'=>$tab)); ?>
                 
         
            
-     <?php } ?></ul> </div>
+     <?php } ?></ul> 
      
-         <?php } ?> </td></tr><?php } ?>
-                <tr>
-                <td valign="top">
+         <?php } ?> </div><?php } ?>
+         <br /> <br />
+                <div class="row-fluid">
+                
                     
-                  <span><b>Forms</b> <a href="#" data-toggle="modal" class="add_form" style="float:right"><i class="icon-plus-sign-alt icon-large text-info"></i></a></span><br/><br/>
+                  <span><b>Forms</b>&nbsp;&nbsp;&nbsp; <a href="#" data-toggle="modal" class="add_form"><i class="icon-plus-sign-alt icon-large text-info"></i></a></span><br/><br/>
      <?php
         $data = Form::model()->getProjectForms(Yii::app()->session['project']);
             if (count($data)){
+				?>
+                <ul class="row-fluid connectedSort thumbnail" style="min-height:20px;" id="ObjectFormList">
+                <?php
                 foreach($data as $item): ?>
-                    <a style="float:left;text-align:center;" href="#" class="thumbnail" rel="tooltip" data-title="UF-<?php echo str_pad($item['number'], 3, "0", STR_PAD_LEFT); ?>">              
+                <li data-Oid="<?php echo $item['form_id']?>" data-id="<?php echo $item['id']?>" style="float:left;text-align:center; list-style:none;" data-type="2" >
+                    <a style="text-align:center;" href="#" class="thumbnail" rel="tooltip" data-title="UF-<?php echo str_pad($item['number'], 3, "0", STR_PAD_LEFT); ?>">              
                
                  <span style=" text-align:center"><i class="icon-file-text icon-4x" style="color:#f89406;"></i><br />
            
@@ -81,17 +96,19 @@ echo $this->renderPartial('/project/head',array('tab'=>$tab)); ?>
     'label'=>$item['name'].' +' ,
     )); */
      ?>  
-            </span>    </a>     
+            </span>    </a>     </li>
                  
-            <?php endforeach;
+            <?php endforeach;?>
+ </ul>
+            <?php
             }?>
-   </td>
+   
+    </div></div>       
                 
-                
-                
-           </tr>  </table>
+    
                    
-
+<br />
+<br />
                   
 <?php                   
 
@@ -142,7 +159,7 @@ $packusecases = Usecase::model()->getPackageUsecases($package['package_id']);
 if (count($packusecases)>0){
 echo '<div class="span4">';	
 foreach($packusecases as $uc){ ?>
-<br /><a href="<?php echo Yii::app()->getBaseUrl();  ?>/project/protoflowview/id/<?php echo $uc['id'];?>">
+<br /><a href="<?php echo Yii::app()->getBaseUrl();  ?>/project/protoflowview/id/<?php echo $uc['id'];?>" >
 UC-<?php echo str_pad($uc['packnumber'], 2, "0", STR_PAD_LEFT).''.str_pad($uc['number'], 3, "0", STR_PAD_LEFT); ?> 
     </a>
         <b><?php echo $uc['name'];?></b>
@@ -204,9 +221,10 @@ echo "</div>";
   </div>
 </div>
 
+<?php   $sortableObject_ids=substr($sortableObject_ids,0,-2); ?>;
          
 <script type="text/javascript">
-var drg;
+//var drg;
 
 $(document).ready(function(){
 
@@ -270,15 +288,48 @@ $("#saveIface").on('click',function(e){
 									alert('Please enter interface name');
 								}
 						});
+
+$( "<?php echo $sortableObject_ids; ?>" ).sortable({
+      connectWith: ".connectedSortable,.flowSteps",
+	 
+	  cursor: 'move',
+	  dropOnEmpty : true,
+	  receive : function (event, ui) {
+				Ifacetype_id=$(this).attr('data-id');
+				drg=ui.item;
+				old_ifacetype=drg.attr('data-ifacetype');
+				iface_id=drg.attr('data-id');
+				if(Ifacetype_id !=old_ifacetype )
+				{
+					$.ajax({
+						   type:'POST',
+						   data:{'Iface[id]':iface_id,'Iface[interfacetype_id]':Ifacetype_id},
+						   url:'<?php echo Yii::app()->getBaseUrl();  ?>/iface/update/ucid/-1/id/'+iface_id,
+						   success:function(data){
+							  
+						   }
 						   
+						   });
+					drg.attr('data-ifacetype',Ifacetype_id);
+				
+				}  
+	  }
+    }).disableSelection();
+
+$( "#ObjectFormList" ).sortable({
+      connectWith: ".flowSteps",
+	  cursor: 'move',
+	  dropOnEmpty : true
+	  }).disableSelection();
+/*						   
 $( ".ifaceDraggable" ).draggable({opacity: 0.6,
                     cursor: 'move',
 					revert:"invalid",
 					drag: function (event, ui) {
                      drg = $(this);				
-					}});
+					}});*/
 
-$( ".ifaceDroppable" ).droppable({
+/*$( ".ifaceDroppable" ).droppable({
 			hoverClass: "ui-state-active",
 			drop: function( event, ui ) {
 				Ifacetype_id=$(this).attr('data-id');
@@ -299,7 +350,7 @@ $( ".ifaceDroppable" ).droppable({
 				
 				}
 				}
-		});
+		});*/
 
 
 						   
